@@ -13,6 +13,7 @@ declare var bootstrap: any;
 export class ProgramCreationComponent implements OnInit {
   programCreationMain!: FormGroup;
   programCreationSub!: FormGroup;
+  locationForm!: FormGroup;
   constructor(
     private fb: FormBuilder,
     private toastrService: ToastrService,
@@ -21,6 +22,7 @@ export class ProgramCreationComponent implements OnInit {
   ) { 
     this.formDetails();
     this.formDetailsTwo();
+    this.formDetailsLocation();
     this.modalFormStype = this.fb.group({
       sourceType: ['', Validators.required],
   });
@@ -33,6 +35,9 @@ export class ProgramCreationComponent implements OnInit {
   }
   get f2() {
     return this.programCreationMain.controls;
+  }
+  get fLocation() {
+    return this.locationForm.controls;
   }
   formDetails() {
     this.programCreationMain  = new FormGroup({
@@ -69,6 +74,20 @@ export class ProgramCreationComponent implements OnInit {
         meterialType: new FormControl("",),
         uploaFile: new FormControl("",),
       })]),
+    });
+  }
+  formDetailsLocation() {
+    this.locationForm = new FormGroup({
+      locationName:new FormControl("",[Validators.required]),
+      ownershipType: new FormControl("",[Validators.required]),
+      typeOfVenue: new FormControl("",[Validators.required]),
+      latitude: new FormControl("",[Validators.required]),
+      longitude:new FormControl("",),
+      googleMapUrl: new FormControl("",),
+      OthersType: new FormControl("",),
+      capacity: new FormControl("",),
+      agencyId: new FormControl("",),
+      filePath: new FormControl("",),
     });
   }
   get addDynamicRow() {
@@ -165,5 +184,26 @@ onModalSubmitType(){
       modalInstance.hide();
     }
     }
+  }
+  onModalSubmitLocation(){
+    console.log(this.locationForm.value)  
+    let payload:any={...this.locationForm.value}
+    payload['typeOfVenue']=='Others'?payload['typeOfVenue']=payload['OthersType']:payload['typeOfVenue']
+    payload['agencyId']='1'
+    // payload['filePath']=this.convertToBlob(payload['filePath']);
+    delete payload['OthersType']
+    this._commonService
+      .add(APIS.programCreation.addLocation,payload)
+      .subscribe({
+        next: (data) => {
+          // this.advanceSearch(this.getSelDataRange);
+          // modal.close()
+          this.toastrService.success('Location Added Successfully', "Program Creation Success!");
+        },
+        error: (err) => {
+          this.toastrService.error(err.message, "Program Creation Error!");
+          new Error(err);
+        },
+      });
   }
 }

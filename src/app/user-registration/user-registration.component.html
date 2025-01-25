@@ -69,59 +69,62 @@
 <!-- begin:: view modal -->
 <div class="modal fade" id="addUser" tabindex="-1" aria-labelledby="addResourceLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
+        <form action="" [formGroup]="RegisterForm" (ngSubmit)="onModalSubmitRegister()">
         <div class="modal-content">
             <div class="modal-header py-2">
                 <h6 class="modal-title text-green" id="addResourceLabel">Add User</h6>
                 <button type="button" class="btn-close me-1" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form>
+               
                     <div class="row">
                         <div class="col-12">
                             <div class="form-floating mb-3">
-                                <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
+                                <select class="form-select" id="floatingSelect" aria-label="Floating label select example" formControlName="userRole">
                                   <option selected>Select Type</option>
-                                  <option value="1">PIA Admin</option>
-                                  <option value="2">PIA Executive</option>
-                                  <option value="3">Call Center</option>
-                                  <option value="4">SPIu/Dept</option>
+                                  <option value="ADMIN">ADMIN</option>
+                                    <option value="AGENCY_MANAGER">PIA Manager</option>
+                                  <option value="AGENCY_EXECUTOR">PIA Executive</option>
+                                  <option value="CALL_CENTER">Call Center</option>
+                                  <option value="DEPARTMENT">SPIU / DEPARTMENT</option>
                                 </select>
                                 <label for="floatingSelect">Type Of User</label>
                               </div>
                         </div>
                         <div class="col-12">
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="emailId" placeholder="Email ID">
+                                <input type="text" class="form-control" id="emailId" placeholder="Email ID" formControlName="email">
                                 <label for="emailId">Email ID</label>
                             </div>
                         </div>
                         <div class="col-12 col-sm-6">
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="firstName" placeholder="First Name">
+                                <input type="text" class="form-control" id="firstName" placeholder="First Name" formControlName="firstName">
                                 <label for="firstName">First Name</label>
                             </div>
                         </div>
                         <div class="col-12 col-sm-6">
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="lastName" placeholder="Last Name">
+                                <input type="text" class="form-control" id="lastName" placeholder="Last Name" formControlName="lastName">
                                 <label for="lastName">Last Name</label>
                             </div>
                         </div>
                         <div class="col-12">
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="mobileNumber" placeholder="Mobile Number">
+                                <input type="text" class="form-control" id="mobileNumber" placeholder="Mobile Number" formControlName="mobile">
                                 <label for="mobileNumber">Mobile Number</label>
                             </div>
                         </div>
                         <div class="col-12">
                             <div class="d-grid">
-                                <button type="button" class="btn btn-lime-green">Submit</button>
+                                <button type="submit" class="btn btn-lime-green" data-bs-dismiss="modal">Submit</button>
                             </div>
                         </div>
                     </div>
-                </form>
+               
             </div>
         </div>
+    </form>
     </div>
 </div>
 <!-- end:: view modal -->
