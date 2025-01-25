@@ -102,11 +102,24 @@
                             </div>
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                 <div class="form-floating mb-3">
+                                    <select class="form-select" formControlName="kpi">
+                                      <option selected>Select KPI </option>
+                                      <option value="Activity">Activity</option>
+                                      <option value="Output">Output</option>
+                                      <option value="Outcome">Outcome</option>
+                                      <option value="Impact">Impact</option>
+                                    </select>
+                                    <label>KPI </label>
+                                </div>
+                                <div *ngIf="f2['kpi'].touched && !f2['kpi'].valid" class="error">KPI is required</div>
+                            </div>
+                            <!-- <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                <div class="form-floating mb-3">
                                     <input type="text" class="form-control" placeholder="" formControlName="kpi">
                                     <label>KPI</label>
                                 </div>
                                 <div *ngIf="f2['kpi'].touched && !f2['kpi'].valid" class="error">KPI is required</div>
-                            </div>
+                            </div> -->
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                 <div class="form-floating mb-3">
                                     <input type="text" class="form-control" placeholder="" formControlName="spocName">
@@ -278,122 +291,169 @@
 <!-- begin:: modal add new location -->
 <div class="modal fade" id="addLocation" tabindex="-1" aria-labelledby="addLocationLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
-        <div class="modal-content">
-            <div class="modal-header py-2">
-                <h6 class="modal-title" id="addLocationLabel">Add New Location</h6>
-                <button type="button" class="btn-close me-1" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-12 col-sm-12 col-md-6 col-lg-6">
-                        <div class="mb-3">
-                            <label class="form-label fs-md fw-600">Location Co-ordinates</label>
-                            <div class="row">
-                                <div class="col-6">
-                                    <input type="text" class="form-control" placeholder="Latitude">
-                                </div>
-                                <div class="col-6">
-                                    <input type="text" class="form-control" placeholder="Longitutde">
-                                </div>
+        <form [formGroup]="locationForm" (ngSubmit)="onModalSubmitLocation()">
+            <div class="modal-content">
+                <div class="modal-header py-2">
+                    <h6 class="modal-title" id="addLocationLabel">Add New Location</h6>
+                    <button type="button" class="btn-close me-1" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                            <div class="mb-3">
+                                <label class="form-label fs-md fw-600">Program Location </label>
+                                <input type="text" class="form-control" placeholder="locationName"  formControlName="locationName">
                             </div>
                         </div>
-                    </div>
-                    <div class="col-12 col-sm-12 col-md-6 col-lg-6">
-                        <div class="mb-3">
-                            <label class="form-label fs-md fw-600">Google Map Location URL</label>
-                            <input type="text" class="form-control" placeholder="">
-                        </div>
-                    </div>
-                    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
-                        <div class="mb-3">
-                            <label class="form-label fs-md fw-600">Type Of Ownership</label>
-                            <div class="row">
-                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="ownFacility" value="option1">
-                                        <label class="form-check-label fs-md" for="ownFacility">Own Facility</label>
+                        <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                            <div class="mb-3">
+                                <label class="form-label fs-md fw-600">Location Co-ordinates</label>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <input type="number" class="form-control" placeholder="Latitude"  formControlName="latitude">
                                     </div>
-                                </div>
-                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="leasedFacility" value="option2">
-                                        <label class="form-check-label fs-md" for="leasedFacility">Leased Facility</label>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-sm-6 col-md-4 col-lg-6">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="rentActivity" value="option2">
-                                        <label class="form-check-label fs-md" for="rentActivity">Rented for the activity</label>
+                                    <div class="col-6">
+                                        <input type="number" class="form-control" placeholder="Longitutde" formControlName="longitude">
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
-                        <div class="mb-3">
-                            <label class="form-label fs-md fw-600">Type Of Venue</label>
-                            <div class="row">
-                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" id="checkbox1" value="option1">
-                                        <label class="form-check-label fs-md" for="checkbox1">Training Facility</label>
+                        <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                            <div class="mb-3">
+                                <label class="form-label fs-md fw-600">Google Map Location URL</label>
+                                <input type="text" class="form-control" placeholder="" formControlName="googleMapUrl">
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="mb-3">
+                                <label class="form-label fs-md fw-600">Type Of Ownership</label>
+                                <div class="row">
+                                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="ownershipType" id="ownFacility" formControlName="ownershipType" value="Own Facility">
+                                            <label class="form-check-label fs-md" for="ownFacility">Own Facility</label>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" id="checkbox2" value="option2">
-                                        <label class="form-check-label fs-md" for="checkbox2">Conference Facility</label>
+                                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="ownershipType" id="leasedFacility" formControlName="ownershipType" value="Leased Facility">
+                                            <label class="form-check-label fs-md" for="leasedFacility">Leased Facility</label>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" id="checkbox3" value="option2">
-                                        <label class="form-check-label fs-md" for="checkbox3">Convention Center</label>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" id="checkbox4" value="option2">
-                                        <label class="form-check-label fs-md" for="checkbox4">Function Hall</label>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" id="checkbox5" value="option2">
-                                        <label class="form-check-label fs-md" for="checkbox5">Open Ground</label>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" id="others" value="option2">
-                                        <label class="form-check-label fs-md" for="others">Others</label>
+                                    <div class="col-12 col-sm-6 col-md-4 col-lg-6">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="ownershipType" id="rentActivity" formControlName="ownershipType" value="Rented for the activity">
+                                            <label class="form-check-label fs-md" for="rentActivity">Rented for the activity</label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="show-other mt-3 none-d">
-                                <input type="text" class="form-control" placeholder="Other Details">
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="mb-3">
+                                <label class="form-label fs-md fw-600">Type Of Venue</label>
+                                <div class="row">
+                                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="typeOfVenue" id="Training" formControlName="typeOfVenue" value="Training Facility">
+                                            <label class="form-check-label fs-md" for="Training">Training Facility</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="typeOfVenue" id="Conference" formControlName="typeOfVenue" value="Conference Facility">
+                                            <label class="form-check-label fs-md" for="Conference">Conference Facility</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-4 col-lg-6">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="typeOfVenue" id="Convention" formControlName="typeOfVenue" value="Convention Center">
+                                            <label class="form-check-label fs-md" for="Convention">Convention Center</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="typeOfVenue" id="Function" formControlName="typeOfVenue" value="Function Hall">
+                                            <label class="form-check-label fs-md" for="Function">Function Hall</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="typeOfVenue" id="grounf" formControlName="typeOfVenue" value="Open Ground">
+                                            <label class="form-check-label fs-md" for="grounf">Open Ground</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="typeOfVenue" id="Others" formControlName="typeOfVenue" value="Others">
+                                            <label class="form-check-label fs-md" for="Others">Others</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- <div class="row">
+                                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="checkbox" id="checkbox1" value="option1">
+                                            <label class="form-check-label fs-md" for="checkbox1">Training Facility</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="checkbox" id="checkbox2" value="option2">
+                                            <label class="form-check-label fs-md" for="checkbox2">Conference Facility</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="checkbox" id="checkbox3" value="option2">
+                                            <label class="form-check-label fs-md" for="checkbox3">Convention Center</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="checkbox" id="checkbox4" value="option2">
+                                            <label class="form-check-label fs-md" for="checkbox4">Function Hall</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="checkbox" id="checkbox5" value="option2">
+                                            <label class="form-check-label fs-md" for="checkbox5">Open Ground</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="checkbox" id="others" value="option2">
+                                            <label class="form-check-label fs-md" for="others">Others</label>
+                                        </div>
+                                    </div>
+                                </div> -->
+                                <div class="show-other mt-3 " *ngIf="this.fLocation['typeOfVenue'].value=='Others'">
+                                    <input type="text" class="form-control" formControlName="OthersType" placeholder="Other Details">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-6 col-lg-3">
+                            <div class="mb-3">
+                                <label class="form-label fs-md fw-600">Max Capacity</label>
+                                <input type="number" class="form-control" placeholder="Max capacity" formControlName="capacity">
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-6 col-lg-3">
+                            <div class="mb-3">
+                                <label class="form-label fs-md fw-600">Pictures Of Facility</label>
+                                <input type="file" class="form-control" placeholder="" formControlName="filePath">
                             </div>
                         </div>
                     </div>
-                    <div class="col-12 col-sm-12 col-md-6 col-lg-3">
-                        <div class="mb-3">
-                            <label class="form-label fs-md fw-600">Max Capacity</label>
-                            <input type="text" class="form-control" placeholder="Max capacity">
-                        </div>
-                    </div>
-                    <div class="col-12 col-sm-12 col-md-6 col-lg-3">
-                        <div class="mb-3">
-                            <label class="form-label fs-md fw-600">Pictures Of Facility</label>
-                            <input type="file" class="form-control" placeholder="Max capacity">
-                        </div>
+    
+                    <div class="text-end">
+                        <button type="submit" class="btn btn-lime-green" data-bs-dismiss="modal">Submit</button>
                     </div>
                 </div>
-
-                <div class="text-end">
-                    <button type="button" class="btn btn-lime-green">Submit</button>
-                </div>
             </div>
-        </div>
+        </form>
+      
     </div>
 </div>
 <!-- end:: modal add new location -->
