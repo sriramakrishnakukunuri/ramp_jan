@@ -1,0 +1,93 @@
+﻿<!-- <nav>
+    <nav class="navbar navbar-expand px-3" style="background-color: #e3f2fd;" *ngIf="user">
+        <div class="container-fluid">
+            <img src="https://avatars.githubusercontent.com/u/57286889?s=280&v=4" style="height: 79px;">
+        </div>
+        <div style="float: right;">
+            
+            <button type="button" class="btn btn-orange" (click)="logout()">Logout</button>
+        </div>
+    </nav>
+</nav> -->
+
+<header *ngIf="user">
+    <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-white">
+        <div class="container-fluid">
+            <div class="d-flex align-items-center justify-content-between w-100">
+                <div>
+                    <a class="navbar-brand" href="#">
+                        <img src="assets/img/logo.png" alt="Logo" class="img-fluid">
+                    </a>
+                </div>    
+                <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasNavbar2" aria-labelledby="offcanvasNavbar2Label">
+                    <div class="offcanvas-header">
+                      <h5 class="offcanvas-title" id="offcanvasNavbar2Label">RAMP</h5>
+                      <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body">
+                        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link" href="#" id="homeDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span>Program Creation</span> <span class="bi bi-chevron-down"></span>
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="homeDropdown">
+                                    <li><a class="dropdown-item" routerLink="/program-creation" routerLinkActive="active">Add Program</a></li>
+                                    <li><a class="dropdown-item" routerLink="/veiw-program-creation" routerLinkActive="active">View Programs</a></li>
+                                    <!-- <li><a class="dropdown-item" href="#">View Approved</a></li> -->
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link" href="#" id="dropdown2" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Program Execution <span class="bi bi-chevron-down"></span>
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="dropdown2">
+                                <!-- <li><a class="dropdown-item" href="#">Add New</a></li> -->
+                                <li><a class="dropdown-item"routerLink="/add-participant-data" routerLinkActive="active">Add Participate Data</a></li>
+                                <li><a class="dropdown-item" href="#">View Completed</a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link" href="#" id="dropdown2" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Update Outcomes <span class="bi bi-chevron-down"></span>
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="dropdown2">
+                                <li><a class="dropdown-item" href="#">Capture Outcome</a></li>
+                                <li><a class="dropdown-item" href="#">Organisation Updates</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>   
+                <div class="d-flex align-items-center justify-content-between">
+                    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar2" aria-controls="offcanvasNavbar2" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <ul class="navbar-nav me-auto ms-2">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link" href="#" id="homeDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <span class="bi bi-person-circle fs-3"></span>
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="homeDropdown">
+                            <li><a class="dropdown-item" routerLink="/profile" routerLinkActive="active"><span class="bi bi-person fs-5 me-2"></span> My Profile</a></li>
+                            <li><a class="dropdown-item" routerLink="/password-settings" routerLinkActive="active"><span class="bi bi-key fs-5 me-2"></span> Change Password</a></li>
+                            <li><a class="dropdown-item" routerLink="/user-registration" routerLinkActive="active"><span class="bi bi-person-circle fs-5 me-2"></span> Register User</a></li>
+                            <li><a class="dropdown-item" (click)="logout()"><span class="bi bi-box-arrow-right fs-5 me-2"></span> Logout</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<!-- main app container class="container"-->
+<div>
+    <router-outlet></router-outlet>
+</div>
+
+<!-- credits -->
+<div class="text-center mt-4">
+    <p>
+    </p>
+</div>

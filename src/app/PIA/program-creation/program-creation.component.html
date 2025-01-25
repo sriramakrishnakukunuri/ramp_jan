@@ -1,0 +1,513 @@
+<main class="mt-4">
+    <section>
+        <div class="container-fluid">
+            <form [formGroup]="programCreationMain">
+            <div class="card mb-4">
+                <div class="card-header bg-transparent">
+                    <div class="d-flex align-items-center justify-content-between flex-wrap">
+                        <div>
+                            <h6 class="mb-2 mb-sm-0 text-green">Add Program</h6>
+                        </div>
+                        <div>
+                            <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#addLocation">Add New Location</button>
+                            <a class="btn btn-default ms-3" id="iconChange" data-bs-toggle="collapse" href="#collapseExample"  aria-expanded="false" aria-controls="collapseExample">
+                                <span class="bi bi-chevron-down"></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body collapse" id="collapseExample">
+                   
+                        <div class="row">
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                <div class="form-floating mb-3">
+                                    <select class="form-select" formControlName="activityId">
+                                      <option selected>Select Type Of Activity</option>
+                                      <option value="Activity1">Activity1</option>
+                                      <option value="Activity2">Activity1</option>
+                                      <option value="Activity3">Activity1</option>
+                                    </select>
+                                    <label>Type Of Activity</label>
+                                </div>
+                                <div *ngIf="f2['activityId'].touched && !f2['activityId'].valid" class="error">Type Of Activityis required</div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                <div class="form-floating mb-3">
+                                    <select class="form-select" formControlName="subActivityId">
+                                      <option selected>Select Sub Activity</option>
+                                      <option value="Sub-Activity1">Sub-Activity1</option>
+                                      <option value="Sub-Activity2">Sub-Activity1</option>
+                                      <option value="Sub-Activity3">Sub-Activity1</option>
+                                    </select>
+                                    <label>Sub Activity</label>
+                                </div>
+                                <div *ngIf="f2['subActivityId'].touched && !f2['subActivityId'].valid" class="error">Sub Activity is required</div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                <div class="form-floating mb-3">
+                                    <select class="form-select" formControlName="programType">
+                                      <option selected>Select Type Of Program</option>
+                                      <option value="Program1">Program1</option>
+                                      <option value="Program2">Program2</option>
+                                      <option value="Program3">Program3</option>
+                                    </select>
+                                    <label>Type Of Program</label>
+                                </div>
+                                <div *ngIf="f2['programType'].touched && !f2['programType'].valid" class="error">Type Of Program is required</div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                <div class="form-floating mb-3">
+                                    <select class="form-select" formControlName="programDetails">
+                                      <option selected>Select Program Details</option>
+                                      <option value="Program Details">Program Details</option>
+                                    </select>
+                                    <label>Program Details</label>
+                                </div>
+                                <div *ngIf="f2['programDetails'].touched && !f2['programDetails'].valid" class="error">Program Details is required</div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" formControlName="programTitle" placeholder="Title Of Program">
+                                    <label>Title Of Program</label>
+                                </div>
+                                <div *ngIf="f2['programTitle'].touched && !f2['programTitle'].valid" class="error">Title Of Program is required</div>
+                            </div>
+                            <!-- <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" formControlName="noOfDays" placeholder="No. Of Days">
+                                    <label>No. Of Days</label>
+                                </div>
+                            </div> -->
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                <div class="form-floating mb-3">
+                                    <input type="date" class="form-control" formControlName="startDate">
+                                    <label>Start Date</label>
+                                </div>
+                                <div *ngIf="f2['startDate'].touched && !f2['startDate'].valid" class="error">Start Date is required</div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                <div class="form-floating mb-3">
+                                    <input type="time" class="form-control"  formControlName="startTime">
+                                    <label>In Time</label>
+                                </div>
+                                <div *ngIf="f2['startTime'].touched && !f2['startTime'].valid" class="error">In Time is required</div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                <div class="form-floating mb-3">
+                                    <input type="time" class="form-control" formControlName="endTime">
+                                    <label>Out Time</label>
+                                </div>
+                                <div *ngIf="f2['endTime'].touched && !f2['endTime'].valid" class="error">Out Time is required</div>
+                           
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" placeholder="" formControlName="kpi">
+                                    <label>KPI</label>
+                                </div>
+                                <div *ngIf="f2['kpi'].touched && !f2['kpi'].valid" class="error">KPI is required</div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" placeholder="" formControlName="spocName">
+                                    <label>SPOC Name</label>
+                                </div>
+                                <div *ngIf="f2['spocName'].touched && !f2['spocName'].valid" class="error">SPOC Name is required</div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" placeholder="" formControlName="spocContactNo">
+                                    <label>SPOC Contact No.</label>
+                                </div>
+                                <div *ngIf="f2['spocContactNo'].touched && !f2['spocContactNo'].valid && !f2['spocContactNo']?.errors?.['pattern']" class="error">SPOC Contact No is required</div>
+                                <div *ngIf="f2['spocContactNo'].touched && !f2['spocContactNo'].valid && f2['spocContactNo']?.errors?.['pattern']" class="error">Contact No is should be Numbers</div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                <div class="form-floating mb-3">
+                                    <select class="form-select" formControlName="programLocation">
+                                        <option selected value="">Select Location</option>
+                                        <option value="Hyderabad">Hyderabad</option>
+                                        <option value="Warangal">Warangal</option>
+                                      </select>
+                                    <label>Program Location</label>
+                                </div>
+                                <div *ngIf="f2['programLocation'].touched && !f2['programLocation'].valid" class="error">Program Location is required</div>
+                           
+                            </div>
+                            <!-- <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                <div class="form-floating mb-3">
+                                    <select class="form-select" formControlName="TargetSector">
+                                        <option selected value="">Select Sector</option>
+                                        <option value="Sector1">Sector1</option>
+                                        <option value="Sector2">Sector2</option>
+                                      </select>
+                                    <label>Target Sector</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                <div class="form-floating mb-3">
+                                    <select class="form-select" formControlName="targetAudience">
+                                        <option selected value="">Select Target Audience</option>
+                                        
+                                      </select>
+                                    <label>Target Audience</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" placeholder="" formControlName="targetNoOfParticipants">
+                                    <label>Target No. of Participants</label>
+                                </div>
+                            </div> -->
+                        </div>
+                    
+                </div>
+            </div>
+
+            <div class="card mb-3">
+                <div class="card-header bg-transparent">
+                    <div class="d-flex align-items-center justify-content-between flex-wrap">
+                        <div>
+                            <h6 class="fw-600 mb-2 mb-sm-0 text-green">Add Session</h6>
+                        </div>
+                        <div>
+                            <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#addResource">Add Resource Person</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form [formGroup]="programCreationSub">
+                    <table id="creation-table" class="table table-borderless table-striped nowrap">
+                        <thead>
+                            <tr>
+                                <th>S.No</th>
+                                <th>Date</th>
+                                <th>Start Time</th>
+                                <th>End Time</th>
+                                <th>Type Of Session</th>
+                                <th>Methodology</th>
+                                <th>Session Details</th>
+                                <!-- <th>Session Expected OutComes</th> -->
+                                <th>Resource Person</th>
+                                <th>Type Of Material Used</th>
+                                <th>Upload</th>
+                                <th>Add/Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ng-container formArrayName="details" *ngFor="let item of addDynamicRow.controls ; let i=index">
+                                <tr [formGroupName]="i">
+                                    <td class="text-start">{{i+1}}</td>
+                                    <td>
+                                        <input type="date" class="form-control" placeholder="" formControlName="sessionDate">
+                                    </td>
+                                    <td>
+                                        <input type="time" class="form-control" placeholder="" formControlName="startTime">
+                                    </td>
+                                    <td>
+                                        <input type="time" class="form-control" placeholder="" formControlName="endTime">
+                                    </td>
+                                    <td>
+                                        <select class="form-select" formControlName="sessionTypeName">
+                                            <option value="">Select Type</option>
+                                            <option value="Session">Session</option>
+                                            <option value="Break">Break</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select class="form-select" formControlName="sessionTypeMethodology">
+                                            <option value="">Select Methodology</option>
+                                            <option value="Lecture">Lecture</option>
+                                            <option value="Break">Break</option>
+                                            <option value="Discussion">Discussion</option>
+                                            <option value="Panel dicussion">Panel dicussion</option>
+                                            <option value="Presentation">Presentation</option>
+                                            <option value="Felicitation">Felicitation</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control" placeholder="Session Details" formControlName="sessionDetails">
+                                    </td>
+                                    <!-- <td>
+                                        <input type="text" class="form-control" placeholder="Session Expected OutComes" formControlName="sessionExpectedOutComes">
+                                    </td> -->
+                                    <td>
+                                        <select class="form-select" formControlName="resourceId">
+                                            <option value="">Select Resource Person</option>
+                                            <option value="Resource Person1">Resource Person1</option>
+                                            <option *ngFor="let list of sourceTypes" value="{{list.values}}">{{list.values}}</option>                                                
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select class="form-select" formControlName="meterialType">
+                                            <option value="">Select Type</option>
+                                            <option value="PDF">PDF</option>
+                                            <option value="Video">Video</option>
+                                            <option value="PPT">PPT</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <input class="form-control" type="file" id="formFile" formControlName="uploaFile">
+                                    </td>
+                                    <td class="text-center">
+                                        <button type="button" class="btn btn-default btn-sm text-lime-green" (click)="onAddRow(i)">
+                                            <span class="bi bi-plus-lg"></span>
+                                        </button>
+                                        <button type="button" class="btn btn-default btn-sm text-danger ms-2" [disabled]="i==0" (click)="onRemoveRow(i)">
+                                            <span class="bi bi-trash"></span>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </ng-container>
+                        </tbody>
+                    </table>
+                </form>
+                </div>
+            </div>
+
+            <div class="text-end mb-3">
+                <!-- <button type="button" class="btn btn-secondary">Save For Later</button> -->
+                 <!-- [disabled]="(!programCreationMain.valid || !programCreationSub.valid)" -->
+                <button type="button" class="btn btn-secondary" [disabled]="(!programCreationMain.valid || !programCreationSub.valid)"  (click)="openModal()">View Preview</button>
+            </div>
+            </form>
+        </div>
+    </section>
+</main>
+
+<!-- begin:: modal add new location -->
+<div class="modal fade" id="addLocation" tabindex="-1" aria-labelledby="addLocationLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+        <div class="modal-content">
+            <div class="modal-header py-2">
+                <h6 class="modal-title" id="addLocationLabel">Add New Location</h6>
+                <button type="button" class="btn-close me-1" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                        <div class="mb-3">
+                            <label class="form-label fs-md fw-600">Location Co-ordinates</label>
+                            <div class="row">
+                                <div class="col-6">
+                                    <input type="text" class="form-control" placeholder="Latitude">
+                                </div>
+                                <div class="col-6">
+                                    <input type="text" class="form-control" placeholder="Longitutde">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                        <div class="mb-3">
+                            <label class="form-label fs-md fw-600">Google Map Location URL</label>
+                            <input type="text" class="form-control" placeholder="">
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                        <div class="mb-3">
+                            <label class="form-label fs-md fw-600">Type Of Ownership</label>
+                            <div class="row">
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="ownFacility" value="option1">
+                                        <label class="form-check-label fs-md" for="ownFacility">Own Facility</label>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="leasedFacility" value="option2">
+                                        <label class="form-check-label fs-md" for="leasedFacility">Leased Facility</label>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-6">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="rentActivity" value="option2">
+                                        <label class="form-check-label fs-md" for="rentActivity">Rented for the activity</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                        <div class="mb-3">
+                            <label class="form-label fs-md fw-600">Type Of Venue</label>
+                            <div class="row">
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" id="checkbox1" value="option1">
+                                        <label class="form-check-label fs-md" for="checkbox1">Training Facility</label>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" id="checkbox2" value="option2">
+                                        <label class="form-check-label fs-md" for="checkbox2">Conference Facility</label>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" id="checkbox3" value="option2">
+                                        <label class="form-check-label fs-md" for="checkbox3">Convention Center</label>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" id="checkbox4" value="option2">
+                                        <label class="form-check-label fs-md" for="checkbox4">Function Hall</label>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" id="checkbox5" value="option2">
+                                        <label class="form-check-label fs-md" for="checkbox5">Open Ground</label>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" id="others" value="option2">
+                                        <label class="form-check-label fs-md" for="others">Others</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="show-other mt-3 none-d">
+                                <input type="text" class="form-control" placeholder="Other Details">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-3">
+                        <div class="mb-3">
+                            <label class="form-label fs-md fw-600">Max Capacity</label>
+                            <input type="text" class="form-control" placeholder="Max capacity">
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-3">
+                        <div class="mb-3">
+                            <label class="form-label fs-md fw-600">Pictures Of Facility</label>
+                            <input type="file" class="form-control" placeholder="Max capacity">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-end">
+                    <button type="button" class="btn btn-lime-green">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end:: modal add new location -->
+
+<!-- begin:: modal add new resource person -->
+<div class="modal fade" id="addResource" tabindex="-1" aria-labelledby="addResourceLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <form [formGroup]="modalFormStype" (ngSubmit)="onModalSubmitType()">
+            <div class="modal-content">
+                <div class="modal-header py-2">
+                    <h6 class="modal-title" id="addResourceLabel">Add New Resource Person</h6>
+                    <button type="button" class="btn-close me-1" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" formControlName="sourceType"  placeholder="Resource Person" />
+                        <label>Resource Person</label>
+                    </div>
+
+                    <div class="text-end">
+                        <button type="submit" class="btn btn-lime-green"  [disabled]="modalFormStype.invalid">Add Resource Person</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- end:: modal add new resource person -->
+
+<div class="modal fade" id="exampleModal" #exampleModal tabindex="-1" aria-modal="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Preview Form Data</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h6><strong>Program Details</strong></h6>
+                <div class="row">
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                        <p><strong>Type Of Activity:</strong> {{ programCreationMain.value.activityId }}</p>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                        <p><strong>Sub Activity:</strong> {{ programCreationMain.value.subActivityId }}</p>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                        <p><strong>Type Of Program:</strong> {{ programCreationMain.value.programType }}</p>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                        <p><strong>Program Details:</strong> {{ programCreationMain.value.programDetails }}</p>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                        <p><strong>Title Of Program:</strong> {{ programCreationMain.value.programTitle }}</p>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                        <p><strong>Start Date:</strong> {{ programCreationMain.value.startDate }}</p>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                        <p><strong>In Time:</strong> {{ programCreationMain.value.startTime }}</p>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                        <p><strong>Out Time:</strong> {{ programCreationMain.value.endTime }}</p>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                        <p><strong>KPI:</strong> {{ programCreationMain.value.kpi }}</p>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                        <p><strong>SPOC Name:</strong> {{ programCreationMain.value.spocName }}</p>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                        <p><strong>SPOC Contact No:</strong> {{ programCreationMain.value.spocContactNo }}</p>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                        <p><strong>Program Location:</strong> {{ programCreationMain.value.programLocation }}</p>
+                    </div>
+                </div>
+                <h6><strong>Session Details</strong></h6>
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>S.No</th>
+                                <th>Date</th>
+                                <th>Start Time</th>
+                                <th>End Time</th>
+                                <th>Type Of Session</th>
+                                <th>Methodology</th>
+                                <th>Session Details</th>
+                                <th>Resource Person</th>
+                                <th>Type Of Material Used</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let session of programCreationSub.value.details; let i = index">
+                                <td>{{ i + 1 }}</td>
+                                <td>{{ session.sessionDate }}</td>
+                                <td>{{ session.startTime }}</td>
+                                <td>{{ session.endTime }}</td>
+                                <td>{{ session.sessionTypeName }}</td>
+                                <td>{{ session.sessionTypeMethodology }}</td>
+                                <td>{{ session.sessionDetails }}</td>
+                                <td>{{ session.resourceId }}</td>
+                                <td>{{ session.meterialType }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Edit
+                </button>
+                <button type="button" class="btn btn-lime-green" (click)="submitForm()">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>

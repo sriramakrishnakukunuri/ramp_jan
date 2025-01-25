@@ -1,0 +1,127 @@
+<main class="mt-4">
+    <section>
+        <div class="container-fluid">
+            <div class="card mb-3">
+                <div class="card-header bg-transparent">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div>
+                            <h6 class="fw-600 mb-2 mb-sm-0">User Creation</h6>
+                        </div>
+                        <div>
+                            <button type="button" class="btn btn-lime-green" data-bs-toggle="modal" data-bs-target="#addUser">Add User</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table id="view-table" class="table table-borderless table-striped nowrap w-100">
+                        <thead>
+                            <tr>
+                                <th>S.No</th>
+                                <th>Type Of User</th>
+                                <th>Full Name</th>
+                                <th>Email ID</th>
+                                <th>Mobil Number</th>
+                                <th class="text-center">Edit/Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>PIA Executive</td>
+                                <td>Ravi Kumar</td>
+                                <td>ravi@gmail.com</td>
+                                <td>9876543210</td>
+                                <td class="text-center">
+                                    <button type="button" class="btn btn-default btn-sm text-lime-green me-2" title="Edit"><span class="bi bi-pencil"></span></button>
+                                    <button type="button" class="btn btn-default btn-sm text-danger" title="Delete"><span class="bi bi-trash"></span></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>PIA Executive</td>
+                                <td>Ravi Kumar</td>
+                                <td>ravi@gmail.com</td>
+                                <td>9876543210</td>
+                                <td class="text-center">
+                                    <button type="button" class="btn btn-default btn-sm text-lime-green me-2" title="Edit"><span class="bi bi-pencil"></span></button>
+                                    <button type="button" class="btn btn-default btn-sm text-danger" title="Delete"><span class="bi bi-trash"></span></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>PIA Executive</td>
+                                <td>Ravi Kumar</td>
+                                <td>ravi@gmail.com</td>
+                                <td>9876543210</td>
+                                <td class="text-center">
+                                    <button type="button" class="btn btn-default btn-sm text-lime-green me-2" title="Edit"><span class="bi bi-pencil"></span></button>
+                                    <button type="button" class="btn btn-default btn-sm text-danger" title="Delete"><span class="bi bi-trash"></span></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<!-- begin:: view modal -->
+<div class="modal fade" id="addUser" tabindex="-1" aria-labelledby="addResourceLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header py-2">
+                <h6 class="modal-title text-green" id="addResourceLabel">Add User</h6>
+                <button type="button" class="btn-close me-1" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-floating mb-3">
+                                <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
+                                  <option selected>Select Type</option>
+                                  <option value="1">PIA Admin</option>
+                                  <option value="2">PIA Executive</option>
+                                  <option value="3">Call Center</option>
+                                  <option value="4">SPIu/Dept</option>
+                                </select>
+                                <label for="floatingSelect">Type Of User</label>
+                              </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="emailId" placeholder="Email ID">
+                                <label for="emailId">Email ID</label>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="firstName" placeholder="First Name">
+                                <label for="firstName">First Name</label>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="lastName" placeholder="Last Name">
+                                <label for="lastName">Last Name</label>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="mobileNumber" placeholder="Mobile Number">
+                                <label for="mobileNumber">Mobile Number</label>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="d-grid">
+                                <button type="button" class="btn btn-lime-green">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end:: view modal -->
