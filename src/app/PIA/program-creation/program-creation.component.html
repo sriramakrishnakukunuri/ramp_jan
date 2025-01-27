@@ -260,7 +260,8 @@
                                         </select>
                                     </td>
                                     <td>
-                                        <input class="form-control" type="file" id="formFile" formControlName="uploaFile">
+                                        <input class="form-control" type="file" accept=".png, .jpg, .jpeg, .pdf, .docx, .xls, .xlsx, .csv,.ppt,.pptx"
+                                        (change)="onFilesSelected($event,i)"  id="formFile" multiple formControlName="uploaFile">
                                     </td>
                                     <td class="text-center">
                                         <button type="button" class="btn btn-default btn-sm text-lime-green" (click)="onAddRow(i)">

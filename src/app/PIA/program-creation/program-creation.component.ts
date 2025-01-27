@@ -23,6 +23,8 @@ export class ProgramCreationComponent implements OnInit {
     this.formDetails();
     this.formDetailsTwo();
     this.formDetailsLocation();
+    this.getProgramLocation()
+    this.getSessionResource()
     this.modalFormStype = this.fb.group({
       sourceType: ['', Validators.required],
   });
@@ -124,21 +126,30 @@ export class ProgramCreationComponent implements OnInit {
     return new Blob([file]);
   }
   submitForm(){
+  
     let val={...this.programCreationMain.value}
-    this.programCreationSub?.controls["details"]?.value.forEach((element:any,index:any) => {
-      if(element['uploaFile']){
-      element['uploaFile']=this.convertToBlob(element['uploaFile']);
-      }
+    // this.programCreationSub?.controls["details"]?.value.forEach((element:any,index:any) => {
+    //   if(element['uploaFile']){
+    //   element['uploaFile']=this.convertToBlob(element['uploaFile']);
+    //   }
         
-    })
+    // })
     val={...this.programCreationMain.value,programSessionList:this.programCreationSub?.controls["details"]?.value}
     console.log(val)
-    
+    let maindata={...this.programCreationMain.value}
+    maindata['activityId']=1
+    maindata['subActivityId']=1
+    maindata['locationId']=1
+    maindata['agencyId']=1
     const programData = JSON.parse(localStorage.getItem('programDetails') || '[]');
     programData.push(val);
     localStorage.setItem('programDetails', JSON.stringify(programData));
     this.closeModal()
     this.router.navigateByUrl('/update-program-execution');
+    this._commonService.requestDataFromMultipleSources(APIS.programCreation.addprogram,APIS.programCreation.addSessions,maindata,this.programCreationSub?.controls["details"]?.value,this.uploadedFiles).subscribe((res: any) => {
+      this.toastrService.success('Program Created Successfully', 'Success');
+      this.uploadedFiles=[]
+     })
     // this._commonService
     //   .add(APIS.programCreation.add,val)
     //   .subscribe({
@@ -199,11 +210,47 @@ onModalSubmitType(){
           // this.advanceSearch(this.getSelDataRange);
           // modal.close()
           this.toastrService.success('Location Added Successfully', "Program Creation Success!");
+          this.getProgramLocation()
         },
         error: (err) => {
           this.toastrService.error(err.message, "Program Creation Error!");
           new Error(err);
         },
       });
+  }
+  getProgramLocationData:any=[]
+  getProgramLocation(){
+    this._commonService
+      .getById(APIS.programCreation.getLocation,'1')
+      .subscribe({
+        next: (data:any) => {
+          this.getProgramLocationData=data.data
+          // this.toastrService.success('Location Added Successfully', "Program Creation Success!");
+        },
+        error: (err:any) => {
+          // this.toastrService.error(err.message, "Program Creation Error!");
+          new Error(err);
+        },
+      });
+  }
+  getSessionResourceData:any=[]
+  getSessionResource(){
+    this._commonService
+      .getById(APIS.programCreation.getResource,'1')
+      .subscribe({
+        next: (data:any) => {
+          this.getSessionResourceData=data.data
+          // this.toastrService.success('Location Added Successfully', "Program Creation Success!");
+        },
+        error: (err:any) => {
+          // this.toastrService.error(err.message, "Program Creation Error!");
+          new Error(err);
+        },
+      });
+  }
+  uploadedFiles:any = [];
+  onFilesSelected(event:any, index:any) {
+    console.log(event.target.files)
+    this.uploadedFiles.push(event.target.files);
   }
 }
