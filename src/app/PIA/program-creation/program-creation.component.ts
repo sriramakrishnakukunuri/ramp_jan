@@ -74,7 +74,7 @@ export class ProgramCreationComponent implements OnInit {
         // sessionExpectedOutComes: new FormControl("",),
         resourceId: new FormControl("",),
         meterialType: new FormControl("",),
-        uploaFile: new FormControl("",),
+        uploaFiles: [[], Validators.required]
       })]),
     });
   }
@@ -106,7 +106,7 @@ export class ProgramCreationComponent implements OnInit {
       "sessionDetails": "",
       "resourceId": '',
       "meterialType": "",
-      "uploaFile": ""
+      "uploaFiles": [null]
   }
   );
   }
@@ -145,11 +145,30 @@ export class ProgramCreationComponent implements OnInit {
     programData.push(val);
     localStorage.setItem('programDetails', JSON.stringify(programData));
     this.closeModal()
-    this.router.navigateByUrl('/update-program-execution');
-    this._commonService.requestDataFromMultipleSources(APIS.programCreation.addprogram,APIS.programCreation.addSessions,maindata,this.programCreationSub?.controls["details"]?.value,this.uploadedFiles).subscribe((res: any) => {
-      this.toastrService.success('Program Created Successfully', 'Success');
-      this.uploadedFiles=[]
-     })
+
+    let formData = new FormData();
+    formData.set("data", JSON.stringify(this.programCreationSub?.controls["details"]?.value))
+    
+    this.programCreationSub?.controls['details']?.value.forEach((element:any,index:any) => {
+      if(element['uploaFiles']){
+        element['uploaFiles'].forEach((file:any) => {          
+          formData.append("files", file);
+        })
+      }
+    })
+
+    console.log(this.programCreationSub?.controls['details']?.value,'sgsgsggs')
+    
+
+    // this.uploadedFiles.forEach((file:any) => {
+    //   formData.append("files", file);
+    // })
+
+    //this.router.navigateByUrl('/update-program-execution');
+    // this._commonService.requestDataFromMultipleSources(APIS.programCreation.addprogram,APIS.programCreation.addSessions,maindata,formData).subscribe((res: any) => {
+    //   this.toastrService.success('Program Created Successfully', 'Success');
+    //   this.uploadedFiles=[]
+    //  })
     // this._commonService
     //   .add(APIS.programCreation.add,val)
     //   .subscribe({
@@ -168,9 +187,15 @@ export class ProgramCreationComponent implements OnInit {
   @ViewChild('exampleModal') exampleModal!: ElementRef;
   
 
-  openModal(): void {
+  openModal(): void {    
+    // if(this.programCreationMain.valid){
+    //   const modal = new bootstrap.Modal(this.exampleModal.nativeElement);
+    //   modal.show();
+    // }else{
+    //   this.toastrService.error('Please enter all fields', "Add Program Error!");
+    // }   
     const modal = new bootstrap.Modal(this.exampleModal.nativeElement);
-    modal.show();
+    modal.show(); 
 }
 
 closeModal(): void {
@@ -251,6 +276,27 @@ onModalSubmitType(){
   uploadedFiles:any = [];
   onFilesSelected(event:any, index:any) {
     console.log(event.target.files)
-    this.uploadedFiles.push(event.target.files);
+    //this.uploadedFiles.push(event.target.files);
+    // const input = event.target as HTMLInputElement;
+    
+    // if (input.files) {      
+    //   const files = Array.from(input.files);
+    //   //this.addDynamicRow.controls[index].setValue({uploaFiles:files})
+    //   //(this.addDynamicRow?.at(index) as FormGroup)?.controls['uploaFiles']?.setValue(files ?? []);
+    //   (this.addDynamicRow.get('uploaFiles') as FormArray).at(index).setValue(files)
+    // }programCreationSub?.get("details")
+
+    const input = event.target as HTMLInputElement;
+  const rows = this.programCreationSub.get('details') as FormArray;
+
+  if (rows && input.files) {
+    const newFiles = Array.from(input.files); // Convert FileList to Array
+    // Set the combined array of files
+    rows.at(index).get('uploaFiles')?.patchValue({uploaFiles: newFiles});
+    //(this.programCreationSub.get('details') as FormArray).at(index)?.patchValue({uploaFiles: allFiles});
+    //filesList.push(newFiles)
+    //this.addDynamicRow.controls[index].setValue({uploaFiles:newFiles})
+  }
+
   }
 }

@@ -25,9 +25,9 @@ export class CommonServiceService {
   public getById(URL: any, id: any,): Observable<any> {
     return this.http.get(URL+id).pipe(catchError(this.formatErrors));
   }
-  requestDataFromMultipleSources( url1:any, url2:any, fileData:any,sessionData:any,uploadFiles:any): Observable<any[]> {    
+  requestDataFromMultipleSources( url1:any, url2:any, fileData:any,sessionData:any): Observable<any[]> {    
     let response1 = this.http.post(url1, fileData).pipe(catchError(this.formatErrors));
-    let response2=this.http.post(url1, fileData).pipe(catchError(this.formatErrors));
+    let response2=this.http.post(url2, sessionData).pipe(catchError(this.formatErrors));
     // sessionData.map((data:any)=>{ 
     //   console.log(data)
     //   let formData = new FormData();

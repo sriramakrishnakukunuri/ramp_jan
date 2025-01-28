@@ -6,150 +6,53 @@
                     <h6 class="fw-600 mb-2 mb-sm-0 text-green">View Programs</h6>
                 </div>
                 <div class="card-body">
-                    <table id="view-table" class="table table-borderless table-striped nowrap">
-                        <thead>
-                            <tr>
-                                <th>S.No</th>
-                                <th>Type Of Activity</th>
-                                <th>Sub Activity</th>
-                                <th>Type Of Program</th>
-                                <th>Program Details</th>
-                                <th>Title Of Program</th>
-                                <th>No. Of Days</th>
-                                <th>Start Date</th>
-                                <th>In Time</th>
-                                <th>Out Time</th>
-                                <th>SPOC Name</th>
-                                <th>SPOC Contact No.</th>
-                                <th>Program Location</th>
-                                <th class="text-center">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let item of localStorageData; let i = index">
-                                <td>{{ i + 1 }}</td>
-                                <td>{{ item.activityId }}</td>
-                                <td>{{ item.subActivityId }}</td>
-                                <td>{{ item.programType }}</td>
-                                <td>{{ item.programDetails }}</td>
-                                <td>{{ item.programTitle }}</td>
-                                <td>{{ item.noOfDays }}</td>
-                                <td>{{ item.startDate }}</td>
-                                <td class="text-center">{{ item.startTime }}</td>
-                                <td class="text-center">{{ item.endTime }}</td>
-                                <td>{{ item.spocName }}</td>
-                                <td>{{ item.spocContactNo }}</td>
-                                <td>{{ item.programLocation }}</td>
-                                <td>
-                                    <button type="button" class="btn btn-default btn-sm text-lime-green" data-bs-toggle="modal" data-bs-target="#viewModal" (click)="sessionDetails(item)" title="View"><span class="bi bi-eye"></span></button>
-                                    <button type="button" class="btn btn-default btn-sm text-primary mx-2" title="Edit"><span class="bi bi-pencil"></span></button>
-                                    <button type="button" class="btn btn-default btn-sm text-danger" title="Delete"><span class="bi bi-trash"></span></button>
-                                </td>
-                            </tr>
-                        </tbody>
-                        <!-- <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Activity - 1</td>
-                                <td>Sub Activity 1</td>
-                                <td>Program 1</td>
-                                <td>Program Details - 1</td>
-                                <td>Title -1 </td>
-                                <td>3 Days</td>
-                                <td>29-12-2024</td>
-                                <td class="text-center">14:57</td>
-                                <td class="text-center">15:00</td>
-                                <td>SPOC Name- 1</td>
-                                <td>9876543210</td>
-                                <td>Hyderabad</td>
-                                <td>
-                                    <button type="button" class="btn btn-default btn-sm text-lime-green" data-bs-toggle="modal" data-bs-target="#viewModal" title="View"><span class="bi bi-eye"></span></button>
-                                    <button type="button" class="btn btn-default btn-sm text-primary mx-2" title="Edit"><span class="bi bi-pencil"></span></button>
-                                    <button type="button" class="btn btn-default btn-sm text-danger" title="Delete"><span class="bi bi-trash"></span></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Activity - 1</td>
-                                <td>Sub Activity 1</td>
-                                <td>Program 1</td>
-                                <td>Program Details - 1</td>
-                                <td>Title -1 </td>
-                                <td>3 Days</td>
-                                <td>29-12-2024</td>
-                                <td class="text-center">14:57</td>
-                                <td class="text-center">15:00</td>
-                                <td>SPOC Name- 1</td>
-                                <td>9876543210</td>
-                                <td>Hyderabad</td>
-                                <td>
-                                    <button type="button" class="btn btn-default btn-sm text-lime-green" data-bs-toggle="modal" data-bs-target="#viewModal" title="View"><span class="bi bi-eye"></span></button>
-                                    <button type="button" class="btn btn-default btn-sm text-primary mx-2" title="Edit"><span class="bi bi-pencil"></span></button>
-                                    <button type="button" class="btn btn-default btn-sm text-danger" title="Delete"><span class="bi bi-trash"></span></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Activity - 1</td>
-                                <td>Sub Activity 1</td>
-                                <td>Program 1</td>
-                                <td>Program Details - 1</td>
-                                <td>Title -1 </td>
-                                <td>3 Days</td>
-                                <td>29-12-2024</td>
-                                <td class="text-center">14:57</td>
-                                <td class="text-center">15:00</td>
-                                <td>SPOC Name- 1</td>
-                                <td>9876543210</td>
-                                <td>Hyderabad</td>
-                                <td>
-                                    <button type="button" class="btn btn-default btn-sm text-lime-green" data-bs-toggle="modal" data-bs-target="#viewModal" title="View"><span class="bi bi-eye"></span></button>
-                                    <button type="button" class="btn btn-default btn-sm text-primary mx-2" title="Edit"><span class="bi bi-pencil"></span></button>
-                                    <button type="button" class="btn btn-default btn-sm text-danger" title="Delete"><span class="bi bi-trash"></span></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Activity - 1</td>
-                                <td>Sub Activity 1</td>
-                                <td>Program 1</td>
-                                <td>Program Details - 1</td>
-                                <td>Title -1 </td>
-                                <td>3 Days</td>
-                                <td>29-12-2024</td>
-                                <td class="text-center">14:57</td>
-                                <td class="text-center">15:00</td>
-                                <td>SPOC Name- 1</td>
-                                <td>9876543210</td>
-                                <td>Hyderabad</td>
-                                <td>
-                                    <button type="button" class="btn btn-default btn-sm text-lime-green" data-bs-toggle="modal" data-bs-target="#viewModal" title="View"><span class="bi bi-eye"></span></button>
-                                    <button type="button" class="btn btn-default btn-sm text-primary mx-2" title="Edit"><span class="bi bi-pencil"></span></button>
-                                    <button type="button" class="btn btn-default btn-sm text-danger" title="Delete"><span class="bi bi-trash"></span></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Activity - 1</td>
-                                <td>Sub Activity 1</td>
-                                <td>Program 1</td>
-                                <td>Program Details - 1</td>
-                                <td>Title -1 </td>
-                                <td>3 Days</td>
-                                <td>29-12-2024</td>
-                                <td class="text-center">14:57</td>
-                                <td class="text-center">15:00</td>
-                                <td>SPOC Name- 1</td>
-                                <td>9876543210</td>
-                                <td>Hyderabad</td>
-                                <td>
-                                    <button type="button" class="btn btn-default btn-sm text-lime-green" data-bs-toggle="modal" data-bs-target="#viewModal" title="View"><span class="bi bi-eye"></span></button>
-                                    <button type="button" class="btn btn-default btn-sm text-primary mx-2" title="Edit"><span class="bi bi-pencil"></span></button>
-                                    <button type="button" class="btn btn-default btn-sm text-danger" title="Delete"><span class="bi bi-trash"></span></button>
-                                </td>
-                            </tr>
-                        </tbody> -->
-                    </table>
+                    <div class="dtable-container">
+                        <table id="view-table" class="display nowrap" style="width:100%">
+                            <thead>
+                                <tr>
+                                    
+                                    <th>S.No</th>
+                                    <th>Type Of Activity</th>
+                                    <th>Sub Activity</th>
+                                    <th>Type Of Program</th>
+                                    <th>Program Details</th>
+                                    <th>Title Of Program</th>
+                                    <th>No. Of Days</th>
+                                    <th>Start Date</th>
+                                    <th>In Time</th>
+                                    <th>Out Time</th>
+                                    <th>SPOC Name</th>
+                                    <th>SPOC Contact No.</th>
+                                    <th>Program Location</th>
+                                    <th class="text-center">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of localStorageData; let i = index">
+                                    
+                                    <td>{{ i + 1 }}</td>
+                                    <td>{{ item.activityId }}</td>
+                                    <td>{{ item.subActivityId }}</td>
+                                    <td>{{ item.programType }}</td>
+                                    <td>{{ item.programDetails }}</td>
+                                    <td>{{ item.programTitle }}</td>
+                                    <td>{{ item.noOfDays }}</td>
+                                    <td>{{ item.startDate }}</td>
+                                    <td class="text-center">{{ item.startTime }}</td>
+                                    <td class="text-center">{{ item.endTime }}</td>
+                                    <td>{{ item.spocName }}</td>
+                                    <td>{{ item.spocContactNo }}</td>
+                                    <td>{{ item.programLocation }}</td>                                    
+                                    <td>
+                                        <button type="button" class="btn btn-default btn-sm text-lime-green" data-bs-toggle="modal" data-bs-target="#viewModal" (click)="sessionDetails(item)" title="View"><span class="bi bi-eye"></span></button>
+                                        <button type="button" class="btn btn-default btn-sm text-primary mx-2" title="Edit"><span class="bi bi-pencil"></span></button>
+                                        <button type="button" class="btn btn-default btn-sm text-danger" title="Delete"><span class="bi bi-trash"></span></button>
+                                    </td>
+                                </tr>
+                            </tbody>                            
+                        </table>
+                    </div>
+                    
                 </div>
             </div>
         </div>

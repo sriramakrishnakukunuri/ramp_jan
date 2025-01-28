@@ -23,9 +23,7 @@
                                 <div class="form-floating mb-3">
                                     <select class="form-select" formControlName="activityId">
                                       <option selected>Select Type Of Activity</option>
-                                      <option value="Activity1">Activity1</option>
-                                      <option value="Activity2">Activity1</option>
-                                      <option value="Activity3">Activity1</option>
+                                      <option value="1">Activity1</option>                                      
                                     </select>
                                     <label>Type Of Activity</label>
                                 </div>
@@ -35,9 +33,7 @@
                                 <div class="form-floating mb-3">
                                     <select class="form-select" formControlName="subActivityId">
                                       <option selected>Select Sub Activity</option>
-                                      <option value="Sub-Activity1">Sub-Activity1</option>
-                                      <option value="Sub-Activity2">Sub-Activity1</option>
-                                      <option value="Sub-Activity3">Sub-Activity1</option>
+                                      <option value="1">Sub-Activity1</option>                                      
                                     </select>
                                     <label>Sub Activity</label>
                                 </div>
@@ -261,7 +257,7 @@
                                     </td>
                                     <td>
                                         <input class="form-control" type="file" accept=".png, .jpg, .jpeg, .pdf, .docx, .xls, .xlsx, .csv,.ppt,.pptx"
-                                        (change)="onFilesSelected($event,i)"  id="formFile" multiple formControlName="uploaFile">
+                                        (change)="onFilesSelected($event,i)"  id="formFile" multiple formControlName="uploaFiles">
                                     </td>
                                     <td class="text-center">
                                         <button type="button" class="btn btn-default btn-sm text-lime-green" (click)="onAddRow(i)">
@@ -282,7 +278,7 @@
             <div class="text-end mb-3">
                 <!-- <button type="button" class="btn btn-secondary">Save For Later</button> -->
                  <!-- [disabled]="(!programCreationMain.valid || !programCreationSub.valid)" -->
-                <button type="button" class="btn btn-secondary" [disabled]="(!programCreationMain.valid || !programCreationSub.valid)"  (click)="openModal()">View Preview</button>
+                <button type="button" class="btn btn-secondary" (click)="openModal()">View Preview</button>
             </div>
             </form>
         </div>
