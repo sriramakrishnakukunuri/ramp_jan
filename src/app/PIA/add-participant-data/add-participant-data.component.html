@@ -35,9 +35,10 @@
                                 <div class="form-floating mb-3">
                                     <select class="form-select" id="organizationId"  formControlName="organizationId">
                                       <option selected>Select Organisation Name</option>
-                                      <option value="1">TCS</option>
+                                      <option *ngFor="let val of OrganizationData" value="{{val?.organizationId}}">{{val?.organizationName}}</option>
+                                      <!-- <option value="1">TCS</option>
                                       <option value="2">Wipro</option>
-                                      <option value="3">Amazon</option>
+                                      <option value="3">Amazon</option> -->
                                     </select>
                                     <label for="organizationId">Organisation Name</label>
                                 </div>
@@ -61,8 +62,8 @@
                                 <div class="form-floating mb-3">
                                     <select class="form-select" id="gender" formControlName="gender">
                                       <option selected>Select Gender</option>
-                                      <option value="Male">Male</option>
-                                      <option value="Female">Female</option>
+                                      <option value="M">Male</option>
+                                      <option value="F">Female</option>
                                       <option value="Trans-Gender">Trans-Gender</option>
                                     </select>
                                     <label for="gender">Gender</label>
@@ -72,8 +73,8 @@
                                 <div class="form-floating mb-3">
                                     <select class="form-select" id="disability" formControlName="disability">
                                       <option selected>Select Disability</option>
-                                      <option value="Yes">Yes</option>
-                                      <option value="No">No</option>
+                                      <option value="Y">Yes</option>
+                                      <option value="N">No</option>
                                     </select>
                                     <label for="disability">Disability</label>
                                 </div>
@@ -85,12 +86,16 @@
                                     <input type="text" class="form-control" id="aadharNo" formControlName="aadharNo" placeholder="">
                                     <label for="aadharNo">Aadhar Number</label>
                                 </div>
+                                <div *ngIf="f2['aadharNo'].touched && !f2['aadharNo'].valid && !f2['aadharNo']?.errors?.['pattern']" class="error">Aadhar No is required</div>
+                                <div *ngIf="f2['aadharNo'].touched && !f2['aadharNo'].valid && f2['aadharNo']?.errors?.['pattern']" class="error">Aadhar No is should be 12 digit Numbers</div>
+                           
                             </div>
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                 <div class="form-floating mb-3">
                                     <select class="form-select" id="category" formControlName="category">
                                       <option selected>Select Category</option>
-                                      <option value="Category 1">Category 1</option>
+                                      <option value="OC">OC</option>
+                                      <option value="BC">BC</option>
                                     </select>
                                     <label for="category">Category</label>
                                 </div>
@@ -100,6 +105,8 @@
                                     <input type="text" class="form-control" id="mobileNo" placeholder="" formControlName="mobileNo">
                                     <label id="mobileNo">Mobile No.</label>
                                 </div>
+                                <div *ngIf="f2['mobileNo'].touched && !f2['mobileNo'].valid && !f2['mobileNo']?.errors?.['pattern']" class="error">Mobile No is required</div>
+                                <div *ngIf="f2['mobileNo'].touched && !f2['mobileNo'].valid && f2['mobileNo']?.errors?.['pattern']" class="error">Mobile No is should be 10 digit Numbers</div>
                             </div>
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                 <div class="form-floating mb-3">
@@ -109,20 +116,24 @@
                             </div>
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                 <div class="form-floating mb-3">
-                                    <select class="form-select" id="designation" formControlName="designation">
+                                    <div class="form-floating mb-3">
+                                        <input type="text" class="form-control" id="designation" placeholder="" formControlName="designation">
+                                        <label id="designation">Designation</label>
+                                    </div>
+                                    <!-- <select class="form-select" id="designation" formControlName="designation">
                                       <option selected>Select Designation</option>
                                       <option value="Designation 1">Designation 1</option>
                                       <option value="Designation 2">Designation 2</option>
                                     </select>
-                                    <label for="designation">Designation</label>
+                                    <label for="designation">Designation</label> -->
                                 </div>
                             </div>
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                 <div class="form-floating mb-3">
                                     <select class="form-select" id="isParticipatedBefore" formControlName="isParticipatedBefore">
                                       <option selected>Select Previous Participants</option>
-                                      <option value="Yes">Yes</option>
-                                      <option value="No">No</option>
+                                      <option value="Y">Yes</option>
+                                      <option value="N">No</option>
                                     </select>
                                     <label for="isParticipatedBefore">Previous Participants</label>
                                 </div>
@@ -140,11 +151,11 @@
                                 <label class="fs-md fw-600 mb-1">Pre Training Assessment Conducted</label>
                                 <div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="preTrainingAssessmentConducted" formControlName="preTrainingAssessmentConducted" id="Yes" value="Yes">
+                                        <input class="form-check-input" type="radio" name="preTrainingAssessmentConducted" formControlName="preTrainingAssessmentConducted" id="Yes" value="Y">
                                         <label class="form-check-label" for="Yes">Yes</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="preTrainingAssessmentConducted" formControlName="preTrainingAssessmentConducted" id="No" value="No">
+                                        <input class="form-check-input" type="radio" name="preTrainingAssessmentConducted" formControlName="preTrainingAssessmentConducted" id="No" value="N">
                                         <label class="form-check-label" for="No">No</label>
                                     </div>
                                 </div>
@@ -153,11 +164,11 @@
                                 <label class="fs-md fw-600 mb-1">Post Training Assessment Conducted</label>
                                 <div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="postTrainingAssessmentConducted" formControlName="postTrainingAssessmentConducted" id="Yes" value="Yes">
+                                        <input class="form-check-input" type="radio" name="postTrainingAssessmentConducted" formControlName="postTrainingAssessmentConducted" id="Yes" value="Y">
                                         <label class="form-check-label" for="Yes">Yes</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="postTrainingAssessmentConducted" formControlName="postTrainingAssessmentConducted" id="No" value="No">
+                                        <input class="form-check-input" type="radio" name="postTrainingAssessmentConducted" formControlName="postTrainingAssessmentConducted" id="No" value="N">
                                         <label class="form-check-label" for="No">No</label>
                                     </div>
                                 </div>
@@ -166,16 +177,16 @@
                                 <label class="fs-md fw-600 mb-1">Certificate Issue Date</label>
                                 <div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="isCertificateIssued" formControlName="isCertificateIssued" id="isCertificateIssued" value="Yes">
+                                        <input class="form-check-input" type="radio" name="isCertificateIssued" formControlName="isCertificateIssued" id="isCertificateIssued" value="Y">
                                         <label class="form-check-label" for="isCertificateIssued">Yes</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="isCertificateIssued" formControlName="isCertificateIssued" id="noCertificate"  value="No">
+                                        <input class="form-check-input" type="radio" name="isCertificateIssued" formControlName="isCertificateIssued" id="noCertificate"  value="N">
                                         <label class="form-check-label" for="noCertificate">No</label>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12 col-sm-6 col-md-4 col-lg-3 " id="certificateDate" *ngIf="this.f2['isCertificateIssued'].value=='Yes'" >
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3 " id="certificateDate" *ngIf="this.f2['isCertificateIssued'].value=='Y'" >
                                 <div class="form-floating mb-3">
                                     <input type="date" class="form-control" id="certificateIssueDate" formControlName="certificateIssueDate" placeholder="">
                                     <label for="certificateIssueDate">Issue Date</label>
@@ -249,10 +260,10 @@
                                 <td>{{item?.designation}}</td>
                                 <td>{{item?.isParticipatedBefore}}</td>
                                 <td>{{item?.preTrainingAssessmentConducted}}</td>
-                                <td>{{item?.inlineRadioOptions}}</td>
-                                <td>{{item?.yesCertificate}}</td>
-                                <td>{{item?.yesCertificate=='Yes'?item?.issueDate:''}}</td>
-                                <td>{{item?.assessment}}</td>
+                                <td>{{item?.postTrainingAssessmentConducted}}</td>
+                                <td>{{item?.isCertificateIssued=='Y'?'Yes':'No'}}</td>
+                                <td>{{item?.isCertificateIssued=='Y'?item?.certificateIssueDate:''}}</td>
+                                <td>{{item?.needAssessmentMethodology}}</td>
                                 <td class="text-center">
                                     <button type="button" class="btn btn-default text-lime-green btn-sm" (click)="editRow(item,i)"><span class="bi bi-pencil"></span></button>
                                     <button type="button" class="btn btn-default text-danger btn-sm" (click)="deleteRow(item,i)"><span class="bi bi-trash"></span></button>
@@ -269,7 +280,7 @@
 <!-- begin:: modal add new location -->
 <div class="modal fade" id="addOrganisation" tabindex="-1" aria-labelledby="addOrganisationLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
-        <form [formGroup]="OrganisationForm">
+        <form [formGroup]="OrganisationForm" >
             <div class="modal-content">
                 <div class="modal-header py-2">
                     <h6 class="modal-title" id="addLocationLabel">Add Organisation</h6>
@@ -283,22 +294,22 @@
                                     <label class="form-label fs-md fw-600">Type of Organisation</label>
                                     <div>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="organisation" id="shg" value="shgOrg" (change)="typeOragnization($event)"  formControlName="organizationType">
-                                            <label class="form-check-label fs-md" for="shg">SHG</label>
+                                            <input class="form-check-input" type="radio" name="organizationType" id="SHG" value="SHG" (change)="typeOragnization($event)"  formControlName="organizationType">
+                                            <label class="form-check-label fs-md" for="SHG">SHG</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="organisation" id="msme" value="msmeOrg" (change)="typeOragnization($event)"  formControlName="organizationType">
-                                            <label class="form-check-label fs-md" for="msme">MSME</label>
+                                            <input class="form-check-input" type="radio" name="organizationType" id="MSME" value="MSME" (change)="typeOragnization($event)"  formControlName="organizationType">
+                                            <label class="form-check-label fs-md" for="MSME">MSME</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="organisation" id="startup" value="startupOrg" (change)="typeOragnization($event)"  formControlName="organizationType">
+                                            <input class="form-check-input" type="radio" name="organizationType" id="startup" value="Start Up" (change)="typeOragnization($event)"  formControlName="organizationType">
                                             <label class="form-check-label fs-md" for="startup">Start Up</label>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="show-hide " id="shgOrg" *ngIf="OragnizationType=='shgOrg'">
+                        <div class="show-hide " id="SHG"  *ngIf="this.fOrg['organizationType'].value=='SHG'">
                             <div class="row">
                                 <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                     <div class="form-floating mb-3">
@@ -368,7 +379,7 @@
                                 </div> -->
                             </div>
                         </div>
-                        <div class="show-hide " id="startupOrg" *ngIf="OragnizationType=='startupOrg'">
+                        <div class="show-hide " id="Start Up" *ngIf="this.fOrg['organizationType'].value=='Start Up'">
                             <div class="row">
                                 <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                     <div class="form-floating mb-3">
@@ -414,7 +425,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="show-hide " id="msmeOrg" *ngIf="OragnizationType=='msmeOrg'">
+                        <div class="show-hide " id="MSME"  *ngIf="this.fOrg['organizationType'].value=='MSME'">
                             <div class="row">
                                 <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                     <label class="fw-600 fs-md">Category</label>
@@ -437,16 +448,16 @@
                                     <label class="fw-600 fs-md">Udyam Registration Number</label>
                                     <div>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="udyam" [(ngModel)]="udyamYesOrNo" id="udyamYes" value="Yes" >
+                                            <input class="form-check-input" type="radio" name="udyam" formControlName="udyamYesOrNo" id="udyamYes" value="Yes" >
                                             <label class="form-check-label fs-md" for="udyamYes">Yes</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="udyam" [(ngModel)]="udyamYesOrNo"  id="udyamNo" value="No" >
+                                            <input class="form-check-input" type="radio" name="udyam" formControlName="udyamYesOrNo"  id="udyamNo" value="No" >
                                             <label class="form-check-label fs-md" for="udyamNo">No</label>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12 col-sm-12 col-md-12 col-lg-6 " id="udyamyesShow" *ngIf="udyamYesOrNo=='Yes'">
+                                <div class="col-12 col-sm-12 col-md-12 col-lg-6 " id="udyamyesShow" *ngIf="this.fOrg['udyamYesOrNo'].value=='Yes'">
                                     <div class="row">
                                         <div class="col-12 col-sm-6 col-md-4 col-lg-6">
                                             <div class="form-floating mb-3">
@@ -539,6 +550,8 @@
                                             <input type="text" class="form-control" id="contact" placeholder="" formControlName="contactNo">
                                             <label for="contact">Contact No.</label>
                                         </div>
+                                        <div *ngIf="this.fOrg['contactNo'].touched && !this.fOrg['contactNo'].valid && !this.fOrg['contactNo']?.errors?.['pattern']" class="error">contact No is required</div>
+                                        <div *ngIf="this.fOrg['contactNo'].touched && !this.fOrg['contactNo'].valid && this.fOrg['contactNo']?.errors?.['pattern']" class="error">Contact No is should be 10 digit Numbers</div>
                                     </div>
                                     <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                         <div class="form-floating mb-3 mb-md-0 mb-lg-0">
@@ -570,6 +583,9 @@
                                             <input type="text" class="form-control" id="ownercontact" placeholder="" formControlName="ownerContactNo">
                                             <label for="ownercontact">Contact</label>
                                         </div>
+                                        <div *ngIf="fOrg['ownerContactNo'].touched && !fOrg['ownerContactNo'].valid && !fOrg['ownerContactNo']?.errors?.['pattern']" class="error">Owner contact No is required</div>
+                                        <div *ngIf="fOrg['ownerContactNo'].touched && !fOrg['ownerContactNo'].valid && fOrg['ownerContactNo']?.errors?.['pattern']" class="error">Owner contact No is should be 10 digit Numbers</div>
+                                   
                                     </div>
                                     <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                         <div class="form-floating mb-3 mb-sm-0 mb-lg-0">
@@ -589,7 +605,7 @@
                     </div>
     
                     <div class="text-end">
-                        <button type="button" class="btn btn-lime-green">Submit</button>
+                        <button type="button" class="btn btn-lime-green"  data-bs-dismiss="modal" (click)="SubmitformOrganization()">Submit</button>
                     </div>
                 </div>
             </div>

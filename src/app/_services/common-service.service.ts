@@ -19,14 +19,14 @@ export class CommonServiceService {
   public update(URL: any, payload: any, id: number | string): Observable<any> {
     return this.http.put(URL + id, payload).pipe(catchError(this.formatErrors));
   }
-  public getById(URL: any, id: any): Observable<any> {
-    return this.http.get(URL + id).pipe(catchError(this.formatErrors));
-  }
   public updatedata(URL: any, payload: any,): Observable<any> {
     return this.http.put(URL, payload).pipe(catchError(this.formatErrors));
   }
   public getById(URL: any, id: any,): Observable<any> {
     return this.http.get(URL+id).pipe(catchError(this.formatErrors));
+  }
+  public getDataByUrl(URL: any): Observable<any> {
+    return this.http.get(URL).pipe(catchError(this.formatErrors));
   }
   requestDataFromMultipleSources( url1:any, url2:any, fileData:any,sessionData:any): Observable<any[]> {    
     let response1 = this.http.post(url1, fileData).pipe(catchError(this.formatErrors));

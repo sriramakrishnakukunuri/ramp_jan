@@ -16,6 +16,7 @@ export const APIS = {
         add: API_BASE_URL + '/participant/save',
         getDataByProgramId: API_BASE_URL + '/program/participants/',
         saveOrgnization: API_BASE_URL + '/organization/save',
+        getOrgnizationData: API_BASE_URL + '/organization/list',
     },
     userRegistration:{
         add: API_BASE_URL + '/login/user/create',

@@ -51,6 +51,7 @@ export class ProgramCreationComponent implements OnInit {
       programTitle: new FormControl("", [Validators.required]),
       // noOfDays: new FormControl("", [Validators.required,]),
       startDate: new FormControl("",[Validators.required]),
+      endDate: new FormControl("",[Validators.required]),
       startTime: new FormControl("",[Validators.required,]),
       endTime: new FormControl("",[Validators.required,]),
       spocName: new FormControl("",[Validators.required,]),

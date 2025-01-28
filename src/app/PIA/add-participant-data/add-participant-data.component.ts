@@ -5,6 +5,10 @@ import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@ang
 import { CommonServiceService } from '@app/_services/common-service.service';
 import { APIS } from '@app/constants/constants';
 import { ToastrService } from 'ngx-toastr';
+import DataTable from 'datatables.net-dt';
+import 'datatables.net-buttons-dt';
+import 'datatables.net-responsive-dt';
+declare var $: any;
 @Component({
   selector: 'app-add-participant-data',
   templateUrl: './add-participant-data.component.html',
@@ -14,8 +18,8 @@ export class AddParticipantDataComponent implements OnInit {
     ParticipantDataForm!: FormGroup;
     OrganisationForm!: FormGroup;
     submitedData:any=[]
-    OragnizationType:any='shgOrg'
-    udyamYesOrNo:any='No'
+    OragnizationType:any='SHG'
+    // udyamYesOrNo:any='No'
     programIds:any='1'
     constructor(private fb: FormBuilder,
       private toastrService: ToastrService,
@@ -24,11 +28,37 @@ export class AddParticipantDataComponent implements OnInit {
     ngOnInit(): void {
   
       this.formDetails();
+      this.formDetailsOrganization();
       this.getData()
-      this.udyamYesOrNo=='No'
+      this.getOrganizationData()
+
+      this.fOrg['udyamYesOrNo'].value.setValue('No')
+    }
+    ngAfterViewInit() {
+      setTimeout(() => {
+        new DataTable('#creation-table', {              
+        // scrollX: true,
+        // scrollCollapse: true,    
+        // responsive: true,    
+        // paging: true,
+        // searching: true,
+        // ordering: true,
+        scrollY: "415px",     
+        scrollX:        true,
+        scrollCollapse: true,
+        autoWidth:         true,  
+        paging:         false,  
+        info: false,   
+        searching: false,  
+        destroy: true, // Ensure reinitialization doesn't cause issues
+        });
+      }, 500);
     }
     get f2() {
       return this.ParticipantDataForm.controls;
+    }
+    get fOrg() {
+      return this.OrganisationForm.controls;
     }
     formDetails() {
       this.ParticipantDataForm  = new FormGroup({
@@ -40,9 +70,9 @@ export class AddParticipantDataComponent implements OnInit {
         disability: new FormControl("", [Validators.required]),
         // noOfDays: new FormControl("", [Validators.required,]),
         category: new FormControl("",[Validators.required]),
-        aadharNo: new FormControl("",[Validators.required,]),
-        mobileNo: new FormControl("",[Validators.required,]),
-        email: new FormControl("",[Validators.required,Validators.pattern(/^[0-9][0-9]*$/)]),
+        aadharNo: new FormControl("",[Validators.required,Validators.pattern(/^[0-9]{12}$/)]),
+        mobileNo: new FormControl("",[Validators.required,Validators.pattern(/^[0-9]{10}$/)]),
+        email: new FormControl("",[Validators.required]),
         designation: new FormControl("",[Validators.required,]),
         isParticipatedBefore: new FormControl("",[Validators.required,]),
         previousParticipationDetails: new FormControl("",[Validators.required,]),
@@ -63,6 +93,7 @@ export class AddParticipantDataComponent implements OnInit {
       "organizationCategory": new FormControl("",[Validators.required,]),
       "organizationType": new FormControl("",[Validators.required,]),
       "udyamregistrationNo": new FormControl("",[Validators.required,]),
+      "udyamYesOrNo": new FormControl("",[Validators.required,]),
       "dateOfRegistration": new FormControl("",[Validators.required,]),
       "startupCertificateNo": new FormControl("",[Validators.required,]),
       "natureOfStartup": new FormControl("",[Validators.required,]),
@@ -78,11 +109,11 @@ export class AddParticipantDataComponent implements OnInit {
       "houseNo": new FormControl("",[Validators.required,]),
       "latitude": new FormControl("",[Validators.required,]),
       "longitude":new FormControl("",[Validators.required,]),
-      "contactNo": new FormControl("",[Validators.required,]),
+      "contactNo": new FormControl("",[Validators.required,Validators.pattern(/^[0-9]{10}$/)]),
       "email": new FormControl("",[Validators.required,]),
       "website": new FormControl("",[Validators.required,]),
       "ownerName": new FormControl("",[Validators.required,]),
-      "ownerContactNo": new FormControl("",[Validators.required,]),
+      "ownerContactNo": new FormControl("",[Validators.required,Validators.pattern(/^[0-9]{10}$/)]),
       "ownerEmail":new FormControl("",[Validators.required,]),
       "ownerAddress": new FormControl("",[Validators.required,]),
       "nameOfTheSHG": new FormControl("",[Validators.required,]),
@@ -92,17 +123,16 @@ export class AddParticipantDataComponent implements OnInit {
     }
     getData(){
       this.submitedData=[]
-     
         // sessionStorage.getItem('ParticipantData')
-        let resList = sessionStorage.getItem('ParticipantData') || ''
-        // let resList = sessionStorage.getItem('ParticipantData') || ''   
-        console.log(resList) 
-        if(resList){
-          this.submitedData=JSON.parse(resList)
-        }
+        // let resList = sessionStorage.getItem('ParticipantData') || ''
+        // // let resList = sessionStorage.getItem('ParticipantData') || ''   
+        // console.log(resList) 
+        // if(resList){
+        //   this.submitedData=JSON.parse(resList)
+        // }
         this._commonService.getById(APIS.participantdata.getDataByProgramId,this.programIds).subscribe({
           next: (res:any) => {
-            // this.submitedData=res?.data?.data
+            this.submitedData=res?.data
             // this.advanceSearch(this.getSelDataRange);
             // modal.close()
             
@@ -115,31 +145,14 @@ export class AddParticipantDataComponent implements OnInit {
         // console.log(this.submitedData)
     }
     Submitform(){
-    //   {
-    //     "participantName": "vasanth1",
-    //     "gender": "M",
-    //     "category": "OC",
-    //     "disability": "N",
-    //     "aadharNo": "123456789012",
-    //     "mobileNo": "9837481239",
-    //     "email": "vasanth@gmail.com",
-    //     "designation": "NA",
-    //     "isParticipatedBefore": "N",
-    //     "previousParticipationDetails": "Nothing",
-    //     "preTrainingAssessmentConducted": "N",
-    //     "postTrainingAssessmentConducted": "N",
-    //     "isCertificateIssued": "N",
-    //     "certificateIssueDate": "01-01-2025",
-    //     "needAssessmentMethodology": "No",
-    //     "organizationId": "1",
-    //     "programIds": ["1"]
-    // }
+     
+   
     delete this.ParticipantDataForm.value['AspirantData'];
       this.submitedData.push(this.ParticipantDataForm.value)
       // sessionStorage.setItem('ParticipantData', this.submitedData)
        sessionStorage.setItem('ParticipantData', JSON.stringify(this.submitedData)); 
        this._commonService
-      .add(APIS.participantdata.add,{...this.ParticipantDataForm.value,"programIds": ["1"]}).subscribe({
+      .add(APIS.participantdata.add,{...this.ParticipantDataForm.value,"programIds": ["1"] }).subscribe({
         next: (data:any) => {
           // this.advanceSearch(this.getSelDataRange);
           // modal.close()
@@ -150,8 +163,9 @@ export class AddParticipantDataComponent implements OnInit {
           new Error(err);
         },
       });
-      this.ParticipantDataForm.reset()
       this.getData()
+      this.ParticipantDataForm.reset()
+      
   
     }
     deleteRow(item:any,i:number){
@@ -171,6 +185,7 @@ export class AddParticipantDataComponent implements OnInit {
       this.OragnizationType=event.target.value
     }
     SubmitformOrganization(){
+      console.log(this.OrganisationForm.value)
          this._commonService.add(APIS.participantdata.saveOrgnization,{...this.OrganisationForm.value}).subscribe({
           next: (data:any) => {
             // this.advanceSearch(this.getSelDataRange);
@@ -182,8 +197,25 @@ export class AddParticipantDataComponent implements OnInit {
             new Error(err);
           },
         });
-        this.ParticipantDataForm.reset()
+        this.OrganisationForm.reset();
         this.getData()
+        this.getOrganizationData()
     
+      }
+      OrganizationData:any=[]
+      getOrganizationData(){
+        this._commonService.getDataByUrl(APIS.participantdata.getOrgnizationData).subscribe({
+          next: (res:any) => {
+            this.OrganizationData=res?.data
+            // this.submitedData=res?.data?.data
+            // this.advanceSearch(this.getSelDataRange);
+            // modal.close()
+            
+          },
+          error: (err) => {
+            this.toastrService.error(err.message, "Organization Data Error!");
+            new Error(err);
+          },
+        });
       }
   }
