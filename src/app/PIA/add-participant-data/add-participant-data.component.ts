@@ -1,15 +1,189 @@
-import { Component, OnInit } from '@angular/core';
 
+import { Component, OnInit,ViewChild,ElementRef } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { CommonServiceService } from '@app/_services/common-service.service';
+import { APIS } from '@app/constants/constants';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-add-participant-data',
   templateUrl: './add-participant-data.component.html',
   styleUrls: ['./add-participant-data.component.css']
 })
 export class AddParticipantDataComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
+    ParticipantDataForm!: FormGroup;
+    OrganisationForm!: FormGroup;
+    submitedData:any=[]
+    OragnizationType:any='shgOrg'
+    udyamYesOrNo:any='No'
+    programIds:any='1'
+    constructor(private fb: FormBuilder,
+      private toastrService: ToastrService,
+      private _commonService: CommonServiceService) { }
+  
+    ngOnInit(): void {
+  
+      this.formDetails();
+      this.getData()
+      this.udyamYesOrNo=='No'
+    }
+    get f2() {
+      return this.ParticipantDataForm.controls;
+    }
+    formDetails() {
+      this.ParticipantDataForm  = new FormGroup({
+        // date: new FormControl("", [Validators.required]),
+        AspirantData: new FormControl("Aspirant", [Validators.required]),
+        organizationId: new FormControl("",[Validators.required,]),
+        participantName: new FormControl("", [Validators.required]), //Validators.required
+        gender: new FormControl("",[Validators.required,]),
+        disability: new FormControl("", [Validators.required]),
+        // noOfDays: new FormControl("", [Validators.required,]),
+        category: new FormControl("",[Validators.required]),
+        aadharNo: new FormControl("",[Validators.required,]),
+        mobileNo: new FormControl("",[Validators.required,]),
+        email: new FormControl("",[Validators.required,Validators.pattern(/^[0-9][0-9]*$/)]),
+        designation: new FormControl("",[Validators.required,]),
+        isParticipatedBefore: new FormControl("",[Validators.required,]),
+        previousParticipationDetails: new FormControl("",[Validators.required,]),
+        preTrainingAssessmentConducted: new FormControl("",[Validators.required,]),
+        postTrainingAssessmentConducted: new FormControl("",[Validators.required,]),
+        isCertificateIssued: new FormControl("",[Validators.required,]),
+        certificateIssueDate: new FormControl("",),
+        needAssessmentMethodology: new FormControl("",[Validators.required,]),
+        // TargetSector: new FormControl("",[Validators.required,]),
+        // targetAudience: new FormControl("",[Validators.required,]),
+        // targetNoOfParticipants: new FormControl("",[Validators.required,]),
+      });
+    }
+    formDetailsOrganization() {
+      this.OrganisationForm  = new FormGroup({
+        // date: new FormControl("", [Validators.required]),
+       "organizationName": new FormControl("",[Validators.required,]),
+      "organizationCategory": new FormControl("",[Validators.required,]),
+      "organizationType": new FormControl("",[Validators.required,]),
+      "udyamregistrationNo": new FormControl("",[Validators.required,]),
+      "dateOfRegistration": new FormControl("",[Validators.required,]),
+      "startupCertificateNo": new FormControl("",[Validators.required,]),
+      "natureOfStartup": new FormControl("",[Validators.required,]),
+      "areasOfWorking": new FormControl("",[Validators.required,]),
+      "incorporationDate": new FormControl("",[Validators.required,]),
+      "dateOfIssue": new FormControl("",[Validators.required,]),
+      "validUpto": new FormControl("",[Validators.required,]),
+      "stateId": new FormControl("",[Validators.required,]),
+      "distId": new FormControl("",[Validators.required,]),
+      "mandal": new FormControl("",[Validators.required,]),
+      "town": new FormControl("",[Validators.required,]),
+      "streetNo":new FormControl("",[Validators.required,]),
+      "houseNo": new FormControl("",[Validators.required,]),
+      "latitude": new FormControl("",[Validators.required,]),
+      "longitude":new FormControl("",[Validators.required,]),
+      "contactNo": new FormControl("",[Validators.required,]),
+      "email": new FormControl("",[Validators.required,]),
+      "website": new FormControl("",[Validators.required,]),
+      "ownerName": new FormControl("",[Validators.required,]),
+      "ownerContactNo": new FormControl("",[Validators.required,]),
+      "ownerEmail":new FormControl("",[Validators.required,]),
+      "ownerAddress": new FormControl("",[Validators.required,]),
+      "nameOfTheSHG": new FormControl("",[Validators.required,]),
+      "nameOfTheVO": new FormControl("",[Validators.required,]),
+      "gramaPanchayat":new FormControl("",[Validators.required,])
+      });
+    }
+    getData(){
+      this.submitedData=[]
+     
+        // sessionStorage.getItem('ParticipantData')
+        let resList = sessionStorage.getItem('ParticipantData') || ''
+        // let resList = sessionStorage.getItem('ParticipantData') || ''   
+        console.log(resList) 
+        if(resList){
+          this.submitedData=JSON.parse(resList)
+        }
+        this._commonService.getById(APIS.participantdata.getDataByProgramId,this.programIds).subscribe({
+          next: (res:any) => {
+            // this.submitedData=res?.data?.data
+            // this.advanceSearch(this.getSelDataRange);
+            // modal.close()
+            
+          },
+          error: (err) => {
+            this.toastrService.error(err.message, "Participant Data Error!");
+            new Error(err);
+          },
+        });
+        // console.log(this.submitedData)
+    }
+    Submitform(){
+    //   {
+    //     "participantName": "vasanth1",
+    //     "gender": "M",
+    //     "category": "OC",
+    //     "disability": "N",
+    //     "aadharNo": "123456789012",
+    //     "mobileNo": "9837481239",
+    //     "email": "vasanth@gmail.com",
+    //     "designation": "NA",
+    //     "isParticipatedBefore": "N",
+    //     "previousParticipationDetails": "Nothing",
+    //     "preTrainingAssessmentConducted": "N",
+    //     "postTrainingAssessmentConducted": "N",
+    //     "isCertificateIssued": "N",
+    //     "certificateIssueDate": "01-01-2025",
+    //     "needAssessmentMethodology": "No",
+    //     "organizationId": "1",
+    //     "programIds": ["1"]
+    // }
+    delete this.ParticipantDataForm.value['AspirantData'];
+      this.submitedData.push(this.ParticipantDataForm.value)
+      // sessionStorage.setItem('ParticipantData', this.submitedData)
+       sessionStorage.setItem('ParticipantData', JSON.stringify(this.submitedData)); 
+       this._commonService
+      .add(APIS.participantdata.add,{...this.ParticipantDataForm.value,"programIds": ["1"]}).subscribe({
+        next: (data:any) => {
+          // this.advanceSearch(this.getSelDataRange);
+          // modal.close()
+          this.toastrService.success('Participant Data Added Successfully', "Participant Data Success!");
+        },
+        error: (err) => {
+          this.toastrService.error(err.message, "Participant Data Error!");
+          new Error(err);
+        },
+      });
+      this.ParticipantDataForm.reset()
+      this.getData()
+  
+    }
+    deleteRow(item:any,i:number){
+    //  this.submitedData.pop(i)
+     this.submitedData.splice(i, 1)
+      console.log( this.submitedData)
+      // this.submitedData.push(this.ParticipantDataForm.value)
+      // sessionStorage.setItem('ParticipantData', this.submitedData)
+       sessionStorage.setItem('ParticipantData', JSON.stringify(this.submitedData)); 
+       this.getData()
+    }
+    editRow(item:any,i:any){
+      this.ParticipantDataForm.patchValue({...item})
+    }
+    typeOragnization(event:any){
+      console.log(event.target.value)
+      this.OragnizationType=event.target.value
+    }
+    SubmitformOrganization(){
+         this._commonService.add(APIS.participantdata.saveOrgnization,{...this.OrganisationForm.value}).subscribe({
+          next: (data:any) => {
+            // this.advanceSearch(this.getSelDataRange);
+            // modal.close()
+            this.toastrService.success('Organization Data Added Successfully', "Organization Data Success!");
+          },
+          error: (err) => {
+            this.toastrService.error(err.message, "Organization Data Error!");
+            new Error(err);
+          },
+        });
+        this.ParticipantDataForm.reset()
+        this.getData()
+    
+      }
   }
-
-}

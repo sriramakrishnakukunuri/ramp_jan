@@ -6,7 +6,7 @@ export const environment = {
     production: false,
     // apiUrl: 'http://localhost:8080'
     //apiUrl: 'http://192.168.30.150:8086/api'
-    apiUrl:'https://metaverseedu.in/workflow-0.0.1-SNAPSHOT'
+    apiUrl:'https://metaverseedu.in/workflow'
 };
 
 /*

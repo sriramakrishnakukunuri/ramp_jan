@@ -9,6 +9,11 @@ export const APIS = {
         // update: API_BASE_URL + '/program/update',
         // delete: API_BASE_URL + '/program/delete',
     },
+    participantdata:{
+        add: API_BASE_URL + '/participant/save',
+        getDataByProgramId: API_BASE_URL + '/program/participants/',
+        saveOrgnization: API_BASE_URL + '/organization/save',
+    },
     userRegistration:{
         add: API_BASE_URL + '/login/user/create',
     }

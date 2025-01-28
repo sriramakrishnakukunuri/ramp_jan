@@ -19,6 +19,9 @@ export class CommonServiceService {
   public update(URL: any, payload: any, id: number | string): Observable<any> {
     return this.http.put(URL + id, payload).pipe(catchError(this.formatErrors));
   }
+  public getById(URL: any, id: any): Observable<any> {
+    return this.http.get(URL + id).pipe(catchError(this.formatErrors));
+  }
   public updatedata(URL: any, payload: any,): Observable<any> {
     return this.http.put(URL, payload).pipe(catchError(this.formatErrors));
   }
