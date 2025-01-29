@@ -1,5 +1,6 @@
 import { HttpClient,HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { APIS } from '@app/constants/constants';
 import { catchError, forkJoin, Observable, throwError } from 'rxjs';
 
 @Injectable({
@@ -25,6 +26,12 @@ export class CommonServiceService {
   public getById(URL: any, id: any,): Observable<any> {
     return this.http.get(URL+id).pipe(catchError(this.formatErrors));
   }
+
+  uploadImage(formData:any): Observable<any> {
+    const url = APIS.programCreation.addSessions;
+    return this.http.post(url, formData);
+  }
+
   requestDataFromMultipleSources( url1:any, url2:any, fileData:any,sessionData:any): Observable<any[]> {    
     let response1 = this.http.post(url1, fileData).pipe(catchError(this.formatErrors));
     let response2=this.http.post(url2, sessionData).pipe(catchError(this.formatErrors));

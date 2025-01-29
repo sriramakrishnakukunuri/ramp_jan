@@ -4,6 +4,7 @@ import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@ang
 import { CommonServiceService } from '@app/_services/common-service.service';
 import { APIS } from '@app/constants/constants';
 import { ToastrService } from 'ngx-toastr';
+import { forkJoin } from 'rxjs';
 declare var bootstrap: any;
 @Component({
   selector: 'app-program-creation',
@@ -74,7 +75,7 @@ export class ProgramCreationComponent implements OnInit {
         // sessionExpectedOutComes: new FormControl("",),
         resourceId: new FormControl("",),
         meterialType: new FormControl("",),
-        uploaFiles: [[], Validators.required]
+        uploaFiles: [null, Validators.required]
       })]),
     });
   }
@@ -143,21 +144,39 @@ export class ProgramCreationComponent implements OnInit {
     maindata['agencyId']=1
     const programData = JSON.parse(localStorage.getItem('programDetails') || '[]');
     programData.push(val);
-    localStorage.setItem('programDetails', JSON.stringify(programData));
-    this.closeModal()
-
-    let formData = new FormData();
-    formData.set("data", JSON.stringify(this.programCreationSub?.controls["details"]?.value))
-    
-    this.programCreationSub?.controls['details']?.value.forEach((element:any,index:any) => {
+    localStorage.setItem('programDetails', JSON.stringify(programData));    
+    let objectnew:any = [...this.programCreationSub?.controls["details"]?.value];
+    //let formData = new FormData();
+    //formData.set("data", JSON.stringify(this.programCreationSub?.controls["details"]?.value))
+    this._commonService.add(APIS.programCreation.addprogram,maindata).subscribe((res: any) => {
+      console.log(res,'program creation')      
+    })
+    const apiCalls = objectnew.map((element:any,index:any) => {
+      const formData = new FormData();          
       if(element['uploaFiles']){
         element['uploaFiles'].forEach((file:any) => {          
           formData.append("files", file);
         })
-      }
+        delete element['uploaFiles'];
+        formData.set("data", JSON.stringify(element))
+      }      
+
+      return this._commonService.uploadImage(formData);
     })
 
-    console.log(this.programCreationSub?.controls['details']?.value,'sgsgsggs')
+    // Parallel API Calls
+    forkJoin(apiCalls).subscribe({
+      next: (results) => {
+        console.log('All API calls completed:', results);
+        this.closeModal()
+        this.toastrService.success('Program Created Successfully', "Program Creation Success!");
+      },
+      error: (err) => {
+        console.error('Error in API calls:', err);
+        this.closeModal()
+        this.toastrService.error(err, "Program Creation Error!");
+      },
+    });
     
 
     // this.uploadedFiles.forEach((file:any) => {
@@ -275,7 +294,7 @@ onModalSubmitType(){
   }
   uploadedFiles:any = [];
   onFilesSelected(event:any, index:any) {
-    console.log(event.target.files)
+  
     //this.uploadedFiles.push(event.target.files);
     // const input = event.target as HTMLInputElement;
     
@@ -290,13 +309,9 @@ onModalSubmitType(){
   const rows = this.programCreationSub.get('details') as FormArray;
 
   if (rows && input.files) {
-    const newFiles = Array.from(input.files); // Convert FileList to Array
-    // Set the combined array of files
-    rows.at(index).get('uploaFiles')?.patchValue({uploaFiles: newFiles});
-    //(this.programCreationSub.get('details') as FormArray).at(index)?.patchValue({uploaFiles: allFiles});
-    //filesList.push(newFiles)
-    //this.addDynamicRow.controls[index].setValue({uploaFiles:newFiles})
+    const newFiles = Array.from(input.files); // Convert FileList to Array    
+    rows.at(index).get('uploaFiles')?.setValue(newFiles);    
   }
-
+  
   }
 }
