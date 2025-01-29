@@ -83,6 +83,13 @@
                             </div>
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                 <div class="form-floating mb-3">
+                                    <input type="date" class="form-control" formControlName="endDate">
+                                    <label>End Date</label>
+                                </div>
+                                <div *ngIf="f2['endDate'].touched && !f2['endDate'].valid" class="error">End Date is required</div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                <div class="form-floating mb-3">
                                     <input type="time" class="form-control"  formControlName="startTime">
                                     <label>In Time</label>
                                 </div>
@@ -135,8 +142,9 @@
                                 <div class="form-floating mb-3">
                                     <select class="form-select" formControlName="programLocation">
                                         <option selected value="">Select Location</option>
-                                        <option value="Hyderabad">Hyderabad</option>
-                                        <option value="Warangal">Warangal</option>
+                                        <option *ngFor="let val of getProgramLocationData" value="{{val?.locationId}}">{{val?.locationName}}</option>
+                                        <!-- <option value="Hyderabad">Hyderabad</option>
+                                        <option value="Warangal">Warangal</option> -->
                                       </select>
                                     <label>Program Location</label>
                                 </div>
@@ -243,8 +251,8 @@
                                     <td>
                                         <select class="form-select" formControlName="resourceId">
                                             <option value="">Select Resource Person</option>
-                                            <option value="Resource Person1">Resource Person1</option>
-                                            <option *ngFor="let list of sourceTypes" value="{{list.values}}">{{list.values}}</option>                                                
+                                            <!-- <option value="Resource Person1">Resource Person1</option> -->
+                                            <option *ngFor="let list of getSessionResourceData" value="{{list.resourceId}}">{{list.name}}</option>                                                
                                         </select>
                                     </td>
                                     <td>

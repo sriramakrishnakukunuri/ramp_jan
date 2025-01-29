@@ -32,6 +32,9 @@ export class CommonServiceService {
     return this.http.post(url, formData);
   }
 
+  public getDataByUrl(URL: any): Observable<any> {
+    return this.http.get(URL).pipe(catchError(this.formatErrors));
+  }
   requestDataFromMultipleSources( url1:any, url2:any, fileData:any,sessionData:any): Observable<any[]> {    
     let response1 = this.http.post(url1, fileData).pipe(catchError(this.formatErrors));
     let response2=this.http.post(url2, sessionData).pipe(catchError(this.formatErrors));

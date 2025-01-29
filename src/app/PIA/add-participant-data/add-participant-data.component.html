@@ -16,119 +16,160 @@
                     </div>
                 </div>
                 <div class="card-body" id="">
-                    <form>
+                    <form [formGroup]="ParticipantDataForm">
+                        <div class="row mb-3">
+                            <div class="col-12 col-sm-3 col-md-3 col-lg-3">
+                                <!-- <label class="fs-md fw-600 mb-1">Post Training Assessment</label> -->
+                                <div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" formControlName="AspirantData" name="AspirantData" id="Aspirant" value="Aspirant">
+                                        <label class="form-check-label" for="Aspirant">Aspirant</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" formControlName="AspirantData" name="AspirantData" id="Existing Oragnization" value="Existing Oragnization">
+                                        <label class="form-check-label" for="Existing Oragnization">Existing Oragnization</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-4 col-md-4 col-lg-4" *ngIf="this.f2['AspirantData'].value=='Existing Oragnization'">
+                                <div class="form-floating mb-3">
+                                    <select class="form-select" id="organizationId"  formControlName="organizationId">
+                                      <option selected>Select Organisation Name</option>
+                                      <option *ngFor="let val of OrganizationData" value="{{val?.organizationId}}">{{val?.organizationName}}</option>
+                                      <!-- <option value="1">TCS</option>
+                                      <option value="2">Wipro</option>
+                                      <option value="3">Amazon</option> -->
+                                    </select>
+                                    <label for="organizationId">Organisation Name</label>
+                                </div>
+                            </div>
+                        </div>
                         <div class="row">
-                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                            <!-- <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                 <div class="form-floating mb-3">
                                     <input type="text" class="form-control" id="code" placeholder="">
                                     <label for="code">Code</label>
                                 </div>
-                            </div>
+                            </div> -->
+                           
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                 <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="nameParticipant" placeholder="">
-                                    <label for="nameParticipant">Name Of The Participant</label>
+                                    <input type="text" class="form-control" id="participantName" formControlName="participantName" placeholder="">
+                                    <label for="participantName">Name Of The Participant</label>
                                 </div>
                             </div>
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                 <div class="form-floating mb-3">
-                                    <select class="form-select" id="gender">
+                                    <select class="form-select" id="gender" formControlName="gender">
                                       <option selected>Select Gender</option>
-                                      <option value="1">Male</option>
-                                      <option value="2">Female</option>
+                                      <option value="M">Male</option>
+                                      <option value="F">Female</option>
+                                      <option value="Trans-Gender">Trans-Gender</option>
                                     </select>
                                     <label for="gender">Gender</label>
                                 </div>
                             </div>
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                 <div class="form-floating mb-3">
-                                    <select class="form-select" id="category">
+                                    <select class="form-select" id="disability" formControlName="disability">
+                                      <option selected>Select Disability</option>
+                                      <option value="Y">Yes</option>
+                                      <option value="N">No</option>
+                                    </select>
+                                    <label for="disability">Disability</label>
+                                </div>
+                            </div>    
+                           
+                                                       
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3" >
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="aadharNo" formControlName="aadharNo" placeholder="">
+                                    <label for="aadharNo">Aadhar Number</label>
+                                </div>
+                                <div *ngIf="f2['aadharNo'].touched && !f2['aadharNo'].valid && !f2['aadharNo']?.errors?.['pattern']" class="error">Aadhar No is required</div>
+                                <div *ngIf="f2['aadharNo'].touched && !f2['aadharNo'].valid && f2['aadharNo']?.errors?.['pattern']" class="error">Aadhar No is should be 12 digit Numbers</div>
+                           
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                <div class="form-floating mb-3">
+                                    <select class="form-select" id="category" formControlName="category">
                                       <option selected>Select Category</option>
-                                      <option value="1">Category 1</option>
+                                      <option value="OC">OC</option>
+                                      <option value="BC">BC</option>
                                     </select>
                                     <label for="category">Category</label>
                                 </div>
                             </div>
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                 <div class="form-floating mb-3">
-                                    <select class="form-select" id="disability">
-                                      <option selected>Select Disability</option>
-                                      <option value="1">Disability 1</option>
-                                    </select>
-                                    <label for="disability">Disability</label>
+                                    <input type="text" class="form-control" id="mobileNo" placeholder="" formControlName="mobileNo">
+                                    <label id="mobileNo">Mobile No.</label>
                                 </div>
-                            </div>                                
+                                <div *ngIf="f2['mobileNo'].touched && !f2['mobileNo'].valid && !f2['mobileNo']?.errors?.['pattern']" class="error">Mobile No is required</div>
+                                <div *ngIf="f2['mobileNo'].touched && !f2['mobileNo'].valid && f2['mobileNo']?.errors?.['pattern']" class="error">Mobile No is should be 10 digit Numbers</div>
+                            </div>
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                 <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="videoUrl" placeholder="">
-                                    <label for="videoUrl">Video URL</label>
+                                    <input type="email" class="form-control" id="email" placeholder="" formControlName="email">
+                                    <label for="email">Email</label>
                                 </div>
                             </div>
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                 <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="aadharNumber" placeholder="">
-                                    <label for="aadharNumber">Aadhar Number</label>
-                                </div>
-                            </div>
-                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                                <div class="form-floating mb-3">
-                                    <select class="form-select" id="organisationName">
-                                      <option selected>Select Organisation Name</option>
-                                      <option value="1">Organisation Name 1</option>
-                                    </select>
-                                    <label for="organisationName">Organisation Name</label>
-                                </div>
-                            </div>
-                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                                <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="mobile" placeholder="">
-                                    <label id="mobile">Mobile No.</label>
-                                </div>
-                            </div>
-                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                                <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="emailId" placeholder="">
-                                    <label for="emailId">Email</label>
-                                </div>
-                            </div>
-                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                                <div class="form-floating mb-3">
-                                    <select class="form-select" id="designation">
+                                    <div class="form-floating mb-3">
+                                        <input type="text" class="form-control" id="designation" placeholder="" formControlName="designation">
+                                        <label id="designation">Designation</label>
+                                    </div>
+                                    <!-- <select class="form-select" id="designation" formControlName="designation">
                                       <option selected>Select Designation</option>
-                                      <option value="1">Designation 1</option>
+                                      <option value="Designation 1">Designation 1</option>
+                                      <option value="Designation 2">Designation 2</option>
                                     </select>
-                                    <label for="designation">Designation</label>
+                                    <label for="designation">Designation</label> -->
                                 </div>
                             </div>
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                 <div class="form-floating mb-3">
-                                    <select class="form-select" id="previousParticipant">
+                                    <select class="form-select" id="isParticipatedBefore" formControlName="isParticipatedBefore">
                                       <option selected>Select Previous Participants</option>
-                                      <option value="1">Yes</option>
-                                      <option value="2">No</option>
+                                      <option value="Y">Yes</option>
+                                      <option value="N">No</option>
                                     </select>
-                                    <label for="previousParticipant">Previous Participants</label>
+                                    <label for="isParticipatedBefore">Previous Participants</label>
                                 </div>
                             </div>
-                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                            <!-- <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                 <div class="form-floating mb-3">
-                                    <select class="form-select" id="preTraining">
+                                    <select class="form-select" id="preTrainingAssessmentConducted" formControlName="preTrainingAssessmentConducted">
                                       <option selected>Select Pre-Training</option>
-                                      <option value="1">Product Innovation</option>
+                                      <option value="Product Innovation">Product Innovation</option>
                                     </select>
-                                    <label for="preTraining">Pre-Training Assessment</label>
+                                    <label for="preTrainingAssessmentConducted">Pre-Training Assessment Conducted</label>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                                <label class="fs-md fw-600 mb-1">Post Training Assessment</label>
+                                <label class="fs-md fw-600 mb-1">Pre Training Assessment Conducted</label>
                                 <div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="yes" value="option1">
-                                        <label class="form-check-label" for="yes">Yes</label>
+                                        <input class="form-check-input" type="radio" name="preTrainingAssessmentConducted" formControlName="preTrainingAssessmentConducted" id="Yes" value="Y">
+                                        <label class="form-check-label" for="Yes">Yes</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="no" value="option2">
-                                        <label class="form-check-label" for="no">No</label>
+                                        <input class="form-check-input" type="radio" name="preTrainingAssessmentConducted" formControlName="preTrainingAssessmentConducted" id="No" value="N">
+                                        <label class="form-check-label" for="No">No</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                <label class="fs-md fw-600 mb-1">Post Training Assessment Conducted</label>
+                                <div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="postTrainingAssessmentConducted" formControlName="postTrainingAssessmentConducted" id="Yes" value="Y">
+                                        <label class="form-check-label" for="Yes">Yes</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="postTrainingAssessmentConducted" formControlName="postTrainingAssessmentConducted" id="No" value="N">
+                                        <label class="form-check-label" for="No">No</label>
                                     </div>
                                 </div>
                             </div>
@@ -136,30 +177,30 @@
                                 <label class="fs-md fw-600 mb-1">Certificate Issue Date</label>
                                 <div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="inlineRadioOptions1" id="yesCertificate" onclick="show1();" value="issueYes">
-                                        <label class="form-check-label" for="yesCertificate">Yes</label>
+                                        <input class="form-check-input" type="radio" name="isCertificateIssued" formControlName="isCertificateIssued" id="isCertificateIssued" value="Y">
+                                        <label class="form-check-label" for="isCertificateIssued">Yes</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="inlineRadioOptions1" id="noCertificate" onclick="show2();" value="issueNo">
+                                        <input class="form-check-input" type="radio" name="isCertificateIssued" formControlName="isCertificateIssued" id="noCertificate"  value="N">
                                         <label class="form-check-label" for="noCertificate">No</label>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12 col-sm-6 col-md-4 col-lg-3 none-d" id="certificateDate">
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3 " id="certificateDate" *ngIf="this.f2['isCertificateIssued'].value=='Y'" >
                                 <div class="form-floating mb-3">
-                                    <input type="date" class="form-control" id="issueDate" placeholder="">
-                                    <label for="issueDate">Issue Date</label>
+                                    <input type="date" class="form-control" id="certificateIssueDate" formControlName="certificateIssueDate" placeholder="">
+                                    <label for="certificateIssueDate">Issue Date</label>
                                 </div>
                             </div>
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                 <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="assessment" placeholder="">
-                                    <label for="assessment">Methodology Used for Needs Assessment</label>
+                                    <input type="text" class="form-control" id="needAssessmentMethodology" formControlName="needAssessmentMethodology" placeholder="">
+                                    <label for="needAssessmentMethodology">Methodology Used for Needs Assessment</label>
                                 </div>
                             </div>
                         </div>
                         <div class="text-end">
-                            <button type="button" class="btn btn-lime-green">Submit</button>
+                            <button type="button" class="btn btn-lime-green" (click)="Submitform()">Submit</button>
                         </div>
                     </form>
                 </div>
@@ -172,8 +213,10 @@
                             <h6 class="fw-600 mb-2 mb-sm-0">Participant Data</h6>
                         </div>
                         <div class="col-12 col-sm-5 col-md-4 col-lg-3">
-                            <select class="form-select">
-                                <option value="#">Select Program</option>
+                            <select class="form-select" [(ngModel)]="programIds">
+                                <option value="">Select Program</option>
+                                <option value="1">Program1</option>
+                                <option value="2">Program2</option>
                             </select>
                         </div>
                     </div>
@@ -183,14 +226,13 @@
                         <thead>
                             <tr>
                                 <th>S.No</th>
-                                <th>Code</th>
+                                <th>IsAspirant</th>
+                                <th>Oragnization Name</th>
                                 <th>Name of the Participant</th>
                                 <th>Gender</th>
-                                <th>Category</th>
                                 <th>Disability</th>
-                                <th>Video URL</th>
                                 <th>Aadhar No.</th>
-                                <th>Organisation Name</th>
+                                <th>Category</th>
                                 <th>Mobile No.</th>
                                 <th>Email</th>
                                 <th>Designation</th>
@@ -198,32 +240,33 @@
                                 <th>Pre-Training Assessment</th>
                                 <th>Post Training Assessment</th>
                                 <th>Certificate Issue Date</th>
+                                <th>Issue Date</th>
                                 <th>Methodology Used for Needs Assessment</th>
                                 <th class="text-center">Edit / Delete</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td class="text-start">1</td>
-                                <td>0001</td>
-                                <td>Ravi CHandra</td>
-                                <td>Male</td>
-                                <td>General</td>
-                                <td>No</td>
-                                <td>https://www.videourl.com/</td>
-                                <td>5142 2314 7618</td>
-                                <td>MSME</td>
-                                <td>9876543231</td>
-                                <td>xyz@gmail.com</td>
-                                <td>Manager</td>
-                                <td>Yes</td>
-                                <td>Product Innovation</td>
-                                <td>Design Thinking</td>
-                                <td>31-12-2024</td>
-                                <td>Methodology 1</td>
+                            <tr  *ngFor="let item of submitedData; let i=index">
+                                <td class="text-start">{{i+1}}</td>
+                                <td>{{item?.AspirantData=='Aspirant'?'Yes':'No'}}</td>
+                                <td >{{item?.AspirantData=='Aspirant'?'':item?.organisationName}}</td>
+                                <td>{{item?.participantName}}</td>
+                                <td>{{item?.gender}}</td>
+                                <td>{{item?.disability}}</td>
+                                <td>{{item?.aadharNo}}</td>
+                                <td>{{item?.category}}</td>
+                                <td>{{item?.mobileNo}}</td>
+                                <td>{{item?.email}}</td>
+                                <td>{{item?.designation}}</td>
+                                <td>{{item?.isParticipatedBefore}}</td>
+                                <td>{{item?.preTrainingAssessmentConducted}}</td>
+                                <td>{{item?.postTrainingAssessmentConducted}}</td>
+                                <td>{{item?.isCertificateIssued=='Y'?'Yes':'No'}}</td>
+                                <td>{{item?.isCertificateIssued=='Y'?item?.certificateIssueDate:''}}</td>
+                                <td>{{item?.needAssessmentMethodology}}</td>
                                 <td class="text-center">
-                                    <button type="button" class="btn btn-default text-lime-green btn-sm"><span class="bi bi-pencil"></span></button>
-                                    <button type="button" class="btn btn-default text-danger btn-sm"><span class="bi bi-trash"></span></button>
+                                    <button type="button" class="btn btn-default text-lime-green btn-sm" (click)="editRow(item,i)"><span class="bi bi-pencil"></span></button>
+                                    <button type="button" class="btn btn-default text-danger btn-sm" (click)="deleteRow(item,i)"><span class="bi bi-trash"></span></button>
                                 </td>
                             </tr>
                         </tbody>
@@ -237,328 +280,336 @@
 <!-- begin:: modal add new location -->
 <div class="modal fade" id="addOrganisation" tabindex="-1" aria-labelledby="addOrganisationLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
-        <div class="modal-content">
-            <div class="modal-header py-2">
-                <h6 class="modal-title" id="addLocationLabel">Add Organisation</h6>
-                <button type="button" class="btn-close me-1" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="card shadow-md p-3 mb-4">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="mb-3">
-                                <label class="form-label fs-md fw-600">Type of Organisation</label>
-                                <div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="organisation" id="shg" value="shgOrg">
-                                        <label class="form-check-label fs-md" for="shg">SHG</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="organisation" id="msme" value="msmeOrg">
-                                        <label class="form-check-label fs-md" for="msme">MSME</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="organisation" id="startup" value="startupOrg">
-                                        <label class="form-check-label fs-md" for="startup">Start Up</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="show-hide none-d" id="shgOrg">
-                        <div class="row">
-                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                                <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="nameShg" placeholder="">
-                                    <label for="nameShg">Name of the SHG</label>
-                                </div>
-                            </div>
-                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                                <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="district" placeholder="">
-                                    <label for="district">District</label>
-                                </div>
-                            </div>
-                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                                <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="mandalSamkya" placeholder="">
-                                    <label for="mandalSamkya">Name of the Mandal Samakya</label>
-                                </div>
-                            </div>
-                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                                <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="mandal" placeholder="">
-                                    <label for="mandal">Name of the Mandal</label>
-                                </div>
-                            </div>
-                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                                <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="vo" placeholder="">
-                                    <label for="vo">Name of the VO</label>
-                                </div>
-                            </div>
-                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                                <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="gramPanchayat" placeholder="">
-                                    <label for="gramPanchayat">Gram Panchyat</label>
-                                </div>
-                            </div>
-                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                                <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="village" placeholder="">
-                                    <label for="village">Name of the Village</label>
-                                </div>
-                            </div>
-                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                                <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="account" placeholder="">
-                                    <label for="account">Bank Account No.</label>
-                                </div>
-                            </div>
-                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                                <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="bank" placeholder="">
-                                    <label for="bank">Name of the Bank</label>
-                                </div>
-                            </div>
-                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                                <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="branch" placeholder="">
-                                    <label for="branch">Name of the Branch</label>
-                                </div>
-                            </div>
-                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                                <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="ifsc" placeholder="">
-                                    <label for="ifsc">IFSC Code</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="show-hide none-d" id="startupOrg">
-                        <div class="row">
-                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                                <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="msmeStartup" placeholder="">
-                                    <label for="msmeStartup">Name of the Startup</label>
-                                </div>
-                            </div>
-                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                                <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="msmeCertificate" placeholder="">
-                                    <label for="msmeCertificate">Certificate No.</label>
-                                </div>
-                            </div>
-                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                                <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="natureStartup" placeholder="">
-                                    <label for="natureStartup">Nature of Startup</label>
-                                </div>
-                            </div>
-                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                                <div class="form-floating mb-3">
-                                    <input type="date" class="form-control" id="incorporationDate" placeholder="">
-                                    <label for="incorporationDate">Incorporation Date</label>
-                                </div>
-                            </div>
-                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                                <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="areasWorking" placeholder="">
-                                    <label for="areasWorking">Areas of Working</label>
-                                </div>
-                            </div>
-                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                                <div class="form-floating mb-3">
-                                    <input type="date" class="form-control" id="dateIssue" placeholder="">
-                                    <label for="dateIssue">Date of Isuue</label>
-                                </div>
-                            </div>
-                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                                <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="validupto" placeholder="">
-                                    <label for="validupto">Valid Upto</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="show-hide none-d" id="msmeOrg">
-                        <div class="row">
-                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                                <label class="fw-600 fs-md">Category</label>
-                                <div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="category" id="Micro" value="Micro">
-                                        <label class="form-check-label fs-md" for="Micro">Micro</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="category" id="Small" value="Small">
-                                        <label class="form-check-label fs-md" for="Small">Small</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="category" id="Medium" value="Medium">
-                                        <label class="form-check-label fs-md" for="Medium">Medium</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                                <label class="fw-600 fs-md">Udyam Registration Number</label>
-                                <div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="udyam" onclick="udyam1();" id="udyamYes" value="udyamYes">
-                                        <label class="form-check-label fs-md" for="udyamYes">Yes</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="udyam" onclick="udyam2();" id="udyamNo" value="udyamNo">
-                                        <label class="form-check-label fs-md" for="udyamNo">No</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-sm-12 col-md-12 col-lg-6 none-d" id="udyamyesShow">
-                                <div class="row">
-                                    <div class="col-12 col-sm-6 col-md-4 col-lg-6">
-                                        <div class="form-floating mb-3">
-                                            <input type="text" class="form-control" id="udyamNumber" placeholder="">
-                                            <label for="udyamNumber">Udyam No.</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-sm-6 col-md-4 col-lg-6">
-                                        <div class="form-floating mb-3">
-                                            <input type="date" class="form-control" id="registrationDate" placeholder="">
-                                            <label for="registrationDate">Registration Date</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-sm-6 col-md-4 col-lg-3 none-d" id="udyamnoShow">
-                                <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="companyRegistration" placeholder="">
-                                    <label for="companyRegistration">Company Registration</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+        <form [formGroup]="OrganisationForm" >
+            <div class="modal-content">
+                <div class="modal-header py-2">
+                    <h6 class="modal-title" id="addLocationLabel">Add Organisation</h6>
+                    <button type="button" class="btn-close me-1" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-
-                <div class="row">
-                    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
-                        <div class="card shadow-md p-3 mb-3">
-                            <!-- <h6 class="fw-600">Address</h6> -->
+                <div class="modal-body">
+                    <div class="card shadow-md p-3 mb-4">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="mb-3">
+                                    <label class="form-label fs-md fw-600">Type of Organisation</label>
+                                    <div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="organizationType" id="SHG" value="SHG" (change)="typeOragnization($event)"  formControlName="organizationType">
+                                            <label class="form-check-label fs-md" for="SHG">SHG</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="organizationType" id="MSME" value="MSME" (change)="typeOragnization($event)"  formControlName="organizationType">
+                                            <label class="form-check-label fs-md" for="MSME">MSME</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="organizationType" id="startup" value="Start Up" (change)="typeOragnization($event)"  formControlName="organizationType">
+                                            <label class="form-check-label fs-md" for="startup">Start Up</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="show-hide " id="SHG"  *ngIf="this.fOrg['organizationType'].value=='SHG'">
                             <div class="row">
                                 <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                     <div class="form-floating mb-3">
-                                        <select class="form-select" id="State">
-                                          <option selected>Select State</option>
-                                          <option value="1">State 1</option>
-                                        </select>
-                                        <label for="State">State</label>
+                                        <input type="text" class="form-control" id="nameOfTheSHG" placeholder="" formControlName="nameOfTheSHG">
+                                        <label for="nameOfTheSHG">Name of the SHG</label>
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                     <div class="form-floating mb-3">
-                                        <select class="form-select" id="District">
-                                          <option selected>Select District</option>
-                                          <option value="1">District 1</option>
-                                        </select>
-                                        <label for="District">District</label>
+                                        <input type="text" class="form-control" id="district" placeholder="" formControlName="distId">
+                                        <label for="district">District</label>
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                     <div class="form-floating mb-3">
-                                        <select class="form-select" id="District">
-                                          <option selected>Select Mandal</option>
-                                          <option value="1">Mandal 1</option>
-                                        </select>
-                                        <label for="Mandal">Mandal</label>
+                                        <input type="text" class="form-control" id="mandalSamkya" placeholder="" formControlName="mandal">
+                                        <label for="mandalSamkya">Name of the Mandal Samakya</label>
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                    <div class="form-floating mb-3">
+                                        <input type="text" class="form-control" id="mandal" placeholder="" formControlName="mandal">
+                                        <label for="mandal">Name of the Mandal</label>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                    <div class="form-floating mb-3">
+                                        <input type="text" class="form-control" id="vo" placeholder="" formControlName="nameOfTheVO">
+                                        <label for="vo">Name of the VO</label>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                    <div class="form-floating mb-3">
+                                        <input type="text" class="form-control" id="gramaPanchayat" placeholder="" formControlName="gramaPanchayat">
+                                        <label for="gramaPanchayat">Grama Panchyat</label>
+                                    </div>
+                                </div>
+                                <!-- <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                     <div class="form-floating mb-3">
                                         <input type="text" class="form-control" id="village" placeholder="">
-                                        <label for="village">Town/Village</label>
+                                        <label for="village">Name of the Village</label>
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                     <div class="form-floating mb-3">
-                                        <input type="text" class="form-control" id="street" placeholder="">
-                                        <label for="street">Street No.</label>
+                                        <input type="text" class="form-control" id="account" placeholder="">
+                                        <label for="account">Bank Account No.</label>
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                     <div class="form-floating mb-3">
-                                        <input type="text" class="form-control" id="house" placeholder="">
-                                        <label for="house">House No.</label>
+                                        <input type="text" class="form-control" id="bank" placeholder="">
+                                        <label for="bank">Name of the Bank</label>
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                     <div class="form-floating mb-3">
-                                        <input type="text" class="form-control" id="Longitude" placeholder="">
-                                        <label for="Longitude">Geo Location Longitude</label>
+                                        <input type="text" class="form-control" id="branch" placeholder="">
+                                        <label for="branch">Name of the Branch</label>
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                     <div class="form-floating mb-3">
-                                        <input type="text" class="form-control" id="Latiude" placeholder="">
-                                        <label for="Latiude">Geo Location Latiude</label>
+                                        <input type="text" class="form-control" id="ifsc" placeholder="">
+                                        <label for="ifsc">IFSC Code</label>
                                     </div>
-                                </div>
-                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                                    <div class="form-floating mb-3 mb-lg-0">
-                                        <input type="text" class="form-control" id="contact" placeholder="">
-                                        <label for="contact">Contact No.</label>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                                    <div class="form-floating mb-3 mb-md-0 mb-lg-0">
-                                        <input type="text" class="form-control" id="email" placeholder="">
-                                        <label for="email">Email</label>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                                    <div class="form-floating mb-3 mb-md-0 mb-lg-0">
-                                        <input type="text" class="form-control" id="website" placeholder="">
-                                        <label for="website">Website</label>
-                                    </div>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
-                    </div>
-                    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
-                        <div class="card shadow-md p-3 mb-3">
-                            <h6 class="fs-md fw-600 mb-2">Owner Details</h6>
+                        <div class="show-hide " id="Start Up" *ngIf="this.fOrg['organizationType'].value=='Start Up'">
                             <div class="row">
                                 <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                                    <div class="form-floating mb-3 mb-sm-0 mb-lg-0">
-                                        <input type="text" class="form-control" id="ownerName" placeholder="">
-                                        <label for="ownerName">Name</label>
+                                    <div class="form-floating mb-3">
+                                        <input type="text" class="form-control" id="msmeStartup" placeholder="" formControlName="organizationName">
+                                        <label for="msmeStartup">Name of the Startup</label>
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                                    <div class="form-floating mb-3 mb-sm-0 mb-lg-0">
-                                        <input type="text" class="form-control" id="ownercontact" placeholder="">
-                                        <label for="ownercontact">Contact</label>
+                                    <div class="form-floating mb-3">
+                                        <input type="text" class="form-control" id="msmeCertificate" placeholder="" formControlName="startupCertificateNo">
+                                        <label for="msmeCertificate">Certificate No.</label>
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                                    <div class="form-floating mb-3 mb-sm-0 mb-lg-0">
-                                        <input type="text" class="form-control" id="owneremail" placeholder="">
-                                        <label for="owneremail">Email</label>
+                                    <div class="form-floating mb-3">
+                                        <input type="text" class="form-control" id="natureStartup" placeholder="" formControlName="natureOfStartup">
+                                        <label for="natureStartup">Nature of Startup</label>
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                                    <div class="form-floating mb-0 mb-lg-0">
-                                        <input type="text" class="form-control" id="ownerAddress" placeholder="">
-                                        <label for="ownerAddress">Address</label>
+                                    <div class="form-floating mb-3">
+                                        <input type="date" class="form-control" id="incorporationDate" placeholder="" formControlName="incorporationDate">
+                                        <label for="incorporationDate">Incorporation Date</label>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                    <div class="form-floating mb-3">
+                                        <input type="text" class="form-control" id="areasWorking" placeholder="" formControlName="areasOfWorking">
+                                        <label for="areasWorking">Areas of Working</label>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                    <div class="form-floating mb-3">
+                                        <input type="date" class="form-control" id="dateIssue" placeholder="" formControlName="dateOfIssue">
+                                        <label for="dateIssue">Date of Isuue</label>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                    <div class="form-floating mb-3">
+                                        <input type="text" class="form-control" id="validupto" placeholder="" formControlName="validUpto">
+                                        <label for="validupto">Valid Upto</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="show-hide " id="MSME"  *ngIf="this.fOrg['organizationType'].value=='MSME'">
+                            <div class="row">
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                    <label class="fw-600 fs-md">Category</label>
+                                    <div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="category" id="Micro" value="Micro" formControlName="organizationCategory">
+                                            <label class="form-check-label fs-md" for="Micro">Micro</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="category" id="Small" value="Small" formControlName="organizationCategory">
+                                            <label class="form-check-label fs-md" for="Small">Small</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="category" id="Medium" value="Medium" formControlName="organizationCategory">
+                                            <label class="form-check-label fs-md" for="Medium">Medium</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                    <label class="fw-600 fs-md">Udyam Registration Number</label>
+                                    <div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="udyam" formControlName="udyamYesOrNo" id="udyamYes" value="Yes" >
+                                            <label class="form-check-label fs-md" for="udyamYes">Yes</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="udyam" formControlName="udyamYesOrNo"  id="udyamNo" value="No" >
+                                            <label class="form-check-label fs-md" for="udyamNo">No</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-12 col-md-12 col-lg-6 " id="udyamyesShow" *ngIf="this.fOrg['udyamYesOrNo'].value=='Yes'">
+                                    <div class="row">
+                                        <div class="col-12 col-sm-6 col-md-4 col-lg-6">
+                                            <div class="form-floating mb-3">
+                                                <input type="text" class="form-control" id="udyamNumber" placeholder="" formControlName="udyamregistrationNo">
+                                                <label for="udyamNumber">Udyam No.</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-sm-6 col-md-4 col-lg-6">
+                                            <div class="form-floating mb-3">
+                                                <input type="date" class="form-control" id="registrationDate" placeholder="" formControlName="dateOfRegistration" >
+                                                <label for="registrationDate">Registration Date</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- <div class="col-12 col-sm-6 col-md-4 col-lg-3 none-d" id="udyamnoShow" *ngIf="udyamYesOrNo=='Yes'" >
+                                    <div class="form-floating mb-3">
+                                        <input type="text" class="form-control" id="companyRegistration" placeholder="">
+                                        <label for="companyRegistration">Company Registration</label>
+                                    </div>
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="row">
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="card shadow-md p-3 mb-3">
+                                <!-- <h6 class="fw-600">Address</h6> -->
+                                <div class="row">
+                                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                        <div class="form-floating mb-3">
+                                            <select class="form-select" id="State" formControlName="stateId">
+                                              <option selected>Select State</option>
+                                              <option value="1">State 1</option>
+                                            </select>
+                                            <label for="State">State</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                        <div class="form-floating mb-3">
+                                            <select class="form-select" id="District" formControlName="distId">
+                                              <option selected>Select District</option>
+                                              <option value="1">District 1</option>
+                                            </select>
+                                            <label for="District">District</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                        <div class="form-floating mb-3">
+                                            <select class="form-select" id="District" formControlName="mandal">
+                                              <option selected>Select Mandal</option>
+                                              <option value="1">Mandal 1</option>
+                                            </select>
+                                            <label for="Mandal">Mandal</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                        <div class="form-floating mb-3">
+                                            <input type="text" class="form-control" id="village" placeholder="" formControlName="town">
+                                            <label for="village">Town/Village</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                        <div class="form-floating mb-3">
+                                            <input type="text" class="form-control" id="street" placeholder="" formControlName="streetNo">
+                                            <label for="street">Street No.</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                        <div class="form-floating mb-3">
+                                            <input type="text" class="form-control" id="house" placeholder="" formControlName="houseNo">
+                                            <label for="house">House No.</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                        <div class="form-floating mb-3">
+                                            <input type="text" class="form-control" id="Longitude" placeholder="" formControlName="longitude">
+                                            <label for="Longitude">Geo Location Longitude</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                        <div class="form-floating mb-3">
+                                            <input type="text" class="form-control" id="Latiude" placeholder="" formControlName="latitude">
+                                            <label for="Latiude">Geo Location Latiude</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                        <div class="form-floating mb-3 mb-lg-0">
+                                            <input type="text" class="form-control" id="contact" placeholder="" formControlName="contactNo">
+                                            <label for="contact">Contact No.</label>
+                                        </div>
+                                        <div *ngIf="this.fOrg['contactNo'].touched && !this.fOrg['contactNo'].valid && !this.fOrg['contactNo']?.errors?.['pattern']" class="error">contact No is required</div>
+                                        <div *ngIf="this.fOrg['contactNo'].touched && !this.fOrg['contactNo'].valid && this.fOrg['contactNo']?.errors?.['pattern']" class="error">Contact No is should be 10 digit Numbers</div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                        <div class="form-floating mb-3 mb-md-0 mb-lg-0">
+                                            <input type="text" class="form-control" id="email" placeholder="" formControlName="email">
+                                            <label for="email">Email</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                        <div class="form-floating mb-3 mb-md-0 mb-lg-0">
+                                            <input type="text" class="form-control" id="website" placeholder="" formControlName="website">
+                                            <label for="website">Website</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="card shadow-md p-3 mb-3">
+                                <h6 class="fs-md fw-600 mb-2">Owner Details</h6>
+                                <div class="row">
+                                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                        <div class="form-floating mb-3 mb-sm-0 mb-lg-0">
+                                            <input type="text" class="form-control" id="ownerName" placeholder="" formControlName="ownerName">
+                                            <label for="ownerName">Name</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                        <div class="form-floating mb-3 mb-sm-0 mb-lg-0">
+                                            <input type="text" class="form-control" id="ownercontact" placeholder="" formControlName="ownerContactNo">
+                                            <label for="ownercontact">Contact</label>
+                                        </div>
+                                        <div *ngIf="fOrg['ownerContactNo'].touched && !fOrg['ownerContactNo'].valid && !fOrg['ownerContactNo']?.errors?.['pattern']" class="error">Owner contact No is required</div>
+                                        <div *ngIf="fOrg['ownerContactNo'].touched && !fOrg['ownerContactNo'].valid && fOrg['ownerContactNo']?.errors?.['pattern']" class="error">Owner contact No is should be 10 digit Numbers</div>
+                                   
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                        <div class="form-floating mb-3 mb-sm-0 mb-lg-0">
+                                            <input type="text" class="form-control" id="owneremail" placeholder="" formControlName="ownerEmail">
+                                            <label for="owneremail">Email</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                        <div class="form-floating mb-0 mb-lg-0">
+                                            <input type="text" class="form-control" id="ownerAddress" placeholder="" formControlName="ownerAddress">
+                                            <label for="ownerAddress">Address</label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-
-                <div class="text-end">
-                    <button type="button" class="btn btn-lime-green">Submit</button>
+    
+                    <div class="text-end">
+                        <button type="button" class="btn btn-lime-green"  data-bs-dismiss="modal" (click)="SubmitformOrganization()">Submit</button>
+                    </div>
                 </div>
             </div>
-        </div>
+        </form>
+        
     </div>
 </div>
