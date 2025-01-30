@@ -27,6 +27,7 @@
         "datatables.net-dt": "^1.11.5",
         "datatables.net-responsive-dt": "^2.3.0",
         "jquery": "^3.6.0",
+        "moment": "^2.29.4",
         "ngx-toastr": "^14.3.0",
         "rxjs": "~7.5.0",
         "tslib": "^2.3.0",
