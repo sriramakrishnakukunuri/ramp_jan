@@ -5,6 +5,7 @@ import { CommonServiceService } from '@app/_services/common-service.service';
 import { APIS } from '@app/constants/constants';
 import { ToastrService } from 'ngx-toastr';
 import { forkJoin } from 'rxjs';
+import moment from "moment";
 declare var bootstrap: any;
 @Component({
   selector: 'app-program-creation',
@@ -127,6 +128,17 @@ export class ProgramCreationComponent implements OnInit {
     // or you can manipulate it if needed, e.g., creating a new Blob
     return new Blob([file]);
   }
+
+  formatTime(timeValue:any) {
+    if (timeValue) {
+      const [hours, minutes] = timeValue.split(':').map(Number);
+      const suffix = hours >= 12 ? 'PM' : 'AM';
+      const formattedHours = hours % 12 || 12; // Convert 0 to 12 for AM case
+      return `${formattedHours}:${minutes.toString().padStart(2, '0')} ${suffix}`;
+    }
+    return timeValue;
+  }
+
   submitForm(){
   
     let val={...this.programCreationMain.value}
@@ -143,6 +155,10 @@ export class ProgramCreationComponent implements OnInit {
     maindata['subActivityId']=1
     maindata['locationId']=1
     maindata['agencyId']=1
+    maindata['startTime']=this.formatTime(maindata['startTime'])
+    maindata['endTime']=this.formatTime(maindata['endTime'])
+    maindata['startDate']=moment(maindata['startDate']).format('DD-MM-YYYY')
+    maindata['endDate']=moment(maindata['endDate']).format('DD-MM-YYYY')
     const programData = JSON.parse(localStorage.getItem('programDetails') || '[]');
     programData.push(val);
     localStorage.setItem('programDetails', JSON.stringify(programData));    
@@ -153,11 +169,16 @@ export class ProgramCreationComponent implements OnInit {
       console.log(res,'program creation')      
     })
     const apiCalls = objectnew.map((element:any,index:any) => {
-      const formData = new FormData();          
+      const formData = new FormData();   
+      const videoUrls:any = []       
       if(element['uploaFiles']){
         element['uploaFiles'].forEach((file:any) => {          
           formData.append("files", file);
+          videoUrls.push(file.name)          
         })
+        element['videoUrls']=videoUrls
+        element['startTime']=this.formatTime(element['startTime'])
+        element['endTime']=this.formatTime(element['endTime'])
         delete element['uploaFiles'];
         formData.set("data", JSON.stringify(element))
       }      
@@ -295,7 +316,7 @@ onModalSubmitType(){
   }
   uploadedFiles:any = [];
   onFilesSelected(event:any, index:any) {
-  
+    console.log(event.target.files)
     //this.uploadedFiles.push(event.target.files);
     // const input = event.target as HTMLInputElement;
     
