@@ -46,13 +46,18 @@ export class LoginComponent implements OnInit {
         this.authenticationService.login(this.f.username.value, this.f.password.value)
             .pipe(first())
             .subscribe({
-                next: () => {
-                    // get return url from query parameters or default to home page
-                    //const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/program-creation';
+                next: (res) => {
                     this.router.navigateByUrl('/program-creation');
+                    // if (res.status === 200) {
+                    //     // get return url from query parameters or default to home page
+                    //     //this.router.navigateByUrl('/program-creation');
+                    // } else if (res.status === 400) {
+                    //     this.error = res.message ? res.message : 'Invalid credentials. Please try again.';
+                    //     this.loading = false;
+                    // }
                 },
                 error: error => {
-                    this.error = error;
+                    this.error = 'An error occurred. Please try again later.';
                     this.loading = false;
                 }
             });
