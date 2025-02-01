@@ -27,7 +27,7 @@
                                     </select>
                                     <label>Type Of Activity</label>
                                 </div>
-                                <div *ngIf="f2['activityId'].touched && !f2['activityId'].valid" class="error">Type Of Activityis required</div>
+                                <div *ngIf="f2['activityId'].touched && !f2['activityId'].valid" class="error" style="color: red;">Type Of Activity is required</div>
                             </div>
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                 <div class="form-floating mb-3">
@@ -37,7 +37,7 @@
                                     </select>
                                     <label>Sub Activity</label>
                                 </div>
-                                <div *ngIf="f2['subActivityId'].touched && !f2['subActivityId'].valid" class="error">Sub Activity is required</div>
+                                <div *ngIf="f2['subActivityId'].touched && !f2['subActivityId'].valid" class="error" style="color: red;">Sub Activity is required</div>
                             </div>
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                 <div class="form-floating mb-3">
@@ -49,7 +49,7 @@
                                     </select>
                                     <label>Type Of Program</label>
                                 </div>
-                                <div *ngIf="f2['programType'].touched && !f2['programType'].valid" class="error">Type Of Program is required</div>
+                                <div *ngIf="f2['programType'].touched && !f2['programType'].valid" class="error" style="color: red;">Type Of Program is required</div>
                             </div>
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                 <div class="form-floating mb-3">
@@ -59,14 +59,14 @@
                                     </select>
                                     <label>Program Details</label>
                                 </div>
-                                <div *ngIf="f2['programDetails'].touched && !f2['programDetails'].valid" class="error">Program Details is required</div>
+                                <div *ngIf="f2['programDetails'].touched && !f2['programDetails'].valid" class="error" style="color: red;">Program Details is required</div>
                             </div>
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                 <div class="form-floating mb-3">
                                     <input type="text" class="form-control" formControlName="programTitle" placeholder="Title Of Program">
                                     <label>Title Of Program</label>
                                 </div>
-                                <div *ngIf="f2['programTitle'].touched && !f2['programTitle'].valid" class="error">Title Of Program is required</div>
+                                <div *ngIf="f2['programTitle'].touched && !f2['programTitle'].valid" class="error" style="color: red;">Title Of Program is required</div>
                             </div>
                             <!-- <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                 <div class="form-floating mb-3">
@@ -79,28 +79,28 @@
                                     <input type="date" class="form-control" formControlName="startDate">
                                     <label>Start Date</label>
                                 </div>
-                                <div *ngIf="f2['startDate'].touched && !f2['startDate'].valid" class="error">Start Date is required</div>
+                                <div *ngIf="f2['startDate'].touched && !f2['startDate'].valid" class="error" style="color: red;">Start Date is required</div>
                             </div>
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                 <div class="form-floating mb-3">
                                     <input type="date" class="form-control" formControlName="endDate">
                                     <label>End Date</label>
                                 </div>
-                                <div *ngIf="f2['endDate'].touched && !f2['endDate'].valid" class="error">End Date is required</div>
+                                <div *ngIf="f2['endDate'].touched && !f2['endDate'].valid" class="error" style="color: red;">End Date is required</div>
                             </div>
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                 <div class="form-floating mb-3">
                                     <input type="time" class="form-control"  formControlName="startTime">
                                     <label>In Time</label>
                                 </div>
-                                <div *ngIf="f2['startTime'].touched && !f2['startTime'].valid" class="error">In Time is required</div>
+                                <div *ngIf="f2['startTime'].touched && !f2['startTime'].valid" class="error" style="color: red;">In Time is required</div>
                             </div>
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                 <div class="form-floating mb-3">
                                     <input type="time" class="form-control" formControlName="endTime">
                                     <label>Out Time</label>
                                 </div>
-                                <div *ngIf="f2['endTime'].touched && !f2['endTime'].valid" class="error">Out Time is required</div>
+                                <div *ngIf="f2['endTime'].touched && !f2['endTime'].valid" class="error" style="color: red;">Out Time is required</div>
                            
                             </div>
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
@@ -114,7 +114,7 @@
                                     </select>
                                     <label>KPI </label>
                                 </div>
-                                <div *ngIf="f2['kpi'].touched && !f2['kpi'].valid" class="error">KPI is required</div>
+                                <div *ngIf="f2['kpi'].touched && !f2['kpi'].valid" class="error" style="color: red;">KPI is required</div>
                             </div>
                             <!-- <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                 <div class="form-floating mb-3">
@@ -128,15 +128,15 @@
                                     <input type="text" class="form-control" placeholder="" formControlName="spocName">
                                     <label>SPOC Name</label>
                                 </div>
-                                <div *ngIf="f2['spocName'].touched && !f2['spocName'].valid" class="error">SPOC Name is required</div>
+                                <div *ngIf="f2['spocName'].touched && !f2['spocName'].valid" class="error" style="color: red;">SPOC Name is required</div>
                             </div>
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                 <div class="form-floating mb-3">
                                     <input type="text" class="form-control" placeholder="" formControlName="spocContactNo">
                                     <label>SPOC Contact No.</label>
                                 </div>
-                                <div *ngIf="f2['spocContactNo'].touched && !f2['spocContactNo'].valid && !f2['spocContactNo']?.errors?.['pattern']" class="error">SPOC Contact No is required</div>
-                                <div *ngIf="f2['spocContactNo'].touched && !f2['spocContactNo'].valid && f2['spocContactNo']?.errors?.['pattern']" class="error">Contact No is should be Numbers</div>
+                                <div *ngIf="f2['spocContactNo'].touched && !f2['spocContactNo'].valid && !f2['spocContactNo']?.errors?.['pattern']" class="error" style="color: red;">SPOC Contact No is required</div>
+                                <div *ngIf="f2['spocContactNo'].touched && !f2['spocContactNo'].valid && f2['spocContactNo']?.errors?.['pattern']" class="error" style="color: red;">Contact No is should be Numbers</div>
                             </div>
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                 <div class="form-floating mb-3">
@@ -148,7 +148,7 @@
                                       </select>
                                     <label>Program Location</label>
                                 </div>
-                                <div *ngIf="f2['programLocation'].touched && !f2['programLocation'].valid" class="error">Program Location is required</div>
+                                <div *ngIf="f2['programLocation'].touched && !f2['programLocation'].valid" class="error" style="color: red;">Program Location is required</div>
                            
                             </div>
                             <!-- <div class="col-12 col-sm-6 col-md-4 col-lg-3">
@@ -207,6 +207,7 @@
                                 <!-- <th>Session Expected OutComes</th> -->
                                 <th>Resource Person</th>
                                 <th>Type Of Material Used</th>
+                                <th>Streaming Url</th>
                                 <th>Upload</th>
                                 <th>Add/Delete</th>
                             </tr>
@@ -264,7 +265,10 @@
                                         </select>
                                     </td>
                                     <td>
-                                        <input class="form-control" type="file" accept=".png, .jpg, .jpeg, .pdf, .docx, .xls, .xlsx, .csv,.ppt,.pptx"
+                                        <input class="form-control" type="text" formControlName="sessionStreamingUrl">
+                                    </td>
+                                    <td>
+                                        <input class="form-control" type="file" accept=".pdf, .docx, .xls, .xlsx, .csv,.ppt,.pptx"
                                         (change)="onFilesSelected($event,i)"  id="formFile" multiple>
                                     </td>
                                     <td class="text-center">
@@ -474,7 +478,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" formControlName="sourceType"  placeholder="Resource Person" />
+                        <input type="text" class="form-control" formControlName="name"  placeholder="Resource Person" />
                         <label>Resource Person</label>
                     </div>
 

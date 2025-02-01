@@ -8,6 +8,7 @@ export const APIS = {
         addLocation: API_BASE_URL + '/location/save',
         getLocation: API_BASE_URL + '/agency/locations/',
         getResource: API_BASE_URL + '/agency/resources/',
+        addResource: API_BASE_URL + '/resource/save',
         // get: API_BASE_URL + '/program/get',
         // update: API_BASE_URL + '/program/update',
         // delete: API_BASE_URL + '/program/delete',

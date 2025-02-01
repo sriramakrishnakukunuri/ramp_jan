@@ -152,7 +152,7 @@ export class AddParticipantDataComponent implements OnInit {
       // sessionStorage.setItem('ParticipantData', this.submitedData)
        sessionStorage.setItem('ParticipantData', JSON.stringify(this.submitedData)); 
        this._commonService
-      .add(APIS.participantdata.add,{...this.ParticipantDataForm.value,"programIds": ["1"] }).subscribe({
+      .add(APIS.participantdata.add,{...this.ParticipantDataForm.value,"programIds": ["1"],"organizationId":"1" }).subscribe({
         next: (data:any) => {
           // this.advanceSearch(this.getSelDataRange);
           // modal.close()
