@@ -525,7 +525,7 @@
 
 <!-- begin:: modal add new resource person -->
 <div class="modal fade" id="addResource" tabindex="-1" aria-labelledby="addResourceLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-dialog-centered">
         <form [formGroup]="modalFormStype" (ngSubmit)="onModalSubmitType()">
             <div class="modal-content">
                 <div class="modal-header py-2">
@@ -536,9 +536,12 @@
                     <div class="row">
                         <div class="col-12 col-sm-6">
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" formControlName="name"
+                                <input type="text" class="form-control" id="floatingSelectGender" formControlName="name"
                                     placeholder="Resource Person" />
-                                <label>Resource Person</label>
+                                <label for="floatingSelectGender">Resource Person</label>
+                                <div *ngIf="modalFormStype.controls['name'].touched && modalFormStype.controls['name'].invalid" class="error" style="color: red; margin-top: 5px;">
+                                    Name is required
+                                </div>
                             </div>
                         </div>
                         <div class="col-12 col-sm-6">
@@ -546,6 +549,9 @@
                                 <input type="text" class="form-control" formControlName="mobileNo"
                                     placeholder="Mobile No" />
                                 <label>Mobile No</label>
+                                <div *ngIf="modalFormStype.controls['mobileNo'].touched && modalFormStype.controls['mobileNo'].invalid" class="error" style="color: red;margin-top: 5px">
+                                    Mobile No is required
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -554,6 +560,9 @@
                             <div class="form-floating mb-3">
                                 <input type="email" class="form-control" formControlName="email" placeholder="Email" />
                                 <label>Email</label>
+                                <div *ngIf="modalFormStype.controls['email'].touched && modalFormStype.controls['email'].invalid" class="error" style="color: red;margin-top: 5px">
+                                    Email is required
+                                </div>
                             </div>
                         </div>
                         <div class="col-12 col-sm-6">
@@ -561,6 +570,9 @@
                                 <input type="text" class="form-control" formControlName="organizationName"
                                     placeholder="Organization Name" />
                                 <label>Organization Name</label>
+                                <div *ngIf="modalFormStype.controls['organizationName'].touched && modalFormStype.controls['organizationName'].invalid" class="error" style="color: red;margin-top: 5px">
+                                    Organization Name is required
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -570,6 +582,9 @@
                                 <input type="text" class="form-control" formControlName="qualification"
                                     placeholder="Qualification" />
                                 <label>Qualification</label>
+                                <div *ngIf="modalFormStype.controls['qualification'].touched && modalFormStype.controls['qualification'].invalid" class="error" style="color: red;margin-top: 5px">
+                                    Qualification is required
+                                </div>
                             </div>
                         </div>
                         <div class="col-12 col-sm-6">
@@ -577,6 +592,9 @@
                                 <input type="text" class="form-control" formControlName="designation"
                                     placeholder="Designation" />
                                 <label>Designation</label>
+                                <div *ngIf="modalFormStype.controls['designation'].touched && modalFormStype.controls['designation'].invalid" class="error" style="color: red;margin-top: 5px">
+                                    Designation is required
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -586,6 +604,9 @@
                                 <input type="text" class="form-control" formControlName="specialization"
                                     placeholder="Specialization" />
                                 <label>Specialization</label>
+                                <div *ngIf="modalFormStype.controls['specialization'].touched && modalFormStype.controls['specialization'].invalid" class="error" style="color: red;margin-top: 5px">
+                                    Specialization is required
+                                </div>
                             </div>
                         </div>
                         <div class="col-12 col-sm-6">
@@ -596,6 +617,9 @@
                                     <option value="O">Other</option>
                                 </select>
                                 <label>Gender</label>
+                                <div *ngIf="modalFormStype.controls['gender'].touched && modalFormStype.controls['gender'].invalid" class="error" style="color: red;margin-top: 5px">
+                                    Gender is required
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -604,11 +628,14 @@
                             <textarea class="form-control" formControlName="briefDescription"
                                 placeholder="Brief Description"></textarea>
                             <label>Brief Description</label>
+                            <div *ngIf="modalFormStype.controls['briefDescription'].touched && modalFormStype.controls['briefDescription'].invalid" class="error" style="color: red;margin-top: 5px">
+                                Brief Description is required
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-lime-green" [disabled]="modalFormStype.invalid">Add Resource
+                    <button type="submit" class="btn btn-lime-green" [ngClass]="{'disabled': modalFormStype.invalid}"  [disabled]="modalFormStype.invalid">Add Resource
                         Person</button>
                 </div>                
             </div>                        

@@ -38,7 +38,7 @@ export class ProgramCreationComponent implements OnInit, AfterViewInit {
     this.modalFormStype = this.fb.group({
       name: ['', Validators.required],
       mobileNo: ['', [Validators.required, Validators.pattern(/^[0-9]{10}$/)]],
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/)]],
       organizationName: ['', Validators.required],
       qualification: ['', Validators.required],
       designation: ['', Validators.required],
