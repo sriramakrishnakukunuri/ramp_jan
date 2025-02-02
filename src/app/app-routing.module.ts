@@ -13,6 +13,8 @@ import { ProgramCreationComponent } from './PIA/program-creation/program-creatio
 import { VeiwProgramCreationComponent } from './PIA/veiw-program-creation/veiw-program-creation.component';
 import { AddParticipantDataComponent } from './PIA/add-participant-data/add-participant-data.component';
 import { UpdateProgramExecutionComponent } from './PIA/update-program-execution/update-program-execution.component';
+import { ViewParticipateCreationComponent } from './PIA/view-praticipate-creation/view-praticipate-creation.component';
+import { OrganizationsListComponent } from './organizations-list/organizations-list.component';
 
 const routes: Routes = [
     {
@@ -30,13 +32,13 @@ const routes: Routes = [
         path: 'profile',
         component: ProfileComponent,
         canActivate: [AuthGuard],
-        data: { roles: [Role.Admin,Role.User] }
+        data: { roles: [Role.Admin,Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
     },
     {
         path: 'password-settings',
         component: PasswordSettingsComponent,
         canActivate: [AuthGuard],
-        data: { roles: [Role.Admin,Role.User] }
+        data: { roles: [Role.Admin,Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
     },
     {
         path: 'user-registration',
@@ -48,25 +50,43 @@ const routes: Routes = [
         path: 'program-creation',
         component: ProgramCreationComponent,
         canActivate: [AuthGuard],
-        data: { roles: [Role.Admin,Role.User] }
+        data: { roles: [Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
+    },
+    {
+        path: 'program-creation-edit/:id',
+        component: ProgramCreationComponent,
+        canActivate: [AuthGuard],
+        data: { roles: [Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
     },
     {
         path: 'veiw-program-creation',
         component: VeiwProgramCreationComponent,
         canActivate: [AuthGuard],
-        data: { roles: [Role.Admin,Role.User] }
+        data: { roles: [Role.Admin,Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
     },
     {
         path: 'add-participant-data',
         component: AddParticipantDataComponent,
         canActivate: [AuthGuard],
-        data: { roles: [Role.Admin,Role.User] }
+        data: { roles: [Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
     },
     {
         path: 'update-program-execution',
         component: UpdateProgramExecutionComponent,
         canActivate: [AuthGuard],
-        data: { roles: [Role.Admin,Role.User] }
+        data: { roles: [Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
+    },
+    {
+        path: 'view-program-participate',
+        component: ViewParticipateCreationComponent,
+        canActivate: [AuthGuard],
+        data: { roles: [Role.Admin,Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
+    },
+    {
+        path: 'view-table-organization',
+        component: OrganizationsListComponent,
+        canActivate: [AuthGuard],
+        data: { roles: [Role.Admin] }
     },
     {
         path: 'login',

@@ -26,6 +26,9 @@ import { ProgramCreationComponent } from './PIA/program-creation/program-creatio
 import { AddParticipantDataComponent } from './PIA/add-participant-data/add-participant-data.component';
 import { VeiwProgramCreationComponent } from './PIA/veiw-program-creation/veiw-program-creation.component';
 import { UpdateProgramExecutionComponent } from './PIA/update-program-execution/update-program-execution.component';
+import { HasRoleDirective } from './app.component'; // Import the directive
+import { ViewParticipateCreationComponent } from './PIA/view-praticipate-creation/view-praticipate-creation.component';
+import { OrganizationsListComponent } from './organizations-list/organizations-list.component';
 
 @NgModule({
     imports: [
@@ -36,6 +39,7 @@ import { UpdateProgramExecutionComponent } from './PIA/update-program-execution/
         FormsModule,
         BrowserAnimationsModule,
         ToastrModule.forRoot({
+            positionClass: 'toast-bottom-right',
             timeOut: 15000, // 15 seconds
             closeButton: true,
             progressBar: true,
@@ -55,7 +59,9 @@ import { UpdateProgramExecutionComponent } from './PIA/update-program-execution/
         ProgramCreationComponent,
         AddParticipantDataComponent,
         VeiwProgramCreationComponent,
-        UpdateProgramExecutionComponent,        
+        UpdateProgramExecutionComponent,
+        HasRoleDirective, // Declare the directive
+        ViewParticipateCreationComponent, OrganizationsListComponent
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

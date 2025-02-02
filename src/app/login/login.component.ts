@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 
 import { AuthenticationService } from '@app/_services';
+import { Role } from '@app/_models/role';
 
 @Component({ templateUrl: 'login.component.html' })
 export class LoginComponent implements OnInit {
@@ -47,14 +48,22 @@ export class LoginComponent implements OnInit {
             .pipe(first())
             .subscribe({
                 next: (res) => {
-                    this.router.navigateByUrl('/program-creation');
-                    // if (res.status === 200) {
-                    //     // get return url from query parameters or default to home page
-                    //     //this.router.navigateByUrl('/program-creation');
-                    // } else if (res.status === 400) {
-                    //     this.error = res.message ? res.message : 'Invalid credentials. Please try again.';
-                    //     this.loading = false;
-                    // }
+                    //this.router.navigateByUrl('/program-creation');
+                    if (res.status === 200) {
+                        // get return url from query parameters or default to home page
+                        this.loading = false;
+                        if(res.data.userRole === Role.Admin){
+                            this.router.navigateByUrl('/veiw-program-creation');
+                        }else if(res.data.userRole === Role.AGENCY_MANAGER
+                            || res.data.userRole === Role.AGENCY_EXECUTOR
+                        ){
+                            this.router.navigateByUrl('/program-creation');
+                        }
+                        
+                    } else if (res.status === 400) {
+                        this.error = res.message ? res.message : 'Invalid credentials. Please try again.';
+                        this.loading = false;
+                    }
                 },
                 error: error => {
                     this.error = 'An error occurred. Please try again later.';

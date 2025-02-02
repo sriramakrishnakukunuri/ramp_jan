@@ -89,12 +89,37 @@
                         <option value="AGENCY_MANAGER">PIA Manager</option>
                         <option value="AGENCY_EXECUTOR">PIA Executive</option>
                         <option value="CALL_CENTER">Call Center</option>
-                        <option value="DEPARTMENT">SPIU / DEPARTMENT</option>
+                        <option value="DEPARTMENT">DEPARTMENT</option>
+                        <option value="SPIU">SPIU</option>
                     </select>
                     <label for="floatingSelect">Type Of User</label>
                     <div *ngIf="f2['userRole'].touched && f2['userRole'].invalid" class="error" style="color: red;">
                         <div *ngIf="f2['userRole'].errors?.['required']">User role is required</div>
                     </div>
+                    </div>
+                </div>
+                <div class="col-12" *ngIf="f2['userRole'].value === 'AGENCY_MANAGER' || f2['userRole'].value === 'AGENCY_EXECUTOR'">
+                    <div class="form-floating mb-3">
+                        <select class="form-select" formControlName="department">
+                            <option value="">Select Department</option>
+                            <option *ngFor="let list of agencyList" value="{{list.agencyId}}">{{list.agencyName}}</option>
+                            <!-- <option value="ALEAP">ALEAP</option>
+                            <option value="WeHub">WeHub</option>
+                            <option value="TIHCL">TIHCL</option> -->
+                        </select>
+                        <label for="department">Department</label>
+                    </div>
+                </div>
+                <div class="col-12" *ngIf="f2['userRole'].value === 'ADMIN' || f2['userRole'].value === 'CALL_CENTER' || f2['userRole'].value === 'DEPARTMENT'">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" formControlName="department" placeholder="Department">
+                        <label for="department">Department</label>
+                    </div>
+                </div>
+                <div class="col-12" *ngIf="f2['userRole'].value === 'SPIU'">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" formControlName="department" placeholder="Department">
+                        <label for="department">Department</label>
                     </div>
                 </div>
                 <div class="col-12">

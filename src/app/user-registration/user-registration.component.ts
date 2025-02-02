@@ -23,8 +23,10 @@ export class UserRegistrationComponent implements OnInit,AfterViewInit {
     private router: Router,) { }
 
     RegisterForm!: FormGroup;
+    agencyList: any = [];
     ngOnInit(): void {
       this.formDetails();
+      this.getAgenciesList()
     }
     ngAfterViewInit() {
       setTimeout(() => {
@@ -61,19 +63,51 @@ export class UserRegistrationComponent implements OnInit,AfterViewInit {
           Validators.pattern(/^[0-9]{10}$/)
         ]),
         userRole: new FormControl("",[Validators.required,]),
+        department: new FormControl(""),
         gender: new FormControl("",[Validators.required,]),
       });
+
+      this.RegisterForm.get('userRole')?.valueChanges.subscribe(value => {
+        this.onUserRoleChange(value);
+      });
     }
+
+    onUserRoleChange(value: string) {
+      const departmentControl = this.RegisterForm.get('department');
+      if (value === 'ADMIN' || value === 'CALL_CENTER' || value === 'DEPARTMENT') {
+        departmentControl?.setValue('Commissionarate of Industries');
+        departmentControl?.disable();
+      } else if (value === 'AGENCY_MANAGER' || value === 'AGENCY_EXECUTOR') {
+        departmentControl?.setValue('');
+        departmentControl?.enable();
+      } else if (value === 'SPIU') {
+        departmentControl?.setValue('GT');
+        departmentControl?.disable();
+      }else {
+        departmentControl?.setValue('');
+        departmentControl?.disable();
+      }
+    }
+
     onModalSubmitRegister(){
       if(this.RegisterForm.invalid){
         return;
       }
       console.log(this.RegisterForm.value);
-      this._commonService.add(APIS.userRegistration.add, this.RegisterForm.value).subscribe((res: any) => {
+      this._commonService.add(APIS.userRegistration.addAgent, this.RegisterForm.value).subscribe((res: any) => {
         this.RegisterForm.reset();
         this.toastrService.success('User Registered Successfully', 'Success');
         
         // this.router.navigate(['/user-registration']);
+      }, (error) => {
+        this.toastrService.error(error.error.message);
+      });
+    }
+
+    getAgenciesList() {
+      this.agencyList = [];
+      this._commonService.getDataByUrl(APIS.masterList.agencyList).subscribe((res: any) => {
+        this.agencyList = res.data;
       }, (error) => {
         this.toastrService.error(error.error.message);
       });

@@ -9,6 +9,8 @@ export const APIS = {
         getLocation: API_BASE_URL + '/agency/locations/',
         getResource: API_BASE_URL + '/agency/resources/',
         addResource: API_BASE_URL + '/resource/save',
+        getProgramsList: API_BASE_URL + '/programs',
+        getSingleProgramsList: API_BASE_URL + '/program/',
         // get: API_BASE_URL + '/program/get',
         // update: API_BASE_URL + '/program/update',
         // delete: API_BASE_URL + '/program/delete',
@@ -18,8 +20,14 @@ export const APIS = {
         getDataByProgramId: API_BASE_URL + '/program/participants/',
         saveOrgnization: API_BASE_URL + '/organization/save',
         getOrgnizationData: API_BASE_URL + '/organization/list',
+        getParticipantList: API_BASE_URL + '/participants',
     },
     userRegistration:{
         add: API_BASE_URL + '/login/user/create',
+        addAgent: API_BASE_URL + '/login/user/create',
+    },
+    masterList: {
+        agencyList: API_BASE_URL + '/agencies',
+        locationList: API_BASE_URL + '/locations',
     }
 }

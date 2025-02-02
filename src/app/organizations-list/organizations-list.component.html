@@ -1,0 +1,83 @@
+<main class="mt-4">
+    <section>
+        <div class="container-fluid">
+
+            <div class="card mb-3">
+                <div class="card-header bg-transparent">
+                    <h6 class="fw-600 mb-2 mb-sm-0 text-green">View Locations</h6>
+                </div>
+                <div class="card-body">
+                    <div class="dtable-container">                        
+                        <table id="view-table-locations" class="display nowrap" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>S.No</th>
+                                    <th>Date</th>
+                                    <th>Program Location</th>
+                                    <th>Latitude</th>
+                                    <th>Longitutde</th>
+                                    <th>Type Of Ownership</th>
+                                    <th>Type Of Venue</th>
+                                    <th>Max Capacity</th>
+                                    <th>Google Map Url</th>
+                                    <th>Agency</th>
+                                    <!-- <th class="text-center">Edit / Delete</th> -->
+                                </tr>
+                            </thead>
+                            <tbody *ngIf="locationsList">
+                                <tr *ngFor="let item of locationsList; let i = index">
+                                    <td class="text-start">{{i+1}}</td>
+                                    <td>{{item?.createdOn | date:'dd-MM-yyyy'}}</td>
+                                    <td>{{item?.locationName}}</td>
+                                    <td>{{item?.latitude}}</td>
+                                    <td>{{item?.longitude}}</td>
+                                    <td>{{item?.ownershipType}}</td>
+                                    <td>{{item?.typeOfVenue}}</td>
+                                    <td>{{item?.capacity}}</td>
+                                    <td>{{item?.googleMapUrl}}</td>
+                                    <td>{{item?.agencyId}}</td>
+                                    <!-- <td class="text-center">
+                                        <button type="button" class="btn btn-default text-lime-green btn-sm"><span class="bi bi-pencil"></span></button>
+                                        <button type="button" class="btn btn-default text-danger btn-sm"><span class="bi bi-trash"></span></button>
+                                    </td> -->
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mb-3">
+                <div class="card-header bg-transparent">
+                    <h6 class="fw-600 mb-2 mb-sm-0 text-green">View Organisations</h6>
+                </div>
+                <div class="card-body">
+                    <div class="dtable-container">                        
+                        <table id="view-table-organization" class="display nowrap" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>S.No</th>
+                                    <th>Organization Name</th>
+                                    <!-- <th class="text-center">Edit / Delete</th> -->
+                                </tr>
+                            </thead>
+                            <tbody *ngIf="organizations">
+                                <tr *ngFor="let item of organizations; let i = index">
+                                    <td class="text-start">{{item?.organizationId}}</td>
+                                    <td>{{item?.organizationName}}</td>
+                                    <!-- <td class="text-center">
+                                        <button type="button" class="btn btn-default text-lime-green btn-sm"><span class="bi bi-pencil"></span></button>
+                                        <button type="button" class="btn btn-default text-danger btn-sm"><span class="bi bi-trash"></span></button>
+                                    </td> -->
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            
+            
+        </div>
+    </section>
+</main>

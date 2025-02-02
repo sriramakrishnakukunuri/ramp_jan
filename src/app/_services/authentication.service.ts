@@ -33,13 +33,13 @@ export class AuthenticationService {
         });   
         return this.http.get<any>(`${environment.apiUrl}/login`, { headers: headers })
             .pipe(map(user => {                
-                // store user details and jwt token in local storage to keep user logged in between page refreshes
-                // if(user.status === 400){
-                //     return user;
-                // }
-                user.role = 'Admin'
-                sessionStorage.setItem('user', JSON.stringify(user));
-                this.userSubject.next(user);
+                //store user details and jwt token in local storage to keep user logged in between page refreshes
+                if(user.status === 400){
+                    return user;
+                }
+                //user.role = 'Admin'
+                sessionStorage.setItem('user', JSON.stringify(user.data));
+                this.userSubject.next(user.data);
                 return user;
             }));
         // return this.http.post<any>(`${environment.apiUrl}/users/authenticate`, { username, password })

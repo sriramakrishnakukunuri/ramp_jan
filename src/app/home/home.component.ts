@@ -54,13 +54,13 @@ export class HomeComponent {
     ngOnInit() {
         
         this.loading = true;
-        this.userService.getById(this.user.id).pipe(first()).subscribe(user => {
+        this.userService.getById(this.user.userId).pipe(first()).subscribe(user => {
             this.loading = false;
             this.userFromApi = user;
         });
-        this.getCurriculmData()
-        this.getSourceType()
-        this.getSourcePerson()
+        //this.getCurriculmData()
+        //this.getSourceType()
+        //this.getSourcePerson()
     }
 
     applyFilter(event: Event) {
