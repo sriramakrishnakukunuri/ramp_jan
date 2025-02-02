@@ -7,12 +7,14 @@
                         <div class="col-12 col-sm-7 col-md-8 col-lg-9">
                             <h6 class="fw-600 mb-2 mb-sm-0 text-green">View Participants</h6>
                         </div>
-                        <div class="col-12 col-sm-5 col-md-4 col-lg-3">
-                            <select class="form-select">
-                                <option value="">Agency</option>
-                                <option *ngFor="let list of agencyList" value="{{list.agencyId}}">{{list.agencyName}}</option>
-                            </select>
-                        </div>
+                        <ng-container *ngIf="loginsessionDetails?.userRole == 'ADMIN'">
+                            <div class="col-12 col-sm-5 col-md-4 col-lg-3">
+                                <select class="form-select">
+                                    <option value="">Agency</option>
+                                    <option *ngFor="let list of agencyList" value="{{list.agencyId}}">{{list.agencyName}}</option>
+                                </select>
+                            </div>
+                        </ng-container>                        
                     </div>
                 </div>
                 <div class="card-body">
@@ -46,7 +48,7 @@
                                     
                                     <td class="text-start">{{i+1}}</td>
                                     <td>{{item?.AspirantData=='Aspirant'?'Yes':'No'}}</td>
-                                    <td >{{item?.AspirantData=='Aspirant'?'':item?.organisationName}}</td>
+                                    <td >{{item?.AspirantData=='Aspirant'?'':item?.organizationName}}</td>
                                     <td>{{item?.participantName}}</td>
                                     <td>{{item?.gender}}</td>
                                     <td>{{item?.disability}}</td>

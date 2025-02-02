@@ -22,7 +22,7 @@ export class ProgramCreationComponent implements OnInit, AfterViewInit {
   programCreationSub!: FormGroup;
   locationForm!: FormGroup;
   programId: string | null = null;
-
+  agencyId:any
   constructor(
     private fb: FormBuilder,
     private toastrService: ToastrService,
@@ -33,8 +33,8 @@ export class ProgramCreationComponent implements OnInit, AfterViewInit {
     this.formDetails();
     this.formDetailsTwo();
     this.formDetailsLocation();
-    this.getProgramLocation();
-    this.getSessionResource();
+    
+    this.agencyId = JSON.parse(sessionStorage.getItem('user') || '{}').agencyId;
     this.modalFormStype = this.fb.group({
       name: ['', Validators.required],
       mobileNo: ['', [Validators.required, Validators.pattern(/^[0-9]{10}$/)]],
@@ -45,8 +45,10 @@ export class ProgramCreationComponent implements OnInit, AfterViewInit {
       specialization: ['', Validators.required],
       briefDescription: ['', Validators.required],
       gender: ['', Validators.required],
-      agencyIds: [['1']],
+      agencyIds: [[this.agencyId]],
     });
+    this.getProgramLocation();
+    this.getSessionResource();
   }
 
   ngOnInit(): void {
@@ -156,7 +158,7 @@ export class ProgramCreationComponent implements OnInit, AfterViewInit {
 
   onAddRow(index: any) {
     const control = this.programCreationSub?.get("details") as FormArray;
-    control.insert(index + 1, this.initiateForm());
+    control.push(this.initiateForm());
   }
 
   onRemoveRow(rowIndex: number) {
@@ -178,16 +180,19 @@ export class ProgramCreationComponent implements OnInit, AfterViewInit {
     return timeValue;
   }
 
+  getProgrameIdBasesOnSave:any
   submitProgramCreation() {
+    this.getProgrameIdBasesOnSave = ''
     let maindata = { ...this.programCreationMain.value };
     maindata['startTime'] = this.formatTime(maindata['startTime'])
     maindata['endTime'] = this.formatTime(maindata['endTime'])
     maindata['startDate'] = moment(maindata['startDate']).format('DD-MM-YYYY')
     maindata['endDate'] = moment(maindata['endDate']).format('DD-MM-YYYY')
     maindata['locationId'] = 1
-    maindata['agencyId'] = 1
+    maindata['agencyId'] = this.agencyId
     const programCreationCall = this._commonService.add(APIS.programCreation.addprogram, maindata).subscribe({
       next: (data) => {
+        this.getProgrameIdBasesOnSave = data.data
         this.toastrService.success('Program Created Successfully', "Program Creation Success!");
         this.programCreationMain.reset();
         this.programCreationSub.reset();
@@ -206,7 +211,7 @@ export class ProgramCreationComponent implements OnInit, AfterViewInit {
     maindata['activityId'] = 1;
     maindata['subActivityId'] = 1;
     maindata['locationId'] = 1;
-    maindata['agencyId'] = 1;
+    maindata['agencyId'] = this.agencyId;
     maindata['startTime'] = this.formatTime(maindata['startTime']);
     maindata['endTime'] = this.formatTime(maindata['endTime']);
     maindata['startDate'] = moment(maindata['startDate']).format('DD-MM-YYYY');
@@ -225,9 +230,31 @@ export class ProgramCreationComponent implements OnInit, AfterViewInit {
         element['startTime'] = this.formatTime(element['startTime']);
         element['endTime'] = this.formatTime(element['endTime']);
         element['sessionDate'] = moment(element['sessionDate']).format('DD-MM-YYYY');
-        element['programId'] = Number(element['programId'] ? element['programId'] : 1);
+        if(this.programId) {
+          element['programId'] = Number(this.programId);
+        }else if(this.getProgrameIdBasesOnSave){
+          element['programId'] = Number(this.getProgrameIdBasesOnSave.programId);
+        }else {
+          element['programId'] = Number(element['programId'] ? element['programId'] : 1);
+        }        
         element['resourceId'] = Number(element['resourceId']);
         delete element['uploaFiles'];
+        //delete element['meterialType'];
+        formData.set("data", JSON.stringify(element));
+      }if(element['uploaFiles'] === null){
+        element['startTime'] = this.formatTime(element['startTime']);
+        element['endTime'] = this.formatTime(element['endTime']);
+        element['sessionDate'] = moment(element['sessionDate']).format('DD-MM-YYYY');
+        if(this.programId) {
+          element['programId'] = Number(this.programId);
+        }else if(this.getProgrameIdBasesOnSave){
+          element['programId'] = Number(this.getProgrameIdBasesOnSave.programId);
+        }else {
+          element['programId'] = Number(element['programId'] ? element['programId'] : 1);
+        }        
+        element['resourceId'] = Number(element['resourceId']);
+        delete element['uploaFiles'];
+        delete element['videoUrls'];
         //delete element['meterialType'];
         formData.set("data", JSON.stringify(element));
       }
@@ -297,7 +324,7 @@ export class ProgramCreationComponent implements OnInit, AfterViewInit {
   onModalSubmitLocation() {
     let payload: any = { ...this.locationForm.value };
     payload['typeOfVenue'] == 'Others' ? payload['typeOfVenue'] = payload['OthersType'] : payload['typeOfVenue'];
-    payload['agencyId'] = '1';
+    payload['agencyId'] = this.agencyId;
     delete payload['OthersType'];
     this._commonService
       .add(APIS.programCreation.addLocation, payload)
@@ -316,7 +343,7 @@ export class ProgramCreationComponent implements OnInit, AfterViewInit {
   getProgramLocationData: any = [];
   getProgramLocation() {
     this._commonService
-      .getById(APIS.programCreation.getLocation, '1')
+      .getById(APIS.programCreation.getLocation, this.agencyId)
       .subscribe({
         next: (data: any) => {
           this.getProgramLocationData = data.data;
@@ -330,7 +357,7 @@ export class ProgramCreationComponent implements OnInit, AfterViewInit {
   getSessionResourceData: any = [];
   getSessionResource() {
     this._commonService
-      .getById(APIS.programCreation.getResource, '1')
+      .getById(APIS.programCreation.getResource, this.agencyId)
       .subscribe({
         next: (data: any) => {
           this.getSessionResourceData = data.data;
@@ -405,24 +432,29 @@ export class ProgramCreationComponent implements OnInit, AfterViewInit {
 
         const sessionArray = this.programCreationSub.get('details') as FormArray;
         sessionArray.clear();
-        program.programSessionList.forEach((session: any, index: any) => {
-          const sessionGroup = this.initiateForm();
-          sessionGroup.patchValue({
-            sessionDate: moment(session.sessionDate).format('YYYY-MM-DD'),
-            startTime: this.convertTo24HourFormat(session.startTime),
-            endTime: this.convertTo24HourFormat(session.endTime),
-            sessionTypeName: session.sessionTypeName,
-            sessionTypeMethodology: session.sessionTypeMethodology,
-            sessionDetails: session.sessionDetails,
-            resourceId: session.resourceId,
-            //meterialType: session.meterialType,
-            uploaFiles: null,
-            sessionStreamingUrl: session.sessionStreamingUrl,
-            videoUrls: session.videoUrls,
+        if(program.programSessionList.length) {
+          program.programSessionList.forEach((session: any, index: any) => {
+            const sessionGroup = this.initiateForm();
+            sessionGroup.patchValue({
+              sessionDate: moment(session.sessionDate).format('YYYY-MM-DD'),
+              startTime: this.convertTo24HourFormat(session.startTime),
+              endTime: this.convertTo24HourFormat(session.endTime),
+              sessionTypeName: session.sessionTypeName,
+              sessionTypeMethodology: session.sessionTypeMethodology,
+              sessionDetails: session.sessionDetails,
+              resourceId: session.resourceId,
+              //meterialType: session.meterialType,
+              uploaFiles: null,
+              sessionStreamingUrl: session.sessionStreamingUrl,
+              videoUrls: session.videoUrls,
+            });
+            sessionArray.push(sessionGroup);
           });
-          sessionArray.push(sessionGroup);
-        });
-        this.reinitializeDataTable();
+          //this.reinitializeDataTable();
+        }else {
+          (this.programCreationSub?.controls["details"] as FormArray).clear();
+          this.onAddRow(0);
+        }
       },
       error: (err: any) => {
         this.toastrService.error(err.message, "Error fetching program details!");
@@ -455,6 +487,7 @@ export class ProgramCreationComponent implements OnInit, AfterViewInit {
       paging:         false,  
       info: false,   
       searching: false,  
+      order: [[0, 'asc']],
       destroy: true, // Ensure reinitialization doesn't cause issues
       });
   }

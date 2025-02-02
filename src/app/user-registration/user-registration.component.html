@@ -23,6 +23,7 @@
                                 <th>Email ID</th>
                                 <th>Mobil Number</th>
                                 <th>Gender</th>
+                                <th>Agency</th>
                                 <th class="text-center">Edit/Delete</th>
                             </tr>
                         </thead>
@@ -103,14 +104,14 @@
                             *ngIf="f2['userRole'].value === 'AGENCY_MANAGER' || f2['userRole'].value === 'AGENCY_EXECUTOR'">
                             <div class="form-floating mb-3">
                                 <select class="form-select" formControlName="department">
-                                    <option value="">Select Department</option>
+                                    <option value="">Select Agency</option>
                                     <option *ngFor="let list of agencyList" value="{{list.agencyId}}">
                                         {{list.agencyName}}</option>
                                     <!-- <option value="ALEAP">ALEAP</option>
                             <option value="WeHub">WeHub</option>
                             <option value="TIHCL">TIHCL</option> -->
                                 </select>
-                                <label for="department">Department</label>
+                                <label for="department">Agency</label>
                             </div>
                         </div>
                         <div class="col-12"

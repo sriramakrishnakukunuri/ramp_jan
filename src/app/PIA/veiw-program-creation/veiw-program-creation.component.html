@@ -7,12 +7,14 @@
                         <div class="col-12 col-sm-7 col-md-8 col-lg-9">
                             <h6 class="fw-600 mb-2 mb-sm-0 text-green">View Programs</h6>
                         </div>
-                        <div class="col-12 col-sm-5 col-md-4 col-lg-3">
-                            <select class="form-select">
-                                <option value="">Agency</option>
-                                <option *ngFor="let list of agencyList" value="{{list.agencyId}}">{{list.agencyName}}</option>
-                            </select>
-                        </div>
+                        <ng-container *ngIf="loginsessionDetails?.userRole == 'ADMIN'">
+                            <div class="col-12 col-sm-5 col-md-4 col-lg-3">
+                                <select class="form-select">
+                                    <option value="">Agency</option>
+                                    <option *ngFor="let list of agencyList" value="{{list.agencyId}}">{{list.agencyName}}</option>
+                                </select>
+                            </div>
+                        </ng-container>                        
                     </div>
                 </div>
                 <div class="card-body">
@@ -34,7 +36,7 @@
                                     <th>SPOC Name</th>
                                     <th>SPOC Contact No.</th>
                                     <th>Program Location</th>
-                                    <th class="text-center">Actions</th>
+                                    <th class="text-center" *ngIf="loginsessionDetails?.userRole == 'AGENCY_MANAGER' || loginsessionDetails?.userRole == 'AGENCY_EXECUTOR'">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -53,7 +55,7 @@
                                     <td>{{ item.spocName }}</td>
                                     <td>{{ item.spocContactNo }}</td>
                                     <td>{{ item.programLocation }}</td>                                    
-                                    <td>
+                                    <td *ngIf="loginsessionDetails?.userRole == 'AGENCY_MANAGER' || loginsessionDetails?.userRole == 'AGENCY_EXECUTOR'">
                                         <button type="button" class="btn btn-default btn-sm text-lime-green" data-bs-toggle="modal" data-bs-target="#viewModal" (click)="sessionDetails(item)" title="View"><span class="bi bi-eye"></span></button>
                                         <button type="button" class="btn btn-default btn-sm text-primary mx-2" title="Edit" (click)="editProgram(item)"><span class="bi bi-pencil"></span></button>
                                         <button type="button" class="btn btn-default btn-sm text-danger" title="Delete"><span class="bi bi-trash"></span></button>

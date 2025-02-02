@@ -16,12 +16,16 @@ export class OrganizationsListComponent implements OnInit {
   organizations: any = '';
   locationsList: any = '';
   displayedColumns: string[] = ['action', 'organizationName'];
-
-  constructor(private http: HttpClient) { }
+  agencyList: any = [];
+  loginsessionDetails: any;
+  constructor(private http: HttpClient) { 
+    this.loginsessionDetails = JSON.parse(sessionStorage.getItem('user') || '{}');    
+  }
 
   ngOnInit(): void {
     this.fetchOrganizations();
     this.fetchLocations()
+    this.getAgenciesList()
   }
 
   ngAfterViewInit() {
@@ -99,5 +103,14 @@ export class OrganizationsListComponent implements OnInit {
     setTimeout(() => {
       this.initializeDataTableLocations();
     }, 0);
+  }
+
+  getAgenciesList() {
+    this.agencyList = [];
+    this.http.get<any[]>(APIS.masterList.agencyList).subscribe((res: any) => {
+      this.agencyList = res.data;
+    }, (error) => {
+      
+    });
   }
 }

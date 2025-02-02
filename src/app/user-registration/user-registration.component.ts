@@ -93,8 +93,36 @@ export class UserRegistrationComponent implements OnInit,AfterViewInit {
       if(this.RegisterForm.invalid){
         return;
       }
-      console.log(this.RegisterForm.value);
-      this._commonService.add(APIS.userRegistration.addAgent, this.RegisterForm.value).subscribe((res: any) => {
+      
+      let url = '';
+      let payload = {};
+      if(this.RegisterForm.value.userRole === 'ADMIN' 
+        || this.RegisterForm.value.userRole === 'CALL_CENTER'
+        || this.RegisterForm.value.userRole === 'DEPARTMENT'
+        || this.RegisterForm.value.userRole === 'SPIU') {
+        url = APIS.userRegistration.add;
+        payload = {
+          "mobileNo": this.RegisterForm.value.mobile,
+          "email": this.RegisterForm.value.email,
+          "firstName": this.RegisterForm.value.firstName,
+          "lastName": this.RegisterForm.value.lastName,
+          "userRole": this.RegisterForm.value.userRole,
+          "gender": this.RegisterForm.value.gender
+        }
+      }else {
+        url = APIS.userRegistration.addAgent;
+        payload = {
+          "mobileNo": this.RegisterForm.value.mobile,
+          "email": this.RegisterForm.value.email,
+          "firstName": this.RegisterForm.value.firstName,
+          "lastName": this.RegisterForm.value.lastName,
+          "userRole": this.RegisterForm.value.userRole,
+          "gender": this.RegisterForm.value.gender,
+          "agencyId": this.RegisterForm.value.department
+        }
+      }
+      console.log(payload,url);
+      this._commonService.add(url, payload).subscribe((res: any) => {
         this.RegisterForm.reset();
         this.toastrService.success('User Registered Successfully', 'Success');
         

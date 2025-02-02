@@ -17,10 +17,13 @@ export class ViewParticipateCreationComponent implements OnInit {
   localStorageData:any
   sessionDetailsList:any
   agencyList: any = [];
+  loginsessionDetails: any;
   constructor(
     private toastrService: ToastrService,
     private _commonService: CommonServiceService,
-  ) { }
+  ) { 
+    this.loginsessionDetails = JSON.parse(sessionStorage.getItem('user') || '{}');    
+  }
 
   ngOnInit(): void {    
     this.getProgramDetails()

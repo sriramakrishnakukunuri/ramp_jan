@@ -19,11 +19,14 @@ export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
   tableList: any;
   dataTable: any;
   agencyList: any = [];
+  loginsessionDetails: any;
   constructor(
     private toastrService: ToastrService,
     private _commonService: CommonServiceService,
     private router: Router,
-  ) { }
+  ) { 
+    this.loginsessionDetails = JSON.parse(sessionStorage.getItem('user') || '{}');    
+  }
 
   ngOnInit(): void {
     this.getProgramDetails();
