@@ -66,7 +66,7 @@ export class LoginComponent implements OnInit {
                     }
                 },
                 error: error => {
-                    this.error = 'An error occurred. Please try again later.';
+                    this.error = 'Server Error. Please try again later.';
                     this.loading = false;
                 }
             });

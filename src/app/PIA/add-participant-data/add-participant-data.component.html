@@ -22,11 +22,11 @@
                                 <!-- <label class="fs-md fw-600 mb-1">Post Training Assessment</label> -->
                                 <div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" formControlName="AspirantData" name="AspirantData" id="Aspirant" value="Aspirant">
+                                        <input class="form-check-input" type="radio" formControlName="AspirantData" name="AspirantData" (change)="OragnizationList($event)" id="Aspirant" value="Aspirant">
                                         <label class="form-check-label" for="Aspirant">Aspirant</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" formControlName="AspirantData" name="AspirantData" id="Existing Oragnization" value="Existing Oragnization">
+                                        <input class="form-check-input" type="radio" formControlName="AspirantData" name="AspirantData" (change)="OragnizationList($event)" id="Existing Oragnization" value="Existing Oragnization">
                                         <label class="form-check-label" for="Existing Oragnization">Existing Oragnization</label>
                                     </div>
                                 </div>
@@ -51,7 +51,16 @@
                                     <label for="code">Code</label>
                                 </div>
                             </div> -->
-                           
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                <div class="form-floating mb-3">
+                                    <select class="form-select" id="programId" formControlName="programIds">
+                                        <option value="">Select Program</option>
+                                        <option *ngFor="let list of programList" value="{{list.programId}}">{{list.programTitle}}</option>
+                                    </select>
+                                    <label for="programId">Programs</label>
+                                </div>
+                                
+                            </div>
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                 <div class="form-floating mb-3">
                                     <input type="text" class="form-control" id="participantName" formControlName="participantName" placeholder="">
@@ -213,16 +222,15 @@
                             <h6 class="fw-600 mb-2 mb-sm-0">Participant Data</h6>
                         </div>
                         <div class="col-12 col-sm-5 col-md-4 col-lg-3">
-                            <select class="form-select" [(ngModel)]="programIds">
+                            <select class="form-select" [(ngModel)]="programIds" (change)="dropdownProgramsList($event,'table')">
                                 <option value="">Select Program</option>
-                                <option value="1">Program1</option>
-                                <option value="2">Program2</option>
+                                <option *ngFor="let list of programList" value="{{list.programId}}">{{list.programTitle}}</option>
                             </select>
                         </div>
                     </div>
                 </div>
                 <div class="card-body">
-                    <table id="creation-table" class="table table-borderless table-striped nowrap">
+                    <table id="view-table-participant" class="table table-borderless table-striped nowrap">
                         <thead>
                             <tr>
                                 <th>S.No</th>
@@ -245,11 +253,11 @@
                                 <th class="text-center">Edit / Delete</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody *ngIf="submitedData">
                             <tr  *ngFor="let item of submitedData; let i=index">
                                 <td class="text-start">{{i+1}}</td>
                                 <td>{{item?.AspirantData=='Aspirant'?'Yes':'No'}}</td>
-                                <td >{{item?.AspirantData=='Aspirant'?'':item?.organisationName}}</td>
+                                <td >{{item?.AspirantData=='Aspirant'?'':item?.organizationName}}</td>
                                 <td>{{item?.participantName}}</td>
                                 <td>{{item?.gender}}</td>
                                 <td>{{item?.disability}}</td>
@@ -294,24 +302,36 @@
 
                                     <div class="d-flex justify-content-between align-items-center">
                                         <label class="form-label fs-md fw-600">Type of Organisation</label>
-                                        <a class="btn btn-default" id="iconChange" data-bs-toggle="collapse" href="#collapseExampleOne" aria-expanded="false" aria-controls="collapseExample">
+                                        <!-- <a class="btn btn-default" id="iconChange" data-bs-toggle="collapse" href="#collapseExampleOne" aria-expanded="false" aria-controls="collapseExample">
                                             <span class="bi bi-chevron-down"></span>
-                                        </a>
+                                        </a> -->
                                     </div>
 
-                                    <div class="collapse" id="collapseExampleOne">
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="organizationType" id="SHG" value="SHG" (change)="typeOragnization($event)"  formControlName="organizationType">
-                                            <label class="form-check-label fs-md" for="SHG">SHG</label>
+                                    <div class="" id="">
+                                        <div class="row">
+                                            <div class="col-12 col-sm-6 col-md-6 col-lg-6">
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="organizationType" id="SHG" value="SHG" (change)="typeOragnization($event)"  formControlName="organizationType">
+                                                    <label class="form-check-label fs-md" for="SHG">SHG</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="organizationType" id="MSME" value="MSME" (change)="typeOragnization($event)"  formControlName="organizationType">
+                                                    <label class="form-check-label fs-md" for="MSME">MSME</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="organizationType" id="startup" value="Start Up" (change)="typeOragnization($event)"  formControlName="organizationType">
+                                                    <label class="form-check-label fs-md" for="startup">Start Up</label>
+                                                </div>
+                                            </div>
+                                            <!-- <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                                <div class="form-floating mb-3">
+                                                    <input type="text" class="form-control" id="organizationName" placeholder="" formControlName="organizationName">
+                                                    <label for="organizationName">Organization Name</label>
+                                                </div>
+                                            </div> -->
                                         </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="organizationType" id="MSME" value="MSME" (change)="typeOragnization($event)"  formControlName="organizationType">
-                                            <label class="form-check-label fs-md" for="MSME">MSME</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="organizationType" id="startup" value="Start Up" (change)="typeOragnization($event)"  formControlName="organizationType">
-                                            <label class="form-check-label fs-md" for="startup">Start Up</label>
-                                        </div>
+                                        
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -449,6 +469,12 @@
                                             <input class="form-check-input" type="radio" name="category" id="Medium" value="Medium" formControlName="organizationCategory">
                                             <label class="form-check-label fs-md" for="Medium">Medium</label>
                                         </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                    <div class="form-floating mb-3">
+                                        <input type="text" class="form-control" id="organizationName" placeholder="" formControlName="organizationName">
+                                        <label for="organizationName">Organization Name</label>
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-6 col-md-4 col-lg-3">
