@@ -29,17 +29,34 @@ export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.getProgramDetails();
-    this.getAgenciesList()
+    console.log(this.loginsessionDetails);
+    if(this.loginsessionDetails.userRole == 'ADMIN') {
+      this.getAgenciesList()
+    }
+    else{
+      this.getProgramDetails();
+    }
+    
   }
 
   ngAfterViewInit() {
     this.initializeDataTable();
   }
+  GetProgramsByAgency(event:any){
+    this._commonService.getDataByUrl(APIS.programCreation.getProgramsListByAgency+event).subscribe({
+      next: (dataList: any) => {
+        this.tableList = dataList.data;
+        this.reinitializeDataTable();
+      },
+      error: (error: any) => {
+        this.toastrService.error(error.error.message);
+      }
+    });
+  }
 
   getProgramDetails(): any {
     this.tableList = '';
-    this._commonService.getDataByUrl(APIS.programCreation.getProgramsList).subscribe({
+    this._commonService.getDataByUrl(APIS.programCreation.getProgramsListByAgency+this.loginsessionDetails.agencyId).subscribe({
       next: (dataList: any) => {
         this.tableList = dataList.data;
         this.reinitializeDataTable();
@@ -84,6 +101,7 @@ export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
     this.agencyList = [];
     this._commonService.getDataByUrl(APIS.masterList.agencyList).subscribe((res: any) => {
       this.agencyList = res.data;
+      this.GetProgramsByAgency(res.data[0].agencyId);
     }, (error) => {
       this.toastrService.error(error.error.message);
     });

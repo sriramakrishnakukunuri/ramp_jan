@@ -20,6 +20,7 @@ export class OrganizationsListComponent implements OnInit {
   displayedColumns: string[] = ['action', 'organizationName'];
   agencyList: any = [];
   loginsessionDetails: any;
+  SelectedCategory: any='Location';
   constructor(private http: HttpClient) { 
     this.loginsessionDetails = JSON.parse(sessionStorage.getItem('user') || '{}');    
   }
@@ -34,7 +35,17 @@ export class OrganizationsListComponent implements OnInit {
   ngAfterViewInit() {
     
   }
-
+  getDataByCategory(val:any){
+    this.SelectedCategory = val;
+    if(val == 'Location'){
+      this.fetchLocations()
+    }
+    else if(val == 'Resource'){
+      this.fetchResources(this.agencyList[0].agencyId)
+    }else{
+      this.fetchOrganizations()
+    }
+  }
   getLocationsByAgency(event: any) {
     let agencyId = event.target.value;
     this.locationsList = '';
