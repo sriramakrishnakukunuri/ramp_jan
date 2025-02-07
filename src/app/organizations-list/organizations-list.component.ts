@@ -21,6 +21,7 @@ export class OrganizationsListComponent implements OnInit {
   agencyList: any = [];
   loginsessionDetails: any;
   SelectedCategory: any='Location';
+  dataTableResources:any
   constructor(private http: HttpClient) { 
     this.loginsessionDetails = JSON.parse(sessionStorage.getItem('user') || '{}');    
   }
@@ -41,7 +42,7 @@ export class OrganizationsListComponent implements OnInit {
       this.fetchLocations()
     }
     else if(val == 'Resource'){
-      this.fetchResources(this.agencyList[0].agencyId)
+      this.getResourcesByAgency(this.agencyList[0].agencyId)
     }else{
       this.fetchOrganizations()
     }
@@ -49,17 +50,18 @@ export class OrganizationsListComponent implements OnInit {
   getLocationsByAgency(event: any) {
     let agencyId = event.target.value;
     this.locationsList = '';
-    this.http.get<any[]>(APIS.programCreation.getLocation +'/'+agencyId).subscribe((data:any) => {
+    this.http.get<any[]>(APIS.programCreation.getLocationByAgency +'/'+agencyId).subscribe((data:any) => {
       this.locationsList = data.data;
       this.reinitializeDataTableLocations();
     });
   }
 
   getResourcesByAgency(event: any) {
-    let agencyId = event.target.value;
+    let agencyId = event;
     this.resources = '';
     this.http.get<any[]>(APIS.programCreation.getResource + '/'+agencyId).subscribe((data:any) => {
       this.resources = data.data;
+      this.reinitializeDataTableResources();
     });
   }
 
@@ -126,7 +128,7 @@ export class OrganizationsListComponent implements OnInit {
   }
 
   initializeDataTableResources() {
-    this.dataTableResources = new DataTable('#view-table-resources', {              
+    this.dataTableResources = new DataTable('#view-table-resourcePerson', {              
       // scrollX: true,
       // scrollCollapse: true,    
       // responsive: true,    
@@ -163,7 +165,7 @@ export class OrganizationsListComponent implements OnInit {
       this.initializeDataTableLocations();
     }, 0);
   }
-  dataTableResources:any
+  
   reinitializeDataTableResources() {
     if (this.dataTableResources) {
       this.dataTableResources.destroy();
@@ -177,7 +179,7 @@ export class OrganizationsListComponent implements OnInit {
     this.agencyList = [];
     this.http.get<any[]>(APIS.masterList.agencyList).subscribe((res: any) => {
       this.agencyList = res.data;
-      this.fetchResources(this.agencyList[0].agencyId);
+      this.getResourcesByAgency(this.agencyList[0].agencyId);
     }, (error) => {
       
     });

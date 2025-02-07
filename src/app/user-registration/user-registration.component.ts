@@ -148,8 +148,10 @@ export class UserRegistrationComponent implements OnInit,AfterViewInit {
       this._commonService.getDataByUrl(APIS.masterList.getUserList).subscribe({
         next: (dataList: any) => {
           this.userList = dataList.data
+          console.log(this.userList);
           
         },error: (error: any) => {
+          console.log(error);
 
         }
       });

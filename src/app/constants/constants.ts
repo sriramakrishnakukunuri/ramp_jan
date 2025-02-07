@@ -7,6 +7,7 @@ export const APIS = {
         addSessions: API_BASE_URL + '/program/session/create',
         addLocation: API_BASE_URL + '/location/save',
         getLocation: API_BASE_URL + '/agency/locations/',
+        getLocationByAgency: API_BASE_URL + '/agency/locationdetails/',
         getResource: API_BASE_URL + '/agency/resources/',
         addResource: API_BASE_URL + '/resource/save',
         getProgramsList: API_BASE_URL + '/programs',
