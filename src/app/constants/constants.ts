@@ -10,6 +10,7 @@ export const APIS = {
         getResource: API_BASE_URL + '/agency/resources/',
         addResource: API_BASE_URL + '/resource/save',
         getProgramsList: API_BASE_URL + '/programs',
+        getProgramsListByAgency: API_BASE_URL + '/agency/programs/',
         getSingleProgramsList: API_BASE_URL + '/program/',
         // get: API_BASE_URL + '/program/get',
         // update: API_BASE_URL + '/program/update',

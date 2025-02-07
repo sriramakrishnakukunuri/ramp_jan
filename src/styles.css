@@ -13954,7 +13954,7 @@ table.dataTable tr.dt-hasChild td.dt-control:before {
 }
 table.dataTable thead > tr > th {
   font-size: 14px;
-  font-weight: 600;
+  font-weight: bold;
 }
 table.dataTable thead > tr > th:active {
   outline: none;
@@ -14827,8 +14827,12 @@ small {
   color: #e5fff2;
 }
 
-.bg-lime-green {
+.bg-lime-green, table>thead {
   background-color: #07C540;
+}
+
+table>thead{
+  color: #fff;
 }
 
 .vh-80 {
