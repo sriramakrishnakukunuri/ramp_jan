@@ -27,9 +27,9 @@ export class OrganizationsListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    //this.fetchOrganizations();
-    this.fetchLocations()
     this.getAgenciesList()
+    //this.fetchOrganizations();
+    this.fetchLocations()   
     
   }
 
