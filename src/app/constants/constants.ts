@@ -32,6 +32,6 @@ export const APIS = {
     masterList: {
         agencyList: API_BASE_URL + '/agencies',
         locationList: API_BASE_URL + '/locations',
-        getUserList: API_BASE_URL + '/users',
+        getUserList: API_BASE_URL + '/login/allusrs',
     }
 }
