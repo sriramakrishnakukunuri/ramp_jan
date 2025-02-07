@@ -27,7 +27,7 @@ export class OrganizationsListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.fetchOrganizations();
+    //this.fetchOrganizations();
     this.fetchLocations()
     this.getAgenciesList()
     
@@ -37,15 +37,16 @@ export class OrganizationsListComponent implements OnInit {
     
   }
   getDataByCategory(val:any){
-    this.SelectedCategory = val;
+    
     if(val == 'Location'){
       this.fetchLocations()
     }
-    else if(val == 'Resource'){
-      this.getResourcesByAgency(this.agencyList[0].agencyId)
+    else if(val == 'Resources'){
+      this.getResourcesByAgency()
     }else{
       this.fetchOrganizations()
     }
+    this.SelectedCategory = val;
   }
   getLocationsByAgency(event: any) {
     let agencyId = event.target.value;
@@ -56,7 +57,12 @@ export class OrganizationsListComponent implements OnInit {
     });
   }
 
-  getResourcesByAgency(event: any) {
+  getResourcesByAgency(event?: any) {
+    if(event){
+      event = event
+    }else {
+      event = this.agencyList[0].agencyId;
+    }
     let agencyId = event;
     this.resources = '';
     this.http.get<any[]>(APIS.programCreation.getResource + '/'+agencyId).subscribe((data:any) => {
@@ -128,7 +134,7 @@ export class OrganizationsListComponent implements OnInit {
   }
 
   initializeDataTableResources() {
-    this.dataTableResources = new DataTable('#view-table-resourcePerson', {              
+    this.dataTableResources = new DataTable('#view-table-resourcePerson1', {              
       // scrollX: true,
       // scrollCollapse: true,    
       // responsive: true,    
@@ -143,7 +149,7 @@ export class OrganizationsListComponent implements OnInit {
       info: false,   
       searching: false,  
       destroy: true, // Ensure reinitialization doesn't cause issues
-      });
+      });     
   }
 
   dataTable: any;
@@ -179,7 +185,7 @@ export class OrganizationsListComponent implements OnInit {
     this.agencyList = [];
     this.http.get<any[]>(APIS.masterList.agencyList).subscribe((res: any) => {
       this.agencyList = res.data;
-      this.getResourcesByAgency(this.agencyList[0].agencyId);
+      //this.getResourcesByAgency(this.agencyList[0].agencyId);
     }, (error) => {
       
     });

@@ -22,7 +22,7 @@
                 <div class="col-12 col-sm-6 col-md-4 col-lg-2">
                     <a href="javascript:;">
                         <div class="card text-center p-3 mb-4">
-                            <div class="d-flex align-items-center">
+                            <div class="d-flex align-items-center" (click)="getDataByCategory('Resources')">
                                 <div class="symbol me-3">
                                     <div class="symbol-label bg-light-danger">
                                         <span class="bi bi-gear text-danger fs-4"></span>
@@ -30,7 +30,7 @@
                                 </div>
                                 <div>
                                     <!-- <h4 class="text-dark fw-bold mb-1">100</h4> -->
-                                    <h6 class="text-muted fs-md fw-500 mb-0"> <a (click)="getDataByCategory('Resources')">Resources </a> </h6>
+                                    <h6 class="text-muted fs-md fw-500 mb-0"> <a>Resources </a> </h6>
                                 </div>
                             </div>
                         </div>
@@ -133,7 +133,7 @@
                 </div>
                 <div class="card-body">
                     <div class="dtable-container">                        
-                        <table id="view-table-resourcePerson" class="display nowrap" style="width:100%">
+                        <table id="view-table-resourcePerson1" class="display nowrap" style="width:100%">
                             <thead>
                                 <tr>
                                     <th>S.No</th>
