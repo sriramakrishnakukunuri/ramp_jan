@@ -9,8 +9,7 @@
                         </div>
                         <ng-container *ngIf="loginsessionDetails?.userRole == 'ADMIN'">
                             <div class="col-12 col-sm-5 col-md-4 col-lg-3">
-                                <select class="form-select">
-                                    <option value="">Agency</option>
+                                <select class="form-select" [(ngModel)]="selectedAgencyId" (change)="getParticipateListByAgency($event)">                                    
                                     <option *ngFor="let list of agencyList" value="{{list.agencyId}}">{{list.agencyName}}</option>
                                 </select>
                             </div>

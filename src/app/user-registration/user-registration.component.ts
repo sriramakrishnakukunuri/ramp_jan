@@ -24,29 +24,31 @@ export class UserRegistrationComponent implements OnInit,AfterViewInit {
 
     RegisterForm!: FormGroup;
     agencyList: any = [];
+    userList:any;
     ngOnInit(): void {
       this.formDetails();
       this.getAgenciesList()
+      this.getAllUsersList()
     }
     ngAfterViewInit() {
-      setTimeout(() => {
-        new DataTable('#view-table', {              
-        // scrollX: true,
-        // scrollCollapse: true,    
-        // responsive: true,    
-        // paging: true,
-        // searching: true,
-        // ordering: true,
-        scrollY: "415px",     
-        scrollX:        true,
-        scrollCollapse: true,
-        autoWidth:         true,  
-        paging:         false,  
-        info: false,   
-        searching: false,  
-        destroy: true, // Ensure reinitialization doesn't cause issues
-        });
-      }, 500);
+      // setTimeout(() => {
+      //   new DataTable('#view-table', {              
+      //   // scrollX: true,
+      //   // scrollCollapse: true,    
+      //   // responsive: true,    
+      //   // paging: true,
+      //   // searching: true,
+      //   // ordering: true,
+      //   scrollY: "415px",     
+      //   scrollX:        true,
+      //   scrollCollapse: true,
+      //   autoWidth:         true,  
+      //   paging:         false,  
+      //   info: false,   
+      //   searching: false,  
+      //   destroy: true, // Ensure reinitialization doesn't cause issues
+      //   });
+      // }, 500);
     }
     get f2() {
       return this.RegisterForm.controls;
@@ -138,6 +140,18 @@ export class UserRegistrationComponent implements OnInit,AfterViewInit {
         this.agencyList = res.data;
       }, (error) => {
         this.toastrService.error(error.error.message);
+      });
+    }
+
+    getAllUsersList() {
+      this.userList = '';
+      this._commonService.getDataByUrl(APIS.masterList.getUserList).subscribe({
+        next: (dataList: any) => {
+          this.userList = dataList.data
+          
+        },error: (error: any) => {
+
+        }
       });
     }
 

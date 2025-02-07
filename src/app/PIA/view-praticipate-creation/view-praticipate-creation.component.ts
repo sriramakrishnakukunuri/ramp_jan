@@ -26,7 +26,7 @@ export class ViewParticipateCreationComponent implements OnInit {
   }
 
   ngOnInit(): void {    
-    this.getProgramDetails()
+    //this.getProgramDetails()
     this.getAgenciesList()
   }
 
@@ -50,6 +50,27 @@ export class ViewParticipateCreationComponent implements OnInit {
         this.toastrService.error(error.error.message);
       }
     })
+  }
+
+  getParticipateListByAgency(event?:any){
+    this.tableList = ''
+    let agencyId = event.target.value
+    if(event.target.value){
+      this.selectedAgencyId = event.target.value
+      //this._commonService.getDataByUrl(APIS.participantdata.getParticipantList+'/'+this.loginsessionDetails.agencyId)
+      this._commonService.getDataByUrl(APIS.participantdata.getParticipantListByAgency+'/'+agencyId).subscribe({
+        next: (dataList: any) => {
+          this.tableList = dataList.data
+          this.reinitializeDataTable();
+        },
+        error: (error: any) => {
+          this.toastrService.error(error.error.message);
+        }
+      })
+    }else {
+
+    }
+    
   }
 
   initializeDataTable() {
@@ -97,10 +118,13 @@ export class ViewParticipateCreationComponent implements OnInit {
   editRow(item:any,i:any){
     //this.tableList.patchValue({...item})
   }
+  selectedAgencyId:any
   getAgenciesList() {
     this.agencyList = [];
     this._commonService.getDataByUrl(APIS.masterList.agencyList).subscribe((res: any) => {
       this.agencyList = res.data;
+      this.selectedAgencyId = res.data[0].agencyId
+      this.getParticipateListByAgency({target:{value:res.data[0].agencyId}})
     }, (error) => {
       this.toastrService.error(error.error.message);
     });

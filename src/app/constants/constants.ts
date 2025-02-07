@@ -21,13 +21,15 @@ export const APIS = {
         saveOrgnization: API_BASE_URL + '/organization/save',
         getOrgnizationData: API_BASE_URL + '/organization/list',
         getParticipantList: API_BASE_URL + '/participants',
+        getParticipantListByAgency: API_BASE_URL + '/agency/participants/',
     },
     userRegistration:{
         add: API_BASE_URL + '/login/user/create',
-        addAgent: API_BASE_URL + '/login/user/create',
+        addAgent: API_BASE_URL + '/login/user/create',        
     },
     masterList: {
         agencyList: API_BASE_URL + '/agencies',
         locationList: API_BASE_URL + '/locations',
+        getUserList: API_BASE_URL + '/users',
     }
 }
