@@ -49,6 +49,7 @@ export class ProgramCreationComponent implements OnInit, AfterViewInit {
     });
     this.getProgramLocation();
     this.getSessionResource();
+    this.getAllActivityList()
   }
 
   ngOnInit(): void {
@@ -60,6 +61,34 @@ export class ProgramCreationComponent implements OnInit, AfterViewInit {
     (document.getElementById('collapseExample') as HTMLElement).classList.add('show');
     (this.programCreationSub?.controls["details"] as FormArray).clear();
     this.onAddRow(0);
+    this.programCreationMain.controls['activityId'].valueChanges.subscribe((activityId: any) => {
+      this.getSubActivitiesList(activityId);
+    });
+  }
+
+  activityList:any
+  subActivitiesList:any
+  getAllActivityList(){
+    this.subActivitiesList = []
+    this._commonService.getDataByUrl(APIS.programCreation.getActivityList).subscribe({
+      next: (data: any) => {
+        this.activityList = data.data;
+      },
+      error: (err: any) => {
+        this.activityList = [];
+      }
+    })
+  }
+
+  getSubActivitiesList(activityId: any){
+    this._commonService.getDataByUrl(`${APIS.programCreation.getSubActivityListByActivity+'/'+activityId}`).subscribe({
+      next: (data: any) => {
+        this.subActivitiesList = data.data.subActivities;
+      },
+      error: (err: any) => {
+        this.subActivitiesList = [];
+      }
+    })
   }
 
   ngAfterViewInit(): void {
@@ -188,12 +217,12 @@ export class ProgramCreationComponent implements OnInit, AfterViewInit {
     maindata['endTime'] = this.formatTime(maindata['endTime'])
     maindata['startDate'] = moment(maindata['startDate']).format('DD-MM-YYYY')
     maindata['endDate'] = moment(maindata['endDate']).format('DD-MM-YYYY')
-    maindata['locationId'] = 1
+    maindata['locationId'] = this.programCreationMain.value.programLocation
     maindata['agencyId'] = this.agencyId
     const programCreationCall = this._commonService.add(APIS.programCreation.addprogram, maindata).subscribe({
       next: (data) => {
         this.getProgrameIdBasesOnSave = data.data
-        this.toastrService.success('Program Created Successfully', "Program Creation Success!");
+        this.toastrService.success('Program Created Successfully', "Success!");
         this.programCreationMain.reset();
         this.programCreationSub.reset();
       },
@@ -208,9 +237,9 @@ export class ProgramCreationComponent implements OnInit, AfterViewInit {
     let val = { ...this.programCreationMain.value };
     val = { ...this.programCreationMain.value, programSessionList: this.programCreationSub?.controls["details"]?.value };
     let maindata = { ...this.programCreationMain.value };
-    maindata['activityId'] = 1;
-    maindata['subActivityId'] = 1;
-    maindata['locationId'] = 1;
+    maindata['activityId'] = this.programCreationMain.value.activityId;
+    maindata['subActivityId'] = this.programCreationMain.value.subActivityId;
+    maindata['locationId'] = this.programCreationMain.value.programLocation;
     maindata['agencyId'] = this.agencyId;
     maindata['startTime'] = this.formatTime(maindata['startTime']);
     maindata['endTime'] = this.formatTime(maindata['endTime']);
@@ -330,7 +359,7 @@ export class ProgramCreationComponent implements OnInit, AfterViewInit {
       .add(APIS.programCreation.addLocation, payload)
       .subscribe({
         next: (data) => {
-          this.toastrService.success('Location Added Successfully', "Program Creation Success!");
+          this.toastrService.success('Location Added Successfully', "Success!");
           this.getProgramLocation();
         },
         error: (err) => {
