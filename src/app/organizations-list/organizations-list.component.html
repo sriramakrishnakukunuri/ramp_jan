@@ -144,7 +144,7 @@
                             </thead>
                             <tbody *ngIf="resources">
                                 <tr *ngFor="let item of resources; let i = index">
-                                    <td class="text-start">{{item?.resourceId}}</td>
+                                    <td class="text-start">{{i + 1}}</td>
                                     <td>{{item?.name}}</td>
                                     <!-- <td class="text-center">
                                         <button type="button" class="btn btn-default text-lime-green btn-sm"><span class="bi bi-pencil"></span></button>
@@ -186,7 +186,7 @@
                             </thead>
                             <tbody *ngIf="organizations">
                                 <tr *ngFor="let item of organizations; let i = index">
-                                    <td class="text-start">{{item?.organizationId}}</td>
+                                    <td class="text-start">{{i + 1}}</td>
                                     <td>{{item?.organizationName}}</td>
                                     <!-- <td class="text-center">
                                         <button type="button" class="btn btn-default text-lime-green btn-sm"><span class="bi bi-pencil"></span></button>

@@ -13,6 +13,8 @@ export const APIS = {
         getProgramsList: API_BASE_URL + '/programs',
         getProgramsListByAgency: API_BASE_URL + '/agency/programs/',
         getSingleProgramsList: API_BASE_URL + '/program/',
+        getActivityList: API_BASE_URL + '/activities',
+        getSubActivityListByActivity: API_BASE_URL + '/activityById',
         // get: API_BASE_URL + '/program/get',
         // update: API_BASE_URL + '/program/update',
         // delete: API_BASE_URL + '/program/delete',

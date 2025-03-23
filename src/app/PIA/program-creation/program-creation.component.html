@@ -29,8 +29,8 @@
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                 <div class="form-floating mb-3">
                                     <select class="form-select" formControlName="activityId">
-                                        <option selected>Select Type Of Activity</option>
-                                        <option value="1">Activity1</option>
+                                        <option selected value="">Select Type Of Activity</option>
+                                        <option value="{{list.activityId}}" *ngFor="let list of activityList">{{list.activityName}}</option>
                                     </select>
                                     <label>Type Of Activity</label>
                                 </div>
@@ -40,8 +40,8 @@
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                 <div class="form-floating mb-3">
                                     <select class="form-select" formControlName="subActivityId">
-                                        <option selected>Select Sub Activity</option>
-                                        <option value="1">Sub-Activity1</option>
+                                        <option selected value="">Select Sub Activity</option>
+                                        <option value="{{list.subActivityId}}" *ngFor="let list of subActivitiesList">{{list.subActivityName}}</option>
                                     </select>
                                     <label>Sub Activity</label>
                                 </div>
@@ -155,7 +155,11 @@
                                 <div *ngIf="f2['spocContactNo'].touched && !f2['spocContactNo'].valid && !f2['spocContactNo']?.errors?.['pattern']"
                                     class="error" style="color: red;">SPOC Contact No is required</div>
                                 <div *ngIf="f2['spocContactNo'].touched && !f2['spocContactNo'].valid && f2['spocContactNo']?.errors?.['pattern']"
+<<<<<<< HEAD
                                     class="error" style="color: red;">Contact No should be 10 digit Number</div>
+=======
+                                    class="error" style="color: red;">Contact No Should Be 10 Digits</div>
+>>>>>>> 8c2ccbf809d47c61c8169a755a28bc4a374498d2
                             </div>
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                 <div class="form-floating mb-3">

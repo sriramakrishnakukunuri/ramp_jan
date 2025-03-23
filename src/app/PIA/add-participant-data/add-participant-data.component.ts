@@ -23,6 +23,7 @@ export class AddParticipantDataComponent implements OnInit {
   agencyId:any
   // udyamYesOrNo:any='No'
   programIds: any = '';
+  loginsessionDetails: any;
   constructor(private fb: FormBuilder,
     private toastrService: ToastrService,
     private _commonService: CommonServiceService) { 
@@ -30,13 +31,26 @@ export class AddParticipantDataComponent implements OnInit {
     }
 
   ngOnInit(): void {
-
+    this.loginsessionDetails = JSON.parse(sessionStorage.getItem('user') || '{}');    
     this.formDetails();
     this.formDetailsOrganization();
     //this.getData()
     this.getOrganizationData()
-    this.getAllPrograms()
+    //this.getAllPrograms()
+    this.getProgramsByAgency()
     //this.fOrg['udyamYesOrNo'].value.setValue('No')
+  }
+
+  agencyProgramList: any;
+  getProgramsByAgency() {
+    this._commonService.getDataByUrl(`${APIS.programCreation.getProgramsListByAgency+'/'+this.loginsessionDetails.agencyId}`).subscribe({
+      next: (res: any) => {
+        this.agencyProgramList = res?.data
+      },
+      error: (err) => {
+        new Error(err);
+      }
+    })
   }
 
   programList: any;
