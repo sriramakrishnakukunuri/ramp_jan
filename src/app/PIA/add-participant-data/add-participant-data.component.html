@@ -22,16 +22,16 @@
                                 <!-- <label class="fs-md fw-600 mb-1">Post Training Assessment</label> -->
                                 <div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" formControlName="AspirantData" name="AspirantData" (change)="OragnizationList($event)" id="Aspirant" value="Aspirant">
+                                        <input class="form-check-input" type="radio" formControlName="isAspirant" name="isAspirant" (change)="OragnizationList($event)" id="Aspirant" value="Aspirant">
                                         <label class="form-check-label" for="Aspirant">Aspirant</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" formControlName="AspirantData" name="AspirantData" (change)="OragnizationList($event)" id="Existing Oragnization" value="Existing Oragnization">
+                                        <input class="form-check-input" type="radio" formControlName="isAspirant" name="isAspirant" (change)="OragnizationList($event)" id="Existing Oragnization" value="Existing Oragnization">
                                         <label class="form-check-label" for="Existing Oragnization">Existing Oragnization</label>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12 col-sm-4 col-md-4 col-lg-4" *ngIf="this.f2['AspirantData'].value=='Existing Oragnization'">
+                            <div class="col-12 col-sm-4 col-md-4 col-lg-4" *ngIf="this.f2['isAspirant'].value=='Existing Oragnization'">
                                 <div class="form-floating mb-3">
                                     <select class="form-select" id="organizationId"  formControlName="organizationId">
                                       <option selected>Select Organisation Name</option>
@@ -43,14 +43,6 @@
                                     <label for="organizationId">Organisation Name</label>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <!-- <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                                <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="code" placeholder="">
-                                    <label for="code">Code</label>
-                                </div>
-                            </div> -->
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                 <div class="form-floating mb-3">
                                     <select class="form-select" id="programId" formControlName="programIds">
@@ -61,6 +53,15 @@
                                 </div>
                                 
                             </div>
+                        </div>
+                        <div class="row">
+                            <!-- <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="code" placeholder="">
+                                    <label for="code">Code</label>
+                                </div>
+                            </div> -->
+                          
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                 <div class="form-floating mb-3">
                                     <input type="text" class="form-control" id="participantName" formControlName="participantName" placeholder="">
@@ -256,8 +257,8 @@
                         <tbody *ngIf="submitedData">
                             <tr  *ngFor="let item of submitedData; let i=index">
                                 <td class="text-start">{{i+1}}</td>
-                                <td>{{item?.AspirantData=='Aspirant'?'Yes':'No'}}</td>
-                                <td >{{item?.AspirantData=='Aspirant'?'':item?.organizationName}}</td>
+                                <td>{{item?.isAspirant=='Aspirant'?'Yes':'No'}}</td>
+                                <td >{{item?.isAspirant=='Aspirant'?'':item?.organizationName}}</td>
                                 <td>{{item?.participantName}}</td>
                                 <td>{{item?.gender}}</td>
                                 <td>{{item?.disability}}</td>
@@ -348,12 +349,6 @@
                                     <div class="form-floating mb-3">
                                         <input type="text" class="form-control" id="district" placeholder="" formControlName="distId">
                                         <label for="district">District</label>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                                    <div class="form-floating mb-3">
-                                        <input type="text" class="form-control" id="mandalSamkya" placeholder="" formControlName="mandal">
-                                        <label for="mandalSamkya">Name of the Mandal Samakya</label>
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-6 col-md-4 col-lg-3">
@@ -589,7 +584,7 @@
                                             <label for="contact">Contact No.</label>
                                         </div>
                                         <div *ngIf="this.fOrg['contactNo'].touched && !this.fOrg['contactNo'].valid && !this.fOrg['contactNo']?.errors?.['pattern']" class="error">contact No is required</div>
-                                        <div *ngIf="this.fOrg['contactNo'].touched && !this.fOrg['contactNo'].valid && this.fOrg['contactNo']?.errors?.['pattern']" class="error">Contact No is should be 10 digit Numbers</div>
+                                        <div *ngIf="this.fOrg['contactNo'].touched && !this.fOrg['contactNo'].valid && this.fOrg['contactNo']?.errors?.['pattern']" class="error">Contact No should be 10 digit Number</div>
                                     </div>
                                     <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                         <div class="form-floating mb-3 mb-md-0 mb-lg-0">
@@ -622,7 +617,7 @@
                                             <label for="ownercontact">Contact</label>
                                         </div>
                                         <div *ngIf="fOrg['ownerContactNo'].touched && !fOrg['ownerContactNo'].valid && !fOrg['ownerContactNo']?.errors?.['pattern']" class="error">Owner contact No is required</div>
-                                        <div *ngIf="fOrg['ownerContactNo'].touched && !fOrg['ownerContactNo'].valid && fOrg['ownerContactNo']?.errors?.['pattern']" class="error">Owner contact No is should be 10 digit Numbers</div>
+                                        <div *ngIf="fOrg['ownerContactNo'].touched && !fOrg['ownerContactNo'].valid && fOrg['ownerContactNo']?.errors?.['pattern']" class="error">Owner Contact No should be 10 digit Number</div>
                                    
                                     </div>
                                     <div class="col-12 col-sm-6 col-md-4 col-lg-3">

@@ -56,17 +56,18 @@
                                 Program Execution <span class="bi bi-chevron-down"></span>
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="dropdown2">                                
-                                <li><a class="dropdown-item"routerLink="/update-program-execution" routerLinkActive="active">Program Execution</a></li>
-                                <li><a class="dropdown-item"routerLink="/add-participant-data" routerLinkActive="active">Add Participate Data</a></li>
+                                <li><a class="dropdown-item" routerLink="/update-program-execution" routerLinkActive="active">Program Execution</a></li>
+                                <li><a class="dropdown-item" routerLink="/add-participant-data" routerLinkActive="active">Add Participate Data</a></li>
                                 <li><a class="dropdown-item" href="#">View Completed</a></li>
                                 </ul>
                             </li>
                             <li class="nav-item dropdown" *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]">
-                                <a class="nav-link" href="#" id="dropdown2" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <a class="nav-link" href="#" id="dropdown3" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Update Outcomes <span class="bi bi-chevron-down"></span>
                                 </a>
-                                <ul class="dropdown-menu" aria-labelledby="dropdown2">
-                                <li><a class="dropdown-item" href="#">Capture Outcome</a></li>
+                                <ul class="dropdown-menu" aria-labelledby="dropdown3">
+                                    <li><a class="dropdown-item" routerLink="/capture-outcome" routerLinkActive="active">Capture Outcome</a></li>
+                                <!-- <li><a class="dropdown-item" href="#">Capture Outcome</a></li> -->
                                 <li><a class="dropdown-item" href="#">Organisation Updates</a></li>
                                 </ul>
                             </li>

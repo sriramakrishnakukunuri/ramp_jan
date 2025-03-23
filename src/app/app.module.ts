@@ -29,6 +29,8 @@ import { UpdateProgramExecutionComponent } from './PIA/update-program-execution/
 import { HasRoleDirective } from './app.component'; // Import the directive
 import { ViewParticipateCreationComponent } from './PIA/view-praticipate-creation/view-praticipate-creation.component';
 import { OrganizationsListComponent } from './organizations-list/organizations-list.component';
+import { CaptureOutcomeComponent } from './PIA/capture-outcome/capture-outcome.component';
+import { CaptureOutcomeDynamicComponent } from './PIA/capture-outcome-dynamic/capture-outcome-dynamic.component';
 
 @NgModule({
     imports: [
@@ -61,7 +63,7 @@ import { OrganizationsListComponent } from './organizations-list/organizations-l
         VeiwProgramCreationComponent,
         UpdateProgramExecutionComponent,
         HasRoleDirective, // Declare the directive
-        ViewParticipateCreationComponent, OrganizationsListComponent
+        ViewParticipateCreationComponent, OrganizationsListComponent, CaptureOutcomeComponent, CaptureOutcomeDynamicComponent
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

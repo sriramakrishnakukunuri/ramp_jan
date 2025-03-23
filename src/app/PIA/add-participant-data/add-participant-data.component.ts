@@ -8,6 +8,7 @@ import { ToastrService } from 'ngx-toastr';
 import DataTable from 'datatables.net-dt';
 import 'datatables.net-buttons-dt';
 import 'datatables.net-responsive-dt';
+import moment from 'moment';
 declare var $: any;
 @Component({
   selector: 'app-add-participant-data',
@@ -19,11 +20,14 @@ export class AddParticipantDataComponent implements OnInit {
   OrganisationForm!: FormGroup;
   submitedData: any = []
   OragnizationType: any = 'SHG'
+  agencyId:any
   // udyamYesOrNo:any='No'
   programIds: any = '';
   constructor(private fb: FormBuilder,
     private toastrService: ToastrService,
-    private _commonService: CommonServiceService) { }
+    private _commonService: CommonServiceService) { 
+      this.agencyId = JSON.parse(sessionStorage.getItem('user') || '{}').agencyId;
+    }
 
   ngOnInit(): void {
 
@@ -68,7 +72,7 @@ export class AddParticipantDataComponent implements OnInit {
   formDetails() {
     this.ParticipantDataForm = new FormGroup({
       // date: new FormControl("", [Validators.required]),
-      AspirantData: new FormControl("Aspirant", [Validators.required]),
+      isAspirant: new FormControl("Aspirant", [Validators.required]),
       organizationId: new FormControl("", [Validators.required,]),
       participantName: new FormControl("", [Validators.required]), //Validators.required
       gender: new FormControl("", [Validators.required,]),
@@ -184,7 +188,7 @@ export class AddParticipantDataComponent implements OnInit {
   Submitform() {
 
 
-    delete this.ParticipantDataForm.value['AspirantData'];
+    delete this.ParticipantDataForm.value['isAspirant'];
     this.submitedData.push(this.ParticipantDataForm.value)
     // sessionStorage.setItem('ParticipantData', this.submitedData)
     sessionStorage.setItem('ParticipantData', JSON.stringify(this.submitedData));
@@ -218,7 +222,7 @@ export class AddParticipantDataComponent implements OnInit {
     this.getData()
   }
   editRow(item: any, i: any) {
-    this.ParticipantDataForm.patchValue({ ...item })
+    this.ParticipantDataForm.patchValue({ ...item,certificateIssueDate:'20-02-2222' })
   }
   typeOragnization(event: any) {
     console.log(event.target.value)

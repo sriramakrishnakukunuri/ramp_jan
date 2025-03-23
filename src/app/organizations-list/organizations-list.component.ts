@@ -42,7 +42,7 @@ export class OrganizationsListComponent implements OnInit {
       this.fetchLocations()
     }
     else if(val == 'Resources'){
-      this.getResourcesByAgency()
+      this.fetchResources()
     }else{
       this.fetchOrganizations()
     }
@@ -50,34 +50,46 @@ export class OrganizationsListComponent implements OnInit {
   }
   getLocationsByAgency(event: any) {
     let agencyId = event.target.value;
-    this.locationsList = '';
-    this.http.get<any[]>(APIS.programCreation.getLocationByAgency +'/'+agencyId).subscribe((data:any) => {
-      this.locationsList = data.data;
-      this.reinitializeDataTableLocations();
-    });
+    if(event.target.value=='All Agency'){
+      this.fetchLocations()
+    }
+    else{
+      this.locationsList = '';
+      this.http.get<any[]>(APIS.programCreation.getLocationByAgency +'/'+agencyId).subscribe((data:any) => {
+        this.locationsList = data.data;
+        this.reinitializeDataTableLocations();
+      });
+    }
+   
   }
 
   getResourcesByAgency(event?: any) {
-    if(event){
-      event = event
-    }else {
-      event = this.agencyList[0].agencyId;
+    if(event=='All Agency'){
+      this.fetchResources()
     }
-    let agencyId = event;
-    this.resources = '';
-    this.http.get<any[]>(APIS.programCreation.getResource + '/'+agencyId).subscribe((data:any) => {
-      this.resources = data.data;
-      this.reinitializeDataTableResources();
-    });
+    else{
+      if(event){
+        event = event
+      }else {
+        event = this.agencyList[0].agencyId;
+      }
+      let agencyId = event;
+      this.resources = '';
+      this.http.get<any[]>(APIS.programCreation.getResource + '/'+agencyId).subscribe((data:any) => {
+        this.resources = data.data;
+        this.reinitializeDataTableResources();
+      });
+    }
+   
   }
 
-  fetchResources(event: any) {  
-    this.resources = '';
-    this.http.get<any[]>(APIS.programCreation.getResource + '/'+event).subscribe((data:any) => {
-      this.resources = data.data;
-      this.reinitializeDataTableResources();
-    });
-  }
+  // fetchResources(event: any) {  
+  //   this.resources = '';
+  //   this.http.get<any[]>(APIS.programCreation.getResource + '/'+event).subscribe((data:any) => {
+  //     this.resources = data.data;
+  //     this.reinitializeDataTableResources();
+  //   });
+  // }
 
   fetchOrganizations() {
     this.organizations = '';
@@ -87,6 +99,13 @@ export class OrganizationsListComponent implements OnInit {
     });
   }
 
+  fetchResources() {
+    this.locationsList = '';
+    this.http.get<any[]>(APIS.masterList.getresources).subscribe((data:any) => {
+      this.resources = data.data;
+      this.reinitializeDataTableResources();
+    });
+  }
   fetchLocations() {
     this.locationsList = '';
     this.http.get<any[]>(APIS.masterList.locationList).subscribe((data:any) => {
@@ -94,6 +113,7 @@ export class OrganizationsListComponent implements OnInit {
       this.reinitializeDataTableLocations();
     });
   }
+
 
   initializeDataTable() {
     this.dataTable = new DataTable('#view-table-organization', {              

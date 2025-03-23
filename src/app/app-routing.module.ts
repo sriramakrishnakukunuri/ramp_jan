@@ -15,6 +15,8 @@ import { AddParticipantDataComponent } from './PIA/add-participant-data/add-part
 import { UpdateProgramExecutionComponent } from './PIA/update-program-execution/update-program-execution.component';
 import { ViewParticipateCreationComponent } from './PIA/view-praticipate-creation/view-praticipate-creation.component';
 import { OrganizationsListComponent } from './organizations-list/organizations-list.component';
+import { CaptureOutcomeComponent } from './PIA/capture-outcome/capture-outcome.component';
+import { CaptureOutcomeDynamicComponent } from './PIA/capture-outcome-dynamic/capture-outcome-dynamic.component';
 
 const routes: Routes = [
     {
@@ -87,6 +89,12 @@ const routes: Routes = [
         component: OrganizationsListComponent,
         canActivate: [AuthGuard],
         data: { roles: [Role.Admin] }
+    },
+    {
+        path: 'capture-outcome',
+        component: CaptureOutcomeDynamicComponent,
+        canActivate: [AuthGuard],
+        data: { roles:  [Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
     },
     {
         path: 'login',

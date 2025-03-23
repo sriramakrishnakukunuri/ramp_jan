@@ -38,3 +38,9 @@
 .text-icon1{
     color: #7239ea;
 }
+.HoverBox:hover,.text-muted:hover{
+    border-right: ridge;
+    font-size: 18px;
+    
+}
+

@@ -33,5 +33,12 @@ export const APIS = {
         agencyList: API_BASE_URL + '/agencies',
         locationList: API_BASE_URL + '/locations',
         getUserList: API_BASE_URL + '/login/allusrs',
+        getresources: API_BASE_URL + '/resources'
+    },
+    captureOutcome:{
+        getParticipantData: API_BASE_URL + '/getParticipantsByMobileNo/',
+        getOutcomelistData: API_BASE_URL + '/program/outcome/tables',
+        getDynamicFormDataBasedOnOutCome: API_BASE_URL + '/program/outcome/details/',
+        saveOutComes:API_BASE_URL + '/program/outcome/save/',
     }
 }

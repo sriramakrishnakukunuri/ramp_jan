@@ -3,9 +3,9 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12 col-sm-6 col-md-4 col-lg-2">
-                    <a href="javascript:;">
-                        <div class="card text-center p-3 mb-4">
-                            <div class="d-flex align-items-center">
+                    <a href="javascript:;" (click)="getDataByCategory('Location')">
+                        <div class="card HoverBox text-center p-3 mb-4">
+                            <div class="d-flex align-items-center" >
                                 <div class="symbol me-3">
                                     <div class="symbol-label bg-light-info">
                                         <span class="bi bi-geo-alt text-icon1 fs-4"></span>
@@ -13,16 +13,16 @@
                                 </div>
                                 <div>
                                     <!-- <h4 class="text-dark fw-bold mb-1">100</h4> -->
-                                    <h6 class="text-muted fs-md fw-500 mb-0"> <a (click)="getDataByCategory('Location')"> Locations </a></h6>
+                                    <h6 class="text-muted fs-md fw-500 mb-0"> <a > Locations </a></h6>
                                 </div>
                             </div>
                         </div>
                     </a>
                 </div>
                 <div class="col-12 col-sm-6 col-md-4 col-lg-2">
-                    <a href="javascript:;">
-                        <div class="card text-center p-3 mb-4">
-                            <div class="d-flex align-items-center" (click)="getDataByCategory('Resources')">
+                    <a href="javascript:;" (click)="getDataByCategory('Resources')">
+                        <div class="card HoverBox text-center p-3 mb-4">
+                            <div class="d-flex align-items-center" >
                                 <div class="symbol me-3">
                                     <div class="symbol-label bg-light-danger">
                                         <span class="bi bi-gear text-danger fs-4"></span>
@@ -37,8 +37,8 @@
                     </a>
                 </div>
                 <div class="col-12 col-sm-6 col-md-4 col-lg-2">
-                    <a href="javascript:;">
-                        <div class="card text-center p-3 mb-4">
+                    <a href="javascript:;"  (click)="getDataByCategory('Organizations')">
+                        <div class="card  HoverBox text-center p-3 mb-4">
                             <div class="d-flex align-items-center">
                                 <div class="symbol me-3">
                                     <div class="symbol-label bg-light-success">
@@ -47,7 +47,7 @@
                                 </div>
                                 <div>
                                     <!-- <h4 class="text-dark fw-bold mb-1">100</h4> -->
-                                    <h6 class="text-muted fs-md fw-500 mb-0"> <a (click)="getDataByCategory('Organizations')">Organisations </a></h6>
+                                    <h6 class="text-muted fs-md fw-500 mb-0"> <a >Organisations </a></h6>
                                 </div>
                             </div>
                         </div>
@@ -64,7 +64,7 @@
                             <div class="col-12 col-sm-5 col-md-4 col-lg-3">
                                 <label for="Agencies" style="font-weight: 600;">List Of Agencies</label>
                                 <select class="form-select" (change)="getLocationsByAgency($event)">
-                                    <!-- <option value="All Agency">Select Agency</option> -->
+                                    <option value="All Agency" selected>All Agencies</option>
                                     <option *ngFor="let list of agencyList" value="{{list.agencyId}}">{{list.agencyName}}</option>
                                 </select>
                             </div>
@@ -125,6 +125,7 @@
                                 <select class="form-select" (change)="getResourcesByAgency($any($event.target).value)">
 
                                     <!-- <option value="All Agency">Select Agency</option> -->
+                                    <option value="All Agency" selected>All Agencies</option>
                                     <option *ngFor="let list of agencyList" value="{{list.agencyId}}">{{list.agencyName}}</option>
                                 </select>
                             </div>
