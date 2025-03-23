@@ -5,7 +5,7 @@
                 <div class="card-header bg-transparent">
                     <div class="row align-items-center">
                         <div class="col-12 col-sm-12 col-md-4 col-lg-3">
-                            <h6 class="fw-600 mb-2 mb-sm-3 mb-md-0">Capture Program Outcome</h6>
+                            <h6 class="fw-600 mb-2 mb-sm-3 mb-md-0 text-green">Capture Program Outcome</h6>
                         </div>
                         <!-- <div class="col-12 col-sm-6 col-md-4 col-lg-3 offset-lg-3">
                             <select class="form-select mb-3 mb-sm-3 mb-md-0">
@@ -24,13 +24,16 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-12 col-sm-12 col-md-4 col-lg-3">
-                            <h6 class="fw-600 mb-2 mb-sm-3 mb-md-0">Select Participant Mobile Number</h6>
+                            <h6 class="fw-600 mb-2 mb-sm-3 mb-md-0 mt-1">Select Participant Mobile Number</h6>
                         </div>
                         <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                             <div class="form-floating mb-3 mb-sm-3 mb-md-0">
-                                <input type="text" class="form-control" id="" placeholder="Mobile No" (input)="GetParticipantByMobile($any($event.target).value)"  [(ngModel)]="MobileNumber">
+                                <input type="text" class="form-control" id="" placeholder="Mobile No"   [(ngModel)]="MobileNumber">
                                 <!-- <label for="MobileNumber">Mobile No</label> -->
                             </div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                            <button type="button" class="btn btn-lime-green mt-1" (click)="Search()" >Search</button>
                         </div>
                         <!-- <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                             <div class="form-floating mb-3 mb-sm-3 mb-md-0">
@@ -72,11 +75,20 @@
                     </table>
                 </div>
             </div>
+         <div class="card mb-3">
             <form [formGroup]="OutComeForm" >
+                <div class="card-header bg-transparent">
+                    <div class="row align-items-center">
+                        <div class="col-12 col-sm-12 col-md-4 col-lg-3">
+                            <h6 class="fw-600 mb-2 mb-sm-3 mb-md-0 text-green">Add Outcome Details </h6>
+                        </div>
+                      
+                    </div>
+                </div>
                 <div class="card-body">
                     <div class="row">
                         <div class="col-12 col-sm-12 col-md-4 col-lg-3">
-                            <h6 class="fw-600 mb-2 mb-sm-3 mb-md-0">Select Out Comes</h6>
+                            <h6 class="fw-400 mb-2 mb-sm-3 mb-md-0 mt-3">Select OutCome</h6>
                         </div>
                         <!-- <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                             <div class="form-floating mb-3 mb-sm-3 mb-md-0">
@@ -91,7 +103,7 @@
                                     <!-- <option value="ONDCRegistration">ONDCRegistration</option> -->
                                   <option *ngFor="let val of ListOfOutCome" value="{{val?.outcomeTableName}}">{{val?.outcomeTableDisplayName}}</option>
                                 </select>
-                                <label for="coverage">OutComes</label>
+                                <!-- <label for="coverage">OutCome</label> -->
                             </div>
                         </div>
                         <!-- <div class="col-12 col-sm-6 col-md-4 col-lg-3">
@@ -105,33 +117,35 @@
                     </div>                        
                 </div>
                 <div class="card-body mt-3">
-                    <div class="row " > 
+                    <div class="row mb-3" > 
                         <div class="col-12 col-sm-12 col-md-4 col-lg-3">
-                            <h6 class="fw-600 mb-2 mb-sm-3 mb-md-0">Details Of Out Comes</h6>
+                            <!-- <h6 class="fw-600 mb-2 mb-sm-3 mb-md-0">Details Of OutCome</h6> -->
                         </div>
                         <div class="row" *ngFor="let Feilds of ListOfDynamicFormData">
                             <div class="col-12 col-sm-12 col-md-4 col-lg-3">
-                               
+                                <h6 class="fw-400 mb-2 mb-sm-3 mb-md-0 mt-3">{{Feilds?.fieldDisplayName}} :</h6>
                             </div>
                           <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
                             <ng-container *ngIf="Feilds?.fieldType=='textbox'" >
                                 <div class="form-floating mb-3 mb-sm-3 mb-md-0">
                                     <input type="text" class="form-control" id="" placeholder="{{Feilds?.fieldDisplayName}}" name="{{Feilds?.fieldName}}" formControlName="{{Feilds?.fieldName}}">
-                                    <label for="{{Feilds?.fieldName}}">{{Feilds?.fieldDisplayName}}</label>
+                                    <!-- <label for="{{Feilds?.fieldName}}">{{Feilds?.fieldDisplayName}}</label> -->
                                 </div>
                                 <div *ngIf="f2[Feilds?.fieldName].touched && !f2[Feilds?.fieldName].valid" class="error">{{Feilds?.fieldDisplayName}} is required</div>
                             </ng-container>
                             <ng-container *ngIf="Feilds?.fieldType=='date'" >
                                 <div class="form-floating mb-3 mb-sm-3 mb-md-0">
                                     <input type="date" class="form-control" id="" placeholder="{{Feilds?.fieldDisplayName}}" name="{{Feilds?.fieldName}}" formControlName="{{Feilds?.fieldName}}">
-                                    <label for="{{Feilds?.fieldName}}">{{Feilds?.fieldDisplayName}}</label>
+                                    <!-- <label for="{{Feilds?.fieldName}}">{{Feilds?.fieldDisplayName}}</label> -->
                                 </div>
+                                <div *ngIf="f2[Feilds?.fieldName].touched && !f2[Feilds?.fieldName].valid" class="error">{{Feilds?.fieldDisplayName}} is required</div>
                             </ng-container>
                             <ng-container *ngIf="Feilds?.fieldType=='number' || Feilds?.fieldType=='decimalnumber'" >
                                 <div class="form-floating mb-3 mb-sm-3 mb-md-0">
                                     <input type="number" class="form-control" id="" placeholder="{{Feilds?.fieldDisplayName}}" name="{{Feilds?.fieldName}}" formControlName="{{Feilds?.fieldName}}">
-                                    <label for="{{Feilds?.fieldName}}">{{Feilds?.fieldDisplayName}}</label>
+                                    <!-- <label for="{{Feilds?.fieldName}}">{{Feilds?.fieldDisplayName}}</label> -->
                                 </div>
+                                <div *ngIf="f2[Feilds?.fieldName].touched && !f2[Feilds?.fieldName].valid" class="error">{{Feilds?.fieldDisplayName}} is required</div>
                             </ng-container>
                           </div>
                            
@@ -140,9 +154,10 @@
                     </div>                        
                 </div>
                 <div class="text-end mb-3">
-                    <button type="button" class="btn btn-lime-green" (click)="SubmitOutCome()" [disabled]="!OutComeForm.valid">Submit</button>
+                    <button type="button" class="btn btn-lime-green me-3" (click)="SubmitOutCome()" [disabled]="!OutComeForm.valid">Submit</button>
                 </div>
             </form>
+         </div>
           
             
         </div>

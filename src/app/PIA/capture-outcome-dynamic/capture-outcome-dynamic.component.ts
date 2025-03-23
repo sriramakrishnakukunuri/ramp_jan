@@ -27,7 +27,7 @@ export class CaptureOutcomeDynamicComponent implements OnInit {
     this.formDetails()
   }
   OutComeForm!:FormGroup
-  
+
   get f2(){
     return this.OutComeForm.controls
   }
@@ -36,6 +36,16 @@ export class CaptureOutcomeDynamicComponent implements OnInit {
   }
   GetParticipantByMobile(mobile:any){
     this._commonService.getById(APIS.captureOutcome.getParticipantData,mobile).subscribe({
+      next: (res: any) => {
+        this.ParticipantData = res?.data
+      },
+      error: (err) => {
+        new Error(err);
+      }
+    })
+  }
+  Search(){
+    this._commonService.getById(APIS.captureOutcome.getParticipantData,this.MobileNumber).subscribe({
       next: (res: any) => {
         this.ParticipantData = res?.data
       },
