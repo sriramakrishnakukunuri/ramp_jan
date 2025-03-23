@@ -27,6 +27,10 @@ export class CaptureOutcomeDynamicComponent implements OnInit {
     this.formDetails()
   }
   OutComeForm!:FormGroup
+  
+  get f2(){
+    return this.OutComeForm.controls
+  }
   formDetails(){
     this.OutComeForm=new FormGroup({outcomesName:new FormControl('',[Validators.required])})
   }

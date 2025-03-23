@@ -72,7 +72,7 @@
                     </table>
                 </div>
             </div>
-            <form [formGroup]="OutComeForm">
+            <form [formGroup]="OutComeForm" >
                 <div class="card-body">
                     <div class="row">
                         <div class="col-12 col-sm-12 col-md-4 col-lg-3">
@@ -104,14 +104,22 @@
                         </div> -->
                     </div>                        
                 </div>
-                <div class="card-body">
-                    <div class="row"> 
-                        <div class="col-12 col-sm-6 col-md-4 col-lg-3" *ngFor="let Feilds of ListOfDynamicFormData">
+                <div class="card-body mt-3">
+                    <div class="row " > 
+                        <div class="col-12 col-sm-12 col-md-4 col-lg-3">
+                            <h6 class="fw-600 mb-2 mb-sm-3 mb-md-0">Details Of Out Comes</h6>
+                        </div>
+                        <div class="row" *ngFor="let Feilds of ListOfDynamicFormData">
+                            <div class="col-12 col-sm-12 col-md-4 col-lg-3">
+                               
+                            </div>
+                          <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
                             <ng-container *ngIf="Feilds?.fieldType=='textbox'" >
                                 <div class="form-floating mb-3 mb-sm-3 mb-md-0">
                                     <input type="text" class="form-control" id="" placeholder="{{Feilds?.fieldDisplayName}}" name="{{Feilds?.fieldName}}" formControlName="{{Feilds?.fieldName}}">
                                     <label for="{{Feilds?.fieldName}}">{{Feilds?.fieldDisplayName}}</label>
                                 </div>
+                                <div *ngIf="f2[Feilds?.fieldName].touched && !f2[Feilds?.fieldName].valid" class="error">{{Feilds?.fieldDisplayName}} is required</div>
                             </ng-container>
                             <ng-container *ngIf="Feilds?.fieldType=='date'" >
                                 <div class="form-floating mb-3 mb-sm-3 mb-md-0">
@@ -125,6 +133,7 @@
                                     <label for="{{Feilds?.fieldName}}">{{Feilds?.fieldDisplayName}}</label>
                                 </div>
                             </ng-container>
+                          </div>
                            
                         </div>
                        

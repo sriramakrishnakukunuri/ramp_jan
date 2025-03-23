@@ -68,29 +68,6 @@
                                     <label for="participantName">Name Of The Participant</label>
                                 </div>
                             </div>
-                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                                <div class="form-floating mb-3">
-                                    <select class="form-select" id="gender" formControlName="gender">
-                                      <option selected>Select Gender</option>
-                                      <option value="M">Male</option>
-                                      <option value="F">Female</option>
-                                      <option value="Trans-Gender">Trans-Gender</option>
-                                    </select>
-                                    <label for="gender">Gender</label>
-                                </div>
-                            </div>
-                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                                <div class="form-floating mb-3">
-                                    <select class="form-select" id="disability" formControlName="disability">
-                                      <option selected>Select Disability</option>
-                                      <option value="Y">Yes</option>
-                                      <option value="N">No</option>
-                                    </select>
-                                    <label for="disability">Disability</label>
-                                </div>
-                            </div>    
-                           
-                                                       
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3" >
                                 <div class="form-floating mb-3">
                                     <input type="text" class="form-control" id="aadharNo" formControlName="aadharNo" placeholder="">
@@ -99,16 +76,6 @@
                                 <div *ngIf="f2['aadharNo'].touched && !f2['aadharNo'].valid && !f2['aadharNo']?.errors?.['pattern']" class="error">Aadhar No is required</div>
                                 <div *ngIf="f2['aadharNo'].touched && !f2['aadharNo'].valid && f2['aadharNo']?.errors?.['pattern']" class="error">Aadhar No is should be 12 digit Numbers</div>
                            
-                            </div>
-                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                                <div class="form-floating mb-3">
-                                    <select class="form-select" id="category" formControlName="category">
-                                      <option selected>Select Category</option>
-                                      <option value="OC">OC</option>
-                                      <option value="BC">BC</option>
-                                    </select>
-                                    <label for="category">Category</label>
-                                </div>
                             </div>
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                 <div class="form-floating mb-3">
@@ -126,6 +93,42 @@
                             </div>
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                 <div class="form-floating mb-3">
+                                    <select class="form-select" id="gender" formControlName="gender">
+                                      <option selected value="">Select Gender</option>
+                                      <option value="M">Male</option>
+                                      <option value="F">Female</option>
+                                      <option value="Trans-Gender">Trans-Gender</option>
+                                    </select>
+                                    <label for="gender">Gender</label>
+                                </div>
+                            </div>
+                          
+                           
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                <div class="form-floating mb-3">
+                                    <select class="form-select" id="category" formControlName="category">
+                                      <option selected value="">Select Category</option>
+                                      <option value="OC">OC</option>
+                                      <option value="BC">BC</option>
+                                      <option value="SC">SC</option>
+                                      <option value="ST">ST</option>
+                                      <option value="Minority">Minority</option>
+                                    </select>
+                                    <label for="category">Category</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                <div class="form-floating mb-3">
+                                    <select class="form-select" id="disability" formControlName="disability">
+                                      <option selected value="">Select Disability</option>
+                                      <option value="Y">Yes</option>
+                                      <option value="N">No</option>
+                                    </select>
+                                    <label for="disability">Disability</label>
+                                </div>
+                            </div>    
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                <div class="form-floating mb-3">
                                     <div class="form-floating mb-3">
                                         <input type="text" class="form-control" id="designation" placeholder="" formControlName="designation">
                                         <label id="designation">Designation</label>
@@ -141,7 +144,7 @@
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                 <div class="form-floating mb-3">
                                     <select class="form-select" id="isParticipatedBefore" formControlName="isParticipatedBefore">
-                                      <option selected>Select Previous Participants</option>
+                                      <option selected value="">Select Previous Participants</option>
                                       <option value="Y">Yes</option>
                                       <option value="N">No</option>
                                     </select>
