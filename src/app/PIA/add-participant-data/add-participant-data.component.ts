@@ -39,6 +39,20 @@ export class AddParticipantDataComponent implements OnInit {
     //this.getAllPrograms()
     this.getProgramsByAgency()
     //this.fOrg['udyamYesOrNo'].value.setValue('No')
+    this.getAllDistricts()
+  }
+
+  allDistricts:any
+  getAllDistricts(){
+    this.allDistricts = []
+    this._commonService.getDataByUrl(APIS.masterList.getDistricts).subscribe({
+      next: (data: any) => {
+        this.allDistricts = data.data;
+      },
+      error: (err: any) => {
+        this.allDistricts = [];
+      }
+    })
   }
 
   agencyProgramList: any;
