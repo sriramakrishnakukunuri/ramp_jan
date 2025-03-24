@@ -70,24 +70,30 @@ export class CaptureOutcomeDynamicComponent implements OnInit {
     this.formData={}
     this.OutComeForm=new FormGroup({outcomesName:new FormControl('',[Validators.required])})
     this.OutComeForm.patchValue({outcomesName:Outcome})
-    this._commonService.getById(APIS.captureOutcome.getDynamicFormDataBasedOnOutCome+this.agencyId+'/',Outcome).subscribe({
-      next: (res: any) => {
-        let object:any
-        this.ListOfDynamicFormData = res?.data?.outcomeForm;
-        res.data?.outcomeForm?.map((item:any)=>{
-          if(item.fieldType!='label'){
-            this.OutComeForm.addControl( item?.fieldName, new FormControl('',[Validators.required]))
-          }
-          if(item.fieldType=='label'){
-            this.OutComeForm.addControl( item?.fieldName, new FormControl(item?.fieldValue,[Validators.required]))
-          }
-          
-        })
-      },
-      error: (err) => {
-        new Error(err);
-      }
-    })
+    if(this.ParticipantData?.participantId){
+      this._commonService.getById(APIS.captureOutcome.getDynamicFormDataBasedOnOutCome+this.ParticipantData?.participantId+'/',Outcome).subscribe({
+        next: (res: any) => {
+          let object:any
+          this.ListOfDynamicFormData = res?.data?.outcomeForm;
+          res.data?.outcomeForm?.map((item:any)=>{
+            if(item.fieldType!='label'){
+              this.OutComeForm.addControl( item?.fieldName, new FormControl('',[Validators.required]))
+            }
+            // if(item.fieldType=='label'){
+            //   this.OutComeForm.addControl( item?.fieldName, new FormControl(item?.fieldValue,[Validators.required]))
+            // }
+            
+          })
+        },
+        error: (err) => {
+          new Error(err);
+        }
+      })
+    }
+    else{
+      this.toastrService.warning('Please Fetch Participant Details', "Capture Program Outcome!");
+    }
+    
   }
   SubmitOutCome(){
     if(Object.keys(this.ParticipantData)?.length){
@@ -104,7 +110,8 @@ export class CaptureOutcomeDynamicComponent implements OnInit {
     formData.set("data", JSON.stringify({...payload,
       participantId:this.ParticipantData?.participantId,
       organizationId:this.ParticipantData?.organizationId,
-      agencyId:this.agencyId}));
+      agencyId:this.agencyId
+   }));
       this._commonService.add(APIS.captureOutcome.saveOutComes+this.OutComeForm.value?.outcomesName,formData).subscribe({
         next: (res: any) => {
           this.toastrService.success('Capture Program Outcome Created Successfully', "Capture Program Outcome Success!");
@@ -112,6 +119,7 @@ export class CaptureOutcomeDynamicComponent implements OnInit {
         },
         error: (err) => {
           new Error(err);
+          this.toastrService.error(err.error, "Capture Program Outcome Success!");
         }
       })
     }

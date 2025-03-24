@@ -101,7 +101,7 @@ export class AddParticipantDataComponent implements OnInit {
       previousParticipationDetails: new FormControl("", [Validators.required,]),
       preTrainingAssessmentConducted: new FormControl("", [Validators.required,]),
       postTrainingAssessmentConducted: new FormControl("", [Validators.required,]),
-      isCertificateIssued: new FormControl("", [Validators.required,]),
+      isCertificateIssued: new FormControl("N", [Validators.required,]),
       certificateIssueDate: new FormControl("",),
       needAssessmentMethodology: new FormControl("", [Validators.required,]),
       programIds: new FormControl("", [Validators.required,]),
@@ -127,6 +127,7 @@ export class AddParticipantDataComponent implements OnInit {
       "validUpto": new FormControl("", [Validators.required,]),
       "stateId": new FormControl("", [Validators.required,]),
       "distId": new FormControl("", [Validators.required,]),
+      // "sector": new FormControl("", [Validators.required,]),
       "mandal": new FormControl("", [Validators.required,]),
       "town": new FormControl("", [Validators.required,]),
       "streetNo": new FormControl("", [Validators.required,]),
@@ -200,14 +201,23 @@ export class AddParticipantDataComponent implements OnInit {
   }
 
   Submitform() {
+    let payload:any={...this.ParticipantDataForm.value, "programIds": [this.ParticipantDataForm.value.programIds], "organizationId": this.ParticipantDataForm.value.organizationId }
+  if(this.f2['isAspirant'].value!='Existing Oragnization'){
+    delete payload['organizationId']
+    delete payload['programIds']
 
-
-    delete this.ParticipantDataForm.value['isAspirant'];
+  }
+  if(payload['isCertificateIssued']=='N'){
+    delete payload['certificateIssueDate'];
+  }
+   
     this.submitedData.push(this.ParticipantDataForm.value)
     // sessionStorage.setItem('ParticipantData', this.submitedData)
+
     sessionStorage.setItem('ParticipantData', JSON.stringify(this.submitedData));
+
     this._commonService
-      .add(APIS.participantdata.add, { ...this.ParticipantDataForm.value, "programIds": [this.ParticipantDataForm.value.programIds], "organizationId": this.ParticipantDataForm.value.organizationId }).subscribe({
+      .add(APIS.participantdata.add, payload).subscribe({
         next: (data: any) => {
           // this.advanceSearch(this.getSelDataRange);
           this.programIds = this.ParticipantDataForm.value.programIds

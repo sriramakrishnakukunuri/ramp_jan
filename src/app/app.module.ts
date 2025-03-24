@@ -34,6 +34,7 @@ import { CaptureOutcomeDynamicComponent } from './PIA/capture-outcome-dynamic/ca
 import { ESDPTrainingComponent } from './PIA/esdp-training/esdp-training.component';
 import { ShgTrainingStatusComponent } from './PIA/shg-training-status/shg-training-status.component';
 import { GlobalDashboardComponent } from './Dashboard/global-dashboard/global-dashboard.component';
+import { MsmeCouncellorRegisterationComponent } from './PIA/msme-councellor-registeration/msme-councellor-registeration.component';
 
 @NgModule({
     imports: [
@@ -66,7 +67,7 @@ import { GlobalDashboardComponent } from './Dashboard/global-dashboard/global-da
         VeiwProgramCreationComponent,
         UpdateProgramExecutionComponent,
         HasRoleDirective, // Declare the directive
-        ViewParticipateCreationComponent, OrganizationsListComponent, CaptureOutcomeComponent, CaptureOutcomeDynamicComponent, ESDPTrainingComponent, ShgTrainingStatusComponent, GlobalDashboardComponent
+        ViewParticipateCreationComponent, OrganizationsListComponent, CaptureOutcomeComponent, CaptureOutcomeDynamicComponent, ESDPTrainingComponent, ShgTrainingStatusComponent, GlobalDashboardComponent,MsmeCouncellorRegisterationComponent
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
