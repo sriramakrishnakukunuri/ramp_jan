@@ -43,7 +43,7 @@
                                     <label for="organizationId">Organisation Name</label>
                                 </div>
                             </div>
-                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3" *ngIf="this.f2['isAspirant'].value=='Existing Oragnization'">
                                 <div class="form-floating mb-3">
                                     <select class="form-select" id="programId" formControlName="programIds">
                                         <option value="">Select Program</option>
@@ -344,10 +344,21 @@
                             <div class="row">
                                 <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                     <div class="form-floating mb-3">
-                                        <input type="text" class="form-control" id="nameOfTheSHG" placeholder="" formControlName="nameOfTheSHG">
+                                        <input type="text" class="form-control" id="nameOfTheSHG" placeholder="" formControlName="nameOfTheSHG" >
                                         <label for="nameOfTheSHG">Name of the SHG</label>
                                     </div>
                                 </div>
+                                <!-- <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                    <div class="form-floating mb-3">
+                                        <select class="form-select" id="sector" formControlName="sector" multiple>
+                                          <option selected>Select sector</option>
+                                          <option value="sector1">sector 1</option>
+                                          <option value="sector2">sector 2</option>
+                                          <option value="sector3">sector 3</option>
+                                        </select>
+                                        <label for="Sector">Sector</label>
+                                    </div>
+                                </div> -->
                                 <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                     <div class="form-floating mb-3">
                                         <input type="text" class="form-control" id="district" placeholder="" formControlName="distId">
@@ -412,6 +423,17 @@
                                         <label for="msmeStartup">Name of the Startup</label>
                                     </div>
                                 </div>
+                                <!-- <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                    <div class="form-floating mb-3">
+                                        <select class="form-select" id="sector" formControlName="sector">
+                                          <option selected>Select sector</option>
+                                          <option value="sector1">sector 1</option>
+                                          <option value="sector2">sector 2</option>
+                                          <option value="sector3">sector 3</option>
+                                        </select>
+                                        <label for="Sector">Sector</label>
+                                    </div>
+                                </div> -->
                                 <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                     <div class="form-floating mb-3">
                                         <input type="text" class="form-control" id="msmeCertificate" placeholder="" formControlName="startupCertificateNo">
@@ -475,6 +497,17 @@
                                         <label for="organizationName">Organization Name</label>
                                     </div>
                                 </div>
+                                <!-- <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                    <div class="form-floating mb-3">
+                                        <select class="form-select" id="sector" formControlName="sector">
+                                          <option selected>Select sector</option>
+                                          <option value="sector1">sector 1</option>
+                                          <option value="sector2">sector 2</option>
+                                          <option value="sector3">sector 3</option>
+                                        </select>
+                                        <label for="Sector">Sector</label>
+                                    </div>
+                                </div> -->
                                 <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                     <label class="fw-600 fs-md">Udyam Registration Number</label>
                                     <div>

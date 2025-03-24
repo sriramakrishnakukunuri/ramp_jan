@@ -61,14 +61,20 @@
                             <tr>
                                 <th>Participant Name</th>
                                 <th>Organization Name</th>
+                                <th>Mobile Number</th>
                                 <th>Program Dates</th>
+                                <th>Name Of SHG</th>
+                                <th>Designation</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr >
                                 <td>{{ParticipantData?.participantName}}</td>
                                 <td>{{ParticipantData?.organizationName}}</td>
+                                <td>{{ParticipantData?.mobileNo}}</td>
                                 <td>{{ParticipantData?.programDates}}</td>
+                                <td>{{ParticipantData?.nameOfTheSHG}}</td>
+                                <td>{{ParticipantData?.designation}}</td>
                             </tr>
                           
                         </tbody>
@@ -149,9 +155,9 @@
                             </ng-container>
                             <ng-container *ngIf="Feilds?.fieldType=='label'" >
                                 <div class="form-floating mb-3 mb-sm-3 mb-md-0">
-                                    <input type="text" class="form-control" readonly id="" placeholder="{{Feilds?.fieldDisplayName}}" name="{{Feilds?.fieldName}}" formControlName="{{Feilds?.fieldName}}">
+                                    <!-- <input type="text" class="form-control" readonly id="" placeholder="{{Feilds?.fieldDisplayName}}" name="{{Feilds?.fieldName}}" formControlName="{{Feilds?.fieldName}}"> -->
                                     <!-- <label for="{{Feilds?.fieldName}}">{{Feilds?.fieldDisplayName}}</label> -->
-                                     <!-- <h6>{{Feilds?.fieldValue}}</h6> -->
+                                     <h6>{{Feilds?.fieldValue}}</h6>
                                 </div>
                                  </ng-container>
                           </div>
