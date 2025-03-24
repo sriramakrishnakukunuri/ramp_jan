@@ -31,6 +31,9 @@ import { ViewParticipateCreationComponent } from './PIA/view-praticipate-creatio
 import { OrganizationsListComponent } from './organizations-list/organizations-list.component';
 import { CaptureOutcomeComponent } from './PIA/capture-outcome/capture-outcome.component';
 import { CaptureOutcomeDynamicComponent } from './PIA/capture-outcome-dynamic/capture-outcome-dynamic.component';
+import { ESDPTrainingComponent } from './PIA/esdp-training/esdp-training.component';
+import { ShgTrainingStatusComponent } from './PIA/shg-training-status/shg-training-status.component';
+import { GlobalDashboardComponent } from './Dashboard/global-dashboard/global-dashboard.component';
 
 @NgModule({
     imports: [
@@ -63,7 +66,7 @@ import { CaptureOutcomeDynamicComponent } from './PIA/capture-outcome-dynamic/ca
         VeiwProgramCreationComponent,
         UpdateProgramExecutionComponent,
         HasRoleDirective, // Declare the directive
-        ViewParticipateCreationComponent, OrganizationsListComponent, CaptureOutcomeComponent, CaptureOutcomeDynamicComponent
+        ViewParticipateCreationComponent, OrganizationsListComponent, CaptureOutcomeComponent, CaptureOutcomeDynamicComponent, ESDPTrainingComponent, ShgTrainingStatusComponent, GlobalDashboardComponent
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
