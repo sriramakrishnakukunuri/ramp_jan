@@ -70,12 +70,18 @@ export class CaptureOutcomeDynamicComponent implements OnInit {
     this.formData={}
     this.OutComeForm=new FormGroup({outcomesName:new FormControl('',[Validators.required])})
     this.OutComeForm.patchValue({outcomesName:Outcome})
-    this._commonService.getById(APIS.captureOutcome.getDynamicFormDataBasedOnOutCome,Outcome).subscribe({
+    this._commonService.getById(APIS.captureOutcome.getDynamicFormDataBasedOnOutCome+this.agencyId+'/',Outcome).subscribe({
       next: (res: any) => {
         let object:any
-        this.ListOfDynamicFormData = res?.data?.columns;
-        res.data?.columns?.map((item:any)=>{
-          this.OutComeForm.addControl( item?.fieldName, new FormControl('',[Validators.required]))
+        this.ListOfDynamicFormData = res?.data?.outcomeForm;
+        res.data?.outcomeForm?.map((item:any)=>{
+          if(item.fieldType!='label'){
+            this.OutComeForm.addControl( item?.fieldName, new FormControl('',[Validators.required]))
+          }
+          if(item.fieldType=='label'){
+            this.OutComeForm.addControl( item?.fieldName, new FormControl(item?.fieldValue,[Validators.required]))
+          }
+          
         })
       },
       error: (err) => {
