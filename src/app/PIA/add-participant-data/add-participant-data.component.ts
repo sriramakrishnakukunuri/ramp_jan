@@ -40,6 +40,7 @@ export class AddParticipantDataComponent implements OnInit {
     this.getProgramsByAgency()
     //this.fOrg['udyamYesOrNo'].value.setValue('No')
     this.getAllDistricts()
+    this.typeOragnization('SHG')
   }
 
   allDistricts:any
@@ -101,23 +102,23 @@ export class AddParticipantDataComponent implements OnInit {
     this.ParticipantDataForm = new FormGroup({
       // date: new FormControl("", [Validators.required]),
       isAspirant: new FormControl("Aspirant", [Validators.required]),
-      organizationId: new FormControl("", [Validators.required,]),
-      participantName: new FormControl("", [Validators.required]), //Validators.required
+      organizationId: new FormControl("",),
+      participantName: new FormControl("", [Validators.required,Validators.pattern(/^[A-Za-z]+$/)]), //Validators.required
       gender: new FormControl("", [Validators.required,]),
       disability: new FormControl("N", [Validators.required]),
       // noOfDays: new FormControl("", [Validators.required,]),
       category: new FormControl("", [Validators.required]),
       aadharNo: new FormControl("", [Validators.required, Validators.pattern(/^[0-9]{12}$/)]),
-      mobileNo: new FormControl("", [Validators.required, Validators.pattern(/^[0-9]{10}$/)]),
-      email: new FormControl("", [Validators.required]),
-      designation: new FormControl("", [Validators.required,]),
-      isParticipatedBefore: new FormControl("", [Validators.required,]),
-      previousParticipationDetails: new FormControl("", [Validators.required,]),
-      preTrainingAssessmentConducted: new FormControl("", [Validators.required,]),
-      postTrainingAssessmentConducted: new FormControl("", [Validators.required,]),
-      isCertificateIssued: new FormControl("N", [Validators.required,]),
+      mobileNo: new FormControl("", [Validators.required, Validators.pattern(/^[6789]\d{9}$/)]),
+      email: new FormControl("", [Validators.email, Validators.required]),
+      designation: new FormControl("", ),
+      isParticipatedBefore: new FormControl("",),
+      previousParticipationDetails: new FormControl("",),
+      preTrainingAssessmentConducted: new FormControl("",),
+      postTrainingAssessmentConducted: new FormControl("",),
+      isCertificateIssued: new FormControl("N",),
       certificateIssueDate: new FormControl("",),
-      needAssessmentMethodology: new FormControl("", [Validators.required,]),
+      needAssessmentMethodology: new FormControl("",),
       programIds: new FormControl("", [Validators.required,]),
       // TargetSector: new FormControl("",[Validators.required,]),
       // targetAudience: new FormControl("",[Validators.required,]),
@@ -127,38 +128,41 @@ export class AddParticipantDataComponent implements OnInit {
   formDetailsOrganization() {
     this.OrganisationForm = new FormGroup({
       // date: new FormControl("", [Validators.required]),
-      "organizationName": new FormControl("", [Validators.required,]),
-      "organizationCategory": new FormControl("", [Validators.required,]),
+      
+      "organizationCategory": new FormControl("",),
       "organizationType": new FormControl("", [Validators.required,]),
-      "udyamregistrationNo": new FormControl("", [Validators.required,]),
-      "udyamYesOrNo": new FormControl("No", [Validators.required,]),
-      "dateOfRegistration": new FormControl("", [Validators.required,]),
-      "startupCertificateNo": new FormControl("", [Validators.required,]),
-      "natureOfStartup": new FormControl("", [Validators.required,]),
-      "areasOfWorking": new FormControl("", [Validators.required,]),
-      "incorporationDate": new FormControl("", [Validators.required,]),
-      "dateOfIssue": new FormControl("", [Validators.required,]),
-      "validUpto": new FormControl("", [Validators.required,]),
+      "udyamregistrationNo": new FormControl(""),
+      "organizationName": new FormControl("",),
+      "udyamYesOrNo": new FormControl("No",),
+      "dateOfRegistration": new FormControl("", ),
+      "startupCertificateNo": new FormControl("",),
+      "natureOfStartup": new FormControl("", ),
+      "areasOfWorking": new FormControl("", ),
+      "msmeStartup": new FormControl("",),
+      "incorporationDate": new FormControl("",),
+      "dateOfIssue": new FormControl("",),
+      "validupto": new FormControl("",),
       "stateId": new FormControl("", [Validators.required,]),
       "distId": new FormControl("", [Validators.required,]),
       // "sector": new FormControl("", [Validators.required,]),
       "mandal": new FormControl("", [Validators.required,]),
       "town": new FormControl("", [Validators.required,]),
-      "streetNo": new FormControl("", [Validators.required,]),
-      "houseNo": new FormControl("", [Validators.required,]),
-      "latitude": new FormControl("", [Validators.required,]),
-      "longitude": new FormControl("", [Validators.required,]),
-      "contactNo": new FormControl("", [Validators.required, Validators.pattern(/^[0-9]{10}$/)]),
-      "email": new FormControl("", [Validators.required,]),
-      "website": new FormControl("", [Validators.required,]),
+      "streetNo": new FormControl("", ),
+      "houseNo": new FormControl("", ),
+      "latitude": new FormControl("", ),
+      "longitude": new FormControl("", ),
+      "contactNo": new FormControl("", [Validators.required, Validators.pattern(/^[6789]\d{9}$/)]),
+      "email": new FormControl("", [Validators.email,]),
+      "website": new FormControl("", ),
       "ownerName": new FormControl("", [Validators.required,]),
-      "ownerContactNo": new FormControl("", [Validators.required, Validators.pattern(/^[0-9]{10}$/)]),
-      "ownerEmail": new FormControl("", [Validators.required,]),
-      "ownerAddress": new FormControl("", [Validators.required,]),
-      "nameOfTheSHG": new FormControl("", [Validators.required,]),
-      "nameOfTheVO": new FormControl("", [Validators.required,]),
-      "gramaPanchayat": new FormControl("", [Validators.required,])
+      "ownerContactNo": new FormControl("", [Validators.required, Validators.pattern(/^[6789]\d{9}$/)]),
+      "ownerEmail": new FormControl("", [Validators.email,]),
+      "ownerAddress": new FormControl("", ),
+      "nameOfTheSHG": new FormControl("",),
+      "nameOfTheVO": new FormControl("",),
+      "gramaPanchayat": new FormControl("",)
     });
+    
   }
   getData() {
     this.submitedData = ''
@@ -218,7 +222,6 @@ export class AddParticipantDataComponent implements OnInit {
     let payload:any={...this.ParticipantDataForm.value, "programIds": [this.ParticipantDataForm.value.programIds], "organizationId": this.ParticipantDataForm.value.organizationId }
   if(this.f2['isAspirant'].value!='Existing Oragnization'){
     delete payload['organizationId']
-    delete payload['programIds']
 
   }
   if(payload['isCertificateIssued']=='N'){
@@ -263,8 +266,97 @@ export class AddParticipantDataComponent implements OnInit {
     this.ParticipantDataForm.patchValue({ ...item,certificateIssueDate:'20-02-2222' })
   }
   typeOragnization(event: any) {
-    console.log(event.target.value)
-    this.OragnizationType = event.target.value
+    this.OragnizationType = event
+    this.fOrg['nameOfTheSHG'].patchValue('')
+    this.fOrg['distId'].patchValue('')
+    this.fOrg['mandal'].patchValue('')
+    this.fOrg['nameOfTheVO'].patchValue('')
+    this.fOrg['gramaPanchayat'].patchValue('')
+    this.fOrg['organizationName'].patchValue('')
+    this.fOrg['startupCertificateNo'].patchValue('')
+    this.fOrg['natureOfStartup'].patchValue('')
+    this.fOrg['incorporationDate'].patchValue('')
+    this.fOrg['areasOfWorking'].patchValue('')
+    this.fOrg['dateOfIssue'].patchValue('')
+    this.fOrg['validupto'].patchValue('')
+    this.fOrg['organizationCategory'].patchValue('')
+    this.fOrg['udyamYesOrNo'].patchValue('')
+    this.fOrg['udyamregistrationNo'].patchValue('')
+    this.fOrg['dateOfRegistration'].patchValue('')
+    if(this.OragnizationType=='SHG'){
+      this.formDetailsOrganization();
+      this.fOrg['organizationType'].patchValue('SHG')
+      this.fOrg['nameOfTheSHG'].addValidators(Validators.required)
+      this.fOrg['distId'].addValidators(Validators.required)
+      this.fOrg['mandal'].addValidators(Validators.required)
+      this.fOrg['nameOfTheVO'].addValidators(Validators.required)
+      this.fOrg['gramaPanchayat'].addValidators(Validators.required)
+     
+      this.fOrg['nameOfTheSHG'].updateValueAndValidity()
+      this.fOrg['distId'].updateValueAndValidity()
+      this.fOrg['mandal'].updateValueAndValidity()
+      this.fOrg['gramaPanchayat'].updateValueAndValidity()
+      this.fOrg['nameOfTheVO'].updateValueAndValidity()
+    }
+    else if(this.OragnizationType=='Start Up'){
+      this.formDetailsOrganization()
+      this.fOrg['organizationType'].patchValue('Start Up')
+      this.fOrg['organizationName'].addValidators(Validators.required)
+      this.fOrg['startupCertificateNo'].addValidators(Validators.required)
+      this.fOrg['natureOfStartup'].addValidators(Validators.required)
+      this.fOrg['incorporationDate'].addValidators(Validators.required)
+      this.fOrg['dateOfIssue'].addValidators(Validators.required)
+      this.fOrg['validupto'].addValidators(Validators.required)
+     
+     
+      this.fOrg['organizationName'].updateValueAndValidity()
+      this.fOrg['startupCertificateNo'].updateValueAndValidity()
+      this.fOrg['natureOfStartup'].updateValueAndValidity()
+      this.fOrg['incorporationDate'].updateValueAndValidity()
+      this.fOrg['areasOfWorking'].updateValueAndValidity()
+      this.fOrg['dateOfIssue'].updateValueAndValidity()
+      this.fOrg['validupto'].updateValueAndValidity()
+      
+    }
+    else if(this.OragnizationType=='MSME'){
+      this.formDetailsOrganization()
+      this.fOrg['organizationType'].patchValue('MSME')
+      this.fOrg['organizationCategory'].addValidators(Validators.required)
+      this.fOrg['organizationName'].addValidators(Validators.required)
+      this.fOrg['udyamYesOrNo'].addValidators(Validators.required)
+      this.fOrg['udyamregistrationNo'].setValidators(null)
+      this.fOrg['dateOfRegistration'].setValidators(null)
+     
+      this.fOrg['organizationCategory'].patchValue('Micro')
+      this.fOrg['udyamYesOrNo'].patchValue('No')
+
+      this.fOrg['organizationCategory'].updateValueAndValidity()
+      this.fOrg['organizationName'].updateValueAndValidity()
+      this.fOrg['udyamYesOrNo'].updateValueAndValidity()
+      this.fOrg['udyamregistrationNo'].updateValueAndValidity()
+      this.fOrg['dateOfRegistration'].updateValueAndValidity()
+     
+    }
+  }
+  chnageUdyam(event:any){
+    console.log(event)
+    if(event=='Yes'){
+      this.fOrg['udyamregistrationNo'].addValidators(Validators.required)
+      this.fOrg['dateOfRegistration'].addValidators(Validators.required)
+      this.fOrg['udyamregistrationNo'].patchValue('')
+    this.fOrg['dateOfRegistration'].patchValue('')
+      this.fOrg['udyamregistrationNo'].updateValueAndValidity()
+      this.fOrg['dateOfRegistration'].updateValueAndValidity()
+    }
+    else{
+      this.fOrg['udyamregistrationNo'].setValidators(null)
+      this.fOrg['dateOfRegistration'].setValidators(null)
+      this.fOrg['udyamregistrationNo'].patchValue('')
+    this.fOrg['dateOfRegistration'].patchValue('')
+      this.fOrg['udyamregistrationNo'].updateValueAndValidity()
+      this.fOrg['dateOfRegistration'].updateValueAndValidity()
+    }
+
   }
   SubmitformOrganization() {
     console.log(this.OrganisationForm.value)
@@ -285,6 +377,33 @@ export class AddParticipantDataComponent implements OnInit {
     this.OrganisationForm.reset();
     this.getData()
     this.getOrganizationData()
+
+  }
+  // district list()
+  MandalList:any
+  GetMandalByDistrict(event: any) {
+    this.MandalList=[]
+    this._commonService.getDataByUrl(APIS.masterList.getMandal + event).subscribe({
+      next: (data: any) => {
+        this.MandalList = data.data;
+      },
+      error: (err: any) => {
+        this.MandalList = [];
+      }
+    })
+
+  }
+  MandalListSHG:any
+  GetMandalByDistrictSHG(event: any) {
+    this.MandalListSHG=[]
+    this._commonService.getDataByUrl(APIS.masterList.getMandal + event).subscribe({
+      next: (data: any) => {
+        this.MandalListSHG = data.data;
+      },
+      error: (err: any) => {
+        this.MandalListSHG = [];
+      }
+    })
 
   }
   OragnizationList(event: any) {
