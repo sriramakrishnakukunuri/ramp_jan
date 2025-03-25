@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { CommonServiceService } from '@app/_services/common-service.service';
 import { APIS } from '@app/constants/constants';
 import { ToastrService } from 'ngx-toastr';
@@ -37,7 +37,7 @@ export class ProgramCreationComponent implements OnInit, AfterViewInit {
     this.agencyId = JSON.parse(sessionStorage.getItem('user') || '{}').agencyId;
     this.modalFormStype = this.fb.group({
       name: ['', Validators.required],
-      mobileNo: ['', [Validators.required, Validators.pattern(/^[0-9]{10}$/)]],
+      mobileNo: ['', [Validators.required, Validators.pattern(/^[6789]\d{9}$/)]],
       email: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/)]],
       organizationName: ['', Validators.required],
       qualification: ['', Validators.required],
@@ -62,7 +62,7 @@ export class ProgramCreationComponent implements OnInit, AfterViewInit {
     (this.programCreationSub?.controls["details"] as FormArray).clear();
     this.onAddRow(0);
     this.programCreationMain.controls['activityId'].valueChanges.subscribe((activityId: any) => {
-      this.getSubActivitiesList(activityId);
+      if(activityId) this.getSubActivitiesList(activityId);
     });
   }
 
@@ -115,21 +115,37 @@ export class ProgramCreationComponent implements OnInit, AfterViewInit {
   }
 
   formDetails() {
+    
     this.programCreationMain = new FormGroup({
       activityId: new FormControl("", [Validators.required]),
       subActivityId: new FormControl("", [Validators.required]),
       programType: new FormControl("", [Validators.required]),
-      programDetails: new FormControl("", [Validators.required]),
-      programTitle: new FormControl("", [Validators.required]),
+      //programDetails: new FormControl("", [Validators.required]),
+      programTitle: new FormControl("", [Validators.required, Validators.pattern(/^[a-zA-Z]+(\s[a-zA-Z]+)*$/)]),
       startDate: new FormControl("", [Validators.required]),
       endDate: new FormControl("", [Validators.required]),
       startTime: new FormControl("", [Validators.required]),
       endTime: new FormControl("", [Validators.required]),
-      spocName: new FormControl("", [Validators.required]),
-      spocContactNo: new FormControl("", [Validators.required, Validators.pattern(/^[0-9]{10}$/)]),
+      spocName: new FormControl("", [Validators.required, Validators.pattern(/^[a-zA-Z]+(\s[a-zA-Z]+)*$/)]),
+      spocContactNo: new FormControl("", [Validators.required, Validators.pattern(/^[6-9]\d{9}$/)]),
       programLocation: new FormControl("", [Validators.required]),
       kpi: new FormControl("", [Validators.required]),
-    });
+    }, { validators: this.validateDates as ValidatorFn });
+    // Mark all controls as touched to show validation errors immediately
+    //Object.values(this.programCreationMain.controls).forEach(control => control.markAsTouched());
+  }
+
+  validateDates: ValidatorFn = (formGroup: AbstractControl): ValidationErrors | null => {
+    const startDate = formGroup.get('startDate')?.value;
+    const endDate = formGroup.get('endDate')?.value;
+
+    if (startDate && endDate && new Date(endDate) < new Date(startDate)) {
+      formGroup.get('endDate')?.setErrors({ invalidEndDate: true });
+      return { invalidEndDate: true };
+    } else {
+      formGroup.get('endDate')?.setErrors(null);
+      return null;
+    }
   }
 
   formDetailsTwo() {
@@ -153,13 +169,13 @@ export class ProgramCreationComponent implements OnInit, AfterViewInit {
   formDetailsLocation() {
     this.locationForm = new FormGroup({
       locationName: new FormControl("", [Validators.required]),
-      ownershipType: new FormControl("", [Validators.required]),
+      ownershipType: new FormControl(""),
       typeOfVenue: new FormControl("", [Validators.required]),
-      latitude: new FormControl("", [Validators.required]),
+      latitude: new FormControl(""),
       longitude: new FormControl("",),
       googleMapUrl: new FormControl("",),
       OthersType: new FormControl("",),
-      capacity: new FormControl("",),
+      capacity: new FormControl("",[Validators.required]),
       agencyId: new FormControl("",),
       filePath: new FormControl("",),
     });
@@ -447,7 +463,7 @@ export class ProgramCreationComponent implements OnInit, AfterViewInit {
           activityId: program.activityId,
           subActivityId: program.subActivityId,
           programType: program.programType,
-          programDetails: program.programDetails,
+          //programDetails: program.programDetails,
           programTitle: program.programTitle,
           startDate: moment(program.startDate).format('YYYY-MM-DD'),
           endDate: moment(program.endDate).format('YYYY-MM-DD'),
