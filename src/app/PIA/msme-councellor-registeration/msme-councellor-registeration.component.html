@@ -200,8 +200,8 @@
                                         <input type="number" class="form-control" id="pincode" placeholder="" name="pincode" formControlName="pincode">
                                         <label for="pincode">Pincode</label>
                                     </div>
-                                    <div *ngIf="this.f2['contactNo'].touched && !this.f2['contactNo'].valid && !this.f2['contactNo']?.errors?.['pattern']" class="error">Pincode is required</div>
-                                <div *ngIf="this.f2['contactNo'].touched && !this.f2['contactNo'].valid && this.f2['contactNo']?.errors?.['pattern']" class="error">Pincode should be 6 digit Number</div>
+                                    <div *ngIf="this.f2['pincode'].touched && !this.f2['pincode'].valid && !this.f2['pincode']?.errors?.['pattern']" class="error">Pincode is required</div>
+                                <div *ngIf="this.f2['pincode'].touched && !this.f2['pincode'].valid && this.f2['pincode']?.errors?.['pattern']" class="error">Pincode should be 6 digit Number</div>
                                 </div>
                             </div>
                         </div>
@@ -256,8 +256,8 @@
                                     <input type="number" class="form-control" id="altcontact" placeholder="" name="altContactNo" formControlName="altContactNo">
                                     <label for="altcontact">Alt Contact No.</label>
                                 </div>
-                                <div *ngIf="this.f2['contactNo'].touched && !this.f2['contactNo'].valid && !this.f2['contactNo']?.errors?.['pattern']" class="error">Alt contact No is required</div>
-                                <div *ngIf="this.f2['contactNo'].touched && !this.f2['contactNo'].valid && this.f2['contactNo']?.errors?.['pattern']" class="error">Alt Contact No should be 10 digit Number</div>
+                                <div *ngIf="this.f2['altContactNo'].touched && !this.f2['altContactNo'].valid && !this.f2['altContactNo']?.errors?.['pattern']" class="error">Alt contact No is required</div>
+                                <div *ngIf="this.f2['altContactNo'].touched && !this.f2['altContactNo'].valid && this.f2['altContactNo']?.errors?.['pattern']" class="error">Alt Contact No should be 10 digit Number</div>
                             
                             </div>
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3">

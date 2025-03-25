@@ -13,45 +13,59 @@
                 <table id="view-table-Counseller" class="table table-borderless table-striped nowrap">
                     <thead>
                         <tr>
+      
                             <th>S.No</th>
-                            <th>IsAspirant</th>
-                            <th>Oragnization Name</th>
-                            <th>Name of the Participant</th>
+                            <th>Date Of Registration</th>
+                            <th>Name Of Counsellor</th>
+                            <th>Date Of Birth</th>
                             <th>Gender</th>
-                            <th>Disability</th>
-                            <th>Aadhar No.</th>
-                            <th>Category</th>
-                            <th>Mobile No.</th>
-                            <th>Email</th>
+                            <th>Social Category</th>
+                            <th>Educational Qualification</th>
+                            <th>District</th>
+                            <th>Mandal</th>
+                            <th>Village</th>
+                            <th>House No</th>
+                            <th>Street Name</th>
+                            <th>Pincode</th>
+                            <th>Landmark</th>
+                            <th>Experience</th>
                             <th>Designation</th>
-                            <th>Previous Participant</th>
-                            <th>Pre-Training Assessment</th>
-                            <th>Post Training Assessment</th>
-                            <th>Certificate Issue Date</th>
-                            <th>Issue Date</th>
-                            <th>Methodology Used for Needs Assessment</th>
+                            <th>Specialzation</th>
+                            <th>Contact No</th>
+                            <th>Alt Contact No</th>
+                            <th>Email Id</th>
+                            <th>Allorted District</th>
+                            <th>Allorted Mandal</th>
+                            <th>Date Of Selection</th>
                            
                         </tr>
                     </thead>
                     <tbody *ngIf="submitedData">
                         <tr  *ngFor="let item of submitedData; let i=index">
                             <td class="text-start">{{i+1}}</td>
-                            <td>{{item?.isAspirant=='Aspirant'?'Yes':'No'}}</td>
-                            <td >{{item?.isAspirant=='Aspirant'?'':item?.organizationName}}</td>
-                            <td>{{item?.participantName}}</td>
+                            <td>{{item?.dateOfRegistration}}</td>
+                            <td>{{item?.nameOfCounsellor}}</td>
+                            <td>{{item?.dateOfBirth}}</td>
                             <td>{{item?.gender}}</td>
-                            <td>{{item?.disability}}</td>
-                            <td>{{item?.aadharNo}}</td>
-                            <td>{{item?.category}}</td>
-                            <td>{{item?.mobileNo}}</td>
-                            <td>{{item?.email}}</td>
+                            <td>{{item?.socialCategory}}</td>
+                            <td>{{item?.educationalQualification}}</td>
+                            <td>{{item?.districtId}}</td>
+                            <td>{{item?.mandalId}}</td>
+                            <td>{{item?.village}}</td>
+                            <td>{{item?.houseNo}}</td>
+                            <td>{{item?.streetName}}</td>
+                            <td>{{item?.pincode}}</td>
+                            <td>{{item?.landmark}}</td>
+                            <td>{{item?.expriance}}</td>
                             <td>{{item?.designation}}</td>
-                            <td>{{item?.isParticipatedBefore}}</td>
-                            <td>{{item?.preTrainingAssessmentConducted}}</td>
-                            <td>{{item?.postTrainingAssessmentConducted}}</td>
-                            <td>{{item?.isCertificateIssued=='Y'?'Yes':'No'}}</td>
-                            <td>{{item?.isCertificateIssued=='Y'?item?.certificateIssueDate:''}}</td>
-                            <td>{{item?.needAssessmentMethodology}}</td>
+                            <td>{{item?.specialzation}}</td>
+                            <td>{{item?.contactNo}}</td>
+                            <td>{{item?.altContactNo}}</td>
+                            <td>{{item?.emailId}}</td>
+                            <td>{{item?.allortedDistrictId}}</td>
+                            <td>{{item?.allortedMandalId}}</td>
+                            <td>{{item?.dateOfSelection}}</td>
+     
                            
                         </tr>
                     </tbody>

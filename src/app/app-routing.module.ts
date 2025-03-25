@@ -20,6 +20,7 @@ import { CaptureOutcomeDynamicComponent } from './PIA/capture-outcome-dynamic/ca
 import { ESDPTrainingComponent } from './PIA/esdp-training/esdp-training.component';
 import { ShgTrainingStatusComponent } from './PIA/shg-training-status/shg-training-status.component';
 import { MsmeCouncellorRegisterationComponent } from './PIA/msme-councellor-registeration/msme-councellor-registeration.component';
+import { ViewMsmeCouncellorDataComponent } from './PIA/view-msme-councellor-data/view-msme-councellor-data.component';
 
 const routes: Routes = [
     {
@@ -114,6 +115,12 @@ const routes: Routes = [
     {
         path: 'MSME-councellor-registeration',
         component: MsmeCouncellorRegisterationComponent,
+        canActivate: [AuthGuard],
+        data: { roles:  [Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
+    },
+    {
+        path: 'view-MSME-councellor',
+        component: ViewMsmeCouncellorDataComponent,
         canActivate: [AuthGuard],
         data: { roles:  [Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
     },
