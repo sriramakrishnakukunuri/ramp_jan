@@ -234,7 +234,7 @@ export class AddParticipantDataComponent implements OnInit {
       .add(APIS.participantdata.add, payload).subscribe({
         next: (data: any) => {
           // this.advanceSearch(this.getSelDataRange);
-          this.programIds = this.ParticipantDataForm.value.programIds
+          this.programIds = this.ParticipantDataForm.value.programIds?this.ParticipantDataForm.value.programIds:this.programList[0]?.programId
           this.getData()
           this.ParticipantDataForm.reset()
           this.formDetails()
