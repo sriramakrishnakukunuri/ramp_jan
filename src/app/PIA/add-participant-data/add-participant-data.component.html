@@ -361,7 +361,11 @@
                                 </div> -->
                                 <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                     <div class="form-floating mb-3">
-                                        <input type="text" class="form-control" id="district" placeholder="" formControlName="distId">
+                                        <!-- <input type="text" class="form-control" id="district" placeholder="" formControlName="distId"> -->
+                                        <select class="form-select" id="district" formControlName="distId">
+                                            <option value="">Select District</option>
+                                            <option *ngFor="let list of allDistricts" value="{{list.districtId}}">{{list.districtName}}</option>
+                                        </select>
                                         <label for="district">District</label>
                                     </div>
                                 </div>
@@ -561,7 +565,7 @@
                                         <div class="form-floating mb-3">
                                             <select class="form-select" id="State" formControlName="stateId">
                                               <option selected>Select State</option>
-                                              <option value="1">State 1</option>
+                                              <option value="Telangana">Telangana</option>
                                             </select>
                                             <label for="State">State</label>
                                         </div>
@@ -570,7 +574,7 @@
                                         <div class="form-floating mb-3">
                                             <select class="form-select" id="District" formControlName="distId">
                                               <option selected>Select District</option>
-                                              <option value="1">District 1</option>
+                                              <option *ngFor="let list of allDistricts" value="{{list.districtId}}">{{list.districtName}}</option>
                                             </select>
                                             <label for="District">District</label>
                                         </div>

@@ -16,7 +16,7 @@ export const APIS = {
         getActivityList: API_BASE_URL + '/activities',
         getSubActivityListByActivity: API_BASE_URL + '/activityById',
         getESDPProgram: API_BASE_URL + '/getESDPTraining',
-        addESDPProgram: API_BASE_URL + '/SaveESDPTraining',
+        addESDPProgram: API_BASE_URL + '/SaveESDPTraining',        
         // get: API_BASE_URL + '/program/get',
         // update: API_BASE_URL + '/program/update',
         // delete: API_BASE_URL + '/program/delete',
@@ -41,7 +41,8 @@ export const APIS = {
         agencyList: API_BASE_URL + '/agencies',
         locationList: API_BASE_URL + '/locations',
         getUserList: API_BASE_URL + '/login/allusrs',
-        getresources: API_BASE_URL + '/resources'
+        getresources: API_BASE_URL + '/resources',
+        getDistricts: API_BASE_URL + '/getAllDistricts',
     },
     captureOutcome:{
         getParticipantData: API_BASE_URL + '/getParticipantsByMobileNo/',

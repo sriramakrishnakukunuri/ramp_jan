@@ -4,7 +4,7 @@ import { CommonServiceService } from '@app/_services/common-service.service';
 import { APIS } from '@app/constants/constants';
 import DataTable from 'datatables.net-dt';
 import { ToastrService } from 'ngx-toastr';
-
+import moment from 'moment';
 @Component({
   selector: 'app-msme-councellor-registeration',
   templateUrl: './msme-councellor-registeration.component.html',
@@ -21,8 +21,20 @@ export class MsmeCouncellorRegisterationComponent implements OnInit {
 
   ngOnInit(): void {
     this.formDetails()
+    this.getAllDistricts()
   }
-
+  allDistricts:any
+  getAllDistricts(){
+    this.allDistricts = []
+    this._commonService.getDataByUrl(APIS.masterList.getDistricts).subscribe({
+      next: (data: any) => {
+        this.allDistricts = data.data;
+      },
+      error: (err: any) => {
+        this.allDistricts = [];
+      }
+    })
+  }
   formDetails() {
     this.CounsellerForm = new FormGroup(
     {
@@ -57,7 +69,7 @@ export class MsmeCouncellorRegisterationComponent implements OnInit {
   }
   submitForm() {
    
-    this._commonService .add(APIS.counsellerData.add, this.CounsellerForm.value).subscribe({
+    this._commonService .add(APIS.counsellerData.add, {...this.CounsellerForm.value,dateOfRegistration:moment(this.CounsellerForm.value.dateOfRegistration).format('DD-MM-YYYY'),dateOfSelection:moment(this.CounsellerForm.value.dateOfSelection).format('DD-MM-YYYY'),dateOfBirth:moment(this.CounsellerForm.value.dateOfBirth).format('DD-MM-YYYY')}).subscribe({
         next: (data: any) => {
          
           this.CounsellerForm.reset()

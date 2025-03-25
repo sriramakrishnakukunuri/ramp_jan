@@ -152,14 +152,15 @@
                             <div class="row">
                                 <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                     <div class="form-floating mb-3">
+                                      
                                         <select class="form-select" id="district" name="districtId" formControlName="districtId">
-                                          <option selected>Select District</option>
-                                          <option value="1">District 1</option>
-                                          <option value="2">District 2</option>
+                                            <option value="">Select District</option>
+                                            <option *ngFor="let list of allDistricts" value="{{list.districtId}}">{{list.districtName}}</option>
                                         </select>
-                                        <label for="district">District</label>
+                                        <label for="district">Name Of The District</label>
                                     </div>
                                 </div>
+                               
                                 <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                     <div class="form-floating mb-3">
                                         <select class="form-select" id="mandal" name="mandalId" formControlName="mandalId">
@@ -262,7 +263,7 @@
                             </div>
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                 <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="email" placeholder="" name="emailId" formControlName="emailId">
+                                    <input type="email" class="form-control" id="email" placeholder="" name="emailId" formControlName="emailId">
                                     <label for="email">Email Id</label>
                                 </div>
                             </div>
@@ -280,12 +281,12 @@
                             <div class="row">
                                 <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                     <div class="form-floating mb-3">
-                                        <select class="form-select" id="districtAlloted" name="allortedDistrictId" formControlName="allortedDistrictId">
-                                          <option selected>Select Mandal</option>
-                                          <option value="1">District 1</option>
-                                          <option value="2">District 2</option>
+                                      
+                                        <select class="form-select" id="district" formControlName="allortedDistrictId">
+                                            <option value="">Select District</option>
+                                            <option *ngFor="let list of allDistricts" value="{{list.districtId}}">{{list.districtName}}</option>
                                         </select>
-                                        <label for="districtAlloted">Name Of The District Allotted</label>
+                                        <label for="district">Name Of The District Allotted</label>
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-6 col-md-4 col-lg-3">
