@@ -31,6 +31,9 @@ import { ViewParticipateCreationComponent } from './PIA/view-praticipate-creatio
 import { OrganizationsListComponent } from './organizations-list/organizations-list.component';
 import { CaptureOutcomeComponent } from './PIA/capture-outcome/capture-outcome.component';
 import { CaptureOutcomeDynamicComponent } from './PIA/capture-outcome-dynamic/capture-outcome-dynamic.component';
+import { ESDPTrainingComponent } from './PIA/esdp-training/esdp-training.component';
+import { ShgTrainingStatusComponent } from './PIA/shg-training-status/shg-training-status.component';
+import { GlobalDashboardComponent } from './Dashboard/global-dashboard/global-dashboard.component';
 import { MsmeCouncellorRegisterationComponent } from './PIA/msme-councellor-registeration/msme-councellor-registeration.component';
 import { GetOutcomeComponent } from './PIA/get-outcome/get-outcome.component';
 import { ViewMsmeCouncellorDataComponent } from './PIA/view-msme-councellor-data/view-msme-councellor-data.component';
@@ -66,7 +69,8 @@ import { ViewMsmeCouncellorDataComponent } from './PIA/view-msme-councellor-data
         VeiwProgramCreationComponent,
         UpdateProgramExecutionComponent,
         HasRoleDirective, // Declare the directive
-        ViewParticipateCreationComponent, OrganizationsListComponent, CaptureOutcomeComponent, CaptureOutcomeDynamicComponent, MsmeCouncellorRegisterationComponent, GetOutcomeComponent, ViewMsmeCouncellorDataComponent,
+        ViewParticipateCreationComponent, OrganizationsListComponent, CaptureOutcomeComponent, CaptureOutcomeDynamicComponent, ESDPTrainingComponent, ShgTrainingStatusComponent, GlobalDashboardComponent,MsmeCouncellorRegisterationComponent
+, GetOutcomeComponent, ViewMsmeCouncellorDataComponent,
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

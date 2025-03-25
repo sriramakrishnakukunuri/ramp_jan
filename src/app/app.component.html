@@ -26,6 +26,13 @@
                     </div>
                     <div class="offcanvas-body">
                         <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+
+                            <!-- <li class="nav-item dropdown" *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]">
+                                <a class="nav-link" routerLink="/global-dashboard" routerLinkActive="active" id="dropdown3" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Dashboard <span class="bi bi-chevron-down"></span>
+                                </a>                               
+                            </li> -->
+
                             <li class="nav-item dropdown" *appHasRole="[Role.Admin]">
                                 <a class="nav-link" href="#" id="homeDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     <span>Programs Per Agencies</span> <span class="bi bi-chevron-down"></span>
@@ -49,6 +56,7 @@
                                 <ul class="dropdown-menu" aria-labelledby="homeDropdown">
                                     <li><a class="dropdown-item" routerLink="/program-creation" routerLinkActive="active">Add Program</a></li>
                                     <li><a class="dropdown-item" routerLink="/veiw-program-creation" routerLinkActive="active">View Programs</a></li>                                    
+                                    <!-- <li><a class="dropdown-item" routerLink="/esdp-training" routerLinkActive="active">ESDP Training Program</a></li>                                     -->
                                 </ul>
                             </li>
                             <li class="nav-item dropdown" *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]">
@@ -68,18 +76,22 @@
                                 <ul class="dropdown-menu" aria-labelledby="dropdown3">
                                     <li><a class="dropdown-item" routerLink="/capture-outcome" routerLinkActive="active">Capture Outcome</a></li>
                                 <!-- <li><a class="dropdown-item" href="#">Capture Outcome</a></li> -->
-                                <li><a class="dropdown-item" href="#">Organisation Updates</a></li>
+                                <li><a class="dropdown-item" href="#">Organisation Updates</a></li>                                
+                                <li><a class="dropdown-item" routerLink="/shg-training" routerLinkActive="active">SHG Training Status</a></li>
                                 </ul>
                             </li>
+                            
+
                             <li class="nav-item dropdown" *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]">
-                                <a class="nav-link" href="#" id="dropdown3" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Counsellor<span class="bi bi-chevron-down"></span>
+                                <a class="nav-link" routerLink="/esdp-training" routerLinkActive="active" id="dropdown3" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    ESDP Training Program <span class="bi bi-chevron-down"></span>
                                 </a>
-                                <ul class="dropdown-menu" aria-labelledby="dropdown3">
-                                    <li><a class="dropdown-item" routerLink="/MSME-councellor-registeration" routerLinkActive="active">Counsellor Registration</a></li>
-                                <!-- <li><a class="dropdown-item" href="#">Capture Outcome</a></li> -->
-                                <!-- <li><a class="dropdown-item" href="#">Organisation Updates</a></li> -->
-                                </ul>
+                            </li>
+
+                            <li class="nav-item dropdown" *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]">
+                                <a class="nav-link" routerLink="/MSME-councellor-registeration" routerLinkActive="active" id="dropdown3" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Counsellor Registration <span class="bi bi-chevron-down"></span>
+                                </a>
                             </li>
                         </ul>
                     </div>
