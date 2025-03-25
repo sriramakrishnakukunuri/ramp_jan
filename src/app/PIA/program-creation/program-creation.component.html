@@ -226,6 +226,12 @@
                             <div>
                                 <h6 class="fw-600 mb-2 mb-sm-0 text-green">Add Session</h6>
                             </div>
+                            <!-- <div>
+                                <select class="form-select" [(ngModel)]="programIds" [ngModelOptions]="{standalone: true}" (change)="dropdownProgramsList($event,'table')">
+                                    <option value="">Select Program</option>
+                                    <option *ngFor="let list of agencyProgramList" value="{{list.programId}}">{{list.programTitle}}</option>
+                                </select>
+                            </div> -->
                             <div>
                                 <button type="button" class="btn btn-lime-green" data-bs-toggle="modal"
                                     data-bs-target="#addResource">Add Resource Person</button>
@@ -238,17 +244,17 @@
                                 <thead>
                                     <tr>
                                         <th>S.No</th>
-                                        <th>Date</th>
-                                        <th>Start Time</th>
-                                        <th>End Time</th>
-                                        <th>Type Of Session</th>
-                                        <th>Methodology</th>
-                                        <th>Session Details</th>
+                                        <th>Date <span class="c-red"> *</span></th>
+                                        <th>Start Time <span class="c-red"> *</span></th>
+                                        <th>End Time <span class="c-red"> *</span></th>
+                                        <th>Type Of Session <span class="c-red"> *</span></th>
+                                        <th>Methodology <span class="c-red"> *</span></th>
+                                        <th>Session Details<span class="c-red"> *</span></th>
                                         <!-- <th>Session Expected OutComes</th> -->
-                                        <th>Resource Person</th>
+                                        <th>Resource Person<span class="c-red"> *</span></th>
                                         <!-- <th>Type Of Material Used</th> -->
-                                        <th>Streaming Url</th>
-                                        <th>Upload</th>
+                                        <th>Streaming Url<span class="c-red"> *</span></th>
+                                        <th>Upload<span class="c-red"> *</span></th>
                                         <th>Add/Delete</th>
                                     </tr>
                                 </thead>
@@ -291,25 +297,15 @@
                                                 <input type="text" class="form-control" placeholder="Session Details"
                                                     formControlName="sessionDetails">
                                             </td>
-                                            <!-- <td>
-                                        <input type="text" class="form-control" placeholder="Session Expected OutComes" formControlName="sessionExpectedOutComes">
-                                    </td> -->
+                                            
                                             <td>
                                                 <select class="form-select" formControlName="resourceId">
-                                                    <option value="">Select Resource Person</option>
-                                                    <!-- <option value="Resource Person1">Resource Person1</option> -->
+                                                    <option value="">Select Resource Person</option>                                            
                                                     <option *ngFor="let list of getSessionResourceData"
                                                         value="{{list.resourceId}}">{{list.name}}</option>
                                                 </select>
                                             </td>
-                                            <!-- <td>
-                                                <select class="form-select" formControlName="meterialType">
-                                                    <option value="">Select Type</option>
-                                                    <option value="PDF">PDF</option>
-                                                    <option value="Video">Video</option>
-                                                    <option value="PPT">PPT</option>
-                                                </select>
-                                            </td> -->
+                                            
                                             <td>
                                                 <input class="form-control" type="text"
                                                     formControlName="sessionStreamingUrl">

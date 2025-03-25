@@ -43,6 +43,7 @@ export const APIS = {
         getUserList: API_BASE_URL + '/login/allusrs',
         getresources: API_BASE_URL + '/resources',
         getDistricts: API_BASE_URL + '/getAllDistricts',
+        getMandal: API_BASE_URL + '/getAllmandalsOfDistrictsById/',
     },
     captureOutcome:{
         getParticipantData: API_BASE_URL + '/getParticipantsByMobileNo/',

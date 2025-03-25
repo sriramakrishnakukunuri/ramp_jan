@@ -22,6 +22,7 @@ import { ShgTrainingStatusComponent } from './PIA/shg-training-status/shg-traini
 import { MsmeCouncellorRegisterationComponent } from './PIA/msme-councellor-registeration/msme-councellor-registeration.component';
 import { ViewMsmeCouncellorDataComponent } from './PIA/view-msme-councellor-data/view-msme-councellor-data.component';
 import { GlobalDashboardComponent } from './Dashboard/global-dashboard/global-dashboard.component';
+import { ViewParticipantComponent } from './PIA/view-participant/view-participant.component';
 
 const routes: Routes = [
     {
@@ -128,6 +129,12 @@ const routes: Routes = [
     {
         path: 'global-dashboard',
         component: GlobalDashboardComponent,
+        canActivate: [AuthGuard],
+        data: { roles:  [Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
+    },
+    {
+        path: 'view-participant-data',
+        component: ViewParticipantComponent,
         canActivate: [AuthGuard],
         data: { roles:  [Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
     },

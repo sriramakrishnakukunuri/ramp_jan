@@ -50,6 +50,7 @@ export class ProgramCreationComponent implements OnInit, AfterViewInit {
     this.getProgramLocation();
     this.getSessionResource();
     this.getAllActivityList()
+    this.getProgramsByAgency()
   }
 
   ngOnInit(): void {
@@ -155,12 +156,12 @@ export class ProgramCreationComponent implements OnInit, AfterViewInit {
         startTime: new FormControl("", [Validators.required]),
         endTime: new FormControl("", [Validators.required]),
         sessionTypeName: new FormControl("", [Validators.required]),
-        sessionTypeMethodology: new FormControl("",),
-        sessionDetails: new FormControl("",),
-        resourceId: new FormControl("",),
+        sessionTypeMethodology: new FormControl("",[Validators.required]),
+        sessionDetails: new FormControl("",[Validators.required]),
+        resourceId: new FormControl("",[Validators.required]),
         //meterialType: new FormControl("",),
         uploaFiles: [null, Validators.required],
-        sessionStreamingUrl: new FormControl("",),
+        sessionStreamingUrl: new FormControl("",[Validators.required]),
         videoUrls: [null, Validators.required],
       })]),
     });
@@ -241,6 +242,7 @@ export class ProgramCreationComponent implements OnInit, AfterViewInit {
         this.toastrService.success('Program Created Successfully', "Success!");
         this.programCreationMain.reset();
         this.programCreationSub.reset();
+        this.getProgramsByAgency()
       },
       error: (err) => {
         this.toastrService.error(err.message, "Program Creation Error!");
@@ -250,6 +252,10 @@ export class ProgramCreationComponent implements OnInit, AfterViewInit {
   }
 
   submitForm() {
+    if(!this.programCreationSub?.controls["details"]?.value[0].startTime) {
+      this.toastrService.error('Please fill all the required fields in add sessions', 'Error!');
+      return;
+    }
     let val = { ...this.programCreationMain.value };
     val = { ...this.programCreationMain.value, programSessionList: this.programCreationSub?.controls["details"]?.value };
     let maindata = { ...this.programCreationMain.value };
@@ -327,7 +333,7 @@ export class ProgramCreationComponent implements OnInit, AfterViewInit {
   }
   @ViewChild('exampleModal') exampleModal!: ElementRef;
 
-  openModal(): void {
+  openModal(): void {    
     const modal = new bootstrap.Modal(this.exampleModal.nativeElement);
     modal.show();
   }
@@ -548,5 +554,23 @@ export class ProgramCreationComponent implements OnInit, AfterViewInit {
     }
 
     return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+  }
+
+  agencyProgramList: any;
+  programIds:any=''
+  getProgramsByAgency() {
+    this._commonService.getDataByUrl(`${APIS.programCreation.getProgramsListByAgency+'/'+this.agencyId}`).subscribe({
+      next: (res: any) => {
+        this.agencyProgramList = res?.data
+      },
+      error: (err) => {
+        new Error(err);
+      }
+    })
+  }
+
+  dropdownProgramsList(event: any, type: any) {
+    this.programIds = event.target.value
+    this.getProgramDetailsById(this.programIds);
   }
 }

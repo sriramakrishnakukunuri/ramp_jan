@@ -2056,6 +2056,7 @@ textarea.form-control-lg {
 .was-validated :valid ~ .valid-tooltip {
   display: block;
 }
+.c-red{color:#F44336 !important}
 .was-validated .form-control :valid {
   border-color: #198754;
   padding-right: calc(1.5em + 0.75rem);
