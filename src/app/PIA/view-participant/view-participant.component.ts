@@ -3,8 +3,10 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { Router } from '@angular/router';
 import { CommonServiceService } from '@app/_services/common-service.service';
 import { APIS } from '@app/constants/constants';
-import DataTable from 'datatables.net-dt';
 import { ToastrService } from 'ngx-toastr';
+import DataTable from 'datatables.net-dt';
+import 'datatables.net-buttons-dt';
+import 'datatables.net-responsive-dt';
 
 @Component({
   selector: 'app-view-participant',
@@ -81,7 +83,7 @@ export class ViewParticipantComponent implements OnInit {
     }
   
     initializeDataTable() {
-      this.dataTable = new DataTable('#view-table-participant', {
+      this.dataTable = new DataTable('#view-table-participant1', {
         // scrollX: true,
         // scrollCollapse: true,    
         // responsive: true,    

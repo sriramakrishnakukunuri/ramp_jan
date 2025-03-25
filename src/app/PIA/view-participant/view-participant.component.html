@@ -15,7 +15,7 @@
                 </div>
             </div>
             <div class="card-body">
-                <table id="view-table-participant" class="table table-borderless table-striped nowrap">
+                <table id="view-table-participant1" class="table table-borderless table-striped nowrap">
                     <thead>
                         <tr>
                             <th>S.No</th>
@@ -57,10 +57,10 @@
                             <td>{{item?.isCertificateIssued=='Y'?'Yes':'No'}}</td>
                             <td>{{item?.isCertificateIssued=='Y'?item?.certificateIssueDate:''}}</td>
                             <td>{{item?.needAssessmentMethodology}}</td>
-                            <td class="text-center">
-                                <!-- <button type="button" class="btn btn-default text-lime-green btn-sm" (click)="editRow(item,i)"><span class="bi bi-pencil"></span></button> -->
-                                <!-- <button type="button" class="btn btn-default text-danger btn-sm" (click)="deleteRow(item,i)"><span class="bi bi-trash"></span></button> -->
-                            </td>
+                            <!-- <td class="text-center">
+                                <button type="button" class="btn btn-default text-lime-green btn-sm" (click)="editRow(item,i)"><span class="bi bi-pencil"></span></button>
+                                <button type="button" class="btn btn-default text-danger btn-sm" (click)="deleteRow(item,i)"><span class="bi bi-trash"></span></button>
+                            </td> -->
                         </tr>
                     </tbody>
                 </table>
