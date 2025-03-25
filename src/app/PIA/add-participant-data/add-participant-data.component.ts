@@ -224,6 +224,9 @@ export class AddParticipantDataComponent implements OnInit {
   if(payload['isCertificateIssued']=='N'){
     delete payload['certificateIssueDate'];
   }
+  else{
+    payload['certificateIssueDate']=moment(payload['certificateIssueDate']).format('DD-MM-YYYY')
+  }
    
     this.submitedData.push(this.ParticipantDataForm.value)
     // sessionStorage.setItem('ParticipantData', this.submitedData)
