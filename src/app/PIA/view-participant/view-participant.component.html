@@ -1,1 +1,71 @@
-<p>view-participant works!</p>
+<main class="mt-4">
+    <section>
+        <div class="card mb-3">
+            <div class="card-header bg-transparent">
+                <div class="row align-items-center">
+                    <div class="col-12 col-sm-7 col-md-8 col-lg-9">
+                        <h6 class="fw-600 mb-2 mb-sm-0">View Participant Data</h6>
+                    </div>
+                    <div class="col-12 col-sm-5 col-md-4 col-lg-3">
+                        <select class="form-select" [(ngModel)]="programIds" (change)="dropdownProgramsList($event,'table')">
+                            <option value="">Select Program</option>
+                            <option *ngFor="let list of agencyProgramList" value="{{list.programId}}">{{list.programTitle}}</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <table id="view-table-participant" class="table table-borderless table-striped nowrap">
+                    <thead>
+                        <tr>
+                            <th>S.No</th>
+                            <th>IsAspirant</th>
+                            <th>Oragnization Name</th>
+                            <th>Name of the Participant</th>
+                            <th>Gender</th>
+                            <th>Disability</th>
+                            <th>Aadhar No.</th>
+                            <th>Category</th>
+                            <th>Mobile No.</th>
+                            <th>Email</th>
+                            <th>Designation</th>
+                            <th>Previous Participant</th>
+                            <th>Pre-Training Assessment</th>
+                            <th>Post Training Assessment</th>
+                            <th>Certificate Issue Date</th>
+                            <th>Issue Date</th>
+                            <th>Methodology Used for Needs Assessment</th>
+                            <!-- <th class="text-center">Edit / Delete</th> -->
+                        </tr>
+                    </thead>
+                    <tbody *ngIf="submitedData">
+                        <tr  *ngFor="let item of submitedData; let i=index">
+                            <td class="text-start">{{i+1}}</td>
+                            <td>{{item?.isAspirant=='Aspirant'?'Yes':'No'}}</td>
+                            <td >{{item?.isAspirant=='Aspirant'?'':item?.organizationName}}</td>
+                            <td>{{item?.participantName}}</td>
+                            <td>{{item?.gender}}</td>
+                            <td>{{item?.disability}}</td>
+                            <td>{{item?.aadharNo}}</td>
+                            <td>{{item?.category}}</td>
+                            <td>{{item?.mobileNo}}</td>
+                            <td>{{item?.email}}</td>
+                            <td>{{item?.designation}}</td>
+                            <td>{{item?.isParticipatedBefore}}</td>
+                            <td>{{item?.preTrainingAssessmentConducted}}</td>
+                            <td>{{item?.postTrainingAssessmentConducted}}</td>
+                            <td>{{item?.isCertificateIssued=='Y'?'Yes':'No'}}</td>
+                            <td>{{item?.isCertificateIssued=='Y'?item?.certificateIssueDate:''}}</td>
+                            <td>{{item?.needAssessmentMethodology}}</td>
+                            <td class="text-center">
+                                <!-- <button type="button" class="btn btn-default text-lime-green btn-sm" (click)="editRow(item,i)"><span class="bi bi-pencil"></span></button> -->
+                                <!-- <button type="button" class="btn btn-default text-danger btn-sm" (click)="deleteRow(item,i)"><span class="bi bi-trash"></span></button> -->
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+</main>
+

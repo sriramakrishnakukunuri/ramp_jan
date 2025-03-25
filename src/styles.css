@@ -15067,3 +15067,9 @@ header .navbar-brand img {
   margin-bottom: 10px;
   text-transform: capitalize;
 }
+
+.isDisabled{
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.5;
+}

@@ -227,6 +227,9 @@ export class AddParticipantDataComponent implements OnInit {
   if(payload['isCertificateIssued']=='N'){
     delete payload['certificateIssueDate'];
   }
+  else{
+    payload['certificateIssueDate']=moment(payload['certificateIssueDate']).format('DD-MM-YYYY')
+  }
    
     this.submitedData.push(this.ParticipantDataForm.value)
     // sessionStorage.setItem('ParticipantData', this.submitedData)
@@ -237,7 +240,7 @@ export class AddParticipantDataComponent implements OnInit {
       .add(APIS.participantdata.add, payload).subscribe({
         next: (data: any) => {
           // this.advanceSearch(this.getSelDataRange);
-          this.programIds = this.ParticipantDataForm.value.programIds
+          this.programIds = this.ParticipantDataForm.value.programIds?this.ParticipantDataForm.value.programIds:this.programList[0]?.programId
           this.getData()
           this.ParticipantDataForm.reset()
           this.formDetails()

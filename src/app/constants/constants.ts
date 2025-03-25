@@ -29,6 +29,10 @@ export const APIS = {
         getParticipantList: API_BASE_URL + '/participants',
         getParticipantListByAgency: API_BASE_URL + '/agency/participants/',
     },
+    counsellerData:{
+        add: API_BASE_URL + '/saveCounsellor',
+        getData: API_BASE_URL + '/getAllCounsellors',
+    },
     userRegistration:{
         add: API_BASE_URL + '/login/user/create',
         addAgent: API_BASE_URL + '/login/user/create',        

@@ -10,23 +10,23 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <form>
+                    <form [formGroup]="CounsellerForm">
                         <div class="row mb-4">
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                 <div class="form-floating mb-3">
-                                    <input type="date" class="form-control" id="dateRegistration" placeholder="">
+                                    <input type="date" class="form-control" id="dateRegistration" placeholder="" name="dateOfRegistration" formControlName="dateOfRegistration">
                                     <label for="dateRegistration">Date Of Registration</label>
                                 </div>
                             </div>
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                 <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="nameCounsellor" placeholder="">
+                                    <input type="text" class="form-control" id="nameCounsellor" placeholder="" name="nameOfCounsellor" formControlName="nameOfCounsellor">
                                     <label for="nameCounsellor">Name Of The MSME Counsellor</label>
                                 </div>
                             </div>
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                 <div class="form-floating mb-3">
-                                    <input type="date" class="form-control" id="dateOfBirth" placeholder="">
+                                    <input type="date" class="form-control" id="dateOfBirth" placeholder="" name="dateOfBirth" formControlName="dateOfBirth">
                                     <label for="dateOfBirth">Date Of Birth</label>
                                 </div>
                             </div>
@@ -34,15 +34,15 @@
                                 <label class="fs-md fw-600 mb-1">Gender</label>
                                 <div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="male" value="Male">
+                                        <input class="form-check-input" type="radio"  name="gender" formControlName="gender" id="male" value="Male">
                                         <label class="form-check-label fs-md" for="male">Male</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="female" value="Female">
+                                        <input class="form-check-input" type="radio"  name="gender" formControlName="gender" id="female" value="Female">
                                         <label class="form-check-label fs-md" for="female">Female</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="tg" value="Transgender">
+                                        <input class="form-check-input" type="radio"  name="gender" formControlName="gender" id="tg" value="Transgender">
                                         <label class="form-check-label fs-md" for="tg">Transgender</label>
                                     </div>
                                 </div>
@@ -54,19 +54,19 @@
                                         <div class="row">
                                             <div class="col-6 col-sm-4 col-md-2 col-lg-4">
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="inlineRadioOptions1" id="sc" value="sc">
+                                                    <input class="form-check-input" type="radio"  name="socialCategory" formControlName="socialCategory" id="sc" value="sc">
                                                     <label class="form-check-label fs-md" for="sc">SC</label>
                                                 </div>
                                             </div>
                                             <div class="col-6 col-sm-4 col-md-2 col-lg-4">
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="inlineRadioOptions1" id="female" value="st">
+                                                    <input class="form-check-input" type="radio"  name="socialCategory" formControlName="socialCategory" id="female" value="st">
                                                     <label class="form-check-label fs-md" for="female">ST</label>
                                                 </div>
                                             </div>
                                             <div class="col-6 col-sm-4 col-md-2 col-lg-4">
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="inlineRadioOptions1" id="bc" value="bc">
+                                                    <input class="form-check-input" type="radio" name="socialCategory" formControlName="socialCategory"  id="bc" value="bc">
                                                     <label class="form-check-label fs-md" for="bc">BC</label>
                                                 </div>
                                             </div>
@@ -76,13 +76,13 @@
                                         <div class="row">
                                             <div class="col-6 col-sm-4 col-md-2 col-lg-4">
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="inlineRadioOptions1" id="minority" value="minority">
+                                                    <input class="form-check-input" type="radio"  name="socialCategory" formControlName="socialCategory" id="minority" value="minority">
                                                     <label class="form-check-label fs-md" for="minority">Minority</label>
                                                 </div>
                                             </div>
                                             <div class="col-6 col-sm-4 col-md-2 col-lg-4">
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="inlineRadioOptions1" id="others" value="others">
+                                                    <input class="form-check-input" type="radio"  name="socialCategory" formControlName="socialCategory" id="others" value="others">
                                                     <label class="form-check-label fs-md" for="others">Others</label>
                                                 </div>
                                             </div>
@@ -100,19 +100,19 @@
                                             <div class="row">
                                                 <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                                                     <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="radio" name="inlineRadioOptions2" id="phd" value="PhD">
+                                                        <input class="form-check-input" type="radio"  name="educationalQualification" formControlName="educationalQualification" id="phd" value="PhD">
                                                         <label class="form-check-label fs-md" for="phd">PhD</label>
                                                     </div>
                                                 </div>
                                                 <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                                                     <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="radio" name="inlineRadioOptions2" id="pg" value="PG">
+                                                        <input class="form-check-input" type="radio"  name="educationalQualification" formControlName="educationalQualification" id="pg" value="PG">
                                                         <label class="form-check-label fs-md" for="pg">PG</label>
                                                     </div>
                                                 </div>
                                                 <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                                                     <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="radio" name="inlineRadioOptions2" id="graduate" value="Graduate">
+                                                        <input class="form-check-input" type="radio"  name="educationalQualification" formControlName="educationalQualification" id="graduate" value="Graduate">
                                                         <label class="form-check-label fs-md" for="graduate">Graduate</label>
                                                     </div>
                                                 </div>
@@ -122,13 +122,13 @@
                                             <div class="row">
                                                 <div class="col-12 col-sm-12 col-md-4 col-lg-8">
                                                     <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="radio" name="inlineRadioOptions2" id="inter" value="inter">
+                                                        <input class="form-check-input" type="radio"  id="inter" name="educationalQualification" formControlName="educationalQualification" value="inter">
                                                         <label class="form-check-label fs-md" for="inter">Inter / Polytechnic</label>
                                                     </div>
                                                 </div>
                                                 <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                                                     <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="radio" name="inlineRadioOptions2" id="iti" value="iti">
+                                                        <input class="form-check-input" type="radio"  id="iti" name="educationalQualification" formControlName="educationalQualification" value="iti">
                                                         <label class="form-check-label fs-md" for="iti">ITI</label>
                                                     </div>
                                                 </div>
@@ -138,7 +138,7 @@
                                         <div class="col-12 col-sm-12 col-md-6 col-lg-4">
                                             <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="inlineRadioOptions2" id="ten" value="10th">
+                                                    <input class="form-check-input" type="radio"  id="ten" name="educationalQualification" formControlName="educationalQualification" value="10th">
                                                     <label class="form-check-label fs-md" for="ten">10th</label>
                                                 </div>
                                             </div>
@@ -152,17 +152,18 @@
                             <div class="row">
                                 <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                     <div class="form-floating mb-3">
-                                        <select class="form-select" id="district">
-                                          <option selected>Select District</option>
-                                          <option value="1">District 1</option>
-                                          <option value="2">District 2</option>
+                                      
+                                        <select class="form-select" id="district" name="districtId" formControlName="districtId">
+                                            <option value="">Select District</option>
+                                            <option *ngFor="let list of allDistricts" value="{{list.districtId}}">{{list.districtName}}</option>
                                         </select>
-                                        <label for="district">District</label>
+                                        <label for="district">Name Of The District</label>
                                     </div>
                                 </div>
+                               
                                 <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                     <div class="form-floating mb-3">
-                                        <select class="form-select" id="mandal">
+                                        <select class="form-select" id="mandal" name="mandalId" formControlName="mandalId">
                                           <option selected>Select Mandal</option>
                                           <option value="1">Mandal 1</option>
                                           <option value="2">Mandal 2</option>
@@ -172,33 +173,36 @@
                                 </div>
                                 <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                     <div class="form-floating mb-3">
-                                        <input type="text" class="form-control" id="village" placeholder="">
+                                        <input type="text" class="form-control" id="village" placeholder="" name="village" formControlName="village">
                                         <label for="village">Village</label>
                                     </div>
                                 </div>
-                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                                    <div class="form-floating mb-3">
-                                        <input type="text" class="form-control" id="pincode" placeholder="">
-                                        <label for="pincode">Pincode</label>
-                                    </div>
-                                </div>
+                               
                                 <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                     <div class="form-floating mb-3 mb-lg-0">
-                                        <input type="text" class="form-control" id="house" placeholder="">
+                                        <input type="text" class="form-control" id="house" placeholder="" name="houseNo" formControlName="houseNo">
                                         <label for="house">House No.</label>
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                     <div class="form-floating mb-3 mb-lg-0">
-                                        <input type="text" class="form-control" id="street" placeholder="">
+                                        <input type="text" class="form-control" id="street" placeholder="" name="streetName" formControlName="streetName">
                                         <label for="street">Street Name</label>
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                     <div class="form-floating mb-3 mb-lg-0">
-                                        <input type="text" class="form-control" id="landmark" placeholder="">
+                                        <input type="text" class="form-control" id="landmark" placeholder="" name="landmark" formControlName="landmark">
                                         <label for="landmark">Landmark</label>
                                     </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                    <div class="form-floating mb-3">
+                                        <input type="number" class="form-control" id="pincode" placeholder="" name="pincode" formControlName="pincode">
+                                        <label for="pincode">Pincode</label>
+                                    </div>
+                                    <div *ngIf="this.f2['pincode'].touched && !this.f2['pincode'].valid && !this.f2['pincode']?.errors?.['pattern']" class="error">Pincode is required</div>
+                                <div *ngIf="this.f2['pincode'].touched && !this.f2['pincode'].valid && this.f2['pincode']?.errors?.['pattern']" class="error">Pincode should be 6 digit Number</div>
                                 </div>
                             </div>
                         </div>
@@ -207,53 +211,59 @@
                             <div class="row">
                                 <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                     <div class="form-floating mb-3 mb-lg-0">
-                                        <input type="text" class="form-control" id="exp" placeholder="">
+                                        <input type="number" class="form-control" id="exp" placeholder="" name="expriance" formControlName="expriance">
                                         <label for="exp">No. Of Years Of Exp</label>
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                     <div class="form-floating mb-3 mb-lg-0">
-                                        <input type="text" class="form-control" id="designation" placeholder="">
+                                        <input type="text" class="form-control" id="designation" placeholder="" name="designation" formControlName="designation">
                                         <label for="designation">Designation</label>
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                     <div class="form-floating mb-3 mb-lg-0">
-                                        <input type="text" class="form-control" id="specialization" placeholder="">
+                                        <input type="text" class="form-control" id="specialization" placeholder="" name="specialzation" formControlName="specialzation">
                                         <label for="specialization">Specialization</label>
                                     </div>
                                 </div>
-                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                <!-- <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                     <label class="fs-md fw-600 mb-1">Select</label>
                                     <div>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="inlineRadioOptions3" id="mepma" value="MEPMA">
+                                            <input class="form-check-input" type="radio" name="inlineRadioOptions3" id="mepma"  name="svs" formControlName="svs" value="MEPMA">
                                             <label class="form-check-label fs-md" for="mepma">MEPMA</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="inlineRadioOptions3" id="serp" value="SERP">
+                                            <input class="form-check-input" type="radio" name="inlineRadioOptions3" id="serp" name="svs" formControlName="svs" value="SERP">
                                             <label class="form-check-label fs-md" for="serp">SERP</label>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                         <div class="row mb-4">
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                 <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="contact" placeholder="">
+                                    <input type="number" class="form-control" id="contact" placeholder="" name="contactNo" formControlName="contactNo">
                                     <label for="contact">Contact No.</label>
                                 </div>
+                                <div *ngIf="this.f2['contactNo'].touched && !this.f2['contactNo'].valid && !this.f2['contactNo']?.errors?.['pattern']" class="error">contact No is required</div>
+                                <div *ngIf="this.f2['contactNo'].touched && !this.f2['contactNo'].valid && this.f2['contactNo']?.errors?.['pattern']" class="error">Contact No should be 10 digit Number</div>
+                            
                             </div>
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                 <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="altcontact" placeholder="">
+                                    <input type="number" class="form-control" id="altcontact" placeholder="" name="altContactNo" formControlName="altContactNo">
                                     <label for="altcontact">Alt Contact No.</label>
                                 </div>
+                                <div *ngIf="this.f2['altContactNo'].touched && !this.f2['altContactNo'].valid && !this.f2['altContactNo']?.errors?.['pattern']" class="error">Alt contact No is required</div>
+                                <div *ngIf="this.f2['altContactNo'].touched && !this.f2['altContactNo'].valid && this.f2['altContactNo']?.errors?.['pattern']" class="error">Alt Contact No should be 10 digit Number</div>
+                            
                             </div>
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                 <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="email" placeholder="">
+                                    <input type="email" class="form-control" id="email" placeholder="" name="emailId" formControlName="emailId">
                                     <label for="email">Email Id</label>
                                 </div>
                             </div>
@@ -262,7 +272,7 @@
                             <div class="row mb-4">
                                 <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                     <div class="form-floating mb-3 mb-lg-0">
-                                        <input type="date" class="form-control" id="selection" placeholder="">
+                                        <input type="date" class="form-control" id="selection" placeholder="" name="dateOfSelection" formControlName="dateOfSelection">
                                         <label for="selection">Date Of Selection</label>
                                     </div>
                                 </div>
@@ -271,18 +281,18 @@
                             <div class="row">
                                 <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                     <div class="form-floating mb-3">
-                                        <select class="form-select" id="districtAlloted">
-                                          <option selected>Select Gender</option>
-                                          <option value="1">District 1</option>
-                                          <option value="2">District 2</option>
+                                      
+                                        <select class="form-select" id="district" formControlName="allortedDistrictId">
+                                            <option value="">Select District</option>
+                                            <option *ngFor="let list of allDistricts" value="{{list.districtId}}">{{list.districtName}}</option>
                                         </select>
-                                        <label for="districtAlloted">Name Of The District Allotted</label>
+                                        <label for="district">Name Of The District Allotted</label>
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                     <div class="form-floating mb-3 mb-lg-0">
-                                        <select class="form-select" id="mandalAlloted">
-                                            <option selected>Select Gender</option>
+                                        <select class="form-select" id="mandalAlloted" name="allortedMandalId" formControlName="allortedMandalId">
+                                            <option selected>Select Mandal</option>
                                             <option value="1">Mandal 1</option>
                                             <option value="2">Mandal 2</option>
                                           </select>
@@ -292,7 +302,7 @@
                             </div>
                         </div>
                         <div class="text-end">
-                            <button type="button" class="btn btn-lime-green">Submit</button>
+                            <button type="button" (click)="submitForm()" class="btn btn-lime-green">Submit</button>
                         </div>
                     </form>
                 </div>
