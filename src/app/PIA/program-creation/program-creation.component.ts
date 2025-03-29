@@ -36,7 +36,7 @@ export class ProgramCreationComponent implements OnInit, AfterViewInit {
     
     this.agencyId = JSON.parse(sessionStorage.getItem('user') || '{}').agencyId;
     this.modalFormStype = this.fb.group({
-      name: ['', Validators.required],
+      name: ['', [Validators.required,Validators.pattern(/^[A-Za-z]+$/)]],
       mobileNo: ['', [Validators.required, Validators.pattern(/^[6789]\d{9}$/)]],
       email: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/)]],
       organizationName: ['', Validators.required],
@@ -169,14 +169,14 @@ export class ProgramCreationComponent implements OnInit, AfterViewInit {
 
   formDetailsLocation() {
     this.locationForm = new FormGroup({
-      locationName: new FormControl("", [Validators.required]),
+      locationName: new FormControl("", [Validators.required,Validators.pattern(/^[A-Za-z]+$/)]),
       ownershipType: new FormControl(""),
       typeOfVenue: new FormControl("", [Validators.required]),
       latitude: new FormControl(""),
       longitude: new FormControl("",),
-      googleMapUrl: new FormControl("",),
+      googleMapUrl: new FormControl("",[Validators.pattern(/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/)]),
       OthersType: new FormControl("",),
-      capacity: new FormControl("",[Validators.required]),
+      capacity: new FormControl("",[Validators.required,Validators.pattern(/^[1-9]\d*$/)]),
       agencyId: new FormControl("",),
       filePath: new FormControl("",),
     });

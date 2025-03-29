@@ -23,11 +23,13 @@ export const APIS = {
     },
     participantdata:{
         add: API_BASE_URL + '/participant/save',
+        update: API_BASE_URL + '/updateParticipant',
         getDataByProgramId: API_BASE_URL + '/program/participants/',
         saveOrgnization: API_BASE_URL + '/organization/save',
         getOrgnizationData: API_BASE_URL + '/organization/list',
         getParticipantList: API_BASE_URL + '/participants',
         getParticipantListByAgency: API_BASE_URL + '/agency/participants/',
+        getParticipantDetailsById: API_BASE_URL + '/getParticipantById/',
     },
     counsellerData:{
         add: API_BASE_URL + '/saveCounsellor',

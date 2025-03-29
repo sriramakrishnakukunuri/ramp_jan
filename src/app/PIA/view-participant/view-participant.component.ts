@@ -109,7 +109,8 @@ export class ViewParticipantComponent implements OnInit {
       sessionStorage.setItem('ParticipantData', JSON.stringify(this.submitedData));
       this.getData()
     }
-    editRow(item: any, i: any) {
-      this.router.navigateByUrl('/program-creation-edit/' + item.programId);
+
+  editRow(item: any, i: any) {
+      this.router.navigateByUrl('/add-participant-data-edit/' + item.participantId);
     }
   }

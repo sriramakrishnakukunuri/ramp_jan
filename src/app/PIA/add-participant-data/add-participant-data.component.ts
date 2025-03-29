@@ -9,6 +9,7 @@ import DataTable from 'datatables.net-dt';
 import 'datatables.net-buttons-dt';
 import 'datatables.net-responsive-dt';
 import moment from 'moment';
+import { REGEX } from '@app/_helpers/regex';
 declare var $: any;
 @Component({
   selector: 'app-add-participant-data',
@@ -24,9 +25,12 @@ export class AddParticipantDataComponent implements OnInit {
   // udyamYesOrNo:any='No'
   programIds: any = '';
   loginsessionDetails: any;
+  participantdetailsId: any;
   constructor(private fb: FormBuilder,
     private toastrService: ToastrService,
-    private _commonService: CommonServiceService) { 
+    private _commonService: CommonServiceService,
+    private router: Router,
+    private route: ActivatedRoute,) { 
       this.agencyId = JSON.parse(sessionStorage.getItem('user') || '{}').agencyId;
     }
 
@@ -41,6 +45,11 @@ export class AddParticipantDataComponent implements OnInit {
     //this.fOrg['udyamYesOrNo'].value.setValue('No')
     this.getAllDistricts()
     this.typeOragnization('SHG')
+    this.participantdetailsId = this.route.snapshot.paramMap.get('id');
+    if (this.participantdetailsId) {
+      this.getParticipantDetailsById(this.participantdetailsId);
+    }
+    console.log(this.participantdetailsId, 'programId');
   }
 
   allDistricts:any
@@ -82,7 +91,22 @@ export class AddParticipantDataComponent implements OnInit {
       }
     })
   }
-
+  getParticipantDetailsById(id  : any){
+    this._commonService.getById(APIS.participantdata.getParticipantDetailsById, id).subscribe({
+      next: (res: any) => {
+        if(res.data){
+          this.editRow(res.data, 0);
+        }
+        else{
+          this.isedit=false
+        }
+        
+      },
+      error: (err) => {
+        new Error(err);
+      }
+    })
+  }
   dropdownProgramsList(event: any, type: any) {
     this.programIds = event.target.value
     if (type == 'table') {
@@ -149,8 +173,8 @@ export class AddParticipantDataComponent implements OnInit {
       "town": new FormControl("", [Validators.required,]),
       "streetNo": new FormControl("", ),
       "houseNo": new FormControl("", ),
-      "latitude": new FormControl("", ),
-      "longitude": new FormControl("", ),
+      "latitude": new FormControl("", [Validators.pattern(/^[0-9.]{1,50}$/)]),
+      "longitude": new FormControl("", [Validators.pattern(/^[0-9.]{1,50}$/)]),
       "contactNo": new FormControl("", [Validators.required, Validators.pattern(/^[6789]\d{9}$/)]),
       "email": new FormControl("", [Validators.email,]),
       "website": new FormControl("", ),
@@ -222,7 +246,6 @@ export class AddParticipantDataComponent implements OnInit {
     let payload:any={...this.ParticipantDataForm.value, "programIds": [this.ParticipantDataForm.value.programIds], "organizationId": this.ParticipantDataForm.value.organizationId }
   if(this.f2['isAspirant'].value!='Existing Oragnization'){
     delete payload['organizationId']
-
   }
   if(payload['isCertificateIssued']=='N'){
     delete payload['certificateIssueDate'];
@@ -235,13 +258,41 @@ export class AddParticipantDataComponent implements OnInit {
     // sessionStorage.setItem('ParticipantData', this.submitedData)
 
     sessionStorage.setItem('ParticipantData', JSON.stringify(this.submitedData));
-
+  if(this.isedit){
+      
+    payload['participantId']=this.participantId
+    this._commonService
+        .updatedata(APIS.participantdata.update, payload).subscribe({
+      next: (data: any) => {
+        // this.advanceSearch(this.getSelDataRange);
+        this.programIds = this.ParticipantDataForm.value.programIds?this.ParticipantDataForm.value.programIds:this.programList[0]?.programId
+        this.getData()
+        this.isedit=false
+        this.participantId=''
+        this.ParticipantDataForm.reset()
+        this.formDetails()
+        this.router.navigateByUrl('/view-participant-data/');
+        // modal.close()
+        this.toastrService.success('Participant Data updated Successfully', "Participant Data Success!");
+      },
+      error: (err) => {
+        this.ParticipantDataForm.reset()
+        this.isedit=false
+        this.formDetails()
+        this.toastrService.error(err.message, "Participant Data Error!");
+        new Error(err);
+      },
+    });
+  }
+  else{
     this._commonService
       .add(APIS.participantdata.add, payload).subscribe({
         next: (data: any) => {
           // this.advanceSearch(this.getSelDataRange);
           this.programIds = this.ParticipantDataForm.value.programIds?this.ParticipantDataForm.value.programIds:this.programList[0]?.programId
           this.getData()
+          this.isedit=false
+          this.participantId=''
           this.ParticipantDataForm.reset()
           this.formDetails()
           // modal.close()
@@ -254,6 +305,7 @@ export class AddParticipantDataComponent implements OnInit {
           new Error(err);
         },
       });
+    }
     //this.getData()  
   }
   deleteRow(item: any, i: number) {
@@ -265,7 +317,11 @@ export class AddParticipantDataComponent implements OnInit {
     sessionStorage.setItem('ParticipantData', JSON.stringify(this.submitedData));
     this.getData()
   }
+  isedit:any=false
+  participantId:any=''
   editRow(item: any, i: any) {
+    this.isedit=true
+    this.participantId=item.participantId
     this.ParticipantDataForm.patchValue({ ...item,certificateIssueDate:'20-02-2222' })
   }
   typeOragnization(event: any) {

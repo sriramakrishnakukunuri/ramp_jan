@@ -79,6 +79,12 @@ const routes: Routes = [
         data: { roles: [Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
     },
     {
+        path: 'add-participant-data-edit/:id',
+        component: AddParticipantDataComponent,
+        canActivate: [AuthGuard],
+        data: { roles: [Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
+    },
+    {
         path: 'update-program-execution',
         component: UpdateProgramExecutionComponent,
         canActivate: [AuthGuard],
