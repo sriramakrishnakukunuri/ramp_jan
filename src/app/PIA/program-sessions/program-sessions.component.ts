@@ -152,13 +152,12 @@ export class ProgramSessionsComponent implements OnInit {
     forkJoin(apiCalls).subscribe({
       next: (results) => {
         this.closeModal();
-        this.toastrService.success('Program Created Successfully', "Program Creation Success!");
-        this.programCreationMain.reset();
-        this.programCreationSub.reset();
+        this.toastrService.success('Session Details Created Successfully', "Session Creation Success!");
+        this.getProgramDetailsById(this.programIds);          
       },
       error: (err) => {
         this.closeModal();
-        this.toastrService.error(err, "Program Creation Error!");
+        this.toastrService.error(err, "Session Creation Error!");
         this.programCreationMain.reset();
         this.programCreationSub.reset();
       },
