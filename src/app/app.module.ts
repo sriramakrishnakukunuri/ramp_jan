@@ -39,6 +39,7 @@ import { ViewParticipantComponent } from './PIA/view-participant/view-participan
 import { GetOutcomeComponent } from './PIA/get-outcome/get-outcome.component';
 import { ViewMsmeCouncellorDataComponent } from './PIA/view-msme-councellor-data/view-msme-councellor-data.component';
 import { ProgramSessionsComponent } from './PIA/program-sessions/program-sessions.component';
+import { LoanApplicationFormComponent } from './TIHCL/loan-application-form/loan-application-form.component';
 
 @NgModule({
     imports: [
@@ -81,7 +82,7 @@ import { ProgramSessionsComponent } from './PIA/program-sessions/program-session
         MsmeCouncellorRegisterationComponent,
         ViewParticipantComponent,
         GetOutcomeComponent,
-        ViewMsmeCouncellorDataComponent, ProgramSessionsComponent,
+        ViewMsmeCouncellorDataComponent, ProgramSessionsComponent, LoanApplicationFormComponent,
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

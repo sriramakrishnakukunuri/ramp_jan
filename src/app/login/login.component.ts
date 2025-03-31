@@ -71,4 +71,15 @@ export class LoginComponent implements OnInit {
                 }
             });
     }
+
+    defaultOTPScreen:boolean = false;
+    OTPVerify(value?:any) {
+        if(value == 'BACK') return this.defaultOTPScreen = false;
+        if(value == 'SUBMIT') {
+            this.router.navigate(['/loan-application-process']);
+            return
+        }
+        this.defaultOTPScreen = true;
+        return
+    }
 }

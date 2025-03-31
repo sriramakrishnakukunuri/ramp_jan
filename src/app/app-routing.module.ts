@@ -24,6 +24,7 @@ import { ViewMsmeCouncellorDataComponent } from './PIA/view-msme-councellor-data
 import { GlobalDashboardComponent } from './Dashboard/global-dashboard/global-dashboard.component';
 import { ViewParticipantComponent } from './PIA/view-participant/view-participant.component';
 import { ProgramSessionsComponent } from './PIA/program-sessions/program-sessions.component';
+import { LoanApplicationFormComponent } from './TIHCL/loan-application-form/loan-application-form.component';
 
 const routes: Routes = [
     {
@@ -160,6 +161,10 @@ const routes: Routes = [
     {
         path: 'login',
         component: LoginComponent
+    },
+    {
+        path: 'loan-application-process',
+        component: LoanApplicationFormComponent
     },
 
     // otherwise redirect to home
