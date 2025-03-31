@@ -204,7 +204,7 @@ export class ProgramCreationComponent implements OnInit, AfterViewInit {
     maindata['agencyId'] = Number(this.agencyId)
     if(this.programId) {
       maindata['programId'] = Number(this.programId)
-      this._commonService.add(APIS.programCreation.updateProgram, maindata).subscribe({
+      this._commonService.updatedata(APIS.programCreation.updateProgram, maindata).subscribe({
         next: (data) => {          
           this.toastrService.success('Program Updated Successfully', "Success!");
           this.getProgramDetailsById(maindata['programId']);          
@@ -336,6 +336,12 @@ export class ProgramCreationComponent implements OnInit, AfterViewInit {
           programLocation: program.programLocation,
           kpi: program.kpi,
         });
+
+        if (this.programCreationMain.invalid) {
+          Object.values(this.programCreationMain.controls).forEach(control => {
+            control.markAsTouched();
+          });
+        }
 
         // const sessionArray = this.programCreationSub.get('details') as FormArray;
         // sessionArray.clear();
