@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-loan-application-form',
   templateUrl: './loan-application-form.component.html',
@@ -7,9 +7,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoanApplicationFormComponent implements OnInit {
 
-  constructor() { }
+  constructor(private toastrService: ToastrService,) { }
 
   ngOnInit(): void {
+  }
+
+  submitForm(){
+    this.toastrService.success('Application Form submitted successfully!');
   }
 
 }
