@@ -14,6 +14,7 @@ export const APIS = {
         getProgramsListByAgency: API_BASE_URL + '/agency/programs/',
         getSingleProgramsList: API_BASE_URL + '/program/',
         getActivityList: API_BASE_URL + '/activities',
+        getActivityListbyId: API_BASE_URL + '/activity/agency/',
         getSubActivityListByActivity: API_BASE_URL + '/activityById',
         getESDPProgram: API_BASE_URL + '/getESDPTraining',
         addESDPProgram: API_BASE_URL + '/SaveESDPTraining',
