@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { CommonServiceService } from '@app/_services/common-service.service';
@@ -30,25 +30,10 @@ export class ProgramCreationComponent implements OnInit, AfterViewInit {
     private router: Router,
     private route: ActivatedRoute,
   ) {
-    this.formDetails();
-    this.formDetailsTwo();
-    this.formDetailsLocation();
-    
-    this.agencyId = JSON.parse(sessionStorage.getItem('user') || '{}').agencyId;
-    this.modalFormStype = this.fb.group({
-      name: ['', Validators.required],
-      mobileNo: ['', [Validators.required, Validators.pattern(/^[6789]\d{9}$/)]],
-      email: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/)]],
-      organizationName: ['', Validators.required],
-      qualification: ['', Validators.required],
-      designation: ['', Validators.required],
-      specialization: ['', Validators.required],
-      briefDescription: ['', Validators.required],
-      gender: ['', Validators.required],
-      agencyIds: [[this.agencyId]],
-    });
-    this.getProgramLocation();
-    this.getSessionResource();
+    this.formDetails();    
+    this.formDetailsLocation();    
+    this.agencyId = JSON.parse(sessionStorage.getItem('user') || '{}').agencyId;    
+    this.getProgramLocation();    
     this.getAllActivityList()
     this.getProgramsByAgency()
   }
@@ -59,9 +44,8 @@ export class ProgramCreationComponent implements OnInit, AfterViewInit {
       this.getProgramDetailsById(this.programId);
     }
     console.log(this.programId, 'programId');
-    (document.getElementById('collapseExample') as HTMLElement).classList.add('show');
-    (this.programCreationSub?.controls["details"] as FormArray).clear();
-    this.onAddRow(0);
+    //(document.getElementById('collapseExample') as HTMLElement).classList.add('show');
+    
     this.programCreationMain.controls['activityId'].valueChanges.subscribe((activityId: any) => {
       if(activityId) this.getSubActivitiesList(activityId);
     });
@@ -149,34 +133,16 @@ export class ProgramCreationComponent implements OnInit, AfterViewInit {
     }
   }
 
-  formDetailsTwo() {
-    this.programCreationSub = new FormGroup({
-      details: this.fb?.array([this.fb.group({
-        sessionDate: new FormControl("", [Validators.required]),
-        startTime: new FormControl("", [Validators.required]),
-        endTime: new FormControl("", [Validators.required]),
-        sessionTypeName: new FormControl("", [Validators.required]),
-        sessionTypeMethodology: new FormControl("",[Validators.required]),
-        sessionDetails: new FormControl("",[Validators.required]),
-        resourceId: new FormControl("",[Validators.required]),
-        //meterialType: new FormControl("",),
-        uploaFiles: [null, Validators.required],
-        sessionStreamingUrl: new FormControl("",[Validators.required]),
-        videoUrls: [null, Validators.required],
-      })]),
-    });
-  }
-
   formDetailsLocation() {
     this.locationForm = new FormGroup({
-      locationName: new FormControl("", [Validators.required]),
+      locationName: new FormControl("", [Validators.required,Validators.pattern(/^[A-Za-z]+$/)]),
       ownershipType: new FormControl(""),
       typeOfVenue: new FormControl("", [Validators.required]),
       latitude: new FormControl(""),
       longitude: new FormControl("",),
-      googleMapUrl: new FormControl("",),
+      googleMapUrl: new FormControl("",[Validators.pattern(/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/)]),
       OthersType: new FormControl("",),
-      capacity: new FormControl("",[Validators.required]),
+      capacity: new FormControl("",[Validators.required,Validators.pattern(/^[1-9]\d*$/)]),
       agencyId: new FormControl("",),
       filePath: new FormControl("",),
     });
@@ -235,141 +201,38 @@ export class ProgramCreationComponent implements OnInit, AfterViewInit {
     maindata['startDate'] = moment(maindata['startDate']).format('DD-MM-YYYY')
     maindata['endDate'] = moment(maindata['endDate']).format('DD-MM-YYYY')
     maindata['locationId'] = this.programCreationMain.value.programLocation
-    maindata['agencyId'] = this.agencyId
-    const programCreationCall = this._commonService.add(APIS.programCreation.addprogram, maindata).subscribe({
-      next: (data) => {
-        this.getProgrameIdBasesOnSave = data.data
-        this.toastrService.success('Program Created Successfully', "Success!");
-        this.programCreationMain.reset();
-        this.programCreationSub.reset();
-        this.getProgramsByAgency()
-      },
-      error: (err) => {
-        this.toastrService.error(err.message, "Program Creation Error!");
-        new Error(err);
-      },
-    })
-  }
-
-  submitForm() {
-    if(!this.programCreationSub?.controls["details"]?.value[0].startTime) {
-      this.toastrService.error('Please fill all the required fields in add sessions', 'Error!');
-      return;
+    maindata['agencyId'] = Number(this.agencyId)
+    if(this.programId) {
+      maindata['programId'] = Number(this.programId)
+      this._commonService.updatedata(APIS.programCreation.updateProgram, maindata).subscribe({
+        next: (data) => {          
+          this.toastrService.success('Program Updated Successfully', "Success!");
+          this.getProgramDetailsById(maindata['programId']);          
+        },
+        error: (err) => {
+          this.toastrService.error(err.message, "Program Creation Error!");
+          new Error(err);
+        },
+      })
+    }else {
+      this._commonService.add(APIS.programCreation.addprogram, maindata).subscribe({
+        next: (data) => {
+          this.getProgrameIdBasesOnSave = data.data
+          this.toastrService.success('Program Created Successfully', "Success!");
+          this.programCreationMain.reset();
+          this.getProgramsByAgency()
+        },
+        error: (err) => {
+          this.toastrService.error(err.message, "Program Creation Error!");
+          new Error(err);
+        },
+      })
     }
-    let val = { ...this.programCreationMain.value };
-    val = { ...this.programCreationMain.value, programSessionList: this.programCreationSub?.controls["details"]?.value };
-    let maindata = { ...this.programCreationMain.value };
-    maindata['activityId'] = this.programCreationMain.value.activityId;
-    maindata['subActivityId'] = this.programCreationMain.value.subActivityId;
-    maindata['locationId'] = this.programCreationMain.value.programLocation;
-    maindata['agencyId'] = this.agencyId;
-    maindata['startTime'] = this.formatTime(maindata['startTime']);
-    maindata['endTime'] = this.formatTime(maindata['endTime']);
-    maindata['startDate'] = moment(maindata['startDate']).format('DD-MM-YYYY');
-    maindata['endDate'] = moment(maindata['endDate']).format('DD-MM-YYYY');
-    const programData = JSON.parse(localStorage.getItem('programDetails') || '[]');
-    programData.push(val);
-    localStorage.setItem('programDetails', JSON.stringify(programData));
-    let objectnew: any = [...this.programCreationSub?.controls["details"]?.value];
-
-    const apiCalls = objectnew.map((element: any, index: any) => {
-      const formData = new FormData();
-      if (element['uploaFiles']) {
-        element['uploaFiles'].forEach((file: any) => {
-          formData.append("files", file);
-        });
-        element['startTime'] = this.formatTime(element['startTime']);
-        element['endTime'] = this.formatTime(element['endTime']);
-        element['sessionDate'] = moment(element['sessionDate']).format('DD-MM-YYYY');
-        if(this.programId) {
-          element['programId'] = Number(this.programId);
-        }else if(this.getProgrameIdBasesOnSave){
-          element['programId'] = Number(this.getProgrameIdBasesOnSave.programId);
-        }else {
-          element['programId'] = Number(element['programId'] ? element['programId'] : 1);
-        }        
-        element['resourceId'] = Number(element['resourceId']);
-        delete element['uploaFiles'];
-        //delete element['meterialType'];
-        formData.set("data", JSON.stringify(element));
-      }if(element['uploaFiles'] === null){
-        element['startTime'] = this.formatTime(element['startTime']);
-        element['endTime'] = this.formatTime(element['endTime']);
-        element['sessionDate'] = moment(element['sessionDate']).format('DD-MM-YYYY');
-        if(this.programId) {
-          element['programId'] = Number(this.programId);
-        }else if(this.getProgrameIdBasesOnSave){
-          element['programId'] = Number(this.getProgrameIdBasesOnSave.programId);
-        }else {
-          element['programId'] = Number(element['programId'] ? element['programId'] : 1);
-        }        
-        element['resourceId'] = Number(element['resourceId']);
-        delete element['uploaFiles'];
-        delete element['videoUrls'];
-        //delete element['meterialType'];
-        formData.set("data", JSON.stringify(element));
-      }
-      return this._commonService.uploadImage(formData);
-    });
-
-    forkJoin(apiCalls).subscribe({
-      next: (results) => {
-        this.closeModal();
-        this.toastrService.success('Program Created Successfully', "Program Creation Success!");
-        this.programCreationMain.reset();
-        this.programCreationSub.reset();
-      },
-      error: (err) => {
-        this.closeModal();
-        this.toastrService.error(err, "Program Creation Error!");
-        this.programCreationMain.reset();
-        this.programCreationSub.reset();
-      },
-    });
+    
   }
 
   redirect() {
     this.router.navigate(['/veiw-program-creation']);
-  }
-  @ViewChild('exampleModal') exampleModal!: ElementRef;
-
-  openModal(): void {    
-    const modal = new bootstrap.Modal(this.exampleModal.nativeElement);
-    modal.show();
-  }
-
-  closeModal(): void {
-    const modal = bootstrap.Modal.getInstance(this.exampleModal.nativeElement);
-    modal.hide();
-  }
-
-  modalFormStype!: FormGroup;
-  sourceTypes: any = [];
-
-  onModalSubmitType() {
-    if (this.modalFormStype.valid) {
-      const newSourceType = this.modalFormStype.value;
-      this.sourceTypes.push(newSourceType);
-
-      this._commonService
-        .add(APIS.programCreation.addResource, this.modalFormStype.value)
-        .subscribe({
-          next: (data) => {
-            this.toastrService.success('Resource Person Created Successfully', "");
-            this.getSessionResource();
-          },
-          error: (err) => {
-            this.toastrService.error(err.message, "Location Creation Error!");
-            new Error(err);
-          },
-        });
-
-      const addResourceModal = document.getElementById('addResource');
-      if (addResourceModal) {
-        const modalInstance = bootstrap.Modal.getInstance(addResourceModal);
-        modalInstance.hide();
-      }
-    }
   }
 
   onModalSubmitLocation() {
@@ -405,19 +268,7 @@ export class ProgramCreationComponent implements OnInit, AfterViewInit {
       });
   }
 
-  getSessionResourceData: any = [];
-  getSessionResource() {
-    this._commonService
-      .getById(APIS.programCreation.getResource, this.agencyId)
-      .subscribe({
-        next: (data: any) => {
-          this.getSessionResourceData = data.data;
-        },
-        error: (err: any) => {
-          new Error(err);
-        },
-      });
-  }
+  
 
   uploadedFiles: any = [];
   // onFilesSelected(event: any, index: any) {
@@ -461,6 +312,11 @@ export class ProgramCreationComponent implements OnInit, AfterViewInit {
     }
   }
 
+  convertToISOFormat(date: string): string {
+    const [day, month, year] = date.split('-');
+    return `${year}-${month}-${day}`; // Convert to yyyy-MM-dd format
+  }
+
   getProgramDetailsById(programId: string) {
     this._commonService.getById(APIS.programCreation.getSingleProgramsList, programId).subscribe({
       next: (data: any) => {
@@ -471,8 +327,8 @@ export class ProgramCreationComponent implements OnInit, AfterViewInit {
           programType: program.programType,
           //programDetails: program.programDetails,
           programTitle: program.programTitle,
-          startDate: moment(program.startDate).format('YYYY-MM-DD'),
-          endDate: moment(program.endDate).format('YYYY-MM-DD'),
+          startDate: this.convertToISOFormat(program.startDate),
+          endDate: this.convertToISOFormat(program.endDate),
           startTime: this.convertTo24HourFormat(program.startTime),
           endTime: this.convertTo24HourFormat(program.endTime),
           spocName: program.spocName,
@@ -481,31 +337,37 @@ export class ProgramCreationComponent implements OnInit, AfterViewInit {
           kpi: program.kpi,
         });
 
-        const sessionArray = this.programCreationSub.get('details') as FormArray;
-        sessionArray.clear();
-        if(program.programSessionList.length) {
-          program.programSessionList.forEach((session: any, index: any) => {
-            const sessionGroup = this.initiateForm();
-            sessionGroup.patchValue({
-              sessionDate: moment(session.sessionDate).format('YYYY-MM-DD'),
-              startTime: this.convertTo24HourFormat(session.startTime),
-              endTime: this.convertTo24HourFormat(session.endTime),
-              sessionTypeName: session.sessionTypeName,
-              sessionTypeMethodology: session.sessionTypeMethodology,
-              sessionDetails: session.sessionDetails,
-              resourceId: session.resourceId,
-              //meterialType: session.meterialType,
-              uploaFiles: null,
-              sessionStreamingUrl: session.sessionStreamingUrl,
-              videoUrls: session.videoUrls,
-            });
-            sessionArray.push(sessionGroup);
+        if (this.programCreationMain.invalid) {
+          Object.values(this.programCreationMain.controls).forEach(control => {
+            control.markAsTouched();
           });
-          //this.reinitializeDataTable();
-        }else {
-          (this.programCreationSub?.controls["details"] as FormArray).clear();
-          this.onAddRow(0);
         }
+
+        // const sessionArray = this.programCreationSub.get('details') as FormArray;
+        // sessionArray.clear();
+        // if(program.programSessionList.length) {
+        //   program.programSessionList.forEach((session: any, index: any) => {
+        //     const sessionGroup = this.initiateForm();
+        //     sessionGroup.patchValue({
+        //       sessionDate: moment(session.sessionDate).format('YYYY-MM-DD'),
+        //       startTime: this.convertTo24HourFormat(session.startTime),
+        //       endTime: this.convertTo24HourFormat(session.endTime),
+        //       sessionTypeName: session.sessionTypeName,
+        //       sessionTypeMethodology: session.sessionTypeMethodology,
+        //       sessionDetails: session.sessionDetails,
+        //       resourceId: session.resourceId,
+        //       //meterialType: session.meterialType,
+        //       uploaFiles: null,
+        //       sessionStreamingUrl: session.sessionStreamingUrl,
+        //       videoUrls: session.videoUrls,
+        //     });
+        //     sessionArray.push(sessionGroup);
+        //   });
+        //   //this.reinitializeDataTable();
+        // }else {
+        //   (this.programCreationSub?.controls["details"] as FormArray).clear();
+        //   this.onAddRow(0);
+        // }
       },
       error: (err: any) => {
         this.toastrService.error(err.message, "Error fetching program details!");

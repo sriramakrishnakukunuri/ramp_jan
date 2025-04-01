@@ -23,6 +23,7 @@ import { MsmeCouncellorRegisterationComponent } from './PIA/msme-councellor-regi
 import { ViewMsmeCouncellorDataComponent } from './PIA/view-msme-councellor-data/view-msme-councellor-data.component';
 import { GlobalDashboardComponent } from './Dashboard/global-dashboard/global-dashboard.component';
 import { ViewParticipantComponent } from './PIA/view-participant/view-participant.component';
+import { ProgramSessionsComponent } from './PIA/program-sessions/program-sessions.component';
 
 const routes: Routes = [
     {
@@ -74,6 +75,12 @@ const routes: Routes = [
     },
     {
         path: 'add-participant-data',
+        component: AddParticipantDataComponent,
+        canActivate: [AuthGuard],
+        data: { roles: [Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
+    },
+    {
+        path: 'add-participant-data-edit/:id',
         component: AddParticipantDataComponent,
         canActivate: [AuthGuard],
         data: { roles: [Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
@@ -137,6 +144,18 @@ const routes: Routes = [
         component: ViewParticipantComponent,
         canActivate: [AuthGuard],
         data: { roles:  [Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
+    },
+    {
+        path: 'program-sessions',
+        component: ProgramSessionsComponent,
+        canActivate: [AuthGuard],
+        data: { roles:  [Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
+    },
+    {
+        path: 'program-sessions-edit/:id',
+        component: ProgramSessionsComponent,
+        canActivate: [AuthGuard],
+        data: { roles: [Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
     },
     {
         path: 'login',

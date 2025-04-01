@@ -2,13 +2,16 @@
 
 import { AuthenticationService } from './_services';
 import { User, Role } from './_models';
+import { IdleTimeoutService } from './_services/idle-timeout.service';
 
 @Component({ selector: 'app-root', templateUrl: 'app.component.html' })
 export class AppComponent {
     user?: User | null;
     Role = Role
 
-    constructor(private authenticationService: AuthenticationService) {
+    constructor(private authenticationService: AuthenticationService,
+        private idleService: IdleTimeoutService
+    ) {
         this.authenticationService.user.subscribe(x => this.user = x);
     }
 

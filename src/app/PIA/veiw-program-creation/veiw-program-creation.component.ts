@@ -75,6 +75,10 @@ export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
     this.router.navigateByUrl('/program-creation-edit/' + dataList.programId);
   }
 
+  editSession(dataList: any): any {
+    this.router.navigateByUrl('/program-sessions-edit/' + dataList.programId);
+  }
+
   initializeDataTable() {
     this.dataTable = new DataTable('#view-table-program', {
       scrollY: "415px",

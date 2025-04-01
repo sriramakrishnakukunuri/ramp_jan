@@ -38,6 +38,7 @@ import { MsmeCouncellorRegisterationComponent } from './PIA/msme-councellor-regi
 import { ViewParticipantComponent } from './PIA/view-participant/view-participant.component';
 import { GetOutcomeComponent } from './PIA/get-outcome/get-outcome.component';
 import { ViewMsmeCouncellorDataComponent } from './PIA/view-msme-councellor-data/view-msme-councellor-data.component';
+import { ProgramSessionsComponent } from './PIA/program-sessions/program-sessions.component';
 
 @NgModule({
     imports: [
@@ -70,17 +71,17 @@ import { ViewMsmeCouncellorDataComponent } from './PIA/view-msme-councellor-data
         VeiwProgramCreationComponent,
         UpdateProgramExecutionComponent,
         HasRoleDirective, // Declare the directive
-        ViewParticipateCreationComponent, 
+        ViewParticipateCreationComponent,
         OrganizationsListComponent,
-         CaptureOutcomeComponent,
-          CaptureOutcomeDynamicComponent,
-           ESDPTrainingComponent,
-            ShgTrainingStatusComponent, 
-            GlobalDashboardComponent,
-            MsmeCouncellorRegisterationComponent, 
-            ViewParticipantComponent, 
-            GetOutcomeComponent, 
-            ViewMsmeCouncellorDataComponent,
+        CaptureOutcomeComponent,
+        CaptureOutcomeDynamicComponent,
+        ESDPTrainingComponent,
+        ShgTrainingStatusComponent,
+        GlobalDashboardComponent,
+        MsmeCouncellorRegisterationComponent,
+        ViewParticipantComponent,
+        GetOutcomeComponent,
+        ViewMsmeCouncellorDataComponent, ProgramSessionsComponent,
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

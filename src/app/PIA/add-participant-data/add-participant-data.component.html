@@ -5,7 +5,7 @@
                 <div class="card-header bg-transparent">
                     <div class="d-flex align-items-center justify-content-between flex-wrap">
                         <div>
-                            <h6 class="mb-2 mb-sm-0 text-green">Add Participant</h6>
+                            <h6 class="mb-2 mb-sm-0 text-green">{{isedit?'Edit':'Add'}} Participant</h6>
                         </div>
                         <div>
                             <button type="button" class="btn btn-lime-green" data-bs-toggle="modal" data-bs-target="#addOrganisation">Add New Organisation</button>
@@ -222,13 +222,13 @@
                             </div>
                         </div>
                         <div class="text-end">
-                            <button type="button" class="btn btn-lime-green" [disabled]="!ParticipantDataForm.valid" [ngClass]="{'disabled': ParticipantDataForm.invalid}"  (click)="Submitform()">Submit</button>
+                            <button type="button" class="btn btn-lime-green" [disabled]="!ParticipantDataForm.valid" [ngClass]="{'disabled': ParticipantDataForm.invalid}"  (click)="Submitform()">{{isedit?'Update':'Submit'}}</button>
                         </div>
                     </form>
                 </div>
             </div>
 
-            <div class="card mb-3">
+            <!-- <div class="card mb-3">
                 <div class="card-header bg-transparent">
                     <div class="row align-items-center">
                         <div class="col-12 col-sm-7 col-md-8 col-lg-9">
@@ -293,7 +293,7 @@
                         </tbody>
                     </table>
                 </div>
-            </div>
+            </div> -->
         </div>
     </section>
 </main>
@@ -650,12 +650,14 @@
                                             <input type="text" class="form-control" id="Longitude" placeholder="" formControlName="longitude">
                                             <label for="Longitude">Geo Location Longitude</label>
                                         </div>
+                                        <div *ngIf="fOrg['longitude'].touched  && fOrg['longitude']?.errors?.['pattern']" class="error">Geo Location Longitude should be Numbers with pointers</div>
                                     </div>
                                     <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                         <div class="form-floating mb-3">
                                             <input type="text" class="form-control" id="Latiude" placeholder="" formControlName="latitude">
-                                            <label for="Latiude">Geo Location Latiude</label>
+                                            <label for="Latiude">Geo Location Latitude</label>
                                         </div>
+                                        <div *ngIf="fOrg['latitude'].touched  && fOrg['latitude']?.errors?.['pattern']" class="error">Geo Location Latiude should be Numbers with pointers</div>
                                     </div>
                                     <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                         <div class="form-floating mb-3 mb-lg-0">
