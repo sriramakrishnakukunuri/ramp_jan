@@ -7,18 +7,24 @@
                     <div class="d-flex align-items-center justify-content-between flex-wrap">
                         <div>
                             <h6 class="fw-600 mb-2 mb-sm-0 text-green">Add Session</h6>
-                        </div>                        
-                        <div class="row">
-                            <div class="col-md-6">
-                                <button type="button" class="btn btn-lime-green" data-bs-toggle="modal"
-                                data-bs-target="#addResource">Add Resource Person</button>
+                        </div>    
+                        <div class="row align-items-center">
+                            <div class="col-12 col-sm-6 col-md-6 col-lg-6">
+                                <h6 class="fw-600">Select Program</h6>
                             </div>
-                            <div class="col-md-6">
-                                <select class="form-select" [(ngModel)]="programIds" [ngModelOptions]="{standalone: true}" (change)="dropdownProgramsList($event,'table')">
-                                    <option value="">Select Program</option>
+                            <div class="col-12 col-sm-6 col-md-6 col-lg-6">
+                                <select class="form-select" [(ngModel)]="programId" [ngModelOptions]="{standalone: true}" (change)="dropdownProgramsList($event,'table')">
+                                    <option value="" selected>Select Program</option>
                                     <option *ngFor="let list of agencyProgramList" value="{{list.programId}}">{{list.programTitle}}</option>
                                 </select>
                             </div>
+                        </div>                    
+                        <div class="row">
+                            <div >
+                                <button type="button" class="btn btn-lime-green" data-bs-toggle="modal"
+                                data-bs-target="#addResource">Add Resource Person</button>
+                            </div>
+                           
                         </div>
                     </div>
                 </div>
@@ -33,7 +39,7 @@
                                     <th>End Time <span class="c-red"> *</span></th>
                                     <th>Type Of Session <span class="c-red"> *</span></th>
                                     <th>Methodology <span class="c-red"> *</span></th>
-                                    <th>Session Details<span class="c-red"> *</span></th>
+                                    <!-- <th>Session Details<span class="c-red"> *</span></th> -->
                                     <!-- <th>Session Expected OutComes</th> -->
                                     <th>Resource Person<span class="c-red"> *</span></th>
                                     <!-- <th>Type Of Material Used</th> -->
@@ -88,12 +94,12 @@
                                                 Methodology is required.
                                             </div>
                                         </td>
-                                        <td>
-                                            <input type="text" class="form-control" formControlName="sessionDetails">
+                                        <!-- <td>
+                                            <input type="text" class="form-control" formControlName="sessionDetails" > 
                                             <div *ngIf="item.get('sessionDetails')?.touched && item.get('sessionDetails')?.invalid" class="text-danger">
                                                 Session Details are required.
                                             </div>
-                                        </td>
+                                        </td> -->
                                         <td>
                                             <select class="form-select" formControlName="resourceId">
                                                 <option value="">Select Resource Person</option>
@@ -319,7 +325,7 @@
                                 <th>End Time</th>
                                 <th>Type Of Session</th>
                                 <th>Methodology</th>
-                                <th>Session Details</th>
+                                <!-- <th>Session Details</th> -->
                                 <th>Resource Person</th>
                                 <!-- <th>Type Of Material Used</th> -->
                             </tr>
@@ -332,7 +338,7 @@
                                 <td>{{ session.endTime }}</td>
                                 <td>{{ session.sessionTypeName }}</td>
                                 <td>{{ session.sessionTypeMethodology }}</td>
-                                <td>{{ session.sessionDetails }}</td>
+                                <!-- <td>{{ session.sessionDetails }}</td> -->
                                 <td>{{ session.resourceId }}</td>
                                 <!-- <td>{{ session.meterialType }}</td> -->
                             </tr>

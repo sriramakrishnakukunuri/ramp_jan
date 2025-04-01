@@ -246,6 +246,7 @@ export class ProgramCreationComponent implements OnInit, AfterViewInit {
       .subscribe({
         next: (data) => {
           this.toastrService.success('Location Added Successfully', "Success!");
+          this.locationForm.reset();
           this.getProgramLocation();
         },
         error: (err) => {
