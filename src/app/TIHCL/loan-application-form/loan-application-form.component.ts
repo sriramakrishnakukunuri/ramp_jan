@@ -46,4 +46,13 @@ export class LoanApplicationFormComponent implements OnInit {
     }
   }
 
+  showApplicationMenu:boolean = false;
+  showApplicationStatus(value: string): void {
+    if (value === 'yes') {
+      this.showApplicationMenu = true;
+    } else {
+      this.showApplicationMenu = false;
+    }
+  }
+
 }

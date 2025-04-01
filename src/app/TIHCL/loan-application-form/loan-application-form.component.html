@@ -12,11 +12,17 @@
                         <i class="bi bi-telephone-fill"></i> Contact: 040-232363990
                     </p>
                 </div>
+                <div class="application-status" *ngIf="showApplicationMenu == false">
+                    <a (click)="showApplicationStatus('yes')" class="btn btn-outline-primary">Application Status</a>
+                </div>
+                <div class="application-status" *ngIf="showApplicationMenu == true">
+                    <a (click)="showApplicationStatus('no')" class="btn btn-outline-primary">New Application</a>
+                </div>
             </div>
         </div>
     </nav>
 </header>
-<main class="pt-80">
+<main class="pt-80" *ngIf="showApplicationMenu == false">
     <section class="pt-3">
         <div class="container-fluid">
             <div class="card">
@@ -512,6 +518,49 @@
                             </div>
                         </div>
                     </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<main class="pt-80" *ngIf="showApplicationMenu == true">
+    <section class="pt-3">
+        <div class="container-fluid">
+            <div class="card">
+                <div class="card-header bg-theme text-white py-3">
+                    <h6 class="mb-0">Application status</h6>
+                </div>
+                <div class="card-body">
+                    <div class="stepper-horizontal">
+                        <div class="step done">
+                          <div class="step-circle"><span>1</span></div>
+                          <div class="step-title"> Application submitted on 2-04-2025</div>
+                          <div class="step-bar-left"></div>
+                          <div class="step-bar-right"></div>
+                        </div>
+                        <div class="step">
+                          <div class="step-circle"><span>2</span></div>
+                          <div class="step-title">PV Level 1</div>
+                          <div class="step-bar-left"></div>
+                          <div class="step-bar-right"></div>
+                        </div>
+                        <div class="step">
+                          <div class="step-circle"><span>3</span></div>
+                          <div class="step-title">PV Level 2</div>
+                          <div class="step-bar-left"></div>
+                          <div class="step-bar-right"></div>
+                        </div>
+                        <div class="step">
+                          <div class="step-circle"><span>4</span></div>
+                          <div class="step-title">Final Status</div>
+                          <div class="step-bar-left"></div>
+                          <div class="step-bar-right"></div>
+                        </div>
+                    </div>
+                    <div class="text-center mt-3 mb-0">
+                        <p>PV - Pending Verification</p>
+                    </div>
                 </div>
             </div>
         </div>
