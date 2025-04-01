@@ -55,7 +55,7 @@ export class ProgramCreationComponent implements OnInit, AfterViewInit {
   subActivitiesList:any
   getAllActivityList(){
     this.subActivitiesList = []
-    this._commonService.getDataByUrl(APIS.programCreation.getActivityList).subscribe({
+    this._commonService.getById(APIS.programCreation.getActivityListbyId,this.agencyId).subscribe({
       next: (data: any) => {
         this.activityList = data.data;
       },
