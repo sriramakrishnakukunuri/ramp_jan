@@ -1,4 +1,4 @@
-import { Component, OnInit,ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit,ViewChild, ElementRef,ChangeDetectorRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { CommonServiceService } from '@app/_services/common-service.service';
@@ -26,6 +26,7 @@ export class ProgramSessionsComponent implements OnInit {
     private _commonService: CommonServiceService,
     private router: Router,
     private route: ActivatedRoute,
+    private cdRef: ChangeDetectorRef
   ) {
     this.formDetails();
     this.formDetailsTwo();
@@ -157,15 +158,41 @@ export class ProgramSessionsComponent implements OnInit {
       },
       error: (err) => {
         this.closeModal();
-        this.toastrService.error(err, "Session Creation Error!");
-        this.programCreationMain.reset();
-        this.programCreationSub.reset();
+        this.toastrService.error(err, "Session Creation Error!");        
       },
     });
   }
 
   @ViewChild('exampleModal') exampleModal!: ElementRef;
   openModal(): void {    
+    const detailsArray = this.programCreationSub.get('details') as FormArray;
+
+    // ✅ Ensure all form controls are marked as touched & trigger validation
+    detailsArray.controls.forEach((rowGroup: AbstractControl) => {
+      (rowGroup as FormGroup).markAllAsTouched();  // 🔹 Mark the entire row as touched
+      (rowGroup as FormGroup).updateValueAndValidity(); // 🔹 Force re-evaluation
+    });
+
+    // ✅ Force Angular to detect UI changes
+    this.cdRef.detectChanges();
+
+    // 🔎 Debugging: Log each field's state
+    detailsArray.controls.forEach((rowGroup, index) => {
+      console.log(`Row ${index + 1} Errors:`, rowGroup.errors);
+      Object.entries((rowGroup as FormGroup).controls).forEach(([key, control]) => {
+        console.log(`Field: ${key}, Touched: ${control.touched}, Invalid: ${control.invalid}`);
+      });
+    });
+
+    console.log('Form Valid:', this.programCreationSub.valid);
+    console.log('Form Errors:', this.programCreationSub.errors);
+
+    // 🚨 If form is invalid, show error message and prevent modal opening
+    if (this.programCreationSub.invalid) {
+      this.toastrService.error('Please fill all required fields in the form.', 'Validation Error!');
+      return;
+    }
+
     const modal = new bootstrap.Modal(this.exampleModal.nativeElement);
     modal.show();
   }
@@ -304,16 +331,16 @@ export class ProgramSessionsComponent implements OnInit {
   formDetailsTwo() {
     this.programCreationSub = new FormGroup({
       details: this.fb?.array([this.fb.group({
-        sessionDate: new FormControl("", [Validators.required]),
-        startTime: new FormControl("", [Validators.required]),
-        endTime: new FormControl("", [Validators.required]),
-        sessionTypeName: new FormControl("", [Validators.required]),
-        sessionTypeMethodology: new FormControl("", [Validators.required]),
-        sessionDetails: new FormControl("", [Validators.required]),
-        resourceId: new FormControl("", [Validators.required]),
+        sessionDate: new FormControl("", Validators.required),
+        startTime: new FormControl("",Validators.required),
+        endTime: new FormControl("", Validators.required),
+        sessionTypeName: new FormControl("", Validators.required),
+        sessionTypeMethodology: new FormControl("", Validators.required),
+        sessionDetails: new FormControl("", Validators.required),
+        resourceId: new FormControl("", Validators.required),
         //meterialType: new FormControl("",),
         uploaFiles: [null, Validators.required],
-        sessionStreamingUrl: new FormControl("", [Validators.required]),
+        sessionStreamingUrl: new FormControl("", Validators.required),
         videoUrls: [null, Validators.required],
       })]),
     });
@@ -325,17 +352,17 @@ export class ProgramSessionsComponent implements OnInit {
 
   initiateForm(): FormGroup {
     return this.fb.group({
-      sessionDate: "",
-      startTime: "",
-      endTime: "",
-      sessionTypeName: "",
-      sessionTypeMethodology: "",
-      sessionDetails: "",
-      resourceId: '',
+      sessionDate:  ['', Validators.required],
+      startTime:  ['', Validators.required],
+      endTime:  ['', Validators.required],
+      sessionTypeName:  ['', Validators.required],
+      sessionTypeMethodology:  ['', Validators.required],
+      sessionDetails:  ['', Validators.required],
+      resourceId:  ['', Validators.required],
       //meterialType: "",
       uploaFiles: [null],
-      sessionStreamingUrl: "",
-      videoUrls: []
+      sessionStreamingUrl:  ['', Validators.required],
+      videoUrls:  ['']
     });
   }
 

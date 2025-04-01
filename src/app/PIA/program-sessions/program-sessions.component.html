@@ -1,6 +1,7 @@
 <main class="mt-4">
     <section>
         <div class="container-fluid">
+            <form [formGroup]="programCreationSub">
             <div class="card mb-3">
                 <div class="card-header bg-transparent">
                     <div class="d-flex align-items-center justify-content-between flex-wrap">
@@ -22,7 +23,7 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <form [formGroup]="programCreationSub">
+                    
                         <table id="creation-table" class="table table-borderless table-striped nowrap">
                             <thead>
                                 <tr>
@@ -42,21 +43,26 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <ng-container formArrayName="details"
-                                    *ngFor="let item of addDynamicRow.controls ; let i=index">
+                                <ng-container formArrayName="details" *ngFor="let item of addDynamicRow.controls; let i = index">
                                     <tr [formGroupName]="i">
-                                        <td class="text-start">{{i+1}}</td>
+                                        <td class="text-start">{{ i + 1 }}</td>
                                         <td>
-                                            <input type="date" class="form-control" placeholder=""
-                                                formControlName="sessionDate">
+                                            <input type="date" class="form-control" formControlName="sessionDate" [attr.min]="programCreationMain.value.startDate" [attr.max]="programCreationMain.value.endDate">
+                                            <div *ngIf="item.get('sessionDate')?.touched && item.get('sessionDate')?.invalid" class="text-danger">
+                                                Date is required.
+                                            </div>
                                         </td>
                                         <td>
-                                            <input type="time" class="form-control" placeholder=""
-                                                formControlName="startTime">
+                                            <input type="time" class="form-control" formControlName="startTime">
+                                            <div *ngIf="item.get('startTime')?.touched && item.get('startTime')?.invalid" class="text-danger">
+                                                Start Time is required.
+                                            </div>
                                         </td>
                                         <td>
-                                            <input type="time" class="form-control" placeholder=""
-                                                formControlName="endTime">
+                                            <input type="time" class="form-control" formControlName="endTime">
+                                            <div *ngIf="item.get('endTime')?.touched && item.get('endTime')?.invalid" class="text-danger">
+                                                End Time is required.
+                                            </div>
                                         </td>
                                         <td>
                                             <select class="form-select" formControlName="sessionTypeName">
@@ -64,6 +70,9 @@
                                                 <option value="Session">Session</option>
                                                 <option value="Break">Break</option>
                                             </select>
+                                            <div *ngIf="item.get('sessionTypeName')?.touched && item.get('sessionTypeName')?.invalid" class="text-danger">
+                                                Type of Session is required.
+                                            </div>
                                         </td>
                                         <td>
                                             <select class="form-select" formControlName="sessionTypeMethodology">
@@ -75,36 +84,42 @@
                                                 <option value="Presentation">Presentation</option>
                                                 <option value="Felicitation">Felicitation</option>
                                             </select>
+                                            <div *ngIf="item.get('sessionTypeMethodology')?.touched && item.get('sessionTypeMethodology')?.invalid" class="text-danger">
+                                                Methodology is required.
+                                            </div>
                                         </td>
                                         <td>
-                                            <input type="text" class="form-control" placeholder="Session Details"
-                                                formControlName="sessionDetails">
+                                            <input type="text" class="form-control" formControlName="sessionDetails">
+                                            <div *ngIf="item.get('sessionDetails')?.touched && item.get('sessionDetails')?.invalid" class="text-danger">
+                                                Session Details are required.
+                                            </div>
                                         </td>
-                                        
                                         <td>
                                             <select class="form-select" formControlName="resourceId">
-                                                <option value="">Select Resource Person</option>                                            
-                                                <option *ngFor="let list of getSessionResourceData"
-                                                    value="{{list.resourceId}}">{{list.name}}</option>
+                                                <option value="">Select Resource Person</option>
+                                                <option *ngFor="let list of getSessionResourceData" [value]="list.resourceId">{{ list.name }}</option>
                                             </select>
-                                        </td>
-                                        
-                                        <td>
-                                            <input class="form-control" type="text"
-                                                formControlName="sessionStreamingUrl">
+                                            <div *ngIf="item.get('resourceId')?.touched && item.get('resourceId')?.invalid" class="text-danger">
+                                                Resource Person is required.
+                                            </div>
                                         </td>
                                         <td>
-                                            <input class="form-control" type="file"
-                                                accept=".docx, .xls, .xlsx, .ppt,.pptx"
-                                                (change)="onFilesSelected($event,i)" id="formFile" multiple>
+                                            <textarea class="form-control" formControlName="sessionStreamingUrl"></textarea>
+                                            <div *ngIf="item.get('sessionStreamingUrl')?.touched && item.get('sessionStreamingUrl')?.invalid" class="text-danger">
+                                                Streaming URL is required.
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <input class="form-control" type="file" accept=".docx, .xls, .xlsx, .ppt,.pptx" (change)="onFilesSelected($event, i)" id="formFile" multiple>
+                                            <div *ngIf="item.get('uploaFiles')?.touched && item.get('uploaFiles')?.invalid" class="text-danger">
+                                                Upload is required.
+                                            </div>
                                         </td>
                                         <td class="text-center">
-                                            <button type="button" class="btn btn-default btn-sm text-lime-green"
-                                                (click)="onAddRow(i)">
+                                            <button type="button" class="btn btn-default btn-sm text-lime-green" (click)="onAddRow(i)">
                                                 <span class="bi bi-plus-lg"></span>
                                             </button>
-                                            <button type="button" class="btn btn-default btn-sm text-danger ms-2"
-                                                [disabled]="i==0" (click)="onRemoveRow(i)">
+                                            <button type="button" class="btn btn-default btn-sm text-danger ms-2" [disabled]="i == 0" (click)="onRemoveRow(i)">
                                                 <span class="bi bi-trash"></span>
                                             </button>
                                         </td>
@@ -112,14 +127,13 @@
                                 </ng-container>
                             </tbody>
                         </table>
-                    </form>
+                    
                 </div>
             </div>
             <div class="text-end mb-3">
-                <!-- <button type="button" class="btn btn-secondary">Save For Later</button> -->
-                <!-- [disabled]="(!programCreationMain.valid || !programCreationSub.valid)" -->
                 <button type="button" class="btn btn-secondary" (click)="openModal()">View Preview</button>
             </div>
+            </form>
         </div>
     </section>
 </main>

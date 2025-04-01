@@ -58,7 +58,7 @@
                                     <td>{{ item.programLocation }}</td>                                    
                                     <td *ngIf="loginsessionDetails?.userRole == 'AGENCY_MANAGER' || loginsessionDetails?.userRole == 'AGENCY_EXECUTOR'">
                                         <!-- (click)="sessionDetails(item)" data-bs-toggle="modal" data-bs-target="#viewModal" -->
-                                        <button type="button" class="btn btn-default btn-sm text-lime-green" title="Sessions" (click)="editSession(item)" title="View"><span class="bi bi-eye"></span></button>
+                                        <button type="button" class="btn btn-default btn-sm text-lime-green" title="Sessions" data-bs-toggle="modal" data-bs-target="#viewModal" (click)="sessionDetails(item)" title="View"><span class="bi bi-eye"></span></button>
                                         <!-- <button type="button" class="btn btn-default btn-sm text-primary mx-2" title="Edit" (click)="editProgram(item)"><span class="bi bi-pencil"></span></button> -->
                                         <!-- <button type="button" class="btn btn-default btn-sm text-danger" title="Delete"><span class="bi bi-trash"></span></button> -->
                                     </td>

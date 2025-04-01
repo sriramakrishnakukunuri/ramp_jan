@@ -338,6 +338,12 @@ export class ProgramCreationComponent implements OnInit, AfterViewInit {
           kpi: program.kpi,
         });
 
+        if (this.programCreationMain.invalid) {
+          Object.values(this.programCreationMain.controls).forEach(control => {
+            control.markAsTouched();
+          });
+        }
+
         // const sessionArray = this.programCreationSub.get('details') as FormArray;
         // sessionArray.clear();
         // if(program.programSessionList.length) {
