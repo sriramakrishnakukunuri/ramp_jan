@@ -19,7 +19,7 @@ export class ProgramSessionsComponent implements OnInit {
   agencyId: any
   programCreationMain!: FormGroup;
   programCreationSub!: FormGroup;
-  programId: string | null = null;
+  programId: any = null;
   constructor(
     private fb: FormBuilder,
     private toastrService: ToastrService,
@@ -46,9 +46,9 @@ export class ProgramSessionsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.programIds = this.route.snapshot.paramMap.get('id');
-    if (this.programIds) {
-      this.getProgramDetailsById(this.programIds);
+    this.programId = this.route.snapshot.paramMap.get('id');
+    if (this.programId) {
+      this.getProgramDetailsById(this.programId);
     }
     this.getSessionResource();
     (this.programCreationSub?.controls["details"] as FormArray).clear();
@@ -154,7 +154,7 @@ export class ProgramSessionsComponent implements OnInit {
       next: (results) => {
         this.closeModal();
         this.toastrService.success('Session Details Created Successfully', "Session Creation Success!");
-        this.getProgramDetailsById(this.programIds);          
+        this.getProgramDetailsById(this.programId);          
       },
       error: (err) => {
         this.closeModal();
@@ -165,10 +165,12 @@ export class ProgramSessionsComponent implements OnInit {
 
   @ViewChild('exampleModal') exampleModal!: ElementRef;
   openModal(): void {    
+    if(this.programId){
     const detailsArray = this.programCreationSub.get('details') as FormArray;
 
     // ✅ Ensure all form controls are marked as touched & trigger validation
     detailsArray.controls.forEach((rowGroup: AbstractControl) => {
+
       (rowGroup as FormGroup).markAllAsTouched();  // 🔹 Mark the entire row as touched
       (rowGroup as FormGroup).updateValueAndValidity(); // 🔹 Force re-evaluation
     });
@@ -196,6 +198,10 @@ export class ProgramSessionsComponent implements OnInit {
     const modal = new bootstrap.Modal(this.exampleModal.nativeElement);
     modal.show();
   }
+  else{
+    this.toastrService.error('Please select Program first', 'Validation Error!');
+  }
+  }
 
   closeModal(): void {
     const modal = bootstrap.Modal.getInstance(this.exampleModal.nativeElement);
@@ -203,7 +209,7 @@ export class ProgramSessionsComponent implements OnInit {
   }
   
   agencyProgramList: any;
-  programIds: any = ''
+  // programId: any = ''
   getProgramsByAgency() {
     this._commonService.getDataByUrl(`${APIS.programCreation.getProgramsListByAgency + '/' + this.agencyId}`).subscribe({
       next: (res: any) => {
@@ -216,9 +222,12 @@ export class ProgramSessionsComponent implements OnInit {
   }
 
   dropdownProgramsList(event: any, type: any) {
-    this.programIds = event.target.value
-    this.getProgramDetailsById(this.programIds);
+    if(event.target.value){
+      this.programId = event.target.value
+    this.getProgramDetailsById(this.programId);
+     }
   }
+    
 
   convertToISOFormat(date: string): string {
     const [day, month, year] = date.split('-');
@@ -336,7 +345,7 @@ export class ProgramSessionsComponent implements OnInit {
         endTime: new FormControl("", Validators.required),
         sessionTypeName: new FormControl("", Validators.required),
         sessionTypeMethodology: new FormControl("", Validators.required),
-        sessionDetails: new FormControl("", Validators.required),
+        sessionDetails: new FormControl("ABC",),
         resourceId: new FormControl("", Validators.required),
         //meterialType: new FormControl("",),
         uploaFiles: [null, Validators.required],
@@ -357,7 +366,7 @@ export class ProgramSessionsComponent implements OnInit {
       endTime:  ['', Validators.required],
       sessionTypeName:  ['', Validators.required],
       sessionTypeMethodology:  ['', Validators.required],
-      sessionDetails:  ['', Validators.required],
+      sessionDetails:  ['ABC'],
       resourceId:  ['', Validators.required],
       //meterialType: "",
       uploaFiles: [null],

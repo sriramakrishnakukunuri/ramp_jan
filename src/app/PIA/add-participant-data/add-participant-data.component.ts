@@ -127,7 +127,7 @@ export class AddParticipantDataComponent implements OnInit {
       // date: new FormControl("", [Validators.required]),
       isAspirant: new FormControl("Aspirant", [Validators.required]),
       organizationId: new FormControl("",),
-      participantName: new FormControl("", [Validators.required,Validators.pattern(/^[A-Za-z]+$/)]), //Validators.required
+      participantName: new FormControl("", [Validators.required,Validators.pattern(/^[A-Za-z ]+$/)]), //Validators.required
       gender: new FormControl("", [Validators.required,]),
       disability: new FormControl("N", [Validators.required]),
       // noOfDays: new FormControl("", [Validators.required,]),
@@ -319,10 +319,15 @@ export class AddParticipantDataComponent implements OnInit {
   }
   isedit:any=false
   participantId:any=''
+  convertToISOFormat(date: string): string {
+    const [day, month, year] = date.split('-');
+    return `${year}-${month}-${day}`; // Convert to yyyy-MM-dd format
+  }
   editRow(item: any, i: any) {
     this.isedit=true
     this.participantId=item.participantId
-    this.ParticipantDataForm.patchValue({ ...item,certificateIssueDate:'20-02-2222' })
+    console.log(moment(item?.certificateIssueDate).format('YYYY-MM-DD'),item?.certificateIssueDate)
+    this.ParticipantDataForm.patchValue({ ...item, certificateIssueDate: this.convertToISOFormat(item.certificateIssueDate)})
   }
   typeOragnization(event: any) {
     this.OragnizationType = event

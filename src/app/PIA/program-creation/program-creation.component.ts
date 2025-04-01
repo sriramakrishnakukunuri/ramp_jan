@@ -135,7 +135,7 @@ export class ProgramCreationComponent implements OnInit, AfterViewInit {
 
   formDetailsLocation() {
     this.locationForm = new FormGroup({
-      locationName: new FormControl("", [Validators.required,Validators.pattern(/^[A-Za-z]+$/)]),
+      locationName: new FormControl("", [Validators.required,Validators.pattern(/^[A-Za-z ]+$/)]),
       ownershipType: new FormControl(""),
       typeOfVenue: new FormControl("", [Validators.required]),
       latitude: new FormControl(""),
@@ -202,6 +202,7 @@ export class ProgramCreationComponent implements OnInit, AfterViewInit {
     maindata['endDate'] = moment(maindata['endDate']).format('DD-MM-YYYY')
     maindata['locationId'] = this.programCreationMain.value.programLocation
     maindata['agencyId'] = Number(this.agencyId)
+   
     if(this.programId) {
       maindata['programId'] = Number(this.programId)
       this._commonService.updatedata(APIS.programCreation.updateProgram, maindata).subscribe({
@@ -245,6 +246,7 @@ export class ProgramCreationComponent implements OnInit, AfterViewInit {
       .subscribe({
         next: (data) => {
           this.toastrService.success('Location Added Successfully', "Success!");
+          this.locationForm.reset();
           this.getProgramLocation();
         },
         error: (err) => {
