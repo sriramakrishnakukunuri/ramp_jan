@@ -51,13 +51,13 @@
                                         </div>
                                         <div class="col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3">
                                             <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="Medium">
+                                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="Medium" (change)="validateEnterpriseCategory($event)">
                                                 <label class="form-check-label" for="inlineRadio3">Medium / మధ్య తరహా</label>
                                             </div>
                                         </div>
                                         <div class="col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3">
                                             <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio4" value="Large">
+                                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio4" value="Large" (change)="validateEnterpriseCategory($event)">
                                                 <label class="form-check-label" for="inlineRadio4">Large / పెద్ద</label>
                                             </div>
                                         </div>
@@ -82,13 +82,13 @@
                                         </div>
                                         <div class="col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3">
                                             <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="inlineRadioOptions1" id="services" value="Services">
+                                                <input class="form-check-input" type="radio" name="inlineRadioOptions1" id="services" value="Services" (change)="validateNatureOfActivity($event)">
                                                 <label class="form-check-label" for="services">Services / సేవలు</label>
                                             </div>
                                         </div>
                                         <div class="col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3">
                                             <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="inlineRadioOptions1" id="trading" value="Trading">
+                                                <input class="form-check-input" type="radio" name="inlineRadioOptions1" id="trading" value="Trading" (change)="validateNatureOfActivity($event)">
                                                 <label class="form-check-label" for="trading">Trading / ట్రేడింగ్</label>
                                             </div>
                                         </div>   
@@ -517,3 +517,18 @@
         </div>
     </section>
 </main>
+
+
+<div class="modal fade" tabindex="-1" role="dialog" #exampleModal aria-labelledby="mySmallModalLabel" aria-hidden="true" id="exampleModal">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">          
+          <h4 class="modal-title" id="myModalLabel">Your are not eligible to apply</h4>          
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" id="modal-btn-si" (click)="checkValidate('yes')">Ok</button>          
+        </div>
+      </div>
+    </div>
+</div>
+  
