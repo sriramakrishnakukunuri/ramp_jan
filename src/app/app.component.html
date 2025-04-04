@@ -27,9 +27,19 @@
                     <div class="offcanvas-body">
                         <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
 
-                            <li class="nav-item" *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]">
+                            <li class="nav-item" *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR,Role.CALL_CENTER]">
                                 <a class="nav-link" routerLink="/global-dashboard" routerLinkActive="active" id="dropdown3" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     Dashboard
+                                </a>                               
+                            </li>
+                            <li class="nav-item" *appHasRole="[Role.CALL_CENTER]">
+                                <a class="nav-link" routerLink="/participant-details" routerLinkActive="active" id="dropdown3" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Program Participation Verification
+                                </a>                               
+                            </li>
+                            <li class="nav-item" *appHasRole="[Role.CALL_CENTER]">
+                                <a class="nav-link" routerLinkActive="active" id="dropdown3" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Outcome Verification
                                 </a>                               
                             </li>
 
@@ -63,12 +73,23 @@
                             </li>
                             <li class="nav-item dropdown" *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]">
                                 <a class="nav-link" href="#" id="dropdown2" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Participant Details <span class="bi bi-chevron-down"></span>
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="dropdown2">                                
+                                <!-- <li><a class="dropdown-item" routerLink="/update-program-execution" routerLinkActive="active">Program Execution</a></li> -->
+                                <li><a class="dropdown-item" routerLink="/add-participant-data" routerLinkActive="active">Add Participant</a></li>
+                                <li><a class="dropdown-item" routerLink="/view-participant-data" routerLinkActive="active">View Participant</a></li>
+                                <!-- <li><a class="dropdown-item" href="#">View Completed</a></li> -->
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown" *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]">
+                                <a class="nav-link" href="#" id="dropdown2" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Program Execution <span class="bi bi-chevron-down"></span>
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="dropdown2">                                
                                 <li><a class="dropdown-item" routerLink="/update-program-execution" routerLinkActive="active">Program Execution</a></li>
-                                <li><a class="dropdown-item" routerLink="/add-participant-data" routerLinkActive="active">Add Participant</a></li>
-                                <li><a class="dropdown-item" routerLink="/view-participant-data" routerLinkActive="active">View Participant</a></li>
+                                <!-- <li><a class="dropdown-item" routerLink="/add-participant-data" routerLinkActive="active">Add Participant</a></li>
+                                <li><a class="dropdown-item" routerLink="/view-participant-data" routerLinkActive="active">View Participant</a></li> -->
                                 <li><a class="dropdown-item" href="#">View Completed</a></li>
                                 </ul>
                             </li>

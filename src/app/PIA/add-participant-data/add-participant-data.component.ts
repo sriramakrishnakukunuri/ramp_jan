@@ -127,14 +127,14 @@ export class AddParticipantDataComponent implements OnInit {
       // date: new FormControl("", [Validators.required]),
       isAspirant: new FormControl("Aspirant", [Validators.required]),
       organizationId: new FormControl("",),
-      participantName: new FormControl("", [Validators.required,Validators.pattern(/^[A-Za-z ]+$/)]), //Validators.required
+      participantName: new FormControl("", [Validators.required,Validators.pattern(/^[A-Za-z][A-Za-z .]*$/)]), //Validators.required
       gender: new FormControl("", [Validators.required,]),
       disability: new FormControl("N", [Validators.required]),
       // noOfDays: new FormControl("", [Validators.required,]),
       category: new FormControl("", [Validators.required]),
       aadharNo: new FormControl("", [Validators.required, Validators.pattern(/^[0-9]{12}$/)]),
       mobileNo: new FormControl("", [Validators.required, Validators.pattern(/^[6789]\d{9}$/)]),
-      email: new FormControl("", [Validators.email, Validators.required]),
+      email: new FormControl("", [Validators.email]),
       designation: new FormControl("", ),
       isParticipatedBefore: new FormControl("",),
       previousParticipationDetails: new FormControl("",),
@@ -156,7 +156,7 @@ export class AddParticipantDataComponent implements OnInit {
       "organizationCategory": new FormControl("",),
       "organizationType": new FormControl("", [Validators.required,]),
       "udyamregistrationNo": new FormControl(""),
-      "organizationName": new FormControl("",),
+      "organizationName": new FormControl("",[Validators.pattern(/^[A-Za-z][A-Za-z0-9 .]*$/)]),
       "udyamYesOrNo": new FormControl("No",),
       "dateOfRegistration": new FormControl("", ),
       "startupCertificateNo": new FormControl("",),
@@ -166,7 +166,7 @@ export class AddParticipantDataComponent implements OnInit {
       "incorporationDate": new FormControl("",),
       "dateOfIssue": new FormControl("",),
       "validupto": new FormControl("",),
-      "stateId": new FormControl("", [Validators.required,]),
+      "stateId": new FormControl("Telangana", [Validators.required,]),
       "distId": new FormControl("", [Validators.required,]),
       // "sector": new FormControl("", [Validators.required,]),
       "mandal": new FormControl("", [Validators.required,]),
@@ -206,7 +206,7 @@ export class AddParticipantDataComponent implements OnInit {
 
       },
       error: (err) => {
-        this.toastrService.error(err.message, "Participant Data Error!");
+        // this.toastrService.error(err.message, "Participant Data Error!");
         new Error(err);
       },
     });
@@ -327,7 +327,8 @@ export class AddParticipantDataComponent implements OnInit {
     this.isedit=true
     this.participantId=item.participantId
     console.log(moment(item?.certificateIssueDate).format('YYYY-MM-DD'),item?.certificateIssueDate)
-    this.ParticipantDataForm.patchValue({ ...item, certificateIssueDate: this.convertToISOFormat(item.certificateIssueDate)})
+   
+    this.ParticipantDataForm.patchValue({ ...item, certificateIssueDate: this.convertToISOFormat(item.certificateIssueDate),isAspirant:item.organizationId?'Aspirant':'Existing Oragnization'})
   }
   typeOragnization(event: any) {
     this.OragnizationType = event
@@ -351,6 +352,7 @@ export class AddParticipantDataComponent implements OnInit {
       this.formDetailsOrganization();
       this.fOrg['organizationType'].patchValue('SHG')
       this.fOrg['nameOfTheSHG'].addValidators(Validators.required)
+      this.fOrg['nameOfTheSHG'].addValidators(Validators.pattern(/^[A-Za-z][A-Za-z .]+$/))
       this.fOrg['distId'].addValidators(Validators.required)
       this.fOrg['mandal'].addValidators(Validators.required)
       this.fOrg['nameOfTheVO'].addValidators(Validators.required)
@@ -366,8 +368,10 @@ export class AddParticipantDataComponent implements OnInit {
       this.formDetailsOrganization()
       this.fOrg['organizationType'].patchValue('Start Up')
       this.fOrg['organizationName'].addValidators(Validators.required)
+      this.fOrg['organizationName'].addValidators(Validators.pattern(/^[A-Za-z][A-Za-z .]+$/))
       this.fOrg['startupCertificateNo'].addValidators(Validators.required)
       this.fOrg['natureOfStartup'].addValidators(Validators.required)
+      this.fOrg['natureOfStartup'].addValidators(Validators.pattern(/^[A-Za-z][A-Za-z .]+$/))
       this.fOrg['incorporationDate'].addValidators(Validators.required)
       this.fOrg['dateOfIssue'].addValidators(Validators.required)
       this.fOrg['validupto'].addValidators(Validators.required)
@@ -387,6 +391,7 @@ export class AddParticipantDataComponent implements OnInit {
       this.fOrg['organizationType'].patchValue('MSME')
       this.fOrg['organizationCategory'].addValidators(Validators.required)
       this.fOrg['organizationName'].addValidators(Validators.required)
+      this.fOrg['organizationName'].addValidators(Validators.pattern(/^[A-Za-z][A-Za-z .]+$/))
       this.fOrg['udyamYesOrNo'].addValidators(Validators.required)
       this.fOrg['udyamregistrationNo'].setValidators(null)
       this.fOrg['dateOfRegistration'].setValidators(null)

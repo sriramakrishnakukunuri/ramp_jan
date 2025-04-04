@@ -42,8 +42,9 @@ export class ViewParticipantComponent implements OnInit {
       })
     }
     dropdownProgramsList(event: any, type: any) {
+      this.submitedData = ''
       this.programIds = event.target.value
-      if (type == 'table') {
+      if (type == 'table' && event.target.value) {
         this.getData()
       }
     }
