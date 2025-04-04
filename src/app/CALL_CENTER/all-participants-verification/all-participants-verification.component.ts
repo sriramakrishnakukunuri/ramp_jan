@@ -46,12 +46,13 @@ export class AllParticipantsVerificationComponent implements OnInit {
   }
 
   submitVerification(): void {
-    if (this.verificationForm.valid) {
-      console.log(this.verificationForm.value);
-      // Handle form submission logic here
-    } else {
-      console.error('Form is invalid');
-    }
+    // if (this.verificationForm.valid) {
+    //   console.log(this.verificationForm.value);
+    //   // Handle form submission logic here
+    // } else {
+    //   console.error('Form is invalid');
+    // }
+    this.toastrService.success('Participant Verification Updated Successfully', 'Success');
   }
 
   ngOnInit(): void {

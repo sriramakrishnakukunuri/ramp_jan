@@ -173,7 +173,7 @@
                     </div>
 
                     <!-- Questions (Visible only if "Answered" is selected) -->
-                    <div *ngIf="showQuestions">
+                    <div [ngClass]="{'isDisabled': !showQuestions}" >
                         <div class="mb-3">
                             <label class="form-label">Have you attended the Program?</label>
                             <div>
@@ -318,7 +318,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-lime-green" (click)="submitVerification()">Submit</button>
+                <button type="button" class="btn btn-lime-green" data-bs-dismiss="modal" (click)="submitVerification()">Update</button>
             </div>
         </div>
     </div>
