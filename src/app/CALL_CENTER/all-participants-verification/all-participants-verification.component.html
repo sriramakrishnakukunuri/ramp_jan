@@ -1,0 +1,325 @@
+<div class="container mt-4">
+    <div class="card mb-4">
+        <div class="card-header bg-transparent">
+            <h6 class="fw-600 mb-2 mb-sm-0 text-green">Program Participant Verification</h6>
+        </div>
+        <div class="card-body">
+            <div class="row mb-3">
+                <div class="col-md-4">
+                    <label for="agencySelect" class="form-label">Select Agency</label>
+                </div>
+                <div class="col-md-4">
+                    <select id="agencySelect" class="form-select" [(ngModel)]="selectedAgency"
+                        (change)="onAgencyChange()">
+                        <option value="" disabled selected>Select Agency</option>
+                        <option *ngFor="let agency of agencies" [value]="agency.agencyId">{{ agency.agencyName }}
+                        </option>
+                    </select>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <label for="programSelect" class="form-label">Select Program</label>
+                </div>
+                <div class="col-md-4">
+                    <select id="programSelect" class="form-select" (change)="onProgramChange()"
+                        [(ngModel)]="selectedProgram" [disabled]="!programs.length">
+                        <option value="" disabled selected>Select Program</option>
+                        <option *ngFor="let program of programs" [value]="program.programId">{{ program.programTitle }}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">&nbsp;</div>
+            <div class="row">
+                <div class="col-md-4"></div>
+                <div class="col-md-4">
+                    <button class="btn btn-lime-green" [ngClass]="{'disabled': !selectedProgram}"
+                        (click)="showParticipants()" [disabled]="!selectedProgram">Show
+                        Participants</button>
+                </div>
+                <!-- <div class="col-md-4 d-flex align-items-end">
+                    class="btn btn-primary w-100"
+                    
+                </div> -->
+            </div>
+        </div>
+    </div>
+</div>
+<main class="mt-4">
+    <section>
+
+
+
+        <div class="container-fluid" *ngIf="participants.length > 0">
+
+            <div class="card">
+                <div class="card-header bg-transparent">
+                    <h6 class="fw-600 mb-2 mb-sm-0 text-green">Participant Details</h6>
+                </div>
+                <div class="card-body">
+                    <div class="">
+                        <table class="table table-borderless table-striped nowrap">
+                            <thead>
+                                <tr>
+                                    <th>S.No</th>
+                                    <th>Name of Participant</th>
+                                    <th>Mobile Number</th>
+                                    <th>Verification Status</th>
+                                    <th>Verified By</th>
+                                    <th>Update Verification</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let participant of participants; let i = index">
+                                    <td>{{ i + 1 }}</td>
+                                    <td>{{ participant?.participantName }}</td>
+                                    <td>{{ participant?.mobileNo }}</td>
+                                    <td>
+                                        <div style="color: orange;">Pending</div>
+                                    </td>
+                                    <td>--</td>
+                                    <td>
+                                        <button class="btn btn-lime-green" data-bs-toggle="modal"
+                                            data-bs-target="#verificationModal">Update</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div *ngIf="participants.length === 0 && showTable" class="alert alert-warning mt-3">
+                        No participants found for the selected program.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+
+<!-- Add this modal popup at the bottom of your HTML file -->
+<div class="modal fade" id="verificationModal" tabindex="-1" aria-labelledby="verificationModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="verificationModalLabel">Participant Verification</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="verificationForm">
+                    <!-- Verification Status -->
+                    <div class="mb-3">
+
+                        <div class="row">
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                <div class="mb-3">
+                                    <label class="form-label">Verification Status</label>
+                                    <div class="row">
+                                        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio"
+                                                    formControlName="verificationStatus" value="Answered"
+                                                    (change)="onVerificationStatusChange('Answered')">
+                                                <label class="form-check-label">Answered</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio"
+                                                    formControlName="verificationStatus" value="Not Answered"
+                                                    (change)="onVerificationStatusChange('Not Answered')">
+                                                <label class="form-check-label">Not Answered</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio"
+                                                    formControlName="verificationStatus" value="Wrong Number"
+                                                    (change)="onVerificationStatusChange('Wrong Number')">
+                                                <label class="form-check-label">Wrong Number</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio"
+                                                    formControlName="verificationStatus" value="Switched Off"
+                                                    (change)="onVerificationStatusChange('Switched Off')">
+                                                <label class="form-check-label">Switched Off</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio"
+                                                    formControlName="verificationStatus" value="Number Not Exists"
+                                                    (change)="onVerificationStatusChange('Number Not Exists')">
+                                                <label class="form-check-label">Number Not Exists</label>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+                    </div>
+
+                    <!-- Questions (Visible only if "Answered" is selected) -->
+                    <div *ngIf="showQuestions">
+                        <div class="mb-3">
+                            <label class="form-label">Have you attended the Program?</label>
+                            <div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" formControlName="attendedProgram"
+                                        value="Yes">
+                                    <label class="form-check-label">Yes</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" formControlName="attendedProgram"
+                                        value="No">
+                                    <label class="form-check-label">No</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Have you attended:</label>
+                            <div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" formControlName="morningSession">
+                                    <label class="form-check-label">Morning Session</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" formControlName="afternoonSession">
+                                    <label class="form-check-label">Afternoon Session</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Did you find the program useful?</label>
+                            <div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" formControlName="programUseful"
+                                        value="Yes">
+                                    <label class="form-check-label">Yes</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" formControlName="programUseful"
+                                        value="No">
+                                    <label class="form-check-label">No</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">How did you find out about the Program?</label>
+                            <div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" formControlName="programSource"
+                                        value="Press/Newspaper">
+                                    <label class="form-check-label">Press/Newspaper</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" formControlName="programSource"
+                                        value="Phone/SMS">
+                                    <label class="form-check-label">Phone/SMS</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" formControlName="programSource"
+                                        value="Social Media">
+                                    <label class="form-check-label">Social Media</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" formControlName="programSource"
+                                        value="SHG">
+                                    <label class="form-check-label">SHG</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" formControlName="programSource"
+                                        value="Friends">
+                                    <label class="form-check-label">Friends</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" formControlName="programSource"
+                                        value="Others">
+                                    <label class="form-check-label">Others</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">How is the Food?</label>
+                            <div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" formControlName="foodQuality"
+                                        value="Good">
+                                    <label class="form-check-label">Good</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" formControlName="foodQuality"
+                                        value="Average">
+                                    <label class="form-check-label">Average</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" formControlName="foodQuality"
+                                        value="Bad">
+                                    <label class="form-check-label">Bad</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" formControlName="foodQuality"
+                                        value="Not Provided">
+                                    <label class="form-check-label">Not Provided</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">How is the Trainer Quality?</label>
+                            <div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" formControlName="trainerQuality"
+                                        value="Liked">
+                                    <label class="form-check-label">Liked</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" formControlName="trainerQuality"
+                                        value="Disliked">
+                                    <label class="form-check-label">Disliked</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Would you like to be contacted for further programs?</label>
+                            <div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" formControlName="contactForPrograms"
+                                        value="Yes">
+                                    <label class="form-check-label">Yes</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" formControlName="contactForPrograms"
+                                        value="No">
+                                    <label class="form-check-label">No</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-lime-green" (click)="submitVerification()">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>

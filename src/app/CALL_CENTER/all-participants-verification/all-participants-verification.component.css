@@ -1,0 +1,25 @@
+.container {
+    max-width: 600px;
+    margin: auto;
+  }
+  
+  .table {
+    margin-top: 20px;
+  }
+  
+  .alert {
+    text-align: center;
+  }
+
+  .modal-content {
+    padding: 20px;
+  }
+  
+  .modal-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #64de91;
+  }
+  
+  .modal-footer {
+    border-top: 1px solid #dee2e6;
+  }
