@@ -51,7 +51,7 @@
                             <div class="col-12 col-sm-6 col-md-4 col-lg-4">
                                 <div class="form-floating mb-3">
                                     <select class="form-select" formControlName="programType">
-                                        <option selected>Select Type Of Program</option>
+                                        <option selected value="">Select Type Of Program</option>
                                         <option value="ESDP Training">ESDP Training</option>
                                         <option value="Awareness">Awareness</option>
                                         <!-- <option value="Program3">Program3</option> -->
@@ -80,7 +80,7 @@
 
                                 <div *ngIf="f2['programTitle'].touched && !f2['programTitle'].valid" class="error" style="color: red;">
                                     <span *ngIf="f2['programTitle'].errors?.['required']">Title Of Program is required</span>
-                                    <span *ngIf="f2['programTitle'].errors?.['pattern']">Title Of Program should contain only letters.</span>
+                                    <span *ngIf="f2['programTitle'].errors?.['pattern']">Title Of Program should contains letters and numerics.</span>
                                 </div>
                             </div>
                             <!-- <div class="col-12 col-sm-6 col-md-4 col-lg-3">
@@ -130,7 +130,7 @@
                             <div class="col-12 col-sm-6 col-md-4 col-lg-4">
                                 <div class="form-floating mb-3">
                                     <select class="form-select" formControlName="kpi">
-                                        <option selected>Select KPI </option>
+                                        <option selected value="">Select KPI </option>
                                         <option value="Activity">Activity</option>
                                         <option value="Output">Output</option>
                                         <option value="Outcome">Outcome</option>

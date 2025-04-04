@@ -32,10 +32,10 @@ export class ProgramSessionsComponent implements OnInit {
     this.formDetailsTwo();
     this.agencyId = JSON.parse(sessionStorage.getItem('user') || '{}').agencyId;
     this.modalFormStype = this.fb.group({
-      name: ['', [Validators.required, Validators.pattern(/^[A-Za-z]+$/)]],
+      name: ['', [Validators.required, Validators.pattern(/^[A-Za-z][A-Za-z .]+$/)]],
       mobileNo: ['', [Validators.required, Validators.pattern(/^[6789]\d{9}$/)]],
       email: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/)]],
-      organizationName: ['', Validators.required],
+      organizationName: ['', [Validators.required, Validators.pattern(/^[A-Za-z][A-Za-z0-9 .]+$/)]],
       qualification: ['', Validators.required],
       designation: ['', Validators.required],
       specialization: ['', Validators.required],
@@ -230,6 +230,7 @@ export class ProgramSessionsComponent implements OnInit {
     
 
   convertToISOFormat(date: string): string {
+    console.log(date)
     const [day, month, year] = date.split('-');
     return `${year}-${month}-${day}`; // Convert to yyyy-MM-dd format
   }
@@ -256,8 +257,10 @@ export class ProgramSessionsComponent implements OnInit {
 
         const sessionArray = this.programCreationSub.get('details') as FormArray;
         sessionArray.clear();
+        console.log(sessionArray,program.programSessionList,program.startDate)
         if (program.programSessionList.length) {
           program.programSessionList.forEach((session: any, index: any) => {
+            console.log(session)
             const sessionGroup = this.initiateForm();
             sessionGroup.patchValue({
               sessionDate: this.convertToISOFormat(session.sessionDate),
@@ -277,7 +280,12 @@ export class ProgramSessionsComponent implements OnInit {
           //this.reinitializeDataTable();
         } else {
           (this.programCreationSub?.controls["details"] as FormArray).clear();
+          
           this.onAddRow(0);
+          // const sessionGroup = this.initiateForm();
+         
+          // sessionGroup.patchValue({
+          //   sessionDate: this.convertToISOFormat(program.startDate),})
         }
       },
       error: (err: any) => {
@@ -361,7 +369,7 @@ export class ProgramSessionsComponent implements OnInit {
 
   initiateForm(): FormGroup {
     return this.fb.group({
-      sessionDate:  ['', Validators.required],
+      sessionDate:  [, Validators.required],
       startTime:  ['', Validators.required],
       endTime:  ['', Validators.required],
       sessionTypeName:  ['', Validators.required],
@@ -376,8 +384,13 @@ export class ProgramSessionsComponent implements OnInit {
   }
 
   onAddRow(index: any) {
-    const control = this.programCreationSub?.get("details") as FormArray;
+    const control:any = this.programCreationSub?.get("details") as FormArray;
     control.push(this.initiateForm());
+    // console.log(control.value)
+    // if(index==0 && this.programCreationMain.value.startDate){
+    //   // control.value.patchValue({sessionDate:this.convertToISOFormat(this.programCreationMain.value.startDate)})
+    //   control.value[0]['sessionDate']=this.convertToISOFormat(this.programCreationMain.value.startDate)
+    // }
   }
 
   onRemoveRow(rowIndex: number) {

@@ -90,7 +90,7 @@
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                 <div class="form-floating mb-3">
                                     <input type="email" class="form-control" id="email" placeholder="" formControlName="email">
-                                    <label for="email">Email<span class="c-red"> *</span></label>
+                                    <label for="email">Email</label>
                                 </div>
                                 <div *ngIf="f2['email'].touched && !f2['email'].valid && !f2['email']?.errors?.['email']" class="error">Email is required</div>
                                 <div *ngIf="f2['email'].touched && !f2['email'].valid && f2['email']?.errors?.['email']" class="error">Please Enter Proper Email Id</div>
@@ -139,7 +139,7 @@
                                 <div class="form-floating mb-3">
                                     <div class="form-floating mb-3">
                                         <input type="text" class="form-control" id="designation" placeholder="" formControlName="designation">
-                                        <label id="designation">Designation</label>
+                                        <label id="designation">{{this.f2['isAspirant'].value=='Existing Oragnization'?"Designation":"Current Trade"}}</label>
                                     </div>
                                     <!-- <select class="form-select" id="designation" formControlName="designation">
                                       <option selected>Select Designation</option>
@@ -152,11 +152,11 @@
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                 <div class="form-floating mb-3">
                                     <select class="form-select" id="isParticipatedBefore" formControlName="isParticipatedBefore">
-                                      <option selected value="">Select Previous Participants</option>
+                                      <option selected value="">Select Previous Participation</option>
                                       <option value="Y">Yes</option>
                                       <option value="N">No</option>
                                     </select>
-                                    <label for="isParticipatedBefore">Previous Participants</label>
+                                    <label for="isParticipatedBefore">Previous Participation</label>
                                 </div>
                             </div>
                             <!-- <div class="col-12 col-sm-6 col-md-4 col-lg-3">
@@ -328,13 +328,14 @@
                                                     <label class="form-check-label fs-md" for="SHG">SHG</label>
                                                 </div>
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="organizationType" id="MSME" value="MSME" (change)="typeOragnization($any($event.target).value)"  formControlName="organizationType">
-                                                    <label class="form-check-label fs-md" for="MSME">MSME</label>
-                                                </div>
-                                                <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type="radio" name="organizationType" id="startup" value="Start Up" (change)="typeOragnization($any($event.target).value)"  formControlName="organizationType">
                                                     <label class="form-check-label fs-md" for="startup">Start Up</label>
                                                 </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="organizationType" id="MSME" value="MSME" (change)="typeOragnization($any($event.target).value)"  formControlName="organizationType">
+                                                    <label class="form-check-label fs-md" for="MSME">MSME</label>
+                                                </div>
+                                               
                                             </div>
                                             <!-- <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                                 <div class="form-floating mb-3">
@@ -356,7 +357,9 @@
                                         <input type="text" class="form-control" id="nameOfTheSHG" placeholder="" formControlName="nameOfTheSHG" >
                                         <label for="nameOfTheSHG">Name of the SHG <span class="c-red"> *</span></label>
                                     </div>
-                                    <div *ngIf="fOrg['nameOfTheSHG'].touched && !fOrg['nameOfTheSHG'].valid" class="error" style="padding-top: 5px;"> Name of the SHG is required</div>
+                                    <!-- <div *ngIf="fOrg['nameOfTheSHG'].touched && !fOrg['nameOfTheSHG'].valid" class="error" style="padding-top: 5px;"> Name of the SHG is required</div> -->
+                                    <div *ngIf="fOrg['nameOfTheSHG'].touched && !fOrg['nameOfTheSHG'].valid && !fOrg['nameOfTheSHG']?.errors?.['pattern']" class="error">Name of the SHG is required</div>
+                                    <div *ngIf="fOrg['nameOfTheSHG'].touched && !fOrg['nameOfTheSHG'].valid && fOrg['nameOfTheSHG']?.errors?.['pattern']" class="error">Name of the SHG Should be Charactersand Numerics</div>
                                 </div>
                                 <!-- <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                     <div class="form-floating mb-3">
@@ -444,7 +447,9 @@
                                         <input type="text" class="form-control" id="msmeStartup" placeholder="" formControlName="organizationName">
                                         <label for="msmeStartup">Name of the Startup<span class="c-red"> *</span></label>
                                     </div>
-                                    <div *ngIf="fOrg['organizationName'].touched && !fOrg['organizationName'].valid" class="error" style="padding-top:  5px;">Name of the Startup is required</div>
+                                    <!-- <div *ngIf="fOrg['organizationName'].touched && !fOrg['organizationName'].valid" class="error" style="padding-top:  5px;">Name of the Startup is required</div> -->
+                                    <div *ngIf="fOrg['organizationName'].touched && !fOrg['organizationName'].valid && !fOrg['organizationName']?.errors?.['pattern']" class="error">Name of the Startup is required</div>
+                                <div *ngIf="fOrg['organizationName'].touched && !fOrg['organizationName'].valid && fOrg['organizationName']?.errors?.['pattern']" class="error">Name of the Startup Should be Charactersand Numerics</div>
                               
                                 </div>
                                 <!-- <div class="col-12 col-sm-6 col-md-4 col-lg-3">
@@ -470,7 +475,9 @@
                                         <input type="text" class="form-control" id="natureStartup" placeholder="" formControlName="natureOfStartup">
                                         <label for="natureStartup">Nature of Startup<span class="c-red"> *</span></label>
                                     </div>
-                                    <div *ngIf="fOrg['natureOfStartup'].touched && !fOrg['natureOfStartup'].valid" class="error" style="padding-top:  5px;">Nature of Startup is required</div>
+                                    <!-- <div *ngIf="fOrg['natureOfStartup'].touched && !fOrg['natureOfStartup'].valid" class="error" style="padding-top:  5px;">Nature of Startup is required</div> -->
+                                    <div *ngIf="fOrg['natureOfStartup'].touched && !fOrg['natureOfStartup'].valid && !fOrg['natureOfStartup']?.errors?.['pattern']" class="error">Nature of Startup is required</div>
+                                    <div *ngIf="fOrg['natureOfStartup'].touched && !fOrg['natureOfStartup'].valid && fOrg['natureOfStartup']?.errors?.['pattern']" class="error">Nature of Startup Should be Charactersand Numerics</div>
                              
                                 </div>
                                 <div class="col-12 col-sm-6 col-md-4 col-lg-3">
@@ -528,7 +535,9 @@
                                         <input type="text" class="form-control" id="organization" placeholder="" name="organizationName" formControlName="organizationName">
                                         <label for="organization">Organization Name <span class="c-red"> *</span></label>
                                     </div>
-                                    <div *ngIf="fOrg['organizationName'].touched && !fOrg['organizationName'].valid" class="error" style="padding-top:  5px;">Organization Name is required</div>
+                                    <!-- <div *ngIf="fOrg['organizationName'].touched && !fOrg['organizationName'].valid" class="error" style="padding-top:  5px;">Organization Name is required</div> -->
+                                    <div *ngIf="fOrg['organizationName'].touched && !fOrg['organizationName'].valid && !fOrg['organizationName']?.errors?.['pattern']" class="error">Organization Name is required</div>
+                                    <div *ngIf="fOrg['organizationName'].touched && !fOrg['organizationName'].valid && fOrg['organizationName']?.errors?.['pattern']" class="error">Organization Name Should be Charactersand Numerics</div>
                                 </div>
                                 <!-- <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                     <div class="form-floating mb-3">
@@ -597,8 +606,8 @@
                                     <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                         <div class="form-floating mb-3">
                                             <select class="form-select" id="State" formControlName="stateId">
-                                              <option selected>Select State</option>
-                                              <option value="Telangana">Telangana</option>
+                                              <!-- <option selected>Select State</option> -->
+                                              <option selected value="Telangana">Telangana</option>
                                             </select>
                                             <label for="State">State<span class="c-red"> *</span></label>
                                         </div>
@@ -685,7 +694,7 @@
                         </div>
                         <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                             <div class="card shadow-md p-3 mb-3">
-                                <h6 class="fs-md fw-600 mb-2">Owner Details</h6>
+                                <h6 class="fs-md fw-600 mb-2">{{this.fOrg['organizationType'].value=='MSME'?'Director':(this.fOrg['organizationType'].value=='Start Up'?'Promoter':'Leader')}} Details</h6>
                                 <div class="row">
                                     <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                         <div class="form-floating mb-3 mb-sm-0 mb-lg-0">
