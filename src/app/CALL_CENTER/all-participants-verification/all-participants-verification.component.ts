@@ -43,6 +43,8 @@ export class AllParticipantsVerificationComponent implements OnInit {
 
   onVerificationStatusChange(status: string): void {
     this.showQuestions = status === 'Answered';
+    this.verificationForm.reset();
+    this.verificationForm.get('verificationStatus')?.setValue(status)
   }
 
   submitVerification(): void {
