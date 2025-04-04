@@ -127,7 +127,7 @@ export class UserRegistrationComponent implements OnInit,AfterViewInit {
       this._commonService.add(url, payload).subscribe((res: any) => {
         this.RegisterForm.reset();
         this.toastrService.success('User Registered Successfully', 'Success');
-        
+        this.getAllUsersList()
         // this.router.navigate(['/user-registration']);
       }, (error) => {
         this.toastrService.error(error.error.message);
