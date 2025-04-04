@@ -69,6 +69,9 @@
                                             <div *ngIf="item.get('endTime')?.touched && item.get('endTime')?.invalid" class="text-danger">
                                                 End Time is required.
                                             </div>
+                                            <div *ngIf="item.get('startTime')?.value > item.get('endTime')?.value" class="text-danger">
+                                                End Time always greater than start time is required.
+                                            </div>
                                         </td>
                                         <td>
                                             <select class="form-select" formControlName="sessionTypeName">
@@ -159,8 +162,9 @@
                                 <input type="text" class="form-control" id="floatingSelectGender" formControlName="name"
                                     placeholder="Resource Person" />
                                 <label for="floatingSelectGender">Resource Person<span class="c-red"> *</span></label>
-                                <div *ngIf="modalFormStype.controls['name'].touched && modalFormStype.controls['name'].invalid" class="error" style="color: red; margin-top: 5px;">
-                                    Name is required
+                                <div *ngIf="modalFormStype.controls['name'].touched && !modalFormStype.controls['name'].valid && modalFormStype.controls['name']?.errors?.['pattern']" class="error" style="color: red;margin-top: 5px">Resource Person Should be Characters</div>
+                                <div *ngIf="modalFormStype.controls['name'].touched && modalFormStype.controls['name'].invalid && !modalFormStype.controls['name']?.errors?.['pattern']" class="error" style="color: red; margin-top: 5px;">
+                                    Resource Person is required
                                 </div>
                             </div>
                         </div>
@@ -192,8 +196,12 @@
                                 <input type="text" class="form-control" formControlName="organizationName"
                                     placeholder="Organization Name" />
                                 <label>Organization Name<span class="c-red"> *</span></label>
-                                <div *ngIf="modalFormStype.controls['organizationName'].touched && modalFormStype.controls['organizationName'].invalid" class="error" style="color: red;margin-top: 5px">
+                                <!-- <div *ngIf="modalFormStype.controls['organizationName'].touched && modalFormStype.controls['organizationName'].invalid" class="error" style="color: red;margin-top: 5px">
                                     Organization Name is required
+                                </div> -->
+                                <div *ngIf="modalFormStype.controls['organizationName'].touched && !modalFormStype.controls['organizationName'].valid && modalFormStype.controls['organizationName']?.errors?.['pattern']" class="error" style="color: red;margin-top: 5px"> Organization Name  Should be Characters and numerics</div>
+                                <div *ngIf="modalFormStype.controls['organizationName'].touched && modalFormStype.controls['organizationName'].invalid && !modalFormStype.controls['organizationName']?.errors?.['pattern']" class="error" style="color: red; margin-top: 5px;">
+                                    Organization Name  is required
                                 </div>
                             </div>
                         </div>
