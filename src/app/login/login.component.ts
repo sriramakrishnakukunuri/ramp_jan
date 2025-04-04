@@ -58,6 +58,9 @@ export class LoginComponent implements OnInit {
                             || res.data.userRole === Role.AGENCY_EXECUTOR
                         ){
                             this.router.navigateByUrl('/program-creation');
+                        }else if(res.data.userRole === Role.CALL_CENTER
+                        ) {
+                            this.router.navigateByUrl('/global-dashboard');
                         }
                         
                     } else if (res.status === 400) {

@@ -137,7 +137,7 @@ const routes: Routes = [
         path: 'global-dashboard',
         component: GlobalDashboardComponent,
         canActivate: [AuthGuard],
-        data: { roles:  [Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
+        data: { roles:  [Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR,Role.CALL_CENTER] }
     },
     {
         path: 'view-participant-data',
