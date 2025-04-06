@@ -425,12 +425,19 @@ export class ProgramSessionsComponent implements OnInit {
   }
 
   getSessionResourceData: any = [];
+  resourcekeyidData:any={}
   getSessionResource() {
+    this.resourcekeyidData={}
+    this.getSessionResourceData =[]
     this._commonService
       .getById(APIS.programCreation.getResource, this.agencyId)
       .subscribe({
         next: (data: any) => {
           this.getSessionResourceData = data.data;
+          this.getSessionResourceData.map((item:any)=>{
+            this.resourcekeyidData[item?.resourceId]=item.name
+          })
+
         },
         error: (err: any) => {
           new Error(err);

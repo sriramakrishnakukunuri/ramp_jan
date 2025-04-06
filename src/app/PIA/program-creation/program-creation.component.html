@@ -52,8 +52,9 @@
                                 <div class="form-floating mb-3">
                                     <select class="form-select" formControlName="programType">
                                         <option selected value="">Select Type Of Program</option>
-                                        <option value="ESDP Training">ESDP Training</option>
-                                        <option value="Awareness">Awareness</option>
+                                        <!-- <option value="ESDP Training">ESDP Training</option>
+                                        <option value="Awareness">Awareness</option> -->
+                                        <option value="{{list.programType}}" *ngFor="let list of getProgramType">{{list.programType}}</option>
                                         <!-- <option value="Program3">Program3</option> -->
                                     </select>
                                     <label>Type Of Program <span class="c-red"> *</span></label>
@@ -111,7 +112,10 @@
                                     </div>
                             </div>
                             <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                               
                                 <div class="form-floating mb-3">
+                                    <!-- <input [ngxTimepicker]="pickerstart" class="form-control" formControlName="startTime">
+                                    <ngx-material-timepicker #pickerstart></ngx-material-timepicker> -->
                                     <input type="time" class="form-control" formControlName="startTime">
                                     <label>In Time <span class="c-red"> *</span></label>
                                 </div>
@@ -120,6 +124,8 @@
                             </div>
                             <div class="col-12 col-sm-6 col-md-4 col-lg-4">
                                 <div class="form-floating mb-3">
+                                    <!-- <input [ngxTimepicker]="pickerEnd" class="form-control" formControlName="endTime">
+                                    <ngx-material-timepicker #pickerEnd></ngx-material-timepicker> -->
                                     <input type="time" class="form-control" formControlName="endTime">
                                     <label>Out Time <span class="c-red"> *</span></label>
                                 </div>

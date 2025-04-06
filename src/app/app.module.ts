@@ -40,6 +40,8 @@ import { GetOutcomeComponent } from './PIA/get-outcome/get-outcome.component';
 import { ViewMsmeCouncellorDataComponent } from './PIA/view-msme-councellor-data/view-msme-councellor-data.component';
 import { ProgramSessionsComponent } from './PIA/program-sessions/program-sessions.component';
 import { AllParticipantsVerificationComponent } from './CALL_CENTER/all-participants-verification/all-participants-verification.component';
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
+import { AttentanceParticipantComponent } from './PIA/attentance-participant/attentance-participant.component';
 
 @NgModule({
     imports: [
@@ -58,6 +60,7 @@ import { AllParticipantsVerificationComponent } from './CALL_CENTER/all-particip
         MatTableModule,
         MatPaginatorModule,
         MatSortModule,
+        NgxMaterialTimepickerModule
     ],
     declarations: [
         AppComponent,
@@ -82,7 +85,7 @@ import { AllParticipantsVerificationComponent } from './CALL_CENTER/all-particip
         MsmeCouncellorRegisterationComponent,
         ViewParticipantComponent,
         GetOutcomeComponent,
-        ViewMsmeCouncellorDataComponent, ProgramSessionsComponent, AllParticipantsVerificationComponent,
+        ViewMsmeCouncellorDataComponent, ProgramSessionsComponent, AllParticipantsVerificationComponent, AttentanceParticipantComponent,
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
