@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CommonServiceService } from '@app/_services/common-service.service';
@@ -13,7 +13,7 @@ import 'datatables.net-responsive-dt';
   templateUrl: './attentance-participant.component.html',
   styleUrls: ['./attentance-participant.component.css']
 })
-export class AttentanceParticipantComponent implements OnInit {
+export class AttentanceParticipantComponent implements OnInit,AfterViewInit {
   loginsessionDetails: any;
   agencyId: any;
   programIds:any
@@ -26,6 +26,10 @@ export class AttentanceParticipantComponent implements OnInit {
     ngOnInit(): void {
       this.loginsessionDetails = JSON.parse(sessionStorage.getItem('user') || '{}');  
       this.getProgramsByAgency()
+    }
+
+    ngAfterViewInit(): void {
+      
     }
 
     agencyProgramList: any;
@@ -53,9 +57,10 @@ export class AttentanceParticipantComponent implements OnInit {
       this.ParticipantAttendanceData = ''
      
       this._commonService.getById(APIS.Attendance.getDeatails, this.programIds).subscribe({
-        next: (res: any) => {
-          this.ParticipantAttendanceData = res?.data
-          this.reinitializeDataTable();
+        next: (res: any) => {          
+          this.ParticipantAttendanceData = res?.data   
+          //this.reinitializeDataTable();    
+             
           // this.advanceSearch(this.getSelDataRange);
           // modal.close()
   
@@ -78,13 +83,7 @@ export class AttentanceParticipantComponent implements OnInit {
     }
   
     initializeDataTable() {
-      this.dataTable = new DataTable('#attendance-table', {
-        // scrollX: true,
-        // scrollCollapse: true,    
-        // responsive: true,    
-        // paging: true,
-        // searching: true,
-        // ordering: true,
+      this.dataTable = new DataTable('#attendance-table', {        
         scrollY: "415px",
         scrollX: true,
         scrollCollapse: true,
@@ -92,7 +91,20 @@ export class AttentanceParticipantComponent implements OnInit {
         paging: false,
         info: false,
         searching: false,
-        destroy: true, // Ensure reinitialization doesn't cause issues
+        destroy: true, // Ensure reinitialization doesn't cause issues        
       });
+      if (this.dataTable) {
+        setTimeout(() => {
+            this.dataTable.columns.adjust();
+        }, 0);
+      }
+    }
+
+    // Add this method to your component
+    getAttendanceHeaders() {
+      if (this.ParticipantAttendanceData?.participantAttendanceList?.length) {
+          return this.ParticipantAttendanceData.participantAttendanceList[0]?.attendanceData || [];
+      }
+      return [];
     }
 }

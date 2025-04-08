@@ -17,7 +17,43 @@
                 </div>
             </div>
             <div class="card-body">
-                <table id="attendance-table" class="table table-bordered nowrap">
+                <table class="table table-bordered nowrap">
+                    <thead class="bg-lime-green text-white">
+                        <tr>
+                            <th>S.No</th>
+                            <th>Name of the MSME Conselor</th>
+                            <th>SHG Name</th>
+                            <th>Member Id</th>
+                            <th>Member Name</th>
+                            <th *ngFor="let header of getAttendanceHeaders(); let i = index">
+                                Day {{i + 1}}
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <ng-container *ngIf="ParticipantAttendanceData?.participantAttendanceList?.length > 0; else noData">
+                            <tr *ngFor="let item of ParticipantAttendanceData?.participantAttendanceList; let i = index">
+                                <td>{{ i + 1 }}</td>
+                                <td>{{ item?.msmecounselorName }}</td>
+                                <td>{{ item?.shgName }}</td>
+                                <td>{{ item?.memberId }}</td>
+                                <td>{{ item?.memberName }}</td>
+                                <td class="text-center" *ngFor="let dataInner of item.attendanceData; let j = index">
+                                    <select class="form-select" [(ngModel)]="item.attendanceData[j]">                                            
+                                        <option value="P">P</option>
+                                        <option value="A">A</option>
+                                    </select>
+                                </td> 
+                            </tr>
+                        </ng-container>
+                        <ng-template #noData>
+                            <tr>
+                                <td colspan="100%" class="text-center">No Data Found</td>
+                            </tr>
+                        </ng-template>
+                    </tbody>
+                </table>
+                <!-- <table id="attendance-table" class="table table-bordered nowrap">
                     <thead class="bg-lime-green text-white">
                         <tr>
                             <th>S.No</th>
@@ -1186,7 +1222,7 @@
                             <td class="text-end">100</td>
                         </tr>
                     </tbody>
-                </table>
+                </table> -->
             </div>
         </div>
     </section>
