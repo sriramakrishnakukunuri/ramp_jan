@@ -234,10 +234,11 @@ export class ProgramSessionsComponent implements OnInit {
     const [day, month, year] = date.split('-');
     return `${year}-${month}-${day}`; // Convert to yyyy-MM-dd format
   }
-
+  ProgramData:any
   getProgramDetailsById(programId: string) {
     this._commonService.getById(APIS.programCreation.getSingleProgramsList, programId).subscribe({
       next: (data: any) => {
+        this.ProgramData=data.data
         const program = data.data;
         this.programCreationMain.patchValue({
           activityId: program.activityId,

@@ -26,6 +26,7 @@ import { ViewParticipantComponent } from './PIA/view-participant/view-participan
 import { ProgramSessionsComponent } from './PIA/program-sessions/program-sessions.component';
 import { AllParticipantsVerificationComponent } from './CALL_CENTER/all-participants-verification/all-participants-verification.component';
 import { AttentanceParticipantComponent } from './PIA/attentance-participant/attentance-participant.component';
+import { RawMaterialsParticipantsComponent } from './PIA/raw-materials-participants/raw-materials-participants.component';
 
 const routes: Routes = [
     {
@@ -162,6 +163,12 @@ const routes: Routes = [
     {
         path: 'attendance-Participant',
         component: AttentanceParticipantComponent,
+        canActivate: [AuthGuard],
+        data: { roles:  [Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR]}
+    },
+    {
+        path: 'rawMaterials-Participant',
+        component: RawMaterialsParticipantsComponent,
         canActivate: [AuthGuard],
         data: { roles:  [Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR]}
     },

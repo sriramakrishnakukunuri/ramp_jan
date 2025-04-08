@@ -65,5 +65,9 @@ export const APIS = {
     Attendance:{
         getDeatails:API_BASE_URL +`/program/attendence/`,
         saveAttendance:API_BASE_URL +`/program/attendence`,
+    },
+    rawMaterial:{
+        getDeatails:API_BASE_URL +`/program/rawmaterial/`,
+        saveAttendance:API_BASE_URL +`/program/rawmaterial`,
     }
 }

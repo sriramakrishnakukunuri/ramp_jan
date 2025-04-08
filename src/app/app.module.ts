@@ -42,6 +42,7 @@ import { ProgramSessionsComponent } from './PIA/program-sessions/program-session
 import { AllParticipantsVerificationComponent } from './CALL_CENTER/all-participants-verification/all-participants-verification.component';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { AttentanceParticipantComponent } from './PIA/attentance-participant/attentance-participant.component';
+import { RawMaterialsParticipantsComponent } from './PIA/raw-materials-participants/raw-materials-participants.component';
 
 @NgModule({
     imports: [
@@ -85,7 +86,7 @@ import { AttentanceParticipantComponent } from './PIA/attentance-participant/att
         MsmeCouncellorRegisterationComponent,
         ViewParticipantComponent,
         GetOutcomeComponent,
-        ViewMsmeCouncellorDataComponent, ProgramSessionsComponent, AllParticipantsVerificationComponent, AttentanceParticipantComponent,
+        ViewMsmeCouncellorDataComponent, ProgramSessionsComponent, AllParticipantsVerificationComponent, AttentanceParticipantComponent, RawMaterialsParticipantsComponent,
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
