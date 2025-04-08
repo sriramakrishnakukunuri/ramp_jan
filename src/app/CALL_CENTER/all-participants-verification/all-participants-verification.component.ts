@@ -20,7 +20,7 @@ export class AllParticipantsVerificationComponent implements OnInit {
   programs: any[] = [];
   participants: any[] = [];
   selectedAgency: string = '';
-  selectedProgram: string = '';
+  selectedProgram: any = '';
   showTable: boolean = false;
   dataTable: any;
   constructor(
@@ -45,11 +45,9 @@ export class AllParticipantsVerificationComponent implements OnInit {
   onVerificationStatusChange(status: string): void {
     this.showQuestions = status === 'Verified';
   }
-  getParticipantByUpdate:any
-  ParticpantdataBYTable(data:any){
-    this.getParticipantByUpdate=data
-  }
+ 
   submitVerification() {
+    console.log(this.verificationForm.value,'srk');
     let payload:any={
       "programId": this.programData.programId,
       "participantId": this.getParticipantByUpdate?.participantId,
@@ -59,16 +57,12 @@ export class AllParticipantsVerificationComponent implements OnInit {
       "questionAnswerList": [
         {
           "questionId": 1,
-          "answers": ["Yes"]
+          "answers": ["Bad"]
         },
         {
           "questionId": 2,
-          "answers": ["Option A", "Option C"]
+          "answers": ["Bad", ]
         },
-        {
-          "questionId": 3,
-          "answers": ["No"]
-        }
       ]
     }
     let questionAnswerListdata:any=[]
@@ -80,7 +74,15 @@ export class AllParticipantsVerificationComponent implements OnInit {
    
     })
 
-    console.log(this.verificationForm.value,questionAnswerListdata);
+   
+    this._commonService.add(APIS.callCenter.saveVeriaficationStatus,payload).subscribe({
+      next: (data: any) => {
+        this.agencies = data.data;
+      },
+      error: (err) => {
+        console.error('Error loading agencies:', err);
+      }
+    });
     // if (this.verificationForm.valid) {
     //   console.log(this.verificationForm.value);
     //   // Handle form submission logic here
@@ -104,9 +106,14 @@ export class AllParticipantsVerificationComponent implements OnInit {
       }
     });
   }
+  getParticipantByUpdate:any
+  ParticpantdataBYTable(data:any){
+    this.getParticipantByUpdate=data
+    this.getQuestionBySubactivityId()
+  }
   verificationStatus:any=[]
   loadVerisationStatus() {
-    this.verificationStatus=[]
+    // this.verificationStatus=[]
     this._commonService.getDataByUrl(APIS.callCenter.getVeriaficationStatus).subscribe({
       next: (data: any) => {
         this.verificationStatus = data.data;
@@ -142,9 +149,8 @@ export class AllParticipantsVerificationComponent implements OnInit {
     this.showTable = true;
     this.participants = [];
     if (this.selectedProgram) {
-      this.loadVerisationStatus()
-     this.getProgramDetailsById(this.selectedProgram)
-      this._commonService.getDataByUrl(`${APIS.participantdata.getDataByProgramId}/${this.selectedProgram}`).subscribe({
+     
+      this._commonService.getDataByUrl(`${APIS.callCenter.getParticipantVerificationById}/${this.selectedProgram}`).subscribe({
         next: (data: any) => {
           if(data.data.length === 0){
             this.toastrService.success('No Records Found', 'Success');
@@ -158,21 +164,20 @@ export class AllParticipantsVerificationComponent implements OnInit {
           console.error('Error loading participants:', err);
         }
       });
+      this.loadVerisationStatus()
+      this.getProgramDetailsById(this.selectedProgram)
     }
   }
  // get program details 
- programData:any={}
+ programData:any
  getProgramDetailsById(ProgrmId:any){
-   this._commonService.getById(APIS.programCreation.getSingleProgramsList, ProgrmId)?.subscribe({
+   this._commonService.getById(APIS.programCreation.getSingleProgramsList, ProgrmId).subscribe({
      next: (data: any) => {
-      if(data?.data){
-        this.programData = data?.data;
-        this.getQuestionBySubactivityId()
-      }
-      
-       
+      this.programData = data?.data;
+      this.getQuestionBySubactivityId()
      },
      error: (err: any) => {
+      this.programData={}
        this.toastrService.error(err.message, "Error fetching program details!");
      }
    });
@@ -180,16 +185,24 @@ export class AllParticipantsVerificationComponent implements OnInit {
  GetQuestion:any=[]
  getQuestionBySubactivityId(){
   this.GetQuestion={}
-  this.verificationForm=new FormGroup({verificationStatusId:new FormControl('',[Validators.required])})
+  this.verificationForm=new FormGroup({verificationStatusId:new FormControl('',[Validators.required]),attendedProgram:new FormControl('',[Validators.required])})
+  // this.verificationForm=this.fb.group({
+  //   verificationStatusId:new FormControl('',[Validators.required]),
+  //   Q1:new FormControl('',[Validators.required]),
+  //   Q2:new FormControl('',[Validators.required]),
+
+  // });
   this._commonService.getById(APIS.callCenter.getQuestionById, this.programData?.subActivityId).subscribe({
     next: (data: any) => {
-      this.GetQuestion = data.data;
-      this.GetQuestion.map((item:any,index:any)=>{
+      
+      data.data.map((item:any,index:any)=>{
         item.answers= item.answers.split(',')
-        item['formValue']='Q'+(index+1)
-        this.verificationForm.addControl('Q'+(index+1), new FormControl(''))
+        item['formValue']='Question_'+(index+1)
+        this.verificationForm.addControl('Question_'+(index+1), new FormControl(''))
       })
       
+      console.log(data.data,'datalll')
+      this.GetQuestion = data.data;
     },
     error: (err: any) => {
       this.toastrService.error(err.message, "Error fetching Questions details!");
@@ -222,6 +235,9 @@ export class AllParticipantsVerificationComponent implements OnInit {
       searching: false,
       destroy: true, // Ensure reinitialization doesn't cause issues
     });
+  }
+  getdata(va:any){
+    console.log(va)
   }
 
 }

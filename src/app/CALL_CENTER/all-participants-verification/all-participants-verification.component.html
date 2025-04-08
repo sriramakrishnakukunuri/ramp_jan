@@ -103,13 +103,14 @@
 <div class="modal fade" id="verificationModal" tabindex="-1" aria-labelledby="verificationModalLabel"
     aria-hidden="true">
     <div class="modal-dialog modal-lg">
+        <form [formGroup]="verificationForm">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="verificationModalLabel">Participant Verification</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form [formGroup]="verificationForm">
+                
                     <!-- Verification Status -->
                     <div class="mb-3">
 
@@ -181,9 +182,25 @@
                             <div class="mb-3" >
                                 <label class="form-label">{{data?.questionName}} ?</label>
                                 <div>
-                                    <div class="form-check" *ngFor="let option of data?.answers;let index1=index">
-                                        <input class="form-check-input" type="{{data?.questionType=='RadioButton'?'radio':'checkbox'}}" name="{{data.formValue}}" value="{{option}}"  formControlName="{{data.formValue}}" >
-                                        <label class="form-check-label">{{option}}</label>
+                                    <div class="form-check" *ngFor="let option of data.answers;let index1=index">
+                                        <input class="form-check-input" type="{{data?.questionType=='RadioButton'?'radio':'checkbox'}}" name="{{data.formValue}}" id="{{option}}"  [attr.value]="option"   formControlName="{{data.formValue}}" >
+                                        <label class="form-check-label" for="{{option}}">{{option}}</label>
+                                    </div>
+                                  
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Have you attended the Program?</label>
+                                <div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" formControlName="attendedProgram"
+                                            value="Yes">
+                                        <label class="form-check-label">Yes</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" formControlName="attendedProgram"
+                                            value="No">
+                                        <label class="form-check-label">No</label>
                                     </div>
                                 </div>
                             </div>
@@ -191,15 +208,31 @@
                                 <label class="form-label">{{data?.questionName}}:</label>
                                 <div>
                                     <div class="form-check" *ngFor="let option of data?.options;let index1=index">
-                                        <input class="form-check-input" type="checkbox" formControlName="morningSession"  value="{{option}}">
-                                        <label class="form-check-label">{{option}}</label>
+                                        <input class="form-check-input" type="checkbox" formControlName="Question2"  value="{{option}}">
+                                        <label class="form-check-label" {{option}}>{{option}}</label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" formControlName="afternoonSession">
-                                        <label class="form-check-label">Afternoon Session</label>
+                                        <input class="form-check-input" type="checkbox" formControlName="Question2">
+                                        <label class="form-check-label" {{option}}>Afternoon Session</label>
                                     </div> 
                                 </div>
                             </div> -->
+                            <!-- <div class="mb-3" >
+                                <label class="form-label">{{data?.questionName}} ?</label>
+                                <ng-container *ngFor="let option of data?.answers;let index1=index">
+                                    <div class="form-check form-check-inline" >
+                                        <input class="form-check-input" type="{{data?.questionType=='RadioButton'?'radio':'checkbox'}}"
+                                         [name]="data.formValue" 
+                                        [id]="data.formValue + index1" 
+                                        [value]="option" 
+                                        [formControlName]="data.formValue"  >
+                                        <label class="form-check-label fw-600" for="{{data.formValue}}{{index1}}A">{{option}}</label>
+                                    </div>
+                                </ng-container>
+                             
+                              
+                            </div> -->
+                            
                         </ng-container>
                        
                         <!-- <div class="mb-3">
@@ -342,12 +375,14 @@
                             </div>
                         </div> -->
                     </div>
-                </form>
+                
             </div>
+           
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-lime-green" data-bs-dismiss="modal" (click)="submitVerification()">Update</button>
             </div>
         </div>
+        </form>
     </div>
 </div>
