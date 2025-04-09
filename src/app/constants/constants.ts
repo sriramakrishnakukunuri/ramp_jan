@@ -7,6 +7,7 @@ export const APIS = {
         addSessions: API_BASE_URL + '/program/session/create',
         addLocation: API_BASE_URL + '/location/save',
         getLocation: API_BASE_URL + '/agency/locations/',
+        getProgramType: API_BASE_URL + '/program/types/agency/id/',
         getLocationByAgency: API_BASE_URL + '/agency/locationdetails/',
         getResource: API_BASE_URL + '/agency/resources/',
         addResource: API_BASE_URL + '/resource/save',
@@ -54,5 +55,20 @@ export const APIS = {
         getOutcomelistData: API_BASE_URL + '/program/outcome/tables',
         getDynamicFormDataBasedOnOutCome: API_BASE_URL + '/program/outcome/details/',
         saveOutComes:API_BASE_URL + '/program/outcome/save/',
+    },
+    callCenter:{
+        getParticipantVerificationById:API_BASE_URL + `/program/participant-verification`,
+        getQuestionById:API_BASE_URL + `/get/questions/subactivity/id/`,
+        getALLQuestion:API_BASE_URL + `/all/questions`,
+        getVeriaficationStatus:API_BASE_URL + `/all/verification/status`,
+        saveVeriaficationStatus:API_BASE_URL + `/save/callcenter/verification/data`
+    },
+    Attendance:{
+        getDeatails:API_BASE_URL +`/program/attendence/`,
+        saveAttendance:API_BASE_URL +`/program/attendence`,
+    },
+    rawMaterial:{
+        getDeatails:API_BASE_URL +`/program/rawmaterial/`,
+        saveAttendance:API_BASE_URL +`/program/rawmaterial`,
     }
 }

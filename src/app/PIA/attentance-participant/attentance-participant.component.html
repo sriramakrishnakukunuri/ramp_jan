@@ -1,0 +1,1243 @@
+
+
+<main class="mt-4">
+    <section>
+        <div class="card mb-3">
+            <div class="card-header bg-transparent">
+                <div class="row align-items-center">
+                    <div class="col-12 col-sm-7 col-md-8 col-lg-9">
+                        <h6 class="fw-600 mb-2 mb-sm-0">Attendance Participants Details</h6>
+                    </div>
+                    <div class="col-12 col-sm-5 col-md-4 col-lg-3">
+                        <select class="form-select" [(ngModel)]="programIds" (change)="dropdownProgramsList($event,'table')">
+                            <option value="">Select Program</option>
+                        <option *ngFor="let list of agencyProgramList" value="{{list.programId}}">{{list.programTitle}}</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <table class="table table-bordered nowrap">
+                    <thead class="bg-lime-green text-white">
+                        <tr>
+                            <th>S.No</th>
+                            <th>Participant Name</th>
+                            <th>Mobile No</th>
+                            <!-- <th>Member Id</th>
+                            <th>Member Name</th> -->
+                            <th *ngFor="let header of getAttendanceHeaders(); let i = index">
+                                Day {{i + 1}}
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <ng-container *ngIf="ParticipantAttendanceData?.participantAttendanceList?.length > 0; else noData">
+                            <tr  *ngFor="let item of  this.ParticipantAttendanceData.participantAttendanceList; let i = index">
+                                <td>{{ i + 1 }}</td>
+                                <td>{{ item?.participantName }}</td>
+                                <td>{{ item?.mobileNo }}</td>
+                                <!-- <td>{{ item?.memberId }}</td>
+                                <td>{{ item?.memberName }}</td> -->
+                                <td class="text-center"   *ngFor="let dataInner of item.attendanceData1; let j = index">
+                                    <ng-container *ngIf="!editAllTable">
+                                        {{dataInner[j]}}
+                                    </ng-container>
+                                    <select *ngIf="editAllTable" class="form-select" (change)="chnages($any($event.target).value,j,item.attendanceData[j],dataInner)" [(ngModel)]="dataInner[j]">                                            
+                                        <option value="P">P</option>
+                                        <option value="A">A</option>
+                                    </select>
+                                </td> 
+                            </tr>
+                        </ng-container>
+                        <ng-template #noData>
+                            <tr>
+                                <td colspan="100%" class="text-center">No Data Found</td>
+                            </tr>
+                        </ng-template>
+                    </tbody>
+                </table>
+                <!-- <table id="attendance-table" class="table table-bordered nowrap">
+                    <thead class="bg-lime-green text-white">
+                        <tr>
+                            <th>S.No</th>
+                            <th>Name of the MSME Conselor</th>
+                            <th>SHG Name</th>
+                            <th>Member Id</th>
+                            <th>Member Name</th>
+                            <th class="text-center">Day 1</th>
+                            <th class="text-center">Day 2</th>
+                            <th class="text-center">Day 3</th>
+                            <th class="text-center">Day 4</th>
+                            <th class="text-center">Day 5</th>
+                            <th class="text-center">Day 6</th>
+                            <th class="text-center">Day 7</th>
+                            <th class="text-center">Day 8</th>
+                            <th class="text-center">Day 9</th>
+                            <th class="text-center">Day 10</th>
+                            <th class="text-center">Day 11</th>
+                            <th class="text-center">Day 12</th>
+                            <th class="text-center">Day 13</th>
+                            <th class="text-center">Day 14</th>
+                            <th class="text-center">Day 15</th>
+                            <th class="text-center">Total</th>
+                            <th class="text-center">%</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Sani Sandhyarani</td>
+                            <td>Sri Rama</td>
+                            <td>02010227001010100801</td>
+                            <td>Tekula Ammaka</td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">15</td>
+                            <td class="text-end">100</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Vanya K</td>
+                            <td>Dhammsheel</td>
+                            <td>02010227001010100801</td>
+                            <td>Tigotte Vaishrantha</td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">15</td>
+                            <td class="text-end">93</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Pranitha</td>
+                            <td>Dhammsheel</td>
+                            <td>02010227001010100801</td>
+                            <td>Tum Jaya</td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">15</td>
+                            <td class="text-end">100</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>Sani Sandhyarani</td>
+                            <td>Sri Rama</td>
+                            <td>02010227001010100801</td>
+                            <td>Tekula Ammaka</td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">15</td>
+                            <td class="text-end">93</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>Vanya K</td>
+                            <td>Dhammsheel</td>
+                            <td>02010227001010100801</td>
+                            <td>Tigotte Vaishrantha</td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">15</td>
+                            <td class="text-end">93</td>
+                        </tr>
+                        <tr>
+                            <td>6</td>
+                            <td>Pranitha</td>
+                            <td>Dhammsheel</td>
+                            <td>02010227001010100801</td>
+                            <td>Tum Jaya</td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">15</td>
+                            <td class="text-end">100</td>
+                        </tr>
+                        <tr>
+                            <td>7</td>
+                            <td>Sani Sandhyarani</td>
+                            <td>Sri Rama</td>
+                            <td>02010227001010100801</td>
+                            <td>Tekula Ammaka</td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">15</td>
+                            <td class="text-end">100</td>
+                        </tr>
+                        <tr>
+                            <td>8</td>
+                            <td>Vanya K</td>
+                            <td>Dhammsheel</td>
+                            <td>02010227001010100801</td>
+                            <td>Tigotte Vaishrantha</td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">15</td>
+                            <td class="text-end">100</td>
+                        </tr>
+                        <tr>
+                            <td>9</td>
+                            <td>Pranitha</td>
+                            <td>Dhammsheel</td>
+                            <td>02010227001010100801</td>
+                            <td>Tum Jaya</td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">15</td>
+                            <td class="text-end">100</td>
+                        </tr>
+                        <tr>
+                            <td>10</td>
+                            <td>Sani Sandhyarani</td>
+                            <td>Sri Rama</td>
+                            <td>02010227001010100801</td>
+                            <td>Tekula Ammaka</td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <select class="form-select">
+                                    <option value="#">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="text-center">15</td>
+                            <td class="text-end">100</td>
+                        </tr>
+                    </tbody>
+                </table> -->
+            </div>
+            <div>
+                <div class="text-end mar-r mar-t" style="margin: 5px;" >
+                <!-- [ngClass]="ParticipantAttendanceData?.participantAttendanceList?.length > 0?'disabled':''"  [ngClass]="workingJobType?.uploadReportFlag=='Completed' || isPullChecked?'disabled':''"-->
+                <button class="btn btn-lime-green"  [ngClass]="ParticipantAttendanceData?.participantAttendanceList?.length <= 0?'disabled':''"
+                  (click)="editAll('editRow', ParticipantAttendanceData?.participantAttendanceList)" *ngIf="!(editAllTable)"  >Edit All</button>
+                <span *ngIf="editAllTable">
+                  <button (click)="closeAll()" class="btn btn-default mar-r" style="margin-right: 5px;">Cancel</button>
+                  <button class="btn btn-lime-green" (click)="saveAll(ParticipantAttendanceData?.participantAttendanceList)">Save All</button>
+                </span>
+              </div>
+            </div>
+        </div>
+    </section>
+</main>

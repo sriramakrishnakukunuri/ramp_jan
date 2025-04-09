@@ -328,7 +328,7 @@ export class AddParticipantDataComponent implements OnInit {
     this.participantId=item.participantId
     console.log(moment(item?.certificateIssueDate).format('YYYY-MM-DD'),item?.certificateIssueDate)
    
-    this.ParticipantDataForm.patchValue({ ...item, certificateIssueDate: this.convertToISOFormat(item.certificateIssueDate),isAspirant:item.organizationId?'Aspirant':'Existing Oragnization'})
+    this.ParticipantDataForm.patchValue({ ...item, certificateIssueDate: item.certificateIssueDate?this.convertToISOFormat(item.certificateIssueDate):'',isAspirant:item.organizationId?'Existing Oragnization':'Aspirant'})
   }
   typeOragnization(event: any) {
     this.OragnizationType = event
@@ -496,4 +496,20 @@ export class AddParticipantDataComponent implements OnInit {
       },
     });
   }
+
+  // get program details 
+  programData:any={}
+  getProgramDetailsById(ProgrmId:any){
+    this.programData={}
+    this._commonService.getById(APIS.programCreation.getSingleProgramsList, ProgrmId).subscribe({
+      next: (data: any) => {
+        this.programData = data.data;
+        
+      },
+      error: (err: any) => {
+        this.toastrService.error(err.message, "Error fetching program details!");
+      }
+    });
+  }
+ 
 }

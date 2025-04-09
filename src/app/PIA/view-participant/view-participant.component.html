@@ -28,7 +28,7 @@
                             <th>Category</th>
                             <th>Mobile No.</th>
                             <th>Email</th>
-                            <th>Designation</th>
+                            <th>Designation/Current Trade</th>
                             <th>Previous Participant</th>
                             <th>Pre-Training Assessment</th>
                             <th>Post Training Assessment</th>
@@ -41,7 +41,7 @@
                     <tbody *ngIf="submitedData">
                         <tr  *ngFor="let item of submitedData; let i=index">
                             <td class="text-start">{{i+1}}</td>
-                            <td>{{item?.isAspirant=='Aspirant'?'Yes':'No'}}</td>
+                            <td>{{item?.organizationName?'No':'Yes'}}</td>
                             <td >{{item?.isAspirant=='Aspirant'?'':item?.organizationName}}</td>
                             <td>{{item?.participantName}}</td>
                             <td>{{item?.gender}}</td>

@@ -244,7 +244,7 @@
                                 <select class="form-select" formControlName="gender">
                                     <option value="M">Male</option>
                                     <option value="F">Female</option>
-                                    <option value="O">Other</option>
+                                    <option value="T">Trans-Gender</option>
                                 </select>
                                 <label>Gender<span class="c-red"> *</span></label>
                                 <div *ngIf="modalFormStype.controls['gender'].touched && modalFormStype.controls['gender'].invalid" class="error" style="color: red;margin-top: 5px">
@@ -286,10 +286,10 @@
                 <h6><strong>Program Details</strong></h6>
                 <div class="row">
                     <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                        <p><strong>Type Of Activity:</strong> {{ programCreationMain.value.activityId }}</p>
+                        <p><strong>Type Of Activity:</strong> {{ ProgramData.activityName }}</p>
                     </div>
                     <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                        <p><strong>Sub Activity:</strong> {{ programCreationMain.value.subActivityId }}</p>
+                        <p><strong>Sub Activity:</strong> {{ ProgramData.subActivityName }}</p>
                     </div>
                     <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                         <p><strong>Type Of Program:</strong> {{ programCreationMain.value.programType }}</p>
@@ -347,7 +347,7 @@
                                 <td>{{ session.sessionTypeName }}</td>
                                 <td>{{ session.sessionTypeMethodology }}</td>
                                 <!-- <td>{{ session.sessionDetails }}</td> -->
-                                <td>{{ session.resourceId }}</td>
+                                <td>{{ resourcekeyidData[session.resourceId]}}</td>
                                 <!-- <td>{{ session.meterialType }}</td> -->
                             </tr>
                         </tbody>

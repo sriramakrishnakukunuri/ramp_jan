@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, TemplateRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { CommonServiceService } from '@app/_services/common-service.service';
@@ -11,6 +11,7 @@ import DataTable from 'datatables.net-dt';
 import 'datatables.net-buttons-dt';
 import 'datatables.net-responsive-dt';
 declare var $: any;
+import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 
 @Component({
   selector: 'app-program-creation',
@@ -23,6 +24,8 @@ export class ProgramCreationComponent implements OnInit, AfterViewInit {
   locationForm!: FormGroup;
   programId: string | null = null;
   agencyId:any
+  @ViewChild("pickerstart") pickerstart!: TemplateRef<any>;
+  @ViewChild("pickerEnd") pickerEnd!: TemplateRef<any>;
   constructor(
     private fb: FormBuilder,
     private toastrService: ToastrService,
@@ -34,6 +37,7 @@ export class ProgramCreationComponent implements OnInit, AfterViewInit {
     this.formDetailsLocation();    
     this.agencyId = JSON.parse(sessionStorage.getItem('user') || '{}').agencyId;    
     this.getProgramLocation();    
+    this.getProgramTypeData();
     this.getAllActivityList()
     this.getProgramsByAgency()
   }
@@ -270,7 +274,19 @@ export class ProgramCreationComponent implements OnInit, AfterViewInit {
       });
   }
 
-  
+  getProgramType: any = [];
+  getProgramTypeData() {
+    this._commonService
+      .getById(APIS.programCreation.getProgramType, this.agencyId)
+      .subscribe({
+        next: (data: any) => {
+          this.getProgramType = data.data;
+        },
+        error: (err: any) => {
+          new Error(err);
+        },
+      });
+  }
 
   uploadedFiles: any = [];
   // onFilesSelected(event: any, index: any) {

@@ -234,10 +234,11 @@ export class ProgramSessionsComponent implements OnInit {
     const [day, month, year] = date.split('-');
     return `${year}-${month}-${day}`; // Convert to yyyy-MM-dd format
   }
-
+  ProgramData:any
   getProgramDetailsById(programId: string) {
     this._commonService.getById(APIS.programCreation.getSingleProgramsList, programId).subscribe({
       next: (data: any) => {
+        this.ProgramData=data.data
         const program = data.data;
         this.programCreationMain.patchValue({
           activityId: program.activityId,
@@ -425,12 +426,19 @@ export class ProgramSessionsComponent implements OnInit {
   }
 
   getSessionResourceData: any = [];
+  resourcekeyidData:any={}
   getSessionResource() {
+    this.resourcekeyidData={}
+    this.getSessionResourceData =[]
     this._commonService
       .getById(APIS.programCreation.getResource, this.agencyId)
       .subscribe({
         next: (data: any) => {
           this.getSessionResourceData = data.data;
+          this.getSessionResourceData.map((item:any)=>{
+            this.resourcekeyidData[item?.resourceId]=item.name
+          })
+
         },
         error: (err: any) => {
           new Error(err);
