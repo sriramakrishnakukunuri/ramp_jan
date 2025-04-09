@@ -201,6 +201,33 @@
                                 </div>
                             </div> -->
                         </ng-container>
+                        <div *ngFor="let question of GetQuestion" class="question-container">
+                            <h3>{{ question.questionName }}</h3>
+                            
+                            <!-- Radio Button Questions -->
+                            <div *ngIf="question.questionType === 'RadioButton'" class="radio-group">
+                              <div *ngFor="let answer of getAnswersArray(question.answers)">
+                                <label>
+                                  <input type="radio" 
+                                         [formControlName]="'question_' + question.questionId" 
+                                         [value]="answer">
+                                  {{ answer }}
+                                </label>
+                              </div>
+                            </div>
+                            
+                            <!-- Checkbox Questions -->
+                            <div *ngIf="question.questionType === 'checkBox'" class="checkbox-group">
+                              <div *ngFor="let answer of getAnswersArray(question.answers); let i = index">
+                                <label>
+                                  <input type="checkbox" 
+                                  [formControl]="getCheckboxControl(question.questionId, i)" >
+                                  {{ answer }}
+                                </label>
+                              </div>
+                            </div>
+                          </div>
+                        
                        
                         <!-- <div class="mb-3">
                             <label class="form-label">Have you attended the Program?</label>

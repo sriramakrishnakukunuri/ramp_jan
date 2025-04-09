@@ -58,7 +58,9 @@ export const APIS = {
     },
     callCenter:{
         getQuestionById:API_BASE_URL + `/get/questions/subactivity/id/`,
-        getVeriaficationStatus:API_BASE_URL + `/all/verification/status`
+        getVeriaficationStatus:API_BASE_URL + `/all/verification/status`,
+        getDataByProgramVerificationId: API_BASE_URL + '/program/participant-verification/',
+        add:API_BASE_URL + `/save/callcenter/verification/data`
     },
     Attendance:{
         getDeatails:API_BASE_URL +`/program/attendence/`,

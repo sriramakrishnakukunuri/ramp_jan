@@ -1,0 +1,246 @@
+<div class="container mt-4">
+    <div class="card mb-4">
+        <div class="card-header bg-transparent">
+            <h6 class="fw-600 mb-2 mb-sm-0 text-green">Program Participant Verification</h6>
+        </div>
+        <div class="card-body">
+            <div class="row mb-3">
+                <div class="col-md-4">
+                    <label for="agencySelect" class="form-label">Select Agency</label>
+                </div>
+                <div class="col-md-4">
+                    <select id="agencySelect" class="form-select" [(ngModel)]="selectedAgency"
+                        (change)="onAgencyChange()">
+                        <option value="" disabled selected>Select Agency</option>
+                        <option *ngFor="let agency of agencies" [value]="agency.agencyId">{{ agency.agencyName }}
+                        </option>
+                    </select>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <label for="programSelect" class="form-label">Select Program</label>
+                </div>
+                <div class="col-md-4">
+                    <select id="programSelect" class="form-select" (change)="onProgramChange()"
+                        [(ngModel)]="selectedProgram" [disabled]="!programs.length">
+                        <option value="" disabled selected>Select Program</option>
+                        <option *ngFor="let program of programs" [value]="program.programId">{{ program.programTitle }}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">&nbsp;</div>
+            <div class="row">
+                <div class="col-md-4"></div>
+                <div class="col-md-4">
+                    <button class="btn btn-lime-green" [ngClass]="{'disabled': !selectedProgram}"
+                        (click)="showParticipants()" [disabled]="!selectedProgram">Show
+                        Participants</button>
+                </div>
+                <!-- <div class="col-md-4 d-flex align-items-end">
+                    class="btn btn-primary w-100"
+                    
+                </div> -->
+            </div>
+        </div>
+    </div>
+</div>
+<main class="mt-4">
+    <section>
+
+
+
+        <div class="container-fluid" *ngIf="participants.length > 0">
+
+            <div class="card">
+                <div class="card-header bg-transparent">
+                    <h6 class="fw-600 mb-2 mb-sm-0 text-green">Participant Details</h6>
+                </div>
+                <div class="card-body">
+                    <div class="">
+                        <table class="table table-borderless table-striped nowrap">
+                            <thead>
+                                <tr>
+                                    <th>S.No</th>
+                                    <th>Name of Participant</th>
+                                    <th>Mobile Number</th>
+                                    <th>Verification Status</th>
+                                    <th>Verified By</th>
+                                    <th>Update Verification</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let participant of participants; let i = index">
+                                    <td>{{ i + 1 }}</td>
+                                    <td>{{ participant?.participantName }}</td>
+                                    <td>{{ participant?.mobileNo }}</td>
+                                    <td *ngIf="participant?.ccVerificationStatus=='Verified'">
+                                        <div  style="color: green;">{{ participant?.ccVerificationStatus }}</div>
+                                    </td>
+                                    <td *ngIf="participant?.ccVerificationStatus!='Verified'">
+                                        <div  style="color: orange;">{{ participant?.ccVerificationStatus?participant?.ccVerificationStatus:'Not verified' }}</div>
+                                    </td>
+                                    <td>--</td>
+                                    <td>
+                                        <button class="btn btn-lime-green" data-bs-toggle="modal" (click)="ParticpantdataBYTable(participant)"
+                                            data-bs-target="#verificationModal">Update</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div *ngIf="participants.length === 0 && showTable" class="alert alert-warning mt-3">
+                        No participants found for the selected program.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+
+<!-- Add this modal popup at the bottom of your HTML file -->
+<div class="modal fade" id="verificationModal" tabindex="-1" aria-labelledby="verificationModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <form [formGroup]="verificationForm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="verificationModalLabel">Participant Verification</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                
+                    <!-- Verification Status -->
+                    <div class="mb-3">
+
+                        <div class="row">
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                <div class="mb-3">
+                                    <label class="form-label">Verification Status</label>
+                                    <div class="row">
+                                        <ng-container *ngFor="let status of verificationStatus">
+                                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio"
+                                                              formControlName="verificationStatusId" value="{{status?.ccVerificationStatusId}}"
+                                                        (change)="onVerificationStatusChange(status?.verificationDetails)">
+                                                    <label class="form-check-label">{{status?.verificationDetails}}</label>
+                                                </div>
+                                            </div>
+                                        </ng-container>
+                                       
+
+                                        <!-- <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio"
+                                                    formControlName="verificationStatusId" value="Not Answered"
+                                                    (change)="onVerificationStatusChange('Not Answered')">
+                                                <label class="form-check-label">Not Answered</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio"
+                                                    formControlName="verificationStatusId" value="Wrong Number"
+                                                    (change)="onVerificationStatusChange('Wrong Number')">
+                                                <label class="form-check-label">Wrong Number</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio"
+                                                    formControlName="verificationStatusId" value="Switched Off"
+                                                    (change)="onVerificationStatusChange('Switched Off')">
+                                                <label class="form-check-label">Switched Off</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio"
+                                                    formControlName="verificationStatusId" value="Number Not Exists"
+                                                    (change)="onVerificationStatusChange('Number Not Exists')">
+                                                <label class="form-check-label">Number Not Exists</label>
+                                            </div>
+                                        </div> -->
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+                    </div>
+
+                    <!-- Questions (Visible only if "Answered" is selected) -->
+                    <div [ngClass]="{'isDisabled': !showQuestions}" >
+                        <ng-container *ngFor="let question of GetQuestion" >
+                            <div class="mb-3" >
+                                <label class="form-label">{{question?.questionName}} ?</label>
+                            
+                                <!-- Radio Button Questions -->
+                                <div *ngIf="question.questionType === 'RadioButton'" class="radio-group">
+                                  <div *ngFor="let answer of getAnswersArray(question.answers)" class="form-check">
+                                    <label class="form-check-label">
+                                      <input type="radio"  class="form-check-input"
+                                             [formControlName]="'question_' + question.questionId" 
+                                             [value]="answer">
+                                      {{ answer }}
+                                    </label>
+                                  </div>
+                                </div>
+                                
+                                <!-- Checkbox Questions -->
+                                <div *ngIf="question.questionType === 'checkBox'" class="checkbox-group">
+                                  <div *ngFor="let answer of getAnswersArray(question.answers); let i = index" class="form-check">
+                                    <label class="form-check-label">
+                                      <input type="checkbox" class="form-check-input"
+                                      [formControl]="getCheckboxControl(question.questionId, i)" >
+                                      {{ answer }}
+                                    </label>
+                                  </div>
+                                </div>
+                            </div>
+                           
+                          </ng-container>
+                        
+                        <!-- <ng-container *ngFor="let data of GetQuestion;let i=index">
+                            <div class="mb-3" >
+                                <label class="form-label">{{data?.questionName}} ?</label>
+                                <div>
+                                    <div class="form-check" *ngFor="let option of data.answers1;let index1=index">
+                                        <ng-container *ngIf="data?.questionType=='RadioButton'">
+                                            <input class="form-check-input" type="radio" name="{{data.formValue}}" id="{{option}}"  [value]="option"   formControlName="{{data.formValue}}" >
+                                            <label class="form-check-label" for="{{option}}">{{option}}</label>
+                                        </ng-container>
+                                        <ng-container *ngIf="data?.questionType=='checkBox'">
+                                            <input class="form-check-input" type="checkbox" (change)="onChangeCheckLister($event,option)" name="{{data.formValue}}" id="{{option}}"   [value]="option"  formControlName="{{data.formValue}}" >
+                                            <label class="form-check-label" for="{{option}}">{{option}}</label>
+                                        </ng-container>
+                                       
+                                    </div>
+                                  
+                                </div>
+                            </div>
+                          
+                        </ng-container> -->
+                       
+                    </div>
+                
+            </div>
+           
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-lime-green" data-bs-dismiss="modal" (click)="submitVerification()">Update</button>
+            </div>
+        </div>
+        </form>
+    </div>
+</div>
