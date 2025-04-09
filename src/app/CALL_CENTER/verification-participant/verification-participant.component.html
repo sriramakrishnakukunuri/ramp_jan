@@ -82,7 +82,7 @@
                                     <td *ngIf="participant?.ccVerificationStatus!='Verified'">
                                         <div  style="color: orange;">{{ participant?.ccVerificationStatus?participant?.ccVerificationStatus:'Not verified' }}</div>
                                     </td>
-                                    <td>--</td>
+                                    <td>{{ participant?.verifiedBy }}</td>
                                     <td>
                                         <button class="btn btn-lime-green" data-bs-toggle="modal" (click)="ParticpantdataBYTable(participant)"
                                             data-bs-target="#verificationModal">Update</button>
@@ -127,7 +127,7 @@
                                                 <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type="radio"
                                                               formControlName="verificationStatusId" value="{{status?.ccVerificationStatusId}}"
-                                                        (change)="onVerificationStatusChange(status?.verificationDetails)">
+                                                        (change)="onVerificationStatusChange(status?.verificationDetails,status?.ccVerificationStatusId)">
                                                     <label class="form-check-label">{{status?.verificationDetails}}</label>
                                                 </div>
                                             </div>

@@ -23,11 +23,14 @@ export class VerificationParticipantComponent implements OnInit {
   selectedProgram: string = '';
   showTable: boolean = false;
   dataTable: any;
+  agencyId:any;
   constructor(
     private _commonService: CommonServiceService,
     private toastrService: ToastrService,
     private fb: FormBuilder
   ) {
+    this.agencyId = JSON.parse(sessionStorage.getItem('user') || '{}').email;
+    console.log(this.agencyId,'agency')
     this.verificationForm=new FormGroup({verificationStatusId:new FormControl('',[Validators.required])})
   }
 
@@ -35,12 +38,25 @@ export class VerificationParticipantComponent implements OnInit {
     this.loadAgencies();
     this.loadVerisationStatus()
   }
-  onVerificationStatusChange(status: string): void {
+  get fVerf(){
+   return this.verificationForm.controls;
+  }
+  onVerificationStatusChange(status: string,id:any): void {
+
     this.showQuestions = status === 'Verified';
+    // this.verificationForm.reset()
+    // this.fVerf['verificationStatusId'].setValue(id)
+    // this.verificationForm.get('verificationStatusId')?.setValue(id)
+
   }
   getParticipantByUpdate:any
   ParticpantdataBYTable(data:any){
     this.getParticipantByUpdate=data
+    console.log(data)
+    // this.verificationForm.reset();
+    this.verificationForm.get('verificationStatusId')?.setValue(data?.ccVerificationStatusId)
+    // this.fVerf['verificationStatusId'].patchValue(data?.ccVerificationStatusId)
+
   }
   // Load Agencies
   loadAgencies(): void {
@@ -72,6 +88,7 @@ export class VerificationParticipantComponent implements OnInit {
   onProgramChange(): void {
     this.participants = [];
     this.showTable = false;   
+    this.getProgramDetailsById(this.selectedProgram)
   }
   // Show Participant
   showParticipants(): void {
@@ -85,7 +102,7 @@ export class VerificationParticipantComponent implements OnInit {
           }else{
             this.participants = data.data;
           
-           this.getProgramDetailsById(this.selectedProgram)
+          
             this.reinitializeDataTable()
           }
           
@@ -158,7 +175,7 @@ export class VerificationParticipantComponent implements OnInit {
  getQuestionBySubactivityId(){
   this.GetQuestion={}
   this.verificationForm=new FormGroup({verificationStatusId:new FormControl('',[Validators.required])})
-  this._commonService.getById(APIS.callCenter.getQuestionById,2).subscribe({
+  this._commonService.getById(APIS.callCenter.getQuestionById,this.programData.subActivityId).subscribe({
     next: (data: any) => {
       this.verificationForm = this.fb.group({verificationStatusId:new FormControl('',[Validators.required])});
       this.GetQuestion = data.data;
@@ -205,7 +222,7 @@ export class VerificationParticipantComponent implements OnInit {
     let payload:any={
       "programId": this.programData.programId,
       "participantId": this.getParticipantByUpdate?.participantId,
-      "verifiedBy": "cc@gmail.com",
+      "verifiedBy": this.agencyId,
       "verificationDate": moment().format('yyyy-MM-DD'),
       "verificationStatusId": this.verificationForm.value?.verificationStatusId?Number(this.verificationForm.value?.verificationStatusId):7,
       "questionAnswerList": this.prepareQuestionAnswers(this.verificationForm.value)
@@ -214,8 +231,8 @@ export class VerificationParticipantComponent implements OnInit {
     this._commonService
       .add(APIS.callCenter.add, payload).subscribe({
         next: (data: any) => {
-         
-          this.toastrService.success('Participant Data Added Successfully', "Participant Data Success!");
+         this.showParticipants()
+         this.toastrService.success('Participant Verification Updated Successfully', 'Success');
         },
         error: (err) => {
 
@@ -223,7 +240,7 @@ export class VerificationParticipantComponent implements OnInit {
           new Error(err);
         },
       });
-    this.toastrService.success('Participant Verification Updated Successfully', 'Success');
+  
   }
   prepareQuestionAnswers(formData: any): any[] {
     return this.GetQuestion.map((question:any) => {
