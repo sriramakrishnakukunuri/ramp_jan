@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { CommonServiceService } from '@app/_services/common-service.service';
 import { APIS } from '@app/constants/constants';
 import { ToastrService } from 'ngx-toastr';
@@ -48,22 +48,25 @@ export class AllParticipantsVerificationComponent implements OnInit {
  
   submitVerification() {
     console.log(this.verificationForm.value,'srk');
+    let finaldata:any=[]
+    Object.entries(this.verificationForm.value)?.forEach(([key, value], index: any) => {
+      if(key!='verificationStatusId'){
+        // this.verificationForm.value[key]=value?.toString()
+       finaldata.push({
+          "questionId": key.split('_')[1],
+          "answers": [this.verificationForm.value[key]]
+        })
+        
+      }
+    })
+    console.log(finaldata,'finaldata')
     let payload:any={
-      "programId": this.programData.programId,
+      "programId": this.programData?.programId,
       "participantId": this.getParticipantByUpdate?.participantId,
       "verifiedBy": "cc@gmail.com",
-      "verificationDate": "2025-04-06",
-      "verificationStatusId": this.verificationForm.value?.verificationStatusId?this.verificationForm.value?.verificationStatusId:7,
-      "questionAnswerList": [
-        {
-          "questionId": 1,
-          "answers": ["Bad"]
-        },
-        {
-          "questionId": 2,
-          "answers": ["Bad", ]
-        },
-      ]
+      "verificationDate": "2025-04-07",
+      "verificationStatusId": this.verificationForm.value?.verificationStatusId?Number(this.verificationForm.value?.verificationStatusId):7,
+      "questionAnswerList": finaldata
     }
     let questionAnswerListdata:any=[]
     Object.entries(this.verificationForm.value)?.forEach(([key, value], index: any) => {
@@ -185,7 +188,7 @@ export class AllParticipantsVerificationComponent implements OnInit {
  GetQuestion:any=[]
  getQuestionBySubactivityId(){
   this.GetQuestion={}
-  this.verificationForm=new FormGroup({verificationStatusId:new FormControl('',[Validators.required]),attendedProgram:new FormControl('',[Validators.required])})
+  this.verificationForm=new FormGroup({verificationStatusId:new FormControl('',[Validators.required])})
   // this.verificationForm=this.fb.group({
   //   verificationStatusId:new FormControl('',[Validators.required]),
   //   Q1:new FormControl('',[Validators.required]),
@@ -194,12 +197,29 @@ export class AllParticipantsVerificationComponent implements OnInit {
   // });
   this._commonService.getById(APIS.callCenter.getQuestionById, this.programData?.subActivityId).subscribe({
     next: (data: any) => {
-      
+      let ControllerObject:any={}
+     
       data.data.map((item:any,index:any)=>{
-        item.answers= item.answers.split(',')
+        console.log(item,'item')
+        if(item?.questionType=='RadioButton'){
+        item['answers1']= item.answers.split(',')
         item['formValue']='Question_'+(index+1)
-        this.verificationForm.addControl('Question_'+(index+1), new FormControl(''))
+        ControllerObject['Question_'+(index+1)]=new FormControl('')
+        }
+      
+        if(item?.questionType=='checkBox'){
+          console.log(item,'checkBox')
+          item['answers1']= item.answers.split(',')
+          item.answers.split(',').forEach((item1:any,index1:any)=>{
+            item['formValue']='Checkbox'+item1?.substring(0,3)+'_'+(index1+1)
+            ControllerObject['Checkbox'+item1?.substring(0,3)+'_'+(index1+1)]=new FormControl('')
+          })
+         
+          }
+        
       })
+      console.log(ControllerObject,'ControllerObject')
+      this.verificationForm=new FormGroup({verificationStatusId:new FormControl('',[Validators.required]),...ControllerObject})
       
       console.log(data.data,'datalll')
       this.GetQuestion = data.data;
@@ -238,6 +258,15 @@ export class AllParticipantsVerificationComponent implements OnInit {
   }
   getdata(va:any){
     console.log(va)
+  }
+  onChangeCheckLister(event: any, item: any) {
+    console.log(event, item)
+    if (event.target.checked) {
+      this.verificationForm.get(item)?.setValue(event.target.value);
+    } else {
+      this.verificationForm.get(item)?.setValue('');
+    }
+    console.log( this.verificationForm.value)
   }
 
 }

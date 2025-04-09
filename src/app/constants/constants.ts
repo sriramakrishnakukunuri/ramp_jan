@@ -59,6 +59,7 @@ export const APIS = {
     callCenter:{
         getParticipantVerificationById:API_BASE_URL + `/program/participant-verification`,
         getQuestionById:API_BASE_URL + `/get/questions/subactivity/id/`,
+        getALLQuestion:API_BASE_URL + `/all/questions`,
         getVeriaficationStatus:API_BASE_URL + `/all/verification/status`,
         saveVeriaficationStatus:API_BASE_URL + `/save/callcenter/verification/data`
     },
