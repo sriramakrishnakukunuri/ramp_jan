@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CommonServiceService } from '@app/_services/common-service.service';
 import { APIS } from '@app/constants/constants';
 import { ToastrService } from 'ngx-toastr';
@@ -20,7 +20,7 @@ export class AllParticipantsVerificationComponent implements OnInit {
   programs: any[] = [];
   participants: any[] = [];
   selectedAgency: string = '';
-  selectedProgram: any = '';
+  selectedProgram: string = '';
   showTable: boolean = false;
   dataTable: any;
   constructor(
@@ -28,64 +28,26 @@ export class AllParticipantsVerificationComponent implements OnInit {
     private toastrService: ToastrService,
     private fb: FormBuilder
   ) {
-    this.verificationForm=new FormGroup({verificationStatusId:new FormControl('',[Validators.required])})
-    // this.verificationForm = this.fb.group({
-    //   verificationStatusId: ['', Validators.required],
-    //   attendedProgram: [''],
-    //   morningSession: [false],
-    //   afternoonSession: [false],
-    //   programUseful: [''],
-    //   programSource: [''],
-    //   foodQuality: [''],
-    //   trainerQuality: [''],
-    //   contactForPrograms: ['']
-    // });
+    this.verificationForm = this.fb.group({
+      verificationStatus: ['', Validators.required],
+      attendedProgram: [''],
+      morningSession: [false],
+      afternoonSession: [false],
+      programUseful: [''],
+      programSource: [''],
+      foodQuality: [''],
+      trainerQuality: [''],
+      contactForPrograms: ['']
+    });
   }
 
   onVerificationStatusChange(status: string): void {
-    this.showQuestions = status === 'Verified';
+    this.showQuestions = status === 'Answered';
+    this.verificationForm.reset();
+    this.verificationForm.get('verificationStatus')?.setValue(status)
   }
- 
-  submitVerification() {
-    console.log(this.verificationForm.value,'srk');
-    let finaldata:any=[]
-    Object.entries(this.verificationForm.value)?.forEach(([key, value], index: any) => {
-      if(key!='verificationStatusId'){
-        // this.verificationForm.value[key]=value?.toString()
-       finaldata.push({
-          "questionId": key.split('_')[1],
-          "answers": [this.verificationForm.value[key]]
-        })
-        
-      }
-    })
-    console.log(finaldata,'finaldata')
-    let payload:any={
-      "programId": this.programData?.programId,
-      "participantId": this.getParticipantByUpdate?.participantId,
-      "verifiedBy": "cc@gmail.com",
-      "verificationDate": "2025-04-07",
-      "verificationStatusId": this.verificationForm.value?.verificationStatusId?Number(this.verificationForm.value?.verificationStatusId):7,
-      "questionAnswerList": finaldata
-    }
-    let questionAnswerListdata:any=[]
-    Object.entries(this.verificationForm.value)?.forEach(([key, value], index: any) => {
-      if(key!='verificationStatusId'){
-        questionAnswerListdata.push({questionId:key,answers:value})
-      }
-     
-   
-    })
 
-   
-    this._commonService.add(APIS.callCenter.saveVeriaficationStatus,payload).subscribe({
-      next: (data: any) => {
-        this.agencies = data.data;
-      },
-      error: (err) => {
-        console.error('Error loading agencies:', err);
-      }
-    });
+  submitVerification(): void {
     // if (this.verificationForm.valid) {
     //   console.log(this.verificationForm.value);
     //   // Handle form submission logic here
@@ -105,24 +67,6 @@ export class AllParticipantsVerificationComponent implements OnInit {
         this.agencies = data.data;
       },
       error: (err) => {
-        console.error('Error loading agencies:', err);
-      }
-    });
-  }
-  getParticipantByUpdate:any
-  ParticpantdataBYTable(data:any){
-    this.getParticipantByUpdate=data
-    this.getQuestionBySubactivityId()
-  }
-  verificationStatus:any=[]
-  loadVerisationStatus() {
-    // this.verificationStatus=[]
-    this._commonService.getDataByUrl(APIS.callCenter.getVeriaficationStatus).subscribe({
-      next: (data: any) => {
-        this.verificationStatus = data.data;
-      },
-      error: (err) => {
-        this.verificationStatus=[]
         console.error('Error loading agencies:', err);
       }
     });
@@ -152,8 +96,7 @@ export class AllParticipantsVerificationComponent implements OnInit {
     this.showTable = true;
     this.participants = [];
     if (this.selectedProgram) {
-     
-      this._commonService.getDataByUrl(`${APIS.callCenter.getParticipantVerificationById}/${this.selectedProgram}`).subscribe({
+      this._commonService.getDataByUrl(`${APIS.participantdata.getDataByProgramId}/${this.selectedProgram}`).subscribe({
         next: (data: any) => {
           if(data.data.length === 0){
             this.toastrService.success('No Records Found', 'Success');
@@ -167,68 +110,9 @@ export class AllParticipantsVerificationComponent implements OnInit {
           console.error('Error loading participants:', err);
         }
       });
-      this.loadVerisationStatus()
-      this.getProgramDetailsById(this.selectedProgram)
     }
   }
- // get program details 
- programData:any
- getProgramDetailsById(ProgrmId:any){
-   this._commonService.getById(APIS.programCreation.getSingleProgramsList, ProgrmId).subscribe({
-     next: (data: any) => {
-      this.programData = data?.data;
-      this.getQuestionBySubactivityId()
-     },
-     error: (err: any) => {
-      this.programData={}
-       this.toastrService.error(err.message, "Error fetching program details!");
-     }
-   });
- }
- GetQuestion:any=[]
- getQuestionBySubactivityId(){
-  this.GetQuestion={}
-  this.verificationForm=new FormGroup({verificationStatusId:new FormControl('',[Validators.required])})
-  // this.verificationForm=this.fb.group({
-  //   verificationStatusId:new FormControl('',[Validators.required]),
-  //   Q1:new FormControl('',[Validators.required]),
-  //   Q2:new FormControl('',[Validators.required]),
 
-  // });
-  this._commonService.getById(APIS.callCenter.getQuestionById, this.programData?.subActivityId).subscribe({
-    next: (data: any) => {
-      let ControllerObject:any={}
-     
-      data.data.map((item:any,index:any)=>{
-        console.log(item,'item')
-        if(item?.questionType=='RadioButton'){
-        item['answers1']= item.answers.split(',')
-        item['formValue']='Question_'+(index+1)
-        ControllerObject['Question_'+(index+1)]=new FormControl('')
-        }
-      
-        if(item?.questionType=='checkBox'){
-          console.log(item,'checkBox')
-          item['answers1']= item.answers.split(',')
-          item.answers.split(',').forEach((item1:any,index1:any)=>{
-            item['formValue']='Checkbox'+item1?.substring(0,3)+'_'+(index1+1)
-            ControllerObject['Checkbox'+item1?.substring(0,3)+'_'+(index1+1)]=new FormControl('')
-          })
-         
-          }
-        
-      })
-      console.log(ControllerObject,'ControllerObject')
-      this.verificationForm=new FormGroup({verificationStatusId:new FormControl('',[Validators.required]),...ControllerObject})
-      
-      console.log(data.data,'datalll')
-      this.GetQuestion = data.data;
-    },
-    error: (err: any) => {
-      this.toastrService.error(err.message, "Error fetching Questions details!");
-    }
-  });
- }
   reinitializeDataTable() {
     if (this.dataTable) {
       this.dataTable.destroy();
@@ -255,18 +139,6 @@ export class AllParticipantsVerificationComponent implements OnInit {
       searching: false,
       destroy: true, // Ensure reinitialization doesn't cause issues
     });
-  }
-  getdata(va:any){
-    console.log(va)
-  }
-  onChangeCheckLister(event: any, item: any) {
-    console.log(event, item)
-    if (event.target.checked) {
-      this.verificationForm.get(item)?.setValue(event.target.value);
-    } else {
-      this.verificationForm.get(item)?.setValue('');
-    }
-    console.log( this.verificationForm.value)
   }
 
 }
