@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { CommonServiceService } from '@app/_services/common-service.service';
 import { APIS } from '@app/constants/constants';
 import { ToastrService } from 'ngx-toastr';
@@ -28,59 +28,26 @@ export class AllParticipantsVerificationComponent implements OnInit {
     private toastrService: ToastrService,
     private fb: FormBuilder
   ) {
-    this.verificationForm=new FormGroup({verificationStatusId:new FormControl('',[Validators.required])})
-    // this.verificationForm = this.fb.group({
-    //   verificationStatusId: ['', Validators.required],
-    //   attendedProgram: [''],
-    //   morningSession: [false],
-    //   afternoonSession: [false],
-    //   programUseful: [''],
-    //   programSource: [''],
-    //   foodQuality: [''],
-    //   trainerQuality: [''],
-    //   contactForPrograms: ['']
-    // });
+    this.verificationForm = this.fb.group({
+      verificationStatus: ['', Validators.required],
+      attendedProgram: [''],
+      morningSession: [false],
+      afternoonSession: [false],
+      programUseful: [''],
+      programSource: [''],
+      foodQuality: [''],
+      trainerQuality: [''],
+      contactForPrograms: ['']
+    });
   }
 
   onVerificationStatusChange(status: string): void {
-    this.showQuestions = status === 'Verified';
+    this.showQuestions = status === 'Answered';
+    this.verificationForm.reset();
+    this.verificationForm.get('verificationStatus')?.setValue(status)
   }
-  getParticipantByUpdate:any
-  ParticpantdataBYTable(data:any){
-    this.getParticipantByUpdate=data
-  }
-  submitVerification() {
-    let payload:any={
-      "programId": this.programData.programId,
-      "participantId": this.getParticipantByUpdate?.participantId,
-      "verifiedBy": "cc@gmail.com",
-      "verificationDate": "2025-04-06",
-      "verificationStatusId": this.verificationForm.value?.verificationStatusId?this.verificationForm.value?.verificationStatusId:7,
-      "questionAnswerList": [
-        {
-          "questionId": 1,
-          "answers": ["Yes"]
-        },
-        {
-          "questionId": 2,
-          "answers": ["Option A", "Option C"]
-        },
-        {
-          "questionId": 3,
-          "answers": ["No"]
-        }
-      ]
-    }
-    let questionAnswerListdata:any=[]
-    Object.entries(this.verificationForm.value)?.forEach(([key, value], index: any) => {
-      if(key!='verificationStatusId'){
-        questionAnswerListdata.push({questionId:key,answers:value})
-      }
-     
-   
-    })
 
-    console.log(this.verificationForm.value,questionAnswerListdata);
+  submitVerification(): void {
     // if (this.verificationForm.valid) {
     //   console.log(this.verificationForm.value);
     //   // Handle form submission logic here
@@ -100,19 +67,6 @@ export class AllParticipantsVerificationComponent implements OnInit {
         this.agencies = data.data;
       },
       error: (err) => {
-        console.error('Error loading agencies:', err);
-      }
-    });
-  }
-  verificationStatus:any=[]
-  loadVerisationStatus() {
-    this.verificationStatus=[]
-    this._commonService.getDataByUrl(APIS.callCenter.getVeriaficationStatus).subscribe({
-      next: (data: any) => {
-        this.verificationStatus = data.data;
-      },
-      error: (err) => {
-        this.verificationStatus=[]
         console.error('Error loading agencies:', err);
       }
     });
@@ -142,8 +96,6 @@ export class AllParticipantsVerificationComponent implements OnInit {
     this.showTable = true;
     this.participants = [];
     if (this.selectedProgram) {
-      this.loadVerisationStatus()
-     this.getProgramDetailsById(this.selectedProgram)
       this._commonService.getDataByUrl(`${APIS.participantdata.getDataByProgramId}/${this.selectedProgram}`).subscribe({
         next: (data: any) => {
           if(data.data.length === 0){
@@ -181,27 +133,14 @@ export class AllParticipantsVerificationComponent implements OnInit {
  getQuestionBySubactivityId(){
   this.GetQuestion={}
   this.verificationForm=new FormGroup({verificationStatusId:new FormControl('',[Validators.required])})
-  this._commonService.getById(APIS.callCenter.getQuestionById,2).subscribe({
+  this._commonService.getById(APIS.callCenter.getQuestionById, this.programData?.subActivityId).subscribe({
     next: (data: any) => {
-      this.verificationForm = this.fb.group({verificationStatusId:new FormControl('',[Validators.required])});
       this.GetQuestion = data.data;
-    this.GetQuestion.forEach((question:any) => {
-      if (question.questionType === 'RadioButton') {
-        // For radio buttons, we'll store the selected value
-        this.verificationForm.addControl(`question_${question.questionId}`, new FormControl(''));
-      } else if (question.questionType === 'checkBox') {
-        // For checkboxes, we'll create a FormArray
-        const answers = question.answers.split(',').map((item:any) => item.trim());
-        const checkboxControls = answers.map(() => new FormControl(false));
-        this.verificationForm.addControl(`question_${question.questionId}`, new FormArray(checkboxControls));
-      }
-    });
-     
-      // this.GetQuestion.map((item:any,index:any)=>{
-      //   item.answers= item.answers.split(',')
-      //   item['formValue']='Q'+(index+1)
-      //   this.verificationForm.addControl('Q'+(index+1), new FormControl(''))
-      // })
+      this.GetQuestion.map((item:any,index:any)=>{
+        item.answers= item.answers.split(',')
+        item['formValue']='Q'+(index+1)
+        this.verificationForm.addControl('Q'+(index+1), new FormControl(''))
+      })
       
     },
     error: (err: any) => {
@@ -209,15 +148,6 @@ export class AllParticipantsVerificationComponent implements OnInit {
     }
   });
  }
-  // Fixed method with proper typing
-  getCheckboxControl(questionId: number, index: number): FormControl {
-    const formArray = this.verificationForm.get(`question_${questionId}`) as FormArray;
-    return formArray.at(index) as FormControl;
-  }
-
-  getAnswersArray(answersString: string): string[] {
-    return answersString.split(',').map(item => item.trim());
-  }
   reinitializeDataTable() {
     if (this.dataTable) {
       this.dataTable.destroy();

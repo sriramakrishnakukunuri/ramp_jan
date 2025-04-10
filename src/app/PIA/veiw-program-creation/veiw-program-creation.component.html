@@ -44,8 +44,8 @@
                                 <tr *ngFor="let item of tableList; let i = index">
                                     
                                     <td>{{ i + 1 }}</td>
-                                    <td>{{ item.activityId }}</td>
-                                    <td>{{ item.subActivityId }}</td>
+                                    <td>{{ item.activityName }}</td>
+                                    <td>{{ item.subActivityName }}</td>
                                     <td>{{ item.programType }}</td>
                                     <!-- <td>{{ item.programDetails }}</td> -->
                                     <td>{{ item.programTitle }}</td>
@@ -106,7 +106,7 @@
                                 <td>{{ session.sessionTypeName }}</td>
                                 <td>{{ session.sessionTypeMethodology }}</td>
                                 <!-- <td>{{ session.sessionDetails }}</td> -->
-                                <td>{{ session.resourceId }}</td>
+                                <td>{{ session.resourceName }}</td>
                                 <!-- <td>{{ session.meterialType }}</td> -->
                         </tr>
                     </tbody>

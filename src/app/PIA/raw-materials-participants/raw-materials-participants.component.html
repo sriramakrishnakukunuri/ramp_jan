@@ -6,7 +6,7 @@
             <div class="card-header bg-transparent">
                 <div class="row align-items-center">
                     <div class="col-12 col-sm-7 col-md-8 col-lg-9">
-                        <h6 class="fw-600 mb-2 mb-sm-0">Attendance Participants Details</h6>
+                        <h6 class="fw-600 mb-2 mb-sm-0">Raw Material Using in SHG Training </h6>
                     </div>
                     <div class="col-12 col-sm-5 col-md-4 col-lg-3">
                         <select class="form-select" [(ngModel)]="programIds" (change)="dropdownProgramsList($event,'table')">
@@ -26,25 +26,26 @@
                             <!-- <th>Member Id</th>
                             <th>Member Name</th> -->
                             <th *ngFor="let header of getAttendanceHeaders(); let i = index">
+                                Raw Material Used <br>
                                 Day {{i + 1}}
                             </th>
                         </tr>
                     </thead>
                     <tbody>
-                        <ng-container *ngIf="ParticipantAttendanceData?.participantAttendanceList?.length > 0; else noData">
-                            <tr  *ngFor="let item of  this.ParticipantAttendanceData.participantAttendanceList; let i = index">
+                        <ng-container *ngIf="ParticipantRawMaterialsData?.participantRawMaterialList?.length > 0; else noData">
+                            <tr  *ngFor="let item of  this.ParticipantRawMaterialsData.participantRawMaterialList; let i = index">
                                 <td>{{ i + 1 }}</td>
                                 <td>{{ item?.participantName }}</td>
                                 <td>{{ item?.mobileNo }}</td>
                                 <!-- <td>{{ item?.memberId }}</td>
                                 <td>{{ item?.memberName }}</td> -->
-                                <td class="text-center"   *ngFor="let dataInner of item.attendanceData1; let j = index">
+                                <td class="text-center"   *ngFor="let dataInner of item.rawMaterialData1; let j = index">
                                     <ng-container *ngIf="!editAllTable">
-                                        {{dataInner[j]}}
+                                        {{dataInner[j]=='A'?'N':'Y'}}
                                     </ng-container>
-                                    <select *ngIf="editAllTable" class="form-select" (change)="chnages($any($event.target).value,j,item.attendanceData[j],dataInner)" [(ngModel)]="dataInner[j]">                                            
-                                        <option value="P">P</option>
-                                        <option value="A">A</option>
+                                    <select *ngIf="editAllTable" class="form-select" (change)="chnages($any($event.target).value,j,item.rawMaterialData[j],dataInner)" [(ngModel)]="dataInner[j]">                                            
+                                        <option value="P">Y</option>
+                                        <option value="A">N</option>
                                     </select>
                                 </td> 
                             </tr>
@@ -1229,12 +1230,12 @@
             </div>
             <div>
                 <div class="text-end mar-r mar-t" style="margin: 5px;" >
-                <!-- [ngClass]="ParticipantAttendanceData?.participantAttendanceList?.length > 0?'disabled':''"  [ngClass]="workingJobType?.uploadReportFlag=='Completed' || isPullChecked?'disabled':''"-->
-                <button class="btn btn-lime-green"  [ngClass]="ParticipantAttendanceData?.participantAttendanceList?.length <= 0?'disabled':''"
-                  (click)="editAll('editRow', ParticipantAttendanceData?.participantAttendanceList)" *ngIf="!(editAllTable)"  >Edit All</button>
+                <!-- [ngClass]="ParticipantRawMaterialsData?.participantRawMaterialList?.length > 0?'disabled':''"  [ngClass]="workingJobType?.uploadReportFlag=='Completed' || isPullChecked?'disabled':''"-->
+                <button class="btn btn-lime-green"  [ngClass]="ParticipantRawMaterialsData?.participantRawMaterialList?.length <= 0?'disabled':''"
+                  (click)="editAll('editRow', ParticipantRawMaterialsData?.participantRawMaterialList)" *ngIf="!(editAllTable)"  >Edit All</button>
                 <span *ngIf="editAllTable">
                   <button (click)="closeAll()" class="btn btn-default mar-r" style="margin-right: 5px;">Cancel</button>
-                  <button class="btn btn-lime-green" (click)="saveAll(ParticipantAttendanceData?.participantAttendanceList)">Save All</button>
+                  <button class="btn btn-lime-green" (click)="saveAll(ParticipantRawMaterialsData?.participantRawMaterialList)">Save All</button>
                 </span>
               </div>
             </div>

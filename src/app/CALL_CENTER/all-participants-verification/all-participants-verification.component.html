@@ -81,7 +81,7 @@
                                     </td>
                                     <td>--</td>
                                     <td>
-                                        <button class="btn btn-lime-green" data-bs-toggle="modal" (click)="ParticpantdataBYTable(participant)"
+                                        <button class="btn btn-lime-green" data-bs-toggle="modal"
                                             data-bs-target="#verificationModal">Update</button>
                                     </td>
                                 </tr>
@@ -118,22 +118,19 @@
                                 <div class="mb-3">
                                     <label class="form-label">Verification Status</label>
                                     <div class="row">
-                                        <ng-container *ngFor="let status of verificationStatus">
-                                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                                                <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio"
-                                                              formControlName="verificationStatusId" value="{{status?.ccVerificationStatusId}}"
-                                                        (change)="onVerificationStatusChange(status?.verificationDetails)">
-                                                    <label class="form-check-label">{{status?.verificationDetails}}</label>
-                                                </div>
-                                            </div>
-                                        </ng-container>
-                                       
-
-                                        <!-- <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                             <div class="form-check form-check-inline">
                                                 <input class="form-check-input" type="radio"
-                                                    formControlName="verificationStatusId" value="Not Answered"
+                                                    formControlName="verificationStatus" value="Answered"
+                                                    (change)="onVerificationStatusChange('Answered')">
+                                                <label class="form-check-label">Answered</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio"
+                                                    formControlName="verificationStatus" value="Not Answered"
                                                     (change)="onVerificationStatusChange('Not Answered')">
                                                 <label class="form-check-label">Not Answered</label>
                                             </div>
@@ -142,7 +139,7 @@
                                         <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                             <div class="form-check">
                                                 <input class="form-check-input" type="radio"
-                                                    formControlName="verificationStatusId" value="Wrong Number"
+                                                    formControlName="verificationStatus" value="Wrong Number"
                                                     (change)="onVerificationStatusChange('Wrong Number')">
                                                 <label class="form-check-label">Wrong Number</label>
                                             </div>
@@ -151,7 +148,7 @@
                                         <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                             <div class="form-check">
                                                 <input class="form-check-input" type="radio"
-                                                    formControlName="verificationStatusId" value="Switched Off"
+                                                    formControlName="verificationStatus" value="Switched Off"
                                                     (change)="onVerificationStatusChange('Switched Off')">
                                                 <label class="form-check-label">Switched Off</label>
                                             </div>
@@ -160,11 +157,11 @@
                                         <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                             <div class="form-check">
                                                 <input class="form-check-input" type="radio"
-                                                    formControlName="verificationStatusId" value="Number Not Exists"
+                                                    formControlName="verificationStatus" value="Number Not Exists"
                                                     (change)="onVerificationStatusChange('Number Not Exists')">
                                                 <label class="form-check-label">Number Not Exists</label>
                                             </div>
-                                        </div> -->
+                                        </div>
 
                                     </div>
                                 </div>
@@ -177,59 +174,7 @@
 
                     <!-- Questions (Visible only if "Answered" is selected) -->
                     <div [ngClass]="{'isDisabled': !showQuestions}" >
-                        <ng-container *ngFor="let data of GetQuestion;let i=index">
-                            <div class="mb-3" >
-                                <label class="form-label">{{data?.questionName}} ?</label>
-                                <div>
-                                    <div class="form-check" *ngFor="let option of data?.answers;let index1=index">
-                                        <input class="form-check-input" type="{{data?.questionType=='RadioButton'?'radio':'checkbox'}}" name="{{data.formValue}}" value="{{option}}"  formControlName="{{data.formValue}}" >
-                                        <label class="form-check-label">{{option}}</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- <div class="mb-3" *ngIf="data?.questionFieldType=='checkBox'">
-                                <label class="form-label">{{data?.questionName}}:</label>
-                                <div>
-                                    <div class="form-check" *ngFor="let option of data?.options;let index1=index">
-                                        <input class="form-check-input" type="checkbox" formControlName="morningSession"  value="{{option}}">
-                                        <label class="form-check-label">{{option}}</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" formControlName="afternoonSession">
-                                        <label class="form-check-label">Afternoon Session</label>
-                                    </div> 
-                                </div>
-                            </div> -->
-                        </ng-container>
-                        <div *ngFor="let question of GetQuestion" class="question-container">
-                            <h3>{{ question.questionName }}</h3>
-                            
-                            <!-- Radio Button Questions -->
-                            <div *ngIf="question.questionType === 'RadioButton'" class="radio-group">
-                              <div *ngFor="let answer of getAnswersArray(question.answers)">
-                                <label>
-                                  <input type="radio" 
-                                         [formControlName]="'question_' + question.questionId" 
-                                         [value]="answer">
-                                  {{ answer }}
-                                </label>
-                              </div>
-                            </div>
-                            
-                            <!-- Checkbox Questions -->
-                            <div *ngIf="question.questionType === 'checkBox'" class="checkbox-group">
-                              <div *ngFor="let answer of getAnswersArray(question.answers); let i = index">
-                                <label>
-                                  <input type="checkbox" 
-                                  [formControl]="getCheckboxControl(question.questionId, i)" >
-                                  {{ answer }}
-                                </label>
-                              </div>
-                            </div>
-                          </div>
-                        
-                       
-                        <!-- <div class="mb-3">
+                        <div class="mb-3">
                             <label class="form-label">Have you attended the Program?</label>
                             <div>
                                 <div class="form-check">
@@ -367,7 +312,7 @@
                                     <label class="form-check-label">No</label>
                                 </div>
                             </div>
-                        </div> -->
+                        </div>
                     </div>
                 </form>
             </div>

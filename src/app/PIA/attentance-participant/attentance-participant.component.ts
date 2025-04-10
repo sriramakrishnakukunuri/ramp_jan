@@ -59,6 +59,7 @@ export class AttentanceParticipantComponent implements OnInit,AfterViewInit {
       this._commonService.getById(APIS.Attendance.getDeatails, this.programIds).subscribe({
         next: (res: any) => {          
           this.ParticipantAttendanceData = res?.data   
+          this.ParticipantAttendanceData.participantAttendanceList=this.getparticipantAttendanceList(res?.data?.participantAttendanceList)
           //this.reinitializeDataTable();    
              
           // this.advanceSearch(this.getSelDataRange);
@@ -106,5 +107,72 @@ export class AttentanceParticipantComponent implements OnInit,AfterViewInit {
           return this.ParticipantAttendanceData.participantAttendanceList[0]?.attendanceData || [];
       }
       return [];
+    }
+    getparticipantAttendanceList(data1:any){
+      let participantAttendanceList:any=[]
+      
+      data1?.forEach((data:any,index:any)=>{
+        let attendanceData1:any=[]
+        data?.attendanceData?.forEach((item:any,index:any)=>{
+          let attendanceData:any={}
+          attendanceData[index]=item
+          attendanceData1.push(attendanceData)
+        })
+        data['attendanceData1']=attendanceData1
+      })
+     
+      console.log(data1,'srk')
+      return data1
+
+    }
+    editAllTable: boolean=false;
+    editAll(type?: string, item?: any) {
+      console.log(type,item)
+      this.editAllTable=true
+      
+    }
+    closeAll(){
+      this.editAllTable=false
+      this.getData() 
+    }
+    valuesfromObject(data:any) {
+     let values= data.map((obj:any) => {
+        const key = Object.keys(obj)[0]; // Get the first (and only) key
+        return obj[key];
+      
+    })
+    return values
+  }
+    saveAll(data:any){
+      console.log(data)
+      let payload:any={}
+      let participantAttendanceList:any=[]
+      data.forEach((item:any)=>{
+        console.log(Object.values(item?.attendanceData1),'ibject')
+       
+        item.attendanceData=this.valuesfromObject(item?.attendanceData1)
+        participantAttendanceList.push({"participantId": item?.participantId,"attendanceData": item?.attendanceData})
+        // item.attendanceData=Object.values(item?.attendanceData1)?.length
+      })
+       payload={
+      "programId": this.programIds,
+      "participantAttendanceList":participantAttendanceList
+      }
+      this._commonService.add(APIS.Attendance.saveAttendance,payload).subscribe({
+        next: (data: any) => {
+          if(data.message){
+            this.toastrService.success('Participant Attendance Details  Updated Successfully', 'Success');
+            this.editAllTable=false
+            this.getData() 
+          }
+         
+        },
+        error: (err) => {
+          console.error('Error loading agencies:', err);
+        }
+      });
+    }
+    chnages(data:any,val:any,index:any,vali:any){
+      console.log(data,val,index,'srk',vali)
     }
 }
