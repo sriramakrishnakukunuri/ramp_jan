@@ -161,7 +161,7 @@ export class RawMaterialsParticipantsComponent implements OnInit,AfterViewInit {
         this._commonService.add(APIS.rawMaterial.saveAttendance,payload).subscribe({
           next: (data: any) => {
             if(data.message){
-              this.toastrService.success('Participant Attendance Details  Updated Successfully', 'Success');
+              this.toastrService.success('Participant Raw Materials Details  Updated Successfully', 'Success');
               this.editAllTable=false
               this.getData() 
             }

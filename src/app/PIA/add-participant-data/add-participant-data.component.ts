@@ -264,16 +264,22 @@ export class AddParticipantDataComponent implements OnInit {
     this._commonService
         .updatedata(APIS.participantdata.update, payload).subscribe({
       next: (data: any) => {
-        // this.advanceSearch(this.getSelDataRange);
-        this.programIds = this.ParticipantDataForm.value.programIds?this.ParticipantDataForm.value.programIds:this.programList[0]?.programId
-        this.getData()
-        this.isedit=false
-        this.participantId=''
-        this.ParticipantDataForm.reset()
-        this.formDetails()
-        this.router.navigateByUrl('/view-participant-data/');
-        // modal.close()
-        this.toastrService.success('Participant Data updated Successfully', "Participant Data Success!");
+        if(data?.status==400){
+          this.toastrService.error(data?.message, "Participant Data Error!");
+        }
+        else{
+          // this.advanceSearch(this.getSelDataRange);
+         this.programIds = this.ParticipantDataForm.value.programIds?this.ParticipantDataForm.value.programIds:this.programList[0]?.programId
+         this.getData()
+         this.isedit=false
+         this.participantId=''
+         this.ParticipantDataForm.reset()
+         this.formDetails()
+         this.router.navigateByUrl('/view-participant-data/');
+         // modal.close()
+         this.toastrService.success('Participant Data updated Successfully', "Participant Data Success!");
+        }
+       
       },
       error: (err) => {
         this.ParticipantDataForm.reset()
@@ -288,7 +294,11 @@ export class AddParticipantDataComponent implements OnInit {
     this._commonService
       .add(APIS.participantdata.add, payload).subscribe({
         next: (data: any) => {
-          // this.advanceSearch(this.getSelDataRange);
+          if(data?.status==400){
+            this.toastrService.error(data?.message, "Participant Data Error!");
+          }
+          else{
+            // this.advanceSearch(this.getSelDataRange);
           this.programIds = this.ParticipantDataForm.value.programIds?this.ParticipantDataForm.value.programIds:this.programList[0]?.programId
           this.getData()
           this.isedit=false
@@ -297,6 +307,8 @@ export class AddParticipantDataComponent implements OnInit {
           this.formDetails()
           // modal.close()
           this.toastrService.success('Participant Data Added Successfully', "Participant Data Success!");
+          }
+          
         },
         error: (err) => {
           this.ParticipantDataForm.reset()
