@@ -14,7 +14,7 @@ declare var $: any;
 @Component({
   selector: 'app-add-participant-data',
   templateUrl: './add-participant-data.component.html',
-  styleUrls: ['./add-participant-data.component.css']
+  styleUrls: ['./add-participant-data.component.css'],
 })
 export class AddParticipantDataComponent implements OnInit {
   ParticipantDataForm!: FormGroup;
@@ -44,6 +44,7 @@ export class AddParticipantDataComponent implements OnInit {
     this.getProgramsByAgency()
     //this.fOrg['udyamYesOrNo'].value.setValue('No')
     this.getAllDistricts()
+    this.getAllSectors()
     this.typeOragnization('SHG')
     this.participantdetailsId = this.route.snapshot.paramMap.get('id');
     if (this.participantdetailsId) {
@@ -61,6 +62,18 @@ export class AddParticipantDataComponent implements OnInit {
       },
       error: (err: any) => {
         this.allDistricts = [];
+      }
+    })
+  }
+  allSectors:any
+  getAllSectors(){
+    this.allSectors = []
+    this._commonService.getDataByUrl(APIS.masterList.getSectors).subscribe({
+      next: (data: any) => {
+        this.allSectors = data.data;
+      },
+      error: (err: any) => {
+        this.allSectors = [];
       }
     })
   }
@@ -168,7 +181,7 @@ export class AddParticipantDataComponent implements OnInit {
       "validupto": new FormControl("",),
       "stateId": new FormControl("Telangana", [Validators.required,]),
       "distId": new FormControl("", [Validators.required,]),
-      // "sector": new FormControl("", [Validators.required,]),
+      "sector": new FormControl("", [Validators.required,]),
       "mandal": new FormControl("", [Validators.required,]),
       "town": new FormControl("", [Validators.required,]),
       "streetNo": new FormControl("", ),

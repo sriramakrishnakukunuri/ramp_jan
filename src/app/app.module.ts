@@ -44,9 +44,11 @@ import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { AttentanceParticipantComponent } from './PIA/attentance-participant/attentance-participant.component';
 import { VerificationParticipantComponent } from './CALL_CENTER/verification-participant/verification-participant.component';
 import { RawMaterialsParticipantsComponent } from './PIA/raw-materials-participants/raw-materials-participants.component';
+import { MaterialModule } from './shared/material/material/material.module';
 
 @NgModule({
     imports: [
+        MaterialModule,
         BrowserModule,
         ReactiveFormsModule,
         HttpClientModule,
@@ -62,7 +64,8 @@ import { RawMaterialsParticipantsComponent } from './PIA/raw-materials-participa
         MatTableModule,
         MatPaginatorModule,
         MatSortModule,
-        NgxMaterialTimepickerModule
+        NgxMaterialTimepickerModule,
+        
     ],
     declarations: [
         AppComponent,
@@ -94,6 +97,7 @@ import { RawMaterialsParticipantsComponent } from './PIA/raw-materials-participa
           VerificationParticipantComponent,
            RawMaterialsParticipantsComponent,
     ],
+    exports:[MaterialModule],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },

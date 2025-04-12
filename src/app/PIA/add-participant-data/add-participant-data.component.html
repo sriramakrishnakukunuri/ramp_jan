@@ -363,17 +363,32 @@
                                     <div *ngIf="fOrg['nameOfTheSHG'].touched && !fOrg['nameOfTheSHG'].valid && !fOrg['nameOfTheSHG']?.errors?.['pattern']" class="error">Name of the SHG is required</div>
                                     <div *ngIf="fOrg['nameOfTheSHG'].touched && !fOrg['nameOfTheSHG'].valid && fOrg['nameOfTheSHG']?.errors?.['pattern']" class="error">Name of the SHG Should be Charactersand Numerics</div>
                                 </div>
-                                <!-- <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                     <div class="form-floating mb-3">
-                                        <select class="form-select" id="sector" formControlName="sector" multiple>
-                                          <option selected>Select sector</option>
-                                          <option value="sector1">sector 1</option>
-                                          <option value="sector2">sector 2</option>
-                                          <option value="sector3">sector 3</option>
+                                        <select class="form-select" id="sector" formControlName="sector" >
+                                            <option *ngFor="let list of allSectors" value="{{list.sectorId}}">{{list.sectorName}}</option>
                                         </select>
-                                        <label for="Sector">Sector</label>
+                                        <label for="Sector">Sector<span class="c-red"> *</span></label>
                                     </div>
-                                </div> -->
+                                </div>
+                                 <!-- <mat-select-filter [array]="failureDropdown"
+                                            (filteredReturn)="filterFailuredropdown = $event"></mat-select-filter> -->
+                                            <!-- <div class="select-all">
+                                                <mat-checkbox [(ngModel)]="allSelectedFailure"
+                                                                [ngModelOptions]="{standalone: true}"
+                                                                (change)="toggleAllSelectionFailure()">Select All</mat-checkbox>
+                                                                </div> -->
+                                                                 <!-- <mat-option *ngFor="let list of failureDropdown" [value]="list" hidden>{{ list }}</mat-option> -->
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                    <mat-form-field class="form-floating mb-3">
+                                        <mat-label>Sector</mat-label>
+                                        <mat-select  formControlName="sector" multiple>
+                                       
+                                            <mat-option *ngFor="let list of allSectors" value="{{list.sectorId}}">{{list.sectorName}}</mat-option>
+                                        </mat-select>
+                                      </mat-form-field>
+                                 
+                                </div>
                                 <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                     <div class="form-floating mb-3">
                                         <!-- <input type="text" class="form-control" id="district" placeholder="" formControlName="distId"> -->
