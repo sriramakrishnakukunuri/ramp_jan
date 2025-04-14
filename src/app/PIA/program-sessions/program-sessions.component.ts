@@ -19,7 +19,7 @@ export class ProgramSessionsComponent implements OnInit {
   agencyId: any
   programCreationMain!: FormGroup;
   programCreationSub!: FormGroup;
-  programId: any = null;
+  programId: any = '';
   constructor(
     private fb: FormBuilder,
     private toastrService: ToastrService,
@@ -116,6 +116,11 @@ export class ProgramSessionsComponent implements OnInit {
 
     const apiCalls = objectnew.map((element: any, index: any) => {
       const formData = new FormData();
+      if(element['sessionId']){
+        element['sessionId'] = Number(element['sessionId']);
+      }else {
+        delete element['sessionId'];
+      }
       if (element['uploaFiles']) {
         element['uploaFiles'].forEach((file: any) => {
           formData.append("files", file);
@@ -275,6 +280,7 @@ export class ProgramSessionsComponent implements OnInit {
               uploaFiles: null,
               sessionStreamingUrl: session.sessionStreamingUrl,
               videoUrls: session.videoUrls,
+              sessionId: session.sessionId,
             });
             sessionArray.push(sessionGroup);
           });
@@ -380,7 +386,8 @@ export class ProgramSessionsComponent implements OnInit {
       //meterialType: "",
       uploaFiles: [null],
       sessionStreamingUrl:  ['', Validators.required],
-      videoUrls:  ['']
+      videoUrls:  [''],
+      sessionId:  [''],
     });
   }
 
