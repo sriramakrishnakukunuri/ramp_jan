@@ -15073,3 +15073,106 @@ header .navbar-brand img {
   cursor: not-allowed;
   opacity: 0.5;
 }
+
+.mat-form-field-infix {
+  font-size: .875rem;
+  border-top: 0;
+  font-family: 'Source Sans Pro';
+}
+
+.mat-form-field-label-wrapper {
+  /* top: 0.5rem; */
+}
+
+.mat-form-field-appearance-outline .mat-form-field-label {
+  /* top: 0.5rem; */
+  margin-top: 0;
+}
+
+.mat-form-field.mat-form-field-invalid .mat-form-field-label {
+  color: unset;
+}
+
+.mat-form-field-required-marker {
+  display: none;
+}
+
+.mat-form-field-appearance-outline:not(.mat-form-field-disabled) .mat-form-field-flex:hover .mat-form-field-outline-thick {
+  color: #ced4da;
+  /* border: 1px solid#ced4da;
+  border-radius: 5px; */
+}
+
+.mat-form-field-appearance-outline.mat-form-field-invalid.mat-form-field-invalid .mat-form-field-outline-thick {
+  /* color: #ced4da; */
+  /* color: transparent;
+  border-radius: 5px;
+  border: 1px solid#ced4da; */
+  color: #ced4da;
+}
+
+.mat-form-field-appearance-outline .mat-form-field-outline {
+  background-color: #fff !important;
+  border-radius: 4px;
+}
+
+.mat-form-field-appearance-outline .mat-form-field-outline-thick {
+  color: #ced4da;
+  /* color: transparent;
+  border-radius: 5px;
+  border: 1px solid#ced4da; */
+}
+
+.mat-form-field {
+  outline: none;
+  width: 100%;
+}
+
+.mat-form-field:focus {
+  outline: none;
+  /* border: 1px solid var(--theme-color);
+height: 2.5rem;
+outline: none; */
+}
+
+.mat-form-field-appearance-outline .mat-form-field-wrapper {
+  margin: 0 !important;
+
+}
+
+.mat-form-field-label {
+  color: #212529;
+
+}
+
+.mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
+  transform: translateY(-1.4em);
+  width: auto;
+  font-size: 0.875rem;
+  width: auto;
+  padding: 0px 0px;
+  background: #fff;
+  color: #212529;
+}
+
+
+.mat-form-field-type-mat-native-select.mat-form-field-invalid .mat-form-field-infix::after,
+.mat-form-field .mat-select.mat-select-invalid .mat-select-arrow {
+  color: rgba(0, 0, 0, .54);
+}
+.mat-select-value-text {
+  font-size: 12px;
+}
+.mat-paginator-page-size mat-select {
+  border: 1px solid #adadad !important;
+  padding: 5px 3px;
+  font-size: 15px;
+}
+.mat-paginator-page-size mat-select span.mat-select-min-line {
+  font-size: 14px;
+}
+.mat-select { display: inline-block;   width: 100%;  outline: none; border: solid 1px #CCC; padding: 2px;  border-radius: 4px;}
+.mat-select { border: transparent !important;} 
+.mat-form-field-appearance-outline .mat-select-arrow-wrapper {
+  transform: translateY(22%);
+}

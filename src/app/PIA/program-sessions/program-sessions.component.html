@@ -286,40 +286,40 @@
                 <h6><strong>Program Details</strong></h6>
                 <div class="row">
                     <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                        <p><strong>Type Of Activity:</strong> {{ ProgramData.activityName }}</p>
+                        <p><strong>Type Of Activity:</strong> {{ ProgramData?.activityName }}</p>
                     </div>
                     <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                        <p><strong>Sub Activity:</strong> {{ ProgramData.subActivityName }}</p>
+                        <p><strong>Sub Activity:</strong> {{ ProgramData?.subActivityName }}</p>
                     </div>
                     <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                        <p><strong>Type Of Program:</strong> {{ programCreationMain.value.programType }}</p>
+                        <p><strong>Type Of Program:</strong> {{ programCreationMain.value?.programType }}</p>
                     </div>
                     <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                        <p><strong>Program Details:</strong> {{ programCreationMain.value.programDetails }}</p>
+                        <p><strong>Program Details:</strong> {{ programCreationMain.value?.programDetails }}</p>
                     </div>
                     <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                        <p><strong>Title Of Program:</strong> {{ programCreationMain.value.programTitle }}</p>
+                        <p><strong>Title Of Program:</strong> {{ programCreationMain.value?.programTitle }}</p>
                     </div>
                     <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                        <p><strong>Start Date:</strong> {{ programCreationMain.value.startDate }}</p>
+                        <p><strong>Start Date:</strong> {{ programCreationMain.value?.startDate }}</p>
                     </div>
                     <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                        <p><strong>In Time:</strong> {{ programCreationMain.value.startTime }}</p>
+                        <p><strong>In Time:</strong> {{ programCreationMain.value?.startTime }}</p>
                     </div>
                     <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                        <p><strong>Out Time:</strong> {{ programCreationMain.value.endTime }}</p>
+                        <p><strong>Out Time:</strong> {{ programCreationMain.value?.endTime }}</p>
                     </div>
                     <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                        <p><strong>KPI:</strong> {{ programCreationMain.value.kpi }}</p>
+                        <p><strong>KPI:</strong> {{ programCreationMain.value?.kpi }}</p>
                     </div>
                     <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                        <p><strong>SPOC Name:</strong> {{ programCreationMain.value.spocName }}</p>
+                        <p><strong>SPOC Name:</strong> {{ programCreationMain.value?.spocName }}</p>
                     </div>
                     <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                        <p><strong>SPOC Contact No:</strong> {{ programCreationMain.value.spocContactNo }}</p>
+                        <p><strong>SPOC Contact No:</strong> {{ programCreationMain.value?.spocContactNo }}</p>
                     </div>
                     <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                        <p><strong>Program Location:</strong> {{ programCreationMain.value.programLocation }}</p>
+                        <p><strong>Program Location:</strong> {{ programCreationMain.value?.programLocation }}</p>
                     </div>
                 </div>
                 <h6><strong>Session Details</strong></h6>
@@ -341,13 +341,13 @@
                         <tbody>
                             <tr *ngFor="let session of programCreationSub.value.details; let i = index">
                                 <td>{{ i + 1 }}</td>
-                                <td>{{ session.sessionDate }}</td>
-                                <td>{{ session.startTime }}</td>
-                                <td>{{ session.endTime }}</td>
-                                <td>{{ session.sessionTypeName }}</td>
-                                <td>{{ session.sessionTypeMethodology }}</td>
+                                <td>{{ session?.sessionDate }}</td>
+                                <td>{{ session?.startTime }}</td>
+                                <td>{{ session?.endTime }}</td>
+                                <td>{{ session?.sessionTypeName }}</td>
+                                <td>{{ session?.sessionTypeMethodology }}</td>
                                 <!-- <td>{{ session.sessionDetails }}</td> -->
-                                <td>{{ resourcekeyidData[session.resourceId]}}</td>
+                                <td>{{ resourcekeyidData[session?.resourceId]}}</td>
                                 <!-- <td>{{ session.meterialType }}</td> -->
                             </tr>
                         </tbody>
