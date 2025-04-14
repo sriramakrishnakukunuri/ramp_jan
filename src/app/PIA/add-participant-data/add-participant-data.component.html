@@ -455,18 +455,16 @@
                                 </div> -->
                                 <!-- <div class="col-12 col-sm-6 col-md-4 col-lg-3 relative field">
                                     <div >
-                                          <ng-multiselect-dropdown required  class="multi"
-                                            placeholder="Select Area*"
-                                            name="area"
-                                            [settings]="dropdownSettings1"
+                                          <ng-multiselect-dropdown   class="multi"
+                                            placeholder="Select sector"
+                                            name="sector"
+                                            [settings]="dropdownSettings"
                                             [data]="dropdownList1"
-                                            [(ngModel)]="contractListObj.area"
-                                            (onSelect)="onItemSelect1($event)"
-                                            (onDeSelect)="OnItemDeSelect1($event)"
-                                            (onSelectAll)="areaOnSelectAll($event)"
-                                            (onDeSelectAll)="areaOnDeSelectAll($event)"
+                                            formControlName="sector"
+                                            (onSelect)="onItemSelect($event)"
+                                            (onDeSelect)="OnItemDeSelect($event)"
                                          ></ng-multiselect-dropdown> 
-                                         <label for="area" class="form-label"> area </label>
+                                         <label for="area" class="form-label"> Sector </label>
                                         
                                     </div>
                                    
