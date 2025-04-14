@@ -14,7 +14,7 @@
                             </div>
                             <div class="col-12 col-sm-6 col-md-6 col-lg-6">
                                 <select class="form-select" [(ngModel)]="programId" [ngModelOptions]="{standalone: true}" (change)="dropdownProgramsList($event,'table')">
-                                    <option value="" selected>Select Program</option>
+                                    <option value="">Select Program</option>
                                     <option *ngFor="let list of agencyProgramList" value="{{list.programId}}">{{list.programTitle}}</option>
                                 </select>
                             </div>
@@ -44,7 +44,7 @@
                                     <th>Resource Person<span class="c-red"> *</span></th>
                                     <!-- <th>Type Of Material Used</th> -->
                                     <th>Streaming Url<span class="c-red"> *</span></th>
-                                    <th>Upload<span class="c-red"> *</span></th>
+                                    <th>Upload</th>
                                     <th>Add/Delete</th>
                                 </tr>
                             </thead>
@@ -319,7 +319,7 @@
                         <p><strong>SPOC Contact No:</strong> {{ programCreationMain.value?.spocContactNo }}</p>
                     </div>
                     <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                        <p><strong>Program Location:</strong> {{ programCreationMain.value?.programLocationName }}</p>
+                        <p><strong>Program Location:</strong> {{ ProgramData?.programLocationName }}</p>
                     </div>
                 </div>
                 <h6><strong>Session Details</strong></h6>

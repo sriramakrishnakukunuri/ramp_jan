@@ -46,6 +46,7 @@ import { VerificationParticipantComponent } from './CALL_CENTER/verification-par
 import { RawMaterialsParticipantsComponent } from './PIA/raw-materials-participants/raw-materials-participants.component';
 import { MaterialModule } from './shared/material/material/material.module';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { ProgramExpenditureComponent } from './PIA/program-expenditure/program-expenditure.component';
 
 @NgModule({
     imports: [
@@ -98,6 +99,7 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
          AttentanceParticipantComponent,
           VerificationParticipantComponent,
            RawMaterialsParticipantsComponent,
+           ProgramExpenditureComponent,
     ],
     exports:[MaterialModule],
     providers: [
