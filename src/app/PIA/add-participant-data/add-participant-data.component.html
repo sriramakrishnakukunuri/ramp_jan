@@ -47,7 +47,7 @@
                                 <div class="form-floating mb-3">
                                     <select class="form-select" id="programId" formControlName="programIds" (change)="getProgramDetailsById($any($event.target).value)">
                                         <option value="">Select Program</option>
-                                        <option *ngFor="let list of agencyProgramList" value="{{list.programId}}">{{list.programTitle}}</option>
+                                        <option *ngFor="let list of agencyProgramList" value="{{list?.programId}}">{{list?.programTitle}}</option>
                                     </select>
                                     <label for="programId">Programs <span class="c-red"> *</span></label>
                                 </div>
@@ -108,8 +108,6 @@
                                 </div>
                                 <div *ngIf="f2['gender'].touched && !f2['gender'].valid" class="error">Gender is required</div>
                             </div>
-                          
-                           
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                 <div class="form-floating mb-3">
                                     <select class="form-select" id="category" formControlName="category">
@@ -208,7 +206,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12 col-sm-6 col-md-4 col-lg-3 " id="certificateDate" *ngIf="this.f2['isCertificateIssued'].value=='Y'" >
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3 " id="certificateDate" *ngIf="this.f2['isCertificateIssued']?.value=='Y'" >
                                 <div class="form-floating mb-3">
                                     <input type="date" class="form-control" id="certificateIssueDate" formControlName="certificateIssueDate" placeholder="">
                                     <label for="certificateIssueDate">Issue Date <span class="c-red"> *</span></label>
@@ -363,38 +361,13 @@
                                     <div *ngIf="fOrg['nameOfTheSHG'].touched && !fOrg['nameOfTheSHG'].valid && !fOrg['nameOfTheSHG']?.errors?.['pattern']" class="error">Name of the SHG is required</div>
                                     <div *ngIf="fOrg['nameOfTheSHG'].touched && !fOrg['nameOfTheSHG'].valid && fOrg['nameOfTheSHG']?.errors?.['pattern']" class="error">Name of the SHG Should be Charactersand Numerics</div>
                                 </div>
-                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                                    <div class="form-floating mb-3">
-                                        <select class="form-select" id="sector" formControlName="sector" >
-                                            <option *ngFor="let list of allSectors" value="{{list.sectorId}}">{{list.sectorName}}</option>
-                                        </select>
-                                        <label for="Sector">Sector<span class="c-red"> *</span></label>
-                                    </div>
-                                </div>
-                                 <!-- <mat-select-filter [array]="failureDropdown"
-                                            (filteredReturn)="filterFailuredropdown = $event"></mat-select-filter> -->
-                                            <!-- <div class="select-all">
-                                                <mat-checkbox [(ngModel)]="allSelectedFailure"
-                                                                [ngModelOptions]="{standalone: true}"
-                                                                (change)="toggleAllSelectionFailure()">Select All</mat-checkbox>
-                                                                </div> -->
-                                                                 <!-- <mat-option *ngFor="let list of failureDropdown" [value]="list" hidden>{{ list }}</mat-option> -->
-                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                                    <mat-form-field class="form-floating mb-3">
-                                        <mat-label>Sector</mat-label>
-                                        <mat-select  formControlName="sector" multiple>
-                                       
-                                            <mat-option *ngFor="let list of allSectors" value="{{list.sectorId}}">{{list.sectorName}}</mat-option>
-                                        </mat-select>
-                                      </mat-form-field>
-                                 
-                                </div>
+                               
                                 <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                     <div class="form-floating mb-3">
                                         <!-- <input type="text" class="form-control" id="district" placeholder="" formControlName="distId"> -->
                                         <select class="form-select" id="district" formControlName="distId" (change)="GetMandalByDistrictSHG($any($event.target).value)" >
                                             <option value="">Select District</option>
-                                            <option *ngFor="let list of allDistricts" value="{{list.districtId}}">{{list.districtName}}</option>
+                                            <option *ngFor="let list of allDistricts" value="{{list?.districtId}}">{{list?.districtName}}</option>
                                         </select>
                                         <label for="district">District <span class="c-red"> *</span></label>
                                     </div>
@@ -404,7 +377,7 @@
                                     <div class="form-floating mb-3">
                                         <select class="form-select" id="District" formControlName="mandal" >
                                           <option selected>Select Mandal</option>
-                                          <option *ngFor="let list of MandalListSHG" value="{{list.mandalId}}">{{list.mandalName}}</option>
+                                          <option *ngFor="let list of MandalListSHG" value="{{list?.mandalId}}">{{list?.mandalName}}</option>
                                           <!-- <option value="1">Mandal 1</option> -->
                                         </select>
                                         <label for="Mandal">Mandal <span class="c-red"> *</span></label>
@@ -480,6 +453,24 @@
                                         <label for="Sector">Sector</label>
                                     </div>
                                 </div> -->
+                                <!-- <div class="col-12 col-sm-6 col-md-4 col-lg-3 relative field">
+                                    <div >
+                                          <ng-multiselect-dropdown required  class="multi"
+                                            placeholder="Select Area*"
+                                            name="area"
+                                            [settings]="dropdownSettings1"
+                                            [data]="dropdownList1"
+                                            [(ngModel)]="contractListObj.area"
+                                            (onSelect)="onItemSelect1($event)"
+                                            (onDeSelect)="OnItemDeSelect1($event)"
+                                            (onSelectAll)="areaOnSelectAll($event)"
+                                            (onDeSelectAll)="areaOnDeSelectAll($event)"
+                                         ></ng-multiselect-dropdown> 
+                                         <label for="area" class="form-label"> area </label>
+                                        
+                                    </div>
+                                   
+                                </div> -->
                                 <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                     <div class="form-floating mb-3">
                                         <input type="text" class="form-control" id="msmeCertificate" placeholder="" formControlName="startupCertificateNo">
@@ -527,7 +518,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="show-hide " id="MSME"  *ngIf="this.fOrg['organizationType'].value=='MSME'">
+                        <div class="show-hide " id="MSME"  *ngIf="this.fOrg['organizationType']?.value=='MSME'">
                             <div class="row">
                                 <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                     <label class="fw-600 fs-md">Category <span class="c-red"> *</span></label>

@@ -157,6 +157,7 @@ export class AddParticipantDataComponent implements OnInit {
       certificateIssueDate: new FormControl("",),
       needAssessmentMethodology: new FormControl("",),
       programIds: new FormControl("", [Validators.required,]),
+    
       // TargetSector: new FormControl("",[Validators.required,]),
       // targetAudience: new FormControl("",[Validators.required,]),
       // targetNoOfParticipants: new FormControl("",[Validators.required,]),
@@ -169,19 +170,20 @@ export class AddParticipantDataComponent implements OnInit {
       "organizationCategory": new FormControl("",),
       "organizationType": new FormControl("", [Validators.required,]),
       "udyamregistrationNo": new FormControl(""),
-      "organizationName": new FormControl("",[Validators.pattern(/^[A-Za-z][A-Za-z0-9 .]*$/)]),
+      "organizationName": new FormControl("",[Validators.pattern(/^[^\s].*/)]),
       "udyamYesOrNo": new FormControl("No",),
       "dateOfRegistration": new FormControl("", ),
       "startupCertificateNo": new FormControl("",),
       "natureOfStartup": new FormControl("", ),
       "areasOfWorking": new FormControl("", ),
       "msmeStartup": new FormControl("",),
+
       "incorporationDate": new FormControl("",),
       "dateOfIssue": new FormControl("",),
       "validupto": new FormControl("",),
       "stateId": new FormControl("Telangana", [Validators.required,]),
       "distId": new FormControl("", [Validators.required,]),
-      "sector": new FormControl("", [Validators.required,]),
+      // "sector": new FormControl("", [Validators.required,]),
       "mandal": new FormControl("", [Validators.required,]),
       "town": new FormControl("", [Validators.required,]),
       "streetNo": new FormControl("", ),
@@ -191,7 +193,8 @@ export class AddParticipantDataComponent implements OnInit {
       "contactNo": new FormControl("", [Validators.required, Validators.pattern(/^[6789]\d{9}$/)]),
       "email": new FormControl("", [Validators.email,]),
       "website": new FormControl("", ),
-      "ownerName": new FormControl("", [Validators.required,]),
+      // "ownerName": new FormControl("", [Validators.required,]),
+      "ownerName": new FormControl("",[Validators.pattern(/^[^\s].*/)]),
       "ownerContactNo": new FormControl("", [Validators.required, Validators.pattern(/^[6789]\d{9}$/)]),
       "ownerEmail": new FormControl("", [Validators.email,]),
       "ownerAddress": new FormControl("", ),
@@ -377,7 +380,7 @@ export class AddParticipantDataComponent implements OnInit {
       this.formDetailsOrganization();
       this.fOrg['organizationType'].patchValue('SHG')
       this.fOrg['nameOfTheSHG'].addValidators(Validators.required)
-      this.fOrg['nameOfTheSHG'].addValidators(Validators.pattern(/^[A-Za-z][A-Za-z .]+$/))
+      this.fOrg['nameOfTheSHG'].addValidators(Validators.pattern(/^[^\s].*/))
       this.fOrg['distId'].addValidators(Validators.required)
       this.fOrg['mandal'].addValidators(Validators.required)
       this.fOrg['nameOfTheVO'].addValidators(Validators.required)
@@ -393,10 +396,10 @@ export class AddParticipantDataComponent implements OnInit {
       this.formDetailsOrganization()
       this.fOrg['organizationType'].patchValue('Start Up')
       this.fOrg['organizationName'].addValidators(Validators.required)
-      this.fOrg['organizationName'].addValidators(Validators.pattern(/^[A-Za-z][A-Za-z .]+$/))
+      this.fOrg['organizationName'].addValidators(Validators.pattern(/^[^\s].*/))
       this.fOrg['startupCertificateNo'].addValidators(Validators.required)
       this.fOrg['natureOfStartup'].addValidators(Validators.required)
-      this.fOrg['natureOfStartup'].addValidators(Validators.pattern(/^[A-Za-z][A-Za-z .]+$/))
+      this.fOrg['natureOfStartup'].addValidators(Validators.pattern(/^[^\s].*/))
       this.fOrg['incorporationDate'].addValidators(Validators.required)
       this.fOrg['dateOfIssue'].addValidators(Validators.required)
       this.fOrg['validupto'].addValidators(Validators.required)
@@ -416,7 +419,7 @@ export class AddParticipantDataComponent implements OnInit {
       this.fOrg['organizationType'].patchValue('MSME')
       this.fOrg['organizationCategory'].addValidators(Validators.required)
       this.fOrg['organizationName'].addValidators(Validators.required)
-      this.fOrg['organizationName'].addValidators(Validators.pattern(/^[A-Za-z][A-Za-z .]+$/))
+      this.fOrg['organizationName'].addValidators(Validators.pattern(/^[^\s].*/))
       this.fOrg['udyamYesOrNo'].addValidators(Validators.required)
       this.fOrg['udyamregistrationNo'].setValidators(null)
       this.fOrg['dateOfRegistration'].setValidators(null)

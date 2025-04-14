@@ -115,7 +115,8 @@ export class ProgramCreationComponent implements OnInit, AfterViewInit {
       endDate: new FormControl("", [Validators.required]),
       startTime: new FormControl("", [Validators.required]),
       endTime: new FormControl("", [Validators.required]),
-      spocName: new FormControl("", [Validators.required, Validators.pattern(/^[a-zA-Z]+(\s[a-zA-Z .]+)*$/)]),
+      // spocName: new FormControl("", [Validators.required, Validators.pattern(/^[a-zA-Z]+(\s[a-zA-Z . ]+)*$/)]),
+      spocName: new FormControl("", [Validators.required,Validators.pattern(/^[A-Za-z][A-Za-z .]*$/)]), //Validators.required
       spocContactNo: new FormControl("", [Validators.required, Validators.pattern(/^[6-9]\d{9}$/)]),
       programLocation: new FormControl("", [Validators.required]),
       kpi: new FormControl("", [Validators.required]),
