@@ -116,11 +116,11 @@ export class ProgramSessionsComponent implements OnInit {
 
     const apiCalls = objectnew.map((element: any, index: any) => {
       const formData = new FormData();
-      if(element['sessionId']){
-        element['sessionId'] = Number(element['sessionId']);
-      }else {
-        delete element['sessionId'];
-      }
+      // if(element['sessionId']){
+      //   element['sessionId'] = Number(element['sessionId']);
+      // }else {
+      //   delete element['sessionId'];
+      // }
       if (element['uploaFiles']) {
         element['uploaFiles'].forEach((file: any) => {
           formData.append("files", file);

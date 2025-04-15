@@ -10,6 +10,7 @@ import 'datatables.net-buttons-dt';
 import 'datatables.net-responsive-dt';
 import moment from 'moment';
 import { REGEX } from '@app/_helpers/regex';
+import { IDropdownSettings } from 'ng-multiselect-dropdown';
 declare var $: any;
 @Component({
   selector: 'app-add-participant-data',
@@ -33,7 +34,48 @@ export class AddParticipantDataComponent implements OnInit {
     private route: ActivatedRoute,) { 
       this.agencyId = JSON.parse(sessionStorage.getItem('user') || '{}').agencyId;
     }
-
+    selectedItems: any[] = [];
+    dropdownList1=[];
+    dropdownSettings: IDropdownSettings = {};
+    assignFluidData1() {
+      this.dropdownSettings = {
+          singleSelection: false,
+          idField: 'sectorId',
+          textField: 'sectorName',
+          itemsShowLimit: 1,
+          enableCheckAll: true,
+          selectAllText: "Select All",
+          unSelectAllText: "Clear All",
+          allowSearchFilter: true,
+          clearSearchFilter: true,
+          maxHeight: 197,
+          searchPlaceholderText: "Search Area",
+          noDataAvailablePlaceholderText: "Data Not Available",
+          closeDropDownOnSelection: false,
+          showSelectedItemsAtTop: false,
+          defaultOpen: false,
+      };
+      this.dropdownList1 = this.allSectors;
+     
+    //   this.contractListObj.area= this.selectMapList1;
+  }
+   
+  
+    onItemSelect(item: any) {
+      console.log('Item selected:', item);
+    }
+  
+    onSelectAll(items: any[]) {
+      console.log('All items selected:', items);
+    }
+  
+    onItemDeSelect(item: any) {
+      console.log('Item deselected:', item);
+    }
+  
+    onDeSelectAll(items: any[]) {
+      console.log('All items deselected');
+    }
   ngOnInit(): void {
     this.loginsessionDetails = JSON.parse(sessionStorage.getItem('user') || '{}');    
     this.formDetails();
@@ -71,6 +113,7 @@ export class AddParticipantDataComponent implements OnInit {
     this._commonService.getDataByUrl(APIS.masterList.getSectors).subscribe({
       next: (data: any) => {
         this.allSectors = data.data;
+        this.assignFluidData1()
       },
       error: (err: any) => {
         this.allSectors = [];
@@ -259,8 +302,18 @@ export class AddParticipantDataComponent implements OnInit {
   }
 
   Submitform() {
+    
     let payload:any={...this.ParticipantDataForm.value, "programIds": [this.ParticipantDataForm.value.programIds], "organizationId": this.ParticipantDataForm.value.organizationId }
-  if(this.f2['isAspirant'].value!='Existing Oragnization'){
+    // if(this.ParticipantDataForm.value.programIds?.length>0){
+    //   payload['programIds']=this.ParticipantDataForm.value.programIds
+    // }
+    // else{
+    //   if( typeof this.ParticipantDataForm.value.programIds=='string')
+    //     {
+    //       payload['programIds']=[Number(this.ParticipantDataForm.value.programIds)]
+    //     }
+    // }
+    if(this.f2['isAspirant'].value!='Existing Oragnization'){
     delete payload['organizationId']
   }
   if(payload['isCertificateIssued']=='N'){
