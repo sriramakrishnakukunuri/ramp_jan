@@ -226,7 +226,7 @@ export class AddParticipantDataComponent implements OnInit {
       "validupto": new FormControl("",),
       "stateId": new FormControl("Telangana", [Validators.required,]),
       "distId": new FormControl("", [Validators.required,]),
-      // "sector": new FormControl("", [Validators.required,]),
+      "sectorIds": new FormControl([], [Validators.required,]),
       "mandal": new FormControl("", [Validators.required,]),
       "town": new FormControl("", [Validators.required,]),
       "streetNo": new FormControl("", ),
@@ -248,7 +248,7 @@ export class AddParticipantDataComponent implements OnInit {
     
   }
   getData() {
-    this.submitedData = ''
+    this.submitedData = []
     // sessionStorage.getItem('ParticipantData')
     // let resList = sessionStorage.getItem('ParticipantData') || ''
     // // let resList = sessionStorage.getItem('ParticipantData') || ''   
@@ -339,7 +339,7 @@ export class AddParticipantDataComponent implements OnInit {
         else{
           // this.advanceSearch(this.getSelDataRange);
          this.programIds = this.ParticipantDataForm.value.programIds?this.ParticipantDataForm.value.programIds:this.programList[0]?.programId
-         this.getData()
+        //  this.getData()
          this.isedit=false
          this.participantId=''
          this.ParticipantDataForm.reset()
@@ -369,7 +369,7 @@ export class AddParticipantDataComponent implements OnInit {
           else{
             // this.advanceSearch(this.getSelDataRange);
           this.programIds = this.ParticipantDataForm.value.programIds?this.ParticipantDataForm.value.programIds:this.programList[0]?.programId
-          this.getData()
+          // this.getData()
           this.isedit=false
           this.participantId=''
           this.ParticipantDataForm.reset()
@@ -414,6 +414,7 @@ export class AddParticipantDataComponent implements OnInit {
   typeOragnization(event: any) {
     this.OragnizationType = event
     this.fOrg['nameOfTheSHG'].patchValue('')
+    this.fOrg['sectorIds'].patchValue([])
     this.fOrg['distId'].patchValue('')
     this.fOrg['mandal'].patchValue('')
     this.fOrg['nameOfTheVO'].patchValue('')
@@ -513,6 +514,14 @@ export class AddParticipantDataComponent implements OnInit {
     if (this.OragnizationType == 'SHG') {
       this.OrganisationForm.value['organizationName'] = this.OrganisationForm.value['nameOfTheSHG']
     }
+    if( this.OrganisationForm.value['sectorIds'].length){
+      this.OrganisationForm.value['sectorIds']=this.OrganisationForm.value['sectorIds'].map((item:any)=>{
+        return Number(item.sectorId)
+      })
+    }
+    else{
+      this.OrganisationForm.value['sectorIds']=[]
+    }
     this._commonService.add(APIS.participantdata.saveOrgnization, { ...this.OrganisationForm.value }).subscribe({
       next: (data: any) => {
         // this.advanceSearch(this.getSelDataRange);
@@ -525,7 +534,7 @@ export class AddParticipantDataComponent implements OnInit {
       },
     });
     this.OrganisationForm.reset();
-    this.getData()
+    // this.getData()
     this.getOrganizationData()
 
   }

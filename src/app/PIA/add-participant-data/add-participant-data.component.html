@@ -398,6 +398,22 @@
                                     </div>
                                     <div *ngIf="fOrg['gramaPanchayat'].touched && !fOrg['gramaPanchayat'].valid" class="error" style="padding-top:  5px;">Grama Panchyat is required</div>
                                 </div>
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-3 relative field">
+                                    <div >
+                                          <ng-multiselect-dropdown   class="multi"
+                                            placeholder="Select sector*"
+                                            name="sectorIds"
+                                            formControlName="sectorIds"
+                                            [settings]="dropdownSettings"
+                                            [data]="dropdownList1"
+                                            (onSelect)="onItemSelect($event)"
+                                            (onSelectAll)="onSelectAll($event)"
+                                         ></ng-multiselect-dropdown> 
+                                         <!-- <label for="area" class="form-label"> Sector </label> -->
+                                        
+                                    </div>
+                                   
+                                </div>
                                 <!-- <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                     <div class="form-floating mb-3">
                                         <input type="text" class="form-control" id="village" placeholder="">
@@ -453,22 +469,7 @@
                                         <label for="Sector">Sector</label>
                                     </div>
                                 </div> -->
-                                <!-- <div class="col-12 col-sm-6 col-md-4 col-lg-3 relative field">
-                                    <div >
-                                          <ng-multiselect-dropdown   class="multi"
-                                            placeholder="Select sector"
-                                            name="sector"
-                                            [settings]="dropdownSettings"
-                                            [data]="dropdownList1"
-                                            formControlName="sector"
-                                            (onSelect)="onItemSelect($event)"
-                                            (onDeSelect)="OnItemDeSelect($event)"
-                                         ></ng-multiselect-dropdown> 
-                                         <label for="area" class="form-label"> Sector </label>
-                                        
-                                    </div>
-                                   
-                                </div> -->
+                                
                                 <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                     <div class="form-floating mb-3">
                                         <input type="text" class="form-control" id="msmeCertificate" placeholder="" formControlName="startupCertificateNo">
@@ -485,6 +486,22 @@
                                     <div *ngIf="fOrg['natureOfStartup'].touched && !fOrg['natureOfStartup'].valid && !fOrg['natureOfStartup']?.errors?.['pattern']" class="error">Nature of Startup is required</div>
                                     <div *ngIf="fOrg['natureOfStartup'].touched && !fOrg['natureOfStartup'].valid && fOrg['natureOfStartup']?.errors?.['pattern']" class="error">Nature of Startup Should be Charactersand Numerics</div>
                              
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-3 relative field">
+                                    <div >
+                                          <ng-multiselect-dropdown   class="multi"
+                                            placeholder="Select sector*"
+                                            name="sectorIds"
+                                            formControlName="sectorIds"
+                                            [settings]="dropdownSettings"
+                                            [data]="dropdownList1"
+                                            (onSelect)="onItemSelect($event)"
+                                            (onSelectAll)="onSelectAll($event)"
+                                         ></ng-multiselect-dropdown> 
+                                         <!-- <label for="area" class="form-label"> Sector </label> -->
+                                        
+                                    </div>
+                                   
                                 </div>
                                 <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                     <div class="form-floating mb-3">
@@ -545,6 +562,22 @@
                                     <div *ngIf="fOrg['organizationName'].touched && !fOrg['organizationName'].valid && !fOrg['organizationName']?.errors?.['pattern']" class="error">Organization Name is required</div>
                                     <div *ngIf="fOrg['organizationName'].touched && !fOrg['organizationName'].valid && fOrg['organizationName']?.errors?.['pattern']" class="error">Organization Name Should be Charactersand Numerics</div>
                                 </div>
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-3 relative field">
+                                    <div >
+                                          <ng-multiselect-dropdown   class="multi"
+                                            placeholder="Select sector*"
+                                            name="sectorIds"
+                                            formControlName="sectorIds"
+                                            [settings]="dropdownSettings"
+                                            [data]="dropdownList1"
+                                            (onSelect)="onItemSelect($event)"
+                                            (onSelectAll)="onSelectAll($event)"
+                                         ></ng-multiselect-dropdown> 
+                                         <!-- <label for="area" class="form-label"> Sector </label> -->
+                                        
+                                    </div>
+                                   
+                                </div>
                                 <!-- <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                     <div class="form-floating mb-3">
                                         <select class="form-select" id="sector" formControlName="sector">
@@ -597,6 +630,7 @@
                                 </div> -->
                             </div>
                         </div>
+                       
                     </div>
     
                     <div class="row">
