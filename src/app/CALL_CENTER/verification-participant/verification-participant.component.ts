@@ -53,8 +53,10 @@ export class VerificationParticipantComponent implements OnInit {
   ParticpantdataBYTable(data:any){
     this.getParticipantByUpdate=data
     console.log(data)
-    // this.verificationForm.reset();
-    this.verificationForm.get('verificationStatusId')?.setValue(data?.ccVerificationStatusId)
+    this.verificationForm.reset();
+    this.verificationForm.patchValue({verificationStatusId:data?.ccVerificationStatusId})
+    console.log(this.verificationForm,data?.ccVerificationStatusId)
+    // this.verificationForm.get('verificationStatusId')?.setValue(data?.ccVerificationStatusId)
     // this.fVerf['verificationStatusId'].patchValue(data?.ccVerificationStatusId)
 
   }

@@ -1,7 +1,7 @@
 import { HttpClient,HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { APIS } from '@app/constants/constants';
-import { catchError, forkJoin, Observable, throwError } from 'rxjs';
+import { catchError, forkJoin, map, Observable, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +12,17 @@ export class CommonServiceService {
   private formatErrors(error: HttpErrorResponse) {
     return throwError(() => error);
   }
-
+  public changePassword(url:any,Payload:any): Observable<any> {     
+    let headers = new HttpHeaders({
+        'Content-Type': 'application/json',
+        'responseType': 'json',
+          userId: Payload?.userId,
+          oldPassword: Payload?.oldPassword,
+          newPassword: Payload?.newPassword
+    });   
+    return this.http.put<any>(url, { headers: headers },{}).pipe(catchError(this.formatErrors));
+   
+}
   public add(URL: any, payload: any): Observable<any> {
     return this.http.post(URL, payload).pipe(catchError(this.formatErrors));
   }

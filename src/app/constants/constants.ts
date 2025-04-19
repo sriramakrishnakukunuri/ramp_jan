@@ -43,6 +43,7 @@ export const APIS = {
         addAgent: API_BASE_URL + '/login/user/create',        
     },
     masterList: {
+        changePassword:API_BASE_URL+'/api/login/change-password',
         agencyList: API_BASE_URL + '/agencies',
         locationList: API_BASE_URL + '/locations',
         getUserList: API_BASE_URL + '/login/allusrs',
