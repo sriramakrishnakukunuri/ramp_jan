@@ -187,24 +187,23 @@
                                         <button type="button" class="btn btn-default text-danger btn-sm"><span class="bi bi-trash"></span></button>
                                     </td>
                                 </tr>
+                              
                             </tbody>
-                            <tfoot *ngIf="getBulkExpenditureData?.length">
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td>Total</td>
-                                    <td>{{BulkTotalUnitCost}}</td>
-                                    <td>{{BulkTotalCost}}</td>
-                                     <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                            </tfoot>
+                            <!-- <tr *ngIf="getBulkExpenditureData?.length">
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>Total</td>
+                                <td>{{BulkTotalUnitCost}}</td>
+                                <td>{{BulkTotalCost}}</td>
+                                 <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr> -->
                         </table>            
                     </div>
                 </div>
@@ -312,7 +311,7 @@
                 </form>
 
                 <div class="text-end mt-3">
-                    <button type="button" class="btn btn-lime-green" data-bs-dismiss="modal" (click)="ExpenditureSubmit()">Add Expenditure</button>
+                    <button type="button" class="btn btn-lime-green" data-bs-dismiss="modal" [ngClass]="{'disabled': PrePostExpenditureForm.invalid}" (click)="ExpenditureSubmit()">Add Expenditure</button>
                 </div>
             </div>
         </div>
@@ -470,7 +469,7 @@
                 </form>
 
                 <div class="text-end mt-3">
-                    <button type="button" class="btn btn-lime-green" data-bs-dismiss="modal" (click)="BulkExpenditureSubmit()">Add Bulk Expenditure</button>
+                    <button type="button" class="btn btn-lime-green" data-bs-dismiss="modal" [ngClass]="{'disabled': BulkExpenditureForm.invalid}" (click)="BulkExpenditureSubmit()">Add Bulk Expenditure</button>
                 </div>
             </div>
         </div>
