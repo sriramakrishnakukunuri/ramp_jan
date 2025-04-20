@@ -43,6 +43,7 @@ export const APIS = {
         addAgent: API_BASE_URL + '/login/user/create',        
     },
     masterList: {
+        changePassword:API_BASE_URL+'/login/change-password',
         agencyList: API_BASE_URL + '/agencies',
         locationList: API_BASE_URL + '/locations',
         getUserList: API_BASE_URL + '/login/allusrs',
@@ -73,5 +74,12 @@ export const APIS = {
     rawMaterial:{
         getDeatails:API_BASE_URL +`/program/rawmaterial/`,
         saveAttendance:API_BASE_URL +`/program/rawmaterial`,
+    },
+    programExpenditure:{
+        getHeadOfExpenditure:API_BASE_URL +`/expenses`,
+        saveExpenditure:API_BASE_URL +`/program/expenditure/save`,
+        savebulkExpenditure:API_BASE_URL +`/bulk/expenditure/save`,
+        getExpenditure:API_BASE_URL +`/program/expenditure/`,
+        getBulkExpenditure:API_BASE_URL +`/bulk/expenditure`,
     }
 }
