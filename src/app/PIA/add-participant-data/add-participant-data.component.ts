@@ -361,6 +361,7 @@ export class AddParticipantDataComponent implements OnInit {
   typeOragnization(event: any) {
     this.OragnizationType = event
     this.fOrg['nameOfTheSHG'].patchValue('')
+    this.fOrg['sectorIds'].patchValue([])
     this.fOrg['distId'].patchValue('')
     this.fOrg['mandal'].patchValue('')
     this.fOrg['nameOfTheVO'].patchValue('')

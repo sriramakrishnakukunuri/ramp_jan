@@ -110,7 +110,7 @@ export class ProgramCreationComponent implements OnInit, AfterViewInit {
       subActivityId: new FormControl("", [Validators.required]),
       programType: new FormControl("", [Validators.required]),
       //programDetails: new FormControl("", [Validators.required]),
-      programTitle: new FormControl("", [Validators.required, Validators.pattern(/^[a-zA-Z]+(\s[a-zA-Z0-9 .]+)*$/)]),
+      programTitle: new FormControl("", [Validators.required, Validators.pattern(/^[^\s].*/)]),
       startDate: new FormControl("", [Validators.required]),
       endDate: new FormControl("", [Validators.required]),
       startTime: new FormControl("", [Validators.required]),
