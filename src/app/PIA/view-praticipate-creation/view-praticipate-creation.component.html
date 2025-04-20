@@ -20,7 +20,7 @@
                 <div class="card-body">
                     <div class="dtable-container">
                         <table id="view-table-participate" class="display nowrap" style="width:100%">
-                            <thead>
+                            <thead class="bg-lime-green text-white">
                                 <tr>
                                     
                                     <th>S.No</th>
@@ -40,7 +40,7 @@
                                     <th>Certificate Issue Date</th>
                                     <th>Issue Date</th>
                                     <th>Methodology Used for Needs Assessment</th>
-                                    <!-- <th class="text-center">Edit / Delete</th> -->
+                                    <th class="text-center">Edit / Delete</th>
                                 </tr>
                             </thead>
                             <tbody *ngIf="tableList">
@@ -63,10 +63,10 @@
                                     <td>{{item?.isCertificateIssued=='Y'?'Yes':'No'}}</td>
                                     <td>{{item?.isCertificateIssued=='Y'?item?.certificateIssueDate:''}}</td>
                                     <td>{{item?.needAssessmentMethodology}}</td>
-                                    <!-- <td class="text-center">
+                                    <td class="text-center">
                                         <button type="button" class="btn btn-default text-lime-green btn-sm" (click)="editRow(item,i)"><span class="bi bi-pencil"></span></button>
                                         <button type="button" class="btn btn-default text-danger btn-sm" (click)="deleteRow(item,i)"><span class="bi bi-trash"></span></button>
-                                    </td> -->
+                                    </td>
                                 </tr>
                             </tbody>                            
                         </table>

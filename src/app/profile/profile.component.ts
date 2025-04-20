@@ -6,9 +6,11 @@ declare var bootstrap: any;
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
-
+  userData:any
   @ViewChild('ModalProfile') ModalProfile!: ElementRef;
-  constructor() { }
+  constructor() { 
+    this.userData = JSON.parse(sessionStorage.getItem('user') || '{}');
+  }
 
   ngOnInit(): void {
   }

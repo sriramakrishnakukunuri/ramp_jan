@@ -12,7 +12,7 @@ export class LoginComponent implements OnInit {
     loading = false;
     submitted = false;
     error = '';
-
+    passwordshowConfirm: Boolean=false;
     constructor(
         private formBuilder: FormBuilder,
         private route: ActivatedRoute,

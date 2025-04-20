@@ -45,6 +45,8 @@ import { AttentanceParticipantComponent } from './PIA/attentance-participant/att
 import { VerificationParticipantComponent } from './CALL_CENTER/verification-participant/verification-participant.component';
 import { RawMaterialsParticipantsComponent } from './PIA/raw-materials-participants/raw-materials-participants.component';
 import { MaterialModule } from './shared/material/material/material.module';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { ProgramExpenditureComponent } from './PIA/program-expenditure/program-expenditure.component';
 
 @NgModule({
     imports: [
@@ -55,6 +57,7 @@ import { MaterialModule } from './shared/material/material/material.module';
         AppRoutingModule,
         FormsModule,
         BrowserAnimationsModule,
+        NgMultiSelectDropDownModule.forRoot(), // Make sure this is here
         ToastrModule.forRoot({
             positionClass: 'toast-bottom-right',
             timeOut: 15000, // 15 seconds
@@ -96,6 +99,7 @@ import { MaterialModule } from './shared/material/material/material.module';
          AttentanceParticipantComponent,
           VerificationParticipantComponent,
            RawMaterialsParticipantsComponent,
+           ProgramExpenditureComponent,
     ],
     exports:[MaterialModule],
     providers: [

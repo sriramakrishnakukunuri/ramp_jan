@@ -21,7 +21,7 @@
                 <div class="card-body">
                     <div class="dtable-container">
                         <table id="view-table-program" class="display nowrap" style="width:100%">
-                            <thead>
+                            <thead class="bg-lime-green text-white">
                                 <tr>
                                     
                                     <th>S.No</th>
@@ -55,7 +55,7 @@
                                     <td class="text-center">{{ item.endTime }}</td>
                                     <td>{{ item.spocName }}</td>
                                     <td>{{ item.spocContactNo }}</td>
-                                    <td>{{ item.programLocation }}</td>                                    
+                                    <td>{{ item.programLocationName }}</td>                                    
                                     <td *ngIf="loginsessionDetails?.userRole == 'AGENCY_MANAGER' || loginsessionDetails?.userRole == 'AGENCY_EXECUTOR'">
                                         <!-- (click)="sessionDetails(item)" data-bs-toggle="modal" data-bs-target="#viewModal" -->
                                         <button type="button" class="btn btn-default btn-sm text-lime-green" title="Sessions" data-bs-toggle="modal" data-bs-target="#viewModal" (click)="sessionDetails(item)" title="View"><span class="bi bi-eye"></span></button>
@@ -83,7 +83,7 @@
             </div>
             <div class="modal-body">
                 <table class="table table-bordered">
-                    <thead>
+                    <thead class="bg-lime-green text-white">
                         <tr>
                             <th>S.No</th>
                             <th>Date</th>

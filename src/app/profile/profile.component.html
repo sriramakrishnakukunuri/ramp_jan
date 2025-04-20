@@ -6,8 +6,8 @@
                     <div class="card bg-lime-green mb-3">
                         <div class="p-3 text-white text-center">
                             <span class="bi bi-person-circle display-4 mb-2"></span>
-                            <p class="fs-5 mb-0">Mr. Ravi Kumar</p>
-                            <p class="mb-1">PIA Executive</p>
+                            <p class="fs-5 mb-0">{{userData?.firstName}}  {{userData?.lastName}}</p>
+                            <p class="mb-1">{{userData?.userRole=='AGENCY_EXECUTOR'?"PIA Executor" : userData?.userRole=='AGENCY_MANAGER'?'PIA Manager':userData?.userRole}}</p>
                             <a class="text-light-green fs-md fw-600" (click)="openModalProfile()"><span class="bi bi-pencil me-2"></span> Edit the profile</a>
                         </div>
                         <div class="card p-3 shadow-none rounded-bottom rounded-5 ">
@@ -15,26 +15,26 @@
                                 <div>
                                     <span class="bi bi-gender-ambiguous text-green fs-6 me-3"></span>
                                 </div>
-                                <div class="fs-md">Male</div>
+                                <div class="fs-md">{{userData?.gender}}</div>
                             </div>
                             <div class="d-flex  mb-3">
                                 <div class="bi bi-credit-card-2-front text-green fs-6 me-3"></div> 
                                 <div>
-                                    <p class="fs-md mb-0">5451 1981 2001</p>
+                                    <p class="fs-md mb-0">{{userData?.userId}}</p>
                                 </div>
                             </div>
                             <div class="d-flex  mb-3">
                                 <div class="bi bi-telephone text-green fs-6 me-3"></div> 
                                 <div>
-                                    <p class="fs-md mb-0">+91 876543210</p>
+                                    <p class="fs-md mb-0">{{userData?.mobileNo}}</p>
                                 </div>
                             </div>
-                            <div class="d-flex  mb-3">
+                            <!-- <div class="d-flex  mb-3">
                                 <div class="bi bi-geo-alt text-green fs-6 me-3"></div> 
                                 <div>
                                     <p class="fs-md mb-0">SR Nagar Main Rd, near S.R.Nagar Traffic Police Station, Srinivasa Nagar, Sanjeeva Reddy Nagar, Hyderabad</p>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
