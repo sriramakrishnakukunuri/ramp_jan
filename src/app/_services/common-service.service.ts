@@ -12,7 +12,7 @@ export class CommonServiceService {
   private formatErrors(error: HttpErrorResponse) {
     return throwError(() => error);
   }
-  public changePassword(url:any,Payload:any): Observable<any> {     
+  public changePassword(url:any,Payload:any) {     
     let headers = new HttpHeaders({
         'Content-Type': 'application/json',
         'responseType': 'json',
@@ -26,7 +26,12 @@ export class CommonServiceService {
   public add(URL: any, payload: any): Observable<any> {
     return this.http.post(URL, payload).pipe(catchError(this.formatErrors));
   }
- 
+  public updateChangedata(URL: any, payload: any,): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+    return this.http.put(URL,payload,{ headers }).pipe(catchError(this.formatErrors));
+  }
   public update(URL: any, payload: any, id: number | string): Observable<any> {
     return this.http.put(URL + id, payload).pipe(catchError(this.formatErrors));
   }

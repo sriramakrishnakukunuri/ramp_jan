@@ -54,12 +54,57 @@ export class VerificationParticipantComponent implements OnInit {
     this.getParticipantByUpdate=data
     console.log(data)
     this.verificationForm.reset();
-    this.verificationForm.patchValue({verificationStatusId:data?.ccVerificationStatusId})
-    console.log(this.verificationForm,data?.ccVerificationStatusId)
+    if(data?.ccVerificationStatusId && data?.questionAnswersList){
+      if(data?.ccVerificationStatusId==1){
+        this.showQuestions = true;
+      }
+     
+      this.verificationForm.patchValue(this.mapToVerificationForm(data, this.verificationForm?.value))
+    }
+    else{
+      this.showQuestions = false;
+      this.verificationForm.patchValue({verificationStatusId:7})
+    }
+   
+    console.log(this.verificationForm.value,data?.ccVerificationStatusId)
     // this.verificationForm.get('verificationStatusId')?.setValue(data?.ccVerificationStatusId)
     // this.fVerf['verificationStatusId'].patchValue(data?.ccVerificationStatusId)
 
   }
+  mapToVerificationForm(response: any,fromdata:any): any {
+    const form:any = {
+      verificationStatusId: response.ccVerificationStatusId
+  };
+  
+  response.questionAnswersList.forEach((qa:any) => {
+      const key = `question_${qa.question.questionId}`;
+      
+      if (qa.question.questionType === "RadioButton") {
+          form[key] = qa.answers || null;
+      } else if (qa.question.questionType === "checkBox") {
+          form[key] = qa.answers ? qa.answers.split(',') : [null, null, null];
+      }
+  });
+  console.log(form)
+  return form;
+
+    // const verificationForm = {...fromdata,verificationStatusId: response.ccVerificationStatusId,};
+
+    // // Map each question answer
+    // response.questionAnswersList.forEach((qa: any) => {
+    //   const questionId = qa.question.questionId;
+    //   const answer = qa.answers === 'null' ? null : qa.answers;
+      
+    //   if (questionId === 1) {
+    //     verificationForm.question_1 = answer;
+    //   } else if (questionId === 2) {
+    //     verificationForm.question_2 = answer;
+    //   }
+    // });
+
+    // return verificationForm;
+  }
+
   // Load Agencies
   loadAgencies(): void {
     this._commonService.getDataByUrl(APIS.masterList.agencyList).subscribe({
@@ -187,7 +232,7 @@ export class VerificationParticipantComponent implements OnInit {
         this.verificationForm.addControl(`question_${question.questionId}`, new FormControl(''));
       } else if (question.questionType === 'checkBox') {
         // For checkboxes, we'll create a FormArray
-        const answers = question.answers.split(',').map((item:any) => item.trim());
+        const answers = question?.answers?.split(',').map((item:any) => item.trim());
         const checkboxControls = answers.map(() => new FormControl(false));
         this.verificationForm.addControl(`question_${question.questionId}`, new FormArray(checkboxControls));
       }
@@ -216,7 +261,7 @@ export class VerificationParticipantComponent implements OnInit {
   }
 
   getAnswersArray(answersString: string): string[] {
-    return answersString.split(',').map(item => item.trim());
+    return answersString?.split(',').map(item => item.trim());
   }
 
   // update 

@@ -76,8 +76,13 @@ export class PasswordSettingsComponent implements OnInit {
 
 changePassword() {
   console.log(this.changePasswordForm.value)
-  debugger
- this._commonService.changePassword(APIS.masterList.changePassword,this.changePasswordForm.value).subscribe({
+  let payload:any={
+    "userId": this.changePasswordForm.value?.userId,
+    "oldPassword": this.changePasswordForm.value?.oldPassword,
+    "newPassword": this.changePasswordForm.value?.newPassword
+}
+debugger
+ this._commonService.updateChangedata(APIS.masterList.changePassword,payload).subscribe({
   next:(data:any)=>{
     debugger
         console.log(data)
