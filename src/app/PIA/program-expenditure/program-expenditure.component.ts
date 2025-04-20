@@ -31,8 +31,7 @@ export class ProgramExpenditureComponent implements OnInit {
     this.formDetails()
     this.formDetailsPre()
     this.formDetailsBulk()
-    this.getExpenditure()
-    this.getBulkExpenditure()
+    
    
     this.programCreationMain.controls['activityId'].valueChanges.subscribe((activityId: any) => {
       if (activityId) this.getSubActivitiesList(activityId);
@@ -49,6 +48,7 @@ export class ProgramExpenditureComponent implements OnInit {
     return this.BulkExpenditureForm.controls;
   }
   @ViewChild('preEventModal') preEventModal!: ElementRef;
+  @ViewChild('BulkEvenModal') BulkEvenModal!: ElementRef;
   activityList: any
   subActivitiesList: any
   programCreationMain!: FormGroup;
@@ -68,6 +68,18 @@ export class ProgramExpenditureComponent implements OnInit {
   programData:any={}
   getProgramDetailsById(ProgrmId:any){
     this.programData=[]
+    if(this.expenditureType=='Bulk'){
+      this.TotalAmount=0
+      // this.getBulkExpenditure()
+      this.getExpenditure()
+    }
+    else{
+      this.TotalAmount=0
+      this.getExpenditure()
+      // this.getBulkExpenditure()
+    }
+    
+    
     if(ProgrmId){
       this._commonService.getById(APIS.programCreation.getSingleProgramsList, ProgrmId)?.subscribe({
         next: (data: any) => {
@@ -170,44 +182,29 @@ export class ProgramExpenditureComponent implements OnInit {
     })
   }
   formDetailsBulk() {
-    // {
-    //   "agencyId": 1,
-    //   "itemName": "Welcome kit",
-    //   "purchaseDate": "2025-04-15",
-    //   "purchasedQuantity": 20,
-    //   "headOfExpenseId": 3,
-    //   "unitCost": 1500.00,
-    //   "billNo": 456789,
-    //   "billDate": "2025-04-16",
-    //   "payeeName": "ABC Furnitures Ltd.",
-    //   "bankName": "State Bank of India",
-    //   "ifscCode": "SBIN0001234",
-    //   "modeOfPayment": "CASH",  
-    //   "remarks": "Procurement for new office setup",
-    //   "uploadBillUrl": "https://example.com/uploads/bill456789.pdf"
-    // }
     this.BulkExpenditureForm = new FormGroup({
       itemName: new FormControl("", [Validators.required]),
-      purchaseDate: new FormControl("", [Validators.required]),
-      purchasedQuantity: new FormControl("", [Validators.required]),
-      headOfExpenseId: new FormControl("", [Validators.required]),
-      unitCost: new FormControl("", [Validators.required]),
-      billNo: new FormControl("", [Validators.required]),
-      billDate: new FormControl("", [Validators.required]),
-      payeeName: new FormControl("", [Validators.required]),
-      bankName: new FormControl("", [Validators.required]),
-      ifscCode: new FormControl("", [Validators.required]),
-      modeOfPayment: new FormControl("", [Validators.required]),
-      remarks: new FormControl("", ),
-      uploadBillUrl: new FormControl("",),
+      purchaseDate: new FormControl("",),
+      purchasedQuantity: new FormControl("",),
+      headOfExpenseId: new FormControl("",[Validators.required]),
+      unitCost: new FormControl("",),
+      bulkExpenditureId: new FormControl("",),
+      availableQuantity: new FormControl("", ),
+      consumedQuantityFromBulk: new FormControl("", ),
+      consumedQuantity: new FormControl("", [Validators.required]),
+      allocatedCost: new FormControl("", ),
     })
   }
   ChangeexpenditureType(event:any,val:any){
     this.expenditureType=val
     if(val=='Bulk'){
-      this.getBulkExpenditure()
+      this.TotalAmount=0
+      // this.getBulkExpenditure()
+      this.getExpenditure()
     }
     else{
+      this.TotalAmount=0
+      // this.getBulkExpenditure()
       this.getExpenditure()
     }
   }
@@ -223,17 +220,60 @@ export class ProgramExpenditureComponent implements OnInit {
         },
       });
   }
+  GetItemsData:any
+  getHeadOfExpenseId(val:any){
+    this.GetItemsData=[]
+    if(val){
+      this._commonService.getDataByUrl(APIS.programExpenditure.getItemByExpenses+'='+val,)?.subscribe({
+        next: (data: any) => {
+         if(data){
+           this.GetItemsData = data;
+         }
+        },
+        error: (err: any) => {
+          this.toastrService.error(err.message, "Error fetching program details!");
+        }
+      });
+    }
+  }
+  getBulkByItem:any
+  getBulkDataByItem(val:any,expenseId:any){
+    this.getBulkByItem=[]
+    if(val && expenseId){
+      this._commonService.add(APIS.programExpenditure.getBulkDataByExpensesItem,{"expenseId": expenseId,"itemName": val})?.subscribe({
+        next: (data: any) => {
+         if(data){
+           this.getBulkByItem = data;
+           this.BulkExpenditureForm.patchValue({"purchasedQuantity": this.getBulkByItem?.purchasedQuantity,"unitCost": this.getBulkByItem?.unitCost,"purchaseDate": this.getBulkByItem?.purchaseDate.substring(0,10),"consumedQuantityFromBulk": this.getBulkByItem?.consumedQuantity,"bulkExpenditureId": this.getBulkByItem?.bulkExpenditureId,"availableQuantity": this.getBulkByItem?.availableQuantity})
+         }
+        },
+        error: (err: any) => {
+          this.toastrService.error(err.message, "Error fetching program details!");
+        }
+      });
+    }
+  }
+  calcCostAllocated(Val:any){
+    this.fBulk['allocatedCost'].setValue(Val*this.fBulk['unitCost'].value)
+  }
   OpenModal():any{
     
     if(this.programCreationMain.value.activityId && this.programCreationMain.value.subActivityId && this.programCreationMain.value.programId){
       this.PrePostExpenditureForm.reset()
-      const modal = new bootstrap.Modal(this.preEventModal.nativeElement);
+      if(this.expenditureType=='Bulk'){
+        const modal = new bootstrap.Modal(this.BulkEvenModal.nativeElement);
         modal.show();
+      }
+      else{
+        const modal = new bootstrap.Modal(this.preEventModal.nativeElement);
+        modal.show();
+      }
+      
         // this.formModel = new window.bootstrap.Modal(document.getElementById("addInventory")    );
       // return true;;
     }
     else{
-      this.toastrService.warning('Please select Activity,subactivity,Program then only you have to enter data')
+      this.toastrService.warning('Please select Activity,subactivity,Program then only you have to Add '+this.expenditureType+' Expenditure')
       // return false;
      
     }
@@ -247,33 +287,41 @@ export class ProgramExpenditureComponent implements OnInit {
         .add(APIS.programExpenditure.saveExpenditure, payload).subscribe({
           next: (data: any) => {
             if(data?.status==400){
-              this.toastrService.error(data?.message, this.expenditureType +"Expenditure Data Error!");
+              this.toastrService.error(data?.message, this.expenditureType +" Expenditure Data Error!");
             }
             else{
               this.PrePostExpenditureForm.reset();
+              this.TotalAmount=0
               this.getExpenditure()
+              // this.getBulkExpenditure()
+              
              
-            this.toastrService.success( this.expenditureType +'Expenditure Added Successfully', this.expenditureType +"Expenditure Data Success!");
+            this.toastrService.success( this.expenditureType +' Expenditure Added Successfully', this.expenditureType +" Expenditure Data Success!");
             }
             
           },
           error: (err) => {
             
-            this.toastrService.error(err.message, this.expenditureType +"Expenditure Data Error!");
+            this.toastrService.error(err.message, this.expenditureType +" Expenditure Data Error!");
             new Error(err);
           },
         });
   }
   getExpenditureData:any=[]
+  getExpenditureDataBoth:any=[]
   TotalAmount:any=0
   getExpenditure(){
     this.getExpenditureData=[]
-    this.TotalAmount=0
-    this._commonService
-        .getById(APIS.programExpenditure.getExpenditure,this.expenditureType).subscribe({
+    this.getExpenditureDataBoth=[]
+    if(this.f2['programId'].value){
+      this._commonService
+        .getDataByUrl(APIS.programExpenditure.getExpenditure+'?programId='+this.f2['programId'].value+'&expenditureType='+'PRE').subscribe({
           next: (data: any) => {
            if(data?.data){
             this.getExpenditureData=data?.data
+            this.getExpenditureDataBoth=[...this.getExpenditureDataBoth,...data?.data]
+            // this.getExpenditure()
+            this.getPost()
             this.reinitializeDataTable();
             this.getExpenditureData?.map((item:any)=>{
               this.TotalAmount+=item?.cost
@@ -283,35 +331,72 @@ export class ProgramExpenditureComponent implements OnInit {
           },
           error: (err) => {
             
-            this.toastrService.error(err.message, this.expenditureType +"Expenditure Data Error!");
+            this.toastrService.error(err.message, this.expenditureType +" Expenditure Data Error!");
+            new Error(err);
+          },
+        });
+        
+    }
+    
+  }
+  getPost(){
+    this._commonService
+        .getDataByUrl(APIS.programExpenditure.getExpenditure+'?programId='+this.f2['programId'].value+'&expenditureType='+'POST').subscribe({
+          next: (data: any) => {
+           if(data?.data){
+            this.getExpenditureData=data?.data
+            this.getExpenditureDataBoth=[...this.getExpenditureDataBoth,...data?.data]
+            this.getBulkExpenditure()
+            this.reinitializeDataTable();
+            this.getExpenditureData?.map((item:any)=>{
+              this.TotalAmount+=item?.cost
+            })
+           }
+            
+          },
+          error: (err) => {
+            
+            this.toastrService.error(err.message, this.expenditureType +" Expenditure Data Error!");
             new Error(err);
           },
         });
   }
   // save Bulk expenditure
   BulkExpenditureSubmit(){
-    let payload={...this.BulkExpenditureForm.value,agencyId:this.agencyId}
-    console.log(payload)
+    let payload1:any={
+      "activityId": this.programCreationMain.value?.activityId,
+      "subActivityId": this.programCreationMain.value?.subActivityId,
+      "programId": this.programCreationMain.value?.programId,
+      "agencyId": this.agencyId,
+      // "expenditureType": "PRE",
+      "headOfExpenseId": this.BulkExpenditureForm.value?.headOfExpenseId,
+      "bulkExpenditureId": this.BulkExpenditureForm.value?.bulkExpenditureId,
+      "consumedQuantity": this.BulkExpenditureForm.value?.consumedQuantity,
+      "allocatedCost":this.BulkExpenditureForm.value?.allocatedCost
+  }
+    // let payload={...this.BulkExpenditureForm.value,agencyId:this.agencyId}
+    // console.log(payload)
     this._commonService
-        .add(APIS.programExpenditure.savebulkExpenditure, payload).subscribe({
+        .add(APIS.programExpenditure.savebulkByItemExpenditure, payload1).subscribe({
           next: (data: any) => {
             if(data?.status==400){
-              this.toastrService.error(data?.message, this.expenditureType +"Expenditure Data Error!");
+              this.toastrService.error(data?.message, this.expenditureType +" Expenditure Data Error!");
             }
             else{
               this.BulkExpenditureForm.reset()
-              this.getBulkExpenditure()
+              this.TotalAmount=0
+              this.getExpenditure()
               // this.advanceSearch(this.getSelDataRange);
           
             // this.formDetails()
             // modal.close()
-            this.toastrService.success( this.expenditureType +'Expenditure Added Successfully', this.expenditureType +"Expenditure Data Success!");
+            this.toastrService.success( this.expenditureType +' Expenditure Added Successfully', this.expenditureType +" Expenditure Data Success!");
             }
             
           },
           error: (err) => {
             
-            this.toastrService.error(err.message, this.expenditureType +"Expenditure Data Error!");
+            this.toastrService.error(err.message, this.expenditureType +" Expenditure Data Error!");
             new Error(err);
           },
         });
@@ -324,26 +409,33 @@ export class ProgramExpenditureComponent implements OnInit {
     this.BulkTotalUnitCost=0
     this.BulkTotalCost=0
     this.BulkExpenditureForm.reset()
-    this._commonService
-        .getDataByUrl(APIS.programExpenditure.getBulkExpenditure).subscribe({
-          next: (data: any) => {
-            if(data?.data){
-              this.getBulkExpenditureData=data?.data
-              this.reinitializeDataTableBulk();
-              this.getBulkExpenditureData?.map((item:any)=>{
-                this.BulkTotalUnitCost+=item?.unitCost
-                this.BulkTotalCost+=item?.totalCost
-              })
-            }
+    if(this.f2['programId'].value){
+      this._commonService
+      .getDataByUrl(APIS.programExpenditure.getBulkExpenditureByProgramId+'?programId='+this.f2['programId'].value).subscribe({
+        next: (data: any) => {
+          if(data?.data){
            
-            
-          },
-          error: (err) => {
-            
-            this.toastrService.error(err.message, this.expenditureType +"Expenditure Data Error!");
-            new Error(err);
-          },
-        });
+           
+            this.getExpenditureDataBoth=[...this.getExpenditureDataBoth,...data?.data]
+             console.log( this.getExpenditureData,data?.data,this.getExpenditureDataBoth)
+            this.getBulkExpenditureData=data?.data
+            this.reinitializeDataTableBulk();
+            this.getBulkExpenditureData?.map((item:any)=>{
+              this.BulkTotalUnitCost+=item?.unitCost
+              this.TotalAmount+=item?.allocatedCost
+            })
+          }
+         
+          console.log(this.TotalAmount)
+        },
+        error: (err) => {
+          
+          this.toastrService.error(err.message, this.expenditureType +" Expenditure Data Error!");
+          new Error(err);
+        },
+      });
+    }
+   
   }
   dataTable: any;
     reinitializeDataTable() {

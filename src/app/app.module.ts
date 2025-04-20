@@ -47,6 +47,7 @@ import { RawMaterialsParticipantsComponent } from './PIA/raw-materials-participa
 import { MaterialModule } from './shared/material/material/material.module';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { ProgramExpenditureComponent } from './PIA/program-expenditure/program-expenditure.component';
+import { BulkExpenditureComponent } from './PIA/bulk-expenditure/bulk-expenditure.component';
 
 @NgModule({
     imports: [
@@ -100,6 +101,7 @@ import { ProgramExpenditureComponent } from './PIA/program-expenditure/program-e
           VerificationParticipantComponent,
            RawMaterialsParticipantsComponent,
            ProgramExpenditureComponent,
+           BulkExpenditureComponent,
     ],
     exports:[MaterialModule],
     providers: [

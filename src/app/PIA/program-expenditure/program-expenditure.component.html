@@ -63,11 +63,11 @@
                     </div>
                 </div>
             </form>
-                <div class="card mb-4" *ngIf="expenditureType=='PRE' || expenditureType=='POST'">
+                <div class="card mb-4" >
                     <div class="card-header bg-transparent">
                         <div class="row align-items-center">
                             <div class="col-8 col-sm-8 col-md-9 col-lg-10">
-                                <h6 class="fw-600 mb-2 mb-sm-3 mb-md-0">{{this.expenditureType=='PRE'?'Pre':'Post'}} Event Expenditure</h6>
+                                <h6 class="fw-600 mb-2 mb-sm-3 mb-md-0"> Event Expenditure</h6>
                             </div>
                             <div class="col-4 col-sm-4 col-md-3 col-lg-2">
                                 <div class="text-end">
@@ -78,11 +78,12 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <table id="expenditure-table" class="table table-bordered nowrap w-100">
+                        <!-- id="expenditure-table" -->
+                        <table  class="table table-bordered nowrap w-100">
                             <thead class="bg-lime-green text-white">
                                 <tr>
                                     <th>S.No</th>
-                                    <th>Events Expenditure</th>
+                                    <th>Type Of Expenditure</th>
                                     <th>Head of Expense</th>
                                     <th>Amount (INR)</th>
                                     <th>Bill No.</th>
@@ -91,52 +92,52 @@
                                     <th>Bank</th>
                                     <th>IFSC Code</th>
                                     <th>Mode of Payment</th>
-                                    <th>Purpose</th>
-                                    <th>Upload Bill</th>
+                                    <!-- <th>Purpose</th> -->
+                                    <!-- <th>Upload Bill</th> -->
                                     <th class="text-center">Edit / Delete</th>
                                 </tr>
                             </thead>
-                            <tbody *ngIf="getExpenditureData?.length">
-                                <tr  *ngFor="let item of getExpenditureData; let i=index">
+                            <tbody *ngIf="getExpenditureDataBoth?.length">
+                                <tr  *ngFor="let item of getExpenditureDataBoth; let i=index">
                                     <td class="text-start">{{i+1}}</td>
                                     <td>{{item?.expenditureType}}</td>
                                     <td>{{item?.headOfExpense}}</td>
-                                    <td>{{item?.cost}}</td>
+                                    <td>{{item?.cost?item?.cost:item?.allocatedCost}}</td>
                                     <td>{{item?.billNo}}</td>
                                     <td>{{item?.billDate}}</td>
                                     <td>{{item?.payeeName}}</td>
                                     <td>{{item?.bankName}}</td>
                                     <td>{{item?.ifscCode}}</td>
                                     <td>{{item?.modeOfPayment}}</td>
-                                    <td>{{item?.purpose}}</td>
-                                    <td>{{item?.uploadBillUrl}}</td>
+                                    <!-- <td>{{item?.purpose}}</td> -->
+                                    <!-- <td>{{item?.uploadBillUrl}}</td> -->
                                     <td class="text-center">
                                         <button type="button" class="btn btn-default text-lime-green btn-sm"><span class="bi bi-pencil"></span></button>
                                         <button type="button" class="btn btn-default text-danger btn-sm"><span class="bi bi-trash"></span></button>
                                     </td>
                                 </tr>
                             </tbody>
-                            <!-- <tfoot *ngIf="getExpenditureData?.length">
+                            <tbody *ngIf="getExpenditureDataBoth?.length">
                                 <tr>
                                     <td></td>
                                     <td></td>
                                     <td>Total</td>
                                     <td>{{TotalAmount}}</td>
                                     <td></td>
+                                    
                                     <td></td>
                                     <td></td>
                                     <td></td>
                                     <td></td>
                                     <td></td>
                                     <td></td>
-                                    <td></td>
-                                    <td></td>
+                                   
                                 </tr>
-                            </tfoot> -->
+                            </tbody>
                         </table>
                     </div>
                 </div>
-                <div class="card mb-3" *ngIf="expenditureType=='Bulk'">
+                <!-- <div class="card mb-3" >
                     <div class="card-header bg-transparent">
                         <div class="row align-items-center">
                             <div class="col-8 col-sm-8 col-md-9 col-lg-10">
@@ -144,7 +145,7 @@
                             </div>
                             <div class="col-4 col-sm-4 col-md-3 col-lg-2">
                                 <div class="text-end">
-                                    <button type="button" class="btn btn-sm btn-lime-green" data-bs-toggle="modal" data-bs-target="#bulkModal"><span class="bi bi-plus-lg"></span> Add</button>
+                                    <button type="button" class="btn btn-sm btn-lime-green" (click)="OpenModal()" ><span class="bi bi-plus-lg"></span> Add</button>
                                 </div>
                             </div>
                         </div>
@@ -157,7 +158,7 @@
                                     <th>Head of Expense</th>
                                     <th>Name of Item</th>
                                     <th>Purchase Date</th>
-                                    <th>Quantity Purchased</th>
+                                    <th>Total Quantity Purchased</th>
                                     <th>Unit Price</th>
                                     <th>Total Cost</th>
                                     <th>Bill No.</th>
@@ -165,6 +166,9 @@
                                     <th>Payee Name</th>
                                     <th>Bank</th>
                                     <th>IFSC Code</th>
+                                    <th>Available Qunatity</th>
+                                    <th>Qunatity Consumed for this program</th>
+                                    <th>Cost Allocated</th>
                                     <th class="text-center">Edit / Delete</th>
                                 </tr>
                             </thead>
@@ -182,6 +186,9 @@
                                     <td>{{item?.payeeName}}</td>
                                     <td>{{item?.bankName}}</td>
                                     <td>{{item?.ifscCode}}</td>
+                                    <td>{{item?.availableQuantity}}</td>
+                                    <td>{{item?.consumedQuantity}}</td>
+                                    <td>{{item?.allocatedCost}}</td>
                                     <td class="text-center">
                                         <button type="button" class="btn btn-default text-lime-green btn-sm"><span class="bi bi-pencil"></span></button>
                                         <button type="button" class="btn btn-default text-danger btn-sm"><span class="bi bi-trash"></span></button>
@@ -189,7 +196,7 @@
                                 </tr>
                               
                             </tbody>
-                            <!-- <tr *ngIf="getBulkExpenditureData?.length">
+                            <tr *ngIf="getBulkExpenditureData?.length">
                                 <td></td>
                                 <td></td>
                                 <td></td>
@@ -203,10 +210,10 @@
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                            </tr> -->
+                            </tr>
                         </table>            
                     </div>
-                </div>
+                </div> -->
                 
             </div>
        
@@ -320,7 +327,7 @@
 <!-- end:: pre/post event expenditure modal -->
 
  <!-- begin:: bulk expenditure modal -->
- <div class="modal fade" id="bulkModal" tabindex="-1" aria-labelledby="bulkLabel" aria-hidden="true">
+ <div class="modal fade" id="bulkModal"  #BulkEvenModal tabindex="-1" aria-labelledby="bulkLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-xl">
         <div class="modal-content">
             <div class="modal-header py-2">
@@ -332,7 +339,7 @@
                     <div class="row">
                         <div class="col-12 col-sm-6 col-md-4 col-lg-4">
                             <div class="form-floating mb-3">
-                                <select class="form-select" id="headExpense" formControlName="headOfExpenseId"   name="headOfExpenseId" >
+                                <select class="form-select" id="headExpense" formControlName="headOfExpenseId"   name="headOfExpenseId" (change)="getHeadOfExpenseId($any($event.target).value)" >
                                     <option value="#">Select Head of expense</option>
                                     <option value="{{list.expenseId}}" *ngFor="let list of ExpenditureData">{{list.expenseName}}</option>
                                 </select>
@@ -343,11 +350,11 @@
                         </div>
                         <div class="col-12 col-sm-6 col-md-4 col-lg-4">
                             <div class="form-floating mb-3">
-                                <!-- <select class="form-select" id="item" formControlName="itemName"   name="itemName">
-                                    <option value="#">Select Item</option>
-                                    <option value="1">Item 1</option>
-                                </select> -->
-                                <input type="text" class="form-control" placeholder="Item Name" formControlName="itemName"   name="itemName" id="item" />
+                                <select class="form-select" id="item" formControlName="itemName"   name="itemName" (change)="getBulkDataByItem($any($event.target).value,this.fBulk['headOfExpenseId'].value)">
+                                    <option value="">Select Item</option>
+                                    <option value="{{list}}" *ngFor="let list of GetItemsData">{{list}}</option>
+                                </select>
+                                <!-- <input type="text" class="form-control" placeholder="Item Name" formControlName="itemName"   name="itemName" id="item" /> -->
                                 <label for="item">Name of Item <span class="c-red"> *</span></label>
                             </div>
                             <div *ngIf="fBulk['itemName'].touched && !fBulk['itemName'].valid" class="error"
@@ -360,7 +367,7 @@
                             </div>
                         </div> -->
                     </div>
-                    <fieldset class="mb-3">
+                    <!-- <fieldset class="mb-3">
                         <legend class="text-lime-green">Quantity Purchased</legend>
                         <div class="row">                                
                             <div class="col-12 col-sm-6 col-md-4 col-lg-4">
@@ -384,92 +391,74 @@
                                     <input type="number" class="form-control" id="bill" formControlName="unitCost"    name="unitCost"  placeholder="bill" />
                                     <label for="bill">Unit Price <span class="c-red"> *</span></label>
                                 </div>
-                                <div *ngIf="fBulk['unitCost'].touched && !fBulk['unitCost'].valid" class="error"
+                                <div *ngIf="fBulk['availableQuantity'].touched && !fBulk['unitCost'].valid" class="error"
                                 style="color: red;">Unit Price   is required</div>
                             </div>
-                            <!-- <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-4">
                                 <div class="form-floating mb-0">
                                     <input type="text" class="form-control" id="cost" formControlName="purchasedQuantity"    name="purchasedQuantity"  placeholder="cost date" />
                                     <label for="cost">Total Cost</label>
                                 </div>
-                            </div> -->
+                            </div>
+                        </div>
+                    </fieldset> -->
+                    <fieldset class="mb-3">
+                        <legend class="text-lime-green">Quantity Purchased</legend>
+                        <div class="row">
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                                <div class="form-floating mb-3">
+                                    <input type="text" readonly class="form-control" formControlName="purchasedQuantity"   name="purchasedQuantity"  id="quantity" placeholder="total quantity">
+                                    <label for="quantity">Total Quantity Purchased</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                                <div class="form-floating mb-3">
+                                    <input type="text" readonly class="form-control" formControlName="unitCost"   name="unitCost"  id="bill" placeholder="bill">
+                                    <label for="bill">Unit Price</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                                <div class="form-floating mb-3">
+                                    <input type="date" readonly class="form-control" formControlName="purchaseDate"   name="purchaseDate"  id="billDate" placeholder="bill date">
+                                    <label for="billDate">Date Of Purchase</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                                <div class="form-floating mb-3 mb-sm-0">
+                                    <input type="text" readonly class="form-control" formControlName="consumedQuantityFromBulk"   name="consumedQuantityFromBulk"  id="payeename" placeholder="payeename">
+                                    <label for="payeename">Quantity Consumed Already</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                                <div class="form-floating mb-0">
+                                    <input type="text" readonly class="form-control" formControlName="availableQuantity"   name="availableQuantity"  id="bank" placeholder="bank">
+                                    <label for="bank">Quantity Available</label>
+                                </div>
+                            </div>
                         </div>
                     </fieldset>
+                   
                     <div class="row">
                         <div class="col-12 col-sm-6 col-md-4 col-lg-4">
                             <div class="form-floating mb-3">
-                                <input type="number" class="form-control" id="bill" placeholder="bill no." formControlName="billNo"    name="billNo">
-                                <label for="bill">Bill No.<span class="c-red"> *</span></label>
+                                <input type="number" class="form-control" formControlName="consumedQuantity"  name="consumedQuantity" id="consumed" placeholder="consumed" (input)="calcCostAllocated($any($event.target).value)">
+                                <label for="consumed">Quantity Consumed For This Program</label>
                             </div>
-                            <div *ngIf="fBulk['billNo'].touched && !fBulk['billNo'].valid" class="error"
-                            style="color: red;">Bill No. is required</div>
+                            <div *ngIf="fBulk['consumedQuantity'].touched && !fBulk['consumedQuantity'].valid" class="error"
+                            style="color: red;">Quantity Consumed For This Program is required</div>
+                            <div *ngIf="fBulk['consumedQuantity'].value > fBulk['availableQuantity'].value" class="error"> Entered Quantity should be less than Or equal to Available Qunatity</div>
                         </div>
                         <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                             <div class="form-floating mb-3">
-                                <input type="date" class="form-control" id="billDate" placeholder="Bill Date" formControlName="billDate"    name="billDate" >
-                                <label for="billDate">Bill Date<span class="c-red"> *</span></label>
+                                <input type="number" class="form-control" id="cose" readonly formControlName="allocatedCost"  name="allocatedCost" placeholder="cost">
+                                <label for="codt">Cost Allocated</label>
                             </div>
-                            <div *ngIf="fBulk['billDate'].touched && !fBulk['billDate'].valid" class="error"
-                            style="color: red;">Bill Date is required</div>
                         </div>
                     </div>
-                    <fieldset class="mb-3">
-                        <legend class="text-lime-green">Bank Details</legend>
-                        <div class="row">                                
-                            <div class="col-12 col-sm-6 col-md-4 col-lg-4">
-                                <div class="form-floating mb-3 mb-sm-3 mb-md-0">
-                                    <input type="text" class="form-control" placeholder="Payee Name" id="payeeName" formControlName="payeeName"    name="payeeName" />
-                                    <label for="payeeName">Payee Name<span class="c-red"> *</span></label>
-                                </div>
-                                <div *ngIf="fBulk['payeeName'].touched && !fBulk['payeeName'].valid" class="error"
-                                style="color: red;">Payee Name is required</div>
-                            </div>
-                            <div class="col-12 col-sm-6 col-md-4 col-lg-4">
-                                <div class="form-floating mb-3 mb-sm-3 mb-md-0">
-                                    <input type="text" class="form-control" id="bank" placeholder="bank" formControlName="bankName"    name="bankName" />
-                                    <label for="bank">Bank<span class="c-red"> *</span></label>
-                                </div>
-                                <div *ngIf="fBulk['bankName'].touched && !fBulk['bankName'].valid" class="error"
-                                style="color: red;">Bank Name is required</div>
-                            </div>
-                            <div class="col-12 col-sm-6 col-md-4 col-lg-4">
-                                <div class="form-floating mb-3 mb-sm-0 mb-md-0">
-                                    <input type="text" class="form-control" id="ifsc" placeholder="ifsc" formControlName="ifscCode"    name="ifscCode" >
-                                    <label for="ifsc">IFSC Code<span class="c-red"> *</span></label>
-                                </div>
-                                <div *ngIf="fBulk['ifscCode'].touched && !fBulk['ifscCode'].valid" class="error"
-                                style="color: red;">IFSC Code is required</div>
-                            </div>
-                            <div class="col-12 col-sm-6 col-md-4 col-lg-3 mt-2">
-                                <div class="form-floating mb-3">
-                                    <select class="form-select" id="modePayment" formControlName="modeOfPayment"  name="modeOfPayment">
-                                        <option value="#">Select Mode</option>
-                                        <option value="BANK_TRANSFER">Bank Transfer</option>
-                                        <option value="CASH">Cash</option>
-                                    </select>
-                                    <label for="modePayment">Mode Of Payment<span class="c-red"> *</span></label>
-                                </div>
-                                <div *ngIf="fBulk['modeOfPayment'].touched && !fBulk['modeOfPayment'].valid" class="error"
-                                style="color: red;">Mode Of Payment is required</div>
-                            </div>
-                            <div class="col-12 col-sm-6 col-md-4 col-lg-3 mt-2">
-                                <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="Remarks" placeholder="remarks" formControlName="remarks"  name="Remarks">
-                                    <label for="Remarks">Remarks</label>
-                                </div>
-                            </div>
-                            <div class="col-12 col-sm-6 col-md-4 col-lg-3 mt-2">
-                                <div class="form-floating mb-3">
-                                    <input type="file" class="form-control" id="upload" placeholder="upload file" formControlName="uploadBillUrl"  name="uploadBillUrl">
-                                    <label for="upload">Upload File</label>
-                                </div>
-                            </div>
-                        </div>
-                    </fieldset>
                 </form>
 
                 <div class="text-end mt-3">
-                    <button type="button" class="btn btn-lime-green" data-bs-dismiss="modal" [ngClass]="{'disabled': BulkExpenditureForm.invalid}" (click)="BulkExpenditureSubmit()">Add Bulk Expenditure</button>
+                    <button type="button" class="btn btn-lime-green" data-bs-dismiss="modal" [ngClass]="{'disabled': BulkExpenditureForm.invalid || fBulk['consumedQuantity'].value >fBulk['availableQuantity'].value}" (click)="BulkExpenditureSubmit()">Add Bulk Expenditure</button>
                 </div>
             </div>
         </div>
