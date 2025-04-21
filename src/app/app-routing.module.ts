@@ -29,6 +29,7 @@ import { AttentanceParticipantComponent } from './PIA/attentance-participant/att
 import { VerificationParticipantComponent } from './CALL_CENTER/verification-participant/verification-participant.component';
 import { RawMaterialsParticipantsComponent } from './PIA/raw-materials-participants/raw-materials-participants.component';
 import { ProgramExpenditureComponent } from './PIA/program-expenditure/program-expenditure.component';
+import { BulkExpenditureComponent } from './PIA/bulk-expenditure/bulk-expenditure.component';
 
 const routes: Routes = [
     {
@@ -177,6 +178,12 @@ const routes: Routes = [
     {
         path: 'program-expenditure',
         component: ProgramExpenditureComponent,
+        canActivate: [AuthGuard],
+        data: { roles:  [Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR]}
+    },
+    {
+        path: 'bulk-expenditure',
+        component: BulkExpenditureComponent,
         canActivate: [AuthGuard],
         data: { roles:  [Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR]}
     },

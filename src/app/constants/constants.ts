@@ -76,10 +76,14 @@ export const APIS = {
         saveAttendance:API_BASE_URL +`/program/rawmaterial`,
     },
     programExpenditure:{
+        getItemByExpenses:API_BASE_URL +`/bulk/transactions/items?expenseId`,
+        getBulkDataByExpensesItem:API_BASE_URL +`/bulk/transactions/lookup`,
         getHeadOfExpenditure:API_BASE_URL +`/expenses`,
         saveExpenditure:API_BASE_URL +`/program/expenditure/save`,
         savebulkExpenditure:API_BASE_URL +`/bulk/expenditure/save`,
-        getExpenditure:API_BASE_URL +`/program/expenditure/`,
+        savebulkByItemExpenditure:API_BASE_URL +`/bulk/transactions/save`,
+        getExpenditure:API_BASE_URL +`/program/expenditure`,
         getBulkExpenditure:API_BASE_URL +`/bulk/expenditure`,
+        getBulkExpenditureByProgramId:API_BASE_URL +`/bulk/transactions`,
     }
 }
