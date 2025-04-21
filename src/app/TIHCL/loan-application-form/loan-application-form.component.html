@@ -19,9 +19,9 @@
                         <span class="bi bi-telephone"></span> Contact: 040-232363990
                     </p>
                 </div>
-                <div class="application-status" *ngIf="showApplicationMenu == false">
+                <!-- <div class="application-status" *ngIf="showApplicationMenu == false">
                     <a (click)="showApplicationStatus('yes')" class="btn btn-outline-primary">Application Status</a>
-                </div>
+                </div> -->
                 <div class="application-status" *ngIf="showApplicationMenu == true">
                     <a (click)="showApplicationStatus('no')" class="btn btn-outline-primary">New Application</a>
                 </div>
@@ -30,7 +30,7 @@
     </nav>
 </header>
 <main class="pt-80" *ngIf="showApplicationMenu == false">
-    <section class="pt-3">
+    <!-- <section class="pt-3">
         <div class="container-fluid">
             <div class="card">
 
@@ -623,6 +623,488 @@
                     </form>
                 </div>
             </div>
+        </div>
+    </section> -->
+
+    <section class="pt-3">
+        <div class="container-fluid">
+          <div class="card mb-3">
+            <div class="card-header bg-theme text-white">
+                <h6 class="mb-0">Application Status</h6>
+            </div>
+            <div class="card-body">                  
+              <div class="px-4 mt-3">
+                <div class="progress px-1" style="height: 3px;">
+                  <div class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <div class="step-container d-flex justify-content-between">
+                  <div class="step-circle"><span class="bi bi-pencil"></span></div>
+                  <div class="step-circle"><span class="bi bi-file-earmark-text"></span></div>
+                  <div class="step-circle"><span class="bi bi-eye"></span></div>
+                </div>
+                <div class="step-container step-label d-flex justify-content-between">
+                  <div class="fs-md fw-600">Registration</div>
+                  <div class="fs-md fw-600">Application</div>
+                  <div class="fs-md fw-600">Status</div>
+                </div>
+              </div>
+              
+              <div class="row mt-3">
+                <div class="col-12">  
+                  <form id="multi-step-form">
+                    <div class="step step-1">
+                      <!-- Step 1 form fields here -->
+                      <div class="card">
+                        <div class="card-header bg-theme text-white">
+                            <h6 class="mb-0">Registration</h6>
+                        </div>
+                        <div class="card-body">
+                          <div class="row">
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                              <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="nameEnterprise" placeholder="Name of the enterprise ">
+                                <label for="nameEnterprise">Name of the Enterprise </label>
+                              </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                              <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="namePromoter" placeholder="Name of the Promoter ">
+                                <label for="namePromoter">Name of the Promoter </label>
+                              </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                              <div class="form-floating mb-3">
+                                <select class="form-select" id="constitution" aria-label="">
+                                  <option selected>Select Constitution</option>
+                                  <option value="1">sole property</option>
+                                  <option value="2">Partnership</option>
+                                  <option value="3">LLP</option>
+                                  <option value="4">Limited Company</option>
+                                </select>
+                                <label for="constitution">Constitution</label>
+                              </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                              <div class="form-floating mb-3">
+                                <input type="date" class="form-control" id="dateProduction" placeholder="Date of Commencement of production">
+                                <label for="dateProduction">Date of Commencement Production </label>
+                              </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                              <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="udyamRegistration" placeholder="Udyam Registration Number">
+                                <label for="udyamRegistration">Udyam Registration Number </label>
+                              </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                              <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="contactDetails" placeholder="Alternative Contact Details">
+                                <label for="contactDetails">Alternative Contact Details </label>
+                              </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                              <div class="form-floating mb-3">
+                                <select class="form-select" id="state" aria-label="">
+                                  <option selected>Select State</option>
+                                  <option value="1">Telangana</option>
+                                </select>
+                                <label for="state">State</label>
+                              </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                              <div class="form-floating mb-3">
+                                <select class="form-select" id="industrialPark" aria-label="">
+                                  <option selected>Select Industrial Park</option>
+                                  <option value="1">Industrial Park 1</option>
+                                </select>
+                                <label for="industrialPark">Industrial Park</label>
+                              </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                              <div class="form-floating mb-3">
+                                <select class="form-select" id="district" aria-label="">
+                                  <option selected>Select District</option>
+                                  <option value="1">District 1</option>
+                                </select>
+                                <label for="district">District</label>
+                              </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                              <div class="form-floating mb-3">
+                                <select class="form-select" id="mandal" aria-label="">
+                                  <option selected>Select Mandal</option>
+                                  <option value="1">Mandal 1</option>
+                                </select>
+                                <label for="mandal">Mandal</label>
+                              </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                              <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="email" placeholder="Email">
+                                <label for="email">Email Id</label>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="text-end">
+                            <button type="button" class="btn btn-primary next-step">Next <span class="bi bi-arrow-right ms-2"></span></button>
+                          </div>
+                        </div>
+                      </div>                      
+                    </div>
+                
+                    <div class="step step-2">
+                      <!-- Step 2 form fields here -->
+                      <div class="card mb-3">
+                        <div class="card-header bg-theme text-white">
+                            <h6 class="mb-0">Application</h6>
+                        </div>
+                        <div class="card-body">
+                          <div class="row">
+                            <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+                              <div class="mb-3">
+                                <div>
+                                  <label class="form-label fs-md fw-600 mb-1">Enterprise category?</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                  <input class="form-check-input" type="radio" name="enterprise" id="inlineRadio1" value="Micro">
+                                  <label class="form-check-label fs-md" for="inlineRadio1">Micro</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                  <input class="form-check-input" type="radio" name="enterprise" id="inlineRadio2" value="Small">
+                                  <label class="form-check-label fs-md" for="inlineRadio2">Small</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                  <input class="form-check-input" type="radio" name="enterprise" id="inlineRadio3" value="Medium">
+                                  <label class="form-check-label fs-md" for="inlineRadio3">Medium</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                  <input class="form-check-input" type="radio" name="enterprise" id="inlineRadio4" value="Large">
+                                  <label class="form-check-label fs-md" for="inlineRadio4">Large</label>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+                              <div class="mb-3">
+                                <div>
+                                  <label class="form-label fs-md  fw-600 mb-1">Nature of activity?</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                  <input class="form-check-input" type="radio" name="inlineRadioOptions1" id="manufacturing" value="Manufacturing">
+                                  <label class="form-check-label fs-md" for="manufacturing">Manufacturing</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                  <input class="form-check-input" type="radio" name="inlineRadioOptions1" id="services" value="Services">
+                                  <label class="form-check-label fs-md" for="services">services</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                  <input class="form-check-input" type="radio" name="inlineRadioOptions1" id="trading" value="Trading">
+                                  <label class="form-check-label fs-md" for="trading">Trading </label>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+                              <div class="form-floating mb-3">
+                                <select class="form-select" id="sector" aria-label="">
+                                  <option selected>Select Sector</option>
+                                  <option value="1">Group</option>
+                                  <option value="2">Division</option>
+                                </select>
+                                <label for="sector">Sector</label>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                              <div class="mb-3">
+                                <div>
+                                  <label class="form-label fs-md fw-600 mb-1">Operational Status of the unit</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                  <input class="form-check-input" type="radio" name="unit" id="unitYes" value="operationalYes">
+                                  <label class="form-check-label fs-md" for="unitYes">Yes</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                  <input class="form-check-input" type="radio" name="unit" id="unitNo" value="operationalNo">
+                                  <label class="form-check-label fs-md" for="unitNo">No</label>
+                                </div>
+                              </div>
+
+                              <div class="show-hide" id="operationalYes" style="display: none;">
+                                <div class="row">
+                                  <div class="col-12 col-sm-6 col-md-6 col-lg-4">
+                                    <div class="form-floating mb-3">
+                                      <input type="text" class="form-control" id="operating" placeholder="Operating">
+                                      <label for="oerating">Operating Satisfactorily </label>
+                                    </div>
+                                  </div>
+                                  <div class="col-12 col-sm-6 col-md-6 col-lg-4">
+                                    <div class="form-floating">
+                                      <select class="form-select" id="operatingDiff">
+                                        <option selected>Select</option>
+                                        <option value="1">Operating 1</option>
+                                      </select>
+                                      <label for="operatingDiff">Operating with difficulties </label>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div class="show-hide" id="operationalNo" style="display: none;">
+                                <div class="row">
+                                  <div class="col-12 col-sm-6 col-md-6 col-lg-4">
+                                    <div class="form-floating mb-3">
+                                      <input type="date" class="form-control" id="date" placeholder="Since When">
+                                      <label for="date">Since when?</label>
+                                    </div>
+                                  </div>
+                                  <div class="col-12 col-sm-6 col-md-6 col-lg-4">
+                                    <div class="form-floating mb-3">
+                                      <input type="text" class="form-control" id="reasons" placeholder="Reasons for not operating ">
+                                      <label for="reasons">Reasons for not operating</label>
+                                    </div>
+                                  </div>
+                                  <div class="col-12 col-sm-6 col-md-6 col-lg-4">
+                                    <div class="mb-3">
+                                      <div>
+                                        <label class="form-label fs-md fw-600 mb-1">Whether intention to restart </label>
+                                      </div>
+                                      <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="restart" id="restartYes" value="restartYes">
+                                        <label class="form-check-label fs-md" for="restartYes">Yes</label>
+                                      </div>
+                                      <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="restart" id="restartNo" value="restartNo">
+                                        <label class="form-check-label fs-md" for="restartNo">No</label>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="col-12 col-sm-6 col-md-6 col-lg-4">
+                                    <div class="form-floating mb-3">
+                                      <input type="text" class="form-control" id="support" placeholder="What support do you need to restart?">
+                                      <label for="support">What support do you need to restart?</label>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                              <div class="mb-3">
+                                <div>
+                                  <label class="form-label fs-md fw-600 mb-1">Existing Credit with facilities with bank/NBFC/FI & SFC ?</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                  <input class="form-check-input" type="radio" name="credit" id="bankYes" value="creditYes">
+                                  <label class="form-check-label fs-md" for="bankYes">Yes</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                  <input class="form-check-input" type="radio" name="credit" id="bankNo" value="creditNo">
+                                  <label class="form-check-label fs-md" for="bankNo">No</label>
+                                </div>
+                              </div>
+
+                              <div class="border rounded-3 p-3 mb-3 show-hide1" id="creditYes" style="display: none;">
+                                <div class="table-responsive">
+                                  <table class="table table-bordered">
+                                    <thead class="bg-theme text-white">
+                                      <tr>
+                                        <th>S.No</th>
+                                        <th>Bank/Fis Name</th>
+                                        <th>Limit sanctioned (In Rs) </th>
+                                        <th>Outstanding Amount (In Rs) </th>
+                                        <th>Overdue Amount (In Rs)</th>
+                                        <th>Overdue Since (Date)</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      <tr>
+                                        <td>1</td>
+                                        <td>
+                                          <input type="text" class="form-control form-control-sm" placeholder="">
+                                        </td>
+                                        <td>
+                                          <input type="text" class="form-control form-control-sm" placeholder="">
+                                        </td>
+                                        <td>
+                                          <input type="text" class="form-control form-control-sm" placeholder="">
+                                        </td>
+                                        <td>
+                                          <input type="text" class="form-control form-control-sm" placeholder="">
+                                        </td>
+                                        <td>
+                                          <input type="text" class="form-control form-control-sm" placeholder="">
+                                        </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </div>
+                                <div class="">
+                                  <div>
+                                    <label class="form-label fs-md fw-600 mb-1">Status of the unit </label>
+                                  </div>
+                                  <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="status" id="regular" value="regular">
+                                    <label class="form-check-label fs-md" for="regular">Regular </label>
+                                  </div>
+                                  <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="status" id="sma" value="sma">
+                                    <label class="form-check-label fs-md" for="sma">SMA - SMA1/SMA2/SMA3</label>
+                                  </div>
+                                  <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="status" id="npa" value="npa">
+                                    <label class="form-check-label fs-md" for="npa">NPA- Substandard/DOUBTFUL</label>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div class="show-hide1" id="creditNo" style="display: none;">
+                                <div class="row">
+                                  <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                                    <div class="form-floating mb-3">
+                                      <input type="text" class="form-control" id="limits" placeholder="">
+                                      <label for="limits">Any requirement for credit limits ?</label>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                              <div class="mb-3">
+                                <div>
+                                  <label class="form-label fs-md fw-600 mb-1">Investment Subsidy / other incentives Sanctioned Govt</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                  <input class="form-check-input" type="radio" name="investment" id="subsidyYes" value="investmentYes">
+                                  <label class="form-check-label fs-md" for="subsidyYes">Yes</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                  <input class="form-check-input" type="radio" name="investment" id="subsidyNo" value="investmentNo">
+                                  <label class="form-check-label fs-md" for="subsidyNo">No</label>
+                                </div>
+                              </div>
+
+                              <div class="show-hide2" id="investmentYes" style="display: none;">
+                                <div class="row">
+                                  <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                                    <div class="form-floating mb-3">
+                                      <input type="text" class="form-control" id="sanctioned" placeholder="">
+                                      <label for="sanctioned">Total Amount Sanctioned </label>
+                                    </div>
+                                  </div>
+                                  <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                                    <div class="form-floating mb-3">
+                                      <input type="text" class="form-control" id="amount" placeholder="">
+                                      <label for="amount">Amount Released  </label>
+                                    </div>
+                                  </div>
+                                  <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                                    <div class="form-floating mb-3">
+                                      <input type="text" class="form-control" id="amountReleased" placeholder="">
+                                      <label for="amountReleased">Amount to be Released  </label>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                              <div class="mb-3">
+                                <div>
+                                  <label class="form-label fs-md fw-600 mb-1">How do you maintain your books of accounts?</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                  <input class="form-check-input" type="radio" name="inlineRadioOptions4" id="accountant" value="Accountant">
+                                  <label class="form-check-label fs-md" for="accountant">Accountant </label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                  <input class="form-check-input" type="radio" name="inlineRadioOptions4" id="software" value="Software">
+                                  <label class="form-check-label fs-md" for="software">Software (using computer)</label>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                              <div class="mb-3">
+                                <label for="comments" class="form-label fs-md fw-600" mb-1>How can we help you?</label>
+                                <textarea class="form-control" id="comments" rows="3" placeholder="Write here"></textarea>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="d-flex align-items-center justify-content-between">
+                            <button type="button" class="btn btn-secondary prev-step"><span class="bi bi-arrow-left me-2"></span> Previous</button>
+                            <button type="button" class="btn btn-primary next-step">Submit <span class="bi bi-send ms-2"></span></button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                
+                    <div class="step step-3">
+                      <!-- Step 3 form fields here -->
+                      <div class="card mb-3">
+                        <div class="card-header bg-theme text-white">
+                            <h6 class="mb-0">Status</h6>
+                        </div>
+                        <div class="card-body">
+                          <div class="row">
+                            <div class="col-12 col-sm-12 col-md-6 offset-md-3 col-lg-4 offset-lg-4">
+                              <div class="text-center mb-5">
+                                <img src="assets/img/success.png" alt="status successfully" class="img-fluid w-75">
+                              </div>
+                              <div class="card border-0 bg-light p-3 rounded-3">
+                                <div class="d-flex align-items-center justify-content-between mb-3">
+                                  <div>
+                                    <p class="fw-600 fs-md mb-0">Application No.</p>
+                                  </div>
+                                  <div>
+                                    <p class="fs-md fw-600 mb-0">TH815328</p>
+                                  </div>
+                                </div>
+                                <div class="d-flex align-items-center justify-content-between mb-3">
+                                  <div>
+                                    <p class="fw-600 fs-md mb-0">Date Of Submission</p>
+                                  </div>
+                                  <div>
+                                    <p class="fs-md mb-0">19-04-2025</p>
+                                  </div>
+                                </div>
+                                <div class="d-flex align-items-center justify-content-between">
+                                  <div>
+                                    <p class="fw-600 fs-md mb-0">Application Status</p>
+                                  </div>
+                                  <div>
+                                    <p class="fs-md text-warning mb-0">Pending</p>
+                                  </div>
+                                </div>
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <div>
+                                      <p class="fw-600 fs-md mb-0">
+                                        
+                                      </p>
+                                    </div>
+                                    <div>
+                                      <p class="fs-md text-warning mb-0">
+                                        <button class="btn btn-primary" (click)="logout()">Finish</button>
+                                      </p>
+                                    </div>
+                                  </div>
+                              </div>
+                            </div>
+                          </div>
+
+                          <!-- <div class="d-flex align-items-center justify-content-between">
+                            <button type="button" class="btn btn-secondary prev-step"><span class="bi bi-arrow-left me-2"></span> Previous</button>
+                            <button type="submit" class="btn btn-primary">Submit <span class="bi bi-send ms-2"></span></button>
+                          </div> -->
+                        </div>
+                      </div>
+                      
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
     </section>
 </main>
