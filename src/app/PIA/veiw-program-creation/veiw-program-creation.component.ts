@@ -4,9 +4,12 @@ import { CommonServiceService } from '@app/_services/common-service.service';
 import { APIS } from '@app/constants/constants';
 import { ToastrService } from 'ngx-toastr';
 import DataTable from 'datatables.net-dt';
-import 'datatables.net-buttons-dt';
-import 'datatables.net-responsive-dt';
+//import * as Buttons from 'datatables.net-dt';
+//import 'datatables.net-buttons-dt';
+//import 'datatables.net-responsive-dt';
 declare var $: any;
+//DataTable.use(Buttons);
+
 
 @Component({
   selector: 'app-veiw-program-creation',
@@ -80,15 +83,27 @@ export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
   }
 
   initializeDataTable() {
-    this.dataTable = new DataTable('#view-table-program', {
-      scrollY: "415px",
+    // this.dataTable = new DataTable('#view-table-program', {
+    //   scrollY: "415px",
+    //   scrollX: true,
+    //   scrollCollapse: true,
+    //   autoWidth: true,
+    //   paging: false,
+    //   info: false,
+    //   searching: false,
+    //   destroy: true,
+    // });
+
+    this.dataTable = $('#view-table-program').DataTable({
+      dom: 'Bfrtip',
+      buttons: ['csv', 'excel'],
+      scrollY: '400px',
       scrollX: true,
       scrollCollapse: true,
       autoWidth: true,
-      paging: false,
-      info: false,
-      searching: false,
-      destroy: true,
+      paging: true,
+      info: true,
+      searching: true
     });
   }
 
