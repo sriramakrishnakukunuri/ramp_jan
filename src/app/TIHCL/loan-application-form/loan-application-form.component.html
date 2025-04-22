@@ -820,16 +820,16 @@
                                   <label class="form-label fs-md fw-600 mb-1">Operational Status of the unit</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                  <input class="form-check-input" type="radio" name="unit" id="unitYes" value="operationalYes">
+                                  <input class="form-check-input" (change)="operationalChange('YES')" type="radio" name="unit" id="unitYes" value="operationalYes">
                                   <label class="form-check-label fs-md" for="unitYes">Yes</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                  <input class="form-check-input" type="radio" name="unit" id="unitNo" value="operationalNo">
+                                  <input class="form-check-input" (change)="operationalChange('NO')" type="radio" name="unit" id="unitNo" value="operationalNo">
                                   <label class="form-check-label fs-md" for="unitNo">No</label>
                                 </div>
                               </div>
 
-                              <div class="show-hide" id="operationalYes" style="display: none;">
+                              <div class="show-hide" id="operationalYes" *ngIf="operationalStatus == true">
                                 <div class="row">
                                   <div class="col-12 col-sm-6 col-md-6 col-lg-4">
                                     <div class="form-floating mb-3">
@@ -849,7 +849,7 @@
                                 </div>
                               </div>
 
-                              <div class="show-hide" id="operationalNo" style="display: none;">
+                              <div class="show-hide" id="operationalNo" *ngIf="operationalStatus == false">
                                 <div class="row">
                                   <div class="col-12 col-sm-6 col-md-6 col-lg-4">
                                     <div class="form-floating mb-3">
@@ -894,16 +894,16 @@
                                   <label class="form-label fs-md fw-600 mb-1">Existing Credit with facilities with bank/NBFC/FI & SFC ?</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                  <input class="form-check-input" type="radio" name="credit" id="bankYes" value="creditYes">
+                                  <input class="form-check-input" type="radio" (change)="existingChange('YES')" name="credit" id="bankYes" value="creditYes">
                                   <label class="form-check-label fs-md" for="bankYes">Yes</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                  <input class="form-check-input" type="radio" name="credit" id="bankNo" value="creditNo">
+                                  <input class="form-check-input" type="radio" (change)="existingChange('NO')" name="credit" id="bankNo" value="creditNo">
                                   <label class="form-check-label fs-md" for="bankNo">No</label>
                                 </div>
                               </div>
 
-                              <div class="border rounded-3 p-3 mb-3 show-hide1" id="creditYes" style="display: none;">
+                              <div class="border rounded-3 p-3 mb-3 show-hide1" id="creditYes" *ngIf="existingStatus == true">
                                 <div class="table-responsive">
                                   <table class="table table-bordered">
                                     <thead class="bg-theme text-white">
@@ -957,7 +957,7 @@
                                 </div>
                               </div>
 
-                              <div class="show-hide1" id="creditNo" style="display: none;">
+                              <div class="show-hide1" id="creditNo" *ngIf="existingStatus == false">
                                 <div class="row">
                                   <div class="col-12 col-sm-6 col-md-4 col-lg-4">
                                     <div class="form-floating mb-3">
@@ -975,16 +975,18 @@
                                   <label class="form-label fs-md fw-600 mb-1">Investment Subsidy / other incentives Sanctioned Govt</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                  <input class="form-check-input" type="radio" name="investment" id="subsidyYes" value="investmentYes">
+                                  <input class="form-check-input" type="radio" name="investment" id="subsidyYes" 
+                                  (change)="investmentChange('YES')" value="investmentYes">
                                   <label class="form-check-label fs-md" for="subsidyYes">Yes</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                  <input class="form-check-input" type="radio" name="investment" id="subsidyNo" value="investmentNo">
+                                  <input class="form-check-input" type="radio" name="investment" id="subsidyNo" 
+                                  (change)="investmentChange('NO')" value="investmentNo">
                                   <label class="form-check-label fs-md" for="subsidyNo">No</label>
                                 </div>
                               </div>
 
-                              <div class="show-hide2" id="investmentYes" style="display: none;">
+                              <div class="show-hide2" id="investmentYes" *ngIf="investmentBorrower == true">
                                 <div class="row">
                                   <div class="col-12 col-sm-6 col-md-4 col-lg-4">
                                     <div class="form-floating mb-3">

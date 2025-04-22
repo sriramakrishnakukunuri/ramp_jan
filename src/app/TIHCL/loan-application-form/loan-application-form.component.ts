@@ -99,4 +99,34 @@ export class LoanApplicationFormComponent implements OnInit {
     }
   }
 
+  investmentBorrower: boolean = false;
+  investmentChange(event: any): void {
+    const selectedValue = event;
+    if (selectedValue === 'YES') {
+      this.investmentBorrower = true;
+    } else {
+      this.investmentBorrower = false;
+    }
+  }
+
+  operationalStatus: any;
+  operationalChange(event: any): void {
+    const selectedValue = event;
+    if (selectedValue === 'YES') {
+      this.operationalStatus = true;
+    } else {
+      this.operationalStatus = false;
+    }
+  }
+
+  existingStatus: any;
+  existingChange(event: any): void {
+    const selectedValue = event;
+    if (selectedValue === 'YES') {
+      this.existingStatus = true;
+    } else {
+      this.existingStatus = false;
+    }
+  }
+
 }
