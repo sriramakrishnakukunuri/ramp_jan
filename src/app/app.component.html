@@ -58,6 +58,14 @@
                                     <span>Masters List</span> 
                                 </a>                                
                             </li>
+                            <li class="nav-item dropdown" *appHasRole="[Role.Admin]">
+                                <a class="nav-link" href="#" id="homeDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span>Reports</span> <span class="bi bi-chevron-down"></span>
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="homeDropdown">                                    
+                                    <li><a class="dropdown-item" routerLink="/program-summary" routerLinkActive="active">Program Summary</a></li>             
+                                </ul>
+                            </li>
                             
                             <li class="nav-item dropdown" *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]">
                                 <a class="nav-link" href="#" id="homeDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -92,6 +100,7 @@
                                 <li><a class="dropdown-item" routerLink="/update-program-execution" routerLinkActive="active">Program Execution</a></li>
                                 <li><a class="dropdown-item" routerLink="/program-expenditure" routerLinkActive="active">Program Expenditure</a></li>
                                 <li><a class="dropdown-item" routerLink="/bulk-expenditure" routerLinkActive="active">Bulk Expenditure</a></li>
+                                <!-- <li><a class="dropdown-item" routerLink="/program-summary" routerLinkActive="active">Program Summary</a></li> -->
                                 <!-- <li><a class="dropdown-item" routerLink="/add-participant-data" routerLinkActive="active">Add Participant</a></li>
                                 <li><a class="dropdown-item" routerLink="/view-participant-data" routerLinkActive="active">View Participant</a></li> -->
                                 <li><a class="dropdown-item" href="#">View Completed</a></li>
@@ -115,7 +124,14 @@
                                     ESDP Training Program
                                 </a>
                             </li>
-
+                            <li class="nav-item dropdown" *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]" >
+                                <a class="nav-link" href="#" id="homeDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span>Reports</span> <span class="bi bi-chevron-down"></span>
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="homeDropdown">                                    
+                                    <li><a class="dropdown-item" routerLink="/program-summary" routerLinkActive="active">Program Summary</a></li>             
+                                </ul>
+                            </li>
                             <li class="nav-item dropdown" *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]">
                                 <a class="nav-link" href="#" id="dropdown3" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     Counsellor<span class="bi bi-chevron-down"></span>

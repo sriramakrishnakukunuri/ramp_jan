@@ -20,12 +20,14 @@ export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
   dataTable: any;
   agencyList: any = [];
   loginsessionDetails: any;
+  agencyId: any;
   constructor(
     private toastrService: ToastrService,
     private _commonService: CommonServiceService,
     private router: Router,
   ) { 
     this.loginsessionDetails = JSON.parse(sessionStorage.getItem('user') || '{}');    
+    this.agencyId = this.loginsessionDetails.agencyId;
   }
 
   ngOnInit(): void {
@@ -40,10 +42,10 @@ export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.initializeDataTable();
+    this.initializeDataTable(this.loginsessionDetails.agencyId);
   }
   GetProgramsByAgency(event:any){
-    this._commonService.getDataByUrl(APIS.programCreation.getProgramsListByAgency+event).subscribe({
+    this._commonService.getDataByUrl(APIS.programCreation.getProgramsListByAgency+event+'?page=0&size=20').subscribe({
       next: (dataList: any) => {
         this.tableList = dataList.data;
         this.reinitializeDataTable();
@@ -79,16 +81,101 @@ export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
     this.router.navigateByUrl('/program-sessions-edit/' + dataList.programId);
   }
 
-  initializeDataTable() {
+  initializeDataTable(agency:any) { 
     this.dataTable = new DataTable('#view-table-program', {
       scrollY: "415px",
       scrollX: true,
       scrollCollapse: true,
+      paging: true,
+      serverSide: true, // Enable server-side processing
+      pageLength: 10, // Default page size
+      lengthMenu: [5, 10, 25, 50], // Available page sizes
       autoWidth: true,
-      paging: false,
       info: false,
       searching: false,
       destroy: true,
+      ajax: function (data:any, callback, settings) {
+        // Extract pagination parameters
+        let page = data.start / data.length;
+        let size = data.length;
+
+        // Fetch data from API
+        fetch(APIS.programCreation.getProgramsListByAgency+agency+`?page=${page}&size=${size}`)
+            .then(res => res.json())
+            .then(json => {
+                callback({
+                    draw: data.draw,
+                    recordsTotal: json.totalElements,
+                    recordsFiltered: json.totalElements,
+                    data: json.data
+                });
+            });
+    },
+    columns: [
+      { 
+          title: 'S.No',
+          render: function(data, type, row, meta) {
+              return meta.row + 1;
+          },
+          className: 'dt-center'
+      },
+      { 
+          data: 'activityName',
+          title: 'Type Of Activity'
+      },
+      { 
+          data: 'subActivityName',
+          title: 'Sub Activity'
+      },
+      { 
+          data: 'programType',
+          title: 'Type Of Program'
+      },
+      { 
+          data: 'programTitle',
+          title: 'Title Of Program'
+      },
+      { 
+          data: 'startDate',
+          title: 'Start Date'
+      },
+      { 
+          data: 'startTime',
+          title: 'In Time',
+          className: 'text-center'
+      },
+      { 
+          data: 'endTime',
+          title: 'Out Time',
+          className: 'text-center'
+      },
+      { 
+          data: 'spocName',
+          title: 'SPOC Name'
+      },
+      { 
+          data: 'spocContactNo',
+          title: 'SPOC Contact No.'
+      },
+      { 
+          data: 'programLocationName',
+          title: 'Program Location'
+      },
+      { 
+          title: 'Actions',
+          data: 'programLocationName',
+          render: function(data:any, type:any, row:any) {
+              // if (this.loginsessionDetails?.userRole == 'AGENCY_MANAGER' || this.loginsessionDetails?.userRole == 'AGENCY_EXECUTOR') {
+                  return `<button type="button" class="btn btn-default btn-sm text-lime-green" title="Sessions" data-bs-toggle="modal" data-bs-target="#viewModal" onclick="sessionDetails(${row.programId})" title="View">
+                              <span class="bi bi-eye"></span>
+                          </button>`;
+              // }
+              // return '';
+          },
+          orderable: false,
+          className: 'text-center'
+      }
+  ],
     });
   }
 
@@ -97,7 +184,7 @@ export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
       this.dataTable.destroy();
     }
     setTimeout(() => {
-      this.initializeDataTable();
+      this.initializeDataTable(this.loginsessionDetails.agencyId);
     }, 0);
   }
 

@@ -30,6 +30,7 @@ import { VerificationParticipantComponent } from './CALL_CENTER/verification-par
 import { RawMaterialsParticipantsComponent } from './PIA/raw-materials-participants/raw-materials-participants.component';
 import { ProgramExpenditureComponent } from './PIA/program-expenditure/program-expenditure.component';
 import { BulkExpenditureComponent } from './PIA/bulk-expenditure/bulk-expenditure.component';
+import { ProgramSummaryComponent } from './PIA/program-summary/program-summary.component';
 
 const routes: Routes = [
     {
@@ -180,6 +181,12 @@ const routes: Routes = [
         component: ProgramExpenditureComponent,
         canActivate: [AuthGuard],
         data: { roles:  [Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR]}
+    },
+    {
+        path: 'program-summary',
+        component: ProgramSummaryComponent,
+        canActivate: [AuthGuard],
+        data: { roles:  [Role.Admin,Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR]}
     },
     {
         path: 'bulk-expenditure',

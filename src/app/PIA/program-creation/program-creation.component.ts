@@ -210,7 +210,7 @@ export class ProgramCreationComponent implements OnInit, AfterViewInit {
    
     if(this.programId) {
       maindata['programId'] = Number(this.programId)
-      this._commonService.updatedata(APIS.programCreation.updateProgram, maindata).subscribe({
+      this._commonService.add(APIS.programCreation.updateProgram, maindata).subscribe({
         next: (data) => {          
           this.toastrService.success('Program Updated Successfully', "Success!");
           this.getProgramDetailsById(maindata['programId']);          

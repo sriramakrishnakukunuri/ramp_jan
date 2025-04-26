@@ -81,11 +81,12 @@ changePassword() {
     "oldPassword": this.changePasswordForm.value?.oldPassword,
     "newPassword": this.changePasswordForm.value?.newPassword
 }
-debugger
- this._commonService.updateChangedata(APIS.masterList.changePassword,payload).subscribe({
+  debugger;
+ this._commonService.add(APIS.masterList.changePassword,payload).subscribe({
   next:(data:any)=>{
-    debugger
+    this.toastrService.success('Change Password Updated Successfully', "Change Password Success!");
         console.log(data)
+        debugger;
   },
   error:(error:any)=>{
 
