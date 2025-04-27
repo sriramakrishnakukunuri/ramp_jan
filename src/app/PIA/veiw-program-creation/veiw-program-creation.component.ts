@@ -45,7 +45,8 @@ export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
     this.initializeDataTable(this.loginsessionDetails.agencyId);
   }
   GetProgramsByAgency(event:any){
-    this._commonService.getDataByUrl(APIS.programCreation.getProgramsListByAgency+event+'?page=0&size=20').subscribe({
+    this.agencyByAdmin=event;
+    this._commonService.getDataByUrl(APIS.programCreation.getProgramsListByAgency+event).subscribe({
       next: (dataList: any) => {
         this.tableList = dataList.data;
         this.reinitializeDataTable();
@@ -83,7 +84,7 @@ export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
 
   initializeDataTable(agency:any) { 
     this.dataTable = new DataTable('#view-table-program', {
-      scrollY: "415px",
+      scrollY: "505px",
       scrollX: true,
       scrollCollapse: true,
       paging: true,
@@ -114,8 +115,9 @@ export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
     columns: [
       { 
           title: 'S.No',
-          render: function(data, type, row, meta) {
-              return meta.row + 1;
+          render: function(data, type, row, meta:any) {
+            console.log(data,meta,type, row)
+              return meta.settings?._iDisplayStart+meta.row  + 1;
           },
           className: 'dt-center'
       },
@@ -184,10 +186,16 @@ export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
       this.dataTable.destroy();
     }
     setTimeout(() => {
-      this.initializeDataTable(this.loginsessionDetails.agencyId);
+      if( this.loginsessionDetails?.userRole == 'ADMIN'){
+        this.initializeDataTable( this.agencyByAdmin);
+      }
+      else{
+        this.initializeDataTable(this.loginsessionDetails.agencyId);
+      }
+     
     }, 0);
   }
-
+  agencyByAdmin:any
   getAgenciesList() {
     this.agencyList = [];
     this._commonService.getDataByUrl(APIS.masterList.agencyList).subscribe((res: any) => {

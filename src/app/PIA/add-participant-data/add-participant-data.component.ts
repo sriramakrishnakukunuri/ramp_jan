@@ -404,7 +404,7 @@ export class AddParticipantDataComponent implements OnInit {
     const [day, month, year] = date.split('-');
     return `${year}-${month}-${day}`; // Convert to yyyy-MM-dd format
   }
-  
+
   editRow(item: any, i: any) {
     this.isedit=true
     this.participantId=item.participantId
