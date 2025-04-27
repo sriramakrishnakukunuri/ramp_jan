@@ -20,6 +20,14 @@ export class AddProgramSessionsComponent implements OnInit {
   sourceTypes: any = [];
   sessionForm!: FormGroup;
 
+  // Full list of methodologies
+  allMethodologies = [
+    'Lecture', 'Break', 'Discussion', 'Panel discussion', 'Presentation', 'Felicitation'
+  ];
+
+  // Visible methodologies after filtering
+  availableMethodologies: string[] = [];
+
   constructor(
     private fb: FormBuilder,
     private toastrService: ToastrService,
@@ -39,6 +47,9 @@ export class AddProgramSessionsComponent implements OnInit {
       gender: ['', Validators.required],
       agencyIds: [[this.agencyId]],
     });
+
+    // Initialize available methodologies
+    this.availableMethodologies = [...this.allMethodologies];
   }
 
   onModalSubmitType() {
@@ -94,6 +105,20 @@ export class AddProgramSessionsComponent implements OnInit {
     this.getProgramsByAgency()
     this.getSessionResource();
     this.initializeSessionForm();
+
+    // Watch sessionTypeName changes
+    this.sessionForm.get('sessionTypeName')?.valueChanges.subscribe(value => {
+      if (value === 'Break') {
+        this.availableMethodologies = ['Break'];
+        this.sessionForm.get('sessionTypeMethodology')?.setValue('Break'); // auto-select Break
+      } else if (value === 'Session') {
+        this.availableMethodologies = this.allMethodologies.filter(m => m !== 'Break');
+        this.sessionForm.get('sessionTypeMethodology')?.setValue('');
+      } else {
+        this.availableMethodologies = [...this.allMethodologies];
+        this.sessionForm.get('sessionTypeMethodology')?.setValue('');
+      }
+    });
   }
 
   initializeSessionForm(): void {
