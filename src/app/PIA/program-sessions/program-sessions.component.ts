@@ -113,7 +113,7 @@ export class ProgramSessionsComponent implements OnInit {
     programData.push(val);
     localStorage.setItem('programDetails', JSON.stringify(programData));
     let objectnew: any = [...this.programCreationSub?.controls["details"]?.value];
-
+    console.log(objectnew,'objectnew')
     const apiCalls = objectnew.map((element: any, index: any) => {
       const formData = new FormData();
       // if(element['sessionId']){

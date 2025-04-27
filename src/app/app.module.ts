@@ -48,6 +48,8 @@ import { MaterialModule } from './shared/material/material/material.module';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { ProgramExpenditureComponent } from './PIA/program-expenditure/program-expenditure.component';
 import { BulkExpenditureComponent } from './PIA/bulk-expenditure/bulk-expenditure.component';
+import { AddProgramSessionsComponent } from './PIA/add-program-sessions/add-program-sessions.component';
+import { NgxDocViewerModule } from 'ngx-doc-viewer';
 
 @NgModule({
     imports: [
@@ -69,7 +71,7 @@ import { BulkExpenditureComponent } from './PIA/bulk-expenditure/bulk-expenditur
         MatPaginatorModule,
         MatSortModule,
         NgxMaterialTimepickerModule,
-        
+        NgxDocViewerModule
     ],
     declarations: [
         AppComponent,
@@ -102,6 +104,7 @@ import { BulkExpenditureComponent } from './PIA/bulk-expenditure/bulk-expenditur
            RawMaterialsParticipantsComponent,
            ProgramExpenditureComponent,
            BulkExpenditureComponent,
+           AddProgramSessionsComponent,
     ],
     exports:[MaterialModule],
     providers: [

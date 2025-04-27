@@ -1,7 +1,7 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonServiceService } from '@app/_services/common-service.service';
-import { APIS } from '@app/constants/constants';
+import { API_BASE_URL, APIS } from '@app/constants/constants';
 import { ToastrService } from 'ngx-toastr';
 import DataTable from 'datatables.net-dt';
 import 'datatables.net-buttons-dt';
@@ -110,4 +110,50 @@ export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
       this.toastrService.error(error.error.message);
     });
   }
+
+  previewData:any;    
+  async showPreviewPopup(dataList: any) {
+    this.previewData = ''
+    let url = `${API_BASE_URL}/program/file/download/${dataList.programSessionFileId}`
+    this.previewData = url
+  }
+
+  getFileIcon(filePath: string): string {
+    const ext = filePath.split('.').pop()?.toLowerCase();
+    switch (ext) {
+      case 'pdf': return 'fas fa-file-pdf';
+      case 'doc':
+      case 'docx': return 'fas fa-file-word';
+      case 'xls':
+      case 'xlsx': return 'fas fa-file-excel';
+      case 'ppt':
+      case 'pptx': return 'fas fa-file-powerpoint';
+      default: return 'fas fa-file';
+    }
+  }
+  
+  getIconColor(filePath: string): string {
+    const ext = filePath.split('.').pop()?.toLowerCase();
+    switch (ext) {
+      case 'pdf': return '#e74c3c';
+      case 'doc':
+      case 'docx': return '#3498db';
+      case 'xls':
+      case 'xlsx': return '#2ecc71';
+      case 'ppt':
+      case 'pptx': return '#e67e22';
+      default: return '#7f8c8d';
+    }
+  }
+  
+  getFileName(filePath: string): string {
+    return filePath.split('/').pop() || 'Download';
+  }
+  
+  collapseStates: { [key: number]: boolean } = {};
+
+  toggleIcon(index: number): void {
+    this.collapseStates[index] = !this.collapseStates[index];
+  }
+    
 }
