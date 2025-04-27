@@ -330,7 +330,7 @@ export class ProgramExpenditureComponent implements OnInit {
             
           },
           error: (err) => {
-            
+            this.getPost()
             this.toastrService.error(err.message, this.expenditureType +" Expenditure Data Error!");
             new Error(err);
           },
@@ -355,7 +355,7 @@ export class ProgramExpenditureComponent implements OnInit {
             
           },
           error: (err) => {
-            
+            this.getBulkExpenditure()
             this.toastrService.error(err.message, this.expenditureType +" Expenditure Data Error!");
             new Error(err);
           },
@@ -420,6 +420,7 @@ export class ProgramExpenditureComponent implements OnInit {
              console.log( this.getExpenditureData,data?.data,this.getExpenditureDataBoth)
             this.getBulkExpenditureData=data?.data
             this.reinitializeDataTableBulk();
+            this.reinitializeDataTable();
             this.getBulkExpenditureData?.map((item:any)=>{
               this.BulkTotalUnitCost+=item?.unitCost
               this.TotalAmount+=item?.allocatedCost
