@@ -47,6 +47,11 @@ export class CommonServiceService {
     return this.http.post(url, formData);
   }
 
+  uploadImageSession(formData:any): Observable<any> {
+    const url = APIS.programCreation.editSession;
+    return this.http.post(url, formData);
+  }
+
   public getDataByUrl(URL: any): Observable<any> {
     return this.http.get(URL).pipe(catchError(this.formatErrors));
   }

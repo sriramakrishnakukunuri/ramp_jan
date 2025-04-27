@@ -1,0 +1,492 @@
+<main class="mt-4">
+    <section>
+        <div class="container-fluid">
+            <div class="card mb-3">
+                <div class="card-header bg-transparent">
+                    <div class="row align-items-center">
+                        <div class="col-12">
+                            <h6 class="fw-600 mb-2 mb-sm-3 mb-md-0">Add Session</h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                            <div class="form-floating mb-3 mb-sm-3 mb-md-0">
+                                <select class="form-select events-expenditure" id="activity" [disabled]="true">
+                                    <option value="#">Select Activity</option>
+                                    <option value="1">Activity 1</option>
+                                </select>
+                                <label for="activity">Activity</label>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                            <div class="form-floating mb-3 mb-sm-0">
+                                <select class="form-select events-expenditure" id="subActivity" [disabled]="true">
+                                    <option value="#">Select Sub Activity</option>
+                                    <option value="1">Sub Activity 1</option>
+                                </select>
+                                <label for="subActivity">Sub Activity</label>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                            <div class="form-floating mb-3 mb-sm-3 mb-md-0">
+                                <select class="form-select events-expenditure" [(ngModel)]="programId"
+                                    [ngModelOptions]="{standalone: true}"
+                                    (change)="dropdownProgramsList($event,'table')">
+                                    <option value="">Select Program</option>
+                                    <option *ngFor="let list of agencyProgramList" value="{{list.programId}}">
+                                        {{list.programTitle}}</option>
+                                </select>
+                                <label for="coverage">Program</label>
+                            </div>
+                        </div>
+                        <!-- <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                            <div class="form-floating mb-3 mb-sm-0">
+                                <button type="button" class="btn btn-lime-green" data-bs-toggle="modal"
+                                    data-bs-target="#addResource">Add Resource Person</button>
+                            </div>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+            <div class="card mb-4">
+                <div class="card-header bg-transparent">
+                    <div class="row align-items-center">
+                        <div class="col-8 col-sm-8 col-md-9 col-lg-6">
+                            <h6 class="fw-600 mb-2 mb-sm-3 mb-md-0">Session Details</h6>
+                        </div>
+                        <div class="col-4 col-sm-4 col-md-3 col-lg-4">
+                            <div class="text-end">
+                                <button type="button" class="btn btn-sm btn-lime-green"
+                                    (click)="showSessionEditModal()"><span class="bi bi-plus-lg"></span> Add</button>
+                            </div>
+                        </div>
+                        <div class="col-4 col-sm-4 col-md-3 col-lg-2">
+                            <div class="text-end">
+                                <button type="button" class="btn btn-lime-green" data-bs-toggle="modal"
+                                    data-bs-target="#addResource">Add Resource Person</button>
+                            </div>                            
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body" id="">
+                    <table id="session-table" class="table table-bordered nowrap w-100">
+                        <thead class="bg-lime-green text-white">
+                            <tr>
+                                <th>S.No</th>
+                                <th>Date</th>
+                                <th>Start Time</th>
+                                <th>End Time</th>
+                                <th>Type of Session</th>
+                                <th>Methodology</th>
+                                <!-- <th>Session Details</th> -->
+                                <th>Resource Person</th>
+                                <th>Streaming URL</th>
+                                <th>Upload File</th>
+                                <th class="text-center">Edit / Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody *ngFor="let item of ProgramData?.programSessionList; let i = index">
+                            <tr>
+                                <td>{{i + 1}}</td>
+                                <td>{{item.sessionDate}}</td>
+                                <td>{{item.startTime}}</td>
+                                <td>{{item.endTime }}</td>
+                                <td>{{item.sessionTypeName}}</td>
+                                <td>{{item.sessionTypeMethodology}}</td>
+                                <!-- <td>{{item.sessionDetails}}</td> -->
+                                <td>{{item.resourceName}}</td>
+                                <td>{{item.sessionStreamingUrl}}</td>
+                                <td>
+                                    <ng-container *ngIf="item.files?.length > 0">
+                                        <!-- <button class="btn btn-secondary" type="button"
+                                            data-bs-toggle="collapse"
+                                            [attr.data-bs-target]="'#collapseFiles' + i"
+                                            aria-expanded="false"
+                                            [attr.aria-controls]="'collapseFiles' + i">
+                                            Files List
+                                        </button>                                         -->
+
+                                        <i *ngIf="!collapseStates[i]" class="fa fa-arrow-circle-down" role="button"
+                                            data-bs-toggle="collapse" [attr.data-bs-target]="'#collapseFiles' + i"
+                                            aria-expanded="false" [attr.aria-controls]="'collapseFiles' + i"
+                                            (click)="toggleIcon(i)"></i>
+                                        <i *ngIf="collapseStates[i]" class="fa fa-arrow-circle-up" role="button"
+                                            data-bs-toggle="collapse" [attr.data-bs-target]="'#collapseFiles' + i"
+                                            aria-expanded="false" [attr.aria-controls]="'collapseFiles' + i"
+                                            (click)="toggleIcon(i)"></i>
+                                        <!-- 
+                                        <ng-container *ngFor="let file of item.files let first = first ;let last = last; let i = index">
+                                            <a href="{{file.filePath}}" target="_blank">{{file.filePath}}</a>
+                                            <span *ngIf="!last">, </span>
+                                        </ng-container>
+                                        -->
+                                    </ng-container>
+                                    <ng-container *ngIf="!item.files?.length">
+                                        <span>No Uploads</span>
+                                    </ng-container>
+                                </td>
+                                <td class="text-center">
+                                    <button type="button" class="btn btn-default text-lime-green btn-sm"
+                                        (click)="showSessionEditModal(item)"><span class="bi bi-pencil"></span></button>
+                                    <button type="button" class="btn btn-default text-danger btn-sm"><span
+                                            class="bi bi-trash"></span></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <!-- <div [id]="'collapseFiles' + i" class="collapse mt-2">
+                                    <div class="file-carousel mt-2">
+                                        <div *ngFor="let file of item.files; let j = index" class="file-item">
+                                            <div class="card p-2 text-center">
+                                                <div class="fw-bold mb-1">File {{ j + 1 }}</div>
+                                                (click)="showPreviewPopup(file)"
+                                                <a (click)="showPreviewPopup(file)" [attr.href]="previewData" target="_blank" class="text-primary text-decoration-underline">
+                                                    Download File
+                                                </a>
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> -->
+                                <td colspan="10" class="sub-table">
+                                    <div [id]="'collapseFiles' + i" class="collapse mt-2">
+                                        <div class="file-carousel-container">
+                                            <div class="file-carousel">
+                                                <div *ngFor="let file of item.files" class="file-card">
+                                                    <div class="file-icon">
+                                                        <i [ngClass]="getFileIcon(file.filePath)"
+                                                            [ngStyle]="{'color': getIconColor(file.filePath)}"
+                                                            class="fa-3x"></i>
+                                                    </div>
+                                                    <div class="file-name">
+                                                        <a (click)="showPreviewPopup(file)" [attr.href]="previewData"
+                                                            target="_blank" class="text-primary text-decoration-none">
+                                                            Download
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </td>
+
+
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- <div class="text-end mb-3">
+                <button type="button" class="btn btn-lime-green" data-bs-toggle="modal" data-bs-target="#previewModal">Submit</button>
+            </div> -->
+
+        </div>
+    </section>
+</main>
+
+<!-- Modal for Form Submission -->
+<div class="modal fade" id="sessionFormModal" #sessionFormModal tabindex="-1" aria-labelledby="sessionFormModalLabel"
+    aria-hidden="true">
+    <!-- <div class="modal-dialog modal-lg"> -->
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="sessionFormModalLabel">{{editFlag ? 'Edit': 'Add'}} Session Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="sessionForm" (ngSubmit)="onSubmitSessionForm()">
+                    <div class="row">
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                            <div class="form-floating mb-3">
+
+                                <input type="date" id="sessionDate" class="form-control" formControlName="sessionDate"
+                                    [attr.min]="validateDate('MIN')" [attr.max]="validateDate('MAX')">
+                                <label for="sessionDate" class="form-label">Session Date</label>
+                                <div *ngIf="sessionForm.get('sessionDate')?.touched && sessionForm.get('sessionDate')?.invalid"
+                                    class="text-danger">
+                                    Session Date is required.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                            <div class="form-floating mb-3">
+
+                                <input type="time" id="startTime" class="form-control" formControlName="startTime">
+                                <label for="startTime" class="form-label">Start Time</label>
+                                <div *ngIf="sessionForm.get('startTime')?.touched && sessionForm.get('startTime')?.invalid"
+                                    class="text-danger">
+                                    Start Time is required.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                            <div class="form-floating mb-3">
+
+                                <input type="time" id="endTime" class="form-control" formControlName="endTime">
+                                <label for="endTime" class="form-label">End Time</label>
+                                <div *ngIf="sessionForm.get('endTime')?.touched && sessionForm.get('endTime')?.invalid"
+                                    class="text-danger">
+                                    End Time is required.
+                                </div>
+                                <div *ngIf="sessionForm.get('startTime')?.value > sessionForm.get('endTime')?.value"
+                                    class="text-danger">
+                                    End Time always greater than start time is required.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                            <div class="form-floating mb-3">
+                                <select class="form-select" id="sessionTypeName" formControlName="sessionTypeName">
+                                    <option value="">Select Type</option>
+                                    <option value="Session">Session</option>
+                                    <option value="Break">Break</option>
+                                </select>
+                                <label for="sessionTypeName" class="form-label">Type of Session</label>
+                                <div *ngIf="sessionForm.get('sessionTypeName')?.touched && sessionForm.get('sessionTypeName')?.invalid"
+                                    class="text-danger">
+                                    Type of Session is required.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                            <div class="form-floating mb-3">
+
+                                <select class="form-select" formControlName="sessionTypeMethodology">
+                                    <option value="">Select Methodology</option>
+                                    <option value="Lecture">Lecture</option>
+                                    <option value="Break">Break</option>
+                                    <option value="Discussion">Discussion</option>
+                                    <option value="Panel dicussion">Panel dicussion</option>
+                                    <option value="Presentation">Presentation</option>
+                                    <option value="Felicitation">Felicitation</option>
+                                </select>
+                                <label for="sessionTypeMethodology" class="form-label">Methodology</label>
+                                <div *ngIf="sessionForm.get('sessionTypeMethodology')?.touched && sessionForm.get('sessionTypeMethodology')?.invalid"
+                                    class="text-danger">
+                                    Methodology is required.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                            <div class="form-floating mb-3">
+
+                                <select class="form-select" formControlName="resourceId" id="resourceId">
+                                    <option value="">Select Resource Person</option>
+                                    <option *ngFor="let list of getSessionResourceData" [value]="list.resourceId">{{
+                                        list.name }}</option>
+                                </select>
+                                <label for="resourceId" class="form-label">Resource Person</label>
+                                <!-- <input type="text" id="resourceId" class="form-control" formControlName="resourceId"> -->
+                                <div *ngIf="sessionForm.get('resourceId')?.touched && sessionForm.get('resourceId')?.invalid"
+                                    class="text-danger">
+                                    Resource Person is required.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                            <div class="form-floating mb-3">
+
+                                <input type="url" id="sessionStreamingUrl" class="form-control"
+                                    formControlName="sessionStreamingUrl">
+                                <label for="sessionStreamingUrl" class="form-label">Streaming URL</label>
+                                <div *ngIf="sessionForm.get('sessionStreamingUrl')?.touched && sessionForm.get('sessionStreamingUrl')?.invalid"
+                                    class="text-danger">
+                                    Session Streaming URL is required.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                            <div class="form-floating mb-3">
+
+                                <input type="file" id="uploaFiles" accept=".docx, .xls, .xlsx, .ppt,.pptx"
+                                    class="form-control" formControlName="uploaFiles" (change)="onFileChange($event)"
+                                    multiple>
+                                <label for="uploaFiles" class="form-label">Upload Files</label>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                            <div class="form-floating mb-3">
+
+                                <textarea id="sessionDetails" class="form-control" formControlName="sessionDetails"
+                                    rows="3"></textarea>
+                                <label for="sessionDetails" class="form-label">Session Details</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
+                        <button type="submit" class="btn btn-lime-green" [ngClass]="{'disabled': sessionForm.invalid}"
+                            [disabled]="sessionForm.invalid">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- begin:: modal add new resource person -->
+<div class="modal fade" id="addResource" tabindex="-1" aria-labelledby="addResourceLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <form [formGroup]="modalFormStype" (ngSubmit)="onModalSubmitType()">
+            <div class="modal-content">
+                <div class="modal-header py-2">
+                    <h6 class="modal-title" id="addResourceLabel">Add New Resource Person</h6>
+                    <button type="button" class="btn-close me-1" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12 col-sm-6">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="floatingSelectGender" formControlName="name"
+                                    placeholder="Resource Person" />
+                                <label for="floatingSelectGender">Resource Person<span class="c-red"> *</span></label>
+                                <div *ngIf="modalFormStype.controls['name'].touched && !modalFormStype.controls['name'].valid && modalFormStype.controls['name']?.errors?.['pattern']"
+                                    class="error" style="color: red;margin-top: 5px">Resource Person Should be
+                                    Characters</div>
+                                <div *ngIf="modalFormStype.controls['name'].touched && modalFormStype.controls['name'].invalid && !modalFormStype.controls['name']?.errors?.['pattern']"
+                                    class="error" style="color: red; margin-top: 5px;">
+                                    Resource Person is required
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" formControlName="mobileNo"
+                                    placeholder="Mobile No" />
+                                <label>Mobile No<span class="c-red"> *</span></label>
+                                <!-- <div *ngIf="modalFormStype.controls['mobileNo'].touched && modalFormStype.controls['mobileNo'].invalid" class="error" style="color: red;margin-top: 5px">
+                                    Mobile No is required
+                                </div> -->
+                                <div *ngIf="modalFormStype.controls['mobileNo'].touched && !modalFormStype.controls['mobileNo'].valid && !modalFormStype.controls['mobileNo']?.errors?.['pattern']"
+                                    class="error" style="color: red;margin-top: 5px">Mobile No is required</div>
+                                <div *ngIf="modalFormStype.controls['mobileNo'].touched && !modalFormStype.controls['mobileNo'].valid && modalFormStype.controls['mobileNo']?.errors?.['pattern']"
+                                    class="error" style="color: red;margin-top: 5px">Mobile No Starts with 6,7,8,9 and
+                                    should be 10 digits</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-sm-6">
+                            <div class="form-floating mb-3">
+                                <input type="email" class="form-control" formControlName="email" placeholder="Email" />
+                                <label>Email<span class="c-red"> *</span></label>
+                                <div *ngIf="modalFormStype.controls['email'].touched && modalFormStype.controls['email'].invalid"
+                                    class="error" style="color: red;margin-top: 5px">
+                                    Email is required
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" formControlName="organizationName"
+                                    placeholder="Organization Name" />
+                                <label>Organization Name<span class="c-red"> *</span></label>
+                                <!-- <div *ngIf="modalFormStype.controls['organizationName'].touched && modalFormStype.controls['organizationName'].invalid" class="error" style="color: red;margin-top: 5px">
+                                    Organization Name is required
+                                </div> -->
+                                <div *ngIf="modalFormStype.controls['organizationName'].touched && !modalFormStype.controls['organizationName'].valid && modalFormStype.controls['organizationName']?.errors?.['pattern']"
+                                    class="error" style="color: red;margin-top: 5px"> Organization Name Should be
+                                    Characters and numerics</div>
+                                <div *ngIf="modalFormStype.controls['organizationName'].touched && modalFormStype.controls['organizationName'].invalid && !modalFormStype.controls['organizationName']?.errors?.['pattern']"
+                                    class="error" style="color: red; margin-top: 5px;">
+                                    Organization Name is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-sm-6">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" formControlName="qualification"
+                                    placeholder="Qualification" />
+                                <label>Qualification<span class="c-red"> *</span></label>
+                                <div *ngIf="modalFormStype.controls['qualification'].touched && modalFormStype.controls['qualification'].invalid"
+                                    class="error" style="color: red;margin-top: 5px">
+                                    Qualification is required
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" formControlName="designation"
+                                    placeholder="Designation" />
+                                <label>Designation<span class="c-red"> *</span></label>
+                                <div *ngIf="modalFormStype.controls['designation'].touched && modalFormStype.controls['designation'].invalid"
+                                    class="error" style="color: red;margin-top: 5px">
+                                    Designation is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-sm-6">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" formControlName="specialization"
+                                    placeholder="Specialization" />
+                                <label>Specialization<span class="c-red"> *</span></label>
+                                <div *ngIf="modalFormStype.controls['specialization'].touched && modalFormStype.controls['specialization'].invalid"
+                                    class="error" style="color: red;margin-top: 5px">
+                                    Specialization is required
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <div class="form-floating mb-3">
+                                <select class="form-select" formControlName="gender">
+                                    <option value="M">Male</option>
+                                    <option value="F">Female</option>
+                                    <option value="T">Trans-Gender</option>
+                                </select>
+                                <label>Gender<span class="c-red"> *</span></label>
+                                <div *ngIf="modalFormStype.controls['gender'].touched && modalFormStype.controls['gender'].invalid"
+                                    class="error" style="color: red;margin-top: 5px">
+                                    Gender is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-floating mb-3">
+                            <textarea class="form-control" formControlName="briefDescription"
+                                placeholder="Brief Description"></textarea>
+                            <label>Brief Description <span class="c-red"> *</span></label>
+                            <div *ngIf="modalFormStype.controls['briefDescription'].touched && modalFormStype.controls['briefDescription'].invalid"
+                                class="error" style="color: red;margin-top: 5px">
+                                Brief Description is required
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-lime-green" [ngClass]="{'disabled': modalFormStype.invalid}"
+                        [disabled]="modalFormStype.invalid">Add Resource
+                        Person</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- end:: modal add new resource person -->
+
+<!-- Preview POP UP START-->
+<div class="modal fade" id="previewModal" tabindex="-1" aria-labelledby="previewModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="sessionFormModalLabel">Preview File</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" *ngIf="previewData">
+                <!-- <iframe [src]="previewData" style="width:51VW; height:80vh;" height="100vh" width="100%" frameborder="0"></iframe> -->
+                <ngx-doc-viewer style="width:51VW; height:80vh;" [url]="previewData" viewer="office">
+                </ngx-doc-viewer>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Preview POP UP END -->

@@ -5,6 +5,7 @@ export const APIS = {
     programCreation:{
         addprogram: API_BASE_URL + '/program/create',
         addSessions: API_BASE_URL + '/program/session/create',
+        editSession: API_BASE_URL + '/program/session/update',
         addLocation: API_BASE_URL + '/location/save',
         getLocation: API_BASE_URL + '/agency/locations/',
         getProgramType: API_BASE_URL + '/program/types/agency/id/',

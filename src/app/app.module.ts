@@ -49,6 +49,8 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { ProgramExpenditureComponent } from './PIA/program-expenditure/program-expenditure.component';
 import { BulkExpenditureComponent } from './PIA/bulk-expenditure/bulk-expenditure.component';
 import { ProgramSummaryComponent } from './PIA/program-summary/program-summary.component';
+import { AddProgramSessionsComponent } from './PIA/add-program-sessions/add-program-sessions.component';
+import { NgxDocViewerModule } from 'ngx-doc-viewer';
 
 @NgModule({
     imports: [
@@ -70,7 +72,7 @@ import { ProgramSummaryComponent } from './PIA/program-summary/program-summary.c
         MatPaginatorModule,
         MatSortModule,
         NgxMaterialTimepickerModule,
-        
+        NgxDocViewerModule
     ],
     declarations: [
         AppComponent,
@@ -104,6 +106,7 @@ import { ProgramSummaryComponent } from './PIA/program-summary/program-summary.c
            ProgramExpenditureComponent,
            BulkExpenditureComponent,
            ProgramSummaryComponent,
+           AddProgramSessionsComponent,
     ],
     exports:[MaterialModule],
     providers: [

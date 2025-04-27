@@ -31,6 +31,7 @@ import { RawMaterialsParticipantsComponent } from './PIA/raw-materials-participa
 import { ProgramExpenditureComponent } from './PIA/program-expenditure/program-expenditure.component';
 import { BulkExpenditureComponent } from './PIA/bulk-expenditure/bulk-expenditure.component';
 import { ProgramSummaryComponent } from './PIA/program-summary/program-summary.component';
+import { AddProgramSessionsComponent } from './PIA/add-program-sessions/add-program-sessions.component';
 
 const routes: Routes = [
     {
@@ -155,6 +156,12 @@ const routes: Routes = [
     {
         path: 'program-sessions',
         component: ProgramSessionsComponent,
+        canActivate: [AuthGuard],
+        data: { roles:  [Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
+    },
+    {
+        path: 'add-sessions',
+        component: AddProgramSessionsComponent,
         canActivate: [AuthGuard],
         data: { roles:  [Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
     },
