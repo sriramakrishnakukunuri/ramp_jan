@@ -414,8 +414,6 @@ export class ProgramExpenditureComponent implements OnInit {
       .getDataByUrl(APIS.programExpenditure.getBulkExpenditureByProgramId+'?programId='+this.f2['programId'].value).subscribe({
         next: (data: any) => {
           if(data?.data){
-           
-           
             this.getExpenditureDataBoth=[...this.getExpenditureDataBoth,...data?.data]
              console.log( this.getExpenditureData,data?.data,this.getExpenditureDataBoth)
             this.getBulkExpenditureData=data?.data

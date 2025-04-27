@@ -404,6 +404,7 @@ export class AddParticipantDataComponent implements OnInit {
     const [day, month, year] = date.split('-');
     return `${year}-${month}-${day}`; // Convert to yyyy-MM-dd format
   }
+  
   editRow(item: any, i: any) {
     this.isedit=true
     this.participantId=item.participantId
@@ -411,6 +412,7 @@ export class AddParticipantDataComponent implements OnInit {
    
     this.ParticipantDataForm.patchValue({ ...item, certificateIssueDate: item.certificateIssueDate?this.convertToISOFormat(item.certificateIssueDate):'',isAspirant:item.organizationId?'Existing Oragnization':'Aspirant'})
   }
+
   typeOragnization(event: any) {
     this.OragnizationType = event
     this.fOrg['nameOfTheSHG'].patchValue('')
@@ -489,6 +491,7 @@ export class AddParticipantDataComponent implements OnInit {
      
     }
   }
+
   chnageUdyam(event:any){
     console.log(event)
     if(event=='Yes'){
@@ -509,6 +512,7 @@ export class AddParticipantDataComponent implements OnInit {
     }
 
   }
+
   SubmitformOrganization() {
     console.log(this.OrganisationForm.value)
     if (this.OragnizationType == 'SHG') {
@@ -586,7 +590,6 @@ export class AddParticipantDataComponent implements OnInit {
       },
     });
   }
-
   // get program details 
   programData:any={}
   getProgramDetailsById(ProgrmId:any){
