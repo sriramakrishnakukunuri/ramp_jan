@@ -21,16 +21,16 @@ import { merge } from "rxjs";
   styleUrls: ['./password-settings.component.css']
 })
 export class PasswordSettingsComponent implements OnInit {
-  passwordshowOld: Boolean=false;
-  passwordshowNew: Boolean=false;
-  passwordshowConfirm: Boolean=false;
-  oldNewError: Boolean=false;
+  passwordshowOld: Boolean = false;
+  passwordshowNew: Boolean = false;
+  passwordshowConfirm: Boolean = false;
+  oldNewError: Boolean = false;
   changePasswordForm!: FormGroup;
-  agencyDetails:any
+  agencyDetails: any
   constructor(private toastrService: ToastrService,
-    private _commonService: CommonServiceService,) { 
-      this.agencyDetails = JSON.parse(sessionStorage.getItem('user') || '{}');
-    }
+    private _commonService: CommonServiceService,) {
+    this.agencyDetails = JSON.parse(sessionStorage.getItem('user') || '{}');
+  }
 
   ngOnInit(): void {
     this.initializeForm()
@@ -59,14 +59,14 @@ export class PasswordSettingsComponent implements OnInit {
   initializeForm() {
     this.changePasswordForm = new FormGroup(
       {
-        userId: new FormControl(this.agencyDetails?.userId ),
+        userId: new FormControl(this.agencyDetails?.userId),
         oldPassword: new FormControl("", [Validators.required]),
         newPassword: new FormControl(
           "",
           Validators.compose([
             Validators.required,
 
-            Validators.minLength(8),PasswordStrengthValidator,])
+            Validators.minLength(8), PasswordStrengthValidator,])
         ),
         conformNewPassword: new FormControl("", [Validators.required]),
       },
@@ -74,25 +74,24 @@ export class PasswordSettingsComponent implements OnInit {
     );
   }
 
-changePassword() {
-  console.log(this.changePasswordForm.value)
-  let payload:any={
-    "userId": this.changePasswordForm.value?.userId,
-    "oldPassword": this.changePasswordForm.value?.oldPassword,
-    "newPassword": this.changePasswordForm.value?.newPassword
-}
-  debugger;
- this._commonService.add(APIS.masterList.changePassword,payload).subscribe({
-  next:(data:any)=>{
-    this.toastrService.success('Change Password Updated Successfully', "Change Password Success!");
-        console.log(data)
-        debugger;
-  },
-  error:(error:any)=>{
+  changePassword() {
+    console.log(this.changePasswordForm.value)
+    let payload: any = {
+      "userId": this.changePasswordForm.value?.userId,
+      "oldPassword": this.changePasswordForm.value?.oldPassword,
+      "newPassword": this.changePasswordForm.value?.newPassword
+    }
 
+    this._commonService.add(APIS.masterList.changePassword, payload).subscribe({
+      next: (data: any) => {
+        this.toastrService.success('Change Password Updated Successfully', "Change Password Success!");
+        this.changePasswordForm.reset();
+      },
+      error: (error: any) => {
+
+      }
+    })
   }
- })
-}
 }
 export const passwordMatchingValidatior: ValidatorFn = (
   control: AbstractControl
