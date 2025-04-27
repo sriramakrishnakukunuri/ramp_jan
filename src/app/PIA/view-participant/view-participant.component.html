@@ -58,8 +58,8 @@
                             <td>{{item?.isCertificateIssued=='Y'?item?.certificateIssueDate:''}}</td>
                             <td>{{item?.needAssessmentMethodology}}</td>
                             <td class="text-center">
-                                <button type="button" class="btn btn-default text-lime-green btn-sm" (click)="editRow(item,i)"><span class="bi bi-pencil"></span></button>
-                                <button type="button" class="btn btn-default text-danger btn-sm" (click)="deleteRow(item,i)"><span class="bi bi-trash"></span></button>
+                                <button type="button" class="btn btn-default text-lime-green btn-sm" (click)="editRow(item)"><span class="bi bi-pencil"></span></button>
+                                <button type="button" class="btn btn-default text-danger btn-sm" (click)="deleteRow(item)"><span class="bi bi-trash"></span></button>
                             </td>
                         </tr>
                     </tbody>

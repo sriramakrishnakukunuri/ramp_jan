@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import DataTable from 'datatables.net-dt';
 import 'datatables.net-buttons-dt';
 import 'datatables.net-responsive-dt';
+import { event } from 'jquery';
 declare var $: any;
 
 @Component({
@@ -71,6 +72,7 @@ export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
   }
 
   sessionDetails(dataList: any): any {
+    console.log(dataList)
     this.sessionDetailsList = dataList.programSessionList;
   }
 
@@ -83,6 +85,7 @@ export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
   }
 
   initializeDataTable(agency:any) { 
+    const self = this;
     this.dataTable = new DataTable('#view-table-program', {
       scrollY: "505px",
       scrollX: true,
@@ -163,14 +166,34 @@ export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
           data: 'programLocationName',
           title: 'Program Location'
       },
+      // { 
+      //   data: null,
+      //   title: 'Edit / Delete',
+      //   render: (data: any, type: any, row: any, meta: any) => {
+      //     // Use meta.row for the current displayed row index
+      //     return `
+      //       <button type="button" class="btn btn-default text-lime-green btn-sm edit-btn" data-index="${meta.row}">
+      //         <span class="bi bi-eye"></span>
+      //       </button>
+      //       // <button type="button" class="btn btn-default text-danger btn-sm delete-btn" data-index="${meta.row}">
+      //       //   <span class="bi bi-trash"></span>
+      //       // </button>
+      //     `;
+      //   },
+      //   className: 'text-center',
+      //   orderable: false
+      // }
       { 
           title: 'Actions',
-          data: 'programLocationName',
-          render: function(data:any, type:any, row:any) {
+          data: null,
+          render: function(data:any, type:any, row:any,meta: any) {
+            console.log(data,row,meta)
               // if (this.loginsessionDetails?.userRole == 'AGENCY_MANAGER' || this.loginsessionDetails?.userRole == 'AGENCY_EXECUTOR') {
-                  return `<button type="button" class="btn btn-default btn-sm text-lime-green" title="Sessions" data-bs-toggle="modal" data-bs-target="#viewModal" onclick="sessionDetails(${row.programId})" title="View">
-                              <span class="bi bi-eye"></span>
-                          </button>`;
+                  return `  <button type="button" class="btn btn-default btn-sm text-lime-green edit-btn" 
+                  title="Sessions" data-bs-toggle="modal" data-bs-target="#viewModal" 
+                  data-id="${row.id}" title="View">
+                  <span class="bi bi-eye"></span>
+                </button>`;
               // }
               // return '';
           },
@@ -178,6 +201,13 @@ export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
           className: 'text-center'
       }
   ],
+  initComplete: function() {
+    // Use proper event handling with arrow function
+    $('#view-table-program').on('click', '.edit-btn', (event:any) => {
+      const rowData = self.dataTable.row($(event.currentTarget).parents('tr')).data();
+      self.sessionDetails(rowData); // Call your method with proper data
+    });
+  }
     });
   }
 

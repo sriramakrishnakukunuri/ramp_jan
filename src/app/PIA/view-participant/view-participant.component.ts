@@ -241,13 +241,15 @@ export class ViewParticipantComponent implements OnInit {
                 title: 'Methodology Used for Needs Assessment'
               },
               { 
+                data: null,
                 title: 'Edit / Delete',
-                render: function(data, type, row, meta) {
+                render: (data: any, type: any, row: any, meta: any) => {
+                  // Use meta.row for the current displayed row index
                   return `
-                    <button type="button" class="btn btn-default text-lime-green btn-sm" onclick="angularComponentReference.editRow(${meta.row})">
+                    <button type="button" class="btn btn-default text-lime-green btn-sm edit-btn" data-index="${meta.row}">
                       <span class="bi bi-pencil"></span>
                     </button>
-                    <button type="button" class="btn btn-default text-danger btn-sm" onclick="angularComponentReference.deleteRow(${meta.row})">
+                    <button type="button" class="btn btn-default text-danger btn-sm delete-btn" data-index="${meta.row}">
                       <span class="bi bi-trash"></span>
                     </button>
                   `;
@@ -255,19 +257,35 @@ export class ViewParticipantComponent implements OnInit {
                 className: 'text-center',
                 orderable: false
               }
+              // { 
+              //   title: 'Edit / Delete',
+              //   render: function(data, type, row, meta) {
+                  
+              //     return `
+              //       <button type="button" class="btn btn-default text-lime-green btn-sm" onclick="editRow(${row})">
+              //         <span class="bi bi-pencil"></span>
+              //       </button>
+              //       <button type="button" class="btn btn-default text-danger btn-sm" onclick="deleteRow(${row})">
+              //         <span class="bi bi-trash"></span>
+              //       </button>
+              //     `;
+              //   },
+              //   className: 'text-center',
+              //   orderable: false
+              // }
             ],
-        // initComplete: function() {
-        //   // Add event listeners for edit/delete buttons
-        //   $('#view-table-participant1').on('click', '.edit-btn', function() {
-        //     const rowData = self.dataTable.row($(this).parents('tr')).data();
-        //     self.editRow(rowData);
-        //   });
+        initComplete: function() {
+          // Add event listeners for edit/delete buttons
+          $('#view-table-participant1').on('click', '.edit-btn', function() {
+            const rowData = self.dataTable.row($(this).parents('tr')).data();
+            self.editRow(rowData);
+          });
           
-        //   $('#view-table-participant1').on('click', '.delete-btn', function() {
-        //     const rowData = self.dataTable.row($(this).parents('tr')).data();
-        //     self.deleteRow(rowData);
-        //   });
-        // }
+          $('#view-table-participant1').on('click', '.delete-btn', function() {
+            const rowData = self.dataTable.row($(this).parents('tr')).data();
+            self.deleteRow(rowData);
+          });
+        }
       });
     }
     // initializeDataTable() {
@@ -425,9 +443,9 @@ export class ViewParticipantComponent implements OnInit {
     //   });
     // }
     
-    deleteRow(item: any, i: number) {
+    deleteRow(item: any,) {
       //  this.submitedData.pop(i)
-      this.submitedData.splice(i, 1)
+      // this.submitedData.splice(i, 1)
       console.log(this.submitedData)
       // this.submitedData.push(this.ParticipantDataForm.value)
       // sessionStorage.setItem('ParticipantData', this.submitedData)
@@ -435,7 +453,7 @@ export class ViewParticipantComponent implements OnInit {
       this.getData()
     }
 
-  editRow(item: any, i: any) {
+  editRow(item: any) {
       this.router.navigateByUrl('/add-participant-data-edit/' + item.participantId);
     }
   }
