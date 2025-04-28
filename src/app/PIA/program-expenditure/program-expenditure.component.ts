@@ -314,7 +314,7 @@ export class ProgramExpenditureComponent implements OnInit {
   }
   //save pre and post expenditure 
   ExpenditureSubmit(){
-    let payload={...this.programCreationMain.value,...this.PrePostExpenditureForm.value,agencyId:this.agencyId}
+    let payload={...this.programCreationMain.value ,programId:Number(this.programCreationMain.value.programId),...this.PrePostExpenditureForm.value,headOfExpenseId:Number(this.PrePostExpenditureForm.value.headOfExpenseId),agencyId:this.agencyId}
     console.log(payload)
     const formData = new FormData();
       formData.append("request", JSON.stringify(payload));
