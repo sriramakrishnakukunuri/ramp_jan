@@ -111,12 +111,36 @@ export class AddProgramSessionsComponent implements OnInit {
       if (value === 'Break') {
         this.availableMethodologies = ['Break'];
         this.sessionForm.get('sessionTypeMethodology')?.setValue('Break'); // auto-select Break
+
+        // Disable and make fields not mandatory
+        this.sessionForm.get('resourceId')?.disable();
+        this.sessionForm.get('resourceId')?.clearValidators();
+        this.sessionForm.get('sessionStreamingUrl')?.disable();
+        this.sessionForm.get('sessionStreamingUrl')?.clearValidators();
+        this.sessionForm.get('uploaFiles')?.disable();
+        this.sessionForm.get('uploaFiles')?.clearValidators();
+        this.sessionForm.get('sessionDetails')?.disable();
+        this.sessionForm.get('sessionDetails')?.clearValidators();
       } else if (value === 'Session') {
         this.availableMethodologies = this.allMethodologies.filter(m => m !== 'Break');
         this.sessionForm.get('sessionTypeMethodology')?.setValue('');
+
+        // Enable and make fields mandatory
+        this.sessionForm.get('resourceId')?.enable();
+        this.sessionForm.get('resourceId')?.setValidators(Validators.required);
+        this.sessionForm.get('sessionStreamingUrl')?.enable();
+        this.sessionForm.get('uploaFiles')?.enable();
+        this.sessionForm.get('sessionDetails')?.enable();
       } else {
         this.availableMethodologies = [...this.allMethodologies];
         this.sessionForm.get('sessionTypeMethodology')?.setValue('');
+
+        // Enable and make fields mandatory
+        this.sessionForm.get('resourceId')?.enable();
+        this.sessionForm.get('resourceId')?.setValidators(Validators.required);
+        this.sessionForm.get('sessionStreamingUrl')?.enable();
+        this.sessionForm.get('uploaFiles')?.enable();
+        this.sessionForm.get('sessionDetails')?.enable();
       }
     });
   }
@@ -131,7 +155,7 @@ export class AddProgramSessionsComponent implements OnInit {
       sessionDetails: ['ABC'],
       resourceId: ['', Validators.required],
       uploaFiles: [null],
-      sessionStreamingUrl: ['', Validators.required],
+      sessionStreamingUrl: [''],
       videoUrls: [''],
       sessionId: ['']
     });
@@ -147,8 +171,10 @@ export class AddProgramSessionsComponent implements OnInit {
     return timeValue;
   }
 
+  loading = false;
   onSubmitSessionForm(): void {
     if (this.sessionForm.valid) {
+      this.loading = true;
       console.log('Form Submitted:', this.sessionForm.value);
       // Handle form submission logic here
       this.sessionForm.value.uploaFiles = this.uploadedFiles;
@@ -179,7 +205,18 @@ export class AddProgramSessionsComponent implements OnInit {
               } else {
                 element['programId'] = Number(element['programId'] ? element['programId'] : 1);
               }
-              element['resourceId'] = Number(element['resourceId']);
+              if(element['videoUrls']) {
+                element['videoUrls'] = element['videoUrls'];
+              }else {
+                delete element['videoUrls'];
+              }
+
+              if(element['sessionTypeName'] === 'Break') {
+                element['resourceId'] = 152;
+              }else {
+                element['resourceId'] = Number(element['resourceId']);
+              }
+              
               delete element['uploaFiles'];
               //delete element['meterialType'];
               formData.set("data", JSON.stringify(element));
@@ -192,7 +229,19 @@ export class AddProgramSessionsComponent implements OnInit {
               } else {
                 element['programId'] = Number(element['programId'] ? element['programId'] : 1);
               }
-              element['resourceId'] = Number(element['resourceId']);
+              
+              if(element['videoUrls']) {
+                element['videoUrls'] = element['videoUrls'];
+              }else {
+                delete element['videoUrls'];
+              }
+
+              if(element['sessionTypeName'] === 'Break') {
+                element['resourceId'] = 152;
+              }else {
+                element['resourceId'] = Number(element['resourceId']);
+              }
+
               delete element['uploaFiles'];
               delete element['videoUrls'];
               //delete element['meterialType'];
@@ -206,11 +255,13 @@ export class AddProgramSessionsComponent implements OnInit {
       
           forkJoin(apiCalls).subscribe({
             next: (results) => {
+              this.loading = false;
               this.closeModal();
               this.toastrService.success('Session Details Created Successfully', "Session Creation Success!");
               this.getProgramDetailsById(this.programId);          
             },
             error: (err) => {
+              this.loading = false;
               this.closeModal();
               this.toastrService.error(err, "Session Creation Error!");        
             },
@@ -267,7 +318,7 @@ export class AddProgramSessionsComponent implements OnInit {
   showSessionEditModal(session?: any) {
     this.uploadedFiles = []
     if(!this.ProgramData?.programId) {
-      this.toastrService.error("Please Select atleast one program to add sessions", "Program Error");
+      this.toastrService.error("Please Select atleast one Program to add sessions", "Program Error");
       return;
     }
     if (!session) {
@@ -277,9 +328,34 @@ export class AddProgramSessionsComponent implements OnInit {
         const modalInstance = new bootstrap.Modal(editSessionModal);
         modalInstance.show();
       }
+
+      // Enable and make fields mandatory
+      this.sessionForm.get('resourceId')?.enable();
+      this.sessionForm.get('resourceId')?.setValidators(Validators.required);
+
+      this.sessionForm.get('sessionStreamingUrl')?.enable();
+      this.sessionForm.get('sessionStreamingUrl')?.clearValidators();
+      this.sessionForm.get('uploaFiles')?.enable();
+      this.sessionForm.get('uploaFiles')?.clearValidators();
+      this.sessionForm.get('sessionDetails')?.enable();
+      this.sessionForm.get('sessionDetails')?.clearValidators();
+
       this.editFlag = false;
       return;
     }
+
+    // Enable and make fields mandatory
+    this.sessionForm.get('resourceId')?.enable();
+    this.sessionForm.get('resourceId')?.setValidators(Validators.required);
+
+    this.sessionForm.get('sessionStreamingUrl')?.enable();
+    this.sessionForm.get('sessionStreamingUrl')?.clearValidators();
+    this.sessionForm.get('uploaFiles')?.enable();
+    this.sessionForm.get('uploaFiles')?.clearValidators();
+    this.sessionForm.get('sessionDetails')?.enable();
+    this.sessionForm.get('sessionDetails')?.clearValidators();
+
+
     this.editFlag = true;
     this.sessionForm.patchValue({
       sessionDate: this.convertToISOFormat(session.sessionDate),
@@ -399,6 +475,7 @@ export class AddProgramSessionsComponent implements OnInit {
     // setTimeout(() => {
     //   this.previewData = genFile  
     // }, 1000);
+    //https://view.officeapps.live.com/op/embed.aspx?src=https://metaverseedu.in/workflow/program/file/download/107
     
     // // this.previewData = this.sanitizer.bypassSecurityTrustResourceUrl(
     // //   `https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(url)}?cache='${this.cacheBuster}`
@@ -448,5 +525,45 @@ export class AddProgramSessionsComponent implements OnInit {
   toggleIcon(index: number): void {
     this.collapseStates[index] = !this.collapseStates[index];
   }
+
+  deleteSessionId:any = ''
+  deleteSession(item: any) {
+    this.deleteSessionId = item?.sessionId
+    const previewModal = document.getElementById('exampleModalDelete');
+    if (previewModal) {
+      const modalInstance = new bootstrap.Modal(previewModal);
+      modalInstance.show();
+    }
+  }
   
+  confirmDelete(id: any) {
+    let url = `?sessionId=${id}`
+    this._commonService.deleteById(APIS.programCreation.deleteSession, url).subscribe({
+      next: (data: any) => {
+        console.log('Response from API:', data);
+        if (data.includes('Deleted Session Successfully')) {
+          this.toastrService.success('Session Deleted Successfully', "");
+        } else {        
+          this.toastrService.error("Something unexpected happened!!");          
+        }
+        this.closeModalDelete();
+        this.deleteSessionId = ''
+        this.getProgramDetailsById(this.programId);
+      },
+      error: (err: any) => {
+        this.closeModalDelete();
+        this.deleteSessionId = ''
+        this.toastrService.error("Something unexpected happened!!");
+        new Error(err);
+      },
+    });
+  }
+
+  closeModalDelete(): void {
+    const editSessionModal = document.getElementById('exampleModalDelete');
+    if (editSessionModal) {
+      const modalInstance = bootstrap.Modal.getInstance(editSessionModal);
+      modalInstance.hide();
+    }
+  }  
 }

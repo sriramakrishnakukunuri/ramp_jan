@@ -186,7 +186,7 @@
                         </div>
                         <div class="col-4 col-sm-4 col-md-3 col-lg-2">
                             <div class="text-end">
-                                <button type="button" class="btn btn-sm btn-lime-green" data-bs-toggle="modal" data-bs-target="#mediaCoverage"><span class="bi bi-plus-lg"></span> Add</button>
+                                <button type="button" class="btn btn-sm btn-lime-green" (click)="showSessionEditModal()"><span class="bi bi-plus-lg"></span> Add</button>
                             </div>
                         </div>
                     </div>
@@ -259,7 +259,7 @@
 </main>
 
 <!-- begin:: details modal -->
-<div class="modal fade" id="mediaCoverage" tabindex="-1" aria-labelledby="mediaCoverageLabel" aria-hidden="true">
+<div class="modal fade" id="sessionFormMediaModal" #sessionFormMediaModal tabindex="-1" aria-labelledby="mediaCoverageLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg">
         <form [formGroup]="mediaCoverageForm" (ngSubmit)="onSubmit()">
             <div class="modal-content">

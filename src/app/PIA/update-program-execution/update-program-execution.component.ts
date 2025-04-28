@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import DataTable from 'datatables.net-dt';
@@ -6,7 +6,11 @@ import 'datatables.net-buttons-dt';
 import 'datatables.net-responsive-dt';
 import { CommonServiceService } from '@app/_services/common-service.service';
 import { API_BASE_URL, APIS } from '@app/constants/constants';
+import { ToastrService } from 'ngx-toastr';
+import { forkJoin } from 'rxjs';
+import moment from "moment";
 declare var $: any;
+declare var bootstrap: any;
 @Component({
   selector: 'app-update-program-execution',
   templateUrl: './update-program-execution.component.html',
@@ -23,6 +27,7 @@ export class UpdateProgramExecutionComponent implements OnInit {
     private router: Router,
     private fb: FormBuilder,
     private _commonService: CommonServiceService,
+    private toastrService: ToastrService,
   ) { 
     this.agencyId = JSON.parse(sessionStorage.getItem('user') || '{}').agencyId;
   }
@@ -33,6 +38,7 @@ export class UpdateProgramExecutionComponent implements OnInit {
       date: ['', Validators.required],
       mediaCoverageType: ['', Validators.required],
       mediaCoverageUrl: ['', Validators.required],
+      programId: [''],
     });
   }
 
@@ -104,13 +110,16 @@ export class UpdateProgramExecutionComponent implements OnInit {
 
   onSubmit() {
     if (this.mediaCoverageForm.invalid) return;
-
+    this.mediaCoverageForm.value.programId = Number(this.programId)
+    let objectnew: any = [this.mediaCoverageForm.value]
     const formData = new FormData();
-    formData.append('programId', '1');
-    formData.append('date', this.mediaCoverageForm.get('date')?.value);
-    formData.append('mediaCoverageType', this.mediaCoverageForm.get('mediaCoverageType')?.value);
-    formData.append('mediaCoverageUrl', this.mediaCoverageForm.get('mediaCoverageUrl')?.value);
-
+    const API_ADD_URL = APIS.programExecutions.saveMediaCoverage;
+    const apiCalls = objectnew.map((element: any, index: any) => { 
+      element['date'] = moment(element['date']).format('DD-MM-YYYY');     
+      formData.set("data", JSON.stringify(element));
+      return this._commonService.uploadImageResource(API_ADD_URL,formData);
+    })
+    
     // Append images
     if (this.selectedFiles['image1']) {
       formData.append('image1', this.selectedFiles['image1']);
@@ -128,6 +137,41 @@ export class UpdateProgramExecutionComponent implements OnInit {
     } else {
       console.log('Add FormData:', formData);
       // Call your create API with formData
+      forkJoin(apiCalls).subscribe({
+        next: (results) => {
+          this.closeModal();
+          this.toastrService.success('Session Details Created Successfully', "Session Creation Success!");
+          this.getProgramDetailsById(this.programId);          
+        },
+        error: (err) => {
+          this.closeModal();
+          this.toastrService.error(err, "Session Creation Error!");        
+        },
+      });
+    }
+  }
+
+  @ViewChild('sessionFormMediaModal') sessionFormMediaModal!: ElementRef;
+    closeModal(): void {
+      const modal = bootstrap.Modal.getInstance(this.sessionFormMediaModal.nativeElement);
+      modal.hide();   
+  }
+
+  showSessionEditModal(session?: any) {
+    if(!this.ProgramData?.programId) {
+      this.toastrService.error("Please Select atleast one Program to add Media Coverage", "Program Error");
+      return;
+    }
+
+    if (!session) {
+      
+      const editSessionModal = document.getElementById('sessionFormMediaModal');
+      if (editSessionModal) {
+        const modalInstance = new bootstrap.Modal(editSessionModal);
+        modalInstance.show();
+      }
+      
+      return;
     }
   }
 }

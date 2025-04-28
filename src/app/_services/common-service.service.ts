@@ -52,6 +52,14 @@ export class CommonServiceService {
     return this.http.post(url, formData);
   }
 
+  uploadImageResource(url:any,formData:any): Observable<any> {   
+    return this.http.post(url, formData);
+  }
+
+  deleteById(URL: any, id: any): Observable<any> {
+    return this.http.post(URL + id,{},{ responseType: 'text' })
+  }
+
   public getDataByUrl(URL: any): Observable<any> {
     return this.http.get(URL).pipe(catchError(this.formatErrors));
   }

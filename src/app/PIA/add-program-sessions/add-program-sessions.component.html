@@ -1,7 +1,7 @@
 <main class="mt-4">
     <section>
         <div class="container-fluid">
-            <div class="card mb-3">
+            <!-- <div class="card mb-3">
                 <div class="card-header bg-transparent">
                     <div class="row align-items-center">
                         <div class="col-12">
@@ -42,22 +42,34 @@
                                 <label for="coverage">Program</label>
                             </div>
                         </div>
-                        <!-- <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                             <div class="form-floating mb-3 mb-sm-0">
                                 <button type="button" class="btn btn-lime-green" data-bs-toggle="modal"
                                     data-bs-target="#addResource">Add Resource Person</button>
                             </div>
-                        </div> -->
+                        </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <div class="card mb-4">
                 <div class="card-header bg-transparent">
                     <div class="row align-items-center">
-                        <div class="col-8 col-sm-8 col-md-9 col-lg-6">
+                        <div class="col-8 col-sm-8 col-md-9 col-lg-5">
                             <h6 class="fw-600 mb-2 mb-sm-3 mb-md-0">Session Details</h6>
                         </div>
-                        <div class="col-4 col-sm-4 col-md-3 col-lg-4">
+                        <div class="col-4 col-sm-4 col-md-3 col-lg-3">
+                            <div class="form-floating mb-3 mb-sm-3 mb-md-0">
+                                <select class="form-select events-expenditure" [(ngModel)]="programId"
+                                    [ngModelOptions]="{standalone: true}"
+                                    (change)="dropdownProgramsList($event,'table')">
+                                    <option value="">Select Program</option>
+                                    <option *ngFor="let list of agencyProgramList" value="{{list.programId}}">
+                                        {{list.programTitle}}</option>
+                                </select>
+                                <label for="coverage">Program</label>
+                            </div>
+                        </div>
+                        <div class="col-4 col-sm-4 col-md-3 col-lg-2">
                             <div class="text-end">
                                 <button type="button" class="btn btn-sm btn-lime-green"
                                     (click)="showSessionEditModal()"><span class="bi bi-plus-lg"></span> Add</button>
@@ -67,7 +79,7 @@
                             <div class="text-end">
                                 <button type="button" class="btn btn-lime-green" data-bs-toggle="modal"
                                     data-bs-target="#addResource">Add Resource Person</button>
-                            </div>                            
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -131,8 +143,8 @@
                                 <td class="text-center">
                                     <button type="button" class="btn btn-default text-lime-green btn-sm"
                                         (click)="showSessionEditModal(item)"><span class="bi bi-pencil"></span></button>
-                                    <!-- <button type="button" class="btn btn-default text-danger btn-sm"><span
-                                            class="bi bi-trash"></span></button> -->
+                                    <button type="button" class="btn btn-default text-danger btn-sm"
+                                        (click)="deleteSession(item)"><span class="bi bi-trash"></span></button>
                                 </td>
                             </tr>
                             <tr>
@@ -206,7 +218,8 @@
 
                                 <input type="date" id="sessionDate" class="form-control" formControlName="sessionDate"
                                     [attr.min]="validateDate('MIN')" [attr.max]="validateDate('MAX')">
-                                <label for="sessionDate" class="form-label">Session Date</label>
+                                <label for="sessionDate" class="form-label">Session Date <span class="c-red">
+                                        *</span></label>
                                 <div *ngIf="sessionForm.get('sessionDate')?.touched && sessionForm.get('sessionDate')?.invalid"
                                     class="text-danger">
                                     Session Date is required.
@@ -217,7 +230,8 @@
                             <div class="form-floating mb-3">
 
                                 <input type="time" id="startTime" class="form-control" formControlName="startTime">
-                                <label for="startTime" class="form-label">Start Time</label>
+                                <label for="startTime" class="form-label">Start Time <span class="c-red">
+                                        *</span></label>
                                 <div *ngIf="sessionForm.get('startTime')?.touched && sessionForm.get('startTime')?.invalid"
                                     class="text-danger">
                                     Start Time is required.
@@ -228,7 +242,7 @@
                             <div class="form-floating mb-3">
 
                                 <input type="time" id="endTime" class="form-control" formControlName="endTime">
-                                <label for="endTime" class="form-label">End Time</label>
+                                <label for="endTime" class="form-label">End Time <span class="c-red"> *</span></label>
                                 <div *ngIf="sessionForm.get('endTime')?.touched && sessionForm.get('endTime')?.invalid"
                                     class="text-danger">
                                     End Time is required.
@@ -246,7 +260,8 @@
                                     <option value="Session">Session</option>
                                     <option value="Break">Break</option>
                                 </select>
-                                <label for="sessionTypeName" class="form-label">Type of Session</label>
+                                <label for="sessionTypeName" class="form-label">Type of Session <span class="c-red">
+                                        *</span></label>
                                 <div *ngIf="sessionForm.get('sessionTypeName')?.touched && sessionForm.get('sessionTypeName')?.invalid"
                                     class="text-danger">
                                     Type of Session is required.
@@ -256,12 +271,13 @@
                         <div class="col-12 col-sm-6 col-md-4 col-lg-4">
                             <div class="form-floating mb-3">
 
-                                <select class="form-select" id="sessionTypeMethodology" formControlName="sessionTypeMethodology">
+                                <select class="form-select" id="sessionTypeMethodology"
+                                    formControlName="sessionTypeMethodology">
                                     <option value="">Select Methodology</option>
                                     <option *ngFor="let methodology of availableMethodologies" [value]="methodology">
-                                      {{ methodology }}
+                                        {{ methodology }}
                                     </option>
-                                  </select>
+                                </select>
                                 <!-- <select class="form-select" formControlName="sessionTypeMethodology">
                                     <option value="">Select Methodology</option>
                                     <option value="Lecture">Lecture</option>
@@ -271,7 +287,8 @@
                                     <option value="Presentation">Presentation</option>
                                     <option value="Felicitation">Felicitation</option>
                                 </select> -->
-                                <label for="sessionTypeMethodology" class="form-label">Methodology</label>
+                                <label for="sessionTypeMethodology" class="form-label">Methodology <span class="c-red">
+                                        *</span></label>
                                 <div *ngIf="sessionForm.get('sessionTypeMethodology')?.touched && sessionForm.get('sessionTypeMethodology')?.invalid"
                                     class="text-danger">
                                     Methodology is required.
@@ -281,12 +298,13 @@
                         <div class="col-12 col-sm-6 col-md-4 col-lg-4">
                             <div class="form-floating mb-3">
 
-                                <select class="form-select" formControlName="resourceId" id="resourceId">
+                                <select class="form-select" formControlName="resourceId" id="resourceId" [disabled]="sessionForm.get('resourceId')?.disabled ?? false">
                                     <option value="">Select Resource Person</option>
                                     <option *ngFor="let list of getSessionResourceData" [value]="list.resourceId">{{
                                         list.name }}</option>
                                 </select>
-                                <label for="resourceId" class="form-label">Resource Person</label>
+                                <label for="resourceId" class="form-label">Resource Person <span class="c-red" *ngIf="sessionForm.get('sessionTypeName')?.value == 'Session'">
+                                        *</span></label>
                                 <!-- <input type="text" id="resourceId" class="form-control" formControlName="resourceId"> -->
                                 <div *ngIf="sessionForm.get('resourceId')?.touched && sessionForm.get('resourceId')?.invalid"
                                     class="text-danger">
@@ -298,8 +316,8 @@
                             <div class="form-floating mb-3">
 
                                 <input type="url" id="sessionStreamingUrl" class="form-control"
-                                    formControlName="sessionStreamingUrl">
-                                <label for="sessionStreamingUrl" class="form-label">Streaming URL</label>
+                                    formControlName="sessionStreamingUrl" [disabled]="sessionForm.get('sessionStreamingUrl')?.disabled ?? false">
+                                <label for="sessionStreamingUrl" class="form-label">Streaming URL </label>
                                 <div *ngIf="sessionForm.get('sessionStreamingUrl')?.touched && sessionForm.get('sessionStreamingUrl')?.invalid"
                                     class="text-danger">
                                     Session Streaming URL is required.
@@ -327,7 +345,10 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
                         <button type="submit" class="btn btn-lime-green" [ngClass]="{'disabled': sessionForm.invalid}"
-                            [disabled]="sessionForm.invalid">Submit</button>
+                            [disabled]="loading || sessionForm.invalid">
+                            <span *ngIf="loading" class="spinner-border spinner-border-sm me-1"></span>
+                            {{editFlag ? 'Update' : 'Submit'}}
+                        </button>
                     </div>
                 </form>
             </div>
@@ -496,3 +517,22 @@
     </div>
 </div>
 <!-- Preview POP UP END -->
+
+<div class="modal fade" id="exampleModalDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalDeleteLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalDeleteLabel">Delete Session</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure want to delete ??
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-lime-green" (click)="confirmDelete(deleteSessionId)">Confirm</button>
+            </div>
+        </div>
+    </div>
+</div>

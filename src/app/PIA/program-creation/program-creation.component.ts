@@ -198,6 +198,7 @@ export class ProgramCreationComponent implements OnInit, AfterViewInit {
   }
 
   getProgrameIdBasesOnSave:any
+  loading = false;
   submitProgramCreation() {
     this.getProgrameIdBasesOnSave = ''
     let maindata = { ...this.programCreationMain.value };
@@ -207,15 +208,17 @@ export class ProgramCreationComponent implements OnInit, AfterViewInit {
     maindata['endDate'] = moment(maindata['endDate']).format('DD-MM-YYYY')
     maindata['locationId'] = this.programCreationMain.value.programLocation
     maindata['agencyId'] = Number(this.agencyId)
-   
+    this.loading = true;
     if(this.programId) {
       maindata['programId'] = Number(this.programId)
       this._commonService.add(APIS.programCreation.updateProgram, maindata).subscribe({
-        next: (data) => {          
+        next: (data) => {      
+          this.loading = false;    
           this.toastrService.success('Program Updated Successfully', "Success!");
           this.getProgramDetailsById(maindata['programId']);          
         },
         error: (err) => {
+          this.loading = false;
           this.toastrService.error(err.message, "Program Creation Error!");
           new Error(err);
         },
@@ -223,12 +226,14 @@ export class ProgramCreationComponent implements OnInit, AfterViewInit {
     }else {
       this._commonService.add(APIS.programCreation.addprogram, maindata).subscribe({
         next: (data) => {
+          this.loading = false;
           this.getProgrameIdBasesOnSave = data.data
           this.toastrService.success('Program Created Successfully', "Success!");
           this.programCreationMain.reset();
           this.getProgramsByAgency()
         },
         error: (err) => {
+          this.loading = false;
           this.toastrService.error(err.message, "Program Creation Error!");
           new Error(err);
         },
