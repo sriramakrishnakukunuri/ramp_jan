@@ -1,4 +1,4 @@
-<main class="mt-4">
+<!-- <main class="mt-4">
     <section>
         <div class="container-fluid">
             <div class="card mb-3">
@@ -16,7 +16,7 @@
                 </div>
                 <div class="card-body">
                     <table id="creation-table" class="table table-borderless table-striped nowrap">
-                        <thead>
+                        <thead class="bg-lime-green text-white">
                             <tr>
                                 <th>Session No.</th>
                                 <th>Session Details</th>
@@ -121,4 +121,206 @@
             
         </div>
     </section>
+</main> -->
+
+<main class="mt-4">
+    <section>
+        <div class="container-fluid">
+            <div class="card mb-3">
+                <div class="card-header bg-transparent">
+                    <div class="row align-items-center">
+                        <div class="col-12 col-sm-4 col-md-8 col-lg-9">
+                            <h6 class="fw-600 mb-2 mb-sm-0">Program Execution</h6>
+                        </div>
+                        <div class="col-12 col-sm-5 col-md-4 col-lg-3">
+                            <select class="form-select events-expenditure" [(ngModel)]="programId"
+                                [ngModelOptions]="{standalone: true}"
+                                (change)="dropdownProgramsList($event,'table')">
+                                <option value="">Select Program</option>
+                                <option *ngFor="let list of agencyProgramList" value="{{list.programId}}">
+                                    {{list.programTitle}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table id="creation-table" class="table table-bordered nowrap w-100">
+                        <thead class="bg-lime-green text-white">
+                            <tr>
+                                <th>S.No</th>
+                                <th>Session Details</th>
+                                <th>Resource Person</th>
+                                <th>Image 1</th>
+                                <th>Image 2</th>
+                                <th>Image 3</th>
+                                <th>Image 4</th>
+                                <th>Image 5</th>
+                                <th>Video / URL</th>
+                                <th class="text-center">Edit</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of ProgramData?.programSessionList; let i = index">
+                                <td>{{i + 1}}</td>
+                                <td>{{item.sessionDetails}}</td>
+                                <td>{{item.resourceName}}</td>
+                                <td>image.jpg</td>
+                                <td>image.jpg</td>
+                                <td>image.jpg</td>
+                                <td>image.jpg</td>
+                                <td>image.jpg</td>
+                                <td>video.mp4</td>
+                                <td class="text-center">
+                                    <button type="button" class="btn btn-default text-lime-green btn-sm"><span class="bi bi-pencil"></span></button>
+                                </td>
+                            </tr>                            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="card mb-4">
+                <div class="card-header bg-transparent">
+                    <div class="row align-items-center">
+                        <div class="col-8 col-sm-8 col-md-9 col-lg-10">
+                            <h6 class="fw-600 mb-2 mb-sm-3 mb-md-0">Media Coverage</h6>
+                        </div>
+                        <div class="col-4 col-sm-4 col-md-3 col-lg-2">
+                            <div class="text-end">
+                                <button type="button" class="btn btn-sm btn-lime-green" (click)="showSessionEditModal()"><span class="bi bi-plus-lg"></span> Add</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table id="coverage-table" class="table table-bordered nowrap w-100">
+                        <thead class="bg-lime-green text-white">
+                            <tr>
+                                <th>S.No</th>
+                                <th>Date</th>
+                                <th>Type of Coverage</th>
+                                <th>Image 1</th>
+                                <th>Image 2</th>
+                                <th>Image 3</th>
+                                <th>Video / URL</th>
+                                <th class="text-center">Edit / Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>18-04-2025</td>
+                                <td>Type of coverage 1</td>
+                                <td>iimage1.jpg</td>
+                                <td>iimage2.jpg</td>
+                                <td>iimage3.jpg</td>
+                                <td>video.mp4</td>
+                                <td class="text-center">
+                                    <button type="button" class="btn btn-default text-lime-green btn-sm"><span class="bi bi-pencil"></span></button>
+                                    <button type="button" class="btn btn-default text-danger btn-sm"><span class="bi bi-trash"></span></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>18-04-2025</td>
+                                <td>Type of coverage 1</td>
+                                <td>iimage1.jpg</td>
+                                <td>iimage2.jpg</td>
+                                <td>iimage3.jpg</td>
+                                <td>video.mp4</td>
+                                <td class="text-center">
+                                    <button type="button" class="btn btn-default text-lime-green btn-sm"><span class="bi bi-pencil"></span></button>
+                                    <button type="button" class="btn btn-default text-danger btn-sm"><span class="bi bi-trash"></span></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>18-04-2025</td>
+                                <td>Type of coverage 1</td>
+                                <td>iimage1.jpg</td>
+                                <td>iimage2.jpg</td>
+                                <td>iimage3.jpg</td>
+                                <td>video.mp4</td>
+                                <td class="text-center">
+                                    <button type="button" class="btn btn-default text-lime-green btn-sm"><span class="bi bi-pencil"></span></button>
+                                    <button type="button" class="btn btn-default text-danger btn-sm"><span class="bi bi-trash"></span></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="text-end mb-3">
+                <button type="button" class="btn btn-lime-green">Final Submission</button>
+            </div>
+            
+        </div>
+    </section>
 </main>
+
+<!-- begin:: details modal -->
+<div class="modal fade" id="sessionFormMediaModal" #sessionFormMediaModal tabindex="-1" aria-labelledby="mediaCoverageLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg">
+        <form [formGroup]="mediaCoverageForm" (ngSubmit)="onSubmit()">
+            <div class="modal-content">
+                <div class="modal-header py-2">
+                    <h6 class="modal-title text-white" id="addResourceLabel">{{isEditMode ? 'Update' : 'Add'}} Media Coverage</h6>
+                    <button type="button" class="btn-close me-1" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    
+                        <div class="row">
+                            <div class="col-12 col-sm-sm-6 col-md-6 col-lg-6">
+                                <div class="form-floating mb-3">
+                                    <input type="date" class="form-control" id="date" placeholder="" formControlName="date">
+                                    <label for="date">Date</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-sm-6 col-md-6 col-lg-6">
+                                <div class="form-floating mb-3">
+                                    <select class="form-select" id="coverage" formControlName="mediaCoverageType">
+                                        <option selected>Select Type</option>
+                                        <option value="News Paper">News Paper</option>
+                                        <option value="TV News">TV News</option>
+                                        <option value="Internet Coverage">Internet Coverage</option>
+                                        <option value="Others">Others</option>
+                                    </select>
+                                    <label for="coverage">Type of Coverage</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-sm-6 col-md-6 col-lg-6">
+                                <div class="form-floating mb-3">
+                                    <input type="file" class="form-control" id="image1" placeholder="" (change)="onFileChange($event, 'image1')">
+                                    <label for="image1">Image 1</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-sm-6 col-md-6 col-lg-6">
+                                <div class="form-floating mb-3">
+                                    <input type="file" class="form-control" id="image2" placeholder="" (change)="onFileChange($event, 'image2')">
+                                    <label for="image2">Image 2</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-sm-6 col-md-6 col-lg-6">
+                                <div class="form-floating mb-3">
+                                    <input type="file" class="form-control" id="image3" placeholder="" (change)="onFileChange($event, 'image3')">
+                                    <label for="image3">Image 3</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-sm-6 col-md-6 col-lg-6">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="video" placeholder="" formControlName="mediaCoverageUrl">
+                                    <label for="video">Video URL</label>
+                                </div>
+                            </div>
+                        </div>
+                    
+
+                    <div class="text-end">
+                        <button type="submit" class="btn btn-lime-green" [ngClass]="{'disabled': mediaCoverageForm.invalid}"
+                        [disabled]="mediaCoverageForm.invalid">{{isEditMode ? 'Update' : 'Add'}} Media Coverage</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

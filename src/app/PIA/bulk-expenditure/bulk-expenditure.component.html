@@ -1,0 +1,236 @@
+<main class="mt-4">
+    <section>
+        <div class="container-fluid">
+            <div class="card mb-3" >
+                <div class="card-header bg-transparent">
+                    <div class="row align-items-center">
+                        <div class="col-8 col-sm-8 col-md-9 col-lg-10">
+                            <h6 class="fw-600 mb-2 mb-sm-3 mb-md-0">Bulk Expenditure</h6>
+                        </div>
+                        <div class="col-4 col-sm-4 col-md-3 col-lg-2">
+                            <div class="text-end">
+                                <button type="button" class="btn btn-sm btn-lime-green" data-bs-toggle="modal" data-bs-target="#bulkModal"><span class="bi bi-plus-lg"></span> Add</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">   
+                    <table id="expenditure-table-bulk" class="table table-bordered nowrap w-100">
+                        <thead class="bg-lime-green text-white">
+                            <tr>
+                                <th>S.No</th>
+                                <th>Head of Expense</th>
+                                <th>Name of Item</th>
+                                <th>Purchase Date</th>
+                                <th>Quantity Purchased</th>
+                                <th>Unit Price</th>
+                                <th>Total Cost</th>
+                                <th>Bill No.</th>
+                                <th>Bill Date</th>
+                                <th>Payee Name</th>
+                                <th>Bank</th>
+                                <th>IFSC Code</th>
+                                <th class="text-center">Edit / Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody *ngIf="getBulkExpenditureData?.length">
+                            <tr  *ngFor="let item of getBulkExpenditureData; let i=index">
+                                <td class="text-start">{{i+1}}</td>
+                                <td>{{item?.headOfExpense}}</td>
+                                <td>{{item?.itemName}}</td>
+                                <td>{{item?.purchaseDate}}</td>
+                                <td>{{item?.purchasedQuantity}}</td>
+                                <td>{{item?.unitCost}}</td>
+                                <td>{{item?.totalCost}}</td>
+                                <td>{{item?.billNo}}</td>
+                                <td>{{item?.billDate}}</td>
+                                <td>{{item?.payeeName}}</td>
+                                <td>{{item?.bankName}}</td>
+                                <td>{{item?.ifscCode}}</td>
+                                <td class="text-center">
+                                    <button type="button" class="btn btn-default text-lime-green btn-sm"><span class="bi bi-pencil"></span></button>
+                                    <button type="button" class="btn btn-default text-danger btn-sm"><span class="bi bi-trash"></span></button>
+                                </td>
+                            </tr>
+                          
+                        </tbody>
+                        <!-- <tr *ngIf="getBulkExpenditureData?.length">
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>Total</td>
+                            <td>{{BulkTotalUnitCost}}</td>
+                            <td>{{BulkTotalCost}}</td>
+                             <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr> -->
+                    </table>            
+                </div>
+            </div>
+
+         
+        </div>
+    </section>
+</main>
+ <!-- begin:: bulk expenditure modal -->
+ <div class="modal fade" id="bulkModal" tabindex="-1" #preEventModal aria-labelledby="bulkLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-xl">
+        <div class="modal-content">
+            <div class="modal-header py-2">
+                <h6 class="modal-title text-white" id="addResourceLabel">Bulk Expenditure</h6>
+                <button type="button" class="btn-close me-1" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="BulkExpenditureForm">
+                    <div class="row">
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                            <div class="form-floating mb-3">
+                                <select class="form-select" id="headExpense" formControlName="headOfExpenseId"   name="headOfExpenseId" >
+                                    <option value="#">Select Head of expense</option>
+                                    <option value="{{list.expenseId}}" *ngFor="let list of ExpenditureData">{{list.expenseName}}</option>
+                                </select>
+                                <label for="headExpense">Head of Expense <span class="c-red"> *</span></label>
+                            </div>
+                            <div *ngIf="fBulk['headOfExpenseId'].touched && !fBulk['headOfExpenseId'].valid" class="error"
+                            style="color: red;">Head of Expense is required</div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                            <div class="form-floating mb-3">
+                                <!-- <select class="form-select" id="item" formControlName="itemName"   name="itemName">
+                                    <option value="#">Select Item</option>
+                                    <option value="1">Item 1</option>
+                                </select> -->
+                                <input type="text" class="form-control" placeholder="Item Name" formControlName="itemName"   name="itemName" id="item" />
+                                <label for="item">Name of Item <span class="c-red"> *</span></label>
+                            </div>
+                            <div *ngIf="fBulk['itemName'].touched && !fBulk['itemName'].valid" class="error"
+                            style="color: red;">Name of Item  is required</div>
+                        </div>
+                        <!-- <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" placeholder="Write here" formControlName="headOfExpenseId"   name="headOfExpenseId" id="description" />
+                                <label for="description">Description</label>
+                            </div>
+                        </div> -->
+                    </div>
+                    <fieldset class="mb-3">
+                        <legend class="text-lime-green">Quantity Purchased</legend>
+                        <div class="row">                                
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                                <div class="form-floating mb-3">
+                                    <input type="date" class="form-control" placeholder="purchaseDate" formControlName="purchaseDate"   name="purchaseDate" id="purchaseDate" />
+                                    <label for="purchaseDate">Purchase Date <span class="c-red"> *</span></label>
+                                </div>
+                                <div *ngIf="fBulk['purchaseDate'].touched && !fBulk['purchaseDate'].valid" class="error"
+                                style="color: red;">Purchase Date  is required</div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                                <div class="form-floating mb-3">
+                                    <input type="number" class="form-control" id="quantity"  formControlName="purchasedQuantity"    name="purchasedQuantity" placeholder="total quantity" />
+                                    <label for="quantity">Quantity Purchased <span class="c-red"> *</span></label>
+                                </div>
+                                <div *ngIf="fBulk['purchasedQuantity'].touched && !fBulk['purchasedQuantity'].valid" class="error"
+                                style="color: red;">Quantity Purchased  is required</div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                                <div class="form-floating mb-3">
+                                    <input type="number" class="form-control" id="bill" formControlName="unitCost"    name="unitCost"  placeholder="bill" />
+                                    <label for="bill">Unit Price <span class="c-red"> *</span></label>
+                                </div>
+                                <div *ngIf="fBulk['unitCost'].touched && !fBulk['unitCost'].valid" class="error"
+                                style="color: red;">Unit Price   is required</div>
+                            </div>
+                            <!-- <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                                <div class="form-floating mb-0">
+                                    <input type="text" class="form-control" id="cost" formControlName="purchasedQuantity"    name="purchasedQuantity"  placeholder="cost date" />
+                                    <label for="cost">Total Cost</label>
+                                </div>
+                            </div> -->
+                        </div>
+                    </fieldset>
+                    <div class="row">
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                            <div class="form-floating mb-3">
+                                <input type="number" class="form-control" id="bill" placeholder="bill no." formControlName="billNo"    name="billNo">
+                                <label for="bill">Bill No.<span class="c-red"> *</span></label>
+                            </div>
+                            <div *ngIf="fBulk['billNo'].touched && !fBulk['billNo'].valid" class="error"
+                            style="color: red;">Bill No. is required</div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                            <div class="form-floating mb-3">
+                                <input type="date" class="form-control" id="billDate" placeholder="Bill Date" formControlName="billDate"    name="billDate" >
+                                <label for="billDate">Bill Date<span class="c-red"> *</span></label>
+                            </div>
+                            <div *ngIf="fBulk['billDate'].touched && !fBulk['billDate'].valid" class="error"
+                            style="color: red;">Bill Date is required</div>
+                        </div>
+                    </div>
+                    <fieldset class="mb-3">
+                        <legend class="text-lime-green">Bank Details</legend>
+                        <div class="row">                                
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                                <div class="form-floating mb-3 mb-sm-3 mb-md-0">
+                                    <input type="text" class="form-control" placeholder="Payee Name" id="payeeName" formControlName="payeeName"    name="payeeName" />
+                                    <label for="payeeName">Payee Name<span class="c-red"> *</span></label>
+                                </div>
+                                <div *ngIf="fBulk['payeeName'].touched && !fBulk['payeeName'].valid" class="error"
+                                style="color: red;">Payee Name is required</div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                                <div class="form-floating mb-3 mb-sm-3 mb-md-0">
+                                    <input type="text" class="form-control" id="bank" placeholder="bank" formControlName="bankName"    name="bankName" />
+                                    <label for="bank">Bank<span class="c-red"> *</span></label>
+                                </div>
+                                <div *ngIf="fBulk['bankName'].touched && !fBulk['bankName'].valid" class="error"
+                                style="color: red;">Bank Name is required</div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                                <div class="form-floating mb-3 mb-sm-0 mb-md-0">
+                                    <input type="text" class="form-control" id="ifsc" placeholder="ifsc" formControlName="ifscCode"    name="ifscCode" >
+                                    <label for="ifsc">IFSC Code<span class="c-red"> *</span></label>
+                                </div>
+                                <div *ngIf="fBulk['ifscCode'].touched && !fBulk['ifscCode'].valid" class="error"
+                                style="color: red;">IFSC Code is required</div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3 mt-2">
+                                <div class="form-floating mb-3">
+                                    <select class="form-select" id="modePayment" formControlName="modeOfPayment"  name="modeOfPayment">
+                                        <option value="#">Select Mode</option>
+                                        <option value="BANK_TRANSFER">Bank Transfer</option>
+                                        <option value="CASH">Cash</option>
+                                    </select>
+                                    <label for="modePayment">Mode Of Payment<span class="c-red"> *</span></label>
+                                </div>
+                                <div *ngIf="fBulk['modeOfPayment'].touched && !fBulk['modeOfPayment'].valid" class="error"
+                                style="color: red;">Mode Of Payment is required</div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3 mt-2">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="Remarks" placeholder="remarks" formControlName="remarks"  name="Remarks">
+                                    <label for="Remarks">Remarks</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3 mt-2">
+                                <div class="form-floating mb-3">
+                                    <input type="file" class="form-control" id="upload" placeholder="upload file" (change)="onFileChange($event)" formControlName="uploadBillUrl"  name="uploadBillUrl">
+                                    <label for="upload">Upload File</label>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+
+                <div class="text-end mt-3">
+                    <button type="button" class="btn btn-lime-green"  [ngClass]="{'disabled': BulkExpenditureForm.invalid}" (click)="BulkExpenditureSubmit()">Add Bulk Expenditure</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end:: bulk expenditure modal -->

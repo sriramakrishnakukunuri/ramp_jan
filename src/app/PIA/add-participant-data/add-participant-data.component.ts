@@ -10,6 +10,7 @@ import 'datatables.net-buttons-dt';
 import 'datatables.net-responsive-dt';
 import moment from 'moment';
 import { REGEX } from '@app/_helpers/regex';
+import { IDropdownSettings } from 'ng-multiselect-dropdown';
 declare var $: any;
 @Component({
   selector: 'app-add-participant-data',
@@ -33,7 +34,48 @@ export class AddParticipantDataComponent implements OnInit {
     private route: ActivatedRoute,) { 
       this.agencyId = JSON.parse(sessionStorage.getItem('user') || '{}').agencyId;
     }
-
+    selectedItems: any[] = [];
+    dropdownList1=[];
+    dropdownSettings: IDropdownSettings = {};
+    assignFluidData1() {
+      this.dropdownSettings = {
+          singleSelection: false,
+          idField: 'sectorId',
+          textField: 'sectorName',
+          itemsShowLimit: 1,
+          enableCheckAll: true,
+          selectAllText: "Select All",
+          unSelectAllText: "Clear All",
+          allowSearchFilter: true,
+          clearSearchFilter: true,
+          maxHeight: 197,
+          searchPlaceholderText: "Search Area",
+          noDataAvailablePlaceholderText: "Data Not Available",
+          closeDropDownOnSelection: false,
+          showSelectedItemsAtTop: false,
+          defaultOpen: false,
+      };
+      this.dropdownList1 = this.allSectors;
+     
+    //   this.contractListObj.area= this.selectMapList1;
+  }
+   
+  
+    onItemSelect(item: any) {
+      console.log('Item selected:', item);
+    }
+  
+    onSelectAll(items: any[]) {
+      console.log('All items selected:', items);
+    }
+  
+    onItemDeSelect(item: any) {
+      console.log('Item deselected:', item);
+    }
+  
+    onDeSelectAll(items: any[]) {
+      console.log('All items deselected');
+    }
   ngOnInit(): void {
     this.loginsessionDetails = JSON.parse(sessionStorage.getItem('user') || '{}');    
     this.formDetails();
@@ -71,6 +113,7 @@ export class AddParticipantDataComponent implements OnInit {
     this._commonService.getDataByUrl(APIS.masterList.getSectors).subscribe({
       next: (data: any) => {
         this.allSectors = data.data;
+        this.assignFluidData1()
       },
       error: (err: any) => {
         this.allSectors = [];
@@ -183,7 +226,7 @@ export class AddParticipantDataComponent implements OnInit {
       "validupto": new FormControl("",),
       "stateId": new FormControl("Telangana", [Validators.required,]),
       "distId": new FormControl("", [Validators.required,]),
-      // "sector": new FormControl("", [Validators.required,]),
+      "sectorIds": new FormControl([], [Validators.required,]),
       "mandal": new FormControl("", [Validators.required,]),
       "town": new FormControl("", [Validators.required,]),
       "streetNo": new FormControl("", ),
@@ -205,7 +248,7 @@ export class AddParticipantDataComponent implements OnInit {
     
   }
   getData() {
-    this.submitedData = ''
+    this.submitedData = []
     // sessionStorage.getItem('ParticipantData')
     // let resList = sessionStorage.getItem('ParticipantData') || ''
     // // let resList = sessionStorage.getItem('ParticipantData') || ''   
@@ -259,8 +302,18 @@ export class AddParticipantDataComponent implements OnInit {
   }
 
   Submitform() {
+    
     let payload:any={...this.ParticipantDataForm.value, "programIds": [this.ParticipantDataForm.value.programIds], "organizationId": this.ParticipantDataForm.value.organizationId }
-  if(this.f2['isAspirant'].value!='Existing Oragnization'){
+    // if(this.ParticipantDataForm.value.programIds?.length>0){
+    //   payload['programIds']=this.ParticipantDataForm.value.programIds
+    // }
+    // else{
+    //   if( typeof this.ParticipantDataForm.value.programIds=='string')
+    //     {
+    //       payload['programIds']=[Number(this.ParticipantDataForm.value.programIds)]
+    //     }
+    // }
+    if(this.f2['isAspirant'].value!='Existing Oragnization'){
     delete payload['organizationId']
   }
   if(payload['isCertificateIssued']=='N'){
@@ -286,7 +339,7 @@ export class AddParticipantDataComponent implements OnInit {
         else{
           // this.advanceSearch(this.getSelDataRange);
          this.programIds = this.ParticipantDataForm.value.programIds?this.ParticipantDataForm.value.programIds:this.programList[0]?.programId
-         this.getData()
+        //  this.getData()
          this.isedit=false
          this.participantId=''
          this.ParticipantDataForm.reset()
@@ -316,7 +369,7 @@ export class AddParticipantDataComponent implements OnInit {
           else{
             // this.advanceSearch(this.getSelDataRange);
           this.programIds = this.ParticipantDataForm.value.programIds?this.ParticipantDataForm.value.programIds:this.programList[0]?.programId
-          this.getData()
+          // this.getData()
           this.isedit=false
           this.participantId=''
           this.ParticipantDataForm.reset()
@@ -351,6 +404,7 @@ export class AddParticipantDataComponent implements OnInit {
     const [day, month, year] = date.split('-');
     return `${year}-${month}-${day}`; // Convert to yyyy-MM-dd format
   }
+
   editRow(item: any, i: any) {
     this.isedit=true
     this.participantId=item.participantId
@@ -358,6 +412,7 @@ export class AddParticipantDataComponent implements OnInit {
    
     this.ParticipantDataForm.patchValue({ ...item, certificateIssueDate: item.certificateIssueDate?this.convertToISOFormat(item.certificateIssueDate):'',isAspirant:item.organizationId?'Existing Oragnization':'Aspirant'})
   }
+
   typeOragnization(event: any) {
     this.OragnizationType = event
     this.fOrg['nameOfTheSHG'].patchValue('')
@@ -436,6 +491,7 @@ export class AddParticipantDataComponent implements OnInit {
      
     }
   }
+
   chnageUdyam(event:any){
     console.log(event)
     if(event=='Yes'){
@@ -456,10 +512,19 @@ export class AddParticipantDataComponent implements OnInit {
     }
 
   }
+
   SubmitformOrganization() {
     console.log(this.OrganisationForm.value)
     if (this.OragnizationType == 'SHG') {
       this.OrganisationForm.value['organizationName'] = this.OrganisationForm.value['nameOfTheSHG']
+    }
+    if( this.OrganisationForm.value['sectorIds'].length){
+      this.OrganisationForm.value['sectorIds']=this.OrganisationForm.value['sectorIds'].map((item:any)=>{
+        return Number(item.sectorId)
+      })
+    }
+    else{
+      this.OrganisationForm.value['sectorIds']=[]
     }
     this._commonService.add(APIS.participantdata.saveOrgnization, { ...this.OrganisationForm.value }).subscribe({
       next: (data: any) => {
@@ -473,7 +538,7 @@ export class AddParticipantDataComponent implements OnInit {
       },
     });
     this.OrganisationForm.reset();
-    this.getData()
+    // this.getData()
     this.getOrganizationData()
 
   }
@@ -525,7 +590,6 @@ export class AddParticipantDataComponent implements OnInit {
       },
     });
   }
-
   // get program details 
   programData:any={}
   getProgramDetailsById(ProgrmId:any){

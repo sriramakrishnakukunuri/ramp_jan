@@ -552,10 +552,8 @@ textarea {
 }
 
 fieldset {
-  min-width: 0;
-  padding: 0;
-  margin: 0;
-  border: 0;
+  border-radius: 8px;
+  border: 1px solid #ccc;
 }
 fieldset :disabled .btn {
   color: var(--bs-btn-disabled-color);
@@ -566,12 +564,9 @@ fieldset :disabled .btn {
 }
 
 legend {
-  float: left;
-  width: 100%;
-  padding: 0;
-  margin-bottom: 0.5rem;
-  font-size: calc(1.275rem + 0.3vw);
-  line-height: inherit;
+  padding: 0 10px;
+  font-size: 14px;
+  font-weight: 600;
 }
 
 legend + * {
@@ -2056,7 +2051,6 @@ textarea.form-control-lg {
 .was-validated :valid ~ .valid-tooltip {
   display: block;
 }
-.c-red{color:#F44336 !important}
 .was-validated .form-control :valid {
   border-color: #198754;
   padding-right: calc(1.5em + 0.75rem);
@@ -3367,12 +3361,12 @@ textarea.form-control.is-invalid {
   align-items: center;
   justify-content: space-between;
 }
-/* .navbar > .container-fluid {
+.navbar > .container-fluid {
   display: flex;
   flex-wrap: inherit;
   align-items: center;
   justify-content: space-between;
-} */
+}
 .navbar > .container-lg {
   display: flex;
   flex-wrap: inherit;
@@ -4646,6 +4640,8 @@ textarea.form-control.is-invalid {
   flex-shrink: 0;
   align-items: center;
   justify-content: space-between;
+  background-color: #07C540;
+  color: #ffffff;
   padding: var(--bs-modal-header-padding);
   border-bottom: var(--bs-modal-header-border-width) solid var(--bs-modal-header-border-color);
   border-top-left-radius: var(--bs-modal-inner-border-radius);
@@ -6273,9 +6269,9 @@ textarea.form-control.is-invalid {
   justify-content: center !important;
 }
 
-/* .justify-content-between {
+.justify-content-between {
   justify-content: space-between !important;
-} */
+}
 
 .justify-content-around {
   justify-content: space-around !important;
@@ -6293,9 +6289,9 @@ textarea.form-control.is-invalid {
   align-items: flex-end !important;
 }
 
-/* .align-items-center {
+.align-items-center {
   align-items: center !important;
-} */
+}
 
 .align-items-baseline {
   align-items: baseline !important;
@@ -7215,9 +7211,6 @@ textarea.form-control.is-invalid {
   h4 {
     font-size: 1.5rem;
   }
-  legend {
-    font-size: 1.5rem;
-  }
   .display-1 {
     font-size: 5rem;
   }
@@ -7512,7 +7505,7 @@ textarea.form-control.is-invalid {
     border-left-width: var(--bs-list-group-border-width);
   }
   .modal-xl {
-    --bs-modal-width: 1140px;
+    --bs-modal-width: 1140px !important;
   }
   .offcanvas-xl {
     --bs-offcanvas-height: auto;
@@ -13955,7 +13948,7 @@ table.dataTable tr.dt-hasChild td.dt-control:before {
 }
 table.dataTable thead > tr > th {
   font-size: 14px;
-  font-weight: bold;
+  font-weight: 600;
 }
 table.dataTable thead > tr > th:active {
   outline: none;
@@ -14747,6 +14740,14 @@ div.table-responsive > div.dt-container > div.row > div[class^=col-]:last-child 
     --bs-gutter-y: 0.5rem;
   }
 }
+.dataTables_scrollHead {
+  border-radius: 8px 8px 0 0;
+}
+
+.dataTables_scrollBody {
+  border-radius: 0 0 8px 8px;
+}
+
 /* width */
 ::-webkit-scrollbar {
   width: 8px;
@@ -14828,16 +14829,16 @@ small {
   color: #e5fff2;
 }
 
-.bg-lime-green, table>thead {
+.bg-lime-green {
   background-color: #07C540;
-}
-
-table>thead{
-  color: #fff;
 }
 
 .vh-80 {
   height: 80vh;
+}
+
+.bg-light-success {
+  background-color: rgba(7, 197, 64, 0.0392156863);
 }
 
 .preloader {
@@ -15025,6 +15026,12 @@ header .navbar-brand img {
   outline: 0;
 }
 
+.form-select:disabled, .form-control:disabled {
+  cursor: default;
+  background-color: light-dark(rgba(239, 239, 239, 0.3), rgba(59, 59, 59, 0.3));
+  color: light-dark(rgb(84, 84, 84), rgb(170, 170, 170));
+}
+
 .login-bg {
   background-image: url("assets/img/login-bg.png");
   background-repeat: no-repeat;
@@ -15059,6 +15066,7 @@ header .navbar-brand img {
     width: auto !important;
   }
 }/*# sourceMappingURL=style.css.map */
+
 .error {
   padding-top: 3px;
   padding-bottom: 10px;
@@ -15175,4 +15183,20 @@ outline: none; */
 .mat-select { border: transparent !important;} 
 .mat-form-field-appearance-outline .mat-select-arrow-wrapper {
   transform: translateY(22%);
+}
+/* Password toggle icon styles */
+.password-key-login{
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  z-index: 10;
+  font-size: 1.2rem;
+  color: #6c757d; /* Bootstrap's secondary text color */
+}
+.c-red{color:#F44336 !important}
+/* Add relative positioning to the password input container */
+.login-password {
+  position: relative;
 }

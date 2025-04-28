@@ -45,6 +45,12 @@ import { AttentanceParticipantComponent } from './PIA/attentance-participant/att
 import { VerificationParticipantComponent } from './CALL_CENTER/verification-participant/verification-participant.component';
 import { RawMaterialsParticipantsComponent } from './PIA/raw-materials-participants/raw-materials-participants.component';
 import { MaterialModule } from './shared/material/material/material.module';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { ProgramExpenditureComponent } from './PIA/program-expenditure/program-expenditure.component';
+import { BulkExpenditureComponent } from './PIA/bulk-expenditure/bulk-expenditure.component';
+import { ProgramSummaryComponent } from './PIA/program-summary/program-summary.component';
+import { AddProgramSessionsComponent } from './PIA/add-program-sessions/add-program-sessions.component';
+import { NgxDocViewerModule } from 'ngx-doc-viewer';
 
 @NgModule({
     imports: [
@@ -55,6 +61,7 @@ import { MaterialModule } from './shared/material/material/material.module';
         AppRoutingModule,
         FormsModule,
         BrowserAnimationsModule,
+        NgMultiSelectDropDownModule.forRoot(), // Make sure this is here
         ToastrModule.forRoot({
             positionClass: 'toast-bottom-right',
             timeOut: 15000, // 15 seconds
@@ -65,7 +72,7 @@ import { MaterialModule } from './shared/material/material/material.module';
         MatPaginatorModule,
         MatSortModule,
         NgxMaterialTimepickerModule,
-        
+        NgxDocViewerModule
     ],
     declarations: [
         AppComponent,
@@ -96,6 +103,10 @@ import { MaterialModule } from './shared/material/material/material.module';
          AttentanceParticipantComponent,
           VerificationParticipantComponent,
            RawMaterialsParticipantsComponent,
+           ProgramExpenditureComponent,
+           BulkExpenditureComponent,
+           ProgramSummaryComponent,
+           AddProgramSessionsComponent,
     ],
     exports:[MaterialModule],
     providers: [

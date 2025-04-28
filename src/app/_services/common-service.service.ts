@@ -1,7 +1,7 @@
 import { HttpClient,HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { APIS } from '@app/constants/constants';
-import { catchError, forkJoin, Observable, throwError } from 'rxjs';
+import { catchError, forkJoin, map, Observable, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -12,11 +12,26 @@ export class CommonServiceService {
   private formatErrors(error: HttpErrorResponse) {
     return throwError(() => error);
   }
-
+  public changePassword(url:any,Payload:any) {     
+    let headers = new HttpHeaders({
+        'Content-Type': 'application/json',
+        'responseType': 'json',
+          userId: Payload?.userId,
+          oldPassword: Payload?.oldPassword,
+          newPassword: Payload?.newPassword
+    });   
+    return this.http.put<any>(url, { headers: headers },{}).pipe(catchError(this.formatErrors));
+   
+}
   public add(URL: any, payload: any): Observable<any> {
     return this.http.post(URL, payload).pipe(catchError(this.formatErrors));
   }
- 
+  public updateChangedata(URL: any, payload: any,): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+    return this.http.put(URL,payload,{ headers }).pipe(catchError(this.formatErrors));
+  }
   public update(URL: any, payload: any, id: number | string): Observable<any> {
     return this.http.put(URL + id, payload).pipe(catchError(this.formatErrors));
   }
@@ -30,6 +45,19 @@ export class CommonServiceService {
   uploadImage(formData:any): Observable<any> {
     const url = APIS.programCreation.addSessions;
     return this.http.post(url, formData);
+  }
+
+  uploadImageSession(formData:any): Observable<any> {
+    const url = APIS.programCreation.editSession;
+    return this.http.post(url, formData);
+  }
+
+  uploadImageResource(url:any,formData:any): Observable<any> {   
+    return this.http.post(url, formData);
+  }
+
+  deleteById(URL: any, id: any): Observable<any> {
+    return this.http.post(URL + id,{},{ responseType: 'text' })
   }
 
   public getDataByUrl(URL: any): Observable<any> {

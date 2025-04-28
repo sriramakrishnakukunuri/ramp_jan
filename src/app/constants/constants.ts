@@ -5,6 +5,7 @@ export const APIS = {
     programCreation:{
         addprogram: API_BASE_URL + '/program/create',
         addSessions: API_BASE_URL + '/program/session/create',
+        editSession: API_BASE_URL + '/program/session/update',
         addLocation: API_BASE_URL + '/location/save',
         getLocation: API_BASE_URL + '/agency/locations/',
         getProgramType: API_BASE_URL + '/program/types/agency/id/',
@@ -12,14 +13,16 @@ export const APIS = {
         getResource: API_BASE_URL + '/agency/resources/',
         addResource: API_BASE_URL + '/resource/save',
         getProgramsList: API_BASE_URL + '/programs',
-        getProgramsListByAgency: API_BASE_URL + '/agency/programs/',
+        getProgramsListByAgency: API_BASE_URL + '/agency/programs/dropdown/',
+        getProgramsListByAgencyDetails: API_BASE_URL + '/agency/programs/',
         getSingleProgramsList: API_BASE_URL + '/program/',
         getActivityList: API_BASE_URL + '/activities',
         getActivityListbyId: API_BASE_URL + '/activity/agency/',
         getSubActivityListByActivity: API_BASE_URL + '/activityById',
         getESDPProgram: API_BASE_URL + '/getESDPTraining',
         addESDPProgram: API_BASE_URL + '/SaveESDPTraining',
-        updateProgram: API_BASE_URL + '/updateProgram',        
+        updateProgram: API_BASE_URL + '/updateProgram',
+        deleteSession: API_BASE_URL + '/program/session/delete',        
         // get: API_BASE_URL + '/program/get',
         // update: API_BASE_URL + '/program/update',
         // delete: API_BASE_URL + '/program/delete',
@@ -27,7 +30,8 @@ export const APIS = {
     participantdata:{
         add: API_BASE_URL + '/participant/save',
         update: API_BASE_URL + '/updateParticipant',
-        getDataByProgramId: API_BASE_URL + '/program/participants/',
+        getDataByProgramId: API_BASE_URL + '/program/participants/dropdown/',
+        getDataByProgramBYDeatisl: API_BASE_URL + '/program/participants/',
         saveOrgnization: API_BASE_URL + '/organization/save',
         getOrgnizationData: API_BASE_URL + '/organization/list',
         getParticipantList: API_BASE_URL + '/participants',
@@ -43,6 +47,7 @@ export const APIS = {
         addAgent: API_BASE_URL + '/login/user/create',        
     },
     masterList: {
+        changePassword:API_BASE_URL+'/login/change-password',
         agencyList: API_BASE_URL + '/agencies',
         locationList: API_BASE_URL + '/locations',
         getUserList: API_BASE_URL + '/login/allusrs',
@@ -73,5 +78,22 @@ export const APIS = {
     rawMaterial:{
         getDeatails:API_BASE_URL +`/program/rawmaterial/`,
         saveAttendance:API_BASE_URL +`/program/rawmaterial`,
+    },
+    programExpenditure:{
+        getItemByExpenses:API_BASE_URL +`/bulk/transactions/items?expenseId`,
+        getBulkDataByExpensesItem:API_BASE_URL +`/bulk/transactions/lookup`,
+        getHeadOfExpenditure:API_BASE_URL +`/expenses`,
+        saveExpenditure:API_BASE_URL +`/program/expenditure/save`,
+        savebulkExpenditure:API_BASE_URL +`/bulk/expenditure/save`,
+        savebulkByItemExpenditure:API_BASE_URL +`/bulk/transactions/save`,
+        getExpenditure:API_BASE_URL +`/program/expenditure`,
+        getBulkExpenditure:API_BASE_URL +`/bulk/expenditure`,
+        getBulkExpenditureByProgramId:API_BASE_URL +`/bulk/transactions`,
+    },
+    programSummary:{
+        getProramData:API_BASE_URL +`/program/summary/`,
+    },
+    programExecutions:{
+        saveMediaCoverage:API_BASE_URL +`/program/execution/media-coverage`,
     }
 }

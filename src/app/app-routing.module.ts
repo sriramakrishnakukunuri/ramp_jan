@@ -28,6 +28,10 @@ import { AllParticipantsVerificationComponent } from './CALL_CENTER/all-particip
 import { AttentanceParticipantComponent } from './PIA/attentance-participant/attentance-participant.component';
 import { VerificationParticipantComponent } from './CALL_CENTER/verification-participant/verification-participant.component';
 import { RawMaterialsParticipantsComponent } from './PIA/raw-materials-participants/raw-materials-participants.component';
+import { ProgramExpenditureComponent } from './PIA/program-expenditure/program-expenditure.component';
+import { BulkExpenditureComponent } from './PIA/bulk-expenditure/bulk-expenditure.component';
+import { ProgramSummaryComponent } from './PIA/program-summary/program-summary.component';
+import { AddProgramSessionsComponent } from './PIA/add-program-sessions/add-program-sessions.component';
 
 const routes: Routes = [
     {
@@ -45,13 +49,13 @@ const routes: Routes = [
         path: 'profile',
         component: ProfileComponent,
         canActivate: [AuthGuard],
-        data: { roles: [Role.Admin,Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
+        data: { roles: [Role.Admin,Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR,Role.CALL_CENTER] }
     },
     {
         path: 'password-settings',
         component: PasswordSettingsComponent,
         canActivate: [AuthGuard],
-        data: { roles: [Role.Admin,Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
+        data: { roles: [Role.Admin,Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR,Role.CALL_CENTER] }
     },
     {
         path: 'user-registration',
@@ -156,6 +160,12 @@ const routes: Routes = [
         data: { roles:  [Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
     },
     {
+        path: 'add-sessions',
+        component: AddProgramSessionsComponent,
+        canActivate: [AuthGuard],
+        data: { roles:  [Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
+    },
+    {
         path: 'program-sessions-edit/:id',
         component: ProgramSessionsComponent,
         canActivate: [AuthGuard],
@@ -170,6 +180,24 @@ const routes: Routes = [
     {
         path: 'rawMaterials-Participant',
         component: RawMaterialsParticipantsComponent,
+        canActivate: [AuthGuard],
+        data: { roles:  [Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR]}
+    },
+    {
+        path: 'program-expenditure',
+        component: ProgramExpenditureComponent,
+        canActivate: [AuthGuard],
+        data: { roles:  [Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR]}
+    },
+    {
+        path: 'program-summary',
+        component: ProgramSummaryComponent,
+        canActivate: [AuthGuard],
+        data: { roles:  [Role.Admin,Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR]}
+    },
+    {
+        path: 'bulk-expenditure',
+        component: BulkExpenditureComponent,
         canActivate: [AuthGuard],
         data: { roles:  [Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR]}
     },
