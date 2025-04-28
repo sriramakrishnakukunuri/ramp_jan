@@ -76,14 +76,56 @@ export class BulkExpenditureComponent implements OnInit {
       const modal = bootstrap.Modal.getInstance(this.preEventModal.nativeElement);
       modal.hide();
   }
+  validateFileExtension(file: File): boolean {
+    const allowedExtensions = ['xlsx', 'xls', 'doc', 'docx', 'ppt', 'pptx','jpg'];
+    const fileExtension = file.name.split('.').pop()?.toLowerCase();
+    return allowedExtensions.includes(fileExtension || '');
+  }
+  uploadedFiles: any = [];
+  onFileChange(event: any) {
+    // const file = event.target.files[0];
+    // let urlsList: any = [];
+    // if (file) {
+    //   this.sessionForm.patchValue({ uploaFiles: file });
+    // }
+    const input = event.target as HTMLInputElement;
+    let urlsList: any = [];
+
+    if (input.files) {
+      const newFiles = Array.from(input.files);
+      const validFiles = newFiles.filter(file => this.validateFileExtension(file));
+      if (validFiles.length !== newFiles.length) {
+        this.toastrService.error('Invalid file type selected. Only Excel, Word, and PowerPoint files are allowed.', 'File Upload Error');
+      }
+      for (let i = 0; i < validFiles.length; i++) {
+        const fileName = validFiles[i].name;
+        const fakePath = `${fileName}`;
+        urlsList.push(fakePath);
+      }
+      //this.sessionForm.patchValue({ uploaFiles: validFiles });
+      //this.sessionForm.get('uploaFiles')?.setValue(validFiles);
+      // Save valid files separately
+      this.uploadedFiles = validFiles;
+      // this.sessionForm.patchValue({ videoUrls: urlsList });
+    }
+  }
     // save Bulk expenditure
     BulkExpenditureSubmit(){
       let payload={...this.BulkExpenditureForm.value,agencyId:this.agencyId}
+      const formData = new FormData();
+      formData.append("request", JSON.stringify(payload));
+
+      if (this.BulkExpenditureForm.value.uploadBillUrl) {
+        formData.append("files", this.uploadedFiles[0]);
+        }
+      // formData.append("files", this.BulkExpenditureForm.value.uploadBillUrl);
+      console.log(formData,this.BulkExpenditureForm.value.uploadBillUrl)
       console.log(payload)
       this._commonService
-          .add(APIS.programExpenditure.savebulkExpenditure, payload).subscribe({
+          .add(APIS.programExpenditure.savebulkExpenditure, formData).subscribe({
             next: (data: any) => {
              this.closeModal()
+             this.uploadedFiles=[]
               if(data?.status==400){
 
                 this.toastrService.error(data?.message, "Bulk Expenditure Data Error!");
@@ -113,6 +155,7 @@ export class BulkExpenditureComponent implements OnInit {
       this.getBulkExpenditureData=[]
       this.BulkTotalUnitCost=0
       this.BulkTotalCost=0
+      this.uploadedFiles=[]
       this.BulkExpenditureForm.reset()
       this._commonService
           .getDataByUrl(APIS.programExpenditure.getBulkExpenditure).subscribe({
@@ -185,7 +228,7 @@ export class BulkExpenditureComponent implements OnInit {
           scrollX: true,
           scrollCollapse: true,
           autoWidth: true,
-          paging: false,
+          paging: true,
           info: false,
           searching: false,
           destroy: true, // Ensure reinitialization doesn't cause issues

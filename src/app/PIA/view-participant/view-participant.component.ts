@@ -58,7 +58,7 @@ export class ViewParticipantComponent implements OnInit {
       // if(resList){
       //   this.submitedData=JSON.parse(resList)
       // }
-      this._commonService.getDataByUrl(APIS.participantdata.getDataByProgramId+this.programIds+`?page=0&size=200`).subscribe({
+      this._commonService.getDataByUrl(APIS.participantdata.getDataByProgramBYDeatisl+this.programIds+`?page=0&size=200`).subscribe({
         next: (res: any) => {
           this.submitedData = res?.data
           this.submitedData.map((data:any)=>{
@@ -120,7 +120,7 @@ export class ViewParticipantComponent implements OnInit {
             params += `&search=${encodeURIComponent(data.search.value)}`;
           }
           
-          this._commonService.getDataByUrl(`${APIS.participantdata.getDataByProgramId}${this.programIds}${params}`)
+          this._commonService.getDataByUrl(`${APIS.participantdata.getDataByProgramBYDeatisl}${this.programIds}${params}`)
             .pipe()
             .subscribe({
               next: (res: any) => {
@@ -205,7 +205,10 @@ export class ViewParticipantComponent implements OnInit {
               },
               { 
                 data: 'isParticipatedBefore',
-                title: 'Previous Participant'
+                title: 'Previous Participant',
+                render: function(data) {
+                  return data === 'Y' ? 'Yes' : 'No';
+                }
               },
               
               { 
