@@ -20,7 +20,8 @@ export const APIS = {
         getSubActivityListByActivity: API_BASE_URL + '/activityById',
         getESDPProgram: API_BASE_URL + '/getESDPTraining',
         addESDPProgram: API_BASE_URL + '/SaveESDPTraining',
-        updateProgram: API_BASE_URL + '/updateProgram',        
+        updateProgram: API_BASE_URL + '/updateProgram',
+        deleteSession: API_BASE_URL + '/program/session/delete',        
         // get: API_BASE_URL + '/program/get',
         // update: API_BASE_URL + '/program/update',
         // delete: API_BASE_URL + '/program/delete',
@@ -89,5 +90,8 @@ export const APIS = {
     },
     programSummary:{
         getProramData:API_BASE_URL +`/program/summary/`,
+    },
+    programExecutions:{
+        saveMediaCoverage:API_BASE_URL +`/program/execution/media-coverage`,
     }
 }
