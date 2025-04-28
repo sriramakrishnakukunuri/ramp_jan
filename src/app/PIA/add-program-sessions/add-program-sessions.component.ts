@@ -173,8 +173,9 @@ export class AddProgramSessionsComponent implements OnInit {
 
   loading = false;
   onSubmitSessionForm(): void {
+    this.loading = true;
     if (this.sessionForm.valid) {
-      this.loading = true;
+      
       console.log('Form Submitted:', this.sessionForm.value);
       // Handle form submission logic here
       this.sessionForm.value.uploaFiles = this.uploadedFiles;
