@@ -98,6 +98,7 @@ export class ProgramSummaryComponent implements OnInit {
           this.PrigramSummaryData['stPercentage'] = this.CalculatePercentage(this.PrigramSummaryData, this.PrigramSummaryData['st'])
           this.PrigramSummaryData['obcPercentage'] = this.CalculatePercentage(this.PrigramSummaryData, this.PrigramSummaryData['obc'])
           this.PrigramSummaryData['ocPercentage'] = this.CalculatePercentage(this.PrigramSummaryData, this.PrigramSummaryData['oc'])
+          this.PrigramSummaryData['bcPercentage'] = this.CalculatePercentage(this.PrigramSummaryData, this.PrigramSummaryData['bc'])
           this.PrigramSummaryData['minoritiesPercentage'] = this.CalculatePercentage(this.PrigramSummaryData, this.PrigramSummaryData['minorities'])
           this.PrigramSummaryData['malePercentage']=this.CalculateGenderPercentage(this.PrigramSummaryData,this.PrigramSummaryData['male'])
           this.PrigramSummaryData['femalePercentage']=this.CalculateGenderPercentage(this.PrigramSummaryData,this.PrigramSummaryData['female'])
@@ -117,7 +118,7 @@ export class ProgramSummaryComponent implements OnInit {
         // console.log(this.ParticipantAttentance)
       }
       CalculatePercentage(Data: any,val:any) {
-        let total = Data.sc + Data.st + Data.obc + Data.oc + Data.minorities;
+        let total = Data.sc + Data.st + Data.bc + Data.oc + Data.minorities;
         let percentage:any = ((val / total) * 100).toFixed(2);
         return isNaN(percentage) ? 0 : percentage
 
