@@ -280,8 +280,10 @@ export class ProgramExpenditureComponent implements OnInit {
     
   }
   validateFileExtension(file: File): boolean {
-    const allowedExtensions = ['xlsx', 'xls', 'doc', 'docx', 'ppt', 'pptx','jpg'];
+
+    const allowedExtensions = ['xlsx', 'xls', 'doc', 'docx', 'ppt', 'pptx','jpg','png'];
     const fileExtension = file.name.split('.').pop()?.toLowerCase();
+    console.log(fileExtension)
     return allowedExtensions.includes(fileExtension || '');
   }
   uploadedFiles: any = [];

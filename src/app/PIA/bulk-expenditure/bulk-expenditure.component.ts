@@ -77,7 +77,7 @@ export class BulkExpenditureComponent implements OnInit {
       modal.hide();
   }
   validateFileExtension(file: File): boolean {
-    const allowedExtensions = ['xlsx', 'xls', 'doc', 'docx', 'ppt', 'pptx','jpg'];
+    const allowedExtensions = ['xlsx', 'xls', 'doc', 'docx', 'ppt', 'pptx','jpg','png'];
     const fileExtension = file.name.split('.').pop()?.toLowerCase();
     return allowedExtensions.includes(fileExtension || '');
   }
