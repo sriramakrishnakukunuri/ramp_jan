@@ -47,7 +47,7 @@ export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
   }
   GetProgramsByAgency(event:any){
     this.agencyByAdmin=event;
-    this._commonService.getDataByUrl(APIS.programCreation.getProgramsListByAgency+event).subscribe({
+    this._commonService.getDataByUrl(APIS.programCreation.getProgramsListByAgencyDetails+event).subscribe({
       next: (dataList: any) => {
         this.tableList = dataList.data;
         this.reinitializeDataTable();
@@ -60,7 +60,7 @@ export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
 
   getProgramDetails(): any {
     this.tableList = '';
-    this._commonService.getDataByUrl(APIS.programCreation.getProgramsListByAgency+this.loginsessionDetails.agencyId).subscribe({
+    this._commonService.getDataByUrl(APIS.programCreation.getProgramsListByAgencyDetails+this.loginsessionDetails.agencyId).subscribe({
       next: (dataList: any) => {
         this.tableList = dataList.data;
         this.reinitializeDataTable();
@@ -104,7 +104,7 @@ export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
         let size = data.length;
 
         // Fetch data from API
-        fetch(APIS.programCreation.getProgramsListByAgency+agency+`?page=${page}&size=${size}`)
+        fetch(APIS.programCreation.getProgramsListByAgencyDetails+agency+`?page=${page}&size=${size}`)
             .then(res => res.json())
             .then(json => {
                 callback({
