@@ -87,11 +87,12 @@ export class AddProgramSessionsComponent implements OnInit {
       .getById(APIS.programCreation.getResource, this.agencyId)
       .subscribe({
         next: (data: any) => {
-          this.getSessionResourceData = data.data;
+          this.getSessionResourceData = data.data;          
           this.getSessionResourceData.map((item: any) => {
             this.resourcekeyidData[item?.resourceId] = item.name
           })
-
+          
+          this.getSessionResourceData = this.getSessionResourceData.filter((item: any) => item.name != "Break")
         },
         error: (err: any) => {
           new Error(err);
@@ -213,7 +214,7 @@ export class AddProgramSessionsComponent implements OnInit {
               }
 
               if(element['sessionTypeName'] === 'Break') {
-                element['resourceId'] = 152;
+                element['resourceId'] = 102;
               }else {
                 element['resourceId'] = Number(element['resourceId']);
               }
@@ -238,7 +239,7 @@ export class AddProgramSessionsComponent implements OnInit {
               }
 
               if(element['sessionTypeName'] === 'Break') {
-                element['resourceId'] = 152;
+                element['resourceId'] = 102;
               }else {
                 element['resourceId'] = Number(element['resourceId']);
               }
