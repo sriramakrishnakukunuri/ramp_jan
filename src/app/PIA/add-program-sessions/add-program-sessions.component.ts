@@ -344,10 +344,11 @@ export class AddProgramSessionsComponent implements OnInit {
       this.editFlag = false;
       if(this.ProgramData?.programSessionList?.length){
         const DummyData=this.ProgramData?.programSessionList.length
-        console.log(this.ProgramData?.programSessionList[DummyData-1]?.sessionDate,'sesiondetails',this.ProgramData?.programSessionList[DummyData-1].endTime)
-        console.log(DummyData,'srk')
         this.sessionForm.patchValue({'sessionDate':this.convertToISOFormat(this.ProgramData?.programSessionList[DummyData-1]?.sessionDate),'startTime':this.convertTo24HourFormat(this.ProgramData?.programSessionList[DummyData-1]?.endTime)})
-        console.log(DummyData,'srk1')
+        // this.sessionForm.get('startTime')?.disable();
+      }
+      else{
+        // this.sessionForm.get('startTime')?.enable();
       }
      
       return;
