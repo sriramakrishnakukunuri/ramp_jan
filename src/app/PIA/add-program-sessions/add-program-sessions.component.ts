@@ -342,6 +342,14 @@ export class AddProgramSessionsComponent implements OnInit {
       this.sessionForm.get('sessionDetails')?.clearValidators();
 
       this.editFlag = false;
+      if(this.ProgramData?.programSessionList?.length){
+        const DummyData=this.ProgramData?.programSessionList.length
+        console.log(this.ProgramData?.programSessionList[DummyData-1]?.sessionDate,'sesiondetails',this.ProgramData?.programSessionList[DummyData-1].endTime)
+        console.log(DummyData,'srk')
+        this.sessionForm.patchValue({'sessionDate':this.convertToISOFormat(this.ProgramData?.programSessionList[DummyData-1]?.sessionDate),'startTime':this.convertTo24HourFormat(this.ProgramData?.programSessionList[DummyData-1]?.endTime)})
+        console.log(DummyData,'srk1')
+      }
+     
       return;
     }
 
@@ -358,6 +366,7 @@ export class AddProgramSessionsComponent implements OnInit {
 
 
     this.editFlag = true;
+
     this.sessionForm.patchValue({
       sessionDate: this.convertToISOFormat(session.sessionDate),
       startTime: this.convertTo24HourFormat(session.startTime),
@@ -396,8 +405,8 @@ export class AddProgramSessionsComponent implements OnInit {
     return ''
   }
 
-  convertToISOFormat(date: string): string {    
-    const [day, month, year] = date.split('-');
+  convertToISOFormat(date: any): string {    
+    const [day, month, year] = date?.split('-');
     return `${year}-${month}-${day}`; // Convert to yyyy-MM-dd format
   }
 
