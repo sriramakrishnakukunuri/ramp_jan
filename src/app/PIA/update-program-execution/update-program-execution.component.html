@@ -149,6 +149,9 @@
                             <tr>
                                 <th>S.No</th>
                                 <th>Session Details</th>
+                                <th>Session Date</th>
+                                <th>Start Time</th>
+                                <th>End Time</th>
                                 <th>Resource Person</th>
                                 <th>Image 1</th>
                                 <th>Image 2</th>
@@ -162,16 +165,66 @@
                         <tbody>
                             <tr *ngFor="let item of ProgramData?.programSessionList; let i = index">
                                 <td>{{i + 1}}</td>
-                                <td>{{item.sessionDetails}}</td>
-                                <td>{{item.resourceName}}</td>
-                                <td>image.jpg</td>
-                                <td>image.jpg</td>
-                                <td>image.jpg</td>
-                                <td>image.jpg</td>
-                                <td>image.jpg</td>
-                                <td>video.mp4</td>
+                                <td>{{item?.sessionDetails}}</td>
+                                <td>{{item?.sessionDate}}</td>
+                                <td>{{item?.startTime}}</td>
+                                <td>{{item?.endTime}}</td>
+                                <td>{{item?.resourceName}}</td>
+                                <td>
+                                    <ng-container *ngIf="item?.image1">
+                                        <a (click)="showImagePreview(imageUrlDownloadPath,item?.image1)" rel="noopener noreferrer">
+                                            <img src="{{imageUrlDownloadPath}}{{item?.image1}}" alt="Image 1" class="img-fluid" style="width: 50px; height: 50px;">
+                                        </a>
+                                    </ng-container>
+                                    <ng-container *ngIf="!item?.image1">
+                                        <span class="text-danger">No Image</span>
+                                    </ng-container>
+                                </td>
+                                <td>
+                                    <ng-container *ngIf="item?.image2">
+                                        <a (click)="showImagePreview(imageUrlDownloadPath,item?.image2)" rel="noopener noreferrer">
+                                            <img src="{{imageUrlDownloadPath}}{{item?.image2}}" alt="Image 2" class="img-fluid" style="width: 50px; height: 50px;">
+                                        </a>
+                                    </ng-container>
+                                    <ng-container *ngIf="!item?.image2">
+                                        <span class="text-danger">No Image</span>
+                                    </ng-container>
+                                </td>
+                                <td>
+                                    <ng-container *ngIf="item?.image3">
+                                        <a (click)="showImagePreview(imageUrlDownloadPath,item?.image3)" rel="noopener noreferrer">
+                                            <img src="{{imageUrlDownloadPath}}{{item?.image3}}" alt="Image 3" class="img-fluid" style="width: 50px; height: 50px;">
+                                        </a>
+                                    </ng-container>
+                                    <ng-container *ngIf="!item?.image3">
+                                        <span class="text-danger">No Image</span>
+                                    </ng-container>
+                                </td>
+                                <td>
+                                    <ng-container *ngIf="item?.image4">
+                                        <a (click)="showImagePreview(imageUrlDownloadPath,item?.image4)" rel="noopener noreferrer">
+                                            <img src="{{imageUrlDownloadPath}}{{item?.image4}}" alt="Image 4" class="img-fluid" style="width: 50px; height: 50px;">
+                                        </a>
+                                    </ng-container>
+                                    <ng-container *ngIf="!item?.image4">
+                                        <span class="text-danger">No Image</span>
+                                    </ng-container>
+                                </td>
+                                <td>
+                                    <ng-container *ngIf="item?.image5">
+                                        <a (click)="showImagePreview(imageUrlDownloadPath,item?.image5)" rel="noopener noreferrer">
+                                            <img src="{{imageUrlDownloadPath}}{{item?.image5}}" alt="Image 5" class="img-fluid" style="width: 50px; height: 50px;">
+                                        </a>
+                                    </ng-container>
+                                    <ng-container *ngIf="!item?.image5">
+                                        <span class="text-danger">No Image</span>
+                                    </ng-container>
+                                </td>
+                                <td>{{item?.sessionStreamingUrl}}</td>
                                 <td class="text-center">
-                                    <button type="button" class="btn btn-default text-lime-green btn-sm"><span class="bi bi-pencil"></span></button>
+                                    <button type="button" class="btn btn-default text-lime-green btn-sm" (click)="showExecutionEditModal(item)">
+                                        <span class="bi bi-pencil"></span>
+                                    </button>
                                 </td>
                             </tr>                            
                         </tbody>
@@ -206,45 +259,46 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>18-04-2025</td>
-                                <td>Type of coverage 1</td>
-                                <td>iimage1.jpg</td>
-                                <td>iimage2.jpg</td>
-                                <td>iimage3.jpg</td>
-                                <td>video.mp4</td>
+                            <tr *ngFor="let item of ProgramData?.mediaCoverageList; let i = index">
+                                <td>{{i + 1}}</td>
+                                <td>{{item?.date}}</td>
+                                <td>{{item?.mediaCoverageType}}</td>
+                                <td>
+                                    <ng-container *ngIf="item?.image1">
+                                        <a (click)="showImagePreview(imageUrlDownloadPath,item?.image1)" rel="noopener noreferrer">
+                                            <img src="{{imageUrlDownloadPath}}{{item?.image1}}" alt="Image 1" class="img-fluid" style="width: 50px; height: 50px;">
+                                        </a>
+                                    </ng-container>
+                                    <ng-container *ngIf="!item?.image1">
+                                        <span class="text-danger">No Image</span>
+                                    </ng-container>
+                                </td>
+                                <td>
+                                    <ng-container *ngIf="item?.image2">
+                                        <a (click)="showImagePreview(imageUrlDownloadPath,item?.image2)" rel="noopener noreferrer">
+                                            <img src="{{imageUrlDownloadPath}}{{item?.image2}}" alt="Image 2" class="img-fluid" style="width: 50px; height: 50px;">
+                                        </a>
+                                    </ng-container>
+                                    <ng-container *ngIf="!item?.image2">
+                                        <span class="text-danger">No Image</span>
+                                    </ng-container>
+                                </td>
+                                <td>
+                                    <ng-container *ngIf="item?.image3">
+                                        <a (click)="showImagePreview(imageUrlDownloadPath,item?.image3)" rel="noopener noreferrer">
+                                            <img src="{{imageUrlDownloadPath}}{{item?.image3}}" alt="Image 3" class="img-fluid" style="width: 50px; height: 50px;">
+                                        </a>
+                                    </ng-container>
+                                    <ng-container *ngIf="!item?.image3">
+                                        <span class="text-danger">No Image</span>
+                                    </ng-container>
+                                </td>
+                                <td>{{item?.mediaCoverageUrl}}</td>
                                 <td class="text-center">
-                                    <button type="button" class="btn btn-default text-lime-green btn-sm"><span class="bi bi-pencil"></span></button>
+                                    <button type="button" class="btn btn-default text-lime-green btn-sm"  (click)="showSessionEditModal(item)"><span class="bi bi-pencil"></span></button>
                                     <button type="button" class="btn btn-default text-danger btn-sm"><span class="bi bi-trash"></span></button>
                                 </td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>18-04-2025</td>
-                                <td>Type of coverage 1</td>
-                                <td>iimage1.jpg</td>
-                                <td>iimage2.jpg</td>
-                                <td>iimage3.jpg</td>
-                                <td>video.mp4</td>
-                                <td class="text-center">
-                                    <button type="button" class="btn btn-default text-lime-green btn-sm"><span class="bi bi-pencil"></span></button>
-                                    <button type="button" class="btn btn-default text-danger btn-sm"><span class="bi bi-trash"></span></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>18-04-2025</td>
-                                <td>Type of coverage 1</td>
-                                <td>iimage1.jpg</td>
-                                <td>iimage2.jpg</td>
-                                <td>iimage3.jpg</td>
-                                <td>video.mp4</td>
-                                <td class="text-center">
-                                    <button type="button" class="btn btn-default text-lime-green btn-sm"><span class="bi bi-pencil"></span></button>
-                                    <button type="button" class="btn btn-default text-danger btn-sm"><span class="bi bi-trash"></span></button>
-                                </td>
-                            </tr>
+                            </tr>                            
                         </tbody>
                     </table>
                 </div>
@@ -259,7 +313,7 @@
 </main>
 
 <!-- begin:: details modal -->
-<div class="modal fade" id="sessionFormMediaModal" #sessionFormMediaModal tabindex="-1" aria-labelledby="mediaCoverageLabel" aria-hidden="true">
+<div class="modal fade" id="sessionFormMediaModal" tabindex="-1" aria-labelledby="mediaCoverageLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg">
         <form [formGroup]="mediaCoverageForm" (ngSubmit)="onSubmit()">
             <div class="modal-content">
@@ -273,7 +327,8 @@
                             <div class="col-12 col-sm-sm-6 col-md-6 col-lg-6">
                                 <div class="form-floating mb-3">
                                     <input type="date" class="form-control" id="date" placeholder="" formControlName="date">
-                                    <label for="date">Date</label>
+                                    <label for="date">Date <span class="c-red">
+                                        *</span></label>
                                 </div>
                             </div>
                             <div class="col-12 col-sm-sm-6 col-md-6 col-lg-6">
@@ -285,42 +340,191 @@
                                         <option value="Internet Coverage">Internet Coverage</option>
                                         <option value="Others">Others</option>
                                     </select>
-                                    <label for="coverage">Type of Coverage</label>
+                                    <label for="coverage">Type of Coverage<span class="c-red">
+                                        *</span></label>
                                 </div>
                             </div>
                             <div class="col-12 col-sm-sm-6 col-md-6 col-lg-6">
                                 <div class="form-floating mb-3">
-                                    <input type="file" class="form-control" id="image1" placeholder="" (change)="onFileChange($event, 'image1')">
+                                    <input type="file" class="form-control" id="image1" accept=".jpg, .jpeg, .png" placeholder="" (change)="onFileChange($event, 'image1')">
                                     <label for="image1">Image 1</label>
                                 </div>
+                                <div class="text-danger" *ngIf="fileErrors['image1']">{{ fileErrors['image1'] }}</div>
                             </div>
                             <div class="col-12 col-sm-sm-6 col-md-6 col-lg-6">
                                 <div class="form-floating mb-3">
-                                    <input type="file" class="form-control" id="image2" placeholder="" (change)="onFileChange($event, 'image2')">
+                                    <input type="file" class="form-control" id="image2" accept=".jpg, .jpeg, .png" placeholder="" (change)="onFileChange($event, 'image2')">
                                     <label for="image2">Image 2</label>
                                 </div>
+                                <div class="text-danger" *ngIf="fileErrors['image2']">{{ fileErrors['image2'] }}</div>
                             </div>
                             <div class="col-12 col-sm-sm-6 col-md-6 col-lg-6">
                                 <div class="form-floating mb-3">
-                                    <input type="file" class="form-control" id="image3" placeholder="" (change)="onFileChange($event, 'image3')">
+                                    <input type="file" class="form-control" accept=".jpg, .jpeg, .png" id="image3" placeholder="" (change)="onFileChange($event, 'image3')">
                                     <label for="image3">Image 3</label>
                                 </div>
+                                <div class="text-danger" *ngIf="fileErrors['image3']">{{ fileErrors['image3'] }}</div>
                             </div>
                             <div class="col-12 col-sm-sm-6 col-md-6 col-lg-6">
                                 <div class="form-floating mb-3">
                                     <input type="text" class="form-control" id="video" placeholder="" formControlName="mediaCoverageUrl">
-                                    <label for="video">Video URL</label>
+                                    <label for="video">Video URL<span class="c-red">
+                                        *</span></label>
                                 </div>
                             </div>
                         </div>
                     
 
+                    <div style="float: left;" class="text-danger mb-2">
+                        <strong>Note:</strong> Please upload images in .jpg, .jpeg, or .png format only.
+                        <br> Maximum file size: 50kb
+                    </div>
                     <div class="text-end">
-                        <button type="submit" class="btn btn-lime-green" [ngClass]="{'disabled': mediaCoverageForm.invalid}"
-                        [disabled]="mediaCoverageForm.invalid">{{isEditMode ? 'Update' : 'Add'}} Media Coverage</button>
+                        <button type="submit" class="btn btn-lime-green" [ngClass]="{'disabled': mediaCoverageForm.invalid || hasFileErrors()}"
+                        [disabled]="hasFileErrors() || loading || mediaCoverageForm.invalid">
+                        <span *ngIf="loading" class="spinner-border spinner-border-sm me-1"></span>
+                        {{isEditMode ? 'Update' : 'Add'}} Media Coverage</button>
                     </div>
                 </div>
             </div>
         </form>
+    </div>
+</div>
+
+
+<!-- begin:: details modal -->
+<div class="modal fade" id="sessionFormExectuionModal" tabindex="-1" aria-labelledby="sessionFormExectuionModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg">
+        <form [formGroup]="mediaExecutionForm" (ngSubmit)="onSubmitExecution()">
+            <div class="modal-content">
+                <div class="modal-header py-2">
+                    <h6 class="modal-title text-white" id="addResourceLabel">{{editFlag ? 'Update' : 'Add'}} Program Execution</h6>
+                    <button type="button" class="btn-close me-1" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    
+                        <div class="row">
+                            <div class="col-12 col-sm-sm-6 col-md-6 col-lg-6">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="date" placeholder="" formControlName="sessionDetails">
+                                    <label for="date">Session Details<span class="c-red">
+                                        *</span></label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-sm-6 col-md-6 col-lg-6">
+                                <div class="form-floating mb-3">
+                                    <select class="form-select" id="coverage" formControlName="resourceId">
+                                        <option disabled>Select Resource Person</option>
+                                        <option *ngFor="let list of getSessionResourceData" [value]="list.resourceId">{{
+                                            list.name }}</option>
+                                    </select>
+                                    <label for="coverage">Resource Name<span class="c-red">
+                                        *</span></label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-sm-6 col-md-6 col-lg-6">
+                                <div class="form-floating mb-3">
+                                    <input type="date" class="form-control" id="date" placeholder="" formControlName="sessionDate"
+                                    [attr.min]="validateDate('MIN')" [attr.max]="validateDate('MAX')">
+                                    <label for="date">Session Date<span class="c-red">
+                                        *</span></label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-sm-6 col-md-6 col-lg-6">
+                                <div class="form-floating mb-3">
+                                    <input type="time" class="form-control" id="date" placeholder="" formControlName="startTime">
+                                    <label for="date">Start Time<span class="c-red">
+                                        *</span></label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-sm-6 col-md-6 col-lg-6">
+                                <div class="form-floating mb-3">
+                                    <input type="time" class="form-control" id="date" placeholder="" formControlName="endTime">
+                                    <label for="date">End Time<span class="c-red">
+                                        *</span></label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-sm-6 col-md-6 col-lg-6">
+                                <div class="form-floating mb-3">
+                                    <input type="file" class="form-control" id="image1" accept=".jpg, .jpeg, .png" placeholder="" (change)="onFileChange($event, 'image1')">
+                                    <label for="image1">Image 1</label>
+                                </div>
+                                <div class="text-danger" *ngIf="fileErrors['image1']">{{ fileErrors['image1'] }}</div>
+                            </div>
+                            <div class="col-12 col-sm-sm-6 col-md-6 col-lg-6">
+                                <div class="form-floating mb-3">
+                                    <input type="file" class="form-control" id="image2" accept=".jpg, .jpeg, .png" placeholder="" (change)="onFileChange($event, 'image2')">
+                                    <label for="image2">Image 2</label>
+                                </div>
+                                <div class="text-danger" *ngIf="fileErrors['image2']">{{ fileErrors['image2'] }}</div>
+                            </div>
+                            <div class="col-12 col-sm-sm-6 col-md-6 col-lg-6">
+                                <div class="form-floating mb-3">
+                                    <input type="file" class="form-control" id="image3" accept=".jpg, .jpeg, .png" placeholder="" (change)="onFileChange($event, 'image3')">
+                                    <label for="image3">Image 3</label>
+                                </div>
+                                <div class="text-danger" *ngIf="fileErrors['image3']">{{ fileErrors['image3'] }}</div>
+                            </div>
+                            <div class="col-12 col-sm-sm-6 col-md-6 col-lg-6">
+                                <div class="form-floating mb-3">
+                                    <input type="file" class="form-control" id="image3" accept=".jpg, .jpeg, .png" placeholder="" (change)="onFileChange($event, 'image4')">
+                                    <label for="image3">Image 4</label>
+                                </div>
+                                <div class="text-danger" *ngIf="fileErrors['image4']">{{ fileErrors['image4'] }}</div>
+                            </div>
+                            <div class="col-12 col-sm-sm-6 col-md-6 col-lg-6">
+                                <div class="form-floating mb-3">
+                                    <input type="file" class="form-control" id="image3" accept=".jpg, .jpeg, .png" placeholder="" (change)="onFileChange($event, 'image5')">
+                                    <label for="image3">Image 5</label>
+                                </div>
+                                <div class="text-danger" *ngIf="fileErrors['image5']">{{ fileErrors['image5'] }}</div>
+                            </div>
+                            <div class="col-12 col-sm-sm-6 col-md-6 col-lg-6">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="video" placeholder="" formControlName="sessionStreamingUrl">
+                                    <label for="video">Video URL<span class="c-red">
+                                        *</span></label>
+                                </div>
+                            </div>
+                        </div>
+                    
+                    <div style="float: left;" class="text-danger mb-2">
+                        <strong>Note:</strong> Please upload images in .jpg, .jpeg, or .png format only.
+                        <br> Maximum file size: 50kb
+                    </div>
+                    
+                    <div class="text-end">
+                        <button type="submit" class="btn btn-lime-green" [ngClass]="{'disabled': mediaExecutionForm.invalid || hasFileErrors()}"
+                        [disabled]="hasFileErrors() || loading || mediaExecutionForm.invalid">
+                        <span *ngIf="loading" class="spinner-border spinner-border-sm me-1"></span>
+                        {{editFlag ? 'Update' : 'Add'}} Program Execution</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div class="modal fade" id="imagePreview" tabindex="-1" aria-labelledby="imagePreview" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header py-2">
+                <h6 class="modal-title text-white" id="addResourceLabel">Image Preview</h6>
+                
+                <a href="{{imagePreviewUrl}}" style="margin-left: 491px;" target="_blank" class="btn btn-secondary" *ngIf="imagePreviewUrl">Download</a>
+                
+                <button type="button" class="btn-close me-1" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <ng-container *ngIf="imagePreviewUrl">
+                    <img [src]="imagePreviewUrl" alt="Image Preview" class="img-fluid" style="width: 100%; height: auto;">
+                </ng-container>
+                <ng-container *ngIf="!imagePreviewUrl">
+                    <span class="text-danger">No Image Available</span>
+                </ng-container>                
+                
+            </div>
+        </div>
     </div>
 </div>
