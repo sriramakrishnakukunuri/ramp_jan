@@ -112,8 +112,8 @@
                                     <!-- <td>{{item?.purpose}}</td> -->
                                     <!-- <td>{{item?.uploadBillUrl}}</td> -->
                                     <td class="text-center">
-                                        <button type="button" class="btn btn-default text-lime-green btn-sm"><span class="bi bi-pencil"></span></button>
-                                        <button type="button" class="btn btn-default text-danger btn-sm"><span class="bi bi-trash"></span></button>
+                                        <button type="button" class="btn btn-default text-lime-green btn-sm" (click)="UpdateExpenditure(item)"><span class="bi bi-pencil"></span></button>
+                                        <button type="button" class="btn btn-default text-danger btn-sm" (click)="deleteExpenditure(item)"><span class="bi bi-trash"></span></button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -313,6 +313,8 @@
                                 <input type="file" class="form-control" id="upload" placeholder="upload file" (change)="onFileChange($event)" formControlName="uploadBillUrl"  name="uploadBillUrl">
                                 <label for="upload">Upload File</label>
                             </div>
+                            <div  class="error"
+                            style="color: red;">Note*:we are allowed only pdf,jpg and png file formats Only </div>
                         </div>
                     </div>
                 </form>

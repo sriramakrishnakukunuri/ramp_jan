@@ -281,7 +281,7 @@ export class ProgramExpenditureComponent implements OnInit {
   }
   validateFileExtension(file: File): boolean {
 
-    const allowedExtensions = ['xlsx', 'xls', 'doc', 'docx', 'ppt', 'pptx','jpg','png'];
+    const allowedExtensions = [ 'jpg','png','pdf','jpeg'];
     const fileExtension = file.name.split('.').pop()?.toLowerCase();
     console.log(fileExtension)
     return allowedExtensions.includes(fileExtension || '');
@@ -300,7 +300,7 @@ export class ProgramExpenditureComponent implements OnInit {
       const newFiles = Array.from(input.files);
       const validFiles = newFiles.filter(file => this.validateFileExtension(file));
       if (validFiles.length !== newFiles.length) {
-        this.toastrService.error('Invalid file type selected. Only Excel, Word, and PowerPoint files are allowed.', 'File Upload Error');
+        this.toastrService.error('Invalid file type selected. Only pdf and images files are allowed.', 'File Upload Error');
       }
       for (let i = 0; i < validFiles.length; i++) {
         const fileName = validFiles[i].name;
@@ -535,5 +535,53 @@ export class ProgramExpenditureComponent implements OnInit {
         searching: false,
         destroy: true, // Ensure reinitialization doesn't cause issues
       });
+    }
+    deleteExpenditure(item:any){
+      // programExpenditureId
+      // const dialogData = new ConfirmDialogModel(
+      //   "Confirm Action",
+      //   "Are you sure you want to delete this Record?"
+      // );
+      // const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      //   maxWidth: "400px",
+      //   data: dialogData,
+      // });
+      // dialogRef.afterClosed().subscribe((dialogResult) => {
+      //   if (!dialogResult) return;
+       
+  
+      // }), (error: any) => {
+      //   this.fileNameinTable = "";
+      //   this.toastrService.error(error.error.exceptionMessage, 'Title Warning!');
+      //   // this.toastrService.error(error.error.exceptionMessage, 'Add/view Document!');
+      // }
+      this._commonService
+      .add(APIS.programExpenditure.deleteExpenditure+item.programExpenditureId, {}).subscribe({
+        next: (data: any) => {
+          if(data?.status==400){
+            this.toastrService.error(data?.message, this.expenditureType +" Expenditure Data Error!");
+          }
+          else{
+            this.BulkExpenditureForm.reset()
+            this.TotalAmount=0
+            this.getExpenditure()
+            // this.advanceSearch(this.getSelDataRange);
+        
+          // this.formDetails()
+          // modal.close()
+          this.toastrService.success( this.expenditureType +' Expenditure Deleted Successfully', this.expenditureType +" Expenditure Data Success!");
+          }
+          
+        },
+        error: (err) => {
+          
+          this.toastrService.error(err.message, this.expenditureType +" Expenditure Data Error!");
+          new Error(err);
+        },
+      });
+
+    }
+    UpdateExpenditure(item:any){
+
     }
 }
