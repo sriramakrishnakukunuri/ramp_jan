@@ -89,7 +89,7 @@ export const APIS = {
         getExpenditure:API_BASE_URL +`/program/expenditure`,
         getBulkExpenditure:API_BASE_URL +`/bulk/expenditure`,
         getBulkExpenditureByProgramId:API_BASE_URL +`/bulk/transactions`,
-        deleteExpenditure:API_BASE_URL +`/program/expenditure/delete`,
+        deleteExpenditure:API_BASE_URL +`/program/expenditure/delete/`,
     },
     programSummary:{
         getProramData:API_BASE_URL +`/program/summary/`,

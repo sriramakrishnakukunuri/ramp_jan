@@ -66,7 +66,7 @@ export class BulkExpenditureComponent implements OnInit {
         billDate: new FormControl("", [Validators.required]),
         payeeName: new FormControl("", [Validators.required]),
         bankName: new FormControl("", [Validators.required]),
-        ifscCode: new FormControl("", [Validators.required]),
+        ifscCode: new FormControl("", [Validators.required,Validators.pattern(/^[A-Z]{4}0[A-Z0-9]{6}$/)]),
         modeOfPayment: new FormControl("", [Validators.required]),
         remarks: new FormControl("", ),
         uploadBillUrl: new FormControl("",),

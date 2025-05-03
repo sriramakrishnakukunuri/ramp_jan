@@ -175,7 +175,7 @@ export class ProgramExpenditureComponent implements OnInit {
       billDate: new FormControl("", [Validators.required]),
       payeeName: new FormControl("", [Validators.required]),
       bankName: new FormControl("", [Validators.required]),
-      ifscCode: new FormControl("", [Validators.required]),
+      ifscCode: new FormControl("", [Validators.required,Validators.pattern(/^[A-Z]{4}0[A-Z0-9]{6}$/)]),
       modeOfPayment: new FormControl("", [Validators.required]),
       purpose: new FormControl("", ),
       uploadBillUrl: new FormControl("", ),
@@ -537,45 +537,23 @@ export class ProgramExpenditureComponent implements OnInit {
       });
     }
     deleteExpenditure(item:any){
-      // programExpenditureId
-      // const dialogData = new ConfirmDialogModel(
-      //   "Confirm Action",
-      //   "Are you sure you want to delete this Record?"
-      // );
-      // const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      //   maxWidth: "400px",
-      //   data: dialogData,
-      // });
-      // dialogRef.afterClosed().subscribe((dialogResult) => {
-      //   if (!dialogResult) return;
-       
-  
-      // }), (error: any) => {
-      //   this.fileNameinTable = "";
-      //   this.toastrService.error(error.error.exceptionMessage, 'Title Warning!');
-      //   // this.toastrService.error(error.error.exceptionMessage, 'Add/view Document!');
-      // }
       this._commonService
       .add(APIS.programExpenditure.deleteExpenditure+item.programExpenditureId, {}).subscribe({
         next: (data: any) => {
           if(data?.status==400){
-            this.toastrService.error(data?.message, this.expenditureType +" Expenditure Data Error!");
+            this.toastrService.error(data?.message, item.expenditureType +" Expenditure Data Error!");
           }
           else{
             this.BulkExpenditureForm.reset()
             this.TotalAmount=0
             this.getExpenditure()
-            // this.advanceSearch(this.getSelDataRange);
-        
-          // this.formDetails()
-          // modal.close()
-          this.toastrService.success( this.expenditureType +' Expenditure Deleted Successfully', this.expenditureType +" Expenditure Data Success!");
+          this.toastrService.success( item.expenditureType +' Expenditure Deleted Successfully', item.expenditureType +" Expenditure Data Success!");
           }
           
         },
         error: (err) => {
           
-          this.toastrService.error(err.message, this.expenditureType +" Expenditure Data Error!");
+          this.toastrService.error(err.message, item.expenditureType +" Expenditure Data Error!");
           new Error(err);
         },
       });

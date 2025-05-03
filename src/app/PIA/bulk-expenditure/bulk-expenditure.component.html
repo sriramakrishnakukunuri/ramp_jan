@@ -195,8 +195,9 @@
                                     <input type="text" class="form-control" id="ifsc" placeholder="ifsc" formControlName="ifscCode"    name="ifscCode" >
                                     <label for="ifsc">IFSC Code<span class="c-red"> *</span></label>
                                 </div>
-                                <div *ngIf="fBulk['ifscCode'].touched && !fBulk['ifscCode'].valid" class="error"
+                                <div *ngIf="fBulk['ifscCode'].touched && !fBulk['ifscCode'].valid && !fBulk['aadharNo']?.errors?.['pattern']" class="error"
                                 style="color: red;">IFSC Code is required</div>
+                                <div *ngIf="fBulk['aadharNo']?.errors?.['pattern']" class="error">Invalid IFSC format. Correct format: AAAA0BBBBBB (4 letters, then 0, then 6 letters/numbers)</div>
                             </div>
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3 mt-2">
                                 <div class="form-floating mb-3">
