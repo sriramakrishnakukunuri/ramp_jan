@@ -7,13 +7,14 @@ import DataTable from 'datatables.net-dt';
 import 'datatables.net-buttons-dt';
 import 'datatables.net-responsive-dt';
 declare var bootstrap: any;
+declare var window: any;
 @Component({
   selector: 'app-program-expenditure',
   templateUrl: './program-expenditure.component.html',
   styleUrls: ['./program-expenditure.component.css']
 })
 export class ProgramExpenditureComponent implements OnInit {
-
+  formModel:any
   agencyId: any
   expenditureType:any='PRE'
   constructor(
@@ -21,6 +22,7 @@ export class ProgramExpenditureComponent implements OnInit {
     private toastrService: ToastrService,
   ) {
     this.agencyId = JSON.parse(sessionStorage.getItem('user') || '{}').agencyId;
+    // this.formModel = new window.bootstrap.Modal(document.getElementById("addPreEventModal"));
   }
 
   ngOnInit(): void {
@@ -47,7 +49,7 @@ export class ProgramExpenditureComponent implements OnInit {
   get fBulk() {
     return this.BulkExpenditureForm.controls;
   }
-  @ViewChild('preEventModal') preEventModal!: ElementRef;
+  @ViewChild('addPreEventModal') PreEventModal!: ElementRef;
   @ViewChild('BulkEvenModal') BulkEvenModal!: ElementRef;
   activityList: any
   subActivitiesList: any
@@ -171,7 +173,7 @@ export class ProgramExpenditureComponent implements OnInit {
     this.PrePostExpenditureForm = new FormGroup({
       headOfExpenseId: new FormControl("", [Validators.required]),
       billNo: new FormControl("", [Validators.required]),
-      cost: new FormControl("", [Validators.required]),
+      cost: new FormControl("", [Validators.required,Validators.pattern(/^(0*[1-9]\d*(\.\d+)?|0+\.\d*[1-9]\d*)$/)]),
       billDate: new FormControl("", [Validators.required]),
       payeeName: new FormControl("", [Validators.required]),
       bankName: new FormControl("", [Validators.required]),
@@ -187,11 +189,11 @@ export class ProgramExpenditureComponent implements OnInit {
       purchaseDate: new FormControl("",),
       purchasedQuantity: new FormControl("",),
       headOfExpenseId: new FormControl("",[Validators.required]),
-      unitCost: new FormControl("",),
+      unitCost: new FormControl("",[Validators.pattern(/^(0*[1-9]\d*(\.\d+)?|0+\.\d*[1-9]\d*)$/)]),
       bulkExpenditureId: new FormControl("",),
       availableQuantity: new FormControl("", ),
       consumedQuantityFromBulk: new FormControl("", ),
-      consumedQuantity: new FormControl("", [Validators.required]),
+      consumedQuantity: new FormControl("", [Validators.required,Validators.pattern(/^[1-9]\d*$/)]),
       allocatedCost: new FormControl("", ),
     })
   }
@@ -256,17 +258,24 @@ export class ProgramExpenditureComponent implements OnInit {
   calcCostAllocated(Val:any){
     this.fBulk['allocatedCost'].setValue(Val*this.fBulk['unitCost'].value)
   }
-  OpenModal():any{
-    
+  
+  isEdit:any=false
+  Expenditureid:any=''
+  OpenModal(type:any,item?:any):any{
+    this.Expenditureid=''
+    this.fileErrors='';  
+   if(type=='add'){
+    this.isEdit=false
     if(this.programCreationMain.value.activityId && this.programCreationMain.value.subActivityId && this.programCreationMain.value.programId){
       this.PrePostExpenditureForm.reset()
       if(this.expenditureType=='Bulk'){
         const modal = new bootstrap.Modal(this.BulkEvenModal.nativeElement);
         modal.show();
+        
       }
       else{
-        const modal = new bootstrap.Modal(this.preEventModal.nativeElement);
-        modal.show();
+        const modal1 = new bootstrap.Modal(this.PreEventModal.nativeElement);
+        modal1.show();
       }
       
         // this.formModel = new window.bootstrap.Modal(document.getElementById("addInventory")    );
@@ -277,7 +286,33 @@ export class ProgramExpenditureComponent implements OnInit {
       // return false;
      
     }
+   }
+   else{
+    this.Expenditureid=item?.programExpenditureId
+    this.isEdit=true
+    console.log(item)
+    this.PrePostExpenditureForm.reset()
+    item['uploadBillUrl']=''
+    this.PrePostExpenditureForm.patchValue({...item,headOfExpenseId:this.getExpenseIdByName(item?.headOfExpense),billDate:this.convertToISOFormat(item?.billDate)})
+    // this.PrePostExpenditureForm.get('uploadBillUrl')?.setValue(item?.uploadBillUrl)
+
+    console.log(item)
     
+    
+   
+    const modal1 = new bootstrap.Modal(this.PreEventModal.nativeElement);
+    modal1.show();
+   }
+    
+  }
+  //date converter
+  convertToISOFormat(date: string): string {    
+    const [day, month, year] = date.split('-');
+    return `${year}-${month}-${day}`; // Convert to yyyy-MM-dd format
+  }
+  getExpenseIdByName(expenseName: string): number | undefined {
+    const expense = this.ExpenditureData.find((item:any) => item.expenseName === expenseName);
+    return expense?.expenseId;
   }
   validateFileExtension(file: File): boolean {
 
@@ -286,22 +321,34 @@ export class ProgramExpenditureComponent implements OnInit {
     console.log(fileExtension)
     return allowedExtensions.includes(fileExtension || '');
   }
+  fileErrors:any=''
   uploadedFiles: any = [];
   onFileChange(event: any) {
+    this.fileErrors=''
     // const file = event.target.files[0];
     // let urlsList: any = [];
     // if (file) {
     //   this.sessionForm.patchValue({ uploaFiles: file });
     // }
     const input = event.target as HTMLInputElement;
+    const maxSize = 500 * 1024; // 50KB
     let urlsList: any = [];
 
     if (input.files) {
       const newFiles = Array.from(input.files);
+      const fileSize = input.files[0].size;
       const validFiles = newFiles.filter(file => this.validateFileExtension(file));
+      // if (validFiles.length !== newFiles.length) {
+      //   this.toastrService.error('Invalid file type selected. Only pdf and images files are allowed.', 'File Upload Error');
+      // }
       if (validFiles.length !== newFiles.length) {
-        this.toastrService.error('Invalid file type selected. Only pdf and images files are allowed.', 'File Upload Error');
+        this.fileErrors = `Invalid file type selected. Only images, and pdf files are allowed.`;
+        // this.toastrService.error('Invalid file type selected. Only images, and pdf files are allowed.', 'File Upload Error');
       }
+      else if (fileSize > maxSize) {
+        this.fileErrors = `File size exceeds the maximum limit of 500KB.`;
+        return;
+    }
       for (let i = 0; i < validFiles.length; i++) {
         const fileName = validFiles[i].name;
         const fakePath = `${fileName}`;
@@ -324,31 +371,61 @@ export class ProgramExpenditureComponent implements OnInit {
       if (this.PrePostExpenditureForm.value.uploadBillUrl) {
         formData.append("files", this.uploadedFiles[0]);
         }
-    this._commonService
-        .add(APIS.programExpenditure.saveExpenditure, formData).subscribe({
-          next: (data: any) => {
-            
-            if(data?.status==400){
-              this.toastrService.error(data?.message, this.expenditureType +" Expenditure Data Error!");
-            }
-            else{
-              this.uploadedFiles=[]
-              this.PrePostExpenditureForm.reset();
-              this.TotalAmount=0
-              this.getExpenditure()
-              // this.getBulkExpenditure()
+        if(this.isEdit){
+          this._commonService
+          .add(APIS.programExpenditure.UpdateExpenditure+this.Expenditureid, formData).subscribe({
+            next: (data: any) => {
               
-             
-            this.toastrService.success( this.expenditureType +' Expenditure Added Successfully', this.expenditureType +" Expenditure Data Success!");
-            }
-            
-          },
-          error: (err) => {
-            
-            this.toastrService.error(err.message, this.expenditureType +" Expenditure Data Error!");
-            new Error(err);
-          },
-        });
+              if(data?.status==400){
+                this.toastrService.error(data?.message, this.expenditureType +" Expenditure Data Error!");
+              }
+              else{
+                this.uploadedFiles=[]
+                this.PrePostExpenditureForm.reset();
+                this.TotalAmount=0
+                this.getExpenditure()
+                // this.getBulkExpenditure()
+                
+               
+              this.toastrService.success( this.expenditureType +' Expenditure Updated Successfully', this.expenditureType +" Expenditure Data Success!");
+              }
+              
+            },
+            error: (err) => {
+              
+              this.toastrService.error(err.message, this.expenditureType +" Expenditure Data Error!");
+              new Error(err);
+            },
+          });
+        }
+        else{
+          this._commonService
+          .add(APIS.programExpenditure.saveExpenditure, formData).subscribe({
+            next: (data: any) => {
+              
+              if(data?.status==400){
+                this.toastrService.error(data?.message, this.expenditureType +" Expenditure Data Error!");
+              }
+              else{
+                this.uploadedFiles=[]
+                this.PrePostExpenditureForm.reset();
+                this.TotalAmount=0
+                this.getExpenditure()
+                // this.getBulkExpenditure()
+                
+               
+              this.toastrService.success( this.expenditureType +' Expenditure Added Successfully', this.expenditureType +" Expenditure Data Success!");
+              }
+              
+            },
+            error: (err) => {
+              
+              this.toastrService.error(err.message, this.expenditureType +" Expenditure Data Error!");
+              new Error(err);
+            },
+          });
+        }
+   
   }
   getExpenditureData:any=[]
   getExpenditureDataBoth:any=[]
@@ -536,29 +613,50 @@ export class ProgramExpenditureComponent implements OnInit {
         destroy: true, // Ensure reinitialization doesn't cause issues
       });
     }
-    deleteExpenditure(item:any){
+    deleteprogramExpenditureId:any ={}
+    deleteExpenditure(item: any) {
+    this.deleteprogramExpenditureId = item
+    const previewModal = document.getElementById('exampleModalDelete');
+    if (previewModal) {
+      const modalInstance = new bootstrap.Modal(previewModal);
+      modalInstance.show();
+    }
+  }
+    ConfirmdeleteExpenditure(item:any){
       this._commonService
-      .add(APIS.programExpenditure.deleteExpenditure+item.programExpenditureId, {}).subscribe({
+      .add(APIS.programExpenditure.deleteExpenditure+item?.programExpenditureId, {}).subscribe({
         next: (data: any) => {
           if(data?.status==400){
             this.toastrService.error(data?.message, item.expenditureType +" Expenditure Data Error!");
+            this.closeModalDelete();
+            this.deleteprogramExpenditureId ={}
           }
           else{
-            this.BulkExpenditureForm.reset()
+            this.PrePostExpenditureForm.reset()
             this.TotalAmount=0
             this.getExpenditure()
+            this.closeModalDelete();
+            this.deleteprogramExpenditureId ={}
           this.toastrService.success( item.expenditureType +' Expenditure Deleted Successfully', item.expenditureType +" Expenditure Data Success!");
           }
           
         },
         error: (err) => {
-          
+          this.closeModalDelete();
+          this.deleteprogramExpenditureId ={}
           this.toastrService.error(err.message, item.expenditureType +" Expenditure Data Error!");
           new Error(err);
         },
       });
 
     }
+    closeModalDelete(): void {
+      const editSessionModal = document.getElementById('exampleModalDelete');
+      if (editSessionModal) {
+        const modalInstance = bootstrap.Modal.getInstance(editSessionModal);
+        modalInstance.hide();
+      }
+    } 
     UpdateExpenditure(item:any){
 
     }
