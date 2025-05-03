@@ -1,3 +1,4 @@
+import { get } from "jquery";
 import { environment } from "src/environments/environment";
 
 export const API_BASE_URL = environment.apiUrl;
@@ -44,7 +45,9 @@ export const APIS = {
     },
     userRegistration:{
         add: API_BASE_URL + '/login/user/create',
-        addAgent: API_BASE_URL + '/login/user/create',        
+        addAgent: API_BASE_URL + '/login/user/create',
+        editProfile: API_BASE_URL + '/login/user/update',
+        getUserById: API_BASE_URL + '/login/user',        
     },
     masterList: {
         changePassword:API_BASE_URL+'/login/change-password',

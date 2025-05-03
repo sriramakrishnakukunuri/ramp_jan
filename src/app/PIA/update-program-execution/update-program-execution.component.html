@@ -346,21 +346,24 @@
                             </div>
                             <div class="col-12 col-sm-sm-6 col-md-6 col-lg-6">
                                 <div class="form-floating mb-3">
-                                    <input type="file" class="form-control" id="image1" placeholder="" (change)="onFileChange($event, 'image1')">
+                                    <input type="file" class="form-control" id="image1" accept=".jpg, .jpeg, .png" placeholder="" (change)="onFileChange($event, 'image1')">
                                     <label for="image1">Image 1</label>
                                 </div>
+                                <div class="text-danger" *ngIf="fileErrors['image1']">{{ fileErrors['image1'] }}</div>
                             </div>
                             <div class="col-12 col-sm-sm-6 col-md-6 col-lg-6">
                                 <div class="form-floating mb-3">
-                                    <input type="file" class="form-control" id="image2" placeholder="" (change)="onFileChange($event, 'image2')">
+                                    <input type="file" class="form-control" id="image2" accept=".jpg, .jpeg, .png" placeholder="" (change)="onFileChange($event, 'image2')">
                                     <label for="image2">Image 2</label>
                                 </div>
+                                <div class="text-danger" *ngIf="fileErrors['image2']">{{ fileErrors['image2'] }}</div>
                             </div>
                             <div class="col-12 col-sm-sm-6 col-md-6 col-lg-6">
                                 <div class="form-floating mb-3">
-                                    <input type="file" class="form-control" id="image3" placeholder="" (change)="onFileChange($event, 'image3')">
+                                    <input type="file" class="form-control" accept=".jpg, .jpeg, .png" id="image3" placeholder="" (change)="onFileChange($event, 'image3')">
                                     <label for="image3">Image 3</label>
                                 </div>
+                                <div class="text-danger" *ngIf="fileErrors['image3']">{{ fileErrors['image3'] }}</div>
                             </div>
                             <div class="col-12 col-sm-sm-6 col-md-6 col-lg-6">
                                 <div class="form-floating mb-3">
@@ -372,9 +375,13 @@
                         </div>
                     
 
+                    <div style="float: left;" class="text-danger mb-2">
+                        <strong>Note:</strong> Please upload images in .jpg, .jpeg, or .png format only.
+                        <br> Maximum file size: 50kb
+                    </div>
                     <div class="text-end">
-                        <button type="submit" class="btn btn-lime-green" [ngClass]="{'disabled': mediaCoverageForm.invalid}"
-                        [disabled]="loading || mediaCoverageForm.invalid">
+                        <button type="submit" class="btn btn-lime-green" [ngClass]="{'disabled': mediaCoverageForm.invalid || hasFileErrors()}"
+                        [disabled]="hasFileErrors() || loading || mediaCoverageForm.invalid">
                         <span *ngIf="loading" class="spinner-border spinner-border-sm me-1"></span>
                         {{isEditMode ? 'Update' : 'Add'}} Media Coverage</button>
                     </div>
@@ -439,33 +446,38 @@
                             </div>
                             <div class="col-12 col-sm-sm-6 col-md-6 col-lg-6">
                                 <div class="form-floating mb-3">
-                                    <input type="file" class="form-control" id="image1" placeholder="" (change)="onFileChange($event, 'image1')">
+                                    <input type="file" class="form-control" id="image1" accept=".jpg, .jpeg, .png" placeholder="" (change)="onFileChange($event, 'image1')">
                                     <label for="image1">Image 1</label>
                                 </div>
+                                <div class="text-danger" *ngIf="fileErrors['image1']">{{ fileErrors['image1'] }}</div>
                             </div>
                             <div class="col-12 col-sm-sm-6 col-md-6 col-lg-6">
                                 <div class="form-floating mb-3">
-                                    <input type="file" class="form-control" id="image2" placeholder="" (change)="onFileChange($event, 'image2')">
+                                    <input type="file" class="form-control" id="image2" accept=".jpg, .jpeg, .png" placeholder="" (change)="onFileChange($event, 'image2')">
                                     <label for="image2">Image 2</label>
                                 </div>
+                                <div class="text-danger" *ngIf="fileErrors['image2']">{{ fileErrors['image2'] }}</div>
                             </div>
                             <div class="col-12 col-sm-sm-6 col-md-6 col-lg-6">
                                 <div class="form-floating mb-3">
-                                    <input type="file" class="form-control" id="image3" placeholder="" (change)="onFileChange($event, 'image3')">
+                                    <input type="file" class="form-control" id="image3" accept=".jpg, .jpeg, .png" placeholder="" (change)="onFileChange($event, 'image3')">
                                     <label for="image3">Image 3</label>
                                 </div>
+                                <div class="text-danger" *ngIf="fileErrors['image3']">{{ fileErrors['image3'] }}</div>
                             </div>
                             <div class="col-12 col-sm-sm-6 col-md-6 col-lg-6">
                                 <div class="form-floating mb-3">
-                                    <input type="file" class="form-control" id="image3" placeholder="" (change)="onFileChange($event, 'image4')">
+                                    <input type="file" class="form-control" id="image3" accept=".jpg, .jpeg, .png" placeholder="" (change)="onFileChange($event, 'image4')">
                                     <label for="image3">Image 4</label>
                                 </div>
+                                <div class="text-danger" *ngIf="fileErrors['image4']">{{ fileErrors['image4'] }}</div>
                             </div>
                             <div class="col-12 col-sm-sm-6 col-md-6 col-lg-6">
                                 <div class="form-floating mb-3">
-                                    <input type="file" class="form-control" id="image3" placeholder="" (change)="onFileChange($event, 'image5')">
+                                    <input type="file" class="form-control" id="image3" accept=".jpg, .jpeg, .png" placeholder="" (change)="onFileChange($event, 'image5')">
                                     <label for="image3">Image 5</label>
                                 </div>
+                                <div class="text-danger" *ngIf="fileErrors['image5']">{{ fileErrors['image5'] }}</div>
                             </div>
                             <div class="col-12 col-sm-sm-6 col-md-6 col-lg-6">
                                 <div class="form-floating mb-3">
@@ -476,10 +488,14 @@
                             </div>
                         </div>
                     
-
+                    <div style="float: left;" class="text-danger mb-2">
+                        <strong>Note:</strong> Please upload images in .jpg, .jpeg, or .png format only.
+                        <br> Maximum file size: 50kb
+                    </div>
+                    
                     <div class="text-end">
-                        <button type="submit" class="btn btn-lime-green" [ngClass]="{'disabled': mediaExecutionForm.invalid}"
-                        [disabled]="loading || mediaExecutionForm.invalid">
+                        <button type="submit" class="btn btn-lime-green" [ngClass]="{'disabled': mediaExecutionForm.invalid || hasFileErrors()}"
+                        [disabled]="hasFileErrors() || loading || mediaExecutionForm.invalid">
                         <span *ngIf="loading" class="spinner-border spinner-border-sm me-1"></span>
                         {{editFlag ? 'Update' : 'Add'}} Program Execution</button>
                     </div>
