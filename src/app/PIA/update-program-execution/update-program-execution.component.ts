@@ -9,6 +9,7 @@ import { API_BASE_URL, APIS } from '@app/constants/constants';
 import { ToastrService } from 'ngx-toastr';
 import { forkJoin } from 'rxjs';
 import moment from "moment";
+import { DomSanitizer } from '@angular/platform-browser';
 declare var $: any;
 declare var bootstrap: any;
 @Component({
@@ -24,13 +25,14 @@ export class UpdateProgramExecutionComponent implements OnInit {
   mediaExecutionForm!: FormGroup;
   isEditMode = false;
   // Store files separately
-  selectedFiles: { [key: string]: File } = {};
+  selectedFiles: { [key: string]: any } = {};
   agencyId: any
   constructor(
     private router: Router,
     private fb: FormBuilder,
     private _commonService: CommonServiceService,
     private toastrService: ToastrService,
+    private sanitizer: DomSanitizer
   ) { 
     this.agencyId = JSON.parse(sessionStorage.getItem('user') || '{}').agencyId;
   }
@@ -125,10 +127,41 @@ export class UpdateProgramExecutionComponent implements OnInit {
     this.router.navigateByUrl('/veiw-program-creation');
   }
 
+  fileErrors: any = {};
   onFileChange(event: any, field: string) {
+    const allowedExtensions = ['jpg', 'jpeg', 'png'];
+    const maxSize = 50 * 1024; // 50KB
+    this.fileErrors = this.fileErrors || {}; // Initialize fileErrors object if not already
     if (event.target.files && event.target.files.length > 0) {
-      this.selectedFiles[field] = event.target.files[0];
+
+      const file = event.target.files[0];
+        const fileExtension = file.name.split('.').pop().toLowerCase();
+        const fileSize = file.size;
+
+        // Validate file type
+        if (!allowedExtensions.includes(fileExtension)) {
+            this.fileErrors[field] = `Invalid file type. Only ${allowedExtensions.join(', ')} are allowed.`;
+            this.selectedFiles[field] = null;
+            return;
+        }
+
+        // Validate file size
+        if (fileSize > maxSize) {
+            this.fileErrors[field] = `File size exceeds the maximum limit of 50KB.`;
+            this.selectedFiles[field] = null;
+            return;
+        }
+
+        // If valid, clear errors and set the file
+        this.fileErrors[field] = '';
+        //this.selectedFiles[field] = file;
+
+        this.selectedFiles[field] = event.target.files[0];
     }
+  }
+
+  hasFileErrors(): boolean {    
+    return Object.values(this.fileErrors).some(error => error !== '');
   }
 
   loading = false;
@@ -219,6 +252,7 @@ export class UpdateProgramExecutionComponent implements OnInit {
 
   showSessionEditModal(session?: any) {
     this.selectedFiles={}
+    this.fileErrors={}
     $('#image1').val('')
     $('#image2').val('')
     $('#image3').val('')
@@ -234,7 +268,7 @@ export class UpdateProgramExecutionComponent implements OnInit {
         const modalInstance = new bootstrap.Modal(editSessionModal);
         modalInstance.show();
       }
-      
+      this.mediaCoverageForm.reset();
       return;
     }
 
@@ -288,6 +322,7 @@ export class UpdateProgramExecutionComponent implements OnInit {
     $('#image4').val('')
     $('#image5').val('')
     this.selectedFiles={}
+    this.fileErrors={}
     if(!this.ProgramData?.programId) {
       this.toastrService.error("Please Select atleast one Program to add Session Details", "Program Error");
       return;
