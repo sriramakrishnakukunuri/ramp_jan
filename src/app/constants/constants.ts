@@ -96,5 +96,6 @@ export const APIS = {
     },
     programExecutions:{
         saveMediaCoverage:API_BASE_URL +`/program/execution/media-coverage`,
+        saveProgramExecution:API_BASE_URL +`/program/execution/images`,
     }
 }

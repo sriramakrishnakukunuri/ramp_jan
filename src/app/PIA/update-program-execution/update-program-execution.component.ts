@@ -18,7 +18,10 @@ declare var bootstrap: any;
 })
 export class UpdateProgramExecutionComponent implements OnInit {
 
+  imageUrlDownloadPath = `${API_BASE_URL}/program/file/download/`;
+  imagePreviewUrl:any
   mediaCoverageForm!: FormGroup;
+  mediaExecutionForm!: FormGroup;
   isEditMode = false;
   // Store files separately
   selectedFiles: { [key: string]: File } = {};
@@ -34,12 +37,33 @@ export class UpdateProgramExecutionComponent implements OnInit {
 
   ngOnInit(): void {
     this.getProgramsByAgency()
+    this.getSessionResource()
     this.mediaCoverageForm = this.fb.group({
       date: ['', Validators.required],
       mediaCoverageType: ['', Validators.required],
       mediaCoverageUrl: ['', Validators.required],
       programId: [''],
+      mediaCoverageId: [''],
+      image1: [''],
+      image2: [''],
+      image3: [''],
     });
+    this.mediaExecutionForm = this.fb.group({
+      sessionDetails: ['', Validators.required],
+      resourceId: ['', Validators.required],
+      programId: [''],
+      sessionStreamingUrl: ['', Validators.required],
+      startTime: ['', Validators.required],
+      endTime: ['', Validators.required],
+      sessionDate: ['', Validators.required],   
+      programSessionId: [''],
+      image1: [''],
+      image2: [''],
+      image3: [''],
+      image4: [''],
+      image5: [''],   
+    });
+
   }
 
   agencyProgramList: any;
@@ -70,9 +94,8 @@ export class UpdateProgramExecutionComponent implements OnInit {
       this.ProgramData = ''
       this._commonService.getById(APIS.programCreation.getSingleProgramsList, programId).subscribe({
         next: (data: any) => {
-          this.ProgramData = data.data;
-        }
-        , error: (err: any) => {
+          this.ProgramData = data.data;          
+        }, error: (err: any) => {
           new Error(err);
         }
       })
@@ -108,7 +131,9 @@ export class UpdateProgramExecutionComponent implements OnInit {
     }
   }
 
+  loading = false;
   onSubmit() {
+    this.loading = true;
     if (this.mediaCoverageForm.invalid) return;
     this.mediaCoverageForm.value.programId = Number(this.programId)
     let objectnew: any = [this.mediaCoverageForm.value]
@@ -134,37 +159,76 @@ export class UpdateProgramExecutionComponent implements OnInit {
     if (this.isEditMode) {
       console.log('Edit FormData:', formData);
       // Call your update API with formData
+      forkJoin(apiCalls).subscribe({
+        next: (results) => {
+          this.loading = false;
+          this.closeModalMedia();
+          this.toastrService.success('Media Coverage Updated Successfully', "Media Coverage Success!");
+          this.mediaCoverageForm.reset();
+          this.selectedFiles = {}; // Reset selected files
+          this.getProgramDetailsById(this.programId);          
+        },
+        error: (err) => {
+          this.loading = false;
+          this.closeModalMedia();
+          this.mediaCoverageForm.reset();
+          this.selectedFiles = {}; // Reset selected files
+          this.toastrService.error(err, "Media Coverage Error!");        
+        },
+      });
     } else {
       console.log('Add FormData:', formData);
       // Call your create API with formData
       forkJoin(apiCalls).subscribe({
         next: (results) => {
-          this.closeModal();
-          this.toastrService.success('Session Details Created Successfully', "Session Creation Success!");
+          this.loading = false;
+          this.closeModalMedia();
+          this.toastrService.success('Media Coverage Created Successfully', "Media Coverage Success!");
+          this.mediaCoverageForm.reset();
+          this.selectedFiles = {}; // Reset selected files
           this.getProgramDetailsById(this.programId);          
         },
         error: (err) => {
-          this.closeModal();
+          this.loading = false;
+          this.closeModalMedia();
+          this.mediaCoverageForm.reset();
+          this.selectedFiles = {}; // Reset selected files
           this.toastrService.error(err, "Session Creation Error!");        
         },
       });
     }
   }
 
-  @ViewChild('sessionFormMediaModal') sessionFormMediaModal!: ElementRef;
-    closeModal(): void {
-      const modal = bootstrap.Modal.getInstance(this.sessionFormMediaModal.nativeElement);
-      modal.hide();   
+  closeModalMedia(): void {
+    const editSessionModal = document.getElementById('sessionFormMediaModal');
+    if (editSessionModal) {
+      const modalInstance = bootstrap.Modal.getInstance(editSessionModal);
+      modalInstance.hide();
+    }
+  }
+  
+  closeModal(): void {
+
+    const editSessionModal = document.getElementById('sessionFormExectuionModal');
+    if (editSessionModal) {
+      const modalInstance = bootstrap.Modal.getInstance(editSessionModal);
+      modalInstance.hide();
+    }
+  
   }
 
   showSessionEditModal(session?: any) {
+    this.selectedFiles={}
+    $('#image1').val('')
+    $('#image2').val('')
+    $('#image3').val('')
     if(!this.ProgramData?.programId) {
       this.toastrService.error("Please Select atleast one Program to add Media Coverage", "Program Error");
       return;
     }
 
     if (!session) {
-      
+      this.isEditMode = false;
       const editSessionModal = document.getElementById('sessionFormMediaModal');
       if (editSessionModal) {
         const modalInstance = new bootstrap.Modal(editSessionModal);
@@ -173,5 +237,190 @@ export class UpdateProgramExecutionComponent implements OnInit {
       
       return;
     }
+
+    this.isEditMode = true;
+    this.mediaCoverageForm.patchValue({
+      date: this.convertToISOFormat(session?.date),
+      mediaCoverageType: session?.mediaCoverageType,
+      mediaCoverageUrl: session?.mediaCoverageUrl,
+      programId: this.ProgramData?.programId,
+      mediaCoverageId: session?.mediaCoverageId,
+      image1: session?.image1,
+      image2: session?.image2,
+      image3: session?.image3,
+    });
+    console.log(this.mediaCoverageForm.value,'sessionFormValue',session)
+    const editSessionModal = document.getElementById('sessionFormMediaModal');
+    if (editSessionModal) {
+      const modalInstance = new bootstrap.Modal(editSessionModal);
+      modalInstance.show();
+    }
+
+  }
+
+  getSessionResourceData: any = [];
+  resourcekeyidData: any = {}
+  getSessionResource() {
+    this.resourcekeyidData = {}
+    this.getSessionResourceData = []
+    this._commonService
+      .getById(APIS.programCreation.getResource, this.agencyId)
+      .subscribe({
+        next: (data: any) => {
+          this.getSessionResourceData = data.data;
+          this.getSessionResourceData.map((item: any) => {
+            this.resourcekeyidData[item?.resourceId] = item.name
+          })
+
+        },
+        error: (err: any) => {
+          new Error(err);
+        },
+      });
+  }
+
+
+  editFlag: boolean = false;
+  showExecutionEditModal(session?: any) {
+    $('#image1').val('')
+    $('#image2').val('')
+    $('#image3').val('')
+    $('#image4').val('')
+    $('#image5').val('')
+    this.selectedFiles={}
+    if(!this.ProgramData?.programId) {
+      this.toastrService.error("Please Select atleast one Program to add Session Details", "Program Error");
+      return;
+    }
+
+    if (!session) {
+      
+      const editSessionModal = document.getElementById('sessionFormExectuionModal');
+      if (editSessionModal) {
+        const modalInstance = new bootstrap.Modal(editSessionModal);
+        modalInstance.show();
+      }
+      this.editFlag = false;
+      return;
+    }
+
+    this.editFlag = true;
+    this.mediaExecutionForm.patchValue({
+      programId: this.ProgramData?.programId,
+      resourceId: session?.resourceId,
+      sessionDetails: session?.sessionDetails,
+      sessionStreamingUrl: session?.sessionStreamingUrl,
+      sessionDate: this.convertToISOFormat(session.sessionDate),
+      startTime: this.convertTo24HourFormat(session.startTime),
+      endTime: this.convertTo24HourFormat(session.endTime),
+      programSessionId: session?.sessionId,
+      image1: session?.image1,
+      image2: session?.image2,
+      image3: session?.image3,
+      image4: session?.image4,
+      image5: session?.image5,      
+    });    
+    console.log(this.mediaExecutionForm.value,'sessionFormValue',session)
+    const editSessionModal = document.getElementById('sessionFormExectuionModal');
+    if (editSessionModal) {
+      const modalInstance = new bootstrap.Modal(editSessionModal);
+      modalInstance.show();
+    }
+  }
+
+  convertToISOFormat(date: string): string {    
+    const [day, month, year] = date.split('-');
+    return `${year}-${month}-${day}`; // Convert to yyyy-MM-dd format
+  }
+
+  convertTo24HourFormat(time: string): string {
+    const [timePart, modifier] = time.split(' ');
+    let [hours, minutes] = timePart.split(':').map(Number);
+
+    if (modifier === 'PM' && hours !== 12) {
+      hours += 12;
+    } else if (modifier === 'AM' && hours === 12) {
+      hours = 0;
+    }
+
+    return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+  }
+
+  onSubmitExecution(){
+    this.loading = true;
+    if (this.mediaExecutionForm.invalid) return;
+    this.mediaExecutionForm.value.programId = Number(this.programId)
+    let objectnew: any = [this.mediaExecutionForm.value]
+    const formData = new FormData();
+    const API_ADD_URL = APIS.programExecutions.saveProgramExecution;
+    const apiCalls = objectnew.map((element: any, index: any) => { 
+      element['sessionDate'] = moment(element['date']).format('DD-MM-YYYY');     
+      formData.set("data", JSON.stringify(element));
+      return this._commonService.uploadImageResource(API_ADD_URL,formData);
+    })
+    
+    // Append images
+    if (this.selectedFiles['image1']) {
+      formData.append('image1', this.selectedFiles['image1']);
+    }
+    if (this.selectedFiles['image2']) {
+      formData.append('image2', this.selectedFiles['image2']);
+    }
+    if (this.selectedFiles['image3']) {
+      formData.append('image3', this.selectedFiles['image3']);
+    }
+    if (this.selectedFiles['image4']) {
+      formData.append('image4', this.selectedFiles['image4']);
+    }
+    if (this.selectedFiles['image5']) {
+      formData.append('image5', this.selectedFiles['image5']);
+    }
+
+    forkJoin(apiCalls).subscribe({
+      next: (results) => {
+        this.loading = false;
+        this.closeModal();
+        this.toastrService.success('Program Execution Updated Successfully', "Program Execution Success!");
+        this.mediaExecutionForm.reset();
+        this.selectedFiles = {}; // Reset selected files
+        this.getProgramDetailsById(this.programId);          
+      },
+      error: (err) => {
+        this.loading = false;
+        this.closeModal();
+        this.mediaExecutionForm.reset();
+        this.selectedFiles = {}; // Reset selected files
+        this.toastrService.error(err, "Program Execution Error!");        
+      },
+    });
+  }
+
+  showImagePreview(url: any, value: string) {
+    this.imagePreviewUrl = null; // Reset the image preview URL
+    this.imagePreviewUrl = url + value;
+
+    const editSessionModal = document.getElementById('imagePreview');
+    if (editSessionModal) {
+      const modalInstance = new bootstrap.Modal(editSessionModal);
+      modalInstance.show();
+    }
+  }
+
+  validateDate(type:any){
+    if(type == 'MIN' && this.ProgramData?.startDate){
+      const startDate = this.convertToISOFormat(this.ProgramData?.startDate);
+      return startDate;
+    }else if(type == 'MAX' && this.ProgramData?.endDate){
+      const endDate = this.convertToISOFormat(this.ProgramData?.endDate);
+      return endDate;
+    }
+    // else if(type == 'MIN' && !this.ProgramData?.startDate){
+    //   let startDate = moment().startOf('Q').format('DD-MM-YYYY');
+    //   return this.convertToISOFormat(startDate);
+    // }else if(type == 'MAX' && !this.ProgramData?.endDate){
+    //   let endDate = moment().endOf('Q').format('DD-MM-YYYY');
+    //   return this.convertToISOFormat(endDate);
+    // }    
+    return ''
   }
 }
