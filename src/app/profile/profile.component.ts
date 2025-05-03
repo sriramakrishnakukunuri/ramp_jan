@@ -84,15 +84,15 @@ export class ProfileComponent implements OnInit {
     let url = '';
     let payload = {};
     url = APIS.userRegistration.editProfile;
-
+    let userDetails = JSON.parse(sessionStorage.getItem('user') || '{}');
     payload = {
       "mobileNo": this.RegisterForm.value.mobile,
-      "email": this.RegisterForm.value.email,
+      "email": userDetails.email,
       "firstName": this.RegisterForm.value.firstName,
       "lastName": this.RegisterForm.value.lastName,
       "gender": this.RegisterForm.value.gender,
     }
-    this._commonService.userUpdateById(url+'/'+this.RegisterForm.value.email, payload).subscribe((res: any) => {
+    this._commonService.userUpdateById(url+'/'+userDetails.email, payload).subscribe((res: any) => {
       this.RegisterForm.reset();
       this.toastrService.success('User Details Updated Successfully', 'Success');
       this.getUserDetails()
