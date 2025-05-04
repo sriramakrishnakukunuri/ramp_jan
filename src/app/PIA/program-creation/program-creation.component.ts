@@ -33,7 +33,8 @@ export class ProgramCreationComponent implements OnInit, AfterViewInit {
     private router: Router,
     private route: ActivatedRoute,
   ) {
-    this.formDetails();    
+    this.formDetails();   
+    this.getAllDistricts() 
     this.formDetailsLocation();    
     this.agencyId = JSON.parse(sessionStorage.getItem('user') || '{}').agencyId;    
     this.getProgramLocation();    
@@ -54,7 +55,31 @@ export class ProgramCreationComponent implements OnInit, AfterViewInit {
       if(activityId) this.getSubActivitiesList(activityId);
     });
   }
+  allDistricts:any
+  getAllDistricts(){
+    this.allDistricts = []
+    this._commonService.getDataByUrl(APIS.masterList.getDistricts).subscribe({
+      next: (data: any) => {
+        this.allDistricts = data.data;
+      },
+      error: (err: any) => {
+        this.allDistricts = [];
+      }
+    })
+  }
+  MandalList:any
+  GetMandalByDistrict(event: any) {
+    this.MandalList=[]
+    this._commonService.getDataByUrl(APIS.masterList.getMandalName + event).subscribe({
+      next: (data: any) => {
+        this.MandalList = data.data;
+      },
+      error: (err: any) => {
+        this.MandalList = [];
+      }
+    })
 
+  }
   activityList:any
   subActivitiesList:any
   getAllActivityList(){
@@ -150,6 +175,8 @@ export class ProgramCreationComponent implements OnInit, AfterViewInit {
       capacity: new FormControl("",[Validators.required,Validators.pattern(/^[1-9]\d*$/)]),
       agencyId: new FormControl("",),
       filePath: new FormControl("",),
+      district: new FormControl("",),
+      mandal: new FormControl("",),
     });
   }
 
