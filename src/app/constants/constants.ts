@@ -38,6 +38,7 @@ export const APIS = {
         getParticipantList: API_BASE_URL + '/participants',
         getParticipantListByAgency: API_BASE_URL + '/agency/participants/',
         getParticipantDetailsById: API_BASE_URL + '/getParticipantById/',
+        uploadParticipant: API_BASE_URL + '/upload',
     },
     counsellerData:{
         add: API_BASE_URL + '/saveCounsellor',
@@ -58,6 +59,7 @@ export const APIS = {
         getDistricts: API_BASE_URL + '/getAllDistricts',
         getSectors: API_BASE_URL + '/getallsectors',
         getMandal: API_BASE_URL + '/getAllmandalsOfDistrictsById/',
+        getMandalName: API_BASE_URL + '/getAllmandalsOfDistrictsByName/',
     },
     captureOutcome:{
         getParticipantData: API_BASE_URL + '/getParticipantsByMobileNo/',
@@ -88,10 +90,14 @@ export const APIS = {
         getHeadOfExpenditure:API_BASE_URL +`/expenses`,
         saveExpenditure:API_BASE_URL +`/program/expenditure/save`,
         savebulkExpenditure:API_BASE_URL +`/bulk/expenditure/save`,
+        updatebulkExpenditure:API_BASE_URL +`/bulk/expenditure/update/`,
         savebulkByItemExpenditure:API_BASE_URL +`/bulk/transactions/save`,
         getExpenditure:API_BASE_URL +`/program/expenditure`,
         getBulkExpenditure:API_BASE_URL +`/bulk/expenditure`,
         getBulkExpenditureByProgramId:API_BASE_URL +`/bulk/transactions`,
+        deleteExpenditure:API_BASE_URL +`/program/expenditure/delete/`,
+        UpdateExpenditure:API_BASE_URL +`/program/expenditure/update/`,
+        deleteBulkExpenditure:API_BASE_URL +`/bulk/expenditure/delete/`,
     },
     programSummary:{
         getProramData:API_BASE_URL +`/program/summary/`,

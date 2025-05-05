@@ -7,7 +7,7 @@
                         <div class="col-12 col-sm-7 col-md-8 col-lg-9">
                             <h6 class="fw-600 mb-2 mb-sm-0 text-green">View Programs</h6>
                         </div>
-                        <ng-container *ngIf="loginsessionDetails?.userRole == 'ADMIN'">
+                        <ng-container >
                             <div class="col-12 col-sm-5 col-md-4 col-lg-3">
                                 <label for="Agencies" style="font-weight: 600;">List Of Agencies</label>
                                 <select class="form-select" id="Agencies" [(ngModel)]="selectedAgencyId"    
@@ -23,12 +23,11 @@
                 </div>
                 <div class="card-body">
                     <div class="dtable-container">
-                        <table id="view-table-program" class="display nowrap" style="width:100%">
+                        <table id="view-program" class="display nowrap" style="width:100%">
                             <thead class="bg-lime-green text-white">
                                 <tr>
 
                                     <th>S.No</th>
-                                    <th class="text-center" >Actions</th>
                                     <th>agency Name</th>
                                     <th>Type Of Activity</th>
                                     <th>Sub Activity</th>
@@ -50,16 +49,7 @@
                                 <tr *ngFor="let item of tableList; let i = index">
 
                                     <td>{{ i + 1 }}</td>
-                                    <td *ngIf="loginsessionDetails?.userRole == 'AGENCY_MANAGER' || loginsessionDetails?.userRole == 'AGENCY_EXECUTOR'
-                                    || loginsessionDetails?.userRole == 'ADMIN'">
-                                        <!-- (click)="sessionDetails(item)" data-bs-toggle="modal" data-bs-target="#viewModal" -->
-                                        <button type="button" class="btn btn-default btn-sm text-lime-green"
-                                            title="Sessions" data-bs-toggle="modal" data-bs-target="#viewModal"
-                                            (click)="sessionDetails(item)" title="View"><span
-                                                class="bi bi-eye"></span></button>
-                                        <!-- <button type="button" class="btn btn-default btn-sm text-primary mx-2" title="Edit" (click)="editProgram(item)"><span class="bi bi-pencil"></span></button> -->
-                                        <!-- <button type="button" class="btn btn-default btn-sm text-danger" title="Delete"><span class="bi bi-trash"></span></button> -->
-                                    </td>
+                                   
                                     <td>{{ item.activityName }}</td>
                                     <td>{{ item.subActivityName }}</td>
                                     <td>{{ item.programType }}</td>

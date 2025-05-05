@@ -15,10 +15,19 @@
                 </div>
             </div>
             <div class="card-body">
+                <!-- <div class="row">
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-6">
+
+                    </div>
+                    <div class="col-12 col-12 col-sm-6 col-md-6 col-lg-6 text-end">
+                        <button type="button" [ngClass]="{'disabled': !programIds}" (click)="openFileUploadModal()" class="btn btn-lime-green" >Upload Participants</button>
+                    </div>
+                </div> -->
                 <table id="view-table-participant1" class="table table-borderless table-striped nowrap">
                     <thead class="bg-lime-green text-white">
                         <tr>
                             <th>S.No</th>
+                            <th class="text-center">Edit / Delete</th>
                             <th>IsAspirant</th>
                             <th>Oragnization Name</th>
                             <th>Name of the Participant</th>
@@ -35,12 +44,16 @@
                             <th>Certificate Issue Date</th>
                             <th>Issue Date</th>
                             <th>Methodology Used for Needs Assessment</th>
-                            <th class="text-center">Edit / Delete</th>
+                          
                         </tr>
                     </thead>
                     <tbody *ngIf="submitedData">
                         <tr  *ngFor="let item of submitedData; let i=index">
                             <td class="text-start">{{i+1}}</td>
+                            <td class="text-center">
+                                <button type="button" class="btn btn-default text-lime-green btn-sm" (click)="editRow(item)"><span class="bi bi-pencil"></span></button>
+                                <button type="button" class="btn btn-default text-danger btn-sm" (click)="deleteRow(item)"><span class="bi bi-trash"></span></button>
+                            </td>
                             <td>{{item?.organizationName?'No':'Yes'}}</td>
                             <td >{{item?.isAspirant=='Aspirant'?'':item?.organizationName}}</td>
                             <td>{{item?.participantName}}</td>
@@ -57,10 +70,7 @@
                             <td>{{item?.isCertificateIssued=='Y'?'Yes':'No'}}</td>
                             <td>{{item?.isCertificateIssued=='Y'?item?.certificateIssueDate:''}}</td>
                             <td>{{item?.needAssessmentMethodology}}</td>
-                            <td class="text-center">
-                                <button type="button" class="btn btn-default text-lime-green btn-sm" (click)="editRow(item)"><span class="bi bi-pencil"></span></button>
-                                <button type="button" class="btn btn-default text-danger btn-sm" (click)="deleteRow(item)"><span class="bi bi-trash"></span></button>
-                            </td>
+                          
                         </tr>
                     </tbody>
                 </table>
@@ -68,4 +78,52 @@
         </div>
     </section>
 </main>
+
+
+<!-- upload form -->
+<div class="modal fade" id="addDocumentModel" tabindex="-1" aria-labelledby="addDocumentLabel" aria-hidden="true" data-keyboard="false" data-bs-backdrop="static" >
+    <div class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title" id="addDocumentLabel">Upload  Document</h6>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <span *ngIf="fileErrorMsg" style="color: red;">{{fileErrorMsg}}</span>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="attachment" *ngIf="!file">
+                            <input class="attachment" style="opacity: 0" #fileInput type="file" 
+                                accept=".xls, .xlsx,"
+                                (change)="onFilesSelected($event)" />
+                            <span class="drop-zone__prompt">Drop file here <br> or <br> click to upload</span>
+                        </div>
+                        <div *ngIf="file">
+                            file Name : {{ selectedfiles.name}} <br> <button class="btn btn-sm btn-primary" 
+                                (click)="file=undefined"> clear file</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <ng-container *ngIf="selectedfiles">
+                            <div class="row" *ngFor="let item of selectedfiles" style="font-size: 10px;">
+                                <div class="col-sm-6 word-wrap">{{item.name}}</div>
+                                <!-- <div class="col-sm-2">{{item.size}}</div>
+                                <div class="col-sm-4 word-wrap">{{item.type}}</div> -->
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+                <div class="d-grid">
+                    <ng-container >
+                        <button type="button"  class="btn btn-lime-green" data-bs-dismiss="modal" (click)="uploadManualFiles()" [ngClass]="{'disabled': !selectedfiles.length}">Upload</button>
+                    </ng-container>
+                  
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
