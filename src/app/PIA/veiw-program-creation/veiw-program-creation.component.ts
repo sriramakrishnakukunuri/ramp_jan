@@ -47,6 +47,7 @@ export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
   }
   GetProgramsByAgency(event:any){
     this.agencyByAdmin=event;
+    this.selectedAgencyId = event;
     this._commonService.getDataByUrl(APIS.programCreation.getProgramsListByAgencyDetails+event).subscribe({
       next: (dataList: any) => {
         this.tableList = dataList.data;
@@ -102,7 +103,7 @@ export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
         // Extract pagination parameters
         let page = data.start / data.length;
         let size = data.length;
-
+       
         // Fetch data from API
         fetch(APIS.programCreation.getProgramsListByAgencyDetails+agency+`?page=${page}&size=${size}`)
             .then(res => res.json())
@@ -125,46 +126,107 @@ export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
           className: 'dt-center'
       },
       { 
+        title: 'Actions',
+        data: null,
+        render: function(data:any, type:any, row:any,meta: any) {
+          console.log(data,row,meta)
+            // if (this.loginsessionDetails?.userRole == 'AGENCY_MANAGER' || this.loginsessionDetails?.userRole == 'AGENCY_EXECUTOR') {
+                return `  <button type="button" class="btn btn-default btn-sm text-lime-green edit-btn" 
+                title="Sessions" data-bs-toggle="modal" data-bs-target="#viewModal" 
+                data-id="${row.id}" title="View">
+                <span class="bi bi-eye"></span>
+              </button>`;
+            // }
+            // return '';
+        },
+        orderable: false,
+        className: 'text-center'
+    },
+    { 
+      data: 'agencyName',
+      title: 'Agency Name',
+      render: function(data, type, row) {
+        return data ? data : '';
+      }
+  },
+      { 
           data: 'activityName',
-          title: 'Type Of Activity'
+          title: 'Type Of Activity',
+          render: function(data, type, row) {
+            return data ? data : '';
+          }
       },
       { 
           data: 'subActivityName',
-          title: 'Sub Activity'
+          title: 'Sub Activity',
+          render: function(data, type, row) {
+            return data ? data : '';
+          }
       },
       { 
           data: 'programType',
-          title: 'Type Of Program'
+          title: 'Type Of Program',
+          render: function(data, type, row) {
+            return data ? data : '';
+          }
       },
       { 
           data: 'programTitle',
-          title: 'Title Of Program'
+          title: 'Title Of Program',
+          render: function(data, type, row) {
+            return data ? data : '';
+          }
       },
       { 
           data: 'startDate',
-          title: 'Start Date'
+          title: 'Start Date',
+          render: function(data, type, row) {
+            return data ? data : '';
+          }
       },
+      { 
+        data: 'endDate',
+        title: 'End Date',
+        render: function(data, type, row) {
+          return data ? data : '';
+        }
+    },
       { 
           data: 'startTime',
           title: 'In Time',
-          className: 'text-center'
+          className: 'text-center',
+          render: function(data, type, row) {
+            return data ? data : '';
+          }
       },
       { 
           data: 'endTime',
           title: 'Out Time',
-          className: 'text-center'
+          className: 'text-center',
+          render: function(data, type, row) {
+            return data ? data : '';
+          }
       },
       { 
           data: 'spocName',
-          title: 'SPOC Name'
+          title: 'SPOC Name',
+          render: function(data, type, row) {
+            return data ? data : '';
+          }
       },
       { 
           data: 'spocContactNo',
-          title: 'SPOC Contact No.'
+          title: 'SPOC Contact No.',
+          render: function(data, type, row) {
+            return data ? data : '';
+          }
       },
       { 
           data: 'programLocationName',
-          title: 'Program Location'
+          title: 'Program Location',
+          render: function(data, type, row) {
+            return data ? data : '';
+          }
       },
       // { 
       //   data: null,
@@ -183,23 +245,7 @@ export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
       //   className: 'text-center',
       //   orderable: false
       // }
-      { 
-          title: 'Actions',
-          data: null,
-          render: function(data:any, type:any, row:any,meta: any) {
-            console.log(data,row,meta)
-              // if (this.loginsessionDetails?.userRole == 'AGENCY_MANAGER' || this.loginsessionDetails?.userRole == 'AGENCY_EXECUTOR') {
-                  return `  <button type="button" class="btn btn-default btn-sm text-lime-green edit-btn" 
-                  title="Sessions" data-bs-toggle="modal" data-bs-target="#viewModal" 
-                  data-id="${row.id}" title="View">
-                  <span class="bi bi-eye"></span>
-                </button>`;
-              // }
-              // return '';
-          },
-          orderable: false,
-          className: 'text-center'
-      }
+     
   ],
   initComplete: function() {
     // Use proper event handling with arrow function
@@ -226,11 +272,13 @@ export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
     }, 0);
   }
   agencyByAdmin:any
+  selectedAgencyId:any=-1
   getAgenciesList() {
     this.agencyList = [];
     this._commonService.getDataByUrl(APIS.masterList.agencyList).subscribe((res: any) => {
       this.agencyList = res.data;
-      this.GetProgramsByAgency(res.data[0].agencyId);
+      this.selectedAgencyId =-1
+      this.GetProgramsByAgency(-1);
     }, (error) => {
       this.toastrService.error(error.error.message);
     });

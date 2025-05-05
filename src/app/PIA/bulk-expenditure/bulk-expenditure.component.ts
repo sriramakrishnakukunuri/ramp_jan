@@ -16,11 +16,13 @@ declare var bootstrap: any;
 export class BulkExpenditureComponent implements OnInit {
 
     agencyId: any
+    loginsessionDetails:any
     expenditureType:any='PRE'
     constructor(
       private _commonService: CommonServiceService,
       private toastrService: ToastrService,
     ) {
+      this.loginsessionDetails = JSON.parse(sessionStorage.getItem('user') || '{}');    
       this.agencyId = JSON.parse(sessionStorage.getItem('user') || '{}').agencyId;
     }
   

@@ -68,27 +68,7 @@ export class ProgramSummaryComponent implements OnInit {
         }
       }
       getData() {
-        this.PrigramSummaryData ={
-          "programName": "Sample Program1234",
-          "agencyName": "TiHCL_05",
-          "participant": 5,
-          "startDate": "01-01-2025",
-          "endDate": "10-01-2025",
-          "sc": 0,
-          "st": 1,
-          "obc": 0,
-          "oc": 4,
-          "minorities": 0,
-          "male": 1,
-          "female": 1,
-          "transgender": 3,
-          "physicallyChallenge": 4,
-          "noOfSHGs": 2,
-          "noOfMSMEs": 0,
-          "noOfStartups": 0,
-          "noOfAspirants": 0
-      }
-       
+        this.PrigramSummaryData ={}
         this._commonService.getById(APIS.programSummary.getProramData, this.programIds).subscribe({
           next: (res: any) => {          
             // this.PrigramSummaryData = res?.data   

@@ -32,6 +32,7 @@ import { ProgramExpenditureComponent } from './PIA/program-expenditure/program-e
 import { BulkExpenditureComponent } from './PIA/bulk-expenditure/bulk-expenditure.component';
 import { ProgramSummaryComponent } from './PIA/program-summary/program-summary.component';
 import { AddProgramSessionsComponent } from './PIA/add-program-sessions/add-program-sessions.component';
+import { ViewProgramAgenciesComponent } from './PIA/view-program-agencies/view-program-agencies.component';
 
 const routes: Routes = [
     {
@@ -78,6 +79,12 @@ const routes: Routes = [
     {
         path: 'veiw-program-creation',
         component: VeiwProgramCreationComponent,
+        canActivate: [AuthGuard],
+        data: { roles: [Role.Admin,Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
+    },
+    {
+        path: 'veiw-program',
+        component: ViewProgramAgenciesComponent,
         canActivate: [AuthGuard],
         data: { roles: [Role.Admin,Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
     },
@@ -199,7 +206,7 @@ const routes: Routes = [
         path: 'bulk-expenditure',
         component: BulkExpenditureComponent,
         canActivate: [AuthGuard],
-        data: { roles:  [Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR]}
+        data: { roles:  [Role.Admin,Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR]}
     },
     {
         path: 'participant-details',

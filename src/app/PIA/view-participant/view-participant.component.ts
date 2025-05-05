@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CommonServiceService } from '@app/_services/common-service.service';
@@ -7,6 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import DataTable from 'datatables.net-dt';
 import 'datatables.net-buttons-dt';
 import 'datatables.net-responsive-dt';
+declare var bootstrap: any;
 
 @Component({
   selector: 'app-view-participant',
@@ -134,7 +135,7 @@ export class ViewParticipantComponent implements OnInit {
                   }))
                  
                 });
-                console.log(data)
+                // console.log(data)
               },
               error: (err) => {
                 this.toastrService.error(err.message, "Participant Data Error!");
@@ -152,10 +153,27 @@ export class ViewParticipantComponent implements OnInit {
               { 
                 title: 'S.No',
                 render: function(data, type, row, meta:any) {
-                  console.log(data,meta,type, row)
+                  // console.log(data,meta,type, row)
                     return meta.settings?._iDisplayStart+meta.row  + 1;
                 },
                 className: 'text-start'
+              },
+              { 
+                data: null,
+                title: 'Edit / Delete',
+                render: (data: any, type: any, row: any, meta: any) => {
+                  // Use meta.row for the current displayed row index
+                  return `
+                    <button type="button" class="btn btn-default text-lime-green btn-sm edit-btn" data-index="${meta.row}">
+                      <span class="bi bi-pencil"></span>
+                    </button>
+                    <button type="button" class="btn btn-default text-danger btn-sm delete-btn" data-index="${meta.row}">
+                      <span class="bi bi-trash"></span>
+                    </button>
+                  `;
+                },
+                className: 'text-center',
+                orderable: false
               },
               { 
                 data: 'organizationName',
@@ -185,23 +203,38 @@ export class ViewParticipantComponent implements OnInit {
               },
               { 
                 data: 'aadharNo',
-                title: 'Aadhar No.'
+                title: 'Aadhar No.',
+                render: function(data, type, row) {
+                  return data ? data : '';
+                }
               },
               { 
                 data: 'category',
-                title: 'Category'
+                title: 'Category',
+                render: function(data, type, row) {
+                  return data ? data : '';
+                }
               },
               { 
                 data: 'mobileNo',
-                title: 'Mobile No.'
+                title: 'Mobile No.',
+                render: function(data, type, row) {
+                  return data ? data : '';
+                }
               },
               { 
                 data: 'email',
-                title: 'Email'
+                title: 'Email',
+                render: function(data, type, row) {
+                  return data ? data : '';
+                }
               },
               { 
                 data: 'designation',
-                title: 'Designation/Current Trade'
+                title: 'Designation/Current Trade',
+                render: function(data, type, row) {
+                  return data ? data : '';
+                }
               },
               { 
                 data: 'isParticipatedBefore',
@@ -236,29 +269,15 @@ export class ViewParticipantComponent implements OnInit {
                 data: 'certificateIssueDate',
                 title: 'Issue Date',
                 render: function(data, type, row) {
-                  return row.isCertificateIssued === 'Y' ? data : '';
+                  return row?.isCertificateIssued === 'Y' ? data ? data:'' : '';
                 }
               },
               { 
                 data: 'needAssessmentMethodology',
-                title: 'Methodology Used for Needs Assessment'
-              },
-              { 
-                data: null,
-                title: 'Edit / Delete',
-                render: (data: any, type: any, row: any, meta: any) => {
-                  // Use meta.row for the current displayed row index
-                  return `
-                    <button type="button" class="btn btn-default text-lime-green btn-sm edit-btn" data-index="${meta.row}">
-                      <span class="bi bi-pencil"></span>
-                    </button>
-                    <button type="button" class="btn btn-default text-danger btn-sm delete-btn" data-index="${meta.row}">
-                      <span class="bi bi-trash"></span>
-                    </button>
-                  `;
-                },
-                className: 'text-center',
-                orderable: false
+                title: 'Methodology Used for Needs Assessment',
+                render: function(data, type, row) {
+                  return data ? data : '';
+                }
               }
               // { 
               //   title: 'Edit / Delete',
@@ -458,6 +477,84 @@ export class ViewParticipantComponent implements OnInit {
 
   editRow(item: any) {
       this.router.navigateByUrl('/add-participant-data-edit/' + item.participantId);
+    }
+    // Upload documnet
+
+    @ViewChild('fileInput') fileInput!: ElementRef;
+    openFileUploadModal() {
+      const modal1 = new bootstrap.Modal(document.getElementById('addDocumentModel'));
+      modal1.show();
+      this.selectedfiles=[]
+       this.fileInput.nativeElement.value = ''
+    }
+    selectUploadedFiles: File = null!
+    multipleFiles: any;
+    fileName: any;
+    fileSize: any;
+    fileType: any;
+    fileErrorMsg: any
+    selectedfiles:any=[]
+    file: any;
+    onFilesSelected(event: any) {
+      this.fileErrorMsg = '';
+      this.multipleFiles = []
+      this.selectedfiles = event.target.files;
+      this.selectUploadedFiles = event.target.files[0];
+      let formData = new FormData();
+      let totalSize = 0;
+      this.multipleFiles = [];
+  
+      for (var i = 0; i < this.selectedfiles.length; i++) {
+        this.fileName = this.selectedfiles[i].name;
+        this.fileSize = this.selectedfiles[i].size;
+        this.fileType = this.selectedfiles[i].type;
+        totalSize += this.fileSize;
+  
+        if (totalSize > 25 * 1024 * 1024) { // 25MB in bytes
+          this.fileErrorMsg = 'Total file size exceeds 25MB';
+          //this.toastrService.error('Total file size exceeds 25MB', 'File Upload Error');
+          return;
+        }
+  
+        this.multipleFiles.push(this.selectedfiles[i]);
+      }
+  
+      if (this.multipleFiles.length > 0) {
+      }
+      // console.log(this.multipleFiles, 'hshshsh')
+  
+      // console.log(event.target.files,this.multipleFiles, "selectedFiles")
+    }
+    uploadManualFiles() {
+
+      let formData = new FormData();
+      formData.append("programId", this.programIds);
+      if (this.selectedfiles.length == 1) {
+        formData.append("file", this.selectUploadedFiles);
+      }
+      else {
+        //formData.set("file", this.multipleFiles);
+        this.multipleFiles.forEach((file: any) => {
+          formData.append("file", file);
+        })
+      }
+  
+      this._commonService.add(APIS.participantdata.uploadParticipant, formData).pipe().subscribe(
+        {
+          next: (res: any) => {
+            console.log(res, "res")
+            this.toastrService.success(res, "Participant Data!");
+            this.getData()
+            this.selectedfiles=[]
+            // console.log(data)
+          },
+          error: (err) => {
+            console.log(err, "error")
+            this.toastrService.success('Participant Data Uploaded successfully', "Participant Data!");
+            this.getData()
+            this.selectedfiles=[]
+          }
+        })
     }
   }
 

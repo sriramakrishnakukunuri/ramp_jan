@@ -51,6 +51,7 @@ import { BulkExpenditureComponent } from './PIA/bulk-expenditure/bulk-expenditur
 import { ProgramSummaryComponent } from './PIA/program-summary/program-summary.component';
 import { AddProgramSessionsComponent } from './PIA/add-program-sessions/add-program-sessions.component';
 import { NgxDocViewerModule } from 'ngx-doc-viewer';
+import { ViewProgramAgenciesComponent } from './PIA/view-program-agencies/view-program-agencies.component';
 
 @NgModule({
     imports: [
@@ -107,6 +108,7 @@ import { NgxDocViewerModule } from 'ngx-doc-viewer';
            BulkExpenditureComponent,
            ProgramSummaryComponent,
            AddProgramSessionsComponent,
+           ViewProgramAgenciesComponent,
     ],
     exports:[MaterialModule],
     providers: [
