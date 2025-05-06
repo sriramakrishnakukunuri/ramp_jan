@@ -434,9 +434,9 @@ export class ProgramExpenditureComponent implements OnInit {
     this.uploadedFiles=[]
     this.getExpenditureData=[]
     this.getExpenditureDataBoth=[]
-    if(this.f2['programId'].value){
+    if(this.f2['programId'].value){ 
       this._commonService
-        .getDataByUrl(APIS.programExpenditure.getExpenditure+'?programId='+this.f2['programId'].value+'&expenditureType='+'PRE').subscribe({
+        .getDataByUrl(APIS.programExpenditure.getExpenditure+'?programId='+this.f2['programId'].value+'&expenditureType='+'PRE&agencyId='+this.agencyId).subscribe({
           next: (data: any) => {
            if(data?.data){
             this.getExpenditureData=data?.data
@@ -462,7 +462,7 @@ export class ProgramExpenditureComponent implements OnInit {
   }
   getPost(){
     this._commonService
-        .getDataByUrl(APIS.programExpenditure.getExpenditure+'?programId='+this.f2['programId'].value+'&expenditureType='+'POST').subscribe({
+        .getDataByUrl(APIS.programExpenditure.getExpenditure+'?programId='+this.f2['programId'].value+'&expenditureType='+'POST'+'&agencyId='+this.agencyId).subscribe({
           next: (data: any) => {
            if(data?.data){
             this.getExpenditureData=data?.data

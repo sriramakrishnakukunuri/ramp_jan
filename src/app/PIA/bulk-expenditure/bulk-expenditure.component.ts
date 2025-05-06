@@ -201,7 +201,7 @@ export class BulkExpenditureComponent implements OnInit {
       this.uploadedFiles=[]
       this.BulkExpenditureForm.reset()
       this._commonService
-          .getDataByUrl(APIS.programExpenditure.getBulkExpenditure).subscribe({
+          .getDataByUrl(APIS.programExpenditure.getBulkExpenditureByAgency+this.agencyId).subscribe({
             next: (data: any) => {
               if(data?.data){
                 this.getBulkExpenditureData=data?.data
