@@ -15,7 +15,9 @@ export class GlobalDashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.url = this.sanitizer
-    .bypassSecurityTrustResourceUrl('https://lookerstudio.google.com/embed/reporting/e52e2113-3d3a-4941-a7f3-57d9971064c4/page/rwZEF?cache=' + this.cacheBuster);
+    .bypassSecurityTrustResourceUrl('https://lookerstudio.google.com/reporting/fcab1a0e-f906-4487-85fa-8097553cbc4b?cache=' + this.cacheBuster);
   }
+  //https://lookerstudio.google.com/embed/reporting/e52e2113-3d3a-4941-a7f3-57d9971064c4/page/rwZEF
+  //https://lookerstudio.google.com/reporting/fcab1a0e-f906-4487-85fa-8097553cbc4b
 
 }
