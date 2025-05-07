@@ -152,7 +152,7 @@ export class AddProgramSessionsComponent implements OnInit {
       endTime: ['', Validators.required],
       sessionTypeName: ['', Validators.required],
       sessionTypeMethodology: ['', Validators.required],
-      sessionDetails: ['ABC'],
+      sessionDetails: [''],
       resourceId: ['', Validators.required],
       uploaFiles: [null],
       sessionStreamingUrl: [''],
@@ -387,7 +387,8 @@ export class AddProgramSessionsComponent implements OnInit {
       uploaFiles: null,
       sessionStreamingUrl: session.sessionStreamingUrl,
       videoUrls: session.videoUrls,
-      sessionId: session.sessionId
+      sessionId: session.sessionId,
+      sessionDetails: session.sessionDetails,
     });
     
     const editSessionModal = document.getElementById('sessionFormModal');
