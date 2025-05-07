@@ -88,7 +88,7 @@ export class ProgramExpenditureComponent implements OnInit {
          if(data?.data){
            this.programData = data?.data;
           //  this.getSubActivitiesList(this.programData.activityId)
-           this.programCreationMain.get('activityId')?.setValue(this.programData?.activityId)
+           this.programCreationMain.get('activityId')?.setValue(Number(this.programData?.activityId))
            
          
          }
@@ -120,7 +120,7 @@ export class ProgramExpenditureComponent implements OnInit {
       next: (data: any) => {
         this.subActivitiesList = data.data.subActivities;
         if(this.programData?.subActivityId){
-          this.programCreationMain.get('subActivityId')?.setValue(this.programData?.subActivityId)
+          this.programCreationMain.get('subActivityId')?.setValue(Number(this.programData?.subActivityId))
         }
       },
       error: (err: any) => {
@@ -363,7 +363,8 @@ export class ProgramExpenditureComponent implements OnInit {
   }
   //save pre and post expenditure 
   ExpenditureSubmit(){
-    let payload={...this.programCreationMain.value ,programId:Number(this.programCreationMain.value.programId),...this.PrePostExpenditureForm.value,headOfExpenseId:Number(this.PrePostExpenditureForm.value.headOfExpenseId),agencyId:this.agencyId}
+    let payload={...this.programCreationMain.value ,activityId:Number(this.programCreationMain.value.activityId),
+      subActivityId:Number(this.programCreationMain.value.subActivityId),programId:Number(this.programCreationMain.value.programId),...this.PrePostExpenditureForm.value,headOfExpenseId:Number(this.PrePostExpenditureForm.value.headOfExpenseId),agencyId:this.agencyId}
     console.log(payload)
     const formData = new FormData();
       formData.append("request", JSON.stringify(payload));
@@ -485,10 +486,10 @@ export class ProgramExpenditureComponent implements OnInit {
   // save Bulk expenditure
   BulkExpenditureSubmit(){
     let payload1:any={
-      "activityId": this.programCreationMain.value?.activityId,
-      "subActivityId": this.programCreationMain.value?.subActivityId,
-      "programId": this.programCreationMain.value?.programId,
-      "agencyId": this.agencyId,
+      "activityId": Number(this.programCreationMain.value?.activityId),
+      "subActivityId": Number(this.programCreationMain.value?.subActivityId),
+      "programId": Number(this.programCreationMain.value?.programId),
+      "agencyId": Number(this.agencyId),
       // "expenditureType": "PRE",
       "headOfExpenseId": this.BulkExpenditureForm.value?.headOfExpenseId,
       "bulkExpenditureId": this.BulkExpenditureForm.value?.bulkExpenditureId,

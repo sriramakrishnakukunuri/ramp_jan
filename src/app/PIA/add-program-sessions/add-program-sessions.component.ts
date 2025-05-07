@@ -282,6 +282,15 @@ export class AddProgramSessionsComponent implements OnInit {
   agencyProgramList: any;
   programId: any = ''
   getProgramsByAgency() {
+    // this._commonService.getDataByUrl(`${APIS.programCreation.getProgramsListBySession + this.agencyId}?status=Program Scheduled`).subscribe({
+    //   next: (res: any) => {
+    //     this.agencyProgramList = res?.data
+    //   },
+    //   error: (err) => {
+    //     new Error(err);
+    //   }
+    // })
+
     this._commonService.getDataByUrl(`${APIS.programCreation.getProgramsListByAgency + this.agencyId}`).subscribe({
       next: (res: any) => {
         this.agencyProgramList = res?.data
@@ -577,4 +586,35 @@ export class AddProgramSessionsComponent implements OnInit {
       modalInstance.hide();
     }
   }  
+
+  closeConfirmSession() {
+    const editSessionModal = document.getElementById('exampleModalDeleteConfirm');
+    if (editSessionModal) {
+      const modalInstance = bootstrap.Modal.getInstance(editSessionModal);
+      modalInstance.hide();
+    }
+  }
+
+  sessionSubmissionFinal() {
+    let data = {}
+    this._commonService.add(`${APIS.programCreation.updateSessionByStatus}${this.agencyId}?status=Sessions Created`, data).subscribe({
+      next: (data: any) => {
+        console.log('Response from API:', data);
+        if (data.includes('Deleted Session Successfully')) {
+          this.toastrService.success('Session Deleted Successfully', "");
+        } else {        
+          this.toastrService.error("Something unexpected happened!!");          
+        }
+        this.closeModalDelete();
+        this.deleteSessionId = ''
+        this.getProgramDetailsById(this.programId);
+      },
+      error: (err: any) => {
+        this.closeModalDelete();
+        this.deleteSessionId = ''
+        this.toastrService.error("Something unexpected happened!!");
+        new Error(err);
+      },
+    });    
+  }
 }

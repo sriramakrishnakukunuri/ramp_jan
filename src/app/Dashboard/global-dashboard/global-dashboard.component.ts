@@ -14,9 +14,11 @@ export class GlobalDashboardComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    console.log('https://lookerstudio.google.com/embed/reporting/fcab1a0e-f906-4487-85fa-8097553cbc4b/page/p_iqwy179urd')
     this.url = this.sanitizer
-    .bypassSecurityTrustResourceUrl('https://lookerstudio.google.com/reporting/fcab1a0e-f906-4487-85fa-8097553cbc4b?cache=' + this.cacheBuster);
+    .bypassSecurityTrustResourceUrl('https://lookerstudio.google.com/embed/reporting/fcab1a0e-f906-4487-85fa-8097553cbc4b/page/p_iqwy179urd');
   }
+  
   //https://lookerstudio.google.com/embed/reporting/e52e2113-3d3a-4941-a7f3-57d9971064c4/page/rwZEF
   //https://lookerstudio.google.com/reporting/fcab1a0e-f906-4487-85fa-8097553cbc4b
 
