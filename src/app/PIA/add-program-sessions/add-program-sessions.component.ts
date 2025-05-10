@@ -282,7 +282,7 @@ export class AddProgramSessionsComponent implements OnInit {
   agencyProgramList: any;
   programId: any = ''
   getProgramsByAgency() {
-    this._commonService.getDataByUrl(`${APIS.programCreation.getProgramsListBySession + this.agencyId}/status?status=Program Scheduled`).subscribe({
+    this._commonService.getDataByUrl(`${APIS.programCreation.getProgramsListBySession + this.agencyId}?status=Program Scheduled`).subscribe({
       next: (res: any) => {
         this.agencyProgramList = res?.data
       },
@@ -598,12 +598,13 @@ export class AddProgramSessionsComponent implements OnInit {
 
   sessionSubmissionFinal() {
     let data = {}
-    this._commonService.add(`${APIS.programCreation.updateSessionByStatus}${this.agencyId}/status?status=Sessions Created`, data).subscribe({
+    this._commonService.add(`${APIS.programCreation.updateSessionByStatus}${this.programId}?status=Sessions Created`, data).subscribe({
       next: (data: any) => {
         console.log('Response from API:', data);
         this.toastrService.success('Session Details Submitted Successfully', "");
         this.closeConfirmSession();
-        this.getProgramDetailsById(this.programId);
+        this.ProgramData = ''
+        this.getProgramsByAgency()
       },
       error: (err: any) => {
         this.closeConfirmSession();        

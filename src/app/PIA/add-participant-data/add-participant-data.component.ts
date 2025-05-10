@@ -123,7 +123,9 @@ export class AddParticipantDataComponent implements OnInit {
 
   agencyProgramList: any;
   getProgramsByAgency() {
-    this._commonService.getDataByUrl(`${APIS.programCreation.getProgramsListByAgency+'/'+this.loginsessionDetails.agencyId}`).subscribe({
+    //`${APIS.programCreation.getProgramsListByAgency+'/'+this.loginsessionDetails.agencyId}`
+
+    this._commonService.getDataByUrl(`${APIS.programCreation.getProgramsListBySession + this.loginsessionDetails.agencyId}?status=Sessions Created`).subscribe({
       next: (res: any) => {
         this.agencyProgramList = res?.data
       },

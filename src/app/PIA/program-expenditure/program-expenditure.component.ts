@@ -712,4 +712,31 @@ export class ProgramExpenditureComponent implements OnInit {
     UpdateExpenditure(item:any){
 
     }
+
+    sessionSubmissionFinal() {
+              let data = {}
+              this._commonService.add(`${APIS.programCreation.updateSessionByStatus}${this.programCreationMain.value.programId}?status=Program Expenditure Updated`, data).subscribe({
+                next: (data: any) => {
+                  console.log('Response from API:', data);
+                  this.toastrService.success('Program Expenditure Details Submitted Successfully', "");
+                  this.closeConfirmSession();
+                  this.getExpenditureDataBoth = ''
+                  this.programCreationMain.reset()
+                  this.onAgencyChange()
+                },
+                error: (err: any) => {
+                  this.closeConfirmSession();        
+                  this.toastrService.error("Something unexpected happened!!");
+                  new Error(err);
+                },
+              });    
+              }
+          
+              closeConfirmSession() {
+              const editSessionModal = document.getElementById('exampleModalDeleteConfirm');
+              if (editSessionModal) {
+                const modalInstance = bootstrap.Modal.getInstance(editSessionModal);
+                modalInstance.hide();
+              }
+            }
 }

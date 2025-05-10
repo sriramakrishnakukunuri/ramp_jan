@@ -66,12 +66,13 @@
                 <div class="card mb-4" >
                     <div class="card-header bg-transparent">
                         <div class="row align-items-center">
-                            <div class="col-8 col-sm-8 col-md-9 col-lg-10">
+                            <div class="col-8 col-sm-8 col-md-9 col-lg-8">
                                 <h6 class="fw-600 mb-2 mb-sm-3 mb-md-0"> Event Expenditure</h6>
                             </div>
-                            <div class="col-4 col-sm-4 col-md-3 col-lg-2">
+                            <div class="col-4 col-sm-4 col-md-3 col-lg-4">
                                 <div class="text-end">
                                     <!-- data-bs-target]="#bulkModal" -->
+                                    <button type="button" [ngClass]="{'disabled': programCreationMain?.value?.programId == ''}" class="btn btn-lime-green" data-bs-toggle="modal" data-bs-target="#exampleModalDeleteConfirm">Final Submission</button> &nbsp;&nbsp;
                                     <button type="button" class="btn btn-sm btn-lime-green" (click)="OpenModal('add')"><span class="bi bi-plus-lg" ></span> Add</button>
                                 </div>
                             </div>
@@ -279,7 +280,7 @@
                         <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                             <div class="form-floating mb-3">
                                 <input type="text" class="form-control" id="bank" formControlName="bankName"  name="bankName" placeholder="bank">
-                                <label for="bank">Bank<span class="c-red"> *</span></label>
+                                <label for="bank">Bank</label>
                             </div>
                             <div *ngIf="fPre['bankName'].touched && !fPre['bankName'].valid" class="error"
                             style="color: red;">Bank is required</div>
@@ -287,7 +288,7 @@
                         <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                             <div class="form-floating mb-3">
                                 <input type="text" class="form-control" id="ifsc" formControlName="ifscCode"  name="ifscCode" placeholder="ifsc">
-                                <label for="ifsc">IFSC Code<span class="c-red"> *</span></label>
+                                <label for="ifsc">IFSC Code</label>
                             </div>
                             <div *ngIf="fPre['ifscCode'].touched && !fPre['ifscCode'].valid && !fPre['ifscCode']?.errors?.['pattern']" class="error"
                             style="color: red;">IFSC Code is required</div>
@@ -500,4 +501,23 @@ aria-hidden="true">
         </div>
     </div>
 </div>
+</div>
+
+<div class="modal fade" id="exampleModalDeleteConfirm" tabindex="-1" role="dialog" aria-labelledby="exampleModalDeleteConfirmLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalDeleteConfirmLabel">Final Program Expenditure Submission</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure want to submit Program Expenditure Details in selected program??
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-lime-green" (click)="sessionSubmissionFinal()">Confirm</button>
+            </div>
+        </div>
+    </div>
 </div>

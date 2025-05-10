@@ -82,7 +82,7 @@ export class PasswordSettingsComponent implements OnInit {
       "newPassword": this.changePasswordForm.value?.newPassword
     }
 
-    this._commonService.add(APIS.masterList.changePassword, payload).subscribe({
+    this._commonService.updatedata(APIS.masterList.changePassword, payload).subscribe({
       next: (data: any) => {
         this.toastrService.success('Change Password Updated Successfully', "Change Password Success!");
         this.changePasswordForm.reset();

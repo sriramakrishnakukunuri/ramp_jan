@@ -71,7 +71,7 @@ export class UpdateProgramExecutionComponent implements OnInit {
   agencyProgramList: any;
     programId: any = ''
     getProgramsByAgency() {
-      this._commonService.getDataByUrl(`${APIS.programCreation.getProgramsListByAgencyStatus+'/'+this.agencyId+'?status=Sessions Created'}`).subscribe({
+      this._commonService.getDataByUrl(`${APIS.programCreation.getProgramsListByAgencyStatus+'/'+this.agencyId+'?status=Attendance Marked'}`).subscribe({
         next: (res: any) => {
           this.agencyProgramList = res?.data
         },
@@ -458,4 +458,31 @@ export class UpdateProgramExecutionComponent implements OnInit {
     // }    
     return ''
   }
+
+  sessionSubmissionFinal() {
+          let data = {}
+          this._commonService.add(`${APIS.programCreation.updateSessionByStatus}${this.programId}?status=Program Execution Updated`, data).subscribe({
+            next: (data: any) => {
+              console.log('Response from API:', data);
+              this.toastrService.success('Program Execution Details Submitted Successfully', "");
+              this.closeConfirmSession();
+              this.ProgramData = ''
+              this.programId = ''
+              this.getProgramsByAgency()
+            },
+            error: (err: any) => {
+              this.closeConfirmSession();        
+              this.toastrService.error("Something unexpected happened!!");
+              new Error(err);
+            },
+          });    
+          }
+      
+          closeConfirmSession() {
+          const editSessionModal = document.getElementById('exampleModalDeleteConfirm');
+          if (editSessionModal) {
+            const modalInstance = bootstrap.Modal.getInstance(editSessionModal);
+            modalInstance.hide();
+          }
+        }
 }

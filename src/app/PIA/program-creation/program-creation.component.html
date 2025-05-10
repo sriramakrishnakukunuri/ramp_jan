@@ -295,7 +295,7 @@
                             <div class=" mb-3">
                                 <label class="form-label fs-md fw-600">Mandal <span class="c-red"> *</span></label>
                                 <select class="form-select" id="District" formControlName="mandal" >
-                                  <option selected>Select Mandal</option>
+                                  <option value="">Select Mandal</option>
                                   <option *ngFor="let list of MandalList" value="{{list?.mandalName}}">{{list?.mandalName}}</option>
                                   <!-- <option value="1">Mandal 1</option> -->
                                 </select>
