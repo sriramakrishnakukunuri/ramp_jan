@@ -34,7 +34,7 @@ export class RawMaterialsParticipantsComponent implements OnInit,AfterViewInit {
   
       agencyProgramList: any;
       getProgramsByAgency() {
-        this._commonService.getDataByUrl(`${APIS.programCreation.getProgramsListByAgency+'/'+(this.loginsessionDetails.agencyId?this.loginsessionDetails.agencyId:this.agencyId)}`).subscribe({
+        this._commonService.getDataByUrl(`${APIS.programCreation.getProgramsListByAgencyStatus+'/'+(this.loginsessionDetails.agencyId?this.loginsessionDetails.agencyId:this.agencyId)+'?status=Participants Added'}`).subscribe({
           next: (res: any) => {
             this.agencyProgramList = res?.data
             this.programIds = this.agencyProgramList[0].programId

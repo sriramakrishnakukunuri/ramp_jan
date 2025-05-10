@@ -15,6 +15,7 @@ export const APIS = {
         addResource: API_BASE_URL + '/resource/save',
         getProgramsList: API_BASE_URL + '/programs',
         getProgramsListByAgency: API_BASE_URL + '/agency/programs/dropdown/',
+        getProgramsListByAgencyStatus: API_BASE_URL + '/programs/status',
         getProgramsListByAgencyDetails: API_BASE_URL + '/agency/programs/',
         getSingleProgramsList: API_BASE_URL + '/program/',
         getActivityList: API_BASE_URL + '/activities',
@@ -109,5 +110,12 @@ export const APIS = {
     programExecutions:{
         saveMediaCoverage:API_BASE_URL +`/program/execution/media-coverage`,
         saveProgramExecution:API_BASE_URL +`/program/execution/images`,
+    },
+    programMonitoring:{
+        getProgramMonitoringById:API_BASE_URL +`/program/details/for/feedback/`,
+        getProgramMonitoringByIdUpdated:API_BASE_URL +`/program/feedback/`,
+        // getProgramMonitoringById:API_BASE_URL +`/program/monitoring/`,
+        saveProgramMonitoring:API_BASE_URL +`/program/feedback/save`,
+        updateProgramMonitoring:API_BASE_URL +`/program/feedback/update/`,
     }
 }

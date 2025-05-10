@@ -1,0 +1,1412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Program Monitoring</title>
+    <link href="assets/img/favicon.ico" rel="icon">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+    <!-- begin:: header -->
+    <header>
+        <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-white">
+            <div class="container-fluid">
+                <div class="d-flex align-items-center justify-content-between w-100">
+                    <div>
+                        <a class="navbar-brand" href="#">
+                            <img src="assets/img/logo.png" alt="Logo" class="img-fluid">
+                        </a>
+                    </div>    
+                    <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasNavbar2" aria-labelledby="offcanvasNavbar2Label">
+                        <div class="offcanvas-header">
+                          <h5 class="offcanvas-title" id="offcanvasNavbar2Label">RAMP</h5>
+                          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                        </div>
+                        <div class="offcanvas-body">
+                            <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link active" href="#" id="homeDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <span>Program Creation</span> <span class="bi bi-chevron-down"></span>
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="homeDropdown">
+                                    <li><a class="dropdown-item active" href="#">Add Program Creation</a></li>
+                                    <li><a class="dropdown-item" href="#">View Saved</a></li>
+                                    <li><a class="dropdown-item" href="#">View Approved</a></li>
+                                    </ul>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link" href="#" id="dropdown2" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Program <span class="bi bi-chevron-down"></span>
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdown2">
+                                    <li><a class="dropdown-item" href="#">Add New</a></li>
+                                    <li><a class="dropdown-item" href="#">Add Participate Data</a></li>
+                                    <li><a class="dropdown-item" href="#">View Completed</a></li>
+                                    </ul>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link" href="#" id="dropdown2" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Updates <span class="bi bi-chevron-down"></span>
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdown2">
+                                    <li><a class="dropdown-item" href="#">Capture Outcome</a></li>
+                                    <li><a class="dropdown-item" href="#">Organisation Updates</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>   
+                    <div class="d-flex align-items-center justify-content-between">
+                        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar2" aria-controls="offcanvasNavbar2" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <ul class="navbar-nav me-auto ms-2">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link" href="#" id="homeDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span class="bi bi-person-circle fs-3"></span>
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="homeDropdown">
+                                <li><a class="dropdown-item" href="#"><span class="bi bi-person fs-5 me-2"></span> My Profile</a></li>
+                                <li><a class="dropdown-item" href="#"><span class="bi bi-key fs-5 me-2"></span> Change Password</a></li>
+                                <li><a class="dropdown-item" href="#"><span class="bi bi-box-arrow-right fs-5 me-2"></span> Logout</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <!-- end:: header -->
+
+    <main class="mt-4">
+        <section>
+            <div class="container-fluid">
+                <div class="card mb-3">
+                    <div class="card-header bg-transparent">
+                        <div class="row align-items-center">
+                            <div class="col-12 col-sm-6 col-md-7 col-lg-9">
+                                <h6 class="fw-600 mb-2 mb-sm-0">Program Monitoring</h6>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-5 col-lg-3">
+                                <select class="form-select form-select-sm">
+                                  <option value="#">Select Program</option>
+                                  <option value="1">Program 1</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="mt-3">
+                            <div class="progress progress-line px-1" style="height: 3px;">
+                                <div class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            <div class="step-container d-flex justify-content-between">
+                                <div class="step-circle"><span class="bi bi-info"></span></div>
+                                <div class="step-circle"><span class="bi bi-person"></span></div>
+                                <div class="step-circle"><span class="bi bi-card-checklist"></span></div>
+                                <div class="step-circle"><span class="bi bi-file-earmark-text"></span></div>
+                                <div class="step-circle"><span class="bi bi-gear"></span></div>
+                                <div class="step-circle"><span class="bi bi-truck"></span></div>
+                                <div class="step-circle"><span class="bi bi-person-gear"></span></div>
+                                <div class="step-circle"><span class="bi bi-file-earmark-check"></span></div>
+                                <div class="step-circle"><span class="bi bi-graph-up-arrow"></span></div>
+                                <div class="step-circle"><span class="bi bi-star"></span></div>
+                                <div class="step-circle"><span class="bi bi-pencil"></span></div>
+                            </div>
+                            <div class="step-container step-label step-content justify-content-between d-none">
+                                <div class="fs-md fw-600">Basic Information</div>
+                                <div class="fs-md fw-600">Audience Profile</div>
+                                <div class="fs-md fw-600">Pre-Event Preparation</div>
+                                <div class="fs-md fw-600">Program Delivery Details</div>
+                                <div class="fs-md fw-600">Program Execution</div>
+                                <div class="fs-md fw-600">Logistics & Facilities Evaluation</div>
+                                <div class="fs-md fw-600">Post-Training Assessment</div>
+                                <div class="fs-md fw-600">Document Checklist</div>
+                                <div class="fs-md fw-600">Observations, Challenges, Best Practices</div>
+                                <div class="fs-md fw-600">Overall Program Rating (by Monitor)</div>
+                                <div class="fs-md fw-600">Additional Remarks / Recommendations</div>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-12">  
+                              <form id="multi-step-form">
+                                <div class="step step-1">
+                                  <!-- Step 1 form fields here -->
+                                  <div class="card border rounded-2 shadow-none">
+                                    <div class="card-header bg-lime-green rounded-top text-white">
+                                        <h6 class="mb-0">Basic Information</h6>
+                                    </div>
+                                    <div class="card-body p-0">
+                                      <div class="p-3">
+                                        <div class="row">
+                                          <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                                            <div class="mb-3">
+                                              <label class="fs-md fw-600 mb-1 d-block">State</label>
+                                              <label class="fs-md">Telangana</label>
+                                            </div>
+                                          </div>
+                                          <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                                            <div class="mb-3">
+                                              <label class="fs-md fw-600 mb-1 d-block">District</label>
+                                              <label class="fs-md">Ranga Reddy</label>
+                                            </div>
+                                          </div>
+                                          <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                                            <div class="mb-3">
+                                              <label class="fs-md fw-600 mb-1 d-block">Date</label>
+                                              <label class="fs-md">04-05-2025</label>
+                                            </div>
+                                          </div>
+                                          <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                                            <div class="mb-3">
+                                              <label class="fs-md fw-600 mb-1 d-block">Agency Name</label>
+                                              <label class="fs-md">ABC Pvt Ltd</label>
+                                            </div>
+                                          </div>
+                                          <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                                            <div class="mb-3">
+                                              <label class="fs-md fw-600 mb-1 d-block">Program Type</label>
+                                              <label class="fs-md">Awareness</label>
+                                            </div>
+                                          </div>
+                                          <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                                            <div class="mb-3">
+                                              <label class="fs-md fw-600 mb-1 d-block">Program Name</label>
+                                              <label class="fs-md">Program Name 1</label>
+                                            </div>
+                                          </div>
+                                          <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                                            <div class="mb-3">
+                                              <label class="fs-md fw-600 mb-1 d-block">Venue Name</label>
+                                              <label class="fs-md">Venue Name 1</label>
+                                            </div>
+                                          </div>
+                                          <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                                            <div class="mb-3">
+                                              <label class="fs-md fw-600 mb-1 d-block">Hosting Agency</label>
+                                              <label class="fs-md">Hosting Agency 1</label>
+                                            </div>
+                                          </div>
+                                          <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                                            <div class="mb-3">
+                                              <label class="fs-md fw-600 mb-1 d-block">Name of the SPOC</label>
+                                              <label class="fs-md">SPOC 1</label>
+                                            </div>
+                                          </div>
+                                          <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                                            <div class="mb-3">
+                                              <label class="fs-md fw-600 mb-1 d-block">SPOC Contact Number</label>
+                                              <label class="fs-md">9876543210</label>
+                                            </div>
+                                          </div>
+                                          <!-- <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                                            <div class="mb-3">
+                                              <label class="fs-md fw-600 mb-1 d-block">SPOC Email Id</label>
+                                              <label class="fs-md">spoc@gmail.com</label>
+                                            </div>
+                                          </div> -->
+                                          <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                                            <div class="mb-3">
+                                              <label class="fs-md fw-600 mb-1 d-block">Time In</label>
+                                              <label class="fs-md">11 AM</label>
+                                            </div>
+                                          </div>
+                                          <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                                            <div class="mb-3">
+                                              <label class="fs-md fw-600 mb-1 d-block">Time Out</label>
+                                              <label class="fs-md">1 PM</label>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      
+                                      <div class="border-top text-end px-3 py-2">
+                                        <button type="button" class="btn btn-lime-green next-step">Save & Next <span class="bi bi-arrow-right ms-2"></span></button>
+                                      </div>
+                                    </div>
+                                  </div>                      
+                                </div>                      
+      
+                                <!-- step 2 -->
+                                <div class="step step-2">
+                                  <div class="card border rounded-2 shadow-none mb-3">
+                                    <div class="card-header bg-lime-green rounded-top text-white">
+                                        <h6 class="mb-0">Audience Profile</h6>
+                                    </div>
+                                    <div class="card-body p-0">
+                                      <div class="p-3">
+                                        <div class="mb-3">
+                                          <h6 class="fs-md">Target Group</h6>
+                                          <div class="row">
+                                            <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                                              <div class="form-floating mb-3 mb-md-3 mb-lg-0">
+                                                <input type="text" class="form-control" id="male" placeholder="">
+                                                <label for="male">Male</label>
+                                              </div>
+                                            </div>
+                                            <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                                              <div class="form-floating mb-3 mb-md-3 mb-lg-0">
+                                                <input type="text" class="form-control" id="female" placeholder="">
+                                                <label for="female">Female</label>
+                                              </div>
+                                            </div>
+                                            <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                                              <div class="form-floating mb-3 mb-md-3 mb-lg-0">
+                                                <input type="text" class="form-control" id="transgender" placeholder="">
+                                                <label for="transgender">Transgender</label>
+                                              </div>
+                                            </div>
+                                            <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                                              <div class="form-floating mb-3 mb-md-0 mb-lg-0">
+                                                <input type="text" class="form-control" id="totalGender" placeholder="">
+                                                <label for="totalGender">Total</label>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <div class="mb-3">
+                                          <h6 class="fs-md">Participants From</h6>
+                                          <div class="row">
+                                            <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                                              <div class="form-floating mb-3 mb-md-3 mb-lg-3">
+                                                <input type="text" class="form-control" id="dic" placeholder="">
+                                                <label for="dic">DIC</label>
+                                              </div>
+                                            </div>
+                                            <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                                              <div class="form-floating mb-3 mb-md-3 mb-lg-3">
+                                                <input type="text" class="form-control" id="shg" placeholder="">
+                                                <label for="shg">SHG</label>
+                                              </div>
+                                            </div>
+                                            <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                                              <div class="form-floating mb-3 mb-md-3 mb-lg-3">
+                                                <input type="text" class="form-control" id="msme" placeholder="">
+                                                <label for="msme">MSMEs</label>
+                                              </div>
+                                            </div>
+                                            <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                                              <div class="form-floating mb-3 mb-md-3 mb-lg-3">
+                                                <input type="text" class="form-control" id="ias" placeholder="">
+                                                <label for="ias">IAs</label>
+                                              </div>
+                                            </div>
+                                            <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                                              <div class="form-floating mb-3 mb-md-0 mb-lg-0">
+                                                <input type="text" class="form-control" id="startup" placeholder="">
+                                                <label for="startup">Startups</label>
+                                              </div>
+                                            </div>
+                                            <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                                              <div class="form-floating mb-3 mb-md-0 mb-lg-0">
+                                                <input type="text" class="form-control" id="startup" placeholder="">
+                                                <label for="startup">Others</label>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <div class="mb-3">
+                                          <h6 class="fs-md">Category Representation </h6>
+                                          <div class="row">
+                                            <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                                              <div class="form-floating mb-3 mb-md-3 mb-lg-3">
+                                                <input type="text" class="form-control" id="sc" placeholder="">
+                                                <label for="sc">SC</label>
+                                              </div>
+                                            </div>
+                                            <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                                              <div class="form-floating mb-3 mb-md-3 mb-lg-3">
+                                                <input type="text" class="form-control" id="st" placeholder="">
+                                                <label for="st">ST</label>
+                                              </div>
+                                            </div>
+                                            <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                                              <div class="form-floating mb-3 mb-md-3 mb-lg-3">
+                                                <input type="text" class="form-control" id="bc" placeholder="">
+                                                <label for="bc">BC</label>
+                                              </div>
+                                            </div>
+                                            <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                                              <div class="form-floating mb-3 mb-md-0 mb-lg-0">
+                                                <input type="text" class="form-control" id="oc" placeholder="">
+                                                <label for="oc">OC</label>
+                                              </div>
+                                            </div>                                            
+                                            <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                                              <div class="form-floating mb-3 mb-md-3 mb-lg-3">
+                                                <input type="text" class="form-control" id="minority" placeholder="">
+                                                <label for="minority">Minority</label>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div class="border-top px-3 py-2 d-flex align-items-center justify-content-between">
+                                        <button type="button" class="btn btn-secondary prev-step"><span class="bi bi-arrow-left me-2"></span> Previous</button>
+                                        <button type="button" class="btn btn-lime-green next-step">Save & Next <span class="bi bi-arrow-right ms-2"></span></button>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+      
+                                <!-- step 3 -->
+                                <div class="step step-3">
+                                  <div class="card shadow-none rounded-2 border mb-3">
+                                    <div class="card-header bg-lime-green rounded-top text-white">
+                                        <h6 class="mb-0">Pre-Event Preparation (Checklist)</h6>
+                                    </div>
+                                    <div class="card-body p-0">
+                                      <div class="p-3">
+                                        <div class="row">
+                                          <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">                                            
+                                            <div class="mb-3">
+                                              <label class="fs-md fw-600 mb-1">Program Agenda Circulated</label>
+                                              <div>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="inlineRadioOptions1" id="yes1" value="yes">
+                                                    <label class="form-check-label fs-md" for="yes1">Yes</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="inlineRadioOptions1" id="no1" value="No">
+                                                    <label class="form-check-label fs-md" for="no1">No</label>
+                                                </div>
+                                              </div>
+                                              <div class="mt-2">
+                                                <textarea class="form-control" rows="2" placeholder="Remarks"></textarea>
+                                              </div>
+                                            </div>
+                                          </div>
+                                          <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">   
+                                            <div class="mb-3">                                         
+                                              <label class="fs-md fw-600 mb-1">Speaker Confirmations</label>
+                                              <div>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="inlineRadioOptions2" id="yes2" value="yes">
+                                                    <label class="form-check-label fs-md" for="yes2">Yes</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="inlineRadioOptions2" id="no2" value="No">
+                                                    <label class="form-check-label fs-md" for="no2">No</label>
+                                                </div>
+                                              </div>
+                                              <div class="mt-2">
+                                                <textarea class="form-control" rows="2" placeholder="Remarks"></textarea>
+                                              </div>
+                                            </div>
+                                          </div>
+                                          <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">     
+                                            <div class="mb-3">                                       
+                                              <label class="fs-md fw-600 mb-1">Training Materials Printed</label>
+                                              <div>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="inlineRadioOptions3" id="yes3" value="yes">
+                                                    <label class="form-check-label fs-md" for="yes3">Yes</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="inlineRadioOptions3" id="no3" value="No">
+                                                    <label class="form-check-label fs-md" for="no3">No</label>
+                                                </div>
+                                              </div>
+                                              <div class="mt-2">
+                                                <textarea class="form-control" rows="2" placeholder="Remarks"></textarea>
+                                              </div>
+                                            </div>
+                                          </div>
+                                          <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">      
+                                            <div class="mb-3">                                      
+                                              <label class="fs-md fw-600 mb-1">Invitations Sent</label>
+                                              <div>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="inlineRadioOptions4" id="yes4" value="yes">
+                                                    <label class="form-check-label fs-md" for="yes4">Yes</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="inlineRadioOptions4" id="no4" value="No">
+                                                    <label class="form-check-label fs-md" for="no4">No</label>
+                                                </div>
+                                              </div>
+                                              <div class="mt-2">
+                                                <textarea class="form-control" rows="2" placeholder="Remarks"></textarea>
+                                              </div>
+                                            </div>
+                                          </div>
+                                          <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">  
+                                            <div class="mb-3">                                          
+                                              <label class="fs-md fw-600 mb-1">Seating Arrangements Ready</label>
+                                              <div>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="inlineRadioOptions5" id="yes5" value="yes">
+                                                    <label class="form-check-label fs-md" for="yes5">Yes</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="inlineRadioOptions5" id="no5" value="No">
+                                                    <label class="form-check-label fs-md" for="no5">No</label>
+                                                </div>
+                                              </div>
+                                              <div class="mt-2">
+                                                <textarea class="form-control" rows="2" placeholder="Remarks"></textarea>
+                                              </div>
+                                            </div>
+                                          </div>
+                                          <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3"> 
+                                            <div class="mb-3">                                           
+                                              <label class="fs-md fw-600 mb-1">AV/Projector Tested</label>
+                                              <div>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="inlineRadioOption65" id="yes6" value="yes">
+                                                    <label class="form-check-label fs-md" for="yes6">Yes</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="inlineRadioOptions6" id="no6" value="No">
+                                                    <label class="form-check-label fs-md" for="no6">No</label>
+                                                </div>
+                                              </div>
+                                              <div class="mt-2">
+                                                <textarea class="form-control" rows="2" placeholder="Remarks"></textarea>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+
+                                      <div class="border-top px-3 py-2 d-flex align-items-center justify-content-between">
+                                        <button type="button" class="btn btn-secondary prev-step"><span class="bi bi-arrow-left me-2"></span> Previous</button>
+                                        <button type="button" class="btn btn-lime-green next-step">Save & Next <span class="bi bi-arrow-right ms-2"></span></button>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>                 
+      
+                                <!-- step 4 -->
+                                <div class="step step-4">
+                                  <div class="card rounded-2 shadow-none border mb-3">
+                                    <div class="card-header bg-lime-green rounded-top text-white">
+                                      <div class="d-flex align-items-center justify-content-between">
+                                        <div>
+                                          <h6 class="mb-0">Program Delivery Details</h6>
+                                        </div>
+                                        <div>
+                                          <button type="button" data-bs-toggle="modal" data-bs-target="#addDelivery" class="btn btn-default btn-sm"><span class="bi bi-plus-lg"></span> Add</button>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="card-body p-0">
+                                      <div class="p-3">
+                                        <div class="table-responsive">
+                                          <table class="table table-bordered nowrap w-100">
+                                            <thead class="bg-lime-green text-white">
+                                                <tr>
+                                                    <th>S.No</th>
+                                                    <th>Speaker Name</th>
+                                                    <th>Topic Delivered</th>
+                                                    <th>Time Taken</th>
+                                                    <th>Audio Visual Aid used (Yes / No)</th>
+                                                    <th>Relevance (High / Medium / Low)</th>
+                                                    <th>Speaker Effectiveness (Rating 1 to 5)</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                              <tr>
+                                                <td>1</td>
+                                                <td>Speaker Name 1</td>
+                                                <td>Topic Delivered 1</td>
+                                                <td>11:00</td>
+                                                <td>Yes</td>
+                                                <td>Low</td>
+                                                <td>4</td>
+                                              </tr>
+                                              <tr>
+                                                <td>2</td>
+                                                <td>Speaker Name 1</td>
+                                                <td>Topic Delivered 1</td>
+                                                <td>11:00</td>
+                                                <td>Yes</td>
+                                                <td>Low</td>
+                                                <td>4</td>
+                                              </tr>
+                                              <tr>
+                                                <td>3</td>
+                                                <td>Speaker Name 1</td>
+                                                <td>Topic Delivered 1</td>
+                                                <td>11:00</td>
+                                                <td>Yes</td>
+                                                <td>Low</td>
+                                                <td>4</td>
+                                              </tr>
+                                              <tr>
+                                                <td>4</td>
+                                                <td>Speaker Name 1</td>
+                                                <td>Topic Delivered 1</td>
+                                                <td>11:00</td>
+                                                <td>Yes</td>
+                                                <td>Low</td>
+                                                <td>4</td>
+                                              </tr>
+                                            </tbody>
+                                          </table>
+                                        </div>
+                                      </div>
+
+                                      <div class="border-top px-3 py-2 d-flex align-items-center justify-content-between">
+                                        <button type="button" class="btn btn-secondary prev-step"><span class="bi bi-arrow-left me-2"></span> Previous</button>
+                                        <button type="button" class="btn btn-lime-green next-step">Save & Next <span class="bi bi-arrow-right ms-2"></span></button>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+      
+                                <!-- step 5 -->
+                                <div class="step step-5">
+                                  <div class="card shadow-none border rounded-2 mb-3">
+                                    <div class="card-header bg-lime-green rounded-top text-white">
+                                        <h6 class="mb-0">Program Execution </h6>
+                                    </div>
+                                    <div class="card-body p-0">
+                                      <div class="p-3">
+                                        <div class="row">
+                                          <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                                            <div class="form-floating mb-3 mb-md-3 mb-lg-3">
+                                              <input type="text" class="form-control" id="punctuality" placeholder="">
+                                              <label for="punctuality">Punctuality of Start / End Time</label>
+                                            </div>
+                                          </div>
+                                          <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                                            <div class="form-floating mb-3 mb-md-3 mb-lg-3">
+                                              <input type="text" class="form-control" id="session" placeholder="">
+                                              <label for="session">Session Continuity</label>
+                                            </div>
+                                          </div>
+                                          <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                                            <div class="form-floating mb-3 mb-md-3 mb-lg-3">
+                                              <input type="text" class="form-control" id="interest" placeholder="">
+                                              <label for="interest">Participant Interest Level</label>
+                                            </div>
+                                          </div>
+                                          <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                                            <div class="form-floating mb-3 mb-md-0 mb-lg-3">
+                                              <input type="text" class="form-control" id="questions" placeholder="">
+                                              <label for="questions">Questions asked by Participants</label>
+                                            </div>
+                                          </div>
+                                          <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                                            <div class="form-floating mb-3 mb-md-0 mb-lg-0">
+                                              <input type="text" class="form-control" id="overall" placeholder="">
+                                              <label for="overall">Overall Energy & Engagement </label>
+                                            </div>
+                                          </div>
+                                          <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                                            <div class="form-floating mb-3 mb-md-0 mb-lg-0">
+                                              <input type="text" class="form-control" id="unforeseen" placeholder="">
+                                              <label for="unforeseen">Unforeseen Issues</label>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+
+                                      <div class="border-top px-3 py-2 d-flex align-items-center justify-content-between">
+                                        <button type="button" class="btn btn-secondary prev-step"><span class="bi bi-arrow-left me-2"></span> Previous</button>
+                                        <button type="button" class="btn btn-lime-green next-step">Save & Next <span class="bi bi-arrow-right ms-2"></span></button>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+      
+                                <!-- step 6 -->
+                                <div class="step step-6">
+                                  <div class="card shadow-none border rounded-2 mb-3">
+                                    <div class="card-header bg-lime-green rounded-top text-white">
+                                        <h6 class="mb-0">Logistics & Facilities Evaluation</h6>
+                                    </div>
+                                    <div class="card-body p-0">
+                                      <div class="p-3">
+                                        <div class="row">
+                                          <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4">
+                                            <div class="mb-3 mb-md-3 mb-lg-3">
+                                              <h6>Venue Quality</h6>
+                                              <label class="fs-md fw-600 d-block mb-1">Rating (1-5)</label>
+                                              <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="venueQuality" id="venueQuality1" value="1">
+                                                <label class="form-check-label fs-md" for="venueQuality1">1</label>
+                                              </div>
+                                              <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="venueQuality" id="venueQuality2" value="2">
+                                                <label class="form-check-label fs-md" for="venueQuality2">2</label>
+                                              </div>
+                                              <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="venueQuality" id="venueQuality3" value="3">
+                                                <label class="form-check-label fs-md" for="venueQuality3">3</label>
+                                              </div>
+                                              <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="venueQuality" id="venueQuality4" value="4">
+                                                <label class="form-check-label fs-md" for="venueQuality4">4</label>
+                                              </div>
+                                              <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="venueQuality" id="venueQuality5" value="5">
+                                                <label class="form-check-label fs-md" for="venueQuality5">5</label>
+                                              </div>
+                                              <div class="mt-2">
+                                                <textarea class="form-control" rows="3" placeholder="Remarks"></textarea>
+                                              </div>
+                                            </div>
+                                          </div>
+                                          <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4">
+                                            <div class="mb-3 mb-md-3 mb-lg-3">
+                                              <h6>Venue Accessibility for the persons with Disabilities</h6>
+                                              <label class="fs-md fw-600 d-block mb-1">Rating (1-5)</label>
+                                              <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="venueAccess" id="venueAccess1" value="1">
+                                                <label class="form-check-label fs-md" for="venueAccess1">1</label>
+                                              </div>
+                                              <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="venueAccess" id="venueAccess2" value="2">
+                                                <label class="form-check-label fs-md" for="venueAccess2">2</label>
+                                              </div>
+                                              <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="venueAccess" id="venueAccess3" value="3">
+                                                <label class="form-check-label fs-md" for="venueAccess3">3</label>
+                                              </div>
+                                              <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="venueAccess" id="venueAccess4" value="4">
+                                                <label class="form-check-label fs-md" for="venueAccess4">4</label>
+                                              </div>
+                                              <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="venueAccess" id="venueAccess5" value="5">
+                                                <label class="form-check-label fs-md" for="venueAccess5">5</label>
+                                              </div>
+                                              <div class="mt-2">
+                                                <textarea class="form-control" rows="3" placeholder="Remarks"></textarea>
+                                              </div>
+                                            </div>
+                                          </div>
+                                          <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4">
+                                            <div class="mb-3 mb-md-3 mb-lg-3">
+                                              <h6>Food Quality (Lunch / Tea / Snacks)</h6>
+                                              <label class="fs-md fw-600 d-block mb-1">Rating (1-5)</label>
+                                              <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="food" id="food1" value="1">
+                                                <label class="form-check-label fs-md" for="food1">1</label>
+                                              </div>
+                                              <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="food" id="food2" value="2">
+                                                <label class="form-check-label fs-md" for="food2">2</label>
+                                              </div>
+                                              <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="food" id="food3" value="3">
+                                                <label class="form-check-label fs-md" for="food3">3</label>
+                                              </div>
+                                              <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="food" id="food4" value="4">
+                                                <label class="form-check-label fs-md" for="food4">4</label>
+                                              </div>
+                                              <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="food" id="food5" value="5">
+                                                <label class="form-check-label fs-md" for="food5">5</label>
+                                              </div>
+                                              <div class="mt-2">
+                                                <textarea class="form-control" rows="3" placeholder="Remarks"></textarea>
+                                              </div>
+                                            </div>
+                                          </div>
+                                          <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4">
+                                            <div class="mb-3 mb-md-3 mb-lg-3">
+                                              <h6>Drinking Water Facility</h6>
+                                              <label class="fs-md fw-600 d-block mb-1">Rating (1-5)</label>
+                                              <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="drinking" id="drinking1" value="1">
+                                                <label class="form-check-label fs-md" for="drinking1">1</label>
+                                              </div>
+                                              <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="drinking" id="drinking2" value="2">
+                                                <label class="form-check-label fs-md" for="drinking2">2</label>
+                                              </div>
+                                              <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="drinking" id="drinking3" value="3">
+                                                <label class="form-check-label fs-md" for="drinking3">3</label>
+                                              </div>
+                                              <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="drinking" id="drinking4" value="4">
+                                                <label class="form-check-label fs-md" for="drinking4">4</label>
+                                              </div>
+                                              <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="drinking" id="drinking5" value="5">
+                                                <label class="form-check-label fs-md" for="drinking5">5</label>
+                                              </div>
+                                              <div class="mt-2">
+                                                <textarea class="form-control" rows="3" placeholder="Remarks"></textarea>
+                                              </div>
+                                            </div>
+                                          </div>
+                                          <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4">
+                                            <div class="mb-3 mb-md-3 mb-lg-3">
+                                              <h6>Toilet Hygiene</h6>
+                                              <label class="fs-md fw-600 d-block mb-1">Rating (1-5)</label>
+                                              <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="toilet" id="toilet1" value="1">
+                                                <label class="form-check-label fs-md" for="toilet1">1</label>
+                                              </div>
+                                              <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="toilet" id="toilet2" value="2">
+                                                <label class="form-check-label fs-md" for="toilet2">2</label>
+                                              </div>
+                                              <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="toilet" id="toilet3" value="3">
+                                                <label class="form-check-label fs-md" for="toilet3">3</label>
+                                              </div>
+                                              <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="toilet" id="toilet4" value="4">
+                                                <label class="form-check-label fs-md" for="toilet4">4</label>
+                                              </div>
+                                              <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="toilet" id="toilet5" value="5">
+                                                <label class="form-check-label fs-md" for="toilet5">5</label>
+                                              </div>
+                                              <div class="mt-2">
+                                                <textarea class="form-control" rows="3" placeholder="Remarks"></textarea>
+                                              </div>
+                                            </div>
+                                          </div>
+                                          <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4">
+                                            <div class="mb-3 mb-md-3 mb-lg-3">
+                                              <h6>Projector / AV Equipment</h6>
+                                              <label class="fs-md fw-600 d-block mb-1">Rating (1-5)</label>
+                                              <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="projector" id="projector1" value="1">
+                                                <label class="form-check-label fs-md" for="projector1">1</label>
+                                              </div>
+                                              <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="projector" id="projector2" value="2">
+                                                <label class="form-check-label fs-md" for="projector2">2</label>
+                                              </div>
+                                              <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="projector" id="projector3" value="3">
+                                                <label class="form-check-label fs-md" for="projector3">3</label>
+                                              </div>
+                                              <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="projector" id="projector4" value="4">
+                                                <label class="form-check-label fs-md" for="projector4">4</label>
+                                              </div>
+                                              <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="projector" id="projector5" value="5">
+                                                <label class="form-check-label fs-md" for="projector5">5</label>
+                                              </div>
+                                              <div class="mt-2">
+                                                <textarea class="form-control" rows="3" placeholder="Remarks"></textarea>
+                                              </div>
+                                            </div>
+                                          </div>
+                                          <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4">
+                                            <div class="mb-3 mb-md-3 mb-lg-3">
+                                              <h6>Stationary Availability</h6>
+                                              <label class="fs-md fw-600 d-block mb-1">Rating (1-5)</label>
+                                              <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="stationary" id="stationary1" value="1">
+                                                <label class="form-check-label fs-md" for="stationary1">1</label>
+                                              </div>
+                                              <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="stationary" id="stationary2" value="2">
+                                                <label class="form-check-label fs-md" for="stationary2">2</label>
+                                              </div>
+                                              <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="stationary" id="stationary3" value="3">
+                                                <label class="form-check-label fs-md" for="stationary3">3</label>
+                                              </div>
+                                              <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="stationary" id="stationary4" value="4">
+                                                <label class="form-check-label fs-md" for="stationary4">4</label>
+                                              </div>
+                                              <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="stationary" id="stationary5" value="5">
+                                                <label class="form-check-label fs-md" for="stationary5">5</label>
+                                              </div>
+                                              <div class="mt-2">
+                                                <textarea class="form-control" rows="3" placeholder="Remarks"></textarea>
+                                              </div>
+                                            </div>
+                                          </div>
+                                          <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4">
+                                            <div class="mb-3 mb-md-3 mb-lg-3">
+                                              <h6>Speaker Accommodation</h6>
+                                              <label class="fs-md fw-600 d-block mb-1">Rating (1-5)</label>
+                                              <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="accommodation" id="accommodation1" value="1">
+                                                <label class="form-check-label fs-md" for="accommodation1">1</label>
+                                              </div>
+                                              <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="accommodation" id="accommodation2" value="2">
+                                                <label class="form-check-label fs-md" for="accommodation2">2</label>
+                                              </div>
+                                              <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="accommodation" id="accommodation3" value="3">
+                                                <label class="form-check-label fs-md" for="accommodation3">3</label>
+                                              </div>
+                                              <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="accommodation" id="accommodation4" value="4">
+                                                <label class="form-check-label fs-md" for="accommodation4">4</label>
+                                              </div>
+                                              <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="accommodation" id="accommodation5" value="5">
+                                                <label class="form-check-label fs-md" for="accommodation5">5</label>
+                                              </div>
+                                              <div class="mt-2">
+                                                <textarea class="form-control" rows="3" placeholder="Remarks"></textarea>
+                                              </div>
+                                            </div>
+                                          </div>
+                                          <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4">
+                                            <div class="mb-3 mb-md-3 mb-lg-3">
+                                              <h6>Speaker Travel Arrangements</h6>
+                                              <label class="fs-md fw-600 d-block mb-1">Rating (1-5)</label>
+                                              <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="travel" id="travel1" value="1">
+                                                <label class="form-check-label fs-md" for="travel1">1</label>
+                                              </div>
+                                              <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="travel" id="travel2" value="2">
+                                                <label class="form-check-label fs-md" for="travel2">2</label>
+                                              </div>
+                                              <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="travel" id="travel3" value="3">
+                                                <label class="form-check-label fs-md" for="travel3">3</label>
+                                              </div>
+                                              <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="travel" id="travel4" value="4">
+                                                <label class="form-check-label fs-md" for="travel4">4</label>
+                                              </div>
+                                              <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="travel" id="travel5" value="5">
+                                                <label class="form-check-label fs-md" for="travel5">5</label>
+                                              </div>
+                                              <div class="mt-2">
+                                                <textarea class="form-control" rows="3" placeholder="Remarks"></textarea>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+
+                                      <div class="border-top px-3 py-2 d-flex align-items-center justify-content-between">
+                                        <button type="button" class="btn btn-secondary prev-step"><span class="bi bi-arrow-left me-2"></span> Previous</button>
+                                        <button type="button" class="btn btn-lime-green next-step">Save & Next <span class="bi bi-arrow-right ms-2"></span></button>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+      
+                                <!-- step 7 -->
+                                <div class="step step-7">
+                                  <div class="card shadow-none border rounded-2 mb-3">
+                                    <div class="card-header bg-lime-green rounded-top text-white">
+                                        <h6 class="mb-0">Post-Training Assessment</h6>
+                                    </div>
+                                    <div class="card-body p-0">
+                                      <div class="p-3">
+                                        <div class="row">
+                                          <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                                            <div class="mb-3">
+                                              <label class="d-block fs-md fw-600 mb-1">Participants Feedback Forms Collected</label>
+                                              <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="feedback" id="yesFeedback" value="yesFeedback">
+                                                <label class="form-check-label fs-md" for="yesFeedback">Yes</label>
+                                              </div>
+                                              <div class="form-check form-check-inline">
+                                                  <input class="form-check-input" type="radio" name="feedback" id="noFeedback" value="noFeedback">
+                                                  <label class="form-check-label fs-md" for="noFeedback">No</label>
+                                              </div>
+                                            </div>
+                                          </div>
+                                          <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                                            <div class="mb-3">
+                                              <label class="d-block fs-md fw-600 mb-1">Participants Person Forms Collected</label>
+                                              <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="person" id="yesperson" value="yesperson">
+                                                <label class="form-check-label fs-md" for="yesperson">Yes</label>
+                                              </div>
+                                              <div class="form-check form-check-inline">
+                                                  <input class="form-check-input" type="radio" name="person" id="noperson" value="noperson">
+                                                  <label class="form-check-label fs-md" for="noperson">No</label>
+                                              </div>
+                                            </div>
+                                          </div>
+                                          <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                                            <div class="mb-3">
+                                              <label class="d-block fs-md fw-600 mb-1">Pre / Post Tests Conducted</label>
+                                              <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="tests" id="yesTests" value="yesTests">
+                                                <label class="form-check-label fs-md" for="yesTests">Yes</label>
+                                              </div>
+                                              <div class="form-check form-check-inline">
+                                                  <input class="form-check-input" type="radio" name="tests" id="noTests" value="noTests">
+                                                  <label class="form-check-label fs-md" for="noTests">No</label>
+                                              </div>
+                                            </div>
+                                          </div>
+                                          <div class="col-12">
+                                            <div class="mb-3">
+                                              <label class="d-block fs-md fw-600 mb-1">Learning Highlights by the participants</label>
+                                              <div>
+                                                <textarea class="form-control" rows="4" placeholder=""></textarea>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+
+                                      <div class="border-top px-3 py-2 d-flex align-items-center justify-content-between">
+                                        <button type="button" class="btn btn-secondary prev-step"><span class="bi bi-arrow-left me-2"></span> Previous</button>
+                                        <button type="button" class="btn btn-lime-green next-step">Save & Next <span class="bi bi-arrow-right ms-2"></span></button>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+      
+                                <!-- step 8 -->
+                                <div class="step step-8">
+                                  <div class="card shadow-none border rounded-2 mb-3">
+                                    <div class="card-header bg-lime-green rounded-top text-white">
+                                        <h6 class="mb-0">Document Checklist</h6>
+                                    </div>
+                                    <div class="card-body p-0">
+                                      <div class="p-3">
+                                        <div class="row">
+                                          <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                            <div class="mb-3">
+                                              <label class="d-block fs-md fw-600 mb-1">Attendance Sheet</label>
+                                              <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="Attendance" id="yesAttendance" value="yes Attendance">
+                                                <label class="form-check-label fs-md" for="yesAttendance">Yes</label>
+                                              </div>
+                                              <div class="form-check form-check-inline">
+                                                  <input class="form-check-input" type="radio" name="Attendance" id="noAttendance" value="no Attendance">
+                                                  <label class="form-check-label fs-md" for="noAttendance">No</label>
+                                              </div>
+                                            </div>
+                                          </div>
+                                          <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                            <div class="mb-3">
+                                              <label class="d-block fs-md fw-600 mb-1">Registration Forms</label>
+                                              <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="registration" id="yesRegistration" value="yes Registration">
+                                                <label class="form-check-label fs-md" for="yesRegistration">Yes</label>
+                                              </div>
+                                              <div class="form-check form-check-inline">
+                                                  <input class="form-check-input" type="radio" name="registration" id="noRegistration" value="No Registration">
+                                                  <label class="form-check-label fs-md" for="noRegistration">No</label>
+                                              </div>
+                                            </div>
+                                          </div>
+                                          <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                            <div class="mb-3">
+                                              <label class="d-block fs-md fw-600 mb-1">Participant Feedback </label>
+                                              <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="participantFeedback" id="yesfb" value="yes Participant">
+                                                <label class="form-check-label fs-md" for="yesfb">Yes</label>
+                                              </div>
+                                              <div class="form-check form-check-inline">
+                                                  <input class="form-check-input" type="radio" name="participantFeedback" id="nofb" value="no Participant">
+                                                  <label class="form-check-label fs-md" for="nofb">No</label>
+                                              </div>
+                                            </div>
+                                          </div>
+                                          <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                            <div class="mb-3">
+                                              <label class="d-block fs-md fw-600 mb-1">Speaker Feedback</label>
+                                              <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="speakerFeedback" id="yesFeed" value="yes Speaker Feedback">
+                                                <label class="form-check-label fs-md" for="yesFeed">Yes</label>
+                                              </div>
+                                              <div class="form-che6 form-check-inline">
+                                                  <input class="form-check-input" type="radio" name="speakerFeedback" id="noFeed" value="no Speaker Feedback">
+                                                  <label class="form-check-label fs-md" for="nofeed">No</label>
+                                              </div>
+                                            </div>
+                                          </div>
+                                          <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                            <div class="mb-3">
+                                              <label class="d-block fs-md fw-600 mb-1">Photographs Attached</label>
+                                              <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="Photographs" id="yesPhotographs" value="yes Photographs">
+                                                <label class="form-check-label fs-md" for="yesPhotographs">Yes</label>
+                                              </div>
+                                              <div class="form-check form-check-inline">
+                                                  <input class="form-check-input" type="radio" name="Photographs" id="noPhotographs" value="no Photographs">
+                                                  <label class="form-check-label fs-md" for="noPhotographs">No</label>
+                                              </div>
+                                            </div>
+                                          </div>
+                                          <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                            <div class="mb-3">
+                                              <label class="d-block fs-md fw-600 mb-1">Brief Summary Report Prepared </label>
+                                              <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="summary" id="yesSummary" value="yes Summary">
+                                                <label class="form-check-label fs-md" for="yesAttendance">Yes</label>
+                                              </div>
+                                              <div class="form-check form-check-inline">
+                                                  <input class="form-check-input" type="radio" name="summary" id="noSummary" value="no Summary">
+                                                  <label class="form-check-label fs-md" for="noSummary">No</label>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div class="border-top px-3 py-2 d-flex align-items-center justify-content-between">
+                                        <button type="button" class="btn btn-secondary prev-step"><span class="bi bi-arrow-left me-2"></span> Previous</button>
+                                        <button type="button" class="btn btn-lime-green next-step">Save & Next <span class="bi bi-arrow-right ms-2"></span></button>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+      
+                                <!-- step 9 -->
+                                <div class="step step-9">
+                                  <div class="card shadow-none border rounded-2 mb-3">
+                                    <div class="card-header bg-lime-green rounded-top text-white">
+                                        <h6 class="mb-0">Observations, Challenges, Best Practices</h6>
+                                    </div>
+                                    <div class="card-body p-0">
+                                      <div class="p-3">
+                                        <div class="row">
+                                          <div class="col-12">
+                                            <div class="mb-3">
+                                              <label class="d-block fs-md fw-600 mb-1">Key Best Practices Observed</label>
+                                              <div>
+                                                <textarea class="form-control" rows="4" placeholder="Write here"></textarea>
+                                              </div>
+                                            </div>
+                                          </div>
+                                          <div class="col-12">
+                                            <div class="mb-3">
+                                              <label class="d-block fs-md fw-600 mb-1">Challenges Faced (Agency Level/Execution Level)</label>
+                                              <div>
+                                                <textarea class="form-control" rows="4" placeholder="Write here"></textarea>
+                                              </div>
+                                            </div>
+                                          </div>
+                                          <div class="col-12">
+                                            <div class="mb-3">
+                                              <label class="d-block fs-md fw-600 mb-1">Gaps Identified and Immediate Corrections Suggested</label>
+                                              <div>
+                                                <textarea class="form-control" rows="4" placeholder="Write here"></textarea>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+
+                                      <div class="border-top px-3 py-2 d-flex align-items-center justify-content-between">
+                                        <button type="button" class="btn btn-secondary prev-step"><span class="bi bi-arrow-left me-2"></span> Previous</button>
+                                        <button type="button" class="btn btn-lime-green next-step">Save & Next <span class="bi bi-arrow-right ms-2"></span></button>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>                            
+      
+                                <!-- step 10 -->
+                                <div class="step step-10">
+                                  <div class="card shadow-none border rounded-2 mb-3">
+                                    <div class="card-header bg-lime-green rounded-top text-white">
+                                        <h6 class="mb-0">Overall Program Rating (by Monitor)</h6>
+                                    </div>
+                                    <div class="card-body p-0">
+                                      <div class="p-3">
+                                        <div class="row">
+                                          <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                            <div class="mb-3">
+                                              <h6>Overall Program Organization</h6>
+                                              <label class="d-block fs-md fw-600 mb-1">Rating (1 to 5)</label>
+                                              <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="organization" id="organization1" value="1">
+                                                <label class="form-check-label fs-md" for="organization1">1</label>
+                                              </div>
+                                              <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="organization" id="organization2" value="2">
+                                                <label class="form-check-label fs-md" for="organization2">2</label>
+                                              </div>
+                                              <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="organization" id="organization3" value="3">
+                                                <label class="form-check-label fs-md" for="organization3">3</label>
+                                              </div>
+                                              <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="organization" id="organization4" value="4">
+                                                <label class="form-check-label fs-md" for="organization4">4</label>
+                                              </div>
+                                              <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="organization" id="organization5" value="5">
+                                                <label class="form-check-label fs-md" for="organization5">5</label>
+                                              </div>
+                                            </div>
+                                          </div>
+                                          <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                            <div class="mb-3">
+                                              <h6>Quality of Sessions</h6>
+                                              <label class="d-block fs-md fw-600 mb-1">Rating (1 to 5)</label>
+                                              <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="sessions" id="sessions1" value="1">
+                                                <label class="form-check-label fs-md" for="sessions1">1</label>
+                                              </div>
+                                              <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="sessions" id="sessions2" value="2">
+                                                <label class="form-check-label fs-md" for="sessions2">2</label>
+                                              </div>
+                                              <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="sessions" id="sessions3" value="3">
+                                                <label class="form-check-label fs-md" for="sessions3">3</label>
+                                              </div>
+                                              <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="sessions" id="sessions4" value="4">
+                                                <label class="form-check-label fs-md" for="sessions4">4</label>
+                                              </div>
+                                              <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="sessions" id="sessions5" value="5">
+                                                <label class="form-check-label fs-md" for="sessions5">5</label>
+                                              </div>
+                                            </div>
+                                          </div>
+                                          <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                            <div class="mb-3">
+                                              <h6>Participants Satisfaction</h6>
+                                              <label class="d-block fs-md fw-600 mb-1">Rating (1 to 5)</label>
+                                              <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="satisfaction" id="satisfaction1" value="1">
+                                                <label class="form-check-label fs-md" for="satisfaction1">1</label>
+                                              </div>
+                                              <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="satisfaction" id="satisfaction2" value="2">
+                                                <label class="form-check-label fs-md" for="satisfaction2">2</label>
+                                              </div>
+                                              <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="satisfaction" id="satisfaction3" value="3">
+                                                <label class="form-check-label fs-md" for="satisfaction3">3</label>
+                                              </div>
+                                              <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="satisfaction" id="satisfaction4" value="4">
+                                                <label class="form-check-label fs-md" for="satisfaction4">4</label>
+                                              </div>
+                                              <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="satisfaction" id="satisfaction5" value="5">
+                                                <label class="form-check-label fs-md" for="satisfaction5">5</label>
+                                              </div>
+                                            </div>
+                                          </div>
+                                          <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                            <div class="mb-3">
+                                              <h6>Impact Potential</h6>
+                                              <label class="d-block fs-md fw-600 mb-1">Rating (1 to 5)</label>
+                                              <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="impact" id="impact1" value="1">
+                                                <label class="form-check-label fs-md" for="impact1">1</label>
+                                              </div>
+                                              <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="impact" id="impact2" value="2">
+                                                <label class="form-check-label fs-md" for="impact2">2</label>
+                                              </div>
+                                              <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="impact" id="impact3" value="3">
+                                                <label class="form-check-label fs-md" for="impact3">3</label>
+                                              </div>
+                                              <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="impact" id="impact4" value="4">
+                                                <label class="form-check-label fs-md" for="impact4">4</label>
+                                              </div>
+                                              <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="impact" id="impact5" value="5">
+                                                <label class="form-check-label fs-md" for="impact5">5</label>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+
+                                      <div class="border-top px-3 py-2 d-flex align-items-center justify-content-between">
+                                        <button type="button" class="btn btn-secondary prev-step"><span class="bi bi-arrow-left me-2"></span> Previous</button>
+                                        <button type="button" class="btn btn-lime-green next-step">Save & Next <span class="bi bi-arrow-right ms-2"></span></button>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                            
+                                <!-- step 11 -->
+                                <div class="step step-11">
+                                  <div class="card border rounded-2 shadow-none">
+                                    <div class="card-header bg-lime-green rounded-top text-white">
+                                        <h6 class="mb-0">Additional Remarks / Recommendations</h6>
+                                    </div>
+                                    <div class="card-body">
+                                      <div class="mb-3">
+                                        <label class="fs-md fw-600 mb-1">Rmerks</label>
+                                        <textarea class="form-control" rows="7" placeholder="Write here"></textarea>
+                                      </div>
+      
+                                      <div class="border-top px-3 py-2 d-flex align-items-center justify-content-between">
+                                        <button type="button" class="btn btn-secondary prev-step"><span class="bi bi-arrow-left me-2"></span> Previous</button>
+                                        <button type="button" class="btn btn-lime-green">Submit <span class="bi bi-send ms-2"></span></button>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  
+                                </div>
+                              </form>
+                            </div>
+                          </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- begin:: step 4 delivery details popup -->
+    <div class="modal fade" id="addDelivery" tabindex="-1" aria-labelledby="addResourceLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header py-2">
+                    <h6 class="modal-title text-white">Add Program Delivery Details</h6>
+                    <button type="button" class="btn-close me-1" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="speaker" placeholder="Speaker Name">
+                                    <label for="speaker">Speaker Name</label>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="topic" placeholder="">
+                                    <label for="topic">Topic Delivered</label>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-floating mb-3">
+                                    <input type="time" class="form-control" id="time" placeholder="time">
+                                    <label for="time">Time Taken</label>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="mb-3">
+                                    <label class="d-block fs-md fw-600 mb-1">Audio Visual Aid used </label>
+                                    <div class="form-check form-check-inline">
+                                      <input class="form-check-input" type="radio" name="audioVisual" id="audioYes" value="audioYes">
+                                      <label class="form-check-label fs-md" for="audioYes">Yes</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                      <input class="form-check-input" type="radio" name="audioVisual" id="audioNo" value="audioNo">
+                                      <label class="form-check-label fs-md" for="audioNo">No</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="mb-3">
+                                    <label class="d-block fs-md fw-600 mb-1">Relevance</label>
+                                    <div class="form-check form-check-inline">
+                                      <input class="form-check-input" type="radio" name="relevance" id="high" value="high">
+                                      <label class="form-check-label fs-md" for="high">High</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                      <input class="form-check-input" type="radio" name="relevance" id="medium" value="medium">
+                                      <label class="form-check-label fs-md" for="medium">Medium</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                      <input class="form-check-input" type="radio" name="relevance" id="low" value="low">
+                                      <label class="form-check-label fs-md" for="low">Low</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="mb-3">
+                                    <label class="d-block fs-md fw-600 mb-1">Speaker Effectiveness Rating</label>
+                                    <div class="form-check form-check-inline">
+                                      <input class="form-check-input" type="radio" name="rating" id="one" value="1">
+                                      <label class="form-check-label fs-md" for="one">1</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                      <input class="form-check-input" type="radio" name="rating" id="two" value="2">
+                                      <label class="form-check-label fs-md" for="two">2</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                      <input class="form-check-input" type="radio" name="rating" id="three" value="3">
+                                      <label class="form-check-label fs-md" for="three">3</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                      <input class="form-check-input" type="radio" name="rating" id="four" value="4">
+                                      <label class="form-check-label fs-md" for="four">4</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                      <input class="form-check-input" type="radio" name="rating" id="five" value="5">
+                                      <label class="form-check-label fs-md" for="five">5</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="text-end">
+                                    <button type="button" class="btn btn-lime-green">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end:: step 4 delivery details popup -->
+
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+    <!-- <script src="assets/js/dataTables.bootstrap5.js"></script> -->
+     
+    <script>
+        // form wizard js
+        var currentStep = 1;
+        var updateProgressBar;
+
+        function displayStep(stepNumber) {
+        if (stepNumber >= 1 && stepNumber <= 11) {
+            $(".step-" + currentStep).hide();
+            $(".step-" + stepNumber).show();
+            currentStep = stepNumber;
+            updateProgressBar();
+        }
+        }
+
+        $(document).ready(function() {
+            $('#multi-step-form').find('.step').slice(1).hide();
+        
+            $(".next-step").click(function() {
+              if (currentStep < 11) {
+                  $(".step-" + currentStep).addClass("animate__animated animate__fadeIn");
+                  currentStep++;
+                  setTimeout(function() {
+                  $(".step").removeClass("animate__animated animate__fadeIn").hide();
+                  $(".step-" + currentStep).show().addClass("animate__animated animate__fadeIn");
+                  updateProgressBar();
+                  }, 500);
+              }
+
+            });
+
+            $(".prev-step").click(function() {
+            if (currentStep > 1) {
+                $(".step-" + currentStep).addClass("animate__animated animate__fadeIn");
+                currentStep--;
+                setTimeout(function() {
+                $(".step").removeClass("animate__animated animate__fadeIn").hide();
+                $(".step-" + currentStep).show().addClass("animate__animated animate__fadeIn");
+                updateProgressBar();
+                }, 500);
+            }
+            });
+
+            updateProgressBar = function() {
+            var progressPercentage = ((currentStep - 1) / 10) * 100;
+            $(".progress-bar").css("width", progressPercentage + "%");
+            }
+        });
+        // form wizard js
+
+    </script>
+</body>
+</html>

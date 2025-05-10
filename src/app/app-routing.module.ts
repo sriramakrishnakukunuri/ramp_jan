@@ -33,6 +33,7 @@ import { BulkExpenditureComponent } from './PIA/bulk-expenditure/bulk-expenditur
 import { ProgramSummaryComponent } from './PIA/program-summary/program-summary.component';
 import { AddProgramSessionsComponent } from './PIA/add-program-sessions/add-program-sessions.component';
 import { ViewProgramAgenciesComponent } from './PIA/view-program-agencies/view-program-agencies.component';
+import { ProgramMonitoringComponent } from './PIA/program-monitoring/program-monitoring.component';
 
 const routes: Routes = [
     {
@@ -79,6 +80,12 @@ const routes: Routes = [
     {
         path: 'veiw-program-creation',
         component: VeiwProgramCreationComponent,
+        canActivate: [AuthGuard],
+        data: { roles: [Role.Admin,Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
+    },
+      {
+        path: 'program-monitoring',
+        component: ProgramMonitoringComponent,
         canActivate: [AuthGuard],
         data: { roles: [Role.Admin,Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
     },

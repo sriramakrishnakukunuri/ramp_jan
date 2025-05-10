@@ -14880,6 +14880,57 @@ small {
   display: none;
 }
 
+.progress-line > .progress-bar {
+  background-color: #07C540;
+}
+
+.step-container {
+  position: relative;
+  text-align: center;
+  transform: translateY(-50%);
+}
+
+.step-label > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+}
+
+.step-circle {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #ffffff;
+  border: 2px solid #07C540;
+  line-height: 30px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2px;
+  cursor: pointer;
+  /* Added cursor pointer */
+}
+
+.step-line {
+  position: absolute;
+  top: 16px;
+  left: 50px;
+  width: calc(100% - 100px);
+  height: 2px;
+  background-color: #07C540;
+  z-index: -1;
+}
+
+.step-content > div {
+  width: auto;
+}
+
+.list-number {
+  list-style: numeric;
+}
+
 .btn {
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
   font-size: 14px;
@@ -15033,7 +15084,7 @@ header .navbar-brand img {
 }
 
 .login-bg {
-  background-image: url("assets/img/login-bg.png");
+  background-image: url("/ramp_jan/src/assets/img/login-bg.png");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;

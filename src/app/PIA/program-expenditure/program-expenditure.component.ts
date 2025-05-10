@@ -133,7 +133,7 @@ export class ProgramExpenditureComponent implements OnInit {
  onAgencyChange(): void {
   this.programs = [];
   if (this.agencyId) {
-    this._commonService.getDataByUrl(`${APIS.programCreation.getProgramsListByAgency}/${this.agencyId}`).subscribe({
+    this._commonService.getDataByUrl(`${APIS.programCreation.getProgramsListByAgencyStatus}/${this.agencyId}/status?status=Program Execution Updated`).subscribe({
       next: (data: any) => {
         this.programs = data.data;
       },
