@@ -95,6 +95,7 @@ export const APIS = {
         savebulkExpenditure:API_BASE_URL +`/bulk/expenditure/save`,
         updatebulkExpenditure:API_BASE_URL +`/bulk/expenditure/update/`,
         savebulkByItemExpenditure:API_BASE_URL +`/bulk/transactions/save`,
+        UpdatebulkByItemTranstion:API_BASE_URL +`/bulk/transactions/update/`,  
         getExpenditure:API_BASE_URL +`/program/expenditure`,
         getExpenditureByAgency:API_BASE_URL +`/program/expenditure/agency/`,
         getBulkExpenditure:API_BASE_URL +`/bulk/expenditure`,
@@ -113,7 +114,7 @@ export const APIS = {
     },
     programMonitoring:{
         getProgramMonitoringById:API_BASE_URL +`/program/details/for/feedback/`,
-        getProgramMonitoringByIdUpdated:API_BASE_URL +`/program/feedback/`,
+        getProgramMonitoringByIdUpdated:API_BASE_URL +`/program/feedback/id/`,
         // getProgramMonitoringById:API_BASE_URL +`/program/monitoring/`,
         saveProgramMonitoring:API_BASE_URL +`/program/feedback/save`,
         updateProgramMonitoring:API_BASE_URL +`/program/feedback/update/`,
