@@ -75,10 +75,9 @@
                                 <ul class="dropdown-menu" aria-labelledby="homeDropdown">
                                     <li><a class="dropdown-item" routerLink="/program-creation" routerLinkActive="active">Add Program</a></li>
                                     <li><a class="dropdown-item" routerLink="/add-sessions" routerLinkActive="active">Add Sessions</a></li>  
-                                    <li><a class="dropdown-item" routerLink="/veiw-program-creation" routerLinkActive="active">View Programs</a></li>       
+                                    <li><a class="dropdown-item" routerLink="/veiw-program-creation" routerLinkActive="active">View My Programs</a></li> 
+                                    <li><a class="dropdown-item" routerLink="/program-monitoring" routerLinkActive="active">Program Monitoring</a></li>      
                                     <li><a class="dropdown-item" routerLink="/veiw-program" routerLinkActive="active">View All Agencies Programs</a></li>                                
-                                                                      
-                                    
                                 </ul>
                             </li>
                             <li class="nav-item dropdown" *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]">
@@ -97,8 +96,8 @@
                                 Program Execution <span class="bi bi-chevron-down"></span>
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="dropdown2">    
-                                    <li><a class="dropdown-item" routerLink="/attendance-Participant" routerLinkActive="active">Particpant Attendance Details</a></li>  
-                                    <li><a class="dropdown-item" routerLink="/rawMaterials-Participant" routerLinkActive="active">Particpant Raw Material Details</a></li>                             
+                                <li><a class="dropdown-item" routerLink="/attendance-Participant" routerLinkActive="active">Particpant Attendance Details</a></li>  
+                                <li><a class="dropdown-item" routerLink="/rawMaterials-Participant" routerLinkActive="active">Particpant Raw Material Details</a></li>                             
                                 <li><a class="dropdown-item" routerLink="/update-program-execution" routerLinkActive="active">Program Execution</a></li>
                                 <li><a class="dropdown-item" routerLink="/program-expenditure" routerLinkActive="active">Program Expenditure</a></li>
                                 <li><a class="dropdown-item" routerLink="/bulk-expenditure" routerLinkActive="active">Bulk Expenditure</a></li>

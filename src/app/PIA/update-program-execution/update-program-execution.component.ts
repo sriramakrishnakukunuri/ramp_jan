@@ -71,7 +71,7 @@ export class UpdateProgramExecutionComponent implements OnInit {
   agencyProgramList: any;
     programId: any = ''
     getProgramsByAgency() {
-      this._commonService.getDataByUrl(`${APIS.programCreation.getProgramsListByAgency + this.agencyId}`).subscribe({
+      this._commonService.getDataByUrl(`${APIS.programCreation.getProgramsListByAgencyStatus+'/'+this.agencyId+'/status?status=Sessions Created'}`).subscribe({
         next: (res: any) => {
           this.agencyProgramList = res?.data
         },
