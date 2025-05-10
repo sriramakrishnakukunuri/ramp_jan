@@ -133,7 +133,7 @@ export class ProgramExpenditureComponent implements OnInit {
  onAgencyChange(): void {
   this.programs = [];
   if (this.agencyId) {
-    this._commonService.getDataByUrl(`${APIS.programCreation.getProgramsListByAgencyStatus}/${this.agencyId}/status?status=Program Execution Updated`).subscribe({
+    this._commonService.getDataByUrl(`${APIS.programCreation.getProgramsListByAgencyStatus}/${this.agencyId}?status=Program Execution Updated`).subscribe({
       next: (data: any) => {
         this.programs = data.data;
       },
@@ -176,8 +176,8 @@ export class ProgramExpenditureComponent implements OnInit {
       cost: new FormControl("", [Validators.required,Validators.pattern(/^(0*[1-9]\d*(\.\d+)?|0+\.\d*[1-9]\d*)$/)]),
       billDate: new FormControl("", [Validators.required]),
       payeeName: new FormControl("", [Validators.required]),
-      bankName: new FormControl("", [Validators.required]),
-      ifscCode: new FormControl("", [Validators.required,Validators.pattern(/^[A-Z]{4}0[A-Z0-9]{6}$/)]),
+      bankName: new FormControl("", ),
+      ifscCode: new FormControl("", [Validators.pattern(/^[A-Z]{4}0[A-Z0-9]{6}$/)]),
       modeOfPayment: new FormControl("", [Validators.required]),
       purpose: new FormControl("", ),
       uploadBillUrl: new FormControl("", ),
@@ -288,20 +288,40 @@ export class ProgramExpenditureComponent implements OnInit {
     }
    }
    else{
-    this.Expenditureid=item?.programExpenditureId
-    this.isEdit=true
-    console.log(item)
-    this.PrePostExpenditureForm.reset()
-    item['uploadBillUrl']=''
-    this.PrePostExpenditureForm.patchValue({...item,headOfExpenseId:this.getExpenseIdByName(item?.headOfExpense),billDate:this.convertToISOFormat(item?.billDate)})
-    // this.PrePostExpenditureForm.get('uploadBillUrl')?.setValue(item?.uploadBillUrl)
-
-    console.log(item)
-    
-    
+    if(item?.expenditureType=='PRE' || item?.expenditureType=='POST'){
+      this.Expenditureid=item?.programExpenditureId
+      this.isEdit=true
+      console.log(item)
+      this.PrePostExpenditureForm.reset()
+      item['uploadBillUrl']=''
+      this.PrePostExpenditureForm.patchValue({...item,headOfExpenseId:this.getExpenseIdByName(item?.headOfExpense),billDate:this.convertToISOFormat(item?.billDate)})
+      // this.PrePostExpenditureForm.get('uploadBillUrl')?.setValue(item?.uploadBillUrl)
+  
+      console.log(item)
+      
+      
+     
+      const modal1 = new bootstrap.Modal(this.PreEventModal.nativeElement);
+      modal1.show();
+    }
+    else{
+      this.Expenditureid=item?.bulkExpenditureTransactionId
+      this.isEdit=true
+      console.log(item)
+     
+      this.BulkExpenditureForm.reset()
+      this.BulkExpenditureForm.patchValue({...item,headOfExpenseId:this.getExpenseIdByName(item?.headOfExpense),billDate:this.convertToISOFormat(item?.billDate)})
+      this.getBulkDataByItem(item?.itemName,this.getExpenseIdByName(item?.headOfExpense))
+      // this.PrePostExpenditureForm.get('uploadBillUrl')?.setValue(item?.uploadBillUrl)
+  
+      console.log(item)
+      
+      
+     
+      const modal1 = new bootstrap.Modal(this.BulkEvenModal.nativeElement);
+      modal1.show();
+    }
    
-    const modal1 = new bootstrap.Modal(this.PreEventModal.nativeElement);
-    modal1.show();
    }
     
   }
@@ -497,30 +517,61 @@ export class ProgramExpenditureComponent implements OnInit {
   }
     // let payload={...this.BulkExpenditureForm.value,agencyId:this.agencyId}
     // console.log(payload)
-    this._commonService
-        .add(APIS.programExpenditure.savebulkByItemExpenditure, payload1).subscribe({
-          next: (data: any) => {
-            if(data?.status==400){
-              this.toastrService.error(data?.message, this.expenditureType +" Expenditure Data Error!");
-            }
-            else{
-              this.BulkExpenditureForm.reset()
-              this.TotalAmount=0
+   
+        if(this.isEdit){
+          this._commonService
+          .add(APIS.programExpenditure.UpdatebulkByItemTranstion+this.Expenditureid, payload1).subscribe({
+            next: (data: any) => {
+              if(data?.status==400){
+                this.toastrService.error(data?.message, this.expenditureType +" Expenditure Data Error!");
+              }
+              else{
+                this.BulkExpenditureForm.reset()
+                this.TotalAmount=0
+                this.getExpenditure()
+                // this.advanceSearch(this.getSelDataRange);
+            
+              // this.formDetails()
+              // modal.close()
+              this.toastrService.success( this.expenditureType +' Expenditure Added Successfully', this.expenditureType +" Expenditure Data Success!");
+              }
+              
+            },
+            error: (err) => {
+              
+              this.toastrService.error(err.message, this.expenditureType +" Expenditure Data Error!");
+              new Error(err);
               this.getExpenditure()
-              // this.advanceSearch(this.getSelDataRange);
-          
-            // this.formDetails()
-            // modal.close()
-            this.toastrService.success( this.expenditureType +' Expenditure Added Successfully', this.expenditureType +" Expenditure Data Success!");
-            }
+            },
+          });
+        }
+        else{
+          this._commonService
+          .add(APIS.programExpenditure.savebulkByItemExpenditure, payload1).subscribe({
+            next: (data: any) => {
+              if(data?.status==400){
+                this.toastrService.error(data?.message, this.expenditureType +" Expenditure Data Error!");
+              }
+              else{
+                this.BulkExpenditureForm.reset()
+                this.TotalAmount=0
+                this.getExpenditure()
+                // this.advanceSearch(this.getSelDataRange);
             
-          },
-          error: (err) => {
-            
-            this.toastrService.error(err.message, this.expenditureType +" Expenditure Data Error!");
-            new Error(err);
-          },
-        });
+              // this.formDetails()
+              // modal.close()
+              this.toastrService.success( this.expenditureType +' Expenditure Added Successfully', this.expenditureType +" Expenditure Data Success!");
+              }
+              
+            },
+            error: (err) => {
+              
+              this.toastrService.error(err.message, this.expenditureType +" Expenditure Data Error!");
+              new Error(err);
+              this.getExpenditure()
+            },
+          });
+        }
   }
   getBulkExpenditureData:any=[]
   BulkTotalUnitCost:any=0
@@ -624,7 +675,7 @@ export class ProgramExpenditureComponent implements OnInit {
   }
     ConfirmdeleteExpenditure(item:any){
       this._commonService
-      .add(APIS.programExpenditure.deleteExpenditure+item?.programExpenditureId, {}).subscribe({
+      .add(APIS.programExpenditure.deleteExpenditure+item?.programExpenditureId?item?.programExpenditureId:item.bulkExpenditureTransactionId, {}).subscribe({
         next: (data: any) => {
           if(data?.status==400){
             this.toastrService.error(data?.message, item.expenditureType +" Expenditure Data Error!");

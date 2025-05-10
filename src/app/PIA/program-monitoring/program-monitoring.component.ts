@@ -25,10 +25,21 @@ export class ProgramMonitoringComponent implements OnInit {
       this.agencyId = JSON.parse(sessionStorage.getItem('user') || '{}').agencyId;
       this.createForm();
       this.addProgramDeliveryDetail()
-      this.loadProgramFeedback(2);
     }
- 
-
+   
+   curretstepsDetails:any = {
+    1:'Basic Information',
+    2:'Audience Profile',
+    3:'Pre-Event Preparation',
+    4:'Program Delivery Details',
+    5:'Program Execution',
+    6:'Logistics & Facilities Evaluation',
+    7:'Post-Training Assessment',
+    8:'Document Checklist',
+    9:'Observations, Challenges, Best Practices',
+    10:'Overall Program Rating (by Monitor)',
+    11:'Additional Remarks / Recommendations'
+   }
   ngOnInit(): void {
     // Load data if editing (example with ID 152)
     // this.loadProgramFeedback(152);
@@ -38,7 +49,7 @@ export class ProgramMonitoringComponent implements OnInit {
   }
   agencyProgramList: any;
   getProgramsByAgency(agency:any) {
-    this._commonService.getDataByUrl(`${APIS.programCreation.getProgramsListByAgencyStatus+'/'+(this.loginsessionDetails.agencyId?this.loginsessionDetails.agencyId:this.agencyId)+'/status?status=Program Scheduled'}`).subscribe({
+    this._commonService.getDataByUrl(`${APIS.programCreation.getProgramsListByAgencyStatus+'/'+(this.loginsessionDetails.agencyId?this.loginsessionDetails.agencyId:this.agencyId)+'?status=Program Scheduled'}`).subscribe({
       next: (res: any) => {
         this.agencyProgramList = res?.data
         if(res.data?.length){
@@ -129,6 +140,7 @@ export class ProgramMonitoringComponent implements OnInit {
       participantInterestLevel: [''],
       overallEnergyEngagement: [''],
       unforeseenIssues: [''],
+      participantQueries: [''],
 
       // Step 6: Logistics & Facilities Evaluation
       logisticsEvaluations: this.fb.array([]),
@@ -172,6 +184,7 @@ export class ProgramMonitoringComponent implements OnInit {
     const [day, month, year] = date.split('-');
     return `${year}-${month}-${day}`; // Convert to yyyy-MM-dd format
   }
+  monitorId:any
   loadProgramFeedback(id: number): void {
     if(this.currentStep==1){
       this._commonService.getDataByUrl(APIS.programMonitoring.getProgramMonitoringById+id).subscribe
@@ -191,46 +204,28 @@ export class ProgramMonitoringComponent implements OnInit {
       });
     }
     else{
-      this._commonService.getDataByUrl(APIS.programMonitoring.getProgramMonitoringByIdUpdated+id).subscribe
+      this._commonService.getDataByUrl(APIS.programMonitoring.getProgramMonitoringByIdUpdated+this.monitorId).subscribe
       ({
         next: (data) => {
-          console.log(data,'resp')
           // this.currentStep=data.data[0]?.stepNumber+1 
           console.log(this.currentStep)
           this.programForm.reset();
           this.createForm()
-          console.log(data.data[0], this.programForm.value)
+          console.log(data.data, this.programForm.value)
           this.programForm.patchValue({
-            ...data.data[0],
-            dateOfMonitoring:data.data[0]?.dateOfMonitoring?this.convertToISOFormat(data.data[0].dateOfMonitoring): null
+            ...data.data,
+            dateOfMonitoring:data.data?.dateOfMonitoring?this.convertToISOFormat(data.data.dateOfMonitoring): null
+
           });
         
+          if(data.data?.programDeliveryDetails?.length){
+            const deliveryDetailsArray = this.programForm.get('programDeliveryDetails') as FormArray;
     
-          // Clear existing arrays
-          // this.preEventChecklists.clear();
-          // // this.programDeliveryDetails.clear();
-          // this.logisticsEvaluations.clear();
-    
-          // Add items to arrays
-          // if(data.data[0]?.preEventChecklists?.length){
-          //   data.data[0]?.preEventChecklists?.forEach((item:any) => this.addPreEventChecklist(item));
-          // }
-          // else{
-          //   this.checklistItems.map((checklist) => {
-          //     this.preEventChecklists.push(this.createChecklistGroup(checklist));
-          //   })
-          // }
-          // console.log(  this.preEventChecklists)
-          // if(data.data[0]?.logisticsEvaluations?.length){
-          //   data.data[0]?.preEventChecklists?.forEach((item:any) => this.addLogisticsEvaluation(item));
-          // }
-          // else{
-          //   this.evaluationItems.map((checklist:any) => {this.addLogisticsEvaluation(checklist)
-          //     console.log(checklist)
-          //   })
-          // }
-          // data.programDeliveryDetails.forEach((item:any) => this.addProgramDeliveryDetail(item));
-         
+         // Push the new form group
+         data.data?.programDeliveryDetails.forEach((item:any) => {
+          deliveryDetailsArray.push(this.fb.group(item));
+            })
+          } 
         },
         error: (err) => {
           this.toastrService.error(err.message, "Location Creation Error!");
@@ -301,6 +296,11 @@ export class ProgramMonitoringComponent implements OnInit {
     else{
       this.saveProgramData('update');
     }
+  
+  }
+  FinalStep(): void {
+    console.log(this.currentStep,'final')
+      this.saveProgramData('update');
     if (this.currentStep < this.totalSteps) {
       this.currentStep++;
       this.updateProgressBar();
@@ -311,6 +311,7 @@ export class ProgramMonitoringComponent implements OnInit {
     if (this.currentStep > 1) {
       this.currentStep--;
       this.updateProgressBar();
+      this.loadProgramFeedback(this.monitorId)
     }
   }
   saveProgramData(type:any){
@@ -318,30 +319,37 @@ export class ProgramMonitoringComponent implements OnInit {
       let Payload:any={...this.programForm.value,stepNumber:this.currentStep,logisticsEvaluations:this.programForm.value?.logisticsEvaluations?this.programForm.value?.logisticsEvaluations:[],programDeliveryDetails:this.programForm.value?.programDeliveryDetails?this.programForm.value?.programDeliveryDetails:[],preEventChecklists:this.programForm.value?.preEventChecklists?this.programForm.value?.preEventChecklists:[]}
       console.log(this.programForm.value,this.programForm.value?.preEventChecklists)
       if(this.currentStep==3){
-        Payload={stepNumber:this.currentStep,progpreEventChecklists:this.programForm.value?.preEventChecklists?this.programForm.value?.preEventChecklists:[],programId:2,programDeliveryDetails:[],logisticsEvaluations:[]}
+        Payload={stepNumber:this.currentStep,preEventChecklists:this.programForm.value?.preEventChecklists?this.programForm.value?.preEventChecklists:[]}
       }
       else if(this.currentStep==4){
-        Payload={stepNumber:this.currentStep,programId:2,programDeliveryDetails:this.programForm.value?.programDeliveryDetails?this.programForm.value?.programDeliveryDetails:[],preEventChecklists:[],logisticsEvaluations:[]}
+        Payload={stepNumber:this.currentStep,programDeliveryDetails:this.programForm.value?.programDeliveryDetails?this.programForm.value?.programDeliveryDetails:[],preEventChecklists:[],logisticsEvaluations:[]}
       }
       else if(this.currentStep==5){
-        Payload={stepNumber:this.currentStep,programId:2,timingPunctuality:this.programForm.value?.timingPunctuality?this.programForm.value?.timingPunctuality:'',sessionContinuity:this.programForm.value?.sessionContinuity?this.programForm.value?.sessionContinuity:'',participantInterestLevel:this.programForm.value?.participantInterestLevel?this.programForm.value?.participantInterestLevel:'',overallEnergyEngagement:this.programForm.value?.overallEnergyEngagement?this.programForm.value?.overallEnergyEngagement:'',unforeseenIssues:this.programForm.value?.unforeseenIssues?this.programForm.value?.unforeseenIssues:''}
+        Payload={stepNumber:this.currentStep,timingPunctuality:this.programForm.value?.timingPunctuality?this.programForm.value?.timingPunctuality:'',sessionContinuity:this.programForm.value?.sessionContinuity?this.programForm.value?.sessionContinuity:'',participantInterestLevel:this.programForm.value?.participantInterestLevel?this.programForm.value?.participantInterestLevel:'',overallEnergyEngagement:this.programForm.value?.overallEnergyEngagement?this.programForm.value?.overallEnergyEngagement:'',unforeseenIssues:this.programForm.value?.unforeseenIssues?this.programForm.value?.unforeseenIssues:'',participantQueries:this.programForm.value?.participantQueries?this.programForm.value?.participantQueries:''}
       }
       else if(this.currentStep==6){
-        Payload={stepNumber:this.currentStep,programId:2,logisticsEvaluations:this.programForm.value?.logisticsEvaluations?this.programForm.value?.logisticsEvaluations:[],preEventChecklists:[],programDeliveryDetails:[]}
+        Payload={stepNumber:this.currentStep,logisticsEvaluations:this.programForm.value?.logisticsEvaluations?this.programForm.value?.logisticsEvaluations:[],preEventChecklists:[],programDeliveryDetails:[]}
       }
       else{
         Payload={...this.programForm.value,stepNumber:this.currentStep,logisticsEvaluations:this.programForm.value?.logisticsEvaluations?this.programForm.value?.logisticsEvaluations:[],programDeliveryDetails:this.programForm.value?.programDeliveryDetails?this.programForm.value?.programDeliveryDetails:[],preEventChecklists:this.programForm.value?.preEventChecklists?this.programForm.value?.preEventChecklists:[]}
       }
 
      
-    this._commonService.add(APIS.programMonitoring.updateProgramMonitoring+2, Payload).subscribe({
+    this._commonService.add(APIS.programMonitoring.updateProgramMonitoring+this.monitorId, Payload).subscribe({
       next: (response) => {
         console.log('Success:', response);
-        this.loadProgramFeedback(2)
+        this.toastrService.success(this.curretstepsDetails[this.currentStep]+' Data Updated Successfully','Program Monitoring');
+        if (this.currentStep < this.totalSteps) {
+          this.currentStep++;
+          this.updateProgressBar();
+        }
+        this.loadProgramFeedback(this.monitorId)
+
         // Show success message
       },
       error: (error) => {
         console.error('Error:', error);
+        this.toastrService.success(error.message,'Program Monitoring');
         // Show error message
       }
     });
@@ -351,11 +359,18 @@ export class ProgramMonitoringComponent implements OnInit {
     this._commonService.add(APIS.programMonitoring.saveProgramMonitoring, Payload).subscribe({
       next: (response) => {
         console.log('Success:', response);
-        this.loadProgramFeedback(2)
+        this.monitorId=response.data.monitorId
+        this.toastrService.success(this.curretstepsDetails[this.currentStep]+' Data Saved Successfully','Program Monitoring');
+        if (this.currentStep < this.totalSteps) {
+          this.currentStep++;
+          this.updateProgressBar();
+        }
+        this.loadProgramFeedback(this.monitorId)
         // Show success message
       },
       error: (error) => {
         console.error('Error:', error);
+        this.toastrService.success(error.message,'Program Monitoring');
         // Show error message
       }
     });
@@ -388,7 +403,11 @@ export class ProgramMonitoringComponent implements OnInit {
   //     this.markFormGroupTouched(this.programForm);
   //   }
   // }
-
+  Enterdata(event:any){
+    console.log(event)
+    const total=(this.programForm.get('maleParticipants')?.value || 0) + (this.programForm.get('femaleParticipants')?.value  || 0) + (this.programForm.get('transGenderParticipants')?.value  || 0)
+    this.programForm.get('totalParticipants')?.setValue(total)
+  }
   markFormGroupTouched(formGroup: FormGroup | FormArray): void {
     Object.values(formGroup.controls).forEach(control => {
       control.markAsTouched();

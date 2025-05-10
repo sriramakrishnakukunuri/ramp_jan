@@ -112,8 +112,8 @@
                                     <!-- <td>{{item?.purpose}}</td> -->
                                     <!-- <td>{{item?.uploadBillUrl}}</td> -->
                                     <td class="text-center">
-                                        <button type="button" class="btn btn-default text-lime-green btn-sm" [ngClass]="{'disabled': item?.expenditureType=='BULK'}"  (click)="OpenModal('edit',item)"><span class="bi bi-pencil"></span></button>
-                                        <button type="button" class="btn btn-default text-danger btn-sm" [ngClass]="{'disabled': item?.expenditureType=='BULK'}"  (click)="deleteExpenditure(item)"><span class="bi bi-trash"></span></button>
+                                        <button type="button" class="btn btn-default text-lime-green btn-sm"  (click)="OpenModal('edit',item)"><span class="bi bi-pencil"></span></button>
+                                        <button type="button" class="btn btn-default text-danger btn-sm"  (click)="deleteExpenditure(item)"><span class="bi bi-trash"></span></button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -299,6 +299,7 @@
                                     <option value="#">Select Mode</option>
                                     <option value="BANK_TRANSFER">Bank Transfer</option>
                                         <option value="CASH">Cash</option>
+                                        <option value="UPI">UPI</option>
                                 </select>
                                 <label for="modePayment">Mode Of Payment<span class="c-red"> *</span></label>
                             </div>
