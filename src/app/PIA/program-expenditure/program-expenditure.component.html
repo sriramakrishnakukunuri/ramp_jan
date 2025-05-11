@@ -72,7 +72,7 @@
                             <div class="col-4 col-sm-4 col-md-3 col-lg-4">
                                 <div class="text-end">
                                     <!-- data-bs-target]="#bulkModal" -->
-                                    <button type="button" [ngClass]="{'disabled': programCreationMain?.value?.programId == ''}" class="btn btn-lime-green" data-bs-toggle="modal" data-bs-target="#exampleModalDeleteConfirm">Final Submission</button> &nbsp;&nbsp;
+                                    <button type="button" [ngClass]="{'disabled': programCreationMain.get('programId')?.value == ''}" class="btn btn-lime-green" data-bs-toggle="modal" data-bs-target="#exampleModalDeleteConfirm">Final Submission</button> &nbsp;&nbsp;
                                     <button type="button" class="btn btn-sm btn-lime-green" (click)="OpenModal('add')"><span class="bi bi-plus-lg" ></span> Add</button>
                                 </div>
                             </div>

@@ -15084,7 +15084,7 @@ header .navbar-brand img {
 }
 
 .login-bg {
-  background-image: url("/ramp_jan/src/assets/img/login-bg.png");
+  background-image: url("assets/img/login-bg.png");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
