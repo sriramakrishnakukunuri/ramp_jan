@@ -52,8 +52,8 @@
                         <tr  *ngFor="let item of submitedData; let i=index">
                             <td class="text-start">{{i+1}}</td>
                             <td class="text-center">
-                                <!-- <button type="button" class="btn btn-default text-lime-green btn-sm" (click)="editRow(item)"><span class="bi bi-pencil"></span></button> -->
-                                <button type="button" class="btn btn-default text-danger btn-sm" (click)="deleteRow(item)"><span class="bi bi-trash"></span></button>
+                                <button type="button" class="btn btn-default text-lime-green btn-sm" (click)="editRow(item)"><span class="bi bi-pencil"></span></button>
+                                <!-- <button type="button" class="btn btn-default text-danger btn-sm" (click)="deleteRow(item)"><span class="bi bi-trash"></span></button> -->
                             </td>
                             <td>{{item?.organizationName?'No':'Yes'}}</td>
                             <td >{{item?.isAspirant=='Aspirant'?'':item?.organizationName}}</td>
@@ -138,7 +138,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                Are you sure want to submit all participants in current session??
+                Are you sure you want to submit these participants for the current program? You cannot add any more Participatants once submitted!”
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

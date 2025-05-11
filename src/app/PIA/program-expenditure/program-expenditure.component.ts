@@ -172,7 +172,7 @@ export class ProgramExpenditureComponent implements OnInit {
     // }
     this.PrePostExpenditureForm = new FormGroup({
       headOfExpenseId: new FormControl("", [Validators.required]),
-      billNo: new FormControl("", [Validators.required]),
+      billNo: new FormControl("", [Validators.required,Validators.pattern(/^[^\s].*/)]),
       cost: new FormControl("", [Validators.required,Validators.pattern(/^(0*[1-9]\d*(\.\d+)?|0+\.\d*[1-9]\d*)$/)]),
       billDate: new FormControl("", [Validators.required]),
       payeeName: new FormControl("", [Validators.required]),

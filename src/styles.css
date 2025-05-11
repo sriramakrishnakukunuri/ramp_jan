@@ -2419,6 +2419,9 @@ textarea.form-control.is-invalid {
   border-color: var(--bs-btn-disabled-border-color);
   opacity: var(--bs-btn-disabled-opacity);
 }
+.btn.isDisable{
+  pointer-events: none;
+}
 
 .btn-primary {
   --bs-btn-color: #fff;
@@ -14944,6 +14947,13 @@ small {
   transition: linear 0.5s;
 }
 .btn-lime-green:hover {
+  background-color: #00A651;
+  color: #ffffff;
+}
+.btn-primary {
+  transition: linear 0.5s;
+}
+.btn-primary:hover {
   background-color: #00A651;
   color: #ffffff;
 }

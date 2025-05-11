@@ -184,6 +184,7 @@ export class ProgramMonitoringComponent implements OnInit {
     const [day, month, year] = date.split('-');
     return `${year}-${month}-${day}`; // Convert to yyyy-MM-dd format
   }
+  finalObject:any
   getByProgramId(id: number){
     //console.log(id,'getByProgramId')
     this._commonService.getDataByUrl(APIS.programMonitoring.getProgramMonitoringByIdProgram+id).subscribe({
@@ -191,10 +192,14 @@ export class ProgramMonitoringComponent implements OnInit {
       next: (res: any) => {
         //console.log(res,'getByProgramId1234')
         if(res.data?.length){
+          this.finalObject=res.data[0]
           this.monitorId=res.data[0].monitorId
           // //console.log(this.monitorId,this.currentStep,res.data[0]?.stepNumber,this.totalSteps)
           if (res.data[0]?.stepNumber < this.totalSteps) {
             this.currentStep=res.data[0]?.stepNumber+1 
+          }
+          else if(res.data[0]?.stepNumber==this.totalSteps){
+            this.currentStep=1
           }
           else{
             this.currentStep=11
@@ -216,12 +221,14 @@ export class ProgramMonitoringComponent implements OnInit {
   }
   monitorId:any
   loadProgramFeedback(id: number): void {
+    this.disability=false
     if(this.currentStep==1 && !this.monitorId){
       this._commonService.getDataByUrl(APIS.programMonitoring.getProgramMonitoringById+id).subscribe
       ({
         next: (data) => {
           ////console.log(data,'resp')
           // this.programForm.reset();
+          
           this.programForm.patchValue({
             ...data.data,
             dateOfMonitoring: this.convertToISOFormat(data.data.dateOfMonitoring)
@@ -239,6 +246,9 @@ export class ProgramMonitoringComponent implements OnInit {
         next: (data) => {
           // this.currentStep=data.data[0]?.stepNumber+1 
           ////console.log(this.currentStep)
+          if(data.data?.stepNumber==this.totalSteps){
+            this.currentStep=1
+          }
           this.programForm.reset();
           this.createForm()
           ////console.log(data.data, this.programForm.value)
@@ -318,8 +328,11 @@ export class ProgramMonitoringComponent implements OnInit {
   }
 
   // Step Navigation
+  disability:any=false
   nextStep(): void {
+    this.disability=true
     if(this.currentStep==1 && !this.monitorId){
+
       // this.programForm.get('programName')?.setValue(this.programIds)
       this.saveProgramData('save')
     }
@@ -329,6 +342,7 @@ export class ProgramMonitoringComponent implements OnInit {
   
   }
   FinalStep(): void {
+    this.disability=true
     //console.log(this.currentStep,'final')
       this.saveProgramData('update');
     if (this.currentStep < this.totalSteps) {
@@ -368,7 +382,9 @@ export class ProgramMonitoringComponent implements OnInit {
     this._commonService.add(APIS.programMonitoring.updateProgramMonitoring+this.monitorId, Payload).subscribe({
       next: (response) => {
         //console.log('Success:', response);
+        this.disability=false
         this.toastrService.success(this.curretstepsDetails[this.currentStep]+' Data Updated Successfully','Program Monitoring');
+       
         if (this.currentStep < this.totalSteps) {
           this.currentStep++;
           this.updateProgressBar();
@@ -378,6 +394,7 @@ export class ProgramMonitoringComponent implements OnInit {
         // Show success message
       },
       error: (error) => {
+        this.disability=false
         //console.error('Error:', error);
         this.toastrService.success(error.message,'Program Monitoring');
         // Show error message
@@ -388,17 +405,20 @@ export class ProgramMonitoringComponent implements OnInit {
       let Payload:any={...this.programForm.value,stepNumber:this.currentStep,logisticsEvaluations:[],programDeliveryDetails:[],preEventChecklists:[],programId:this.programIds}
     this._commonService.add(APIS.programMonitoring.saveProgramMonitoring, Payload).subscribe({
       next: (response) => {
+        this.disability=false
         //console.log('Success:', response);
         this.monitorId=response.data.monitorId
-        this.toastrService.success(this.curretstepsDetails[this.currentStep]+' Data Saved Successfully','Program Monitoring');
+        // this.toastrService.success(this.curretstepsDetails[this.currentStep]+' Data Saved Successfully','Program Monitoring');
         if (this.currentStep < this.totalSteps) {
           this.currentStep++;
+
           this.updateProgressBar();
         }
         this.loadProgramFeedback(this.monitorId)
         // Show success message
       },
       error: (error) => {
+        this.disability=false
         //console.error('Error:', error);
         this.toastrService.success(error.message,'Program Monitoring');
         // Show error message
@@ -458,5 +478,9 @@ export class ProgramMonitoringComponent implements OnInit {
     deliveryDetailsArray.push(this.fb.group(this.programDeliveryDetailsForm.value));
 
     this.programDeliveryDetailsForm.reset();
+  }
+  deleteDelivery(index: number) {
+    const deliveryDetailsArray = this.programForm.get('programDeliveryDetails') as FormArray;
+    deliveryDetailsArray.removeAt(index);
   }
 }

@@ -45,7 +45,7 @@
                            
                         </div>       
                         <div class="row">
-                            <div class="col-12 mb-3">
+                            <div class="col-10 mb-3">
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" name="expenditureType" formControlName="expenditureType" [(ngModel)]="expenditureType" (input)="ChangeexpenditureType($any($event.target).checked,'PRE')" id="preEvent" value="PRE">
                                     <label class="form-check-label fs-md" for="preEvent">Pre Event Expenditure</label>
@@ -59,6 +59,11 @@
                                     <label class="form-check-label fs-md" for="BulkEvent">Bulk Expenditure</label>
                                 </div>
                             </div>
+                            <div class="col-2 col-sm-2 col-md-2 col-lg-2">
+                                <div class="text-end">
+                                <button type="button" [ngClass]="{'isDisable': programCreationMain.get('programId')?.value == ''}" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalDeleteConfirm">Final Submission</button> &nbsp;&nbsp;
+                                </div>
+                            </div>
                         </div>                 
                     </div>
                 </div>
@@ -66,13 +71,12 @@
                 <div class="card mb-4" >
                     <div class="card-header bg-transparent">
                         <div class="row align-items-center">
-                            <div class="col-8 col-sm-8 col-md-9 col-lg-8">
+                            <div class="col-8 col-sm-8 col-md-9 col-lg-10">
                                 <h6 class="fw-600 mb-2 mb-sm-3 mb-md-0"> Event Expenditure</h6>
                             </div>
-                            <div class="col-4 col-sm-4 col-md-3 col-lg-4">
+                            <div class="col-4 col-sm-4 col-md-3 col-lg-2">
                                 <div class="text-end">
                                     <!-- data-bs-target]="#bulkModal" -->
-                                    <button type="button" [ngClass]="{'disabled': programCreationMain.get('programId')?.value == ''}" class="btn btn-lime-green" data-bs-toggle="modal" data-bs-target="#exampleModalDeleteConfirm">Final Submission</button> &nbsp;&nbsp;
                                     <button type="button" class="btn btn-sm btn-lime-green" (click)="OpenModal('add')"><span class="bi bi-plus-lg" ></span> Add</button>
                                 </div>
                             </div>
@@ -138,85 +142,9 @@
                         </table>
                     </div>
                 </div>
-                <!-- <div class="card mb-3" >
-                    <div class="card-header bg-transparent">
-                        <div class="row align-items-center">
-                            <div class="col-8 col-sm-8 col-md-9 col-lg-10">
-                                <h6 class="fw-600 mb-2 mb-sm-3 mb-md-0">Bulk Expenditure</h6>
-                            </div>
-                            <div class="col-4 col-sm-4 col-md-3 col-lg-2">
-                                <div class="text-end">
-                                    <button type="button" class="btn btn-sm btn-lime-green" (click)="OpenModal()" ><span class="bi bi-plus-lg"></span> Add</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-body">   
-                        <table id="expenditure-table-bulk" class="table table-bordered nowrap w-100">
-                            <thead class="bg-lime-green text-white">
-                                <tr>
-                                    <th>S.No</th>
-                                    <th>Head of Expense</th>
-                                    <th>Name of Item</th>
-                                    <th>Purchase Date</th>
-                                    <th>Total Quantity Purchased</th>
-                                    <th>Unit Price</th>
-                                    <th>Total Cost</th>
-                                    <th>Bill No.</th>
-                                    <th>Bill Date</th>
-                                    <th>Payee Name</th>
-                                    <th>Bank</th>
-                                    <th>IFSC Code</th>
-                                    <th>Available Qunatity</th>
-                                    <th>Qunatity Consumed for this program</th>
-                                    <th>Cost Allocated</th>
-                                    <th class="text-center">Edit / Delete</th>
-                                </tr>
-                            </thead>
-                            <tbody *ngIf="getBulkExpenditureData?.length">
-                                <tr  *ngFor="let item of getBulkExpenditureData; let i=index">
-                                    <td class="text-start">{{i+1}}</td>
-                                    <td>{{item?.headOfExpense}}</td>
-                                    <td>{{item?.itemName}}</td>
-                                    <td>{{item?.purchaseDate}}</td>
-                                    <td>{{item?.purchasedQuantity}}</td>
-                                    <td>{{item?.unitCost}}</td>
-                                    <td>{{item?.totalCost}}</td>
-                                    <td>{{item?.billNo}}</td>
-                                    <td>{{item?.billDate}}</td>
-                                    <td>{{item?.payeeName}}</td>
-                                    <td>{{item?.bankName}}</td>
-                                    <td>{{item?.ifscCode}}</td>
-                                    <td>{{item?.availableQuantity}}</td>
-                                    <td>{{item?.consumedQuantity}}</td>
-                                    <td>{{item?.allocatedCost}}</td>
-                                    <td class="text-center">
-                                        <button type="button" class="btn btn-default text-lime-green btn-sm"><span class="bi bi-pencil"></span></button>
-                                        <button type="button" class="btn btn-default text-danger btn-sm"><span class="bi bi-trash"></span></button>
-                                    </td>
-                                </tr>
-                              
-                            </tbody>
-                            <tr *ngIf="getBulkExpenditureData?.length">
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td>Total</td>
-                                <td>{{BulkTotalUnitCost}}</td>
-                                <td>{{BulkTotalCost}}</td>
-                                 <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                        </table>            
-                    </div>
-                </div> -->
-                
-            </div>
+              
+            </div>￼
+
        
     </section>
 </main>
@@ -255,7 +183,7 @@
                         </div>
                         <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                             <div class="form-floating mb-3">
-                                <input type="number" class="form-control" id="bill" formControlName="billNo"  name="billNo" placeholder="bill">
+                                <input type="text" class="form-control" id="bill" formControlName="billNo"  name="billNo" placeholder="bill">
                                 <label for="bill">Bill No.<span class="c-red"> *</span></label>
                             </div>
                             <div *ngIf="fPre['billNo'].touched && !fPre['billNo'].valid" class="error"
@@ -280,7 +208,7 @@
                         <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                             <div class="form-floating mb-3">
                                 <input type="text" class="form-control" id="bank" formControlName="bankName"  name="bankName" placeholder="bank">
-                                <label for="bank">Bank</label>
+                                <label for="bank">Bank<span class="c-red"> *</span></label>
                             </div>
                             <div *ngIf="fPre['bankName'].touched && !fPre['bankName'].valid" class="error"
                             style="color: red;">Bank is required</div>
@@ -288,7 +216,7 @@
                         <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                             <div class="form-floating mb-3">
                                 <input type="text" class="form-control" id="ifsc" formControlName="ifscCode"  name="ifscCode" placeholder="ifsc">
-                                <label for="ifsc">IFSC Code</label>
+                                <label for="ifsc">IFSC Code<span class="c-red"> *</span></label>
                             </div>
                             <div *ngIf="fPre['ifscCode'].touched && !fPre['ifscCode'].valid && !fPre['ifscCode']?.errors?.['pattern']" class="error"
                             style="color: red;">IFSC Code is required</div>
@@ -512,7 +440,7 @@ aria-hidden="true">
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                Are you sure want to submit Program Expenditure Details in selected program??
+                Are you sure you want to submit these Expenditure for the current program? You cannot add any more Expenditure once submitted!”
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

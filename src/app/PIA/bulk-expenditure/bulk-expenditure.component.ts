@@ -64,7 +64,7 @@ export class BulkExpenditureComponent implements OnInit {
         purchasedQuantity: new FormControl("", [Validators.required,Validators.pattern(/^[1-9]\d*$/)]),
         headOfExpenseId: new FormControl("", [Validators.required]),
         unitCost: new FormControl("", [Validators.required,Validators.pattern(/^(0*[1-9]\d*(\.\d+)?|0+\.\d*[1-9]\d*)$/)]),
-        billNo: new FormControl("", [Validators.required]),
+        billNo: new FormControl("", [Validators.required,Validators.pattern(/^[^\s].*/)]),
         billDate: new FormControl("", [Validators.required]),
         payeeName: new FormControl("", [Validators.required]),
         bankName: new FormControl("", ),

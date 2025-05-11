@@ -162,7 +162,7 @@
                   </div>
                 </div>
                 <div class="border-top text-end px-3 py-2">
-                  <button type="button" class="btn btn-lime-green" (click)="nextStep()">Save & Next <span class="bi bi-arrow-right ms-2"></span></button>
+                  <button type="button" class="btn btn-lime-green"  (click)="nextStep()">Next <span class="bi bi-arrow-right ms-2"></span></button>
                 </div>
               </div>
             </div>
@@ -326,7 +326,7 @@
                 </div>
                 <div class="border-top px-3 py-2 d-flex align-items-center justify-content-between">
                   <button type="button" class="btn btn-secondary" (click)="prevStep()"><span class="bi bi-arrow-left me-2"></span> Previous</button>
-                  <button type="button" class="btn btn-lime-green" (click)="nextStep()">Save & Next <span class="bi bi-arrow-right ms-2"></span></button>
+                  <button type="button" class="btn btn-lime-green" [ngClass]="{'disabled':disability}" (click)="nextStep()">Save & Next <span class="bi bi-arrow-right ms-2"></span></button>
                 </div>
               </div>
             </div>
@@ -371,7 +371,7 @@
 
                 <div class="border-top px-3 py-2 d-flex align-items-center justify-content-between">
                     <button type="button" class="btn btn-secondary" (click)="prevStep()"><span class="bi bi-arrow-left me-2"></span> Previous</button>
-                    <button type="button" class="btn btn-lime-green" (click)="nextStep()">Save & Next <span class="bi bi-arrow-right ms-2"></span></button>
+                    <button type="button" class="btn btn-lime-green" [ngClass]="{'disabled':disability}" (click)="nextStep()">Save & Next <span class="bi bi-arrow-right ms-2"></span></button>
                   </div>
               </div>
             </div>
@@ -398,6 +398,7 @@
                       <thead class="bg-lime-green text-white">
                           <tr>
                               <th>S.No</th>
+                              <th class="text-center" >Delete</th>
                               <th>Speaker Name</th>
                               <th>Topic Delivered</th>
                               <th>Time Taken</th>
@@ -408,7 +409,10 @@
                       </thead>
                       <tbody>
                         <tr *ngFor="let item of this.programForm.value.programDeliveryDetails;let i=index">
-                            <td class="text-start">{{i+1}}</td>
+                          <td class="text-start">{{i+1}}</td>
+                          <td class="text-center">
+                            <button type="button" class="btn btn-default text-danger btn-sm" (click)="deleteDelivery(i)"><span class="bi bi-trash"></span></button>
+                        </td>
                           <td>{{item?.speakerName}}</td>
                           <td>{{item?.topicDelivered}}</td>
                           <td>{{item?.timeTaken}}</td>
@@ -422,8 +426,8 @@
                 </div>
 
                 <div class="border-top px-3 py-2 d-flex align-items-center justify-content-between">
-                    <button type="button" class="btn btn-secondary" (click)="prevStep()"><span class="bi bi-arrow-left me-2"></span> Previous</button>
-                    <button type="button" class="btn btn-lime-green" (click)="nextStep()">Save & Next <span class="bi bi-arrow-right ms-2"></span></button>
+                    <button type="button" class="btn btn-secondary" (click)="prevStep()"> <span class="bi bi-arrow-left me-2"></span> Previous</button>
+                    <button type="button" class="btn btn-lime-green" (click)="nextStep()" [ngClass]="{'disabled':disability}" >Save & Next <span class="bi bi-arrow-right ms-2"></span></button>
                   </div>
               </div>
             </div>
@@ -478,7 +482,7 @@
                 </div>
                 <div class="border-top px-3 py-2 d-flex align-items-center justify-content-between">
                   <button type="button" class="btn btn-secondary" (click)="prevStep()"><span class="bi bi-arrow-left me-2"></span> Previous</button>
-                  <button type="button" class="btn btn-lime-green" (click)="nextStep()">Save & Next <span class="bi bi-arrow-right ms-2"></span></button>
+                  <button type="button" class="btn btn-lime-green" [ngClass]="{'disabled':disability}" (click)="nextStep()">Save & Next <span class="bi bi-arrow-right ms-2"></span></button>
                 </div>
               </div>
             </div>
@@ -490,278 +494,6 @@
               <div class="card-header bg-lime-green rounded-top text-white">
                   <h6 class="mb-0">Logistics & Facilities Evaluation</h6>
               </div>
-              <!-- <div class="card-body p-0">
-                <div class="p-3">
-                  <div class="row">
-                    <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4">
-                      <div class="mb-3 mb-md-3 mb-lg-3">
-                        <h6>Venue Quality</h6>
-                        <label class="fs-md fw-600 d-block mb-1">Rating (1-5)</label>
-                        <div class="form-check form-check-inline">
-                          <input class="form-check-input" type="radio" name="venueQuality" id="venueQuality1" value="1">
-                          <label class="form-check-label fs-md" for="venueQuality1">1</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                          <input class="form-check-input" type="radio" name="venueQuality" id="venueQuality2" value="2">
-                          <label class="form-check-label fs-md" for="venueQuality2">2</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                          <input class="form-check-input" type="radio" name="venueQuality" id="venueQuality3" value="3">
-                          <label class="form-check-label fs-md" for="venueQuality3">3</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                          <input class="form-check-input" type="radio" name="venueQuality" id="venueQuality4" value="4">
-                          <label class="form-check-label fs-md" for="venueQuality4">4</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                          <input class="form-check-input" type="radio" name="venueQuality" id="venueQuality5" value="5">
-                          <label class="form-check-label fs-md" for="venueQuality5">5</label>
-                        </div>
-                        <div class="mt-2">
-                          <textarea class="form-control" rows="3" placeholder="Remarks"></textarea>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4">
-                      <div class="mb-3 mb-md-3 mb-lg-3">
-                        <h6>Venue Accessibility for the persons with Disabilities</h6>
-                        <label class="fs-md fw-600 d-block mb-1">Rating (1-5)</label>
-                        <div class="form-check form-check-inline">
-                          <input class="form-check-input" type="radio" name="venueAccess" id="venueAccess1" value="1">
-                          <label class="form-check-label fs-md" for="venueAccess1">1</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                          <input class="form-check-input" type="radio" name="venueAccess" id="venueAccess2" value="2">
-                          <label class="form-check-label fs-md" for="venueAccess2">2</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                          <input class="form-check-input" type="radio" name="venueAccess" id="venueAccess3" value="3">
-                          <label class="form-check-label fs-md" for="venueAccess3">3</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                          <input class="form-check-input" type="radio" name="venueAccess" id="venueAccess4" value="4">
-                          <label class="form-check-label fs-md" for="venueAccess4">4</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                          <input class="form-check-input" type="radio" name="venueAccess" id="venueAccess5" value="5">
-                          <label class="form-check-label fs-md" for="venueAccess5">5</label>
-                        </div>
-                        <div class="mt-2">
-                          <textarea class="form-control" rows="3" placeholder="Remarks"></textarea>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4">
-                      <div class="mb-3 mb-md-3 mb-lg-3">
-                        <h6>Food Quality (Lunch / Tea / Snacks)</h6>
-                        <label class="fs-md fw-600 d-block mb-1">Rating (1-5)</label>
-                        <div class="form-check form-check-inline">
-                          <input class="form-check-input" type="radio" name="food" id="food1" value="1">
-                          <label class="form-check-label fs-md" for="food1">1</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                          <input class="form-check-input" type="radio" name="food" id="food2" value="2">
-                          <label class="form-check-label fs-md" for="food2">2</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                          <input class="form-check-input" type="radio" name="food" id="food3" value="3">
-                          <label class="form-check-label fs-md" for="food3">3</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                          <input class="form-check-input" type="radio" name="food" id="food4" value="4">
-                          <label class="form-check-label fs-md" for="food4">4</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                          <input class="form-check-input" type="radio" name="food" id="food5" value="5">
-                          <label class="form-check-label fs-md" for="food5">5</label>
-                        </div>
-                        <div class="mt-2">
-                          <textarea class="form-control" rows="3" placeholder="Remarks"></textarea>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4">
-                      <div class="mb-3 mb-md-3 mb-lg-3">
-                        <h6>Drinking Water Facility</h6>
-                        <label class="fs-md fw-600 d-block mb-1">Rating (1-5)</label>
-                        <div class="form-check form-check-inline">
-                          <input class="form-check-input" type="radio" name="drinking" id="drinking1" value="1">
-                          <label class="form-check-label fs-md" for="drinking1">1</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                          <input class="form-check-input" type="radio" name="drinking" id="drinking2" value="2">
-                          <label class="form-check-label fs-md" for="drinking2">2</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                          <input class="form-check-input" type="radio" name="drinking" id="drinking3" value="3">
-                          <label class="form-check-label fs-md" for="drinking3">3</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                          <input class="form-check-input" type="radio" name="drinking" id="drinking4" value="4">
-                          <label class="form-check-label fs-md" for="drinking4">4</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                          <input class="form-check-input" type="radio" name="drinking" id="drinking5" value="5">
-                          <label class="form-check-label fs-md" for="drinking5">5</label>
-                        </div>
-                        <div class="mt-2">
-                          <textarea class="form-control" rows="3" placeholder="Remarks"></textarea>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4">
-                      <div class="mb-3 mb-md-3 mb-lg-3">
-                        <h6>Toilet Hygiene</h6>
-                        <label class="fs-md fw-600 d-block mb-1">Rating (1-5)</label>
-                        <div class="form-check form-check-inline">
-                          <input class="form-check-input" type="radio" name="toilet" id="toilet1" value="1">
-                          <label class="form-check-label fs-md" for="toilet1">1</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                          <input class="form-check-input" type="radio" name="toilet" id="toilet2" value="2">
-                          <label class="form-check-label fs-md" for="toilet2">2</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                          <input class="form-check-input" type="radio" name="toilet" id="toilet3" value="3">
-                          <label class="form-check-label fs-md" for="toilet3">3</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                          <input class="form-check-input" type="radio" name="toilet" id="toilet4" value="4">
-                          <label class="form-check-label fs-md" for="toilet4">4</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                          <input class="form-check-input" type="radio" name="toilet" id="toilet5" value="5">
-                          <label class="form-check-label fs-md" for="toilet5">5</label>
-                        </div>
-                        <div class="mt-2">
-                          <textarea class="form-control" rows="3" placeholder="Remarks"></textarea>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4">
-                      <div class="mb-3 mb-md-3 mb-lg-3">
-                        <h6>Projector / AV Equipment</h6>
-                        <label class="fs-md fw-600 d-block mb-1">Rating (1-5)</label>
-                        <div class="form-check form-check-inline">
-                          <input class="form-check-input" type="radio" name="projector" id="projector1" value="1">
-                          <label class="form-check-label fs-md" for="projector1">1</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                          <input class="form-check-input" type="radio" name="projector" id="projector2" value="2">
-                          <label class="form-check-label fs-md" for="projector2">2</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                          <input class="form-check-input" type="radio" name="projector" id="projector3" value="3">
-                          <label class="form-check-label fs-md" for="projector3">3</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                          <input class="form-check-input" type="radio" name="projector" id="projector4" value="4">
-                          <label class="form-check-label fs-md" for="projector4">4</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                          <input class="form-check-input" type="radio" name="projector" id="projector5" value="5">
-                          <label class="form-check-label fs-md" for="projector5">5</label>
-                        </div>
-                        <div class="mt-2">
-                          <textarea class="form-control" rows="3" placeholder="Remarks"></textarea>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4">
-                      <div class="mb-3 mb-md-3 mb-lg-3">
-                        <h6>Stationary Availability</h6>
-                        <label class="fs-md fw-600 d-block mb-1">Rating (1-5)</label>
-                        <div class="form-check form-check-inline">
-                          <input class="form-check-input" type="radio" name="stationary" id="stationary1" value="1">
-                          <label class="form-check-label fs-md" for="stationary1">1</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                          <input class="form-check-input" type="radio" name="stationary" id="stationary2" value="2">
-                          <label class="form-check-label fs-md" for="stationary2">2</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                          <input class="form-check-input" type="radio" name="stationary" id="stationary3" value="3">
-                          <label class="form-check-label fs-md" for="stationary3">3</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                          <input class="form-check-input" type="radio" name="stationary" id="stationary4" value="4">
-                          <label class="form-check-label fs-md" for="stationary4">4</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                          <input class="form-check-input" type="radio" name="stationary" id="stationary5" value="5">
-                          <label class="form-check-label fs-md" for="stationary5">5</label>
-                        </div>
-                        <div class="mt-2">
-                          <textarea class="form-control" rows="3" placeholder="Remarks"></textarea>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4">
-                      <div class="mb-3 mb-md-3 mb-lg-3">
-                        <h6>Speaker Accommodation</h6>
-                        <label class="fs-md fw-600 d-block mb-1">Rating (1-5)</label>
-                        <div class="form-check form-check-inline">
-                          <input class="form-check-input" type="radio" name="accommodation" id="accommodation1" value="1">
-                          <label class="form-check-label fs-md" for="accommodation1">1</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                          <input class="form-check-input" type="radio" name="accommodation" id="accommodation2" value="2">
-                          <label class="form-check-label fs-md" for="accommodation2">2</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                          <input class="form-check-input" type="radio" name="accommodation" id="accommodation3" value="3">
-                          <label class="form-check-label fs-md" for="accommodation3">3</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                          <input class="form-check-input" type="radio" name="accommodation" id="accommodation4" value="4">
-                          <label class="form-check-label fs-md" for="accommodation4">4</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                          <input class="form-check-input" type="radio" name="accommodation" id="accommodation5" value="5">
-                          <label class="form-check-label fs-md" for="accommodation5">5</label>
-                        </div>
-                        <div class="mt-2">
-                          <textarea class="form-control" rows="3" placeholder="Remarks"></textarea>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4">
-                      <div class="mb-3 mb-md-3 mb-lg-3">
-                        <h6>Speaker Travel Arrangements</h6>
-                        <label class="fs-md fw-600 d-block mb-1">Rating (1-5)</label>
-                        <div class="form-check form-check-inline">
-                          <input class="form-check-input" type="radio" name="travel" id="travel1" value="1">
-                          <label class="form-check-label fs-md" for="travel1">1</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                          <input class="form-check-input" type="radio" name="travel" id="travel2" value="2">
-                          <label class="form-check-label fs-md" for="travel2">2</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                          <input class="form-check-input" type="radio" name="travel" id="travel3" value="3">
-                          <label class="form-check-label fs-md" for="travel3">3</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                          <input class="form-check-input" type="radio" name="travel" id="travel4" value="4">
-                          <label class="form-check-label fs-md" for="travel4">4</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                          <input class="form-check-input" type="radio" name="travel" id="travel5" value="5">
-                          <label class="form-check-label fs-md" for="travel5">5</label>
-                        </div>
-                        <div class="mt-2">
-                          <textarea class="form-control" rows="3" placeholder="Remarks"></textarea>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="border-top px-3 py-2 d-flex align-items-center justify-content-between">
-                    <button type="button" class="btn btn-secondary" (click)="prevStep()"><span class="bi bi-arrow-left me-2"></span> Previous</button>
-                    <button type="button" class="btn btn-lime-green" (click)="nextStep()">Save & Next <span class="bi bi-arrow-right ms-2"></span></button>
-                  </div>
-              </div> -->
               <div class="card-body p-0">
                 <div class="p-3">
                   <div class="row" >
@@ -788,7 +520,7 @@
 
                 <div class="border-top px-3 py-2 d-flex align-items-center justify-content-between">
                     <button type="button" class="btn btn-secondary" (click)="prevStep()"><span class="bi bi-arrow-left me-2"></span> Previous</button>
-                    <button type="button" class="btn btn-lime-green" (click)="nextStep()">Save & Next <span class="bi bi-arrow-right ms-2"></span></button>
+                    <button type="button" class="btn btn-lime-green" [ngClass]="{'disabled':disability}" (click)="nextStep()">Save & Next <span class="bi bi-arrow-right ms-2"></span></button>
                   </div>
               </div>
             </div>
@@ -861,7 +593,7 @@
                 </div>
                 <div class="border-top px-3 py-2 d-flex align-items-center justify-content-between">
                   <button type="button" class="btn btn-secondary" (click)="prevStep()"><span class="bi bi-arrow-left me-2"></span> Previous</button>
-                  <button type="button" class="btn btn-lime-green" (click)="nextStep()">Save & Next <span class="bi bi-arrow-right ms-2"></span></button>
+                  <button type="button" class="btn btn-lime-green" [ngClass]="{'disabled':disability}" (click)="nextStep()">Save & Next <span class="bi bi-arrow-right ms-2"></span></button>
                 </div>
               </div>
             </div>
@@ -983,7 +715,7 @@
                           <button type="button" class="btn btn-secondary" (click)="prevStep()">
                             <span class="bi bi-arrow-left me-2"></span> Previous
                           </button>
-                          <button type="button" class="btn btn-lime-green" (click)="nextStep()">
+                          <button type="button" class="btn btn-lime-green" [ngClass]="{'disabled':disability}" (click)="nextStep()">
                             Save & Next <span class="bi bi-arrow-right ms-2"></span>
                           </button>
                         </div>
@@ -1033,7 +765,7 @@
                           <button type="button" class="btn btn-secondary" (click)="prevStep()">
                             <span class="bi bi-arrow-left me-2"></span> Previous
                           </button>
-                          <button type="button" class="btn btn-lime-green" (click)="nextStep()">
+                          <button type="button" class="btn btn-lime-green" [ngClass]="{'disabled':disability}" (click)="nextStep()">
                             Save & Next <span class="bi bi-arrow-right ms-2"></span>
                           </button>
                         </div>
@@ -1108,7 +840,7 @@
                           <button type="button" class="btn btn-secondary" (click)="prevStep()">
                             <span class="bi bi-arrow-left me-2"></span> Previous
                           </button>
-                          <button type="button" class="btn btn-lime-green" (click)="nextStep()">
+                          <button type="button" class="btn btn-lime-green" [ngClass]="{'disabled':disability}" (click)="nextStep()">
                             Save & Next <span class="bi bi-arrow-right ms-2"></span>
                           </button>
                         </div>
@@ -1132,7 +864,7 @@
                           <button type="button" class="btn btn-secondary" (click)="prevStep()">
                             <span class="bi bi-arrow-left me-2"></span> Previous
                           </button>
-                          <button type="submit" (click)="FinalStep()" class="btn btn-lime-green">
+                          <button type="submit" (click)="FinalStep()" [ngClass]="{'disabled':disability}" class="btn btn-lime-green">
                             Submit <span class="bi bi-send ms-2" ></span>
                           </button>
                         </div>

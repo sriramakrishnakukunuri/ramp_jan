@@ -171,16 +171,20 @@ export class ViewParticipantComponent implements OnInit {
               },
               { 
                 data: null,
-                title: 'Delete',
+                title: 'Actions',
                 render: (data: any, type: any, row: any, meta: any) => {
                   // Use meta.row for the current displayed row index
                   // <button type="button" class="btn btn-default text-lime-green btn-sm edit-btn" data-index="${meta.row}">
                   //     <span class="bi bi-pencil"></span>
                   //   </button>
-                  return `                    
-                    <button type="button" class="btn btn-default text-danger btn-sm delete-btn" data-index="${meta.row}">
-                      <span class="bi bi-trash"></span>
-                    </button>
+                //   <button type="button" class="btn btn-default text-danger btn-sm delete-btn" data-index="${meta.row}">
+                //   <span class="bi bi-trash"></span>
+                // </button>
+                  return `   
+                   <button type="button" class="btn btn-default text-lime-green btn-sm edit-btn" data-index="${meta.row}">
+                      <span class="bi bi-pencil"></span>
+                  </button>                 
+                   
                   `;
                 },
                 className: 'text-center',
