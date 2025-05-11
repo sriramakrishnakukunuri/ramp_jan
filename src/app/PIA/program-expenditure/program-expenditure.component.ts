@@ -246,7 +246,7 @@ export class ProgramExpenditureComponent implements OnInit {
         next: (data: any) => {
          if(data){
            this.getBulkByItem = data;
-           this.BulkExpenditureForm.patchValue({"purchasedQuantity": this.getBulkByItem?.purchasedQuantity,"unitCost": this.getBulkByItem?.unitCost,"purchaseDate": this.getBulkByItem?.purchaseDate.substring(0,10),"consumedQuantityFromBulk": this.getBulkByItem?.consumedQuantity,"bulkExpenditureId": this.getBulkByItem?.bulkExpenditureId,"availableQuantity": this.getBulkByItem?.availableQuantity})
+           this.BulkExpenditureForm.patchValue({"purchasedQuantity": this.getBulkByItem?.purchasedQuantity,"unitCost": this.getBulkByItem?.unitCost,"purchaseDate":this.convertToISOFormat(this.getBulkByItem?.purchaseDate),"consumedQuantityFromBulk": this.getBulkByItem?.consumedQuantity,"bulkExpenditureId": this.getBulkByItem?.bulkExpenditureId,"availableQuantity": this.getBulkByItem?.availableQuantity})
          }
         },
         error: (err: any) => {
@@ -311,6 +311,8 @@ export class ProgramExpenditureComponent implements OnInit {
      
       this.BulkExpenditureForm.reset()
       this.BulkExpenditureForm.patchValue({...item,headOfExpenseId:this.getExpenseIdByName(item?.headOfExpense),billDate:this.convertToISOFormat(item?.billDate)})
+      this.getHeadOfExpenseId(this.getExpenseIdByName(item?.headOfExpense))
+      console.log(item?.itemName,this.getExpenseIdByName(item?.headOfExpense))
       this.getBulkDataByItem(item?.itemName,this.getExpenseIdByName(item?.headOfExpense))
       // this.PrePostExpenditureForm.get('uploadBillUrl')?.setValue(item?.uploadBillUrl)
   
@@ -327,8 +329,14 @@ export class ProgramExpenditureComponent implements OnInit {
   }
   //date converter
   convertToISOFormat(date: string): string {    
-    const [day, month, year] = date.split('-');
-    return `${year}-${month}-${day}`; // Convert to yyyy-MM-dd format
+    if(date){
+      const [day, month, year] = date.split('-');
+      return `${year}-${month}-${day}`; // Convert to yyyy-MM-dd format
+    }
+    else{
+      return ''
+    }
+  
   }
   getExpenseIdByName(expenseName: string): number | undefined {
     const expense = this.ExpenditureData.find((item:any) => item.expenseName === expenseName);
@@ -469,6 +477,9 @@ export class ProgramExpenditureComponent implements OnInit {
               this.TotalAmount+=item?.cost
             })
            }
+           else{
+            this.getPost()
+           }
             
           },
           error: (err) => {
@@ -493,6 +504,9 @@ export class ProgramExpenditureComponent implements OnInit {
             this.getExpenditureData?.map((item:any)=>{
               this.TotalAmount+=item?.cost
             })
+           }
+           else{
+            this.getBulkExpenditure()
            }
             
           },
@@ -578,6 +592,7 @@ export class ProgramExpenditureComponent implements OnInit {
   BulkTotalUnitCost:any=0
   BulkTotalCost:any=0
   getBulkExpenditure(){
+    console.log(this.f2['programId'].value,'bulk')
     this.getBulkExpenditureData=[]
     this.BulkTotalUnitCost=0
     this.BulkTotalCost=0
@@ -675,8 +690,12 @@ export class ProgramExpenditureComponent implements OnInit {
     }
   }
     ConfirmdeleteExpenditure(item:any){
+      console.log(item,'ConfirmdeleteExpenditure')
+      let id=item?.programExpenditureId?item?.programExpenditureId:item.bulkExpenditureTransactionId
+      let URL=item?.programExpenditureId?APIS.programExpenditure.deleteExpenditure:APIS.programExpenditure.deleteTransation
+      console.log(id)
       this._commonService
-      .add(APIS.programExpenditure.deleteExpenditure+item?.programExpenditureId?item?.programExpenditureId:item.bulkExpenditureTransactionId, {}).subscribe({
+      .add(URL+id, {}).subscribe({
         next: (data: any) => {
           if(data?.status==400){
             this.toastrService.error(data?.message, item.expenditureType +" Expenditure Data Error!");

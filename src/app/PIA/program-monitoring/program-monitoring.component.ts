@@ -49,12 +49,12 @@ export class ProgramMonitoringComponent implements OnInit {
   }
   agencyProgramList: any;
   getProgramsByAgency(agency:any) {
-    this._commonService.getDataByUrl(`${APIS.programCreation.getProgramsListByAgencyStatus+'/'+(this.loginsessionDetails.agencyId?this.loginsessionDetails.agencyId:this.agencyId)+'?status=Program Scheduled'}`).subscribe({
+    this._commonService.getDataByUrl(`${APIS.programCreation.getProgramsListByAgency+(this.loginsessionDetails.agencyId?this.loginsessionDetails.agencyId:this.agencyId)}`).subscribe({
       next: (res: any) => {
         this.agencyProgramList = res?.data
         if(res.data?.length){
           this.programIds = this.agencyProgramList[0].programId
-          this.loadProgramFeedback(this.programIds);
+          this.getByProgramId(this.programIds);
         }
       
       },
@@ -180,17 +180,47 @@ export class ProgramMonitoringComponent implements OnInit {
     // this.addLogisticsEvaluation();
   }
   convertToISOFormat(date: string): string {
-    console.log(date)
+    //console.log(date)
     const [day, month, year] = date.split('-');
     return `${year}-${month}-${day}`; // Convert to yyyy-MM-dd format
   }
+  getByProgramId(id: number){
+    //console.log(id,'getByProgramId')
+    this._commonService.getDataByUrl(APIS.programMonitoring.getProgramMonitoringByIdProgram+id).subscribe({
+     
+      next: (res: any) => {
+        //console.log(res,'getByProgramId1234')
+        if(res.data?.length){
+          this.monitorId=res.data[0].monitorId
+          // //console.log(this.monitorId,this.currentStep,res.data[0]?.stepNumber,this.totalSteps)
+          if (res.data[0]?.stepNumber < this.totalSteps) {
+            this.currentStep=res.data[0]?.stepNumber+1 
+          }
+          else{
+            this.currentStep=11
+          }
+          this.loadProgramFeedback(id)
+        }
+        else{
+          this.monitorId=null
+          this.currentStep=1
+          this.createForm()
+          this.addProgramDeliveryDetail()
+          this.loadProgramFeedback(id)
+        }
+      },
+      error: (err) => {
+        new Error(err);
+      }
+    })
+  }
   monitorId:any
   loadProgramFeedback(id: number): void {
-    if(this.currentStep==1){
+    if(this.currentStep==1 && !this.monitorId){
       this._commonService.getDataByUrl(APIS.programMonitoring.getProgramMonitoringById+id).subscribe
       ({
         next: (data) => {
-          console.log(data,'resp')
+          ////console.log(data,'resp')
           // this.programForm.reset();
           this.programForm.patchValue({
             ...data.data,
@@ -208,10 +238,10 @@ export class ProgramMonitoringComponent implements OnInit {
       ({
         next: (data) => {
           // this.currentStep=data.data[0]?.stepNumber+1 
-          console.log(this.currentStep)
+          ////console.log(this.currentStep)
           this.programForm.reset();
           this.createForm()
-          console.log(data.data, this.programForm.value)
+          ////console.log(data.data, this.programForm.value)
           this.programForm.patchValue({
             ...data.data,
             dateOfMonitoring:data.data?.dateOfMonitoring?this.convertToISOFormat(data.data.dateOfMonitoring): null
@@ -259,7 +289,7 @@ export class ProgramMonitoringComponent implements OnInit {
     this.checklistItems.map((checklist) => {
       this.preEventChecklists.push(this.createChecklistGroup(checklist));
     })
-    console.log(this.preEventChecklists.value,this.preEventChecklists.controls)
+    //console.log(this.preEventChecklists.value,this.preEventChecklists.controls)
   }
   
 
@@ -273,7 +303,7 @@ export class ProgramMonitoringComponent implements OnInit {
 
 
   createdynamiclogisticsEvaluations(){
-    console.log(this.logisticsEvaluations.value,this.evaluationItems)
+    //console.log(this.logisticsEvaluations.value,this.evaluationItems)
     this.evaluationItems.map((checklist:any) => {
       this.addLogisticsEvaluation(checklist)
         })
@@ -284,12 +314,12 @@ export class ProgramMonitoringComponent implements OnInit {
       rating: [item?.rating || 1, [ Validators.min(1), Validators.max(5)]],
       remarks: [item?.remarks || '']
     }));
-    console.log(this.logisticsEvaluations.value)
+    //console.log(this.logisticsEvaluations.value)
   }
 
   // Step Navigation
   nextStep(): void {
-    if(this.currentStep==1){
+    if(this.currentStep==1 && !this.monitorId){
       // this.programForm.get('programName')?.setValue(this.programIds)
       this.saveProgramData('save')
     }
@@ -299,7 +329,7 @@ export class ProgramMonitoringComponent implements OnInit {
   
   }
   FinalStep(): void {
-    console.log(this.currentStep,'final')
+    //console.log(this.currentStep,'final')
       this.saveProgramData('update');
     if (this.currentStep < this.totalSteps) {
       this.currentStep++;
@@ -317,7 +347,7 @@ export class ProgramMonitoringComponent implements OnInit {
   saveProgramData(type:any){
     if(type=='update'){
       let Payload:any={...this.programForm.value,stepNumber:this.currentStep,logisticsEvaluations:this.programForm.value?.logisticsEvaluations?this.programForm.value?.logisticsEvaluations:[],programDeliveryDetails:this.programForm.value?.programDeliveryDetails?this.programForm.value?.programDeliveryDetails:[],preEventChecklists:this.programForm.value?.preEventChecklists?this.programForm.value?.preEventChecklists:[]}
-      console.log(this.programForm.value,this.programForm.value?.preEventChecklists)
+      //console.log(this.programForm.value,this.programForm.value?.preEventChecklists)
       if(this.currentStep==3){
         Payload={stepNumber:this.currentStep,preEventChecklists:this.programForm.value?.preEventChecklists?this.programForm.value?.preEventChecklists:[]}
       }
@@ -337,7 +367,7 @@ export class ProgramMonitoringComponent implements OnInit {
      
     this._commonService.add(APIS.programMonitoring.updateProgramMonitoring+this.monitorId, Payload).subscribe({
       next: (response) => {
-        console.log('Success:', response);
+        //console.log('Success:', response);
         this.toastrService.success(this.curretstepsDetails[this.currentStep]+' Data Updated Successfully','Program Monitoring');
         if (this.currentStep < this.totalSteps) {
           this.currentStep++;
@@ -348,17 +378,17 @@ export class ProgramMonitoringComponent implements OnInit {
         // Show success message
       },
       error: (error) => {
-        console.error('Error:', error);
+        //console.error('Error:', error);
         this.toastrService.success(error.message,'Program Monitoring');
         // Show error message
       }
     });
     }
     else{
-      let Payload:any={...this.programForm.value,stepNumber:this.currentStep,logisticsEvaluations:[],programDeliveryDetails:[],preEventChecklists:[],programId:1}
+      let Payload:any={...this.programForm.value,stepNumber:this.currentStep,logisticsEvaluations:[],programDeliveryDetails:[],preEventChecklists:[],programId:this.programIds}
     this._commonService.add(APIS.programMonitoring.saveProgramMonitoring, Payload).subscribe({
       next: (response) => {
-        console.log('Success:', response);
+        //console.log('Success:', response);
         this.monitorId=response.data.monitorId
         this.toastrService.success(this.curretstepsDetails[this.currentStep]+' Data Saved Successfully','Program Monitoring');
         if (this.currentStep < this.totalSteps) {
@@ -369,7 +399,7 @@ export class ProgramMonitoringComponent implements OnInit {
         // Show success message
       },
       error: (error) => {
-        console.error('Error:', error);
+        //console.error('Error:', error);
         this.toastrService.success(error.message,'Program Monitoring');
         // Show error message
       }
@@ -390,11 +420,11 @@ export class ProgramMonitoringComponent implements OnInit {
 
   //     this.programFeedbackService.updateProgramFeedback(152, formData).subscribe({
   //       next: (response) => {
-  //         console.log('Success:', response);
+  //         //console.log('Success:', response);
   //         // Show success message
   //       },
   //       error: (error) => {
-  //         console.error('Error:', error);
+  //         //console.error('Error:', error);
   //         // Show error message
   //       }
   //     });
@@ -404,7 +434,7 @@ export class ProgramMonitoringComponent implements OnInit {
   //   }
   // }
   Enterdata(event:any){
-    console.log(event)
+    //console.log(event)
     const total=(this.programForm.get('maleParticipants')?.value || 0) + (this.programForm.get('femaleParticipants')?.value  || 0) + (this.programForm.get('transGenderParticipants')?.value  || 0)
     this.programForm.get('totalParticipants')?.setValue(total)
   }
@@ -419,7 +449,7 @@ export class ProgramMonitoringComponent implements OnInit {
   // Form Submission
   submit(){
 
-    console.log(this.programForm.value,this.programDeliveryDetailsForm.value)
+    //console.log(this.programForm.value,this.programDeliveryDetailsForm.value)
 
     // this.fMon['programDeliveryDetails'](this.fMon['programDeliveryDetails'].value,this.programDeliveryDetailsForm.value)
     const deliveryDetailsArray = this.programForm.get('programDeliveryDetails') as FormArray;
