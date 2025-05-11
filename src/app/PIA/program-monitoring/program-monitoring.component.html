@@ -10,7 +10,7 @@
           <div class="col-12 col-sm-4 col-md-3 col-lg-3">
             <div>
                 <label for="Agencies" style="font-weight: 600;">List Of Programs</label>
-                <select class="form-select" [(ngModel)]="programIds" (change)="loadProgramFeedback($any($event.target).value)">
+                <select class="form-select" [(ngModel)]="programIds" (change)="getByProgramId($any($event.target).value)">
                     <!-- <option value="">Select Program</option> -->
                 <option *ngFor="let list of agencyProgramList" value="{{list.programId}}">{{list.programTitle}}</option>
                 </select>
@@ -1132,8 +1132,8 @@
                           <button type="button" class="btn btn-secondary" (click)="prevStep()">
                             <span class="bi bi-arrow-left me-2"></span> Previous
                           </button>
-                          <button type="submit" class="btn btn-lime-green">
-                            Submit <span class="bi bi-send ms-2" (click)="FinalStep()"></span>
+                          <button type="submit" (click)="FinalStep()" class="btn btn-lime-green">
+                            Submit <span class="bi bi-send ms-2" ></span>
                           </button>
                         </div>
                       </div>

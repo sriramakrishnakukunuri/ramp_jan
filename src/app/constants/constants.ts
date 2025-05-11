@@ -113,6 +113,7 @@ export const APIS = {
     programMonitoring:{
         getProgramMonitoringById:API_BASE_URL +`/program/details/for/feedback/`,
         getProgramMonitoringByIdUpdated:API_BASE_URL +`/program/feedback/id/`,
+        getProgramMonitoringByIdProgram:API_BASE_URL +`/program/feedback/`,
         // getProgramMonitoringById:API_BASE_URL +`/program/monitoring/`,
         saveProgramMonitoring:API_BASE_URL +`/program/feedback/save`,
         updateProgramMonitoring:API_BASE_URL +`/program/feedback/update/`,
