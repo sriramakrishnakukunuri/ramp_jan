@@ -6,7 +6,6 @@ import { ToastrService } from 'ngx-toastr';
 import DataTable from 'datatables.net-dt';
 import 'datatables.net-buttons-dt';
 import 'datatables.net-responsive-dt';
-import { event } from 'jquery';
 declare var $: any;
 
 @Component({

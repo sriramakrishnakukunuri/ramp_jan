@@ -53,6 +53,7 @@ import { AddProgramSessionsComponent } from './PIA/add-program-sessions/add-prog
 import { NgxDocViewerModule } from 'ngx-doc-viewer';
 import { ViewProgramAgenciesComponent } from './PIA/view-program-agencies/view-program-agencies.component';
 import { ProgramMonitoringComponent } from './PIA/program-monitoring/program-monitoring.component';
+import { ViewAllAgencySessionsComponent } from './PIA/view-all-agency-sessions/view-all-agency-sessions.component';
 
 @NgModule({
     imports: [
@@ -111,6 +112,7 @@ import { ProgramMonitoringComponent } from './PIA/program-monitoring/program-mon
            AddProgramSessionsComponent,
            ViewProgramAgenciesComponent,
            ProgramMonitoringComponent,
+           ViewAllAgencySessionsComponent,
     ],
     exports:[MaterialModule],
     providers: [

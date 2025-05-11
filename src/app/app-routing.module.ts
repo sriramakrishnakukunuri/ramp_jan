@@ -34,6 +34,7 @@ import { ProgramSummaryComponent } from './PIA/program-summary/program-summary.c
 import { AddProgramSessionsComponent } from './PIA/add-program-sessions/add-program-sessions.component';
 import { ViewProgramAgenciesComponent } from './PIA/view-program-agencies/view-program-agencies.component';
 import { ProgramMonitoringComponent } from './PIA/program-monitoring/program-monitoring.component';
+import { ViewAllAgencySessionsComponent } from './PIA/view-all-agency-sessions/view-all-agency-sessions.component';
 
 const routes: Routes = [
     {
@@ -178,6 +179,12 @@ const routes: Routes = [
         component: AddProgramSessionsComponent,
         canActivate: [AuthGuard],
         data: { roles:  [Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
+    },
+    {
+        path: 'view-agency-sessions',
+        component: ViewAllAgencySessionsComponent,
+        canActivate: [AuthGuard],
+        data: { roles:  [Role.Admin] }
     },
     {
         path: 'program-sessions-edit/:id',
