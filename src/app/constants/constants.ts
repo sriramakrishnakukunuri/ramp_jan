@@ -100,6 +100,7 @@ export const APIS = {
         getBulkExpenditureByAgency:API_BASE_URL +`/bulk/expenditure/agency/`,
         getBulkExpenditureByProgramId:API_BASE_URL +`/bulk/transactions`,
         deleteExpenditure:API_BASE_URL +`/program/expenditure/delete/`,
+        deleteTransation:API_BASE_URL +`/bulk/transactions/delete/`,
         UpdateExpenditure:API_BASE_URL +`/program/expenditure/update/`,
         deleteBulkExpenditure:API_BASE_URL +`/bulk/expenditure/delete/`,
     },

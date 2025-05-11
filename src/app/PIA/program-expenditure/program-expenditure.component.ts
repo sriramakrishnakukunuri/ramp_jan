@@ -691,9 +691,10 @@ export class ProgramExpenditureComponent implements OnInit {
     ConfirmdeleteExpenditure(item:any){
       console.log(item,'ConfirmdeleteExpenditure')
       let id=item?.programExpenditureId?item?.programExpenditureId:item.bulkExpenditureTransactionId
+      let URL=item?.programExpenditureId?APIS.programExpenditure.deleteExpenditure:APIS.programExpenditure.deleteTransation
       console.log(id)
       this._commonService
-      .add(APIS.programExpenditure.deleteExpenditure+id, {}).subscribe({
+      .add(URL+id, {}).subscribe({
         next: (data: any) => {
           if(data?.status==400){
             this.toastrService.error(data?.message, item.expenditureType +" Expenditure Data Error!");
