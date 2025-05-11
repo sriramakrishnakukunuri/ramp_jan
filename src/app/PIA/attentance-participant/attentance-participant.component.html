@@ -57,9 +57,9 @@
                     </tbody>
                 </table>                
             </div>
-            <div>
+            <div>                
                 <div class="text-end mar-r mar-t" style="margin: 5px;" >
-                    <button type="button" [ngClass]="{'disabled': programIds == ''}" class="btn btn-lime-green" data-bs-toggle="modal" data-bs-target="#exampleModalDeleteConfirm">Final Submission</button> &nbsp;&nbsp;
+                    
                 <!-- [ngClass]="ParticipantAttendanceData?.participantAttendanceList?.length > 0?'disabled':''"  [ngClass]="workingJobType?.uploadReportFlag=='Completed' || isPullChecked?'disabled':''"-->
                 <button class="btn btn-lime-green"  [ngClass]="ParticipantAttendanceData?.participantAttendanceList?.length <= 0?'disabled':''"
                   (click)="editAll('editRow', ParticipantAttendanceData?.participantAttendanceList)" *ngIf="!(editAllTable)"  >Edit All</button>
@@ -68,6 +68,9 @@
                   <button class="btn btn-lime-green" (click)="saveAll(ParticipantAttendanceData?.participantAttendanceList)">Save All</button>
                 </span>
               </div>
+            </div>
+            <div class="mb-3">
+                <button type="button" [ngClass]="{'disabled': programIds == ''}" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModalDeleteConfirm">Final Submission</button>
             </div>
         </div>
     </section>

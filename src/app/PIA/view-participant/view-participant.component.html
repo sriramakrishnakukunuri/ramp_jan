@@ -17,13 +17,14 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-12 col-sm-6 col-md-6 col-lg-6">
-
+                        <button type="button" [ngClass]="{'disabled': !programIds}" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModalDeleteConfirm">Final Submission</button>
                     </div>
                     <div class="col-12 col-12 col-sm-6 col-md-6 col-lg-6 text-end">
-                        <button type="button" [ngClass]="{'disabled': !programIds}" class="btn btn-lime-green" data-bs-toggle="modal" data-bs-target="#exampleModalDeleteConfirm">Final Submission</button> &nbsp;&nbsp;
+                        <!-- <button type="button" [ngClass]="{'disabled': !programIds}" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModalDeleteConfirm">Final Submission</button> &nbsp;&nbsp; -->
                         <button type="button" [ngClass]="{'disabled': !programIds}" (click)="openFileUploadModal()" class="btn btn-lime-green" >Upload Participants</button>
                     </div>
                 </div>
+                <br>
                 <table id="view-table-participant1" class="table table-borderless table-striped nowrap">
                     <thead class="bg-lime-green text-white">
                         <tr>
