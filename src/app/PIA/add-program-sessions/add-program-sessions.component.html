@@ -190,11 +190,10 @@
                         </tbody>
                     </table>
                 </div>
+            </div>            
+            <div class="mb-3">
+                <button type="button" [ngClass]="{'disabled': programId == ''}" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModalDeleteConfirm">Final Submission</button>
             </div>
-
-            <!-- <div class="text-end mb-3">
-                <button type="button" class="btn btn-lime-green" data-bs-toggle="modal" data-bs-target="#previewModal">Submit</button>
-            </div> -->
 
         </div>
     </section>
@@ -532,6 +531,25 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-lime-green" (click)="confirmDelete(deleteSessionId)">Confirm</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="exampleModalDeleteConfirm" tabindex="-1" role="dialog" aria-labelledby="exampleModalDeleteConfirmLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalDeleteConfirmLabel">Final Session Submit</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to submit these Session Details for the current program? You cannot add any more Sessions once submitted!”
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-lime-green" (click)="sessionSubmissionFinal()">Confirm</button>
             </div>
         </div>
     </div>

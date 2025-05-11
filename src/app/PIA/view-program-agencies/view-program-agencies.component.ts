@@ -6,7 +6,6 @@ import { ToastrService } from 'ngx-toastr';
 import DataTable from 'datatables.net-dt';
 import 'datatables.net-buttons-dt';
 import 'datatables.net-responsive-dt';
-import { event } from 'jquery';
 declare var $: any;
 
 @Component({
@@ -105,6 +104,23 @@ export class ViewProgramAgenciesComponent implements OnInit ,AfterViewInit{
             },
             className: 'dt-center'
         },
+        { 
+          title: 'Actions',
+          data: null,
+          render: function(data:any, type:any, row:any,meta: any) {
+            console.log(data,row,meta)
+              // if (this.loginsessionDetails?.userRole == 'AGENCY_MANAGER' || this.loginsessionDetails?.userRole == 'AGENCY_EXECUTOR') {
+                  return `  <button type="button" class="btn btn-default btn-sm text-lime-green edit-btn" 
+                  title="Sessions" data-bs-toggle="modal" data-bs-target="#viewModal" 
+                  data-id="${row.id}" title="View">
+                  <span class="bi bi-eye"></span>
+                </button>`;
+              // }
+              // return '';
+          },
+          orderable: false,
+          className: 'text-center'
+      },
       { 
         data: 'agencyName',
         title: 'Agency Name'

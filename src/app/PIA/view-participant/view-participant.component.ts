@@ -27,11 +27,45 @@ export class ViewParticipantComponent implements OnInit {
   
     ngOnInit(): void {
       this.loginsessionDetails = JSON.parse(sessionStorage.getItem('user') || '{}');  
-      this.getProgramsByAgency()
+      if(this.loginsessionDetails.userRole == 'ADMIN') {
+        this.getAgenciesList()
+      }
+      else{
+        this.getProgramsByAgency()
+      }
+     
     }
+    selectedAgencyId:any;
+    agencyList:any;
+  getAgenciesList() {
+    this.agencyList = [];
+    this._commonService.getDataByUrl(APIS.masterList.agencyList).subscribe((res: any) => {
+      this.agencyList = res.data;
+      this.selectedAgencyId = res.data[0].agencyId
+      this.getProgramsByAgencyAdmin(this.selectedAgencyId)
+    }, (error) => {
+      this.toastrService.error(error.error.message);
+    });
+  }
     agencyProgramList: any;
+    getProgramsByAgencyAdmin(agency:any) {
+      this.submitedData = ''
+      this._commonService.getDataByUrl(`${APIS.programCreation.getProgramsListByAgency+'/'+agency}`).subscribe({
+        next: (res: any) => {
+          this.agencyProgramList = res?.data
+          this.programIds = this.agencyProgramList[0].programId
+          this.submitedData = ''
+          this.getData()
+        },
+        error: (err) => {
+          new Error(err);
+        }
+      })
+    }
     getProgramsByAgency() {
-      this._commonService.getDataByUrl(`${APIS.programCreation.getProgramsListByAgency+'/'+(this.loginsessionDetails.agencyId?this.loginsessionDetails.agencyId:this.agencyId)}`).subscribe({
+     
+
+      this._commonService.getDataByUrl(`${APIS.programCreation.getProgramsListBySession + (this.loginsessionDetails.agencyId?this.loginsessionDetails.agencyId:this.agencyId)}?status=Sessions Created`).subscribe({
         next: (res: any) => {
           this.agencyProgramList = res?.data
           this.programIds = this.agencyProgramList[0].programId
@@ -160,17 +194,27 @@ export class ViewParticipantComponent implements OnInit {
               },
               { 
                 data: null,
-                title: 'Edit / Delete',
+                title: 'Actions',
                 render: (data: any, type: any, row: any, meta: any) => {
                   // Use meta.row for the current displayed row index
-                  return `
-                    <button type="button" class="btn btn-default text-lime-green btn-sm edit-btn" data-index="${meta.row}">
-                      <span class="bi bi-pencil"></span>
-                    </button>
-                    <button type="button" class="btn btn-default text-danger btn-sm delete-btn" data-index="${meta.row}">
-                      <span class="bi bi-trash"></span>
-                    </button>
-                  `;
+                  // <button type="button" class="btn btn-default text-lime-green btn-sm edit-btn" data-index="${meta.row}">
+                  //     <span class="bi bi-pencil"></span>
+                  //   </button>
+                //   <button type="button" class="btn btn-default text-danger btn-sm delete-btn" data-index="${meta.row}">
+                //   <span class="bi bi-trash"></span>
+                // </button>
+                if (this.loginsessionDetails?.userRole == 'AGENCY_MANAGER' || this.loginsessionDetails?.userRole == 'AGENCY_EXECUTOR') {
+                  return `   
+                  <button type="button" class="btn btn-default text-lime-green btn-sm edit-btn" data-index="${meta.row}">
+                     <span class="bi bi-pencil"></span>
+                 </button>                 
+                  
+                 `;
+                }
+                else{
+                  return '';
+                }
+                 
                 },
                 className: 'text-center',
                 orderable: false
@@ -556,6 +600,32 @@ export class ViewParticipantComponent implements OnInit {
           }
         })
     }
+
+    sessionSubmissionFinal() {
+    let data = {}
+    this._commonService.add(`${APIS.programCreation.updateSessionByStatus}${this.programIds}?status=Participants Added`, data).subscribe({
+      next: (data: any) => {
+        console.log('Response from API:', data);
+        this.toastrService.success('Participants Details Submitted Successfully', "");
+        this.closeConfirmSession();
+        this.submitedData = ''
+        this.getProgramsByAgency()
+      },
+      error: (err: any) => {
+        this.closeConfirmSession();        
+        this.toastrService.error("Something unexpected happened!!");
+        new Error(err);
+      },
+    });    
+    }
+
+    closeConfirmSession() {
+    const editSessionModal = document.getElementById('exampleModalDeleteConfirm');
+    if (editSessionModal) {
+      const modalInstance = bootstrap.Modal.getInstance(editSessionModal);
+      modalInstance.hide();
+    }
+  }
   }
 
 

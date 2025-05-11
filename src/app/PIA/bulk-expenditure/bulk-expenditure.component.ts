@@ -64,11 +64,11 @@ export class BulkExpenditureComponent implements OnInit {
         purchasedQuantity: new FormControl("", [Validators.required,Validators.pattern(/^[1-9]\d*$/)]),
         headOfExpenseId: new FormControl("", [Validators.required]),
         unitCost: new FormControl("", [Validators.required,Validators.pattern(/^(0*[1-9]\d*(\.\d+)?|0+\.\d*[1-9]\d*)$/)]),
-        billNo: new FormControl("", [Validators.required]),
+        billNo: new FormControl("", [Validators.required,Validators.pattern(/^[^\s].*/)]),
         billDate: new FormControl("", [Validators.required]),
         payeeName: new FormControl("", [Validators.required]),
-        bankName: new FormControl("", [Validators.required]),
-        ifscCode: new FormControl("", [Validators.required,Validators.pattern(/^[A-Z]{4}0[A-Z0-9]{6}$/)]),
+        bankName: new FormControl("", ),
+        ifscCode: new FormControl("", [Validators.pattern(/^[A-Z]{4}0[A-Z0-9]{6}$/)]),
         modeOfPayment: new FormControl("", [Validators.required]),
         remarks: new FormControl("", ),
         uploadBillUrl: new FormControl("",),
@@ -201,7 +201,7 @@ export class BulkExpenditureComponent implements OnInit {
       this.uploadedFiles=[]
       this.BulkExpenditureForm.reset()
       this._commonService
-          .getDataByUrl(APIS.programExpenditure.getBulkExpenditure).subscribe({
+          .getDataByUrl(APIS.programExpenditure.getBulkExpenditureByAgency+this.agencyId).subscribe({
             next: (data: any) => {
               if(data?.data){
                 this.getBulkExpenditureData=data?.data

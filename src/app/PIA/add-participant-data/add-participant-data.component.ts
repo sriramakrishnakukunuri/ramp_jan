@@ -123,7 +123,9 @@ export class AddParticipantDataComponent implements OnInit {
 
   agencyProgramList: any;
   getProgramsByAgency() {
-    this._commonService.getDataByUrl(`${APIS.programCreation.getProgramsListByAgency+'/'+this.loginsessionDetails.agencyId}`).subscribe({
+    //`${APIS.programCreation.getProgramsListByAgency+'/'+this.loginsessionDetails.agencyId}`
+
+    this._commonService.getDataByUrl(`${APIS.programCreation.getProgramsListBySession + this.loginsessionDetails.agencyId}?status=Sessions Created`).subscribe({
       next: (res: any) => {
         this.agencyProgramList = res?.data
       },
@@ -328,10 +330,10 @@ export class AddParticipantDataComponent implements OnInit {
 
     sessionStorage.setItem('ParticipantData', JSON.stringify(this.submitedData));
   if(this.isedit){
-      
+      payload['programIds']=this.ParticipantDataForm.value.programIds
     payload['participantId']=this.participantId
     this._commonService
-        .updatedata(APIS.participantdata.update, payload).subscribe({
+        .add(APIS.participantdata.update, payload).subscribe({
       next: (data: any) => {
         if(data?.status==400){
           this.toastrService.error(data?.message, "Participant Data Error!");
@@ -344,7 +346,7 @@ export class AddParticipantDataComponent implements OnInit {
          this.participantId=''
          this.ParticipantDataForm.reset()
          this.formDetails()
-         this.router.navigateByUrl('/view-participant-data/');
+         this.router.navigateByUrl('/view-participant-data');
          // modal.close()
          this.toastrService.success('Participant Data updated Successfully', "Participant Data Success!");
         }

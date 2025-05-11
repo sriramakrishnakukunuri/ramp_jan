@@ -27,7 +27,7 @@
                     <div class="offcanvas-body">
                         <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
 
-                            <li class="nav-item" *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR,Role.CALL_CENTER]">
+                            <li class="nav-item" *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR,Role.CALL_CENTER,Role.Admin]">
                                 <a class="nav-link" routerLink="/global-dashboard" routerLinkActive="active" id="dropdown3" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     Dashboard
                                 </a>                               
@@ -48,8 +48,9 @@
                                     <span>Programs Per Agencies</span> <span class="bi bi-chevron-down"></span>
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="homeDropdown">                                    
-                                    <li><a class="dropdown-item" routerLink="/veiw-program" routerLinkActive="active">View Programs</a></li>                                    
-                                    <li><a class="dropdown-item"routerLink="/view-program-participate" routerLinkActive="active">View Participants</a></li>
+                                    <li><a class="dropdown-item" routerLink="/veiw-program" routerLinkActive="active">View Programs</a></li>               
+                                    <!-- <li><a class="dropdown-item" routerLink="/view-agency-sessions" routerLinkActive="active">View Sessions</a></li>                        -->
+                                    <li><a class="dropdown-item"routerLink="/view-Completed-data" routerLinkActive="active">View Participants</a></li>                                    
                                     <!-- <li><a class="dropdown-item" routerLink="/bulk-expenditure" routerLinkActive="active">Bulk Expenditure</a></li> -->
                                 </ul>
                             </li>
@@ -57,6 +58,11 @@
                             <li class="nav-item" *appHasRole="[Role.Admin]">
                                 <a class="nav-link" id="homeDropdown" role="button" routerLink="/view-table-organization" routerLinkActive="active" aria-expanded="false">
                                     <span>Masters List</span> 
+                                </a>                                
+                            </li>
+                            <li class="nav-item" *appHasRole="[Role.Admin]">
+                                <a class="nav-link" routerLink="/program-monitoring" routerLinkActive="active" id="dropdown3" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Program Monitoring
                                 </a>                                
                             </li>
                             <li class="nav-item dropdown" *appHasRole="[Role.Admin]">
@@ -75,10 +81,9 @@
                                 <ul class="dropdown-menu" aria-labelledby="homeDropdown">
                                     <li><a class="dropdown-item" routerLink="/program-creation" routerLinkActive="active">Add Program</a></li>
                                     <li><a class="dropdown-item" routerLink="/add-sessions" routerLinkActive="active">Add Sessions</a></li>  
-                                    <li><a class="dropdown-item" routerLink="/veiw-program-creation" routerLinkActive="active">View Programs</a></li>       
-                                    <!-- <li><a class="dropdown-item" routerLink="/veiw-program" routerLinkActive="active">View All Agencies Programs</a></li>                                 -->
-                                                                      
-                                    
+                                    <li><a class="dropdown-item" routerLink="/veiw-program-creation" routerLinkActive="active">View My Programs</a></li> 
+                                         
+                                    <li><a class="dropdown-item" routerLink="/veiw-program" routerLinkActive="active">View All Agencies Programs</a></li>                                
                                 </ul>
                             </li>
                             <li class="nav-item dropdown" *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]">
@@ -97,15 +102,15 @@
                                 Program Execution <span class="bi bi-chevron-down"></span>
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="dropdown2">    
-                                    <li><a class="dropdown-item" routerLink="/attendance-Participant" routerLinkActive="active">Particpant Attendance Details</a></li>  
-                                    <li><a class="dropdown-item" routerLink="/rawMaterials-Participant" routerLinkActive="active">Particpant Raw Material Details</a></li>                             
+                                <li><a class="dropdown-item" routerLink="/attendance-Participant" routerLinkActive="active">Particpant Attendance Details</a></li>  
+                                <li><a class="dropdown-item" routerLink="/rawMaterials-Participant" routerLinkActive="active">Particpant Raw Material Details</a></li>                             
                                 <li><a class="dropdown-item" routerLink="/update-program-execution" routerLinkActive="active">Program Execution</a></li>
                                 <li><a class="dropdown-item" routerLink="/program-expenditure" routerLinkActive="active">Program Expenditure</a></li>
                                 <li><a class="dropdown-item" routerLink="/bulk-expenditure" routerLinkActive="active">Bulk Expenditure</a></li>
                                 
                                 <!-- <li><a class="dropdown-item" routerLink="/add-participant-data" routerLinkActive="active">Add Participant</a></li>
                                 <li><a class="dropdown-item" routerLink="/view-participant-data" routerLinkActive="active">View Participant</a></li> -->
-                                <!-- <li><a class="dropdown-item" href="#">View Completed</a></li> -->
+                                <li><a class="dropdown-item" routerLink="/view-Completed-data" routerLinkActive="active">View Completed</a></li>
                                 </ul>
                             </li>
                             <li class="nav-item dropdown isDisabled" *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]">

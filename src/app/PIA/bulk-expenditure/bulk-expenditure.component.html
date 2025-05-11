@@ -162,7 +162,7 @@
                     <div class="row">
                         <div class="col-12 col-sm-6 col-md-4 col-lg-4">
                             <div class="form-floating mb-3">
-                                <input type="number" class="form-control" id="bill" placeholder="bill no." formControlName="billNo"    name="billNo">
+                                <input type="text" class="form-control" id="bill" placeholder="bill no." formControlName="billNo"    name="billNo">
                                 <label for="bill">Bill No.<span class="c-red"> *</span></label>
                             </div>
                             <div *ngIf="fBulk['billNo'].touched && !fBulk['billNo'].valid" class="error"
@@ -211,6 +211,7 @@
                                         <option value="#">Select Mode</option>
                                         <option value="BANK_TRANSFER">Bank Transfer</option>
                                         <option value="CASH">Cash</option>
+                                        <option value="UPI">UPI</option>
                                     </select>
                                     <label for="modePayment">Mode Of Payment<span class="c-red"> *</span></label>
                                 </div>

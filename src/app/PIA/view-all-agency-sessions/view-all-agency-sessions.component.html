@@ -5,12 +5,12 @@
                 <div class="card-header bg-transparent">
                     <div class="row align-items-center">
                         <div class="col-12 col-sm-7 col-md-8 col-lg-9">
-                            <h6 class="fw-600 mb-2 mb-sm-0 text-green">View Programs</h6>
+                            <h6 class="fw-600 mb-2 mb-sm-0 text-green">View Sessions</h6>
                         </div>
-                        <ng-container >
+                        <ng-container>
                             <div class="col-12 col-sm-5 col-md-4 col-lg-3">
                                 <label for="Agencies" style="font-weight: 600;">List Of Agencies</label>
-                                <select class="form-select" id="Agencies" [(ngModel)]="selectedAgencyId"    
+                                <select class="form-select" id="Agencies" [(ngModel)]="selectedAgencyId"
                                     (change)="GetProgramsByAgency($any($event.target).value)">
                                     <option value="-1"> All Agencies</option>
                                     <option *ngFor="let list of agencyList" value="{{list.agencyId}}">
@@ -23,59 +23,115 @@
                 </div>
                 <div class="card-body">
                     <div class="dtable-container">
-                        <table id="view-program" class="display nowrap" style="width:100%">
+                        <table id="session-table" class="table table-bordered nowrap w-100">
                             <thead class="bg-lime-green text-white">
                                 <tr>
-
-                                    <th>S.No</th>
-                                    <th>Actions</th>
-                                    <th>agency Name</th>
-                                    <th>Type Of Activity</th>
-                                    <th>Sub Activity</th>
-                                    <th>Type Of Program</th>
-                                    <!-- <th>Program Details</th> -->
-                                    <th>Title Of Program</th>
-                                    <!-- <th>No. Of Days</th> -->
-                                    <th>Start Date</th>
-                                    <th>End Date</th>
-                                    <th>In Time</th>
-                                    <th>Out Time</th>
-                                    <th>SPOC Name</th>
-                                    <th>SPOC Contact No.</th>
-                                    <th>Program Location</th>
-                                    
+                                    <!-- <th>S.No</th> -->
+                                    <th>Date</th>
+                                    <th>Start Time</th>
+                                    <th>End Time</th>
+                                    <th>Type of Session</th>
+                                    <th>Methodology</th>
+                                    <th>Session Details</th>
+                                    <th>Resource Person</th>
+                                    <th>Streaming URL</th>
+                                    <th>Upload File</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr *ngFor="let item of tableList; let i = index">
+                            <ng-container *ngFor="let list of tableList;let s=index">
+                                <tbody *ngFor="let item of list?.programSessionList; let i = index">
+                                    <tr>
+                                        <!-- <td>{{i + 1}}</td> -->
+                                        <td>{{item.sessionDate}}</td>
+                                        <td>{{item.startTime}}</td>
+                                        <td>{{item.endTime }}</td>
+                                        <td>{{item.sessionTypeName}}</td>
+                                        <td>{{item.sessionTypeMethodology}}</td>
+                                        <td>{{item.sessionDetails}}</td>
+                                        <td>{{item.resourceName}}</td>
+                                        <td>{{item.sessionStreamingUrl}}</td>
+                                        <td>
+                                            <ng-container *ngIf="item.files?.length > 0">
+                                                <!-- <button class="btn btn-secondary" type="button"
+                                            data-bs-toggle="collapse"
+                                            [attr.data-bs-target]="'#collapseFiles' + i"
+                                            aria-expanded="false"
+                                            [attr.aria-controls]="'collapseFiles' + i">
+                                            Files List
+                                        </button>                                         -->
 
-                                    <td>{{ i + 1 }}</td>
-                                    <td *ngIf="loginsessionDetails?.userRole == 'AGENCY_MANAGER' || loginsessionDetails?.userRole == 'AGENCY_EXECUTOR'
-                                    || loginsessionDetails?.userRole == 'ADMIN'">
-                                        <!-- (click)="sessionDetails(item)" data-bs-toggle="modal" data-bs-target="#viewModal" -->
-                                        <button type="button" class="btn btn-default btn-sm text-lime-green"
-                                            title="Sessions" data-bs-toggle="modal" data-bs-target="#viewModal"
-                                            (click)="sessionDetails(item)" title="View"><span
-                                                class="bi bi-eye"></span></button>
-                                        <!-- <button type="button" class="btn btn-default btn-sm text-primary mx-2" title="Edit" (click)="editProgram(item)"><span class="bi bi-pencil"></span></button> -->
-                                        <!-- <button type="button" class="btn btn-default btn-sm text-danger" title="Delete"><span class="bi bi-trash"></span></button> -->
-                                    </td>
-                                    <td>{{ item.activityName }}</td>
-                                    <td>{{ item.subActivityName }}</td>
-                                    <td>{{ item.programType }}</td>
-                                    <!-- <td>{{ item.programDetails }}</td> -->
-                                    <td>{{ item.programTitle }}</td>
-                                    <!-- <td>{{ item.noOfDays }}</td> -->
-                                    <td>{{ item.startDate }}</td>
-                                    <td>{{ item.endDate }}</td>
-                                    <td class="text-center">{{ item.startTime }}</td>
-                                    <td class="text-center">{{ item.endTime }}</td>
-                                    <td>{{ item.spocName }}</td>
-                                    <td>{{ item.spocContactNo }}</td>
-                                    <td>{{ item.programLocationName }}</td>
-                                    
-                                </tr>
-                            </tbody>
+                                                <i *ngIf="!collapseStates[i]" class="fa fa-arrow-circle-down"
+                                                    role="button" data-bs-toggle="collapse"
+                                                    [attr.data-bs-target]="'#collapseFiles' + i" aria-expanded="false"
+                                                    [attr.aria-controls]="'collapseFiles' + i"
+                                                    (click)="toggleIcon(i)"></i>
+                                                <i *ngIf="collapseStates[i]" class="fa fa-arrow-circle-up" role="button"
+                                                    data-bs-toggle="collapse"
+                                                    [attr.data-bs-target]="'#collapseFiles' + i" aria-expanded="false"
+                                                    [attr.aria-controls]="'collapseFiles' + i"
+                                                    (click)="toggleIcon(i)"></i>
+                                                <!-- 
+                                        <ng-container *ngFor="let file of item.files let first = first ;let last = last; let i = index">
+                                            <a href="{{file.filePath}}" target="_blank">{{file.filePath}}</a>
+                                            <span *ngIf="!last">, </span>
+                                        </ng-container>
+                                        -->
+                                            </ng-container>
+                                            <ng-container *ngIf="!item.files?.length">
+                                                <span>No Uploads</span>
+                                            </ng-container>
+                                        </td>
+                                        <!-- <td class="text-center">
+                                    <button type="button" class="btn btn-default text-lime-green btn-sm"
+                                        (click)="showSessionEditModal(item)"><span class="bi bi-pencil"></span></button>
+                                    <button type="button" class="btn btn-default text-danger btn-sm"
+                                        (click)="deleteSession(item)"><span class="bi bi-trash"></span></button>
+                                </td> -->
+                                    </tr>
+                                    <tr>
+                                        <!-- <div [id]="'collapseFiles' + i" class="collapse mt-2">
+                                    <div class="file-carousel mt-2">
+                                        <div *ngFor="let file of item.files; let j = index" class="file-item">
+                                            <div class="card p-2 text-center">
+                                                <div class="fw-bold mb-1">File {{ j + 1 }}</div>
+                                                (click)="showPreviewPopup(file)"
+                                                <a (click)="showPreviewPopup(file)" [attr.href]="previewData" target="_blank" class="text-primary text-decoration-underline">
+                                                    Download File
+                                                </a>
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> -->
+                                        <td colspan="10" class="sub-table">
+                                            <div [id]="'collapseFiles' + i" class="collapse mt-2">
+                                                <div class="file-carousel-container">
+                                                    <div class="file-carousel">
+                                                        <div *ngFor="let file of item.files" class="file-card">
+                                                            <div class="file-icon">
+                                                                <i [ngClass]="getFileIcon(file.filePath)"
+                                                                    [ngStyle]="{'color': getIconColor(file.filePath)}"
+                                                                    class="fa-3x"></i>
+                                                            </div>
+                                                            <div class="file-name">
+                                                                <a (click)="showPreviewPopup(file)"
+                                                                    [attr.href]="previewData" target="_blank"
+                                                                    class="text-primary text-decoration-none">
+                                                                    Download
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </td>
+
+
+                                    </tr>
+                                </tbody>
+                            </ng-container>
+
                         </table>
                     </div>
 
@@ -123,13 +179,13 @@
                             <!-- <td>{{ session.meterialType }}</td> -->
                             <td>
                                 <ng-container *ngIf="session.files?.length > 0">
-                                    <i *ngIf="!collapseStates[i]" class="fa fa-arrow-circle-down" role="button" data-bs-toggle="collapse"
-                                        [attr.data-bs-target]="'#collapseFiles' + i" aria-expanded="false"
-                                        [attr.aria-controls]="'collapseFiles' + i"
+                                    <i *ngIf="!collapseStates[i]" class="fa fa-arrow-circle-down" role="button"
+                                        data-bs-toggle="collapse" [attr.data-bs-target]="'#collapseFiles' + i"
+                                        aria-expanded="false" [attr.aria-controls]="'collapseFiles' + i"
                                         (click)="toggleIcon(i)"></i>
-                                    <i *ngIf="collapseStates[i]"  class="fa fa-arrow-circle-up" role="button" data-bs-toggle="collapse"
-                                        [attr.data-bs-target]="'#collapseFiles' + i" aria-expanded="false"
-                                        [attr.aria-controls]="'collapseFiles' + i"
+                                    <i *ngIf="collapseStates[i]" class="fa fa-arrow-circle-up" role="button"
+                                        data-bs-toggle="collapse" [attr.data-bs-target]="'#collapseFiles' + i"
+                                        aria-expanded="false" [attr.aria-controls]="'collapseFiles' + i"
                                         (click)="toggleIcon(i)"></i>
                                 </ng-container>
                                 <ng-container *ngIf="!session.files?.length">

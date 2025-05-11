@@ -143,6 +143,13 @@ export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
         className: 'text-center'
     },
     { 
+      data: 'status',
+      title: 'Status',
+      render: function(data, type, row) {
+        return data ? data : '';
+      }
+  },
+    { 
       data: 'agencyName',
       title: 'Agency Name',
       render: function(data, type, row) {
