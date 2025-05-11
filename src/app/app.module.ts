@@ -54,6 +54,7 @@ import { NgxDocViewerModule } from 'ngx-doc-viewer';
 import { ViewProgramAgenciesComponent } from './PIA/view-program-agencies/view-program-agencies.component';
 import { ProgramMonitoringComponent } from './PIA/program-monitoring/program-monitoring.component';
 import { ViewAllAgencySessionsComponent } from './PIA/view-all-agency-sessions/view-all-agency-sessions.component';
+import { ViewCompletedComponent } from './PIA/view-completed/view-completed.component';
 
 @NgModule({
     imports: [
@@ -113,6 +114,7 @@ import { ViewAllAgencySessionsComponent } from './PIA/view-all-agency-sessions/v
            ViewProgramAgenciesComponent,
            ProgramMonitoringComponent,
            ViewAllAgencySessionsComponent,
+           ViewCompletedComponent,
     ],
     exports:[MaterialModule],
     providers: [

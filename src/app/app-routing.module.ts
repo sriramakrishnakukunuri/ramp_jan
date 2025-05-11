@@ -35,6 +35,7 @@ import { AddProgramSessionsComponent } from './PIA/add-program-sessions/add-prog
 import { ViewProgramAgenciesComponent } from './PIA/view-program-agencies/view-program-agencies.component';
 import { ProgramMonitoringComponent } from './PIA/program-monitoring/program-monitoring.component';
 import { ViewAllAgencySessionsComponent } from './PIA/view-all-agency-sessions/view-all-agency-sessions.component';
+import { ViewCompletedComponent } from './PIA/view-completed/view-completed.component';
 
 const routes: Routes = [
     {
@@ -166,7 +167,13 @@ const routes: Routes = [
         path: 'view-participant-data',
         component: ViewParticipantComponent,
         canActivate: [AuthGuard],
-        data: { roles:  [Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
+        data: { roles:  [Role.Admin,Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
+    },
+    {
+        path: 'view-Completed-data',
+        component: ViewCompletedComponent,
+        canActivate: [AuthGuard],
+        data: { roles:  [Role.Admin,Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
     },
     {
         path: 'program-sessions',

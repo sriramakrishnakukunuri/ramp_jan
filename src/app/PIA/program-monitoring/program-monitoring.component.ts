@@ -22,7 +22,7 @@ export class ProgramMonitoringComponent implements OnInit {
   constructor(private fb: FormBuilder,
     private toastrService: ToastrService,
     private _commonService: CommonServiceService, private router: Router,) { 
-      this.agencyId = JSON.parse(sessionStorage.getItem('user') || '{}').agencyId;
+      // this.agencyId = JSON.parse(sessionStorage.getItem('user') || '{}').agencyId;
       this.createForm();
       this.addProgramDeliveryDetail()
     }
@@ -45,16 +45,32 @@ export class ProgramMonitoringComponent implements OnInit {
     // this.loadProgramFeedback(152);
     this.loginsessionDetails = JSON.parse(sessionStorage.getItem('user') || '{}');  
     
-      this.getProgramsByAgency( this.agencyId )
+      this.getAgenciesList(  )
+  }
+  agencyList:any
+  getAgenciesList() {
+    this.agencyList = [];
+    this._commonService.getDataByUrl(APIS.masterList.agencyList).subscribe((res: any) => {
+      this.agencyList = res.data;
+      this.agencyId=res.data[0].agencyId
+      this.getProgramsByAgency(res.data[0].agencyId);
+    }, (error) => {
+      this.toastrService.error(error.error.message);
+    });
   }
   agencyProgramList: any;
   getProgramsByAgency(agency:any) {
-    this._commonService.getDataByUrl(`${APIS.programCreation.getProgramsListByAgency+(this.loginsessionDetails.agencyId?this.loginsessionDetails.agencyId:this.agencyId)}`).subscribe({
+    this.agencyProgramList =[]
+    this._commonService.getDataByUrl(`${APIS.programCreation.getProgramsListByAgency+agency}`).subscribe({
       next: (res: any) => {
         this.agencyProgramList = res?.data
         if(res.data?.length){
           this.programIds = this.agencyProgramList[0].programId
           this.getByProgramId(this.programIds);
+        }
+        else{
+          this.createForm()
+          this.currentStep=1
         }
       
       },

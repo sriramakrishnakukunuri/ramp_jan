@@ -49,8 +49,8 @@
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="homeDropdown">                                    
                                     <li><a class="dropdown-item" routerLink="/veiw-program" routerLinkActive="active">View Programs</a></li>               
-                                    <li><a class="dropdown-item" routerLink="/view-agency-sessions" routerLinkActive="active">View Sessions</a></li>                       
-                                    <li><a class="dropdown-item"routerLink="/view-program-participate" routerLinkActive="active">View Participants</a></li>                                    
+                                    <!-- <li><a class="dropdown-item" routerLink="/view-agency-sessions" routerLinkActive="active">View Sessions</a></li>                        -->
+                                    <li><a class="dropdown-item"routerLink="/view-Completed-data" routerLinkActive="active">View Participants</a></li>                                    
                                     <!-- <li><a class="dropdown-item" routerLink="/bulk-expenditure" routerLinkActive="active">Bulk Expenditure</a></li> -->
                                 </ul>
                             </li>
@@ -58,6 +58,11 @@
                             <li class="nav-item" *appHasRole="[Role.Admin]">
                                 <a class="nav-link" id="homeDropdown" role="button" routerLink="/view-table-organization" routerLinkActive="active" aria-expanded="false">
                                     <span>Masters List</span> 
+                                </a>                                
+                            </li>
+                            <li class="nav-item" *appHasRole="[Role.Admin]">
+                                <a class="nav-link" routerLink="/program-monitoring" routerLinkActive="active" id="dropdown3" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Program Monitoring
                                 </a>                                
                             </li>
                             <li class="nav-item dropdown" *appHasRole="[Role.Admin]">
@@ -77,7 +82,7 @@
                                     <li><a class="dropdown-item" routerLink="/program-creation" routerLinkActive="active">Add Program</a></li>
                                     <li><a class="dropdown-item" routerLink="/add-sessions" routerLinkActive="active">Add Sessions</a></li>  
                                     <li><a class="dropdown-item" routerLink="/veiw-program-creation" routerLinkActive="active">View My Programs</a></li> 
-                                    <li><a class="dropdown-item" routerLink="/program-monitoring" routerLinkActive="active">Program Monitoring</a></li>      
+                                         
                                     <li><a class="dropdown-item" routerLink="/veiw-program" routerLinkActive="active">View All Agencies Programs</a></li>                                
                                 </ul>
                             </li>
@@ -105,7 +110,7 @@
                                 <!-- <li><a class="dropdown-item" routerLink="/program-summary" routerLinkActive="active">Program Summary</a></li> -->
                                 <!-- <li><a class="dropdown-item" routerLink="/add-participant-data" routerLinkActive="active">Add Participant</a></li>
                                 <li><a class="dropdown-item" routerLink="/view-participant-data" routerLinkActive="active">View Participant</a></li> -->
-                                <li><a class="dropdown-item" href="#">View Completed</a></li>
+                                <li><a class="dropdown-item" routerLink="/view-Completed-data" routerLinkActive="active">View Completed</a></li>
                                 </ul>
                             </li>
                             <li class="nav-item dropdown" *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]">
