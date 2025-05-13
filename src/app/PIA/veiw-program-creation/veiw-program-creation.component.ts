@@ -7,6 +7,7 @@ import DataTable from 'datatables.net-dt';
 import 'datatables.net-buttons-dt';
 import 'datatables.net-responsive-dt';
 import { event } from 'jquery';
+declare var bootstrap: any;
 declare var $: any;
 
 @Component({
@@ -32,12 +33,14 @@ export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    console.log(this.loginsessionDetails);
+    // console.log(this.loginsessionDetails);
     if(this.loginsessionDetails.userRole == 'ADMIN') {
       this.getAgenciesList()
     }
     else{
       this.getProgramDetails();
+      this.getData()
+      this.selectedAgencyId=this.agencyId
     }
     
   }
@@ -48,6 +51,7 @@ export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
   GetProgramsByAgency(event:any){
     this.agencyByAdmin=event;
     this.selectedAgencyId = event;
+    this.getData()
     this._commonService.getDataByUrl(APIS.programCreation.getProgramsListByAgencyDetails+event).subscribe({
       next: (dataList: any) => {
         this.tableList = dataList.data;
@@ -61,6 +65,7 @@ export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
 
   getProgramDetails(): any {
     this.tableList = '';
+
     this._commonService.getDataByUrl(APIS.programCreation.getProgramsListByAgencyDetails+this.loginsessionDetails.agencyId).subscribe({
       next: (dataList: any) => {
         this.tableList = dataList.data;
@@ -73,7 +78,7 @@ export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
   }
 
   sessionDetails(dataList: any): any {
-    console.log(dataList)
+    // console.log(dataList)
     this.sessionDetailsList = dataList.programSessionList;
   }
 
@@ -120,71 +125,32 @@ export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
       { 
           title: 'S.No',
           render: function(data, type, row, meta:any) {
-            console.log(data,meta,type, row)
+            // console.log(data,meta,type, row)
               return meta.settings?._iDisplayStart+meta.row  + 1;
           },
           className: 'dt-center'
       },
+   
       { 
         title: 'Actions',
         data: null,
         render: function(data:any, type:any, row:any,meta: any) {
-          console.log(data,row,meta)
+          // console.log(data,row,meta)
             // if (this.loginsessionDetails?.userRole == 'AGENCY_MANAGER' || this.loginsessionDetails?.userRole == 'AGENCY_EXECUTOR') {
                 return `  <button type="button" class="btn btn-default btn-sm text-lime-green edit-btn" 
                 title="Sessions" data-bs-toggle="modal" data-bs-target="#viewModal" 
                 data-id="${row.id}" title="View">
                 <span class="bi bi-eye"></span>
-              </button>`;
+              </button>
+              <button type="button" class="btn btn-default btn-sm text-danger delete-btn" data-id="${row.id}" title="Delete"><span class="bi bi-trash"></span></button>
+              `;
             // }
             // return '';
         },
         orderable: false,
         className: 'text-center'
     },
-    { 
-      data: 'status',
-      title: 'Status',
-      render: function(data, type, row) {
-        return data ? data : '';
-      }
-  },
-    { 
-      data: 'agencyName',
-      title: 'Agency Name',
-      render: function(data, type, row) {
-        return data ? data : '';
-      }
-  },
-      { 
-          data: 'activityName',
-          title: 'Type Of Activity',
-          render: function(data, type, row) {
-            return data ? data : '';
-          }
-      },
-      { 
-          data: 'subActivityName',
-          title: 'Sub Activity',
-          render: function(data, type, row) {
-            return data ? data : '';
-          }
-      },
-      { 
-          data: 'programType',
-          title: 'Type Of Program',
-          render: function(data, type, row) {
-            return data ? data : '';
-          }
-      },
-      { 
-          data: 'programTitle',
-          title: 'Title Of Program',
-          render: function(data, type, row) {
-            return data ? data : '';
-          }
-      },
-      { 
+        { 
           data: 'startDate',
           title: 'Start Date',
           render: function(data, type, row) {
@@ -214,6 +180,52 @@ export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
             return data ? data : '';
           }
       },
+   
+    { 
+      data: 'programType',
+      title: 'Type Of Program',
+      render: function(data, type, row) {
+        return data ? data : '';
+      }
+    },
+    { 
+      data: 'agencyName',
+      title: 'Agency Name',
+      render: function(data, type, row) {
+        return data ? data : '';
+      }
+    },
+    { 
+      data: 'programTitle',
+      title: 'Title Of Program',
+      render: function(data, type, row) {
+        return data ? data : '';
+      }
+    },
+    { 
+      data: 'status',
+      title: 'Status',
+      render: function(data, type, row) {
+        return data ? data : '';
+      }
+    },
+   
+     { 
+          data: 'activityName',
+          title: 'Type Of Activity',
+          render: function(data, type, row) {
+            return data ? data : '';
+          }
+      },
+      { 
+          data: 'subActivityName',
+          title: 'Sub Activity',
+          render: function(data, type, row) {
+            return data ? data : '';
+          }
+      },
+      
+     
       { 
           data: 'spocName',
           title: 'SPOC Name',
@@ -260,6 +272,10 @@ export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
       const rowData = self.dataTable.row($(event.currentTarget).parents('tr')).data();
       self.sessionDetails(rowData); // Call your method with proper data
     });
+    $('#view-table-program').on('click', '.delete-btn', (event:any) => {
+      const rowData = self.dataTable.row($(event.currentTarget).parents('tr')).data();
+      self.deleteExpenditure(rowData);
+    });
   }
     });
   }
@@ -285,6 +301,7 @@ export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
     this._commonService.getDataByUrl(APIS.masterList.agencyList).subscribe((res: any) => {
       this.agencyList = res.data;
       this.selectedAgencyId =-1
+      this.getData()
       this.GetProgramsByAgency(-1);
     }, (error) => {
       this.toastrService.error(error.error.message);
@@ -335,5 +352,68 @@ export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
   toggleIcon(index: number): void {
     this.collapseStates[index] = !this.collapseStates[index];
   }
-    
+  PrigramSummaryData:any={}
+  getData() {
+    this.PrigramSummaryData ={}
+    this._commonService.getById(APIS.programCreation.programSummary, this.selectedAgencyId).subscribe({
+      next: (res: any) => {          
+        // this.PrigramSummaryData = res?.data   
+      // console.log( this.PrigramSummaryData)
+      this.PrigramSummaryData = res?.data
+      },
+      error: (err) => {
+        this.toastrService.error('Data Not Available', "Summary Data Error!");
+        new Error(err);
+      },
+    });
+    // console.log(this.ParticipantAttentance)
+  }
+
+
+     // delete Expenditure
+     deleteProgramId:any ={}
+     deleteExpenditure(item: any) {
+     this.deleteProgramId = item?.programId
+     document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+     const myModal = new bootstrap.Modal(document.getElementById('exampleModalDeleteProgram'));
+      myModal.show();
+   }
+     ConfirmdeleteExpenditure(item:any){
+       this._commonService
+       .deleteId(APIS.programCreation.deleteProgram,item).subscribe({
+         next: (data: any) => {
+           if(data?.status==400){
+             this.toastrService.error(data?.message, "Program Data Error!");
+             this.closeModalDelete();
+             this.deleteProgramId =''
+           }
+           else{
+            this.getProgramDetails()
+            this.reinitializeDataTable();
+             this.closeModalDelete();
+             this.deleteProgramId =''
+           this.toastrService.success( 'Program Deleted Successfully', "Program Data Success!");
+           }
+           
+         },
+         error: (err) => {
+           this.closeModalDelete();
+           this.deleteProgramId ={}
+           this.toastrService.error(err.message, "Program Data Error!");
+           new Error(err);
+         },
+       });
+ 
+     }
+     closeModalDelete(): void {
+
+      const editSessionModal = document.getElementById('exampleModalDeleteProgram');
+    if (editSessionModal) {
+      const modalInstance = bootstrap.Modal.getInstance(editSessionModal);
+      modalInstance.hide();
+    }
+
+      // const myModal = bootstrap.Modal.getInstance(document.getElementById('exampleModalDelete'));
+      // myModal.hide();
+     } 
 }

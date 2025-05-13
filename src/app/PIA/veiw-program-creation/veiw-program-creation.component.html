@@ -22,6 +22,33 @@
                     </div>
                 </div>
                 <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-12 col-sm-12 col-md-3 col-lg-3">
+                            <div class="card bg-primary text-white text-center shadow-none p-2">
+                                <label>Programs Scheduled</label>
+                                <p class="fw-bold fs-6 mb-0">{{PrigramSummaryData?.programScheduled || 0}}</p>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-3 col-lg-3">
+                            <div class="card bg-warning text-white text-center shadow-none p-2">
+                                <label>Programs Completed</label>
+                                <p class="fw-bold fs-6 mb-0">{{PrigramSummaryData?.programCompleted || 0}}</p>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-3 col-lg-3">
+                            <div class="card bg-lime-green text-white text-center shadow-none p-2">
+                                <label>Programs OverDue</label>
+                                <p class="fw-bold fs-6 mb-0">{{PrigramSummaryData?.programOverdue || 0}}</p>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-3 col-lg-3">
+                            <div class="card bg-info text-white text-center shadow-none p-2">
+                                <label>Programs Due</label>
+                                <p class="fw-bold fs-6 mb-0">{{PrigramSummaryData?.programDue || 0}}</p>
+                            </div>
+                        </div>
+
+                    </div>
                     <div class="dtable-container">
                         <table id="view-table-program" class="display nowrap" style="width:100%">
                             <thead class="bg-lime-green text-white">
@@ -29,18 +56,20 @@
 
                                     <th>S.No</th>
                                     <th class="text-center" >Actions</th>
-                                    <th>Status</th>
-                                    <th>agency Name</th>
-                                    <th>Type Of Activity</th>
-                                    <th>Sub Activity</th>
-                                    <th>Type Of Program</th>
-                                    <!-- <th>Program Details</th> -->
-                                    <th>Title Of Program</th>
-                                    <!-- <th>No. Of Days</th> -->
                                     <th>Start Date</th>
                                     <th>End Date</th>
                                     <th>In Time</th>
                                     <th>Out Time</th>
+                                    <th>Type Of Program</th>
+                                    <!-- <th>Program Details</th> -->
+                                    <th>Title Of Program</th>
+                                    <th>Status</th>
+                                    <th>agency Name</th>
+                                    <th>Type Of Activity</th>
+                                    <th>Sub Activity</th>
+                                    
+                                    <!-- <th>No. Of Days</th> -->
+                                   
                                     <th>SPOC Name</th>
                                     <th>SPOC Contact No.</th>
                                     <th>Program Location</th>
@@ -58,20 +87,24 @@
                                             title="Sessions" data-bs-toggle="modal" data-bs-target="#viewModal"
                                             (click)="sessionDetails(item)" title="View"><span
                                                 class="bi bi-eye"></span></button>
+                                                <button type="button" class="btn btn-default btn-sm text-danger" title="Delete"><span class="bi bi-trash"></span></button>
                                         <!-- <button type="button" class="btn btn-default btn-sm text-primary mx-2" title="Edit" (click)="editProgram(item)"><span class="bi bi-pencil"></span></button> -->
                                         <!-- <button type="button" class="btn btn-default btn-sm text-danger" title="Delete"><span class="bi bi-trash"></span></button> -->
                                     </td>
-                                    <td>{{ item.status }}</td>
-                                    <td>{{ item.activityName }}</td>
-                                    <td>{{ item.subActivityName }}</td>
-                                    <td>{{ item.programType }}</td>
-                                    <!-- <td>{{ item.programDetails }}</td> -->
-                                    <td>{{ item.programTitle }}</td>
-                                    <!-- <td>{{ item.noOfDays }}</td> -->
                                     <td>{{ item.startDate }}</td>
                                     <td>{{ item.endDate }}</td>
                                     <td class="text-center">{{ item.startTime }}</td>
                                     <td class="text-center">{{ item.endTime }}</td>
+                                    <td>{{ item.programType }}</td>
+                                    <td>{{ item.programTitle }}</td>
+                                    <td>{{ item.status }}</td>
+                                    <td>{{ item.activityName }}</td>
+                                    <td>{{ item.subActivityName }}</td>
+                                    
+                                    <!-- <td>{{ item.programDetails }}</td> -->
+                                    
+                                    <!-- <td>{{ item.noOfDays }}</td> -->
+                                    
                                     <td>{{ item.spocName }}</td>
                                     <td>{{ item.spocContactNo }}</td>
                                     <td>{{ item.programLocationName }}</td>
@@ -234,4 +267,22 @@
             </div>
         </div>
     </div>
+</div>
+
+<div class="modal fade" id="exampleModalDeleteProgram" tabindex="-1" role="dialog" aria-labelledby="exampleModalDeleteLabel" aria-hidden="true">
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalDeleteLabel">Delete Program</h5>
+            <button type="button" class="btn-close" (click)="closeModalDelete()" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            Are you sure you want to delete Program?
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="closeModalDelete()" >Close</button>
+            <button type="button" class="btn btn-lime-green"  (click)="ConfirmdeleteExpenditure(deleteProgramId)">Confirm</button>
+        </div>
+    </div>
+</div>
 </div>

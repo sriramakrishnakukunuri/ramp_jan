@@ -22,6 +22,33 @@
                     </div>
                 </div>
                 <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-12 col-sm-12 col-md-3 col-lg-3">
+                            <div class="card bg-primary text-white text-center shadow-none p-2">
+                                <label>Programs Scheduled</label>
+                                <p class="fw-bold fs-6 mb-0">{{PrigramSummaryData?.programScheduled || 0}}</p>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-3 col-lg-3">
+                            <div class="card bg-warning text-white text-center shadow-none p-2">
+                                <label>Programs Completed</label>
+                                <p class="fw-bold fs-6 mb-0">{{PrigramSummaryData?.programCompleted || 0}}</p>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-3 col-lg-3">
+                            <div class="card bg-lime-green text-white text-center shadow-none p-2">
+                                <label>Programs OverDue</label>
+                                <p class="fw-bold fs-6 mb-0">{{PrigramSummaryData?.programOverdue || 0}}</p>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-3 col-lg-3">
+                            <div class="card bg-info text-white text-center shadow-none p-2">
+                                <label>Programs Due</label>
+                                <p class="fw-bold fs-6 mb-0">{{PrigramSummaryData?.programDue || 0}}</p>
+                            </div>
+                        </div>
+
+                    </div>
                     <div class="dtable-container">
                         <table id="view-program" class="display nowrap" style="width:100%">
                             <thead class="bg-lime-green text-white">
@@ -29,6 +56,7 @@
 
                                     <th>S.No</th>
                                     <th>Actions</th>
+                                    <th>Status</th>
                                     <th>agency Name</th>
                                     <th>Type Of Activity</th>
                                     <th>Sub Activity</th>
@@ -60,6 +88,7 @@
                                         <!-- <button type="button" class="btn btn-default btn-sm text-primary mx-2" title="Edit" (click)="editProgram(item)"><span class="bi bi-pencil"></span></button> -->
                                         <!-- <button type="button" class="btn btn-default btn-sm text-danger" title="Delete"><span class="bi bi-trash"></span></button> -->
                                     </td>
+                                    <td>{{ item.status }}</td>
                                     <td>{{ item.activityName }}</td>
                                     <td>{{ item.subActivityName }}</td>
                                     <td>{{ item.programType }}</td>

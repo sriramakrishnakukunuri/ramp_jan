@@ -59,6 +59,9 @@ export class CommonServiceService {
   deleteById(URL: any, id: any): Observable<any> {
     return this.http.post(URL + id,{},{ responseType: 'text' })
   }
+  deleteId(URL: any, id: any): Observable<any> {
+    return this.http.delete(URL + id).pipe(catchError(this.formatErrors));
+  }
 
   public getDataByUrl(URL: any): Observable<any> {
     return this.http.get(URL).pipe(catchError(this.formatErrors));
