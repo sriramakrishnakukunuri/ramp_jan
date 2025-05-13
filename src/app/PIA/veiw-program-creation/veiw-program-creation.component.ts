@@ -364,7 +364,7 @@ export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
   PrigramSummaryData:any={}
   getData() {
     this.PrigramSummaryData ={}
-    this._commonService.getById(APIS.programCreation.programSummary, this.selectedAgencyId).subscribe({
+    this._commonService.getById(APIS.programCreation.programSummary, this.agencyId).subscribe({
       next: (res: any) => {          
         // this.PrigramSummaryData = res?.data   
       // console.log( this.PrigramSummaryData)
