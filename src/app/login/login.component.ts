@@ -53,7 +53,7 @@ export class LoginComponent implements OnInit {
                         // get return url from query parameters or default to home page
                         this.loading = false;
                         if(res.data.userRole === Role.Admin){
-                            this.router.navigateByUrl('/veiw-program-creation');
+                            this.router.navigateByUrl('/veiw-program');
                         }else if(res.data.userRole === Role.AGENCY_MANAGER
                             || res.data.userRole === Role.AGENCY_EXECUTOR
                         ){
