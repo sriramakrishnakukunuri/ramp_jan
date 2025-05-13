@@ -40,6 +40,7 @@ export class ViewProgramAgenciesComponent implements OnInit ,AfterViewInit{
     GetProgramsByAgency(event:any){
       this.agencyByAdmin=event;
       this.selectedAgencyId = event;
+      this.getData()
       this._commonService.getDataByUrl(APIS.programCreation.getProgramsListByAgencyDetails+event).subscribe({
         next: (dataList: any) => {
           this.tableList = dataList.data;
@@ -122,9 +123,46 @@ export class ViewProgramAgenciesComponent implements OnInit ,AfterViewInit{
           className: 'text-center'
       },
       { 
+        data: 'startDate',
+        title: 'Start Date'
+    },
+    { 
+      data: 'endDate',
+      title: 'End Date'
+  },
+    { 
+        data: 'startTime',
+        title: 'In Time',
+        className: 'text-center'
+    },
+    { 
+        data: 'endTime',
+        title: 'Out Time',
+        className: 'text-center'
+    },
+    { 
+      data: 'programLocationName',
+      title: 'Program Location',
+      render: function(data, type, row) {
+        return data ? data : '';
+      }
+  },
+    { 
+      data: 'programType',
+      title: 'Type Of Program'
+  },
+      { 
         data: 'agencyName',
         title: 'Agency Name'
     },
+    { 
+      data: 'programTitle',
+      title: 'Title Of Program'
+  },
+    { 
+      data: 'status',
+      title: 'Status',
+  },
         { 
             data: 'activityName',
             title: 'Type Of Activity'
@@ -133,32 +171,9 @@ export class ViewProgramAgenciesComponent implements OnInit ,AfterViewInit{
             data: 'subActivityName',
             title: 'Sub Activity'
         },
-        { 
-            data: 'programType',
-            title: 'Type Of Program'
-        },
-        { 
-            data: 'programTitle',
-            title: 'Title Of Program'
-        },
-        { 
-            data: 'startDate',
-            title: 'Start Date'
-        },
-        { 
-          data: 'endDate',
-          title: 'End Date'
-      },
-        { 
-            data: 'startTime',
-            title: 'In Time',
-            className: 'text-center'
-        },
-        { 
-            data: 'endTime',
-            title: 'Out Time',
-            className: 'text-center'
-        },
+       
+      
+      
         { 
             data: 'spocName',
             title: 'SPOC Name'
@@ -166,10 +181,6 @@ export class ViewProgramAgenciesComponent implements OnInit ,AfterViewInit{
         { 
             data: 'spocContactNo',
             title: 'SPOC Contact No.'
-        },
-        { 
-            data: 'programLocationName',
-            title: 'Program Location'
         },
         // { 
         //   data: null,
@@ -266,5 +277,20 @@ export class ViewProgramAgenciesComponent implements OnInit ,AfterViewInit{
     toggleIcon(index: number): void {
       this.collapseStates[index] = !this.collapseStates[index];
     }
-      
+    PrigramSummaryData:any={}
+    getData() {
+      this.PrigramSummaryData ={}
+      this._commonService.getById(APIS.programCreation.programSummary, this.selectedAgencyId).subscribe({
+        next: (res: any) => {          
+          // this.PrigramSummaryData = res?.data   
+        console.log( this.PrigramSummaryData)
+        this.PrigramSummaryData = res?.data
+        },
+        error: (err) => {
+          this.toastrService.error('Data Not Available', "Summary Data Error!");
+          new Error(err);
+        },
+      });
+      // console.log(this.ParticipantAttentance)
+    }
   }

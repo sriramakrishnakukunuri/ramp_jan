@@ -6,7 +6,7 @@
                     <div class="card-header bg-transparent">
                         <div class="d-flex align-items-center justify-content-between flex-wrap">
                             <div>
-                                <h6 class="mb-2 mb-sm-0 text-green">Add Program</h6>
+                                <h6 class="mb-2 mb-sm-0 text-green">{{this.programId?'Edit':'Add'}} Program</h6>
                             </div>
                             <div>
                                 <ng-container *ngIf="programId">
@@ -14,7 +14,7 @@
                                 </ng-container>
                                 
                                 <!-- class="btn btn-secondary" -->
-                                <button type="button" class="btn btn-lime-green" data-bs-toggle="modal"
+                                <button type="button"  class="btn btn-lime-green" data-bs-toggle="modal"
                                     data-bs-target="#addLocation">Add New Location</button>
                                 <!-- <a class="btn btn-default ms-3" id="iconChange" data-bs-toggle="collapse"
                                     href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
@@ -194,7 +194,7 @@
                                 <button type="submit" class="btn btn-lime-green" [ngClass]="{'disabled': programCreationMain.invalid}"
                                 [disabled]="loading || programCreationMain.invalid" (click)="submitProgramCreation()">
                                 <span *ngIf="loading" class="spinner-border spinner-border-sm me-1"></span>
-                                Submit</button>
+                                {{this.programId?'Update':'Submit'}}</button>
                             </div>
                             <!-- <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                 <div class="form-floating mb-3">
