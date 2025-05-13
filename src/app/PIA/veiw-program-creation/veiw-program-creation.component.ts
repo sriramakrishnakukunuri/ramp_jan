@@ -142,6 +142,7 @@ export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
                 data-id="${row.id}" title="View">
                 <span class="bi bi-eye"></span>
               </button>
+                <button type="button" class="btn btn-default btn-sm text-danger editable-btn" data-id="${row.id}" title="Delete"><span class="bi bi-pencil"></span></button>
               <button type="button" class="btn btn-default btn-sm text-danger delete-btn" data-id="${row.id}" title="Delete"><span class="bi bi-trash"></span></button>
               `;
             // }
@@ -180,7 +181,13 @@ export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
             return data ? data : '';
           }
       },
-   
+      { 
+        data: 'programLocationName',
+        title: 'Program Location',
+        render: function(data, type, row) {
+          return data ? data : '';
+        }
+    },
     { 
       data: 'programType',
       title: 'Type Of Program',
@@ -240,13 +247,7 @@ export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
             return data ? data : '';
           }
       },
-      { 
-          data: 'programLocationName',
-          title: 'Program Location',
-          render: function(data, type, row) {
-            return data ? data : '';
-          }
-      },
+     
       // { 
       //   data: null,
       //   title: 'Edit / Delete',
@@ -272,10 +273,18 @@ export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
       const rowData = self.dataTable.row($(event.currentTarget).parents('tr')).data();
       self.sessionDetails(rowData); // Call your method with proper data
     });
-    $('#view-table-program').on('click', '.delete-btn', (event:any) => {
+    $('#view-table-program').on('click', '.editable-btn', (event:any) => {
+      const rowData = self.dataTable.row($(event.currentTarget).parents('tr')).data();
+      self.editProgram(rowData); // Call your method with proper data
+    });
+    $('#view-table-program').off('click', '.delete-btn').on('click', '.delete-btn', (event: any) => {
       const rowData = self.dataTable.row($(event.currentTarget).parents('tr')).data();
       self.deleteExpenditure(rowData);
     });
+    // $('#view-table-program').on('click', '.delete-btn', (event:any) => {
+    //   const rowData = self.dataTable.row($(event.currentTarget).parents('tr')).data();
+    //   self.deleteExpenditure(rowData);
+    // });
   }
     });
   }
@@ -373,10 +382,18 @@ export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
      // delete Expenditure
      deleteProgramId:any ={}
      deleteExpenditure(item: any) {
-     this.deleteProgramId = item?.programId
-     document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
-     const myModal = new bootstrap.Modal(document.getElementById('exampleModalDeleteProgram'));
-      myModal.show();
+       if(item?.status=='Program Scheduled' || item.status=='Sessions Created'){
+        this.deleteProgramId = item?.programId
+         document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+        const myModal = new bootstrap.Modal(document.getElementById('exampleModalDeleteProgram'));
+         myModal.show();
+       }
+      else{
+        console.log(item,'warming')
+        this.toastrService.warning('Selected Program has Participants Added hence can not be deleted!', "Delete not Allowed!");
+        return;
+      }
+     
    }
      ConfirmdeleteExpenditure(item:any){
        this._commonService

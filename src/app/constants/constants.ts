@@ -28,7 +28,7 @@ export const APIS = {
         deleteProgram: API_BASE_URL + '/program/delete/',
         getProgramsListBySession: API_BASE_URL + '/programs/status/',
         updateSessionByStatus: API_BASE_URL + '/programs/status/',
-        programSummary: API_BASE_URL + '/programs/status/summery/',        
+        programSummary: API_BASE_URL + '/programs/status/summary/',        
         // get: API_BASE_URL + '/program/get',
         // update: API_BASE_URL + '/program/update',
         // delete: API_BASE_URL + '/program/delete',

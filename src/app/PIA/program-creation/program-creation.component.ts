@@ -223,7 +223,7 @@ export class ProgramCreationComponent implements OnInit, AfterViewInit {
     }
     return timeValue;
   }
-
+  
   getProgrameIdBasesOnSave:any
   loading = false;
   submitProgramCreation() {
@@ -231,9 +231,9 @@ export class ProgramCreationComponent implements OnInit, AfterViewInit {
     let maindata = { ...this.programCreationMain.value };
     maindata['startTime'] = this.formatTime(maindata['startTime'])
     maindata['endTime'] = this.formatTime(maindata['endTime'])
-    maindata['startDate'] = moment(maindata['startDate']).format('DD-MM-YYYY')
+    maindata['startDate'] = this.convertToISOFormat(maindata['startDate'])
     maindata['endDate'] = moment(maindata['endDate']).format('DD-MM-YYYY')
-    maindata['locationId'] = this.programCreationMain.value.programLocation
+    maindata['locationId'] = Number(this.programCreationMain.value?.programLocation)
     maindata['agencyId'] = Number(this.agencyId)
     this.loading = true;
     if(this.programId) {
@@ -242,7 +242,8 @@ export class ProgramCreationComponent implements OnInit, AfterViewInit {
         next: (data) => {      
           this.loading = false;    
           this.toastrService.success('Program Updated Successfully', "Success!");
-          this.getProgramDetailsById(maindata['programId']);          
+          this.getProgramDetailsById(maindata['programId']);      
+          this.redirect()    
         },
         error: (err) => {
           this.loading = false;
@@ -367,8 +368,9 @@ export class ProgramCreationComponent implements OnInit, AfterViewInit {
     const [day, month, year] = date.split('-');
     return `${year}-${month}-${day}`; // Convert to yyyy-MM-dd format
   }
-
+  isedit:boolean = false
   getProgramDetailsById(programId: string) {
+    this.isedit=true
     this._commonService.getById(APIS.programCreation.getSingleProgramsList, programId).subscribe({
       next: (data: any) => {
         const program = data.data;

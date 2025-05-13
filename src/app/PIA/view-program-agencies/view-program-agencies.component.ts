@@ -141,6 +141,13 @@ export class ViewProgramAgenciesComponent implements OnInit ,AfterViewInit{
         className: 'text-center'
     },
     { 
+      data: 'programLocationName',
+      title: 'Program Location',
+      render: function(data, type, row) {
+        return data ? data : '';
+      }
+  },
+    { 
       data: 'programType',
       title: 'Type Of Program'
   },
@@ -174,10 +181,6 @@ export class ViewProgramAgenciesComponent implements OnInit ,AfterViewInit{
         { 
             data: 'spocContactNo',
             title: 'SPOC Contact No.'
-        },
-        { 
-            data: 'programLocationName',
-            title: 'Program Location'
         },
         // { 
         //   data: null,
