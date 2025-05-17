@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import DataTable from 'datatables.net-dt';
 import 'datatables.net-buttons-dt';
 import 'datatables.net-responsive-dt';
+import moment from 'moment';
 declare var bootstrap: any;
 
 @Component({
@@ -41,7 +42,6 @@ export class BulkExpenditureComponent implements OnInit {
     subActivitiesList: any
     programCreationMain!: FormGroup;
     BulkExpenditureForm!: FormGroup;
-    PrePostExpenditureForm!: FormGroup;
     ExpenditureData:any=[]
     getHeadOfExpenditure() {
       this._commonService.getDataByUrl(APIS.programExpenditure.getHeadOfExpenditure).subscribe({
@@ -124,7 +124,7 @@ export class BulkExpenditureComponent implements OnInit {
   //     modalInstance.show();
     // save Bulk expenditure
     BulkExpenditureSubmit(){
-      let payload={...this.BulkExpenditureForm.value,agencyId:this.agencyId}
+      let payload={...this.BulkExpenditureForm.value,purchaseDate:moment(this.BulkExpenditureForm.value.purchaseDate).format('DD-MM-YYYY'), billDate:moment(this.BulkExpenditureForm.value.billDate).format('DD-MM-YYYY'),agencyId:this.agencyId}
       const formData = new FormData();
       formData.append("request", JSON.stringify(payload));
 

@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import DataTable from 'datatables.net-dt';
 import 'datatables.net-buttons-dt';
 import 'datatables.net-responsive-dt';
+import moment from 'moment';
 declare var bootstrap: any;
 declare var window: any;
 @Component({
@@ -392,7 +393,10 @@ export class ProgramExpenditureComponent implements OnInit {
   //save pre and post expenditure 
   ExpenditureSubmit(){
     let payload={...this.programCreationMain.value ,activityId:Number(this.programCreationMain.value.activityId),
-      subActivityId:Number(this.programCreationMain.value.subActivityId),programId:Number(this.programCreationMain.value.programId),...this.PrePostExpenditureForm.value,headOfExpenseId:Number(this.PrePostExpenditureForm.value.headOfExpenseId),agencyId:this.agencyId}
+      subActivityId:Number(this.programCreationMain.value.subActivityId),programId:Number(this.programCreationMain.value.programId),...this.PrePostExpenditureForm.value,
+      headOfExpenseId:Number(this.PrePostExpenditureForm.value.headOfExpenseId),
+      billDate:moment(this.PrePostExpenditureForm.value.billDate).format('DD-MM-YYYY'),
+      agencyId:this.agencyId}
     console.log(payload)
     const formData = new FormData();
       formData.append("request", JSON.stringify(payload));
