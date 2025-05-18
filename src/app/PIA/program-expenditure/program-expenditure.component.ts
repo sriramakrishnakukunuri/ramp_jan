@@ -178,11 +178,61 @@ export class ProgramExpenditureComponent implements OnInit {
       billDate: new FormControl("", [Validators.required]),
       payeeName: new FormControl("", [Validators.required]),
       bankName: new FormControl("", ),
+      transactionId: new FormControl("", [Validators.pattern(/^[^\s].*/)]),
       ifscCode: new FormControl("", [Validators.pattern(/^[A-Z]{4}0[A-Z0-9]{6}$/)]),
       modeOfPayment: new FormControl("", [Validators.required]),
       purpose: new FormControl("", ),
       uploadBillUrl: new FormControl("", ),
     })
+  }
+  // Mode of payment
+  modeOfPayment(val:any){
+    if(val=='CASH'){
+      this.PrePostExpenditureForm.get('bankName')?.setValidators(null);
+      this.PrePostExpenditureForm.get('transactionId')?.setValidators(null);
+      this.PrePostExpenditureForm.get('ifscCode')?.setValidators(null);
+      this.PrePostExpenditureForm.get('bankName')?.patchValue('');
+      this.PrePostExpenditureForm.get('transactionId')?.patchValue('');
+      this.PrePostExpenditureForm.get('ifscCode')?.patchValue('');
+      this.PrePostExpenditureForm.get('bankName')?.clearValidators();
+      this.PrePostExpenditureForm.get('transactionId')?.clearValidators();
+      this.PrePostExpenditureForm.get('ifscCode')?.clearValidators();
+      this.PrePostExpenditureForm.get('bankName')?.disable();
+      this.PrePostExpenditureForm.get('transactionId')?.disable();
+      this.PrePostExpenditureForm.get('ifscCode')?.disable();
+      this.PrePostExpenditureForm.get('bankName')?.updateValueAndValidity();
+      this.PrePostExpenditureForm.get('transactionId')?.updateValueAndValidity();
+      this.PrePostExpenditureForm.get('ifscCode')?.updateValueAndValidity();
+
+    }
+    else if(val=='BANK_TRANSFER'){
+      this.PrePostExpenditureForm.get('bankName')?.setValidators([Validators.required]);
+      this.PrePostExpenditureForm.get('transactionId')?.setValidators(null);
+      this.PrePostExpenditureForm.get('ifscCode')?.setValidators([Validators.required,Validators.pattern(/^[A-Z]{4}0[A-Z0-9]{6}$/)]);
+      this.PrePostExpenditureForm.get('bankName')?.enable();
+      this.PrePostExpenditureForm.get('transactionId')?.disable();
+      this.PrePostExpenditureForm.get('ifscCode')?.enable();
+      this.PrePostExpenditureForm.get('bankName')?.patchValue('');
+      this.PrePostExpenditureForm.get('transactionId')?.patchValue('');
+      this.PrePostExpenditureForm.get('ifscCode')?.patchValue('');
+      this.PrePostExpenditureForm.get('bankName')?.updateValueAndValidity();
+      this.PrePostExpenditureForm.get('transactionId')?.updateValueAndValidity();
+      this.PrePostExpenditureForm.get('ifscCode')?.updateValueAndValidity();
+    }
+    else if(val=='UPI'){
+      this.PrePostExpenditureForm.get('bankName')?.setValidators(null);
+      this.PrePostExpenditureForm.get('transactionId')?.setValidators([Validators.required]);
+      this.PrePostExpenditureForm.get('ifscCode')?.setValidators(null);
+      this.PrePostExpenditureForm.get('bankName')?.disable();
+      this.PrePostExpenditureForm.get('transactionId')?.enable();
+      this.PrePostExpenditureForm.get('ifscCode')?.disable();
+      this.PrePostExpenditureForm.get('bankName')?.patchValue('');
+      this.PrePostExpenditureForm.get('transactionId')?.patchValue('');
+      this.PrePostExpenditureForm.get('ifscCode')?.patchValue('');
+      this.PrePostExpenditureForm.get('bankName')?.updateValueAndValidity();
+      this.PrePostExpenditureForm.get('transactionId')?.updateValueAndValidity();
+      this.PrePostExpenditureForm.get('ifscCode')?.updateValueAndValidity();
+    }
   }
   formDetailsBulk() {
     this.BulkExpenditureForm = new FormGroup({
