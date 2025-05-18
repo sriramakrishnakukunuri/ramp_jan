@@ -118,11 +118,11 @@ export class ViewProgramAgenciesComponent implements OnInit ,AfterViewInit{
         title: 'In Time',
         className: 'text-center'
     },
-    { 
-        data: 'endTime',
-        title: 'Out Time',
-        className: 'text-center'
-    },
+    // { 
+    //     data: 'endTime',
+    //     title: 'Out Time',
+    //     className: 'text-center'
+    // },
     { 
       data: 'programLocationName',
       orderable: false,
