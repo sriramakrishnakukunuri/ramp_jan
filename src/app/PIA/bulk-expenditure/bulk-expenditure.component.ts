@@ -54,10 +54,7 @@ export class BulkExpenditureComponent implements OnInit {
       })
     }
    
-
-    
     formDetailsBulk() {
-     
       this.BulkExpenditureForm = new FormGroup({
         itemName: new FormControl("", [Validators.required]),
         purchaseDate: new FormControl("", [Validators.required]),
@@ -68,11 +65,61 @@ export class BulkExpenditureComponent implements OnInit {
         billDate: new FormControl("", [Validators.required]),
         payeeName: new FormControl("", [Validators.required]),
         bankName: new FormControl("", ),
+        transactionId: new FormControl("",[Validators.pattern(/^[^\s].*/)] ),
         ifscCode: new FormControl("", [Validators.pattern(/^[A-Z]{4}0[A-Z0-9]{6}$/)]),
         modeOfPayment: new FormControl("", [Validators.required]),
         remarks: new FormControl("", ),
         uploadBillUrl: new FormControl("",),
       })
+    }
+    // Mode of payment
+    modeOfPayment(val:any){
+      if(val=='CASH'){
+        this.BulkExpenditureForm.get('bankName')?.setValidators(null);
+        this.BulkExpenditureForm.get('transactionId')?.setValidators(null);
+        this.BulkExpenditureForm.get('ifscCode')?.setValidators(null);
+        this.BulkExpenditureForm.get('bankName')?.patchValue('');
+        this.BulkExpenditureForm.get('transactionId')?.patchValue('');
+        this.BulkExpenditureForm.get('ifscCode')?.patchValue('');
+        this.BulkExpenditureForm.get('bankName')?.clearValidators();
+        this.BulkExpenditureForm.get('transactionId')?.clearValidators();
+        this.BulkExpenditureForm.get('ifscCode')?.clearValidators();
+        this.BulkExpenditureForm.get('bankName')?.disable();
+        this.BulkExpenditureForm.get('transactionId')?.disable();
+        this.BulkExpenditureForm.get('ifscCode')?.disable();
+        this.BulkExpenditureForm.get('bankName')?.updateValueAndValidity();
+        this.BulkExpenditureForm.get('transactionId')?.updateValueAndValidity();
+        this.BulkExpenditureForm.get('ifscCode')?.updateValueAndValidity();
+
+      }
+      else if(val=='BANK_TRANSFER'){
+        this.BulkExpenditureForm.get('bankName')?.setValidators([Validators.required]);
+        this.BulkExpenditureForm.get('transactionId')?.setValidators(null);
+        this.BulkExpenditureForm.get('ifscCode')?.setValidators([Validators.required,Validators.pattern(/^[A-Z]{4}0[A-Z0-9]{6}$/)]);
+        this.BulkExpenditureForm.get('bankName')?.enable();
+        this.BulkExpenditureForm.get('transactionId')?.disable();
+        this.BulkExpenditureForm.get('ifscCode')?.enable();
+        this.BulkExpenditureForm.get('bankName')?.patchValue('');
+        this.BulkExpenditureForm.get('transactionId')?.patchValue('');
+        this.BulkExpenditureForm.get('ifscCode')?.patchValue('');
+        this.BulkExpenditureForm.get('bankName')?.updateValueAndValidity();
+        this.BulkExpenditureForm.get('transactionId')?.updateValueAndValidity();
+        this.BulkExpenditureForm.get('ifscCode')?.updateValueAndValidity();
+      }
+      else if(val=='UPI'){
+        this.BulkExpenditureForm.get('bankName')?.setValidators(null);
+        this.BulkExpenditureForm.get('transactionId')?.setValidators([Validators.required,Validators.pattern(/^[^\s].*/)]);
+        this.BulkExpenditureForm.get('ifscCode')?.setValidators(null);
+        this.BulkExpenditureForm.get('bankName')?.disable();
+        this.BulkExpenditureForm.get('transactionId')?.enable();
+        this.BulkExpenditureForm.get('ifscCode')?.disable();
+        this.BulkExpenditureForm.get('bankName')?.patchValue('');
+        this.BulkExpenditureForm.get('transactionId')?.patchValue('');
+        this.BulkExpenditureForm.get('ifscCode')?.patchValue('');
+        this.BulkExpenditureForm.get('bankName')?.updateValueAndValidity();
+        this.BulkExpenditureForm.get('transactionId')?.updateValueAndValidity();
+        this.BulkExpenditureForm.get('ifscCode')?.updateValueAndValidity();
+      }
     }
     closeModal(): void {
       const modal = bootstrap.Modal.getInstance(this.preEventModal.nativeElement);

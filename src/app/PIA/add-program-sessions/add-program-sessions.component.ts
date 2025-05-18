@@ -549,7 +549,9 @@ export class AddProgramSessionsComponent implements OnInit {
   }
 
   deleteSessionId:any = ''
+  deleteTitle:any = ''
   deleteSession(item: any) {
+    this.deleteTitle = 'Delete Session'
     this.deleteSessionId = item?.sessionId
     const previewModal = document.getElementById('exampleModalDelete');
     if (previewModal) {
@@ -562,6 +564,7 @@ export class AddProgramSessionsComponent implements OnInit {
     let url = `?sessionId=${id}`
     this._commonService.deleteById(APIS.programCreation.deleteSession, url).subscribe({
       next: (data: any) => {
+        this.deleteTitle = ''
         console.log('Response from API:', data);
         if (data.includes('Deleted Session Successfully')) {
           this.toastrService.success('Session Deleted Successfully', "");
@@ -573,6 +576,7 @@ export class AddProgramSessionsComponent implements OnInit {
         this.getProgramDetailsById(this.programId);
       },
       error: (err: any) => {
+        this.deleteTitle = ''
         this.closeModalDelete();
         this.deleteSessionId = ''
         this.toastrService.error("Something unexpected happened!!");
@@ -613,5 +617,50 @@ export class AddProgramSessionsComponent implements OnInit {
         new Error(err);
       },
     });    
+  }
+
+  deleteFileData: any = {}
+  deleteFile(parentIndex: number, fileIndex: number): void {
+    // const confirmed = confirm('Are you sure you want to delete this file?');
+    // if (confirmed) {
+    //   //this.items[parentIndex].files.splice(fileIndex, 1);
+    // }
+    this.deleteTitle = 'Delete File'
+    this.deleteFileData = {
+      parentIndex: parentIndex,
+      fileIndex: fileIndex
+    }
+    const previewModal = document.getElementById('exampleModalDelete');
+    if (previewModal) {
+      const modalInstance = new bootstrap.Modal(previewModal);
+      modalInstance.show();
+    }
+  }
+
+  confirmDeleteFile(deleteFileData: any) {
+    const { parentIndex, fileIndex } = deleteFileData;       
+    let url = `${parentIndex?.programSessionFileId}`
+    
+    this._commonService.deleteId(APIS.programCreation.sessionFilesDelete, url).subscribe({
+      next: (data: any) => {
+        this.deleteTitle = ''
+        console.log('Response from API:', data);
+        if (data?.message.includes('File deleted successfully')) {
+          this.toastrService.success('File deleted successfully', "");          
+        } else {        
+          this.toastrService.error("Something unexpected happened!!");          
+        }
+        this.closeModalDelete();
+        this.deleteSessionId = ''
+        this.getProgramDetailsById(this.programId);
+      },
+      error: (err: any) => {
+        this.deleteTitle = ''
+        this.closeModalDelete();
+        this.deleteSessionId = ''
+        this.toastrService.error("Something unexpected happened!!");
+        new Error(err);
+      },
+    });
   }
 }
