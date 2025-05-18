@@ -79,23 +79,6 @@ export class ViewProgramAgenciesComponent implements OnInit ,AfterViewInit{
         info: false,
         searching: false,
         destroy: true,
-        ajax: function (data:any, callback, settings) {
-          // Extract pagination parameters
-          let page = data.start / data.length;
-          let size = data.length;
-         
-          // Fetch data from API
-          fetch(APIS.programCreation.getProgramsListByAgencyDetails+agency+`?page=${page}&size=${size}`)
-              .then(res => res.json())
-              .then(json => {
-                  callback({
-                      draw: data.draw,
-                      recordsTotal: json.totalElements,
-                      recordsFiltered: json.totalElements,
-                      data: json.data
-                  });
-              });
-      },
       columns: [
         { 
             title: 'S.No',
@@ -142,11 +125,21 @@ export class ViewProgramAgenciesComponent implements OnInit ,AfterViewInit{
     },
     { 
       data: 'programLocationName',
+      orderable: false,
       title: 'Program Location',
       render: function(data, type, row) {
         return data ? data : '';
       }
   },
+  { 
+    title: 'District',
+    orderable: false ,
+    render: function(data, type, row, meta:any) {
+      console.log(data,meta,type, row)
+        return row?.district ? row?.district : '-';   
+    },
+    className: 'dt-center'
+},
     { 
       data: 'programType',
       title: 'Type Of Program'
@@ -165,10 +158,12 @@ export class ViewProgramAgenciesComponent implements OnInit ,AfterViewInit{
   },
         { 
             data: 'activityName',
+            orderable: false,
             title: 'Type Of Activity'
         },
         { 
             data: 'subActivityName',
+            orderable: false,
             title: 'Sub Activity'
         },
        
@@ -201,6 +196,58 @@ export class ViewProgramAgenciesComponent implements OnInit ,AfterViewInit{
         // }
        
     ],
+    ajax: (data: any, callback: any, settings: any) => {
+      // Extract pagination and sorting parameters
+      const page = data.start / data.length;
+      const size = data.length;
+      const sortColumn = data.order[0]?.column;
+      const sortDirection = data.order[0]?.dir;
+      const sortField = data.columns[sortColumn]?.data;
+      
+      // Prepare parameters for API call
+      let params = `?page=${page}&size=${size}`;
+      if(sortField=='programLocationName' || sortField=='subActivityName' || sortField=='activityName'){
+        params = `?page=${page}&size=${size}`
+        
+      }
+      else{
+        if (sortField && sortDirection) {
+          params += `&sort=${sortField},${sortDirection}`;
+        }
+      }
+     
+      
+      // Add search filter if any
+      if (data.search.value) {
+        params += `&search=${encodeURIComponent(data.search.value)}`;
+      }
+      
+      this._commonService.getDataByUrl(`${APIS.programCreation.getProgramsListByAgencyDetails}${agency}${params}`)
+        .pipe()
+        .subscribe({
+          next: (res: any) => {
+            callback({
+              draw: data.draw,
+              recordsTotal: res.totalElements,
+              recordsFiltered: res.totalElements,
+              data: res.data
+             
+            });
+            // console.log(data)
+          },
+          error: (err) => {
+            this.toastrService.error(err.message, "Programs Data Error!");
+            console.error(err);
+            callback({
+              draw: data.draw,
+              recordsTotal: 0,
+              recordsFiltered: 0,
+              data: []
+            });
+          }
+        });
+    },
+   
     initComplete: function() {
       // Use proper event handling with arrow function
       $('#view-program').on('click', '.edit-btn', (event:any) => {

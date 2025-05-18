@@ -23,6 +23,14 @@
                 </div>
                 <div class="card-body">
                     <div class="row mb-3">
+                        <div class="col-12 col-sm-6 col-md-6 col-lg-6">
+                            <!-- <button type="button" [ngClass]="{'disabled': !programIds}" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModalDeleteConfirm">Final Submission</button> -->
+                        </div>
+                        <div class="col-12 col-12 col-sm-6 col-md-6 col-lg-6 text-end">
+                            <button type="button"  (click)="openFileUploadModal()" class="btn btn-lime-green" >Upload Programs</button>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
                         <div class="col-12 col-sm-12 col-md-2 col-lg-2">
                             <div class="card bg-primary text-white text-center shadow-none p-2">
                                 <label>Total Programs Scheduled</label>
@@ -67,7 +75,7 @@
                                     <th>In Time</th>
                                     <th>Out Time</th>
                                     <th>Type Of Program</th>
-                                    <!-- <th>Program Details</th> -->
+                                    <th>District</th>
                                     <th>Title Of Program</th>
                                     <th>Status</th>
                                     <th>agency Name</th>
@@ -291,4 +299,51 @@
         </div>
     </div>
 </div>
+</div>
+
+<!-- upload form -->
+<div class="modal fade" id="addDocumentModel" tabindex="-1" aria-labelledby="addDocumentLabel" aria-hidden="true" data-keyboard="false" data-bs-backdrop="static" >
+    <div class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title" id="addDocumentLabel">Upload  Document</h6>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <span *ngIf="fileErrorMsg" style="color: red;">{{fileErrorMsg}}</span>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="attachment" *ngIf="!file">
+                            <input class="attachment" style="opacity: 0" #fileInput type="file" 
+                                accept=".xls, .xlsx,"
+                                (change)="onFilesSelected($event)" />
+                            <span class="drop-zone__prompt">Drop file here <br> or <br> click to upload</span>
+                        </div>
+                        <div *ngIf="file">
+                            file Name : {{ selectedfiles.name}} <br> <button class="btn btn-sm btn-primary" 
+                                (click)="file=undefined"> clear file</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <ng-container *ngIf="selectedfiles">
+                            <div class="row" *ngFor="let item of selectedfiles" style="font-size: 10px;">
+                                <div class="col-sm-6 word-wrap">{{item.name}}</div>
+                                <!-- <div class="col-sm-2">{{item.size}}</div>
+                                <div class="col-sm-4 word-wrap">{{item.type}}</div> -->
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+                <div class="d-grid">
+                    <ng-container >
+                        <button type="button"  class="btn btn-lime-green" data-bs-dismiss="modal" (click)="uploadManualFiles()" [ngClass]="{'disabled': !selectedfiles.length}">Upload</button>
+                    </ng-container>
+                  
+                    
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
