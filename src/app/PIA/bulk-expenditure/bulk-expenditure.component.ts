@@ -54,10 +54,7 @@ export class BulkExpenditureComponent implements OnInit {
       })
     }
    
-
-    
     formDetailsBulk() {
-     
       this.BulkExpenditureForm = new FormGroup({
         itemName: new FormControl("", [Validators.required]),
         purchaseDate: new FormControl("", [Validators.required]),
