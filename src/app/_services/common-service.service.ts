@@ -89,4 +89,17 @@ export class CommonServiceService {
     // Observable.forkJoin (RxJS 5) changes to just forkJoin() in RxJS 6
     return forkJoin([response1, response2]);
   }
+
+  public ProgramsWithAgenciesData(url: string, agencyid: number): Observable<any> {  
+    const fullUrl = `${url}${agencyid}`;
+    return this.http.get<any>(fullUrl).pipe( 
+      catchError(this.formatErrors.bind(this))
+    );
+  }
+  
+  
+  
 }
+
+
+// api/agency/programs/1

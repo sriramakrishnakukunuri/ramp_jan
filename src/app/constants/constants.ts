@@ -92,6 +92,7 @@ export const APIS = {
     },
     programSummary:{
         getProramData:API_BASE_URL +`/program/summary/`,
+        getParticipantsBYProgram:API_BASE_URL +`/program/participants/dropdown/`,
     },
     programExecutions:{
         saveMediaCoverage:API_BASE_URL +`/program/execution/media-coverage`,
