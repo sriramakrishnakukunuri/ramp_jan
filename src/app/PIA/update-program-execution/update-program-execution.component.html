@@ -170,8 +170,11 @@
                                 <td>{{item?.startTime}}</td>
                                 <td>{{item?.endTime}}</td>
                                 <td>{{item?.resourceName}}</td>
-                                <td>
+                                <td class="file-card">
                                     <ng-container *ngIf="item?.image1">
+                                        <!-- <i class="fas fa-trash delete-icon" 
+                                        (click)="deleteFile(item?.image1,i)" 
+                                        title="Delete file"></i> -->
                                         <a (click)="showImagePreview(imageUrlDownloadPath,item?.image1)" rel="noopener noreferrer">
                                             <img src="{{imageUrlDownloadPath}}{{item?.image1}}" alt="Image 1" class="img-fluid" style="width: 50px; height: 50px;">
                                         </a>
@@ -180,8 +183,11 @@
                                         <span class="text-danger">No Image</span>
                                     </ng-container>
                                 </td>
-                                <td>
+                                <td class="file-card">
                                     <ng-container *ngIf="item?.image2">
+                                        <!-- <i class="fas fa-trash delete-icon" 
+                                        (click)="deleteFile(item?.image2,i)" 
+                                        title="Delete file"></i> -->
                                         <a (click)="showImagePreview(imageUrlDownloadPath,item?.image2)" rel="noopener noreferrer">
                                             <img src="{{imageUrlDownloadPath}}{{item?.image2}}" alt="Image 2" class="img-fluid" style="width: 50px; height: 50px;">
                                         </a>
@@ -190,8 +196,11 @@
                                         <span class="text-danger">No Image</span>
                                     </ng-container>
                                 </td>
-                                <td>
+                                <td class="file-card">
                                     <ng-container *ngIf="item?.image3">
+                                        <!-- <i class="fas fa-trash delete-icon" 
+                                        (click)="deleteFile(item?.image3,i)" 
+                                        title="Delete file"></i> -->
                                         <a (click)="showImagePreview(imageUrlDownloadPath,item?.image3)" rel="noopener noreferrer">
                                             <img src="{{imageUrlDownloadPath}}{{item?.image3}}" alt="Image 3" class="img-fluid" style="width: 50px; height: 50px;">
                                         </a>
@@ -200,8 +209,11 @@
                                         <span class="text-danger">No Image</span>
                                     </ng-container>
                                 </td>
-                                <td>
+                                <td class="file-card">
                                     <ng-container *ngIf="item?.image4">
+                                        <!-- <i class="fas fa-trash delete-icon" 
+                                        (click)="deleteFile(item?.image4,i)" 
+                                        title="Delete file"></i> -->
                                         <a (click)="showImagePreview(imageUrlDownloadPath,item?.image4)" rel="noopener noreferrer">
                                             <img src="{{imageUrlDownloadPath}}{{item?.image4}}" alt="Image 4" class="img-fluid" style="width: 50px; height: 50px;">
                                         </a>
@@ -210,8 +222,11 @@
                                         <span class="text-danger">No Image</span>
                                     </ng-container>
                                 </td>
-                                <td>
+                                <td class="file-card">
                                     <ng-container *ngIf="item?.image5">
+                                        <!-- <i class="fas fa-trash delete-icon" 
+                                        (click)="deleteFile(item?.image5,i)" 
+                                        title="Delete file"></i> -->
                                         <a (click)="showImagePreview(imageUrlDownloadPath,item?.image5)" rel="noopener noreferrer">
                                             <img src="{{imageUrlDownloadPath}}{{item?.image5}}" alt="Image 5" class="img-fluid" style="width: 50px; height: 50px;">
                                         </a>
@@ -544,6 +559,25 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-lime-green" (click)="sessionSubmissionFinal()">Confirm</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="exampleModalDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalDeleteLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalDeleteLabel">Delete File</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure want to delete ??
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-lime-green" (click)="confirmDeleteFile(deleteFileData)">Confirm</button>
             </div>
         </div>
     </div>

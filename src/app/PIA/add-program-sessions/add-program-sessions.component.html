@@ -166,7 +166,13 @@
                                     <div [id]="'collapseFiles' + i" class="collapse mt-2">
                                         <div class="file-carousel-container">
                                             <div class="file-carousel">
-                                                <div *ngFor="let file of item.files" class="file-card">
+                                                <div *ngFor="let file of item.files; let jj=index" class="file-card">
+
+                                                    <!-- Delete Icon -->
+                                                    <i class="fas fa-trash delete-icon" 
+                                                        (click)="deleteFile(file,jj)" 
+                                                        title="Delete file"></i>
+
                                                     <div class="file-icon">
                                                         <i [ngClass]="getFileIcon(file.filePath)"
                                                             [ngStyle]="{'color': getIconColor(file.filePath)}"
@@ -522,7 +528,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalDeleteLabel">Delete Session</h5>
+                <h5 class="modal-title" id="exampleModalDeleteLabel">{{deleteTitle}}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -530,7 +536,12 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-lime-green" (click)="confirmDelete(deleteSessionId)">Confirm</button>
+                <ng-container *ngIf="deleteTitle == 'Delete Session'">
+                    <button type="button" class="btn btn-lime-green" (click)="confirmDelete(deleteSessionId)">Confirm</button>
+                </ng-container>
+                <ng-container *ngIf="deleteTitle == 'Delete File'">
+                    <button type="button" class="btn btn-lime-green" (click)="confirmDeleteFile(deleteFileData)">Confirm</button>
+                </ng-container>
             </div>
         </div>
     </div>
