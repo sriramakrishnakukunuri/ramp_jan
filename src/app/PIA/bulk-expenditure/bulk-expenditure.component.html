@@ -28,6 +28,7 @@
                                 <th>Bill No.</th>
                                 <th>Bill Date</th>
                                 <th>Payee Name</th>
+                                <th>Transaction Id</th>
                                 <th>Bank</th>
                                 <th>IFSC Code</th>
                                 <th class="text-center" *ngIf="loginsessionDetails?.userRole != 'ADMIN'">Edit / Delete</th>
@@ -45,6 +46,7 @@
                                 <td>{{item?.billNo}}</td>
                                 <td>{{item?.billDate}}</td>
                                 <td>{{item?.payeeName}}</td>
+                                <td>{{item?.transactionId}}</td>
                                 <td>{{item?.bankName}}</td>
                                 <td>{{item?.ifscCode}}</td>
                                 <td class="text-center" *ngIf="loginsessionDetails?.userRole != 'ADMIN'">
