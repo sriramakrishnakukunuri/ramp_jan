@@ -9,6 +9,7 @@ import { API_BASE_URL, APIS } from '@app/constants/constants';
 import { ToastrService } from 'ngx-toastr';
 import { forkJoin } from 'rxjs';
 import moment from "moment";
+import { DomSanitizer } from '@angular/platform-browser';
 declare var $: any;
 declare var bootstrap: any;
 @Component({
@@ -19,19 +20,20 @@ declare var bootstrap: any;
 export class UpdateProgramExecutionComponent implements OnInit {
 
   imageUrlDownloadPath = `${API_BASE_URL}/program/file/download/`;
-  imagePreviewUrl:any
+  imagePreviewUrl: any
   mediaCoverageForm!: FormGroup;
   mediaExecutionForm!: FormGroup;
   isEditMode = false;
   // Store files separately
-  selectedFiles: { [key: string]: File } = {};
+  selectedFiles: { [key: string]: any } = {};
   agencyId: any
   constructor(
     private router: Router,
     private fb: FormBuilder,
     private _commonService: CommonServiceService,
     private toastrService: ToastrService,
-  ) { 
+    private sanitizer: DomSanitizer
+  ) {
     this.agencyId = JSON.parse(sessionStorage.getItem('user') || '{}').agencyId;
   }
 
@@ -55,51 +57,51 @@ export class UpdateProgramExecutionComponent implements OnInit {
       sessionStreamingUrl: ['', Validators.required],
       startTime: ['', Validators.required],
       endTime: ['', Validators.required],
-      sessionDate: ['', Validators.required],   
+      sessionDate: ['', Validators.required],
       programSessionId: [''],
       image1: [''],
       image2: [''],
       image3: [''],
       image4: [''],
-      image5: [''],   
+      image5: [''],
     });
 
   }
 
   agencyProgramList: any;
-    programId: any = ''
-    getProgramsByAgency() {
-      this._commonService.getDataByUrl(`${APIS.programCreation.getProgramsListByAgency + this.agencyId}`).subscribe({
-        next: (res: any) => {
-          this.agencyProgramList = res?.data
-        },
-        error: (err) => {
-          new Error(err);
-        }
-      })
+  programId: any = ''
+  getProgramsByAgency() {
+    this._commonService.getDataByUrl(`${APIS.programCreation.getProgramsListByAgencyStatus + '/' + this.agencyId + '?status=Attendance Marked'}`).subscribe({
+      next: (res: any) => {
+        this.agencyProgramList = res?.data
+      },
+      error: (err) => {
+        new Error(err);
+      }
+    })
   }
 
   dropdownProgramsList(event: any, type: any) {
     if (event.target.value) {
       this.programId = event.target.value
       this.getProgramDetailsById(this.programId);
-    }else {
+    } else {
       this.programId = ''
       this.ProgramData = ''
     }
   }
 
   ProgramData: any
-    getProgramDetailsById(programId: string) {
-      this.ProgramData = ''
-      this._commonService.getById(APIS.programCreation.getSingleProgramsList, programId).subscribe({
-        next: (data: any) => {
-          this.ProgramData = data.data;          
-        }, error: (err: any) => {
-          new Error(err);
-        }
-      })
-    }
+  getProgramDetailsById(programId: string) {
+    this.ProgramData = ''
+    this._commonService.getById(APIS.programCreation.getSingleProgramsList, programId).subscribe({
+      next: (data: any) => {
+        this.ProgramData = data.data;
+      }, error: (err: any) => {
+        new Error(err);
+      }
+    })
+  }
 
   ngAfterViewInit() {
     // setTimeout(() => {
@@ -121,14 +123,45 @@ export class UpdateProgramExecutionComponent implements OnInit {
     //   });
     // }, 500);
   }
-  submitRedirect(){
+  submitRedirect() {
     this.router.navigateByUrl('/veiw-program-creation');
   }
 
+  fileErrors: any = {};
   onFileChange(event: any, field: string) {
+    const allowedExtensions = ['jpg', 'jpeg', 'png'];
+    const maxSize = 50 * 1024; // 50KB
+    this.fileErrors = this.fileErrors || {}; // Initialize fileErrors object if not already
     if (event.target.files && event.target.files.length > 0) {
+
+      const file = event.target.files[0];
+      const fileExtension = file.name.split('.').pop().toLowerCase();
+      const fileSize = file.size;
+
+      // Validate file type
+      if (!allowedExtensions.includes(fileExtension)) {
+        this.fileErrors[field] = `Invalid file type. Only ${allowedExtensions.join(', ')} are allowed.`;
+        this.selectedFiles[field] = null;
+        return;
+      }
+
+      // Validate file size
+      if (fileSize > maxSize) {
+        this.fileErrors[field] = `File size exceeds the maximum limit of 50KB.`;
+        this.selectedFiles[field] = null;
+        return;
+      }
+
+      // If valid, clear errors and set the file
+      this.fileErrors[field] = '';
+      //this.selectedFiles[field] = file;
+
       this.selectedFiles[field] = event.target.files[0];
     }
+  }
+
+  hasFileErrors(): boolean {
+    return Object.values(this.fileErrors).some(error => error !== '');
   }
 
   loading = false;
@@ -139,12 +172,12 @@ export class UpdateProgramExecutionComponent implements OnInit {
     let objectnew: any = [this.mediaCoverageForm.value]
     const formData = new FormData();
     const API_ADD_URL = APIS.programExecutions.saveMediaCoverage;
-    const apiCalls = objectnew.map((element: any, index: any) => { 
-      element['date'] = moment(element['date']).format('DD-MM-YYYY');     
+    const apiCalls = objectnew.map((element: any, index: any) => {
+      element['date'] = moment(element['date']).format('DD-MM-YYYY');
       formData.set("data", JSON.stringify(element));
-      return this._commonService.uploadImageResource(API_ADD_URL,formData);
+      return this._commonService.uploadImageResource(API_ADD_URL, formData);
     })
-    
+
     // Append images
     if (this.selectedFiles['image1']) {
       formData.append('image1', this.selectedFiles['image1']);
@@ -166,14 +199,14 @@ export class UpdateProgramExecutionComponent implements OnInit {
           this.toastrService.success('Media Coverage Updated Successfully', "Media Coverage Success!");
           this.mediaCoverageForm.reset();
           this.selectedFiles = {}; // Reset selected files
-          this.getProgramDetailsById(this.programId);          
+          this.getProgramDetailsById(this.programId);
         },
         error: (err) => {
           this.loading = false;
           this.closeModalMedia();
           this.mediaCoverageForm.reset();
           this.selectedFiles = {}; // Reset selected files
-          this.toastrService.error(err, "Media Coverage Error!");        
+          this.toastrService.error(err, "Media Coverage Error!");
         },
       });
     } else {
@@ -186,14 +219,14 @@ export class UpdateProgramExecutionComponent implements OnInit {
           this.toastrService.success('Media Coverage Created Successfully', "Media Coverage Success!");
           this.mediaCoverageForm.reset();
           this.selectedFiles = {}; // Reset selected files
-          this.getProgramDetailsById(this.programId);          
+          this.getProgramDetailsById(this.programId);
         },
         error: (err) => {
           this.loading = false;
           this.closeModalMedia();
           this.mediaCoverageForm.reset();
           this.selectedFiles = {}; // Reset selected files
-          this.toastrService.error(err, "Session Creation Error!");        
+          this.toastrService.error(err, "Session Creation Error!");
         },
       });
     }
@@ -206,7 +239,7 @@ export class UpdateProgramExecutionComponent implements OnInit {
       modalInstance.hide();
     }
   }
-  
+
   closeModal(): void {
 
     const editSessionModal = document.getElementById('sessionFormExectuionModal');
@@ -214,15 +247,16 @@ export class UpdateProgramExecutionComponent implements OnInit {
       const modalInstance = bootstrap.Modal.getInstance(editSessionModal);
       modalInstance.hide();
     }
-  
+
   }
 
   showSessionEditModal(session?: any) {
-    this.selectedFiles={}
+    this.selectedFiles = {}
+    this.fileErrors = {}
     $('#image1').val('')
     $('#image2').val('')
     $('#image3').val('')
-    if(!this.ProgramData?.programId) {
+    if (!this.ProgramData?.programId) {
       this.toastrService.error("Please Select atleast one Program to add Media Coverage", "Program Error");
       return;
     }
@@ -234,7 +268,7 @@ export class UpdateProgramExecutionComponent implements OnInit {
         const modalInstance = new bootstrap.Modal(editSessionModal);
         modalInstance.show();
       }
-      
+      this.mediaCoverageForm.reset();
       return;
     }
 
@@ -249,7 +283,7 @@ export class UpdateProgramExecutionComponent implements OnInit {
       image2: session?.image2,
       image3: session?.image3,
     });
-    console.log(this.mediaCoverageForm.value,'sessionFormValue',session)
+    console.log(this.mediaCoverageForm.value, 'sessionFormValue', session)
     const editSessionModal = document.getElementById('sessionFormMediaModal');
     if (editSessionModal) {
       const modalInstance = new bootstrap.Modal(editSessionModal);
@@ -287,14 +321,15 @@ export class UpdateProgramExecutionComponent implements OnInit {
     $('#image3').val('')
     $('#image4').val('')
     $('#image5').val('')
-    this.selectedFiles={}
-    if(!this.ProgramData?.programId) {
+    this.selectedFiles = {}
+    this.fileErrors = {}
+    if (!this.ProgramData?.programId) {
       this.toastrService.error("Please Select atleast one Program to add Session Details", "Program Error");
       return;
     }
 
     if (!session) {
-      
+
       const editSessionModal = document.getElementById('sessionFormExectuionModal');
       if (editSessionModal) {
         const modalInstance = new bootstrap.Modal(editSessionModal);
@@ -318,9 +353,9 @@ export class UpdateProgramExecutionComponent implements OnInit {
       image2: session?.image2,
       image3: session?.image3,
       image4: session?.image4,
-      image5: session?.image5,      
-    });    
-    console.log(this.mediaExecutionForm.value,'sessionFormValue',session)
+      image5: session?.image5,
+    });
+    console.log(this.mediaExecutionForm.value, 'sessionFormValue', session)
     const editSessionModal = document.getElementById('sessionFormExectuionModal');
     if (editSessionModal) {
       const modalInstance = new bootstrap.Modal(editSessionModal);
@@ -328,7 +363,7 @@ export class UpdateProgramExecutionComponent implements OnInit {
     }
   }
 
-  convertToISOFormat(date: string): string {    
+  convertToISOFormat(date: string): string {
     const [day, month, year] = date.split('-');
     return `${year}-${month}-${day}`; // Convert to yyyy-MM-dd format
   }
@@ -346,19 +381,19 @@ export class UpdateProgramExecutionComponent implements OnInit {
     return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
   }
 
-  onSubmitExecution(){
+  onSubmitExecution() {
     this.loading = true;
     if (this.mediaExecutionForm.invalid) return;
     this.mediaExecutionForm.value.programId = Number(this.programId)
     let objectnew: any = [this.mediaExecutionForm.value]
     const formData = new FormData();
     const API_ADD_URL = APIS.programExecutions.saveProgramExecution;
-    const apiCalls = objectnew.map((element: any, index: any) => { 
-      element['sessionDate'] = moment(element['date']).format('DD-MM-YYYY');     
+    const apiCalls = objectnew.map((element: any, index: any) => {
+      element['sessionDate'] = moment(element['date']).format('DD-MM-YYYY');
       formData.set("data", JSON.stringify(element));
-      return this._commonService.uploadImageResource(API_ADD_URL,formData);
+      return this._commonService.uploadImageResource(API_ADD_URL, formData);
     })
-    
+
     // Append images
     if (this.selectedFiles['image1']) {
       formData.append('image1', this.selectedFiles['image1']);
@@ -383,14 +418,14 @@ export class UpdateProgramExecutionComponent implements OnInit {
         this.toastrService.success('Program Execution Updated Successfully', "Program Execution Success!");
         this.mediaExecutionForm.reset();
         this.selectedFiles = {}; // Reset selected files
-        this.getProgramDetailsById(this.programId);          
+        this.getProgramDetailsById(this.programId);
       },
       error: (err) => {
         this.loading = false;
         this.closeModal();
         this.mediaExecutionForm.reset();
         this.selectedFiles = {}; // Reset selected files
-        this.toastrService.error(err, "Program Execution Error!");        
+        this.toastrService.error(err, "Program Execution Error!");
       },
     });
   }
@@ -406,11 +441,11 @@ export class UpdateProgramExecutionComponent implements OnInit {
     }
   }
 
-  validateDate(type:any){
-    if(type == 'MIN' && this.ProgramData?.startDate){
+  validateDate(type: any) {
+    if (type == 'MIN' && this.ProgramData?.startDate) {
       const startDate = this.convertToISOFormat(this.ProgramData?.startDate);
       return startDate;
-    }else if(type == 'MAX' && this.ProgramData?.endDate){
+    } else if (type == 'MAX' && this.ProgramData?.endDate) {
       const endDate = this.convertToISOFormat(this.ProgramData?.endDate);
       return endDate;
     }
@@ -422,5 +457,75 @@ export class UpdateProgramExecutionComponent implements OnInit {
     //   return this.convertToISOFormat(endDate);
     // }    
     return ''
+  }
+
+  sessionSubmissionFinal() {
+    let data = {}
+    this._commonService.add(`${APIS.programCreation.updateSessionByStatus}${this.programId}?status=Program Execution Updated`, data).subscribe({
+      next: (data: any) => {
+        console.log('Response from API:', data);
+        this.toastrService.success('Program Execution Details Submitted Successfully', "");
+        this.closeConfirmSession();
+        this.ProgramData = ''
+        this.programId = ''
+        this.getProgramsByAgency()
+      },
+      error: (err: any) => {
+        this.closeConfirmSession();
+        this.toastrService.error("Something unexpected happened!!");
+        new Error(err);
+      },
+    });
+  }
+
+  closeConfirmSession() {
+    const editSessionModal = document.getElementById('exampleModalDeleteConfirm');
+    if (editSessionModal) {
+      const modalInstance = bootstrap.Modal.getInstance(editSessionModal);
+      modalInstance.hide();
+    }
+  }
+
+  deleteFileData: any = {}
+  deleteFile(fileId: number, fileIndex: number): void {
+    this.deleteFileData = {
+      fileId: fileId,
+      fileIndex: fileIndex
+    }
+    const editSessionModal = document.getElementById('exampleModalDelete');
+    if (editSessionModal) {
+      const modalInstance = new bootstrap.Modal(editSessionModal);
+      modalInstance.show();
+    }
+  }
+
+  confirmDeleteFile(deleteFileData:any){    
+    // Call your delete API here
+    let url = `${deleteFileData?.fileId}`    
+    this._commonService.deleteId(APIS.programCreation.sessionFilesDelete, url).subscribe({
+      next: (data: any) => {        
+        console.log('Response from API:', data);
+        if (data?.message.includes('File deleted successfully')) {
+          this.toastrService.success('File deleted successfully', "");          
+        } else {        
+          this.toastrService.error("Something unexpected happened!!");          
+        }
+        this.closeModalDelete();        
+        this.getProgramDetailsById(this.programId);
+      },
+      error: (err: any) => {        
+        this.closeModalDelete();        
+        this.toastrService.error("Something unexpected happened!!");
+        new Error(err);
+      },
+    });
+  }
+
+  closeModalDelete(): void {
+    const editSessionModal = document.getElementById('exampleModalDelete');
+    if (editSessionModal) {
+      const modalInstance = bootstrap.Modal.getInstance(editSessionModal);
+      modalInstance.hide();
+    }
   }
 }

@@ -59,10 +59,27 @@ export class CommonServiceService {
   deleteById(URL: any, id: any): Observable<any> {
     return this.http.post(URL + id,{},{ responseType: 'text' })
   }
+  deleteId(URL: any, id: any): Observable<any> {
+    return this.http.delete(URL + id).pipe(catchError(this.formatErrors));
+  }
 
   public getDataByUrl(URL: any): Observable<any> {
     return this.http.get(URL).pipe(catchError(this.formatErrors));
   }
+  getUserById(URL: any, id: any): Observable<any> {
+
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'responseType': 'json',
+      userId: id,
+  });
+    return this.http.get(URL,{ headers: headers }).pipe(catchError(this.formatErrors)); 
+  }
+
+  userUpdateById(URL: any, id: any): Observable<any> {
+    return this.http.post(URL,{...id}).pipe(catchError(this.formatErrors)); 
+  }
+
   requestDataFromMultipleSources( url1:any, url2:any, fileData:any,sessionData:any): Observable<any[]> {    
     let response1 = this.http.post(url1, fileData).pipe(catchError(this.formatErrors));
     let response2=this.http.post(url2, sessionData).pipe(catchError(this.formatErrors));

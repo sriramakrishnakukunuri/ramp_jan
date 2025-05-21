@@ -7,7 +7,7 @@
                         <div class="col-12 col-sm-7 col-md-8 col-lg-9">
                             <h6 class="fw-600 mb-2 mb-sm-0 text-green">View Programs</h6>
                         </div>
-                        <ng-container *ngIf="loginsessionDetails?.userRole == 'ADMIN'">
+                        <ng-container >
                             <div class="col-12 col-sm-5 col-md-4 col-lg-3">
                                 <label for="Agencies" style="font-weight: 600;">List Of Agencies</label>
                                 <select class="form-select" id="Agencies" [(ngModel)]="selectedAgencyId"    
@@ -22,14 +22,7 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <div class="row mb-3">
-                        <div class="col-12 col-sm-6 col-md-6 col-lg-6">
-                            <!-- <button type="button" [ngClass]="{'disabled': !programIds}" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModalDeleteConfirm">Final Submission</button> -->
-                        </div>
-                        <div class="col-12 col-12 col-sm-6 col-md-6 col-lg-6 text-end">
-                            <button type="button"  (click)="openFileUploadModal()" class="btn btn-lime-green" >Upload Programs</button>
-                        </div>
-                    </div>
+              
                     <div class="row mb-3">
                         <div class="col-12 col-sm-12 col-md-2 col-lg-2">
                             <div class="card bg-primary text-white text-center shadow-none p-2">
@@ -64,26 +57,24 @@
 
                     </div>
                     <div class="dtable-container">
-                        <table id="view-table-program" class="display nowrap" style="width:100%">
+                        <table id="view-program" class="display nowrap" style="width:100%">
                             <thead class="bg-lime-green text-white">
                                 <tr>
 
                                     <th>S.No</th>
-                                    <th class="text-center" >Actions</th>
-                                    <th>Start Date</th>
-                                    <th>End Date</th>
-                                    <th>In Time</th>
-                                    <th>Out Time</th>
-                                    <th>Type Of Program</th>
-                                    <th>District</th>
-                                    <th>Title Of Program</th>
+                                    <th>Actions</th>
                                     <th>Status</th>
                                     <th>agency Name</th>
                                     <th>Type Of Activity</th>
                                     <th>Sub Activity</th>
-                                    
+                                    <th>Type Of Program</th>
+                                    <th>District</th>
+                                    <th>Title Of Program</th>
                                     <!-- <th>No. Of Days</th> -->
-                                   
+                                    <th>Start Date</th>
+                                    <th>End Date</th>
+                                    <th>In Time</th>
+                                    <th>Out Time</th>
                                     <th>SPOC Name</th>
                                     <th>SPOC Contact No.</th>
                                     <th>Program Location</th>
@@ -101,24 +92,20 @@
                                             title="Sessions" data-bs-toggle="modal" data-bs-target="#viewModal"
                                             (click)="sessionDetails(item)" title="View"><span
                                                 class="bi bi-eye"></span></button>
-                                                <!-- <button type="button" class="btn btn-default btn-sm text-danger" title="Delete"><span class="bi bi-trash"></span></button> -->
                                         <!-- <button type="button" class="btn btn-default btn-sm text-primary mx-2" title="Edit" (click)="editProgram(item)"><span class="bi bi-pencil"></span></button> -->
                                         <!-- <button type="button" class="btn btn-default btn-sm text-danger" title="Delete"><span class="bi bi-trash"></span></button> -->
                                     </td>
+                                    <td>{{ item.status }}</td>
+                                    <td>{{ item.activityName }}</td>
+                                    <td>{{ item.subActivityName }}</td>
+                                    <td>{{ item.programType }}</td>
+                                    <!-- <td>{{ item.programDetails }}</td> -->
+                                    <td>{{ item.programTitle }}</td>
+                                    <!-- <td>{{ item.noOfDays }}</td> -->
                                     <td>{{ item.startDate }}</td>
                                     <td>{{ item.endDate }}</td>
                                     <td class="text-center">{{ item.startTime }}</td>
                                     <td class="text-center">{{ item.endTime }}</td>
-                                    <td>{{ item.programType }}</td>
-                                    <td>{{ item.programTitle }}</td>
-                                    <td>{{ item.status }}</td>
-                                    <td>{{ item.activityName }}</td>
-                                    <td>{{ item.subActivityName }}</td>
-                                    
-                                    <!-- <td>{{ item.programDetails }}</td> -->
-                                    
-                                    <!-- <td>{{ item.noOfDays }}</td> -->
-                                    
                                     <td>{{ item.spocName }}</td>
                                     <td>{{ item.spocContactNo }}</td>
                                     <td>{{ item.programLocationName }}</td>
@@ -278,71 +265,6 @@
                         </tr>
                     </tbody> -->
                 </table>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="exampleModalDeleteProgram" tabindex="-1" role="dialog" aria-labelledby="exampleModalDeleteLabel" aria-hidden="true">
-<div class="modal-dialog" role="document">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalDeleteLabel">Delete Program</h5>
-            <button type="button" class="btn-close" (click)="closeModalDelete()" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            Are you sure you want to delete Program?. Related Sessions, Participants & Expenditure also will be deleted!
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" (click)="closeModalDelete()" >Close</button>
-            <button type="button" class="btn btn-lime-green"  (click)="ConfirmdeleteExpenditure(deleteProgramId)">Confirm</button>
-        </div>
-    </div>
-</div>
-</div>
-
-<!-- upload form -->
-<div class="modal fade" id="addDocumentModel" tabindex="-1" aria-labelledby="addDocumentLabel" aria-hidden="true" data-keyboard="false" data-bs-backdrop="static" >
-    <div class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h6 class="modal-title" id="addDocumentLabel">Upload  Document</h6>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <span *ngIf="fileErrorMsg" style="color: red;">{{fileErrorMsg}}</span>
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="attachment" *ngIf="!file">
-                            <input class="attachment" style="opacity: 0" #fileInput type="file" 
-                                accept=".xls, .xlsx,"
-                                (change)="onFilesSelected($event)" />
-                            <span class="drop-zone__prompt">Drop file here <br> or <br> click to upload</span>
-                        </div>
-                        <div *ngIf="file">
-                            file Name : {{ selectedfiles.name}} <br> <button class="btn btn-sm btn-primary" 
-                                (click)="file=undefined"> clear file</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-12">
-                        <ng-container *ngIf="selectedfiles">
-                            <div class="row" *ngFor="let item of selectedfiles" style="font-size: 10px;">
-                                <div class="col-sm-6 word-wrap">{{item.name}}</div>
-                                <!-- <div class="col-sm-2">{{item.size}}</div>
-                                <div class="col-sm-4 word-wrap">{{item.type}}</div> -->
-                            </div>
-                        </ng-container>
-                    </div>
-                </div>
-                <div class="d-grid">
-                    <ng-container >
-                        <button type="button"  class="btn btn-lime-green" data-bs-dismiss="modal" (click)="uploadManualFiles()" [ngClass]="{'disabled': !selectedfiles.length}">Upload</button>
-                    </ng-container>
-                  
-                    
-                </div>
             </div>
         </div>
     </div>

@@ -1,3 +1,4 @@
+import { get } from "jquery";
 import { environment } from "src/environments/environment";
 
 export const API_BASE_URL = environment.apiUrl;
@@ -14,6 +15,7 @@ export const APIS = {
         addResource: API_BASE_URL + '/resource/save',
         getProgramsList: API_BASE_URL + '/programs',
         getProgramsListByAgency: API_BASE_URL + '/agency/programs/dropdown/',
+        getProgramsListByAgencyStatus: API_BASE_URL + '/programs/status',
         getProgramsListByAgencyDetails: API_BASE_URL + '/agency/programs/',
         getSingleProgramsList: API_BASE_URL + '/program/',
         getActivityList: API_BASE_URL + '/activities',
@@ -22,7 +24,13 @@ export const APIS = {
         getESDPProgram: API_BASE_URL + '/getESDPTraining',
         addESDPProgram: API_BASE_URL + '/SaveESDPTraining',
         updateProgram: API_BASE_URL + '/updateProgram',
-        deleteSession: API_BASE_URL + '/program/session/delete',        
+        deleteSession: API_BASE_URL + '/program/session/delete',
+        deleteProgram: API_BASE_URL + '/program/delete/',
+        getProgramsListBySession: API_BASE_URL + '/programs/status/',
+        updateSessionByStatus: API_BASE_URL + '/programs/status/',
+        programSummary: API_BASE_URL + '/programs/status/summary/',
+        sessionFilesDelete: API_BASE_URL + '/program-session-files/', 
+        uploadProgram: API_BASE_URL + '/program/import', 
         // get: API_BASE_URL + '/program/get',
         // update: API_BASE_URL + '/program/update',
         // delete: API_BASE_URL + '/program/delete',
@@ -37,6 +45,7 @@ export const APIS = {
         getParticipantList: API_BASE_URL + '/participants',
         getParticipantListByAgency: API_BASE_URL + '/agency/participants/',
         getParticipantDetailsById: API_BASE_URL + '/getParticipantById/',
+        uploadParticipant: API_BASE_URL + '/upload',
     },
     counsellerData:{
         add: API_BASE_URL + '/saveCounsellor',
@@ -44,7 +53,9 @@ export const APIS = {
     },
     userRegistration:{
         add: API_BASE_URL + '/login/user/create',
-        addAgent: API_BASE_URL + '/login/user/create',        
+        addAgent: API_BASE_URL + '/login/user/create',
+        editProfile: API_BASE_URL + '/login/user/update',
+        getUserById: API_BASE_URL + '/login/user',        
     },
     masterList: {
         changePassword:API_BASE_URL+'/login/change-password',
@@ -55,6 +66,7 @@ export const APIS = {
         getDistricts: API_BASE_URL + '/getAllDistricts',
         getSectors: API_BASE_URL + '/getallsectors',
         getMandal: API_BASE_URL + '/getAllmandalsOfDistrictsById/',
+        getMandalName: API_BASE_URL + '/getAllmandalsOfDistrictsByName/',
     },
     captureOutcome:{
         getParticipantData: API_BASE_URL + '/getParticipantsByMobileNo/',
@@ -85,10 +97,18 @@ export const APIS = {
         getHeadOfExpenditure:API_BASE_URL +`/expenses`,
         saveExpenditure:API_BASE_URL +`/program/expenditure/save`,
         savebulkExpenditure:API_BASE_URL +`/bulk/expenditure/save`,
+        updatebulkExpenditure:API_BASE_URL +`/bulk/expenditure/update/`,
         savebulkByItemExpenditure:API_BASE_URL +`/bulk/transactions/save`,
+        UpdatebulkByItemTranstion:API_BASE_URL +`/bulk/transactions/update/`,  
         getExpenditure:API_BASE_URL +`/program/expenditure`,
+        getExpenditureByAgency:API_BASE_URL +`/program/expenditure/agency/`,
         getBulkExpenditure:API_BASE_URL +`/bulk/expenditure`,
+        getBulkExpenditureByAgency:API_BASE_URL +`/bulk/expenditure/agency/`,
         getBulkExpenditureByProgramId:API_BASE_URL +`/bulk/transactions`,
+        deleteExpenditure:API_BASE_URL +`/program/expenditure/delete/`,
+        deleteTransation:API_BASE_URL +`/bulk/transactions/delete/`,
+        UpdateExpenditure:API_BASE_URL +`/program/expenditure/update/`,
+        deleteBulkExpenditure:API_BASE_URL +`/bulk/expenditure/delete/`,
     },
     programSummary:{
         getProramData:API_BASE_URL +`/program/summary/`,
@@ -97,5 +117,13 @@ export const APIS = {
     programExecutions:{
         saveMediaCoverage:API_BASE_URL +`/program/execution/media-coverage`,
         saveProgramExecution:API_BASE_URL +`/program/execution/images`,
+    },
+    programMonitoring:{
+        getProgramMonitoringById:API_BASE_URL +`/program/details/for/feedback/`,
+        getProgramMonitoringByIdUpdated:API_BASE_URL +`/program/feedback/id/`,
+        getProgramMonitoringByIdProgram:API_BASE_URL +`/program/feedback/`,
+        // getProgramMonitoringById:API_BASE_URL +`/program/monitoring/`,
+        saveProgramMonitoring:API_BASE_URL +`/program/feedback/save`,
+        updateProgramMonitoring:API_BASE_URL +`/program/feedback/update/`,
     }
 }

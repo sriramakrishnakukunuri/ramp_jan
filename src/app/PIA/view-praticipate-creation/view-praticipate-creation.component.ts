@@ -68,7 +68,17 @@ export class ViewParticipateCreationComponent implements OnInit {
         }
       })
     }else {
-
+      this.selectedAgencyId = event.target.value
+      //this._commonService.getDataByUrl(APIS.participantdata.getParticipantList+'/'+this.loginsessionDetails.agencyId)
+      this._commonService.getDataByUrl(APIS.participantdata.getParticipantListByAgency+'/'+agencyId).subscribe({
+        next: (dataList: any) => {
+          this.tableList = dataList.data
+          this.reinitializeDataTable(agencyId);
+        },
+        error: (error: any) => {
+          this.toastrService.error(error.error.message);
+        }
+      })
     }
     
   }

@@ -1,0 +1,1008 @@
+<main class="mt-4">
+    <section>
+        <div class="container-fluid">
+    <div class="card mb-3">
+      <div class="card-header bg-transparent">
+        <div class="row align-items-center">
+          <div class="col-12 col-sm-6 col-md-6 col-lg-6">
+            <h6 class="fw-600 mb-2 mb-sm-0">Program Monitoring</h6>
+          </div>
+          <div class="col-12 col-sm-3 col-md-3 col-lg-3">
+            <label for="Agencies" style="font-weight: 600;">List Of Agencies</label>
+            <select class="form-select" id="Agencies" [(ngModel)]="agencyId" (change)="getProgramsByAgency($any($event.target).value)">   >
+                <option *ngFor="let list of agencyList" value="{{list.agencyId}}">
+                    {{list.agencyName}}</option>
+            </select>
+
+        </div>
+          <div class="col-12 col-sm-3 col-md-3 col-lg-3">
+            <div>
+                <label for="Agencies" style="font-weight: 600;">List Of Programs</label>
+                <select class="form-select" [(ngModel)]="programIds" (change)="getByProgramId($any($event.target).value)">
+                    <!-- <option value="">Select Program</option> -->
+                <option *ngFor="let list of agencyProgramList" value="{{list.programId}}">{{list.programTitle}}</option>
+                </select>
+            </div>
+        </div>
+
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="mt-3">
+          <div class="progress progress-line px-1" style="height: 3px;">
+            <div class="progress-bar" role="progressbar" [style.width]="(currentStep/totalSteps)*100 + '%'" 
+                 [attr.aria-valuenow]="currentStep" aria-valuemin="1" [attr.aria-valuemax]="totalSteps"></div>
+          </div>
+          <div class="step-container d-flex justify-content-between">
+            <div class="step-circle" [class.active]="currentStep >= 1"><span class="bi bi-info"></span></div>
+            <div class="step-circle" [class.active]="currentStep >= 2"><span class="bi bi-person"></span></div>
+            <div class="step-circle" [class.active]="currentStep >= 3"><span class="bi bi-card-checklist"></span></div>
+            <div class="step-circle" [class.active]="currentStep >= 4"><span class="bi bi-file-earmark-text"></span></div>
+            <div class="step-circle" [class.active]="currentStep >= 5"><span class="bi bi-gear"></span></div>
+            <div class="step-circle" [class.active]="currentStep >= 6"><span class="bi bi-truck"></span></div>
+            <div class="step-circle" [class.active]="currentStep >= 7"><span class="bi bi-person-gear"></span></div>
+            <div class="step-circle" [class.active]="currentStep >= 8"><span class="bi bi-file-earmark-check"></span></div>
+            <div class="step-circle" [class.active]="currentStep >= 9"><span class="bi bi-graph-up-arrow"></span></div>
+            <div class="step-circle" [class.active]="currentStep >= 10"><span class="bi bi-star"></span></div>
+            <div class="step-circle" [class.active]="currentStep >= 11"><span class="bi bi-pencil"></span></div>
+          </div>
+          <!-- <div class="step-container step-label step-content justify-content-between">
+            <div class="fs-md fw-600">Basic Information</div>
+            <div class="fs-md fw-600">Audience Profile</div>
+            <div class="fs-md fw-600">Pre-Event Preparation</div>
+            <div class="fs-md fw-600">Program Delivery Details</div>
+            <div class="fs-md fw-600">Program Execution</div>
+            <div class="fs-md fw-600">Logistics & Facilities Evaluation</div>
+            <div class="fs-md fw-600">Post-Training Assessment</div>
+            <div class="fs-md fw-600">Document Checklist</div>
+            <div class="fs-md fw-600">Observations, Challenges, Best Practices</div>
+            <div class="fs-md fw-600">Overall Program Rating (by Monitor)</div>
+            <div class="fs-md fw-600">Additional Remarks / Recommendations</div>
+          </div> -->
+        </div>
+  <!-- (ngSubmit)="onSubmit()" -->
+        <form [formGroup]="programForm" >
+          <!-- Step 1: Basic Information -->
+          <div class="step step-1" *ngIf="currentStep === 1">
+            <div class="card border rounded-2 shadow-none">
+              <div class="card-header bg-lime-green rounded-top text-white">
+                <h6 class="mb-0">Basic Information</h6>
+              </div>
+              <div class="card-body p-0">
+                <div class="p-3">
+                  <div class="row">
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                      <div class="mb-3">
+                        <label class="fs-md fw-600 mb-1 d-block">State</label>
+                        <label class="fs-md">{{fMon['state'].value}}</label>
+                        <!-- <input type="text" class="form-control" formControlName="state">
+                        <div *ngIf="programForm.get('state')?.invalid && programForm.get('state')?.touched" class="text-danger">
+                          State is required
+                        </div> -->
+                      </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                      <div class="mb-3">
+                        <label class="fs-md fw-600 mb-1 d-block">District</label>
+                        <label class="fs-md">{{fMon['district'].value}}</label>
+                        <!-- <input type="text" class="form-control" formControlName="district">
+                        <div *ngIf="programForm.get('district')?.invalid && programForm.get('district')?.touched" class="text-danger">
+                          District is required
+                        </div> -->
+                      </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                      <div class="mb-3">
+                        <label class="fs-md fw-600 mb-1 d-block">Date</label>
+                        <label class="fs-md">{{fMon['dateOfMonitoring'].value}}</label>
+                        <!-- <input type="date" class="form-control" formControlName="dateOfMonitoring">
+                        <div *ngIf="programForm.get('dateOfMonitoring')?.invalid && programForm.get('dateOfMonitoring')?.touched" class="text-danger">
+                          Date is required
+                        </div> -->
+                      </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                      <div class="mb-3">
+                        <label class="fs-md fw-600 mb-1 d-block">Agency Name</label>
+                        <label class="fs-md">{{fMon['agencyName'].value}}</label>
+                        <!-- <input type="text" class="form-control" formControlName="agencyName"> -->
+                      </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                      <div class="mb-3">
+                        <label class="fs-md fw-600 mb-1 d-block">Program Type</label>
+                        <label class="fs-md">{{fMon['programType'].value}}</label>
+                        <!-- <input type="text" class="form-control" formControlName="programType"> -->
+                      </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                      <div class="mb-3">
+                        <label class="fs-md fw-600 mb-1 d-block">Program Name</label>
+                        <label class="fs-md">{{fMon['programName'].value}}</label>
+                        <!-- <input type="text" class="form-control" formControlName="programName"> -->
+                      </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                      <div class="mb-3">
+                        <label class="fs-md fw-600 mb-1 d-block">Venue Name</label>
+                        <label class="fs-md">{{fMon['venueName'].value}}</label>
+                        <!-- <input type="text" class="form-control" formControlName="venueName"> -->
+                      </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                      <div class="mb-3">
+                        <label class="fs-md fw-600 mb-1 d-block">Hosting Agency</label>
+                        <label class="fs-md">{{fMon['hostingAgencyName'].value}}</label>
+                        <!-- <input type="text" class="form-control" formControlName="hostingAgencyName"> -->
+                      </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                      <div class="mb-3">
+                        <label class="fs-md fw-600 mb-1 d-block">Name of the SPOC</label>
+                        <label class="fs-md">{{fMon['spocName'].value}}</label>
+                        <!-- <input type="text" class="form-control" formControlName="spocName"> -->
+                      </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                      <div class="mb-3">
+                        <label class="fs-md fw-600 mb-1 d-block">SPOC Contact Number</label>
+                        <label class="fs-md">{{fMon['spocContact'].value}}</label>
+                        <!-- <input type="tel" class="form-control" formControlName="spocContact">
+                        <div *ngIf="programForm.get('spocContact')?.invalid && programForm.get('spocContact')?.touched" class="text-danger">
+                          Valid 10-digit number required
+                        </div> -->
+                      </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                      <div class="mb-3">
+                        <label class="fs-md fw-600 mb-1 d-block">Time In</label>
+                        <label class="fs-md">{{fMon['inTime'].value}}</label>
+                        <!-- <input type="time" class="form-control" formControlName="inTime"> -->
+                      </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                      <div class="mb-3">
+                        <label class="fs-md fw-600 mb-1 d-block">Time Out</label>
+                        <label class="fs-md">{{fMon['outTime'].value}}</label>
+                        <!-- <input type="time" class="form-control" formControlName="outTime"> -->
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="border-top text-end px-3 py-2">
+                  <button type="button" class="btn btn-lime-green" [ngClass]="{'disabled':!agencyProgramList?.length}" (click)="nextStep()">Next <span class="bi bi-arrow-right ms-2"></span></button>
+                </div>
+              </div>
+            </div>
+          </div>
+  
+          <!-- Step 2: Audience Profile -->
+          <div class="step step-2" *ngIf="currentStep === 2">
+            <div class="card border rounded-2 shadow-none mb-3">
+              <div class="card-header bg-lime-green rounded-top text-white">
+                <h6 class="mb-0">Audience Profile</h6>
+              </div>
+              <div class="card-body p-0">
+                <div class="p-3">
+                  <div class="mb-3">
+                    <h6 class="fs-md">Target Group</h6>
+                    <div class="row">
+                      <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                        <div class="form-floating mb-3 mb-md-3 mb-lg-0">
+                          <input type="number" class="form-control" id="male" (input)="Enterdata($any($event.target).value)" formControlName="maleParticipants" min="0">
+                          <label for="male">Male</label>
+                        </div>
+                        <div *ngIf="programForm.get('maleParticipants')?.errors?.['min']" class="error">
+                          Value must be at least 0
+                      </div>
+                      </div>
+                      <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                        <div class="form-floating mb-3 mb-md-3 mb-lg-0">
+                          <input type="number" class="form-control" id="female" (input)="Enterdata($any($event.target).value)" formControlName="femaleParticipants" min="0">
+                          <label for="female">Female</label>
+                        </div>
+                        <div *ngIf="programForm.get('femaleParticipants')?.errors?.['min']" class="error">
+                          Value must be at least 0
+                      </div>
+                      </div>
+                      <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                        <div class="form-floating mb-3 mb-md-3 mb-lg-0">
+                          <input type="number" class="form-control" id="transgender" (input)="Enterdata($any($event.target).value)" formControlName="transGenderParticipants" min="0">
+                          <label for="transgender">Transgender</label>
+                        </div>
+                        <div *ngIf="programForm.get('transGenderParticipants')?.errors?.['min']" class="error">
+                          Value must be at least 0
+                      </div>
+                      </div>
+                      <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                        <div class="form-floating mb-3 mb-md-0 mb-lg-0">
+                          <input type="number" readonly class="form-control" id="totalGender" formControlName="totalParticipants" min="0">
+                          <label for="totalGender">Total</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mb-3">
+                    <h6 class="fs-md">Participants From</h6>
+                    <div class="row">
+                      <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                        <div class="form-floating mb-3 mb-md-3 mb-lg-3">
+                          <input type="number" class="form-control" id="dic" formControlName="noOfDIC" min="0">
+                          <label for="dic">DIC</label>
+                        </div>
+                        <div *ngIf="programForm.get('noOfDIC')?.errors?.['min']" class="error">
+                          Value must be at least 0
+                      </div>
+                      </div>
+                      <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                        <div class="form-floating mb-3 mb-md-3 mb-lg-3">
+                          <input type="number" class="form-control" id="shg" formControlName="noOfSHG" min="0">
+                          <label for="shg">SHG</label>
+                        </div>
+                        <div *ngIf="programForm.get('noOfSHG')?.errors?.['min']" class="error">
+                          Value must be at least 0
+                      </div>
+                      </div>
+                      <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                        <div class="form-floating mb-3 mb-md-3 mb-lg-3">
+                          <input type="number" class="form-control" id="msme" formControlName="noOfMSME" min="0">
+                          <label for="msme">MSMEs</label>
+                        </div>
+                        <div *ngIf="programForm.get('noOfMSME')?.errors?.['min']" class="error">
+                          Value must be at least 0
+                      </div>
+                      </div>
+                      <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                        <div class="form-floating mb-3 mb-md-3 mb-lg-3">
+                          <input type="number" class="form-control" id="ias" formControlName="noOfIAs" min="0">
+                          <label for="ias">IAs</label>
+                        </div>
+                        <div *ngIf="programForm.get('noOfIAs')?.errors?.['min']" class="error">
+                          Value must be at least 0
+                      </div>
+                      </div>
+                      <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                        <div class="form-floating mb-3 mb-md-0 mb-lg-0">
+                          <input type="number" class="form-control" id="startup" formControlName="noOfStartup" min="0">
+                          <label for="startup">Startups</label>
+                        </div>
+                        <div *ngIf="programForm.get('noOfStartup')?.errors?.['min']" class="error">
+                          Value must be at least 0
+                      </div>
+                      </div>
+                      <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                        <div class="form-floating mb-3 mb-md-0 mb-lg-0">
+                          <input type="number" class="form-control" id="others" formControlName="noOfOthers" min="0">
+                          <label for="others">Others</label>
+                        </div>
+                        <div *ngIf="programForm.get('noOfOthers')?.errors?.['min']" class="error">
+                          Value must be at least 0
+                      </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mb-3">
+                    <h6 class="fs-md">Category Representation</h6>
+                    <div class="row">
+                      <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                        <div class="form-floating mb-3 mb-md-3 mb-lg-3">
+                          <input type="number" class="form-control" id="sc" formControlName="noOfSC" min="0">
+                          <label for="sc">SC</label>
+                        </div>
+                        <div *ngIf="programForm.get('noOfSC')?.errors?.['min']" class="error">
+                          Value must be at least 0
+                      </div>
+                      </div>
+                      <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                        <div class="form-floating mb-3 mb-md-3 mb-lg-3">
+                          <input type="number" class="form-control" id="st" formControlName="noOfST" min="0">
+                          <label for="st">ST</label>
+                        </div>
+                        <div *ngIf="programForm.get('noOfST')?.errors?.['min']" class="error">
+                          Value must be at least 0
+                      </div>
+                      </div>
+                      <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                        <div class="form-floating mb-3 mb-md-3 mb-lg-3">
+                          <input type="number" class="form-control" id="bc" formControlName="noOfBC" min="0">
+                          <label for="bc">BC</label>
+                        </div>
+                        <div *ngIf="programForm.get('noOfBC')?.errors?.['min']" class="error">
+                          Value must be at least 0
+                      </div>
+                      </div>
+                      <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                        <div class="form-floating mb-3 mb-md-0 mb-lg-0">
+                          <input type="number" class="form-control" id="oc" formControlName="noOfOC" min="0">
+                          <label for="oc">OC</label>
+                        </div>
+                        <div *ngIf="programForm.get('noOfOC')?.errors?.['min']" class="error">
+                          Value must be at least 0
+                      </div>
+                      </div>
+                      <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                        <div class="form-floating mb-3 mb-md-3 mb-lg-3">
+                          <input type="number" class="form-control" id="minority" formControlName="noOfMinority" min="0">
+                          <label for="minority">Minority</label>
+                        </div>
+                        <div *ngIf="programForm.get('noOfMinority')?.errors?.['min']" class="error">
+                          Value must be at least 0
+                      </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="border-top px-3 py-2 d-flex align-items-center justify-content-between">
+                  <button type="button" class="btn btn-secondary" (click)="prevStep()"><span class="bi bi-arrow-left me-2"></span> Previous</button>
+                  <button type="button" class="btn btn-lime-green" [ngClass]="{'disabled':disability}" (click)="nextStep()">Save & Next <span class="bi bi-arrow-right ms-2"></span></button>
+                </div>
+              </div>
+            </div>
+          </div>
+  
+          <!-- Step 3: Pre-Event Preparation -->
+          <div class="step step-3" *ngIf="currentStep === 3">
+            <div class="card shadow-none rounded-2 border mb-3">
+              <div class="card-header bg-lime-green rounded-top text-white">
+                  <h6 class="mb-0">Pre-Event Preparation (Checklist)</h6>
+              </div>
+              <div class="card-body p-0">
+                <div class="p-3">
+                  <div class="row" formArrayName="preEventChecklists">
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3" 
+                         *ngFor="let checklist of preEventChecklists.controls; let i = index">
+                      <div class="mb-3" [formGroup]="$any(checklist)" >
+                        <label class="fs-md fw-600 mb-1">{{ checklist.get('name')?.value }}</label>
+                        <div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" 
+                                   [id]="'yes' + i" 
+                                   [value]="true"
+                                   formControlName="status">
+                            <label class="form-check-label fs-md" [for]="'yes' + i">Yes</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" 
+                                   [id]="'no' + i" 
+                                   [value]="false"
+                                   formControlName="status">
+                            <label class="form-check-label fs-md" [for]="'no' + i">No</label>
+                          </div>
+                        </div>
+                        <div class="mt-2">
+                          <textarea class="form-control" rows="2" placeholder="Remarks"
+                                    formControlName="remarks"></textarea>
+                        </div>
+                      </div>
+                </div>
+                </div>
+
+                <div class="border-top px-3 py-2 d-flex align-items-center justify-content-between">
+                    <button type="button" class="btn btn-secondary" (click)="prevStep()"><span class="bi bi-arrow-left me-2"></span> Previous</button>
+                    <button type="button" class="btn btn-lime-green" [ngClass]="{'disabled':disability}" (click)="nextStep()">Save & Next <span class="bi bi-arrow-right ms-2"></span></button>
+                  </div>
+              </div>
+            </div>
+          </div>   
+          </div>
+  
+          <!-- Step 4: Program Delivery Details -->
+          <div class="step step-4" *ngIf="currentStep === 4">
+            <div class="card rounded-2 shadow-none border mb-3">
+              <div class="card-header bg-lime-green rounded-top text-white">
+                <div class="d-flex align-items-center justify-content-between">
+                  <div>
+                    <h6 class="mb-0">Program Delivery Details</h6>
+                  </div>
+                  <div>
+                    <button type="button" data-bs-toggle="modal" data-bs-target="#addDelivery" class="btn btn-default btn-sm"><span class="bi bi-plus-lg"></span> Add</button>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body p-0">
+                <div class="p-3">
+                  <div class="table-responsive">
+                    <table class="table table-bordered nowrap w-100">
+                      <thead class="bg-lime-green text-white">
+                          <tr>
+                              <th>S.No</th>
+                              <th class="text-center" >Delete</th>
+                              <th>Speaker Name</th>
+                              <th>Topic Delivered</th>
+                              <th>Time Taken</th>
+                              <th>Audio Visual Aid used (Yes / No)</th>
+                              <th>Relevance (High / Medium / Low)</th>
+                              <th>Speaker Effectiveness (Rating 1 to 5)</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let item of this.programForm.value.programDeliveryDetails;let i=index">
+                          <td class="text-start">{{i+1}}</td>
+                          <td class="text-center">
+                            <button type="button" class="btn btn-default text-danger btn-sm" (click)="deleteDelivery(i)"><span class="bi bi-trash"></span></button>
+                        </td>
+                          <td>{{item?.speakerName}}</td>
+                          <td>{{item?.topicDelivered}}</td>
+                          <td>{{item?.timeTaken}}</td>
+                          <td>{{item?.audioVisualUsed}}</td>
+                          <td>{{item?.relevance}}</td>
+                          <td>{{item?.speakerEffectiveness}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                <div class="border-top px-3 py-2 d-flex align-items-center justify-content-between">
+                    <button type="button" class="btn btn-secondary" (click)="prevStep()"> <span class="bi bi-arrow-left me-2"></span> Previous</button>
+                    <button type="button" class="btn btn-lime-green" (click)="nextStep()" [ngClass]="{'disabled':disability}" >Save & Next <span class="bi bi-arrow-right ms-2"></span></button>
+                  </div>
+              </div>
+            </div>
+          </div>
+  
+          <!-- Step 5: Program Execution -->
+          <div class="step step-5" *ngIf="currentStep === 5">
+            <div class="card shadow-none border rounded-2 mb-3">
+              <div class="card-header bg-lime-green rounded-top text-white">
+                <h6 class="mb-0">Program Execution</h6>
+              </div>
+              <div class="card-body p-0">
+                <div class="p-3">
+                  <div class="row">
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                      <div class="form-floating mb-3 mb-md-3 mb-lg-3">
+                        <input type="text" class="form-control" id="punctuality" formControlName="timingPunctuality">
+                        <label for="punctuality">Punctuality of Start / End Time</label>
+                      </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                      <div class="form-floating mb-3 mb-md-3 mb-lg-3">
+                        <input type="text" class="form-control" id="session" formControlName="sessionContinuity">
+                        <label for="session">Session Continuity</label>
+                      </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                      <div class="form-floating mb-3 mb-md-3 mb-lg-3">
+                        <input type="text" class="form-control" id="interest" formControlName="participantInterestLevel">
+                        <label for="interest">Participant Interest Level</label>
+                      </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                      <div class="form-floating mb-3 mb-md-3 mb-lg-3">
+                        <input type="text" class="form-control" id="interest" formControlName="participantQueries">
+                        <label for="interest">Questions Asked By Participants</label>
+                      </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                      <div class="form-floating mb-3 mb-md-0 mb-lg-3">
+                        <input type="text" class="form-control" id="questions" formControlName="unforeseenIssues">
+                        <label for="questions">Unforeseen Issues</label>
+                      </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                      <div class="form-floating mb-3 mb-md-0 mb-lg-0">
+                        <input type="text" class="form-control" id="overall" formControlName="overallEnergyEngagement">
+                        <label for="overall">Overall Energy & Engagement</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="border-top px-3 py-2 d-flex align-items-center justify-content-between">
+                  <button type="button" class="btn btn-secondary" (click)="prevStep()"><span class="bi bi-arrow-left me-2"></span> Previous</button>
+                  <button type="button" class="btn btn-lime-green" [ngClass]="{'disabled':disability}" (click)="nextStep()">Save & Next <span class="bi bi-arrow-right ms-2"></span></button>
+                </div>
+              </div>
+            </div>
+          </div>
+  
+          <!-- Step 6: Logistics & Facilities Evaluation -->
+          <div class="step step-6" *ngIf="currentStep === 6">
+            <div class="card shadow-none border rounded-2 mb-3">
+              <div class="card-header bg-lime-green rounded-top text-white">
+                  <h6 class="mb-0">Logistics & Facilities Evaluation</h6>
+              </div>
+              <div class="card-body p-0">
+                <div class="p-3">
+                  <div class="row" >
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3" *ngFor="let logistic of logisticsEvaluations.controls; let i = index">
+                      <div class="mb-3" [formGroup]="$any(logistic)" >
+                        <label class="fs-md fw-600 mb-1">{{ logistic.get('parameter')?.value }}</label>
+                        <label class="fs-md fw-600 d-block mb-1">Rating (1-5)</label>
+                        <div>
+                          <div class="form-check form-check-inline" *ngFor="let rating of [1,2,3,4,5]">
+                            <input class="form-check-input" type="radio" 
+                                   [id]="logistic.get('parameter')?.value + rating" 
+                                   [value]="rating"
+                                   formControlName="rating">
+                            <label class="form-check-label fs-md" [for]="logistic.get('parameter')?.value + rating">{{rating}}</label>
+                          </div>
+                        </div>
+                        <div class="mt-2">
+                          <textarea class="form-control" rows="2" placeholder="Remarks"
+                                    formControlName="remarks"></textarea>
+                        </div>
+                      </div>
+                </div>
+                </div>
+
+                <div class="border-top px-3 py-2 d-flex align-items-center justify-content-between">
+                    <button type="button" class="btn btn-secondary" (click)="prevStep()"><span class="bi bi-arrow-left me-2"></span> Previous</button>
+                    <button type="button" class="btn btn-lime-green" [ngClass]="{'disabled':disability}" (click)="nextStep()">Save & Next <span class="bi bi-arrow-right ms-2"></span></button>
+                  </div>
+              </div>
+            </div>
+            </div>
+          </div>
+  
+          <!-- Step 7: Post-Training Assessment -->
+          <div class="step step-7" *ngIf="currentStep === 7">
+            <div class="card shadow-none border rounded-2 mb-3">
+              <div class="card-header bg-lime-green rounded-top text-white">
+                <h6 class="mb-0">Post-Training Assessment</h6>
+              </div>
+              <div class="card-body p-0">
+                <div class="p-3">
+                  <div class="row">
+                    <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                      <div class="mb-3">
+                        <label class="d-block fs-md fw-600 mb-1">Participants Feedback Forms Collected</label>
+                        <div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" formControlName="participantsFeedbackCollected" id="yesFeedback" [value]="true">
+                            <label class="form-check-label fs-md" for="yesFeedback">Yes</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" formControlName="participantsFeedbackCollected" id="noFeedback" [value]="false">
+                            <label class="form-check-label fs-md" for="noFeedback">No</label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                      <div class="mb-3">
+                        <label class="d-block fs-md fw-600 mb-1">Participants Person Forms Collected</label>
+                        <div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" formControlName="resourceFeedbackCollected" id="yesperson" [value]="true">
+                            <label class="form-check-label fs-md" for="yesperson">Yes</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" formControlName="resourceFeedbackCollected" id="noperson" [value]="false">
+                            <label class="form-check-label fs-md" for="noperson">No</label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                      <div class="mb-3">
+                        <label class="d-block fs-md fw-600 mb-1">Pre / Post Tests Conducted</label>
+                        <div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" formControlName="prePostTestsConducted" id="yesTests" [value]="true">
+                            <label class="form-check-label fs-md" for="yesTests">Yes</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" formControlName="prePostTestsConducted" id="noTests" [value]="false">
+                            <label class="form-check-label fs-md" for="noTests">No</label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <div class="mb-3">
+                        <label class="d-block fs-md fw-600 mb-1">Learning Highlights by the participants</label>
+                        <div>
+                          <textarea class="form-control" rows="4" formControlName="learningHighlights" placeholder=""></textarea>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="border-top px-3 py-2 d-flex align-items-center justify-content-between">
+                  <button type="button" class="btn btn-secondary" (click)="prevStep()"><span class="bi bi-arrow-left me-2"></span> Previous</button>
+                  <button type="button" class="btn btn-lime-green" [ngClass]="{'disabled':disability}" (click)="nextStep()">Save & Next <span class="bi bi-arrow-right ms-2"></span></button>
+                </div>
+              </div>
+            </div>
+          </div>
+                <!-- Step 8: Document Checklist -->
+                <div class="step step-8" *ngIf="currentStep === 8">
+                    <div class="card shadow-none border rounded-2 mb-3">
+                      <div class="card-header bg-lime-green rounded-top text-white">
+                        <h6 class="mb-0">Document Checklist</h6>
+                      </div>
+                      <div class="card-body p-0">
+                        <div class="p-3">
+                          <div class="row">
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                              <div class="mb-3">
+                                <label class="d-block fs-md fw-600 mb-1">Attendance Sheet</label>
+                                <div>
+                                  <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="attendanceSheet" id="yesAttendance" 
+                                           formControlName="attendanceSheet" [value]="true">
+                                    <label class="form-check-label fs-md" for="yesAttendance">Yes</label>
+                                  </div>
+                                  <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="attendanceSheet" id="noAttendance" 
+                                           formControlName="attendanceSheet" [value]="false">
+                                    <label class="form-check-label fs-md" for="noAttendance">No</label>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                              <div class="mb-3">
+                                <label class="d-block fs-md fw-600 mb-1">Registration Forms</label>
+                                <div>
+                                  <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="registrationForms" id="yesRegistration" 
+                                           formControlName="registrationForms" [value]="true">
+                                    <label class="form-check-label fs-md" for="yesRegistration">Yes</label>
+                                  </div>
+                                  <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="registrationForms" id="noRegistration" 
+                                           formControlName="registrationForms" [value]="false">
+                                    <label class="form-check-label fs-md" for="noRegistration">No</label>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                              <div class="mb-3">
+                                <label class="d-block fs-md fw-600 mb-1">Participant Feedback</label>
+                                <div>
+                                  <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="participantFeedBack" id="yesfb" 
+                                           formControlName="participantFeedBack" [value]="true">
+                                    <label class="form-check-label fs-md" for="yesfb">Yes</label>
+                                  </div>
+                                  <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="participantFeedBack" id="nofb" 
+                                           formControlName="participantFeedBack" [value]="false">
+                                    <label class="form-check-label fs-md" for="nofb">No</label>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                              <div class="mb-3">
+                                <label class="d-block fs-md fw-600 mb-1">Speaker Feedback</label>
+                                <div>
+                                  <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="speakerFeedBack" id="yesFeed" 
+                                           formControlName="speakerFeedBack" [value]="true">
+                                    <label class="form-check-label fs-md" for="yesFeed">Yes</label>
+                                  </div>
+                                  <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="speakerFeedBack" id="noFeed" 
+                                           formControlName="speakerFeedBack" [value]="false">
+                                    <label class="form-check-label fs-md" for="noFeed">No</label>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                              <div class="mb-3">
+                                <label class="d-block fs-md fw-600 mb-1">Photographs Attached</label>
+                                <div>
+                                  <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="photographsAttached" id="yesPhotographs" 
+                                           formControlName="photographsAttached" [value]="true">
+                                    <label class="form-check-label fs-md" for="yesPhotographs">Yes</label>
+                                  </div>
+                                  <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="photographsAttached" id="noPhotographs" 
+                                           formControlName="photographsAttached" [value]="false">
+                                    <label class="form-check-label fs-md" for="noPhotographs">No</label>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                              <div class="mb-3">
+                                <label class="d-block fs-md fw-600 mb-1">Brief Summary Report Prepared</label>
+                                <div>
+                                  <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="summaryReportPrepared" id="yesSummary" 
+                                           formControlName="summaryReportPrepared" [value]="true">
+                                    <label class="form-check-label fs-md" for="yesSummary">Yes</label>
+                                  </div>
+                                  <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="summaryReportPrepared" id="noSummary" 
+                                           formControlName="summaryReportPrepared" [value]="false">
+                                    <label class="form-check-label fs-md" for="noSummary">No</label>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="border-top px-3 py-2 d-flex align-items-center justify-content-between">
+                          <button type="button" class="btn btn-secondary" (click)="prevStep()">
+                            <span class="bi bi-arrow-left me-2"></span> Previous
+                          </button>
+                          <button type="button" class="btn btn-lime-green" [ngClass]="{'disabled':disability}" (click)="nextStep()">
+                            Save & Next <span class="bi bi-arrow-right ms-2"></span>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+          
+                  <!-- Step 9: Observations, Challenges, Best Practices -->
+                  <div class="step step-9" *ngIf="currentStep === 9">
+                    <div class="card shadow-none border rounded-2 mb-3">
+                      <div class="card-header bg-lime-green rounded-top text-white">
+                        <h6 class="mb-0">Observations, Challenges, Best Practices</h6>
+                      </div>
+                      <div class="card-body p-0">
+                        <div class="p-3">
+                          <div class="row">
+                            <div class="col-12">
+                              <div class="mb-3">
+                                <label class="d-block fs-md fw-600 mb-1">Key Best Practices Observed</label>
+                                <div>
+                                  <textarea class="form-control" rows="4" formControlName="observedPractices" 
+                                            placeholder="Write here"></textarea>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-12">
+                              <div class="mb-3">
+                                <label class="d-block fs-md fw-600 mb-1">Challenges Faced (Agency Level/Execution Level)</label>
+                                <div>
+                                  <textarea class="form-control" rows="4" formControlName="challengesFaced" 
+                                            placeholder="Write here"></textarea>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-12">
+                              <div class="mb-3">
+                                <label class="d-block fs-md fw-600 mb-1">Gaps Identified and Immediate Corrections Suggested</label>
+                                <div>
+                                  <textarea class="form-control" rows="4" formControlName="issuesAndCorrections" 
+                                            placeholder="Write here"></textarea>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="border-top px-3 py-2 d-flex align-items-center justify-content-between">
+                          <button type="button" class="btn btn-secondary" (click)="prevStep()">
+                            <span class="bi bi-arrow-left me-2"></span> Previous
+                          </button>
+                          <button type="button" class="btn btn-lime-green" [ngClass]="{'disabled':disability}" (click)="nextStep()">
+                            Save & Next <span class="bi bi-arrow-right ms-2"></span>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+          
+                  <!-- Step 10: Overall Program Rating -->
+                  <div class="step step-10" *ngIf="currentStep === 10">
+                    <div class="card shadow-none border rounded-2 mb-3">
+                      <div class="card-header bg-lime-green rounded-top text-white">
+                        <h6 class="mb-0">Overall Program Rating (by Monitor)</h6>
+                      </div>
+                      <div class="card-body p-0">
+                        <div class="p-3">
+                          <div class="row">
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                              <div class="mb-3">
+                                <h6>Overall Program Organization</h6>
+                                <label class="d-block fs-md fw-600 mb-1">Rating (1 to 5)</label>
+                                <div>
+                                  <div class="form-check form-check-inline" *ngFor="let i of [1,2,3,4,5]">
+                                    <input class="form-check-input" type="radio" name="overallProgramOrganization" 
+                                           [id]="'organization' + i" [value]="i" formControlName="overallProgramOrganization">
+                                    <label class="form-check-label fs-md" [for]="'organization' + i">{{i}}</label>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                              <div class="mb-3">
+                                <h6>Quality of Sessions</h6>
+                                <label class="d-block fs-md fw-600 mb-1">Rating (1 to 5)</label>
+                                <div>
+                                  <div class="form-check form-check-inline" *ngFor="let i of [1,2,3,4,5]">
+                                    <input class="form-check-input" type="radio" name="qualityOfSessions" 
+                                           [id]="'sessions' + i" [value]="i" formControlName="qualityOfSessions">
+                                    <label class="form-check-label fs-md" [for]="'sessions' + i">{{i}}</label>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                              <div class="mb-3">
+                                <h6>Participants Satisfaction</h6>
+                                <label class="d-block fs-md fw-600 mb-1">Rating (1 to 5)</label>
+                                <div>
+                                  <div class="form-check form-check-inline" *ngFor="let i of [1,2,3,4,5]">
+                                    <input class="form-check-input" type="radio" name="participantsSatisfaction" 
+                                           [id]="'satisfaction' + i" [value]="i" formControlName="participantsSatisfaction">
+                                    <label class="form-check-label fs-md" [for]="'satisfaction' + i">{{i}}</label>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                              <div class="mb-3">
+                                <h6>Impact Potential</h6>
+                                <label class="d-block fs-md fw-600 mb-1">Rating (1 to 5)</label>
+                                <div>
+                                  <div class="form-check form-check-inline" *ngFor="let i of [1,2,3,4,5]">
+                                    <input class="form-check-input" type="radio" name="impactPotential" 
+                                           [id]="'impact' + i" [value]="i" formControlName="impactPotential">
+                                    <label class="form-check-label fs-md" [for]="'impact' + i">{{i}}</label>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="border-top px-3 py-2 d-flex align-items-center justify-content-between">
+                          <button type="button" class="btn btn-secondary" (click)="prevStep()">
+                            <span class="bi bi-arrow-left me-2"></span> Previous
+                          </button>
+                          <button type="button" class="btn btn-lime-green" [ngClass]="{'disabled':disability}" (click)="nextStep()">
+                            Save & Next <span class="bi bi-arrow-right ms-2"></span>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+          
+                  <!-- Step 11: Additional Remarks / Recommendations -->
+                  <div class="step step-11" *ngIf="currentStep === 11">
+                    <div class="card border rounded-2 shadow-none">
+                      <div class="card-header bg-lime-green rounded-top text-white">
+                        <h6 class="mb-0">Additional Remarks / Recommendations</h6>
+                      </div>
+                      <div class="card-body">
+                        <div class="mb-3">
+                          <label class="fs-md fw-600 mb-1">Remarks</label>
+                          <textarea class="form-control" rows="7" formControlName="additionalRemarks" 
+                                    placeholder="Write here"></textarea>
+                        </div>
+                        <div class="border-top px-3 py-2 d-flex align-items-center justify-content-between">
+                          <button type="button" class="btn btn-secondary" (click)="prevStep()">
+                            <span class="bi bi-arrow-left me-2"></span> Previous
+                          </button>
+                          <button type="submit" (click)="FinalStep()" [ngClass]="{'disabled':disability}" class="btn btn-lime-green">
+                            Submit <span class="bi bi-send ms-2" ></span>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+        </form>
+    </div>
+</div>
+</div>
+</section>
+</main>
+
+
+
+<div class="modal fade" id="addDelivery" tabindex="-1" aria-labelledby="addResourceLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header py-2">
+                <h6 class="modal-title text-white">Add Program Delivery Details</h6>
+                <button type="button" class="btn-close me-1" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="programDeliveryDetailsForm">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="speaker" placeholder="Speaker Name" 
+                                       formControlName="speakerName">
+                                <label for="speaker">Speaker Name</label>
+                                <div *ngIf="programDeliveryDetailsForm.get('speakerName')?.invalid && 
+                                           (programDeliveryDetailsForm.get('speakerName')?.dirty || 
+                                           programDeliveryDetailsForm.get('speakerName')?.touched)" 
+                                     class="text-danger">
+                                    Speaker name is required
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="topic" placeholder="Topic Delivered"
+                                       formControlName="topicDelivered">
+                                <label for="topic">Topic Delivered</label>
+                                <div *ngIf="programDeliveryDetailsForm.get('topicDelivered')?.invalid && 
+                                           (programDeliveryDetailsForm.get('topicDelivered')?.dirty || 
+                                           programDeliveryDetailsForm.get('topicDelivered')?.touched)" 
+                                     class="text-danger">
+                                    Topic is required
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-floating mb-3">
+                                <input type="number" class="form-control" id="time" placeholder="Time Taken"
+                                       formControlName="timeTaken">
+                                <label for="time">Time Taken (in minutes)</label>
+                                <div *ngIf="programDeliveryDetailsForm.get('timeTaken')?.invalid && 
+                                           (programDeliveryDetailsForm.get('timeTaken')?.dirty || 
+                                           programDeliveryDetailsForm.get('timeTaken')?.touched)" 
+                                     class="text-danger">
+                                    <div *ngIf="programDeliveryDetailsForm.get('timeTaken')?.errors?.['required']">
+                                        Time taken is required
+                                    </div>
+                                    <div *ngIf="programDeliveryDetailsForm.get('timeTaken')?.errors?.['min']">
+                                        Time must be at least 1 minute
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="mb-3">
+                                <label class="d-block fs-md fw-600 mb-1">Audio Visual Aid used </label>
+                                <div class="form-check form-check-inline">
+                                  <input class="form-check-input" type="radio" name="audioVisual" id="audioYes" 
+                                         value="true" formControlName="audioVisualUsed">
+                                  <label class="form-check-label fs-md" for="audioYes">Yes</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                  <input class="form-check-input" type="radio" name="audioVisual" id="audioNo" 
+                                         value="false" formControlName="audioVisualUsed">
+                                  <label class="form-check-label fs-md" for="audioNo">No</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="mb-3">
+                                <label class="d-block fs-md fw-600 mb-1">Relevance</label>
+                                <div class="form-check form-check-inline">
+                                  <input class="form-check-input" type="radio" name="relevance" id="high" 
+                                         value="high" formControlName="relevance">
+                                  <label class="form-check-label fs-md" for="high">High</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                  <input class="form-check-input" type="radio" name="relevance" id="medium" 
+                                         value="medium" formControlName="relevance">
+                                  <label class="form-check-label fs-md" for="medium">Medium</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                  <input class="form-check-input" type="radio" name="relevance" id="low" 
+                                         value="low" formControlName="relevance">
+                                  <label class="form-check-label fs-md" for="low">Low</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="mb-3">
+                                <label class="d-block fs-md fw-600 mb-1">Speaker Effectiveness Rating</label>
+                                <div class="form-check form-check-inline" *ngFor="let i of [1,2,3,4,5]">
+                                    <input class="form-check-input" type="radio" name="speakerEffectiveness" 
+                                           [id]="'effectiveness' + i" [value]="i" 
+                                           formControlName="speakerEffectiveness">
+                                    <label class="form-check-label fs-md" [for]="'effectiveness' + i">{{i}}</label>
+                                </div>
+                                <div *ngIf="programDeliveryDetailsForm.get('speakerEffectiveness')?.invalid && 
+                                           (programDeliveryDetailsForm.get('speakerEffectiveness')?.dirty || 
+                                           programDeliveryDetailsForm.get('speakerEffectiveness')?.touched)" 
+                                     class="text-danger">
+                                    Rating must be between 1 and 5
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="text-end">
+                                <button type="button" class="btn btn-lime-green" 
+                                        [disabled]="!programDeliveryDetailsForm.valid"  data-bs-dismiss="modal" (click)="submit()">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

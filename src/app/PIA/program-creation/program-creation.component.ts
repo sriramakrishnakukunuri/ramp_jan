@@ -33,7 +33,8 @@ export class ProgramCreationComponent implements OnInit, AfterViewInit {
     private router: Router,
     private route: ActivatedRoute,
   ) {
-    this.formDetails();    
+    this.formDetails();   
+    this.getAllDistricts() 
     this.formDetailsLocation();    
     this.agencyId = JSON.parse(sessionStorage.getItem('user') || '{}').agencyId;    
     this.getProgramLocation();    
@@ -54,7 +55,31 @@ export class ProgramCreationComponent implements OnInit, AfterViewInit {
       if(activityId) this.getSubActivitiesList(activityId);
     });
   }
+  allDistricts:any
+  getAllDistricts(){
+    this.allDistricts = []
+    this._commonService.getDataByUrl(APIS.masterList.getDistricts).subscribe({
+      next: (data: any) => {
+        this.allDistricts = data.data;
+      },
+      error: (err: any) => {
+        this.allDistricts = [];
+      }
+    })
+  }
+  MandalList:any
+  GetMandalByDistrict(event: any) {
+    this.MandalList=[]
+    this._commonService.getDataByUrl(APIS.masterList.getMandalName + event).subscribe({
+      next: (data: any) => {
+        this.MandalList = data.data;
+      },
+      error: (err: any) => {
+        this.MandalList = [];
+      }
+    })
 
+  }
   activityList:any
   subActivitiesList:any
   getAllActivityList(){
@@ -150,6 +175,8 @@ export class ProgramCreationComponent implements OnInit, AfterViewInit {
       capacity: new FormControl("",[Validators.required,Validators.pattern(/^[1-9]\d*$/)]),
       agencyId: new FormControl("",),
       filePath: new FormControl("",),
+      district: new FormControl("",),
+      mandal: new FormControl("",),
     });
   }
 
@@ -196,7 +223,7 @@ export class ProgramCreationComponent implements OnInit, AfterViewInit {
     }
     return timeValue;
   }
-
+  
   getProgrameIdBasesOnSave:any
   loading = false;
   submitProgramCreation() {
@@ -204,9 +231,9 @@ export class ProgramCreationComponent implements OnInit, AfterViewInit {
     let maindata = { ...this.programCreationMain.value };
     maindata['startTime'] = this.formatTime(maindata['startTime'])
     maindata['endTime'] = this.formatTime(maindata['endTime'])
-    maindata['startDate'] = moment(maindata['startDate']).format('DD-MM-YYYY')
+    maindata['startDate'] = this.convertToISOFormat(maindata['startDate'])
     maindata['endDate'] = moment(maindata['endDate']).format('DD-MM-YYYY')
-    maindata['locationId'] = this.programCreationMain.value.programLocation
+    maindata['locationId'] = Number(this.programCreationMain.value?.programLocation)
     maindata['agencyId'] = Number(this.agencyId)
     this.loading = true;
     if(this.programId) {
@@ -215,7 +242,8 @@ export class ProgramCreationComponent implements OnInit, AfterViewInit {
         next: (data) => {      
           this.loading = false;    
           this.toastrService.success('Program Updated Successfully', "Success!");
-          this.getProgramDetailsById(maindata['programId']);          
+          this.getProgramDetailsById(maindata['programId']);      
+          this.redirect()    
         },
         error: (err) => {
           this.loading = false;
@@ -340,8 +368,9 @@ export class ProgramCreationComponent implements OnInit, AfterViewInit {
     const [day, month, year] = date.split('-');
     return `${year}-${month}-${day}`; // Convert to yyyy-MM-dd format
   }
-
+  isedit:boolean = false
   getProgramDetailsById(programId: string) {
+    this.isedit=true
     this._commonService.getById(APIS.programCreation.getSingleProgramsList, programId).subscribe({
       next: (data: any) => {
         const program = data.data;

@@ -22,7 +22,7 @@
                         </div>
                     </ng-container>   
                     <ng-container *ngIf="loginsessionDetails?.userRole != 'ADMIN'">
-                        <div class="col-12 col-sm-6 col-md-6 col-lg-6">
+                        <div class="col-12 col-sm-3 col-md-3 col-lg-3">
                             <label for="Agencies" style="font-weight: 600;">List Of Programs</label>
                             <select class="form-select" [(ngModel)]="programIds" (change)="dropdownProgramsList($event,'table')">
                                 <option value="">Select Program</option>
@@ -34,21 +34,11 @@
                 </div>
             </div>
             <div class="card-body">
-                <div class="row">
-                    <div class="col-12 col-sm-6 col-md-6 col-lg-6">
-                        <button type="button" [ngClass]="{'disabled': !programIds}" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModalDeleteConfirm">Final Submission</button>
-                    </div>
-                    <div class="col-12 col-12 col-sm-6 col-md-6 col-lg-6 text-end">
-                        <!-- <button type="button" [ngClass]="{'disabled': !programIds}" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModalDeleteConfirm">Final Submission</button> &nbsp;&nbsp; -->
-                        <button type="button" [ngClass]="{'disabled': !programIds}" (click)="openFileUploadModal()" class="btn btn-lime-green" >Upload Participants</button>
-                    </div>
-                </div>
-                <br>
+               
                 <table id="view-table-participant1" class="table table-borderless table-striped nowrap">
                     <thead class="bg-lime-green text-white">
                         <tr>
                             <th>S.No</th>
-                            <th class="text-center">Edit / Delete</th>
                             <th>IsAspirant</th>
                             <th>Oragnization Name</th>
                             <th>Name of the Participant</th>
@@ -71,10 +61,6 @@
                     <tbody *ngIf="submitedData">
                         <tr  *ngFor="let item of submitedData; let i=index">
                             <td class="text-start">{{i+1}}</td>
-                            <td class="text-center">
-                                <button type="button" class="btn btn-default text-lime-green btn-sm" (click)="editRow(item)"><span class="bi bi-pencil"></span></button>
-                                <!-- <button type="button" class="btn btn-default text-danger btn-sm" (click)="deleteRow(item)"><span class="bi bi-trash"></span></button> -->
-                            </td>
                             <td>{{item?.organizationName?'No':'Yes'}}</td>
                             <td >{{item?.isAspirant=='Aspirant'?'':item?.organizationName}}</td>
                             <td>{{item?.participantName}}</td>

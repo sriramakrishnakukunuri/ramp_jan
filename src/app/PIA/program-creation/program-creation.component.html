@@ -6,7 +6,7 @@
                     <div class="card-header bg-transparent">
                         <div class="d-flex align-items-center justify-content-between flex-wrap">
                             <div>
-                                <h6 class="mb-2 mb-sm-0 text-green">Add Program</h6>
+                                <h6 class="mb-2 mb-sm-0 text-green">{{this.programId?'Edit':'Add'}} Program</h6>
                             </div>
                             <div>
                                 <ng-container *ngIf="programId">
@@ -14,7 +14,7 @@
                                 </ng-container>
                                 
                                 <!-- class="btn btn-secondary" -->
-                                <button type="button" class="btn btn-lime-green" data-bs-toggle="modal"
+                                <button type="button"  class="btn btn-lime-green" data-bs-toggle="modal"
                                     data-bs-target="#addLocation">Add New Location</button>
                                 <!-- <a class="btn btn-default ms-3" id="iconChange" data-bs-toggle="collapse"
                                     href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
@@ -194,7 +194,7 @@
                                 <button type="submit" class="btn btn-lime-green" [ngClass]="{'disabled': programCreationMain.invalid}"
                                 [disabled]="loading || programCreationMain.invalid" (click)="submitProgramCreation()">
                                 <span *ngIf="loading" class="spinner-border spinner-border-sm me-1"></span>
-                                Submit</button>
+                                {{this.programId?'Update':'Submit'}}</button>
                             </div>
                             <!-- <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                 <div class="form-floating mb-3">
@@ -276,6 +276,33 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                            <div class=" mb-3">
+                                <!-- <input type="text" class="form-control" id="district" placeholder="" formControlName="distId"> -->
+                                <label class="form-label fs-md fw-600">District <span class="c-red"> *</span></label>
+                                <select class="form-select" id="district" formControlName="district" (change)="GetMandalByDistrict($any($event.target).value)" >
+                                    <option value="">Select District</option>
+                                    <option *ngFor="let list of allDistricts" value="{{list?.districtName}}">{{list?.districtName}}</option>
+                                </select>
+                               
+                                <!-- <label for="district">District <span class="c-red"> *</span></label> -->
+                            </div>
+                            <div *ngIf="fLocation['district'].touched && !fLocation['district'].valid" class="error" style="padding-top:  5px;">District is required</div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                            <!-- form-floating -->
+                            <div class=" mb-3">
+                                <label class="form-label fs-md fw-600">Mandal <span class="c-red"> *</span></label>
+                                <select class="form-select" id="District" formControlName="mandal" >
+                                  <option value="">Select Mandal</option>
+                                  <option *ngFor="let list of MandalList" value="{{list?.mandalName}}">{{list?.mandalName}}</option>
+                                  <!-- <option value="1">Mandal 1</option> -->
+                                </select>
+                               
+                                <!-- <label for="Mandal">Mandal <span class="c-red"> *</span></label> -->
+                            </div>
+                            <div *ngIf="fLocation['mandal'].touched && !fLocation['mandal'].valid" class="error" style="padding-top:  5px;">Mandal is required</div>
                         </div>
                         <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                             <div class="mb-3">

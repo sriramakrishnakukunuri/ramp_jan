@@ -170,8 +170,11 @@
                                 <td>{{item?.startTime}}</td>
                                 <td>{{item?.endTime}}</td>
                                 <td>{{item?.resourceName}}</td>
-                                <td>
+                                <td class="file-card">
                                     <ng-container *ngIf="item?.image1">
+                                        <!-- <i class="fas fa-trash delete-icon" 
+                                        (click)="deleteFile(item?.image1,i)" 
+                                        title="Delete file"></i> -->
                                         <a (click)="showImagePreview(imageUrlDownloadPath,item?.image1)" rel="noopener noreferrer">
                                             <img src="{{imageUrlDownloadPath}}{{item?.image1}}" alt="Image 1" class="img-fluid" style="width: 50px; height: 50px;">
                                         </a>
@@ -180,8 +183,11 @@
                                         <span class="text-danger">No Image</span>
                                     </ng-container>
                                 </td>
-                                <td>
+                                <td class="file-card">
                                     <ng-container *ngIf="item?.image2">
+                                        <!-- <i class="fas fa-trash delete-icon" 
+                                        (click)="deleteFile(item?.image2,i)" 
+                                        title="Delete file"></i> -->
                                         <a (click)="showImagePreview(imageUrlDownloadPath,item?.image2)" rel="noopener noreferrer">
                                             <img src="{{imageUrlDownloadPath}}{{item?.image2}}" alt="Image 2" class="img-fluid" style="width: 50px; height: 50px;">
                                         </a>
@@ -190,8 +196,11 @@
                                         <span class="text-danger">No Image</span>
                                     </ng-container>
                                 </td>
-                                <td>
+                                <td class="file-card">
                                     <ng-container *ngIf="item?.image3">
+                                        <!-- <i class="fas fa-trash delete-icon" 
+                                        (click)="deleteFile(item?.image3,i)" 
+                                        title="Delete file"></i> -->
                                         <a (click)="showImagePreview(imageUrlDownloadPath,item?.image3)" rel="noopener noreferrer">
                                             <img src="{{imageUrlDownloadPath}}{{item?.image3}}" alt="Image 3" class="img-fluid" style="width: 50px; height: 50px;">
                                         </a>
@@ -200,8 +209,11 @@
                                         <span class="text-danger">No Image</span>
                                     </ng-container>
                                 </td>
-                                <td>
+                                <td class="file-card">
                                     <ng-container *ngIf="item?.image4">
+                                        <!-- <i class="fas fa-trash delete-icon" 
+                                        (click)="deleteFile(item?.image4,i)" 
+                                        title="Delete file"></i> -->
                                         <a (click)="showImagePreview(imageUrlDownloadPath,item?.image4)" rel="noopener noreferrer">
                                             <img src="{{imageUrlDownloadPath}}{{item?.image4}}" alt="Image 4" class="img-fluid" style="width: 50px; height: 50px;">
                                         </a>
@@ -210,8 +222,11 @@
                                         <span class="text-danger">No Image</span>
                                     </ng-container>
                                 </td>
-                                <td>
+                                <td class="file-card">
                                     <ng-container *ngIf="item?.image5">
+                                        <!-- <i class="fas fa-trash delete-icon" 
+                                        (click)="deleteFile(item?.image5,i)" 
+                                        title="Delete file"></i> -->
                                         <a (click)="showImagePreview(imageUrlDownloadPath,item?.image5)" rel="noopener noreferrer">
                                             <img src="{{imageUrlDownloadPath}}{{item?.image5}}" alt="Image 5" class="img-fluid" style="width: 50px; height: 50px;">
                                         </a>
@@ -304,8 +319,8 @@
                 </div>
             </div>
 
-            <div class="text-end mb-3">
-                <button type="button" class="btn btn-lime-green">Final Submission</button>
+            <div class="mb-3">
+                <button type="button" [ngClass]="{'disabled': programId == ''}" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModalDeleteConfirm">Final Submission</button>
             </div>
             
         </div>
@@ -346,21 +361,24 @@
                             </div>
                             <div class="col-12 col-sm-sm-6 col-md-6 col-lg-6">
                                 <div class="form-floating mb-3">
-                                    <input type="file" class="form-control" id="image1" placeholder="" (change)="onFileChange($event, 'image1')">
+                                    <input type="file" class="form-control" id="image1" accept=".jpg, .jpeg, .png" placeholder="" (change)="onFileChange($event, 'image1')">
                                     <label for="image1">Image 1</label>
                                 </div>
+                                <div class="text-danger" *ngIf="fileErrors['image1']">{{ fileErrors['image1'] }}</div>
                             </div>
                             <div class="col-12 col-sm-sm-6 col-md-6 col-lg-6">
                                 <div class="form-floating mb-3">
-                                    <input type="file" class="form-control" id="image2" placeholder="" (change)="onFileChange($event, 'image2')">
+                                    <input type="file" class="form-control" id="image2" accept=".jpg, .jpeg, .png" placeholder="" (change)="onFileChange($event, 'image2')">
                                     <label for="image2">Image 2</label>
                                 </div>
+                                <div class="text-danger" *ngIf="fileErrors['image2']">{{ fileErrors['image2'] }}</div>
                             </div>
                             <div class="col-12 col-sm-sm-6 col-md-6 col-lg-6">
                                 <div class="form-floating mb-3">
-                                    <input type="file" class="form-control" id="image3" placeholder="" (change)="onFileChange($event, 'image3')">
+                                    <input type="file" class="form-control" accept=".jpg, .jpeg, .png" id="image3" placeholder="" (change)="onFileChange($event, 'image3')">
                                     <label for="image3">Image 3</label>
                                 </div>
+                                <div class="text-danger" *ngIf="fileErrors['image3']">{{ fileErrors['image3'] }}</div>
                             </div>
                             <div class="col-12 col-sm-sm-6 col-md-6 col-lg-6">
                                 <div class="form-floating mb-3">
@@ -372,9 +390,13 @@
                         </div>
                     
 
+                    <div style="float: left;" class="text-danger mb-2">
+                        <strong>Note:</strong> Please upload images in .jpg, .jpeg, or .png format only.
+                        <br> Maximum file size: 50kb
+                    </div>
                     <div class="text-end">
-                        <button type="submit" class="btn btn-lime-green" [ngClass]="{'disabled': mediaCoverageForm.invalid}"
-                        [disabled]="loading || mediaCoverageForm.invalid">
+                        <button type="submit" class="btn btn-lime-green" [ngClass]="{'disabled': mediaCoverageForm.invalid || hasFileErrors()}"
+                        [disabled]="hasFileErrors() || loading || mediaCoverageForm.invalid">
                         <span *ngIf="loading" class="spinner-border spinner-border-sm me-1"></span>
                         {{isEditMode ? 'Update' : 'Add'}} Media Coverage</button>
                     </div>
@@ -439,33 +461,38 @@
                             </div>
                             <div class="col-12 col-sm-sm-6 col-md-6 col-lg-6">
                                 <div class="form-floating mb-3">
-                                    <input type="file" class="form-control" id="image1" placeholder="" (change)="onFileChange($event, 'image1')">
+                                    <input type="file" class="form-control" id="image1" accept=".jpg, .jpeg, .png" placeholder="" (change)="onFileChange($event, 'image1')">
                                     <label for="image1">Image 1</label>
                                 </div>
+                                <div class="text-danger" *ngIf="fileErrors['image1']">{{ fileErrors['image1'] }}</div>
                             </div>
                             <div class="col-12 col-sm-sm-6 col-md-6 col-lg-6">
                                 <div class="form-floating mb-3">
-                                    <input type="file" class="form-control" id="image2" placeholder="" (change)="onFileChange($event, 'image2')">
+                                    <input type="file" class="form-control" id="image2" accept=".jpg, .jpeg, .png" placeholder="" (change)="onFileChange($event, 'image2')">
                                     <label for="image2">Image 2</label>
                                 </div>
+                                <div class="text-danger" *ngIf="fileErrors['image2']">{{ fileErrors['image2'] }}</div>
                             </div>
                             <div class="col-12 col-sm-sm-6 col-md-6 col-lg-6">
                                 <div class="form-floating mb-3">
-                                    <input type="file" class="form-control" id="image3" placeholder="" (change)="onFileChange($event, 'image3')">
+                                    <input type="file" class="form-control" id="image3" accept=".jpg, .jpeg, .png" placeholder="" (change)="onFileChange($event, 'image3')">
                                     <label for="image3">Image 3</label>
                                 </div>
+                                <div class="text-danger" *ngIf="fileErrors['image3']">{{ fileErrors['image3'] }}</div>
                             </div>
                             <div class="col-12 col-sm-sm-6 col-md-6 col-lg-6">
                                 <div class="form-floating mb-3">
-                                    <input type="file" class="form-control" id="image3" placeholder="" (change)="onFileChange($event, 'image4')">
+                                    <input type="file" class="form-control" id="image3" accept=".jpg, .jpeg, .png" placeholder="" (change)="onFileChange($event, 'image4')">
                                     <label for="image3">Image 4</label>
                                 </div>
+                                <div class="text-danger" *ngIf="fileErrors['image4']">{{ fileErrors['image4'] }}</div>
                             </div>
                             <div class="col-12 col-sm-sm-6 col-md-6 col-lg-6">
                                 <div class="form-floating mb-3">
-                                    <input type="file" class="form-control" id="image3" placeholder="" (change)="onFileChange($event, 'image5')">
+                                    <input type="file" class="form-control" id="image3" accept=".jpg, .jpeg, .png" placeholder="" (change)="onFileChange($event, 'image5')">
                                     <label for="image3">Image 5</label>
                                 </div>
+                                <div class="text-danger" *ngIf="fileErrors['image5']">{{ fileErrors['image5'] }}</div>
                             </div>
                             <div class="col-12 col-sm-sm-6 col-md-6 col-lg-6">
                                 <div class="form-floating mb-3">
@@ -476,10 +503,14 @@
                             </div>
                         </div>
                     
-
+                    <div style="float: left;" class="text-danger mb-2">
+                        <strong>Note:</strong> Please upload images in .jpg, .jpeg, or .png format only.
+                        <br> Maximum file size: 50kb
+                    </div>
+                    
                     <div class="text-end">
-                        <button type="submit" class="btn btn-lime-green" [ngClass]="{'disabled': mediaExecutionForm.invalid}"
-                        [disabled]="loading || mediaExecutionForm.invalid">
+                        <button type="submit" class="btn btn-lime-green" [ngClass]="{'disabled': mediaExecutionForm.invalid || hasFileErrors()}"
+                        [disabled]="hasFileErrors() || loading || mediaExecutionForm.invalid">
                         <span *ngIf="loading" class="spinner-border spinner-border-sm me-1"></span>
                         {{editFlag ? 'Update' : 'Add'}} Program Execution</button>
                     </div>
@@ -508,6 +539,45 @@
                     <span class="text-danger">No Image Available</span>
                 </ng-container>                
                 
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="exampleModalDeleteConfirm" tabindex="-1" role="dialog" aria-labelledby="exampleModalDeleteConfirmLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalDeleteConfirmLabel">Final Program Execution Submission</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Are you sure want to submit Program Execution Details in selected program?? -->
+                Are you sure you want to submit these Program Execution Details for the current program? You cannot add any more Execution Details once submitted!”
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-lime-green" (click)="sessionSubmissionFinal()">Confirm</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="exampleModalDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalDeleteLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalDeleteLabel">Delete File</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure want to delete ??
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-lime-green" (click)="confirmDeleteFile(deleteFileData)">Confirm</button>
             </div>
         </div>
     </div>
