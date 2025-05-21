@@ -592,4 +592,14 @@ export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
           }
         })
     }
+    downloadProgram(){
+      let linkUrl = APIS.programCreation.downloadProgramsData+this.agencyId
+      const link = document.createElement("a");
+      link.setAttribute("download", linkUrl);
+      link.setAttribute("target", "_blank");
+      link.setAttribute("href", APIS.programCreation.downloadProgramsData+this.agencyId);
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    }
 }

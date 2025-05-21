@@ -31,6 +31,8 @@ export const APIS = {
         programSummary: API_BASE_URL + '/programs/status/summary/',
         sessionFilesDelete: API_BASE_URL + '/program-session-files/', 
         uploadProgram: API_BASE_URL + '/program/import', 
+        downloadProgramsData: API_BASE_URL + '/program/pdf/',
+        downloadSessionsData: API_BASE_URL + '/program/session/pdf/',
         // get: API_BASE_URL + '/program/get',
         // update: API_BASE_URL + '/program/update',
         // delete: API_BASE_URL + '/program/delete',
@@ -46,6 +48,7 @@ export const APIS = {
         getParticipantListByAgency: API_BASE_URL + '/agency/participants/',
         getParticipantDetailsById: API_BASE_URL + '/getParticipantById/',
         uploadParticipant: API_BASE_URL + '/upload',
+        downloadParticipantData: API_BASE_URL + '/program/participant/pdf/',
     },
     counsellerData:{
         add: API_BASE_URL + '/saveCounsellor',
@@ -109,6 +112,7 @@ export const APIS = {
         deleteTransation:API_BASE_URL +`/bulk/transactions/delete/`,
         UpdateExpenditure:API_BASE_URL +`/program/expenditure/update/`,
         deleteBulkExpenditure:API_BASE_URL +`/bulk/expenditure/delete/`,
+        downloadExpeditureData:API_BASE_URL +`/export-program-expenditure`,
     },
     programSummary:{
         getProramData:API_BASE_URL +`/program/summary/`,

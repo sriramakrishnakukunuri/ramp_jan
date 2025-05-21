@@ -812,4 +812,14 @@ export class ProgramExpenditureComponent implements OnInit {
                 modalInstance.hide();
               }
             }
+            downloadProgramExpenditure(){
+              let linkUrl = APIS.programExpenditure.downloadExpeditureData+'?programId='+this.programCreationMain.value.programId+'&agencyId='+this.agencyId
+              const link = document.createElement("a");
+              link.setAttribute("download", linkUrl);
+              link.setAttribute("target", "_blank");
+              link.setAttribute("href", linkUrl);
+              document.body.appendChild(link);
+              link.click();
+              link.remove();
+            }
 }

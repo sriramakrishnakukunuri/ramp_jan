@@ -662,4 +662,14 @@ export class AddProgramSessionsComponent implements OnInit {
       },
     });
   }
+  downloadSessions(){
+    let linkUrl = APIS.programCreation.downloadSessionsData+this.programId
+    const link = document.createElement("a");
+    link.setAttribute("download", linkUrl);
+    link.setAttribute("target", "_blank");
+    link.setAttribute("href", linkUrl);
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+  }
 }

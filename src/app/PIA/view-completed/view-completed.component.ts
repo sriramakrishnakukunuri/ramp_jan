@@ -598,6 +598,16 @@ export class ViewCompletedComponent implements OnInit {
         modalInstance.hide();
       }
     }
+    downloadParticipant(){
+      let linkUrl = APIS.participantdata.downloadParticipantData+this.programIds
+      const link = document.createElement("a");
+      link.setAttribute("download", linkUrl);
+      link.setAttribute("target", "_blank");
+      link.setAttribute("href", APIS.participantdata.downloadParticipantData+this.programIds);
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    }
     }
   
   

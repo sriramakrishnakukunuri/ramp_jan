@@ -138,14 +138,24 @@
                             <thead class="bg-lime-green text-white">
                                 <tr>
                                     <th>S.No</th>
+                                    <th>Organization Name</th>
                                     <th>Resource Name</th>
+                                    <th>Designation</th>
+                                    <th>Specilization</th>
+                                    <th>Mobile Number</th>
+                                    <th>Email</th>
                                     <!-- <th class="text-center">Edit / Delete</th> -->
                                 </tr>
                             </thead>
                             <tbody *ngIf="resources">
                                 <tr *ngFor="let item of resources; let i = index">
                                     <td class="text-start">{{i + 1}}</td>
+                                    <td>{{item?.organizationName}}</td>
                                     <td>{{item?.name}}</td>
+                                    <td>{{item?.designation}}</td>
+                                    <td>{{item?.specialization}}</td>
+                                    <td>{{item?.mobileNo}}</td>
+                                    <td>{{item?.email}}</td>
                                     <!-- <td class="text-center">
                                         <button type="button" class="btn btn-default text-lime-green btn-sm"><span class="bi bi-pencil"></span></button>
                                         <button type="button" class="btn btn-default text-danger btn-sm"><span class="bi bi-trash"></span></button>
@@ -180,14 +190,24 @@
                             <thead class="bg-lime-green text-white">
                                 <tr>
                                     <th>S.No</th>
+                                    <th>Type Of Organization</th>
                                     <th>Organization Name</th>
+                                    <th>Name Of Director/Promotor/Leader</th>
+                                    <th>Contact</th>
+                                    <th>Email</th>
+                                    <th>Address</th>
                                     <!-- <th class="text-center">Edit / Delete</th> -->
                                 </tr>
                             </thead>
                             <tbody *ngIf="organizations">
                                 <tr *ngFor="let item of organizations; let i = index">
                                     <td class="text-start">{{i + 1}}</td>
+                                    <td>{{item?.organizationType}}</td>
                                     <td>{{item?.organizationName}}</td>
+                                    <td>{{item?.ownerName}}</td>
+                                    <td>{{item?.ownerContactNo}}</td>
+                                    <td>{{item?.ownerEmail}}</td>
+                                    <td>{{item?.ownerAddress}}</td>
                                     <!-- <td class="text-center">
                                         <button type="button" class="btn btn-default text-lime-green btn-sm"><span class="bi bi-pencil"></span></button>
                                         <button type="button" class="btn btn-default text-danger btn-sm"><span class="bi bi-trash"></span></button>

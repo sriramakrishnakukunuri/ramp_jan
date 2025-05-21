@@ -71,12 +71,13 @@
                 <div class="card mb-4" >
                     <div class="card-header bg-transparent">
                         <div class="row align-items-center">
-                            <div class="col-8 col-sm-8 col-md-9 col-lg-10">
+                            <div class="col-6 col-sm-6 col-md-6 col-lg-9">
                                 <h6 class="fw-600 mb-2 mb-sm-3 mb-md-0"> Event Expenditure</h6>
                             </div>
-                            <div class="col-4 col-sm-4 col-md-3 col-lg-2">
+                            <div class="col-6 col-sm-6 col-md-6 col-lg-3">
                                 <div class="text-end">
                                     <!-- data-bs-target]="#bulkModal" -->
+                                    <button type="button" (click)="downloadProgramExpenditure()" [ngClass]="{'disabled': !this.programCreationMain.value.programId}" class="btn btn-secondary">Download Programs Expenditure</button> &nbsp;&nbsp;
                                     <button type="button" class="btn btn-sm btn-lime-green" (click)="OpenModal('add')"><span class="bi bi-plus-lg" ></span> Add</button>
                                 </div>
                             </div>

@@ -84,6 +84,15 @@
                     </div>
                 </div>
                 <div class="card-body" id="">
+                    <div class="row mb-3">
+                        <div class="col-12 col-sm-6 col-md-6 col-lg-6">
+                            <!-- <button type="button" [ngClass]="{'disabled': !programIds}" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModalDeleteConfirm">Final Submission</button> -->
+                        </div>
+                        <div class="col-12 col-12 col-sm-6 col-md-6 col-lg-6 text-end">
+                            <button type="button" [ngClass]="{'disabled': !programId}" (click)="downloadSessions()" class="btn btn-secondary">Download Sessions</button> &nbsp;&nbsp;
+                            <!-- <button type="button"  (click)="openFileUploadModal()" class="btn btn-lime-green" >Upload Programs</button> -->
+                        </div>
+                    </div>
                     <table id="session-table" class="table table-bordered nowrap w-100">
                         <thead class="bg-lime-green text-white">
                             <tr>
