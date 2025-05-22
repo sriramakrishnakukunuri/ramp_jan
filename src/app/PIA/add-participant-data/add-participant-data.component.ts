@@ -189,7 +189,7 @@ export class AddParticipantDataComponent implements OnInit {
       gender: new FormControl("", [Validators.required,]),
       disability: new FormControl("N", [Validators.required]),
       // noOfDays: new FormControl("", [Validators.required,]),
-      category: new FormControl(""),
+      category: new FormControl("",[Validators.required,]),
       aadharNo: new FormControl("", [Validators.pattern(/^[0-9]{12}$/)]),
       mobileNo: new FormControl("", [Validators.required, Validators.pattern(/^[6789]\d{9}$/)]),
       email: new FormControl("", [Validators.email]),
