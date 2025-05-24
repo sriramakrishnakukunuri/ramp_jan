@@ -5,7 +5,8 @@
 /tmp
 /out-tsc
 /bazel-out
-
+/WEB-INF
+/META-INF
 # Node
 **node_modules
 npm-debug.log

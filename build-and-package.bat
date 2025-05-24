@@ -25,7 +25,29 @@ if not exist "dist\skill-development\" (
     exit /b 1
 )
 
-:: Step 2: Create WAR file from dist/skill-development contents
+:: Step 2: Copy WEB-INF and META-INF folders to dist
+echo Copying WEB-INF and META-INF folders to dist/skill-development
+if exist "WEB-INF\" (
+    xcopy /E /I /Y "WEB-INF" "dist\skill-development\WEB-INF\"
+    if %errorlevel% neq 0 (
+        echo Error: Failed to copy WEB-INF folder
+        exit /b 1
+    )
+) else (
+    echo Warning: WEB-INF folder not found in current directory
+)
+
+if exist "META-INF\" (
+    xcopy /E /I /Y "META-INF" "dist\skill-development\META-INF\"
+    if %errorlevel% neq 0 (
+        echo Error: Failed to copy META-INF folder
+        exit /b 1
+    )
+) else (
+    echo Warning: META-INF folder not found in current directory
+)
+
+:: Step 3: Create WAR file from dist/skill-development contents
 echo Creating WAR file %war_name%.war from dist/skill-development
 pushd dist\skill-development
 
@@ -33,7 +55,7 @@ pushd dist\skill-development
 echo Current directory: %cd%
 dir
 
-:: Create WAR file
+:: Create WAR file (including WEB-INF and META-INF if they exist)
 jar -cvf %war_name%.war *
 if %errorlevel% neq 0 (
     echo Error: WAR file creation failed
@@ -48,7 +70,7 @@ if not exist "%war_name%.war" (
     exit /b 1
 )
 
-:: Step 3: Move WAR file to package.json location
+:: Step 4: Move WAR file to package.json location
 echo Moving WAR file to package.json location
 for /f "delims=" %%p in ('npm prefix') do set "npm_path=%%p"
 move "%war_name%.war" "%npm_path%"
@@ -63,6 +85,10 @@ popd
 :: Final verification
 if exist "%npm_path%\%war_name%.war" (
     echo Success: Created %npm_path%\%war_name%.war
+    echo WAR file includes:
+    echo - Angular production build
+    if exist "WEB-INF\" echo - WEB-INF folder
+    if exist "META-INF\" echo - META-INF folder
 ) else (
     echo Error: WAR file not found at final destination
     exit /b 1
