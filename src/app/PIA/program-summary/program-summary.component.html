@@ -1,6 +1,6 @@
 <main class="mt-4">
-    <section>
-        <div class="container-fluid">
+    <section id="pdf-download-section">
+        <div class="container-fluid" id="program-summary-container">
             <div class="card mb-3">
                 <div class="card-header bg-transparent">
                     <div class="row align-items-center">
@@ -223,11 +223,63 @@
                     </div>
                 </div>
             </div>
-
-            <div class="text-end mb-3">
-                <button type="button" class="btn btn-lime-green">Download</button>
-            </div>
             
         </div>
+        <div class="text-center mt-3" id="program-collage-image">
+            <h5>Program Collage Image</h5>
+            <img src="assets/img/Program1.png" 
+            alt="Spring" class="img-fluid" style="width: 70%; height: auto;"/>
+        </div>
+
+        <div class="card shadow-none" id="participant-details">
+            <h5 class="fw-bold m-4 mb-0">Participant Details</h5>
+            <div class="card-body m-3">
+            <div class="table-responsive shadow-none border mb-3">
+              <table class="table mb-0">
+                <thead>
+                  <tr>
+                    <th>Sl No</th>
+                    <th>Name of the Participant</th>
+                    <th>Organization Name</th>
+                    <th>District Name</th>
+                    <th>Mandal Name</th>
+                    <th>Caste</th>
+                    <th>Mobile Number</th>
+                    <th>Vo Name</th>
+                    <th>Sector</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let post of paginatedPosts; let i = index">
+                        <td>{{ i + 1 }}</td> <!-- Shows index starting from 1 -->
+                        <td>{{ post.participantName }}</td>
+                        <td>{{ post.organizationName }}</td>
+                        <td>{{ post.DistrictName }}</td>
+                        <td>{{ post.MandalName }}</td>
+                        <td>{{ post.category }}</td>
+                        <td>{{ post.mobileNo }}</td>
+                        <td>{{ post.voName }}</td>
+                        <td>{{ post.sectorList?.join(', ') }}</td>
+                    </tr>
+                </tbody>                      
+              </table>
+            </div>
+          
+            <div id="pagination-controls" class="d-flex justify-content-between align-items-center p-2"  *ngIf="showPagination">
+                <button class="btn btn-lime-green" (click)="previousPage()" [disabled]="currentPage === 1">Previous</button>
+                <span class="color:black">Page {{ currentPage }} of {{ totalPages }}</span>
+                <button class="btn btn-lime-green" (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button>
+            </div>
+              
+          </div>
+        </div>
+          
+        <ng-template #loading>
+            <p>Loading posts...</p>
+        </ng-template>
+        <div class="text-end mb-3" style="margin-right:20px;" id="pdf-download-button">
+            <button type="button" class="btn btn-lime-green" (click)="handleDownloadPDF()">Download</button>
+        </div>
+          
     </section>
 </main>
