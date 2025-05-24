@@ -2422,6 +2422,10 @@ textarea.form-control.is-invalid {
 .btn.isDisable{
   pointer-events: none;
 }
+.btn.isdisable{
+  pointer-events: none;
+  background-color: lightgray;
+}
 
 .btn-primary {
   --bs-btn-color: #fff;

@@ -18,6 +18,14 @@
                 <div class="card-body" id="">
                     <form [formGroup]="ParticipantDataForm">
                         <div class="row mb-3">
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="mobileNo" placeholder="" formControlName="mobileNo" (input)="getDataByMobileNumber($any($event.target).value)">
+                                    <label id="mobileNo">Mobile No<span class="c-red"> *</span></label>
+                                </div>
+                                <div *ngIf="f2['mobileNo'].touched && !f2['mobileNo'].valid && !f2['mobileNo']?.errors?.['pattern']" class="error">Mobile No is required</div>
+                                <div *ngIf="f2['mobileNo'].touched && !f2['mobileNo'].valid && f2['mobileNo']?.errors?.['pattern']" class="error">Mobile No Starts with 6,7,8,9 and should be 10 digits</div>
+                            </div>
                             <div class="col-12 col-sm-3 col-md-3 col-lg-3">
                                 <!-- <label class="fs-md fw-600 mb-1">Post Training Assessment</label> -->
                                 <div>
@@ -31,18 +39,30 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12 col-sm-4 col-md-4 col-lg-4" *ngIf="this.f2['isAspirant'].value=='Existing Oragnization'">
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3 relative field" *ngIf="this.f2['isAspirant'].value=='Existing Oragnization'">
+                                <div >
+                                      <ng-multiselect-dropdown   class="multi"
+                                        placeholder="Select Organisation*"
+                                        name="organizationId"
+                                        formControlName="organizationId"
+                                        [settings]="dropdownSettingsOrg"
+                                        [data]="dropdownListOrg"
+                                        (onSelect)="onItemSelectOrg($event)"
+                                     ></ng-multiselect-dropdown> 
+                                     <!-- <label for="area" class="form-label"> Sector </label> -->
+                                    
+                                </div>
+                               
+                            </div>
+                            <!-- <div class="col-12 col-sm-4 col-md-4 col-lg-4" *ngIf="this.f2['isAspirant'].value=='Existing Oragnization'">
                                 <div class="form-floating mb-3">
                                     <select class="form-select" id="organizationId"  formControlName="organizationId">
                                       <option selected value="">Select Organisation Name</option>
                                       <option *ngFor="let val of OrganizationData" value="{{val?.organizationId}}">{{val?.organizationName}}</option>
-                                      <!-- <option value="1">TCS</option>
-                                      <option value="2">Wipro</option>
-                                      <option value="3">Amazon</option> -->
                                     </select>
                                     <label for="organizationId">Organisation Name <span class="c-red"> *</span></label>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3" >
                                 <div class="form-floating mb-3">
                                     <select class="form-select" id="programId" formControlName="programIds" (change)="getProgramDetailsById($any($event.target).value)">
@@ -79,14 +99,7 @@
                                 <div *ngIf="f2['aadharNo'].touched && !f2['aadharNo'].valid && f2['aadharNo']?.errors?.['pattern']" class="error">Aadhar No should be 12 digit Numbers</div>
                            
                             </div>
-                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                                <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="mobileNo" placeholder="" formControlName="mobileNo">
-                                    <label id="mobileNo">Mobile No<span class="c-red"> *</span></label>
-                                </div>
-                                <div *ngIf="f2['mobileNo'].touched && !f2['mobileNo'].valid && !f2['mobileNo']?.errors?.['pattern']" class="error">Mobile No is required</div>
-                                <div *ngIf="f2['mobileNo'].touched && !f2['mobileNo'].valid && f2['mobileNo']?.errors?.['pattern']" class="error">Mobile No Starts with 6,7,8,9 and should be 10 digits</div>
-                            </div>
+                           
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                 <div class="form-floating mb-3">
                                     <input type="email" class="form-control" id="email" placeholder="" formControlName="email">

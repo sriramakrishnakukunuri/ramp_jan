@@ -62,8 +62,8 @@ export class UpdateProgramExecutionComponent implements OnInit {
       image1: [''],
       image2: [''],
       image3: [''],
-      image4: [''],
-      image5: [''],
+      // image4: [''],
+      // image5: [''],
     });
 
   }
@@ -71,7 +71,7 @@ export class UpdateProgramExecutionComponent implements OnInit {
   agencyProgramList: any;
   programId: any = ''
   getProgramsByAgency() {
-    this._commonService.getDataByUrl(`${APIS.programCreation.getProgramsListByAgencyStatus + '/' + this.agencyId + '?status=Attendance Marked'}`).subscribe({
+    this._commonService.getDataByUrl(`${APIS.programCreation.getProgramsListByAgencyStatus + '/' + this.agencyId + '?status=Sessions Created'}`).subscribe({
       next: (res: any) => {
         this.agencyProgramList = res?.data
       },
@@ -298,7 +298,7 @@ export class UpdateProgramExecutionComponent implements OnInit {
     this.resourcekeyidData = {}
     this.getSessionResourceData = []
     this._commonService
-      .getById(APIS.programCreation.getResource, this.agencyId)
+      .getById(APIS.programCreation.getResource+'/', this.agencyId)
       .subscribe({
         next: (data: any) => {
           this.getSessionResourceData = data.data;
@@ -319,8 +319,8 @@ export class UpdateProgramExecutionComponent implements OnInit {
     $('#image1').val('')
     $('#image2').val('')
     $('#image3').val('')
-    $('#image4').val('')
-    $('#image5').val('')
+    // $('#image4').val('')
+    // $('#image5').val('')
     this.selectedFiles = {}
     this.fileErrors = {}
     if (!this.ProgramData?.programId) {
@@ -352,8 +352,8 @@ export class UpdateProgramExecutionComponent implements OnInit {
       image1: session?.image1,
       image2: session?.image2,
       image3: session?.image3,
-      image4: session?.image4,
-      image5: session?.image5,
+      // image4: session?.image4,
+      // image5: session?.image5,
     });
     console.log(this.mediaExecutionForm.value, 'sessionFormValue', session)
     const editSessionModal = document.getElementById('sessionFormExectuionModal');
@@ -404,9 +404,9 @@ export class UpdateProgramExecutionComponent implements OnInit {
     if (this.selectedFiles['image3']) {
       formData.append('image3', this.selectedFiles['image3']);
     }
-    if (this.selectedFiles['image4']) {
-      formData.append('image4', this.selectedFiles['image4']);
-    }
+    // if (this.selectedFiles['image4']) {
+    //   formData.append('image4', this.selectedFiles['image4']);
+    // }
     if (this.selectedFiles['image5']) {
       formData.append('image5', this.selectedFiles['image5']);
     }

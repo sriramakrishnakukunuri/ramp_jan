@@ -113,16 +113,21 @@
                                 <li><a class="dropdown-item" routerLink="/view-Completed-data" routerLinkActive="active">View Completed</a></li>
                                 </ul>
                             </li>
-                            <li class="nav-item dropdown" *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]">
+                            <!-- <li class="nav-item dropdown" *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]">
                                 <a class="nav-link" href="#" id="dropdown3" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Update Outcomes <span class="bi bi-chevron-down"></span>
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="dropdown3">
                                     <li><a class="dropdown-item" routerLink="/capture-outcome" routerLinkActive="active">Capture Outcome</a></li>
-                                <!-- <li><a class="dropdown-item" href="#">Capture Outcome</a></li> -->
+                                <li><a class="dropdown-item" href="#">Capture Outcome</a></li>
                                 <li><a class="dropdown-item" href="#">Organisation Updates</a></li>                                
                                 <li><a class="dropdown-item" routerLink="/shg-training" routerLinkActive="active">SHG Training Status</a></li>
                                 </ul>
+                            </li> -->
+                            <li class="nav-item" *appHasRole="[Role.Admin,Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]">
+                                <a class="nav-link" id="homeDropdown" role="button" routerLink="/view-table-organization" routerLinkActive="active" aria-expanded="false">
+                                    <span>Masters List</span> 
+                                </a>                                
                             </li>
                             
 

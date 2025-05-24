@@ -36,6 +36,38 @@ export class AddParticipantDataComponent implements OnInit {
     }
     selectedItems: any[] = [];
     dropdownList1=[];
+    dropdownListOrg=[];
+    dropdownSettingsOrg: IDropdownSettings = {};
+    assignFluidData1Org() {
+      this.dropdownSettingsOrg = {
+          singleSelection: true,
+          idField: 'organizationId',
+          textField: 'organizationName',
+          itemsShowLimit: 1,
+          allowSearchFilter: true,
+          clearSearchFilter: true,
+          maxHeight: 197,
+          searchPlaceholderText: "Search Organization",
+          noDataAvailablePlaceholderText: "Data Not Available",
+          closeDropDownOnSelection: false,
+          showSelectedItemsAtTop: false,
+          defaultOpen: false,
+      };
+      this.dropdownListOrg = this.OrganizationData;
+     
+    //   this.contractListObj.area= this.selectMapList1;
+  }
+   
+  
+    onItemSelectOrg(item: any) {
+      console.log('Item selected:', item);
+    }
+  
+  
+    onItemDeSelectOrg(item: any) {
+      console.log('Item deselected:', item);
+    }
+  
     dropdownSettings: IDropdownSettings = {};
     assignFluidData1() {
       this.dropdownSettings = {
@@ -78,10 +110,11 @@ export class AddParticipantDataComponent implements OnInit {
     }
   ngOnInit(): void {
     this.loginsessionDetails = JSON.parse(sessionStorage.getItem('user') || '{}');    
+    this.getOrganizationData()
     this.formDetails();
     this.formDetailsOrganization();
     //this.getData()
-    this.getOrganizationData()
+    
     //this.getAllPrograms()
     this.getProgramsByAgency()
     //this.fOrg['udyamYesOrNo'].value.setValue('No')
@@ -90,7 +123,10 @@ export class AddParticipantDataComponent implements OnInit {
     this.typeOragnization('SHG')
     this.participantdetailsId = this.route.snapshot.paramMap.get('id');
     if (this.participantdetailsId) {
-      this.getParticipantDetailsById(this.participantdetailsId);
+      setTimeout(() => {
+        this.getParticipantDetailsById(this.participantdetailsId);
+      }, 500);
+      
     }
     console.log(this.participantdetailsId, 'programId');
   }
@@ -305,7 +341,7 @@ export class AddParticipantDataComponent implements OnInit {
 
   Submitform() {
     
-    let payload:any={...this.ParticipantDataForm.value, "programIds": [this.ParticipantDataForm.value.programIds], "organizationId": this.ParticipantDataForm.value.organizationId }
+    let payload:any={...this.ParticipantDataForm.value, "programIds": [this.ParticipantDataForm.value.programIds], "organizationId": this.ParticipantDataForm.value.organizationId[0]?.organizationId }
     // if(this.ParticipantDataForm.value.programIds?.length>0){
     //   payload['programIds']=this.ParticipantDataForm.value.programIds
     // }
@@ -406,13 +442,40 @@ export class AddParticipantDataComponent implements OnInit {
     const [day, month, year] = date.split('-');
     return `${year}-${month}-${day}`; // Convert to yyyy-MM-dd format
   }
-
+  getDataByMobileNumber(MobileNumber:any){
+  this._commonService.getById(APIS.captureOutcome.getParticipantData,MobileNumber).subscribe({
+    next: (res: any) => {
+      console.log(res)
+      if(res.status==400){
+        this.ParticipantDataForm.reset()
+        this.ParticipantDataForm.patchValue({mobileNo:MobileNumber})
+      }
+      else{
+        let item = res?.data;
+        this.ParticipantDataForm.patchValue({ ...item, certificateIssueDate: item.certificateIssueDate?this.convertToISOFormat(item.certificateIssueDate):'',isAspirant:item.organizationId?'Existing Oragnization':'Aspirant',organizationId:this.OrganizationData.filter((data:any)=>{
+          if(data.organizationId==item?.organizationId){
+                return data
+              }
+        })})
+      }
+     
+    },
+    error: (err) => {
+      this.ParticipantDataForm.reset()
+        this.ParticipantDataForm.patchValue({mobileNo:MobileNumber})
+      new Error(err);
+    }
+  })
+}
   editRow(item: any, i: any) {
     this.isedit=true
     this.participantId=item.participantId
-    console.log(moment(item?.certificateIssueDate).format('YYYY-MM-DD'),item?.certificateIssueDate)
-   
-    this.ParticipantDataForm.patchValue({ ...item, certificateIssueDate: item.certificateIssueDate?this.convertToISOFormat(item.certificateIssueDate):'',isAspirant:item.organizationId?'Existing Oragnization':'Aspirant'})
+   console.log(this.OrganizationData)
+    this.ParticipantDataForm.patchValue({ ...item, certificateIssueDate: item.certificateIssueDate?this.convertToISOFormat(item.certificateIssueDate):'',isAspirant:item.organizationId?'Existing Oragnization':'Aspirant',organizationId:this.OrganizationData.filter((data:any)=>{
+      if(data.organizationId==item?.organizationId){
+            return data
+          }
+    })})
   }
 
   typeOragnization(event: any) {
@@ -581,6 +644,7 @@ export class AddParticipantDataComponent implements OnInit {
     this._commonService.getDataByUrl(APIS.participantdata.getOrgnizationData).subscribe({
       next: (res: any) => {
         this.OrganizationData = res?.data
+        this.assignFluidData1Org()
         // this.submitedData=res?.data?.data
         // this.advanceSearch(this.getSelDataRange);
         // modal.close()

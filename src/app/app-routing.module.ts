@@ -125,7 +125,7 @@ const routes: Routes = [
         path: 'view-table-organization',
         component: OrganizationsListComponent,
         canActivate: [AuthGuard],
-        data: { roles: [Role.Admin] }
+        data: { roles: [Role.Admin,Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR] }
     },
     {
         path: 'capture-outcome',

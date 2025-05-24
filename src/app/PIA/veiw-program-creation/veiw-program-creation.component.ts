@@ -109,7 +109,7 @@ export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
   editSession(dataList: any): any {
     this.router.navigateByUrl('/program-sessions-edit/' + dataList.programId);
   }
-
+//  <button type="button" class="btn btn-default btn-sm text-danger delete-btn" data-id="${row.id}" title="Delete"><span class="bi bi-trash"></span></button>
   initializeDataTable(agency:any) { 
     const self = this;
     this.dataTable = new DataTable('#view-table-program', {
@@ -212,8 +212,9 @@ export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
                 data-id="${row.id}" title="View">
                 <span class="bi bi-eye"></span>
               </button>
-                <button type="button" class="btn btn-default btn-sm text-danger editable-btn" data-id="${row.id}" title="Delete"><span class="bi bi-pencil"></span></button>
-              <button type="button" class="btn btn-default btn-sm text-danger delete-btn" data-id="${row.id}" title="Delete"><span class="bi bi-trash"></span></button>
+                <button type="button" class="btn btn-default btn-sm text-danger editable-btn ${row.overdue ? 'isdisable' : ''}" data-id="${row.id}" title="Edit"><span class="bi bi-pencil"></span></button>
+                <button type="button" class="btn btn-default btn-sm text-danger overDue-btn ${!row.overdue ? 'isdisable' : ''}" data-id="${row.id}" title="Over-due"><span class="bi bi-alarm-fill"></span></button>
+             
               `;
             // }
             // return '';
@@ -351,16 +352,23 @@ export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
   initComplete: function() {
     // Use proper event handling with arrow function
     $('#view-table-program').on('click', '.edit-btn', (event:any) => {
+     
       const rowData = self.dataTable.row($(event.currentTarget).parents('tr')).data();
+      const button = $(this);
+      if (rowData.overdue) {
+        button.addClass('disabled');
+      } else {
+        button.addClass('disabled-row');
+      }
       self.sessionDetails(rowData); // Call your method with proper data
     });
     $('#view-table-program').on('click', '.editable-btn', (event:any) => {
       const rowData = self.dataTable.row($(event.currentTarget).parents('tr')).data();
       self.editProgram(rowData); // Call your method with proper data
     });
-    $('#view-table-program').off('click', '.delete-btn').on('click', '.delete-btn', (event: any) => {
+   $('#view-table-program').on('click', '.overDue-btn', (event:any) => {
       const rowData = self.dataTable.row($(event.currentTarget).parents('tr')).data();
-      self.deleteExpenditure(rowData);
+      self.OverDue(rowData);
     });
     // $('#view-table-program').on('click', '.delete-btn', (event:any) => {
     //   const rowData = self.dataTable.row($(event.currentTarget).parents('tr')).data();
@@ -370,7 +378,10 @@ export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
     });
   }
   
-
+//  $('#view-table-program').off('click', '.delete-btn').on('click', '.delete-btn', (event: any) => {
+//   const rowData = self.dataTable.row($(event.currentTarget).parents('tr')).data();
+//   self.deleteExpenditure(rowData);
+// });
   reinitializeDataTable() {
     if (this.dataTable) {
       this.dataTable.destroy();
@@ -460,10 +471,57 @@ export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
     // console.log(this.ParticipantAttentance)
   }
 
+// OverDue
+overDueId:any
+OverDue(item: any) {
+  this.overDueId=item?.programId
+  document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+   const myModal = new bootstrap.Modal(document.getElementById('exampleModalOverDueProgram'));
+    myModal.show();
+}
+
+closeModalOverDue(): void {
+
+  const editSessionModal = document.getElementById('exampleModalOverDueProgram');
+if (editSessionModal) {
+  const modalInstance = bootstrap.Modal.getInstance(editSessionModal);
+  modalInstance.hide();
+}
+
+  // const myModal = bootstrap.Modal.getInstance(document.getElementById('exampleModalDelete'));
+  // myModal.hide();
+ } 
+ ConfirmOverDue(id:any){
+  this._commonService.updatedata(APIS.programCreation.updateOverDue+id+'/update-overdue',{}).subscribe({
+    next: (data: any) => {
+      if(data?.status==400){
+        this.toastrService.error(data?.message, "Program Data Error!");
+        this.closeModalOverDue();
+        this.overDueId =''
+      }
+      else{
+        this.closeModalOverDue();
+       this.getProgramDetails()
+       this.reinitializeDataTable();
+       
+      this.overDueId =''
+      this.toastrService.success( 'OverDue Succesfully Updated', "Program Data Success!");
+      }
+      
+    },
+    error: (err) => {
+      this.closeModalOverDue();
+      this.overDueId ={}
+      this.toastrService.error(err.message, "Program Data Error!");
+      new Error(err);
+    },
+  });
+ }
 
      // delete Expenditure
      deleteProgramId:any ={}
      deleteExpenditure(item: any) {
+      
        if(item?.status=='Program Scheduled' || item.status=='Sessions Created'){
         this.deleteProgramId = item?.programId
          document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
@@ -477,6 +535,7 @@ export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
       }
      
    }
+
      ConfirmdeleteExpenditure(item:any){
        this._commonService
        .deleteId(APIS.programCreation.deleteProgram,item).subscribe({
@@ -504,6 +563,7 @@ export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
        });
  
      }
+     
      closeModalDelete(): void {
 
       const editSessionModal = document.getElementById('exampleModalDeleteProgram');

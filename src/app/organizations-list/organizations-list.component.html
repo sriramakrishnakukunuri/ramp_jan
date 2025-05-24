@@ -63,7 +63,7 @@
                         <ng-container *ngIf="loginsessionDetails?.userRole == 'ADMIN'">
                             <div class="col-12 col-sm-5 col-md-4 col-lg-3">
                                 <label for="Agencies" style="font-weight: 600;">List Of Agencies</label>
-                                <select class="form-select" (change)="getLocationsByAgency($event)">
+                                <select class="form-select" (change)="getLocationsByAgency($any($event.target).value)">
                                     <option value="All Agency" selected>All Agencies</option>
                                     <option *ngFor="let list of agencyList" value="{{list.agencyId}}">{{list.agencyName}}</option>
                                 </select>
@@ -77,30 +77,35 @@
                             <thead class="bg-lime-green text-white">
                                 <tr>
                                     <th>S.No</th>
-                                    <th>Date</th>
+                                    <th *ngIf="loginsessionDetails?.userRole == 'ADMIN'">Agency</th>
                                     <th>Program Location</th>
-                                    <th>Latitude</th>
-                                    <th>Longitutde</th>
-                                    <th>Type Of Ownership</th>
+                                    <th>District</th>
+                                    <th>Mandal</th>
                                     <th>Type Of Venue</th>
                                     <th>Max Capacity</th>
+                                    <th>Type Of Ownership</th>
+                                    <th>Date</th>
+                                    <th>Latitude</th>
+                                    <th>Longitutde</th>
                                     <th>Google Map Url</th>
-                                    <th>Agency</th>
                                     <!-- <th class="text-center">Edit / Delete</th> -->
                                 </tr>
                             </thead>
                             <tbody *ngIf="locationsList">
                                 <tr *ngFor="let item of locationsList; let i = index">
                                     <td class="text-start">{{i+1}}</td>
-                                    <td>{{item?.createdOn | date:'dd-MM-yyyy'}}</td>
+                                    <td *ngIf="loginsessionDetails?.userRole == 'ADMIN'" >{{item?.agencyName}}</td>
                                     <td>{{item?.locationName}}</td>
-                                    <td>{{item?.latitude}}</td>
-                                    <td>{{item?.longitude}}</td>
-                                    <td>{{item?.ownershipType}}</td>
+                                    <td>{{item?.locationName}}</td>
+                                    <td>{{item?.locationName}}</td>
                                     <td>{{item?.typeOfVenue}}</td>
                                     <td>{{item?.capacity}}</td>
+                                    <td>{{item?.ownershipType}}</td>
+                                    <td>{{item?.createdOn | date:'dd-MM-yyyy'}}</td>
+                                    <td>{{item?.latitude}}</td>
+                                    <td>{{item?.longitude}}</td>
                                     <td>{{item?.googleMapUrl}}</td>
-                                    <td>{{item?.agencyName}}</td>
+                                    
                                     <!-- <td class="text-center">
                                         <button type="button" class="btn btn-default text-lime-green btn-sm"><span class="bi bi-pencil"></span></button>
                                         <button type="button" class="btn btn-default text-danger btn-sm"><span class="bi bi-trash"></span></button>
@@ -138,6 +143,7 @@
                             <thead class="bg-lime-green text-white">
                                 <tr>
                                     <th>S.No</th>
+                                    <th *ngIf="loginsessionDetails?.userRole == 'ADMIN'" >Agency</th>
                                     <th>Organization Name</th>
                                     <th>Resource Name</th>
                                     <th>Designation</th>
@@ -150,7 +156,9 @@
                             <tbody *ngIf="resources">
                                 <tr *ngFor="let item of resources; let i = index">
                                     <td class="text-start">{{i + 1}}</td>
+                                    <td *ngIf="loginsessionDetails?.userRole == 'ADMIN'">{{item?.agencyNames}}</td>
                                     <td>{{item?.organizationName}}</td>
+
                                     <td>{{item?.name}}</td>
                                     <td>{{item?.designation}}</td>
                                     <td>{{item?.specialization}}</td>
