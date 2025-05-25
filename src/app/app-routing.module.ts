@@ -37,6 +37,9 @@ import { ProgramMonitoringComponent } from './PIA/program-monitoring/program-mon
 import { ViewAllAgencySessionsComponent } from './PIA/view-all-agency-sessions/view-all-agency-sessions.component';
 import { ViewCompletedComponent } from './PIA/view-completed/view-completed.component';
 
+import { CollageHomeComponent } from './PIA/collage-home/collage-home.component';
+import { CollageCreationComponent } from './PIA/collage-creation/collage-creation.component';
+
 const routes: Routes = [
     {
         path: '',
@@ -125,7 +128,7 @@ const routes: Routes = [
         path: 'view-table-organization',
         component: OrganizationsListComponent,
         canActivate: [AuthGuard],
-        data: { roles: [Role.Admin] }
+        data: { roles: [Role.Admin,Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR] }
     },
     {
         path: 'capture-outcome',
@@ -220,6 +223,18 @@ const routes: Routes = [
     {
         path: 'program-summary',
         component: ProgramSummaryComponent,
+        canActivate: [AuthGuard],
+        data: { roles:  [Role.Admin,Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR]}
+    },
+    {
+        path: 'collage-home',
+        component: CollageHomeComponent,
+        canActivate: [AuthGuard],
+        data: { roles:  [Role.Admin,Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR]}
+    },
+    {
+        path: 'collage-creation',
+        component: CollageCreationComponent,
         canActivate: [AuthGuard],
         data: { roles:  [Role.Admin,Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR]}
     },

@@ -28,8 +28,17 @@ export class OrganizationsListComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAgenciesList()
+    if(this.loginsessionDetails?.userRole == 'ADMIN'){
+      this.getLocationsByAgency('All Agency');
+      this.getResourcesByAgency('All Agency');
+
+    }
+    else{
+      this.getLocationsByAgency(this.loginsessionDetails.agencyId);
+      this.getResourcesByAgency(this.loginsessionDetails.agencyId);
+    }
     //this.fetchOrganizations();
-    this.fetchLocations()   
+    // this.fetchLocations()   
     
   }
 
@@ -39,18 +48,32 @@ export class OrganizationsListComponent implements OnInit {
   getDataByCategory(val:any){
     
     if(val == 'Location'){
-      this.fetchLocations()
+      if(this.loginsessionDetails?.userRole == 'ADMIN'){
+        this.getLocationsByAgency('All Agency');
+  
+      }
+      else{
+        this.getLocationsByAgency(this.loginsessionDetails.agencyId);
+      }
+      // this.fetchLocations()
     }
     else if(val == 'Resources'){
-      this.fetchResources()
+      if(this.loginsessionDetails?.userRole == 'ADMIN'){
+        this.getResourcesByAgency('All Agency');
+  
+      }
+      else{
+        this.getResourcesByAgency(this.loginsessionDetails.agencyId);
+      }
+      // this.fetchResources()
     }else{
       this.fetchOrganizations()
     }
     this.SelectedCategory = val;
   }
   getLocationsByAgency(event: any) {
-    let agencyId = event.target.value;
-    if(event.target.value=='All Agency'){
+    let agencyId = event;
+    if(event=='All Agency'){
       this.fetchLocations()
     }
     else{
@@ -127,7 +150,7 @@ export class OrganizationsListComponent implements OnInit {
       scrollX:        true,
       scrollCollapse: true,
       autoWidth:         true,  
-      paging:         false,  
+      paging:         true,  
       info: false,   
       searching: false,  
       destroy: true, // Ensure reinitialization doesn't cause issues
@@ -146,7 +169,7 @@ export class OrganizationsListComponent implements OnInit {
       scrollX:        true,
       scrollCollapse: true,
       autoWidth:         true,  
-      paging:         false,  
+      paging:         true,  
       info: false,   
       searching: false,  
       destroy: true, // Ensure reinitialization doesn't cause issues
@@ -165,7 +188,7 @@ export class OrganizationsListComponent implements OnInit {
       scrollX:        true,
       scrollCollapse: true,
       autoWidth:         true,  
-      paging:         false,  
+      paging:         true,  
       info: false,   
       searching: false,  
       destroy: true, // Ensure reinitialization doesn't cause issues
