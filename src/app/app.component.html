@@ -69,7 +69,8 @@
                                 <a class="nav-link" href="#" id="homeDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     <span>Reports</span> <span class="bi bi-chevron-down"></span>
                                 </a>
-                                <ul class="dropdown-menu" aria-labelledby="homeDropdown">                                    
+                                <ul class="dropdown-menu" aria-labelledby="homeDropdown">
+                                    <li><a class="dropdown-item" routerLink="/collage-home" routerLinkActive="active">Create Collage</a></li>                                     
                                     <li><a class="dropdown-item" routerLink="/program-summary" routerLinkActive="active">Program Summary</a></li>             
                                 </ul>
                             </li>
@@ -139,9 +140,13 @@
                             <li class="nav-item dropdown" *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]" >
                                 <a class="nav-link" href="#" id="homeDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     <span>Reports</span> <span class="bi bi-chevron-down"></span>
+
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="homeDropdown">                                    
-                                    <li><a class="dropdown-item" routerLink="/program-summary" routerLinkActive="active">Program Summary</a></li>             
+                                    
+                                    <li><a class="dropdown-item" routerLink="/program-summary" routerLinkActive="active">Program Summary</a></li>
+                                    <li><a class="dropdown-item" routerLink="/collage-home" routerLinkActive="active">Create Collage</a></li>  
+                                                 
                                 </ul>
                             </li>
                             <li class="nav-item dropdown" *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]">

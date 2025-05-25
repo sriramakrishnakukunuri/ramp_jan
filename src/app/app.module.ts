@@ -14,6 +14,8 @@ import { HomeComponent } from './home';
 import { AdminComponent } from './admin';
 import { LoginComponent } from './login';
 import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { ToastrModule } from 'ngx-toastr';
 import { MatTableModule } from '@angular/material/table';
@@ -55,6 +57,8 @@ import { ViewProgramAgenciesComponent } from './PIA/view-program-agencies/view-p
 import { ProgramMonitoringComponent } from './PIA/program-monitoring/program-monitoring.component';
 import { ViewAllAgencySessionsComponent } from './PIA/view-all-agency-sessions/view-all-agency-sessions.component';
 import { ViewCompletedComponent } from './PIA/view-completed/view-completed.component';
+import { CollageHomeComponent } from './PIA/collage-home/collage-home.component';
+import { CollageCreationComponent } from './PIA/collage-creation/collage-creation.component';
 
 @NgModule({
     imports: [
@@ -64,6 +68,7 @@ import { ViewCompletedComponent } from './PIA/view-completed/view-completed.comp
         HttpClientModule,
         AppRoutingModule,
         FormsModule,
+        CommonModule,
         BrowserAnimationsModule,
         NgMultiSelectDropDownModule.forRoot(), // Make sure this is here
         ToastrModule.forRoot({
@@ -76,7 +81,8 @@ import { ViewCompletedComponent } from './PIA/view-completed/view-completed.comp
         MatPaginatorModule,
         MatSortModule,
         NgxMaterialTimepickerModule,
-        NgxDocViewerModule
+        NgxDocViewerModule,
+        FontAwesomeModule
     ],
     declarations: [
         AppComponent,
@@ -102,19 +108,22 @@ import { ViewCompletedComponent } from './PIA/view-completed/view-completed.comp
         ViewParticipantComponent,
         GetOutcomeComponent,
         ViewMsmeCouncellorDataComponent,
-         ProgramSessionsComponent, 
-         AllParticipantsVerificationComponent, 
-         AttentanceParticipantComponent,
-          VerificationParticipantComponent,
-           RawMaterialsParticipantsComponent,
-           ProgramExpenditureComponent,
-           BulkExpenditureComponent,
-           ProgramSummaryComponent,
-           AddProgramSessionsComponent,
-           ViewProgramAgenciesComponent,
-           ProgramMonitoringComponent,
-           ViewAllAgencySessionsComponent,
-           ViewCompletedComponent,
+        ProgramSessionsComponent, 
+        AllParticipantsVerificationComponent, 
+        AttentanceParticipantComponent,
+        VerificationParticipantComponent,
+        RawMaterialsParticipantsComponent,
+        ProgramExpenditureComponent,
+        BulkExpenditureComponent,
+        ProgramSummaryComponent,
+        AddProgramSessionsComponent,
+        ViewProgramAgenciesComponent,
+        ProgramMonitoringComponent,
+        ViewAllAgencySessionsComponent,
+        ViewCompletedComponent,
+        CollageCreationComponent,
+        CollageHomeComponent,
+
     ],
     exports:[MaterialModule],
     providers: [

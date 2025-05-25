@@ -117,6 +117,7 @@ export const APIS = {
     },
     programSummary:{
         getProramData:API_BASE_URL +`/program/summary/`,
+        getParticipantsBYProgram:API_BASE_URL +`/program/participants/dropdown/`,
     },
     programExecutions:{
         saveMediaCoverage:API_BASE_URL +`/program/execution/media-coverage`,
@@ -129,5 +130,12 @@ export const APIS = {
         // getProgramMonitoringById:API_BASE_URL +`/program/monitoring/`,
         saveProgramMonitoring:API_BASE_URL +`/program/feedback/save`,
         updateProgramMonitoring:API_BASE_URL +`/program/feedback/update/`,
-    }
+    },
+    collageCreation:{
+        GET_ALL_IMAGES: API_BASE_URL+`/program/file/paths/`,
+        GET_COLLAGE_IMAGES: API_BASE_URL+`/program/file/paths/status?fileType=COLLAGE`,
+        UPLOAD_COLLAGE: API_BASE_URL+`/program/collage/images`,
+        GET_AGENCIES: API_BASE_URL+`/agencies`,
+        GET_PROGRAMS: API_BASE_URL+`/agency/programs/dropdown`,
+    },
 }
