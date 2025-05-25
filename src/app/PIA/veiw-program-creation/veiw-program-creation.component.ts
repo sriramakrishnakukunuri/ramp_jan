@@ -279,6 +279,7 @@ export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
     { 
       data: 'agencyName',
       title: 'Agency Name',
+      orderable: false,
       render: function(data, type, row) {
         return data ? data : '';
       }

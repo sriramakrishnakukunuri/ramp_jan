@@ -42,6 +42,7 @@ export class AddProgramSessionsComponent implements OnInit {
       organizationName: ['', [Validators.required, Validators.pattern(/^[A-Za-z][A-Za-z0-9 .]+$/)]],
       qualification: ['', Validators.required],
       designation: ['', Validators.required],
+      isVIP: ['', ],
       specialization: ['', Validators.required],
       briefDescription: ['', Validators.required],
       gender: ['', Validators.required],
@@ -50,6 +51,59 @@ export class AddProgramSessionsComponent implements OnInit {
 
     // Initialize available methodologies
     this.availableMethodologies = [...this.allMethodologies];
+  }
+  get fresouce(){
+    return this.modalFormStype.controls;
+  }
+  changeStatus(event:any){
+    if(event.target.checked){
+      this.modalFormStype.patchValue({isVIP:true})
+      this.modalFormStype.get('mobileNo')?.patchValue('');
+      this.modalFormStype.get('mobileNo')?.setValidators(null);
+      this.modalFormStype.get('mobileNo')?.updateValueAndValidity();
+      this.modalFormStype.get('email')?.patchValue('');
+      this.modalFormStype.get('email')?.setValidators(null);
+      this.modalFormStype.get('email')?.updateValueAndValidity();
+      this.modalFormStype.get('organizationName')?.patchValue('');
+      this.modalFormStype.get('organizationName')?.setValidators(null);
+      this.modalFormStype.get('organizationName')?.updateValueAndValidity();
+      this.modalFormStype.get('qualification')?.patchValue('');
+      this.modalFormStype.get('qualification')?.setValidators(null);
+      this.modalFormStype.get('qualification')?.updateValueAndValidity();
+      this.modalFormStype.get('designation')?.patchValue('');
+      this.modalFormStype.get('designation')?.setValidators(null);
+      this.modalFormStype.get('designation')?.updateValueAndValidity();
+      this.modalFormStype.get('briefDescription')?.patchValue('');
+      this.modalFormStype.get('briefDescription')?.setValidators(null);
+      this.modalFormStype.get('briefDescription')?.updateValueAndValidity();
+      this.modalFormStype.get('specialization')?.patchValue('');
+      this.modalFormStype.get('specialization')?.setValidators(null);
+      this.modalFormStype.get('specialization')?.updateValueAndValidity();
+      
+    }else{
+      this.modalFormStype.patchValue({isVIP:false})
+      this.modalFormStype.get('mobileNo')?.patchValue('');
+      this.modalFormStype.get('mobileNo')?.setValidators([Validators.required, Validators.pattern(/^[6789]\d{9}$/)]);
+      this.modalFormStype.get('mobileNo')?.updateValueAndValidity();
+      this.modalFormStype.get('email')?.patchValue('');
+      this.modalFormStype.get('email')?.setValidators([Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/)]);
+      this.modalFormStype.get('email')?.updateValueAndValidity();
+      this.modalFormStype.get('organizationName')?.patchValue('');
+      this.modalFormStype.get('organizationName')?.setValidators([Validators.required, Validators.pattern(/^[A-Za-z][A-Za-z0-9 .]+$/)]);
+      this.modalFormStype.get('organizationName')?.updateValueAndValidity();
+      this.modalFormStype.get('qualification')?.patchValue('');
+      this.modalFormStype.get('qualification')?.setValidators([Validators.required]);
+      this.modalFormStype.get('qualification')?.updateValueAndValidity();
+      this.modalFormStype.get('designation')?.patchValue('');
+      this.modalFormStype.get('designation')?.setValidators([Validators.required]);
+      this.modalFormStype.get('designation')?.updateValueAndValidity();
+      this.modalFormStype.get('briefDescription')?.patchValue('');
+      this.modalFormStype.get('briefDescription')?.setValidators([Validators.required]);
+      this.modalFormStype.get('briefDescription')?.updateValueAndValidity();
+      this.modalFormStype.get('specialization')?.patchValue('');
+      this.modalFormStype.get('specialization')?.setValidators([Validators.required]);
+      this.modalFormStype.get('specialization')?.updateValueAndValidity();
+    }
   }
 
   onModalSubmitType() {

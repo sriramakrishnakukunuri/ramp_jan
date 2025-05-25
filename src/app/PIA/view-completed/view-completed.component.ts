@@ -49,7 +49,14 @@ export class ViewCompletedComponent implements OnInit {
     }
       agencyProgramList: any;
       getProgramsByAgencyAdmin(agency:any) {
-        this.submitedData = ''
+        if(agency == 'All Agencies') {
+          this.programIds = 'All Programs'
+          this.agencyProgramList=[]
+          this.getData()
+
+        }
+        else{
+          this.submitedData = ''
         this._commonService.getDataByUrl(`${APIS.programCreation.getProgramsListByAgency+'/'+agency}`).subscribe({
           next: (res: any) => {
             this.agencyProgramList = res?.data
@@ -61,6 +68,8 @@ export class ViewCompletedComponent implements OnInit {
             new Error(err);
           }
         })
+        }
+        
       }
       getProgramsByAgency() {
         this._commonService.getDataByUrl(`${APIS.programCreation.getProgramsListByAgency+'/'+ this.agencyId}`).subscribe({
@@ -78,9 +87,16 @@ export class ViewCompletedComponent implements OnInit {
       dropdownProgramsList(event: any, type: any) {
         this.submitedData = ''
         this.programIds = event.target.value
-        if (type == 'table' && event.target.value) {
+        if(event.target.value == 'All Programs') {
           this.getData()
+
         }
+        else{
+          if (type == 'table' && event.target.value) {
+            this.getData()
+          }
+        }
+        
       }
       submitedData:any
       getData() {
@@ -92,22 +108,63 @@ export class ViewCompletedComponent implements OnInit {
         // if(resList){
         //   this.submitedData=JSON.parse(resList)
         // }
-        this._commonService.getDataByUrl(APIS.participantdata.getDataByProgramBYDeatisl+this.programIds+`?page=0&size=200`).subscribe({
-          next: (res: any) => {
-            this.submitedData = res?.data
-            this.submitedData.map((data:any)=>{
-              data['organizationName'] = data['organizationName'] ?data['organizationName']:''
-            })
-            this.reinitializeDataTable();
-            // this.advanceSearch(this.getSelDataRange);
-            // modal.close()
-    
-          },
-          error: (err) => {
-            this.toastrService.error(err.message, "Participant Data Error!");
-            new Error(err);
-          },
-        });
+        if(this.selectedAgencyId=='All Agencies') {
+          this._commonService.getDataByUrl(APIS.participantdata.getDataByProgramBYDeatisl+-1+`?page=0&size=200`).subscribe({
+            next: (res: any) => {
+              this.submitedData = res?.data
+              this.submitedData.map((data:any)=>{
+                data['organizationName'] = data['organizationName'] ?data['organizationName']:''
+              })
+              this.reinitializeDataTable();
+              // this.advanceSearch(this.getSelDataRange);
+              // modal.close()
+      
+            },
+            error: (err) => {
+              this.toastrService.error(err.message, "Participant Data Error!");
+              new Error(err);
+            },
+          });
+        }
+        else if(this.programIds == 'All Programs') {
+          this._commonService.getDataByUrl(APIS.participantdata.getDataByProgramBYDeatisl+-2+`?agencyId=`+this.selectedAgencyId+`&page=0&size=200`).subscribe({
+            next: (res: any) => {
+              this.submitedData = res?.data
+              this.submitedData.map((data:any)=>{
+                data['organizationName'] = data['organizationName'] ?data['organizationName']:''
+              })
+              this.reinitializeDataTable();
+              // this.advanceSearch(this.getSelDataRange);
+              // modal.close()
+      
+            },
+            error: (err) => {
+              this.toastrService.error(err.message, "Participant Data Error!");
+              new Error(err);
+            },
+          });
+        }
+        else{
+          this._commonService.getDataByUrl(APIS.participantdata.getDataByProgramBYDeatisl+this.programIds+`?page=0&size=200`).subscribe({
+            next: (res: any) => {
+              this.submitedData = res?.data
+              this.submitedData.map((data:any)=>{
+                data['organizationName'] = data['organizationName'] ?data['organizationName']:''
+              })
+              this.reinitializeDataTable();
+              // this.advanceSearch(this.getSelDataRange);
+              // modal.close()
+      
+            },
+            error: (err) => {
+              this.toastrService.error(err.message, "Participant Data Error!");
+              new Error(err);
+            },
+          });
+        }
+
+
+       
         // console.log(this.submitedData)
       }
       dataTable: any;
@@ -148,13 +205,21 @@ export class ViewCompletedComponent implements OnInit {
             if (sortField && sortDirection) {
               params += `&sort=${sortField},${sortDirection}`;
             }
-            
+            let Url:any=''
             // Add search filter if any
             if (data.search.value) {
               params += `&search=${encodeURIComponent(data.search.value)}`;
             }
-            
-            this._commonService.getDataByUrl(`${APIS.participantdata.getDataByProgramBYDeatisl}${this.programIds}${params}`)
+            if(this.selectedAgencyId=='All Agencies') {
+              Url=APIS.participantdata.getDataByProgramBYDeatisl+-1+params
+            }
+            else if(this.programIds == 'All Programs') {
+              Url=APIS.participantdata.getDataByProgramBYDeatisl+-2+'?agencyId='+this.selectedAgencyId+'&page='+page+'&size='+size
+            }
+            else{
+             Url=APIS.participantdata.getDataByProgramBYDeatisl+this.programIds+params
+            }
+            this._commonService.getDataByUrl(Url)
               .pipe()
               .subscribe({
                 next: (res: any) => {

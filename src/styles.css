@@ -14552,6 +14552,7 @@ table.dataTable.nowrap th {
 }
 table.dataTable.nowrap td {
   white-space: nowrap;
+  
 }
 
 table.table.dataTable {

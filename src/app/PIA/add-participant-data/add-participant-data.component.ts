@@ -555,6 +555,19 @@ export class AddParticipantDataComponent implements OnInit {
       this.fOrg['dateOfRegistration'].updateValueAndValidity()
      
     }
+    else if(this.OragnizationType=='Department'){
+      this.formDetailsOrganization()
+      this.fOrg['organizationType'].patchValue('Department')
+      this.fOrg['organizationName'].addValidators(Validators.required)
+      this.fOrg['organizationName'].addValidators(Validators.pattern(/^[^\s].*/))
+      this.fOrg['sectorIds'].setValidators(null)
+      this.fOrg['ownerContactNo'].setValidators(null)
+      this.fOrg['sectorIds'].updateValueAndValidity()
+      this.fOrg['organizationName'].updateValueAndValidity()
+      this.fOrg['ownerContactNo'].updateValueAndValidity()
+    
+     
+    }
   }
 
   chnageUdyam(event:any){

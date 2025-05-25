@@ -348,6 +348,10 @@
                                                     <input class="form-check-input" type="radio" name="organizationType" id="MSME" value="MSME" (change)="typeOragnization($any($event.target).value)"  formControlName="organizationType">
                                                     <label class="form-check-label fs-md" for="MSME">MSME</label>
                                                 </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="organizationType" id="Department" value="Department" (change)="typeOragnization($any($event.target).value)"  formControlName="organizationType">
+                                                    <label class="form-check-label fs-md" for="Department">Department</label>
+                                                </div>
                                                
                                             </div>
                                             <!-- <div class="col-12 col-sm-6 col-md-4 col-lg-3">
@@ -546,6 +550,20 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="show-hide " id="Department"  *ngIf="this.fOrg['organizationType']?.value=='Department'">
+                            <div class="row">
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                    <div class="form-floating mb-3">
+                                        <input type="text" class="form-control" id="organization" placeholder="" name="organizationName" formControlName="organizationName">
+                                        <label for="organization">Department Name <span class="c-red"> *</span></label>
+                                    </div>
+                                    <!-- <div *ngIf="fOrg['organizationName'].touched && !fOrg['organizationName'].valid" class="error" style="padding-top:  5px;">Organization Name is required</div> -->
+                                    <div *ngIf="fOrg['organizationName'].touched && !fOrg['organizationName'].valid && !fOrg['organizationName']?.errors?.['pattern']" class="error">Department Name is required</div>
+                                    <div *ngIf="fOrg['organizationName'].touched && !fOrg['organizationName'].valid && fOrg['organizationName']?.errors?.['pattern']" class="error">Department Name Should be Charactersand Numerics</div>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="show-hide " id="MSME"  *ngIf="this.fOrg['organizationType']?.value=='MSME'">
                             <div class="row">
                                 <div class="col-12 col-sm-6 col-md-4 col-lg-3">
@@ -655,7 +673,7 @@
                                         <span class="bi bi-chevron-down"></span>
                                     </a>
                                 </div>
-                                <div class="row collapse" id="collapseExample">
+                                <div class="row collapse show" id="collapseExample">
                                     <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                         <div class="form-floating mb-3">
                                             <select class="form-select" id="State" formControlName="stateId">
@@ -745,8 +763,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
-                            <div class="card shadow-md p-3 mb-3">
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12" >
+                            <div class="card shadow-md p-3 mb-3" *ngIf="this.fOrg['organizationType'].value!='Department'">
                                 <h6 class="fs-md fw-600 mb-2">{{this.fOrg['organizationType'].value=='MSME'?'Director':(this.fOrg['organizationType'].value=='Start Up'?'Promoter':'Leader')}} Details</h6>
                                 <div class="row">
                                     <div class="col-12 col-sm-6 col-md-4 col-lg-3">
