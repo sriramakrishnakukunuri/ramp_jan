@@ -10,8 +10,8 @@ export const APIS = {
         addLocation: API_BASE_URL + '/location/save',
         getLocation: API_BASE_URL + '/agency/locations/',
         getProgramType: API_BASE_URL + '/program/types/agency/id/',
-        getLocationByAgency: API_BASE_URL + '/agency/locationdetails/',
-        getResource: API_BASE_URL + '/agency/resources/',
+        getLocationByAgency: API_BASE_URL + '/agency/locationdetails',
+        getResource: API_BASE_URL + '/agency/resources',
         addResource: API_BASE_URL + '/resource/save',
         getProgramsList: API_BASE_URL + '/programs',
         getProgramsListByAgency: API_BASE_URL + '/agency/programs/dropdown/',
@@ -33,6 +33,7 @@ export const APIS = {
         uploadProgram: API_BASE_URL + '/program/import', 
         downloadProgramsData: API_BASE_URL + '/program/pdf/',
         downloadSessionsData: API_BASE_URL + '/program/session/pdf/',
+        updateOverDue: API_BASE_URL + '/',
         // get: API_BASE_URL + '/program/get',
         // update: API_BASE_URL + '/program/update',
         // delete: API_BASE_URL + '/program/delete',
@@ -116,6 +117,7 @@ export const APIS = {
     },
     programSummary:{
         getProramData:API_BASE_URL +`/program/summary/`,
+        getParticipantsBYProgram:API_BASE_URL +`/program/participants/dropdown/`,
     },
     programExecutions:{
         saveMediaCoverage:API_BASE_URL +`/program/execution/media-coverage`,
@@ -128,5 +130,12 @@ export const APIS = {
         // getProgramMonitoringById:API_BASE_URL +`/program/monitoring/`,
         saveProgramMonitoring:API_BASE_URL +`/program/feedback/save`,
         updateProgramMonitoring:API_BASE_URL +`/program/feedback/update/`,
-    }
+    },
+    collageCreation:{
+        GET_ALL_IMAGES: API_BASE_URL+`/program/file/paths/`,
+        GET_COLLAGE_IMAGES: API_BASE_URL+`/program/file/paths/status?fileType=COLLAGE`,
+        UPLOAD_COLLAGE: API_BASE_URL+`/program/collage/images`,
+        GET_AGENCIES: API_BASE_URL+`/agencies`,
+        GET_PROGRAMS: API_BASE_URL+`/agency/programs/dropdown`,
+    },
 }

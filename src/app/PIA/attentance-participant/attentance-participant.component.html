@@ -28,6 +28,7 @@
                             <th *ngFor="let header of getAttendanceHeaders(); let i = index">
                                 Day {{i + 1}}
                             </th>
+                            <th>Percentage of present</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -47,6 +48,7 @@
                                         <option value="A">A</option>
                                     </select>
                                 </td> 
+                                <td>{{item?.percentage}}%</td>
                             </tr>
                         </ng-container>
                         <ng-template #noData>

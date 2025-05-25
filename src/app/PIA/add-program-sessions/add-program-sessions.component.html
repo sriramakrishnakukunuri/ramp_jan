@@ -383,6 +383,14 @@
                     <div class="row">
                         <div class="col-12 col-sm-6">
                             <div class="form-floating mb-3">
+                                <label class="form-check-label"> </label>
+                                <input type="checkbox" class="form-check-input me-2" (change)="changeStatus($event)" formControlName="isVIP" >VIP
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-sm-6">
+                            <div class="form-floating mb-3">
                                 <input type="text" class="form-control" id="floatingSelectGender" formControlName="name"
                                     placeholder="Resource Person" />
                                 <label for="floatingSelectGender">Resource Person<span class="c-red"> *</span></label>
@@ -395,11 +403,14 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- isVIP -->
+                      
+                      
                         <div class="col-12 col-sm-6">
                             <div class="form-floating mb-3">
                                 <input type="text" class="form-control" formControlName="mobileNo"
                                     placeholder="Mobile No" />
-                                <label>Mobile No<span class="c-red"> *</span></label>
+                                <label>Mobile No<span *ngIf="!fresouce['isVIP'].value" class="c-red"> *</span></label>
                                 <!-- <div *ngIf="modalFormStype.controls['mobileNo'].touched && modalFormStype.controls['mobileNo'].invalid" class="error" style="color: red;margin-top: 5px">
                                     Mobile No is required
                                 </div> -->
@@ -415,7 +426,7 @@
                         <div class="col-12 col-sm-6">
                             <div class="form-floating mb-3">
                                 <input type="email" class="form-control" formControlName="email" placeholder="Email" />
-                                <label>Email<span class="c-red"> *</span></label>
+                                <label>Email<span class="c-red" *ngIf="!fresouce['isVIP'].value" > *</span></label>
                                 <div *ngIf="modalFormStype.controls['email'].touched && modalFormStype.controls['email'].invalid"
                                     class="error" style="color: red;margin-top: 5px">
                                     Email is required
@@ -426,7 +437,7 @@
                             <div class="form-floating mb-3">
                                 <input type="text" class="form-control" formControlName="organizationName"
                                     placeholder="Organization Name" />
-                                <label>Organization Name<span class="c-red"> *</span></label>
+                                <label>Organization Name<span *ngIf="!fresouce['isVIP'].value"  class="c-red"> *</span></label>
                                 <!-- <div *ngIf="modalFormStype.controls['organizationName'].touched && modalFormStype.controls['organizationName'].invalid" class="error" style="color: red;margin-top: 5px">
                                     Organization Name is required
                                 </div> -->
@@ -445,7 +456,7 @@
                             <div class="form-floating mb-3">
                                 <input type="text" class="form-control" formControlName="qualification"
                                     placeholder="Qualification" />
-                                <label>Qualification<span class="c-red"> *</span></label>
+                                <label>Qualification<span *ngIf="!fresouce['isVIP'].value"  class="c-red"> *</span></label>
                                 <div *ngIf="modalFormStype.controls['qualification'].touched && modalFormStype.controls['qualification'].invalid"
                                     class="error" style="color: red;margin-top: 5px">
                                     Qualification is required
@@ -456,7 +467,7 @@
                             <div class="form-floating mb-3">
                                 <input type="text" class="form-control" formControlName="designation"
                                     placeholder="Designation" />
-                                <label>Designation<span class="c-red"> *</span></label>
+                                <label>Designation<span *ngIf="!fresouce['isVIP'].value"  class="c-red"> *</span></label>
                                 <div *ngIf="modalFormStype.controls['designation'].touched && modalFormStype.controls['designation'].invalid"
                                     class="error" style="color: red;margin-top: 5px">
                                     Designation is required
@@ -469,7 +480,7 @@
                             <div class="form-floating mb-3">
                                 <input type="text" class="form-control" formControlName="specialization"
                                     placeholder="Specialization" />
-                                <label>Specialization<span class="c-red"> *</span></label>
+                                <label>Specialization<span *ngIf="!fresouce['isVIP'].value"  class="c-red"> *</span></label>
                                 <div *ngIf="modalFormStype.controls['specialization'].touched && modalFormStype.controls['specialization'].invalid"
                                     class="error" style="color: red;margin-top: 5px">
                                     Specialization is required
@@ -495,7 +506,7 @@
                         <div class="form-floating mb-3">
                             <textarea class="form-control" formControlName="briefDescription"
                                 placeholder="Brief Description"></textarea>
-                            <label>Brief Description <span class="c-red"> *</span></label>
+                            <label>Brief Description <span *ngIf="!fresouce['isVIP'].value"  class="c-red"> *</span></label>
                             <div *ngIf="modalFormStype.controls['briefDescription'].touched && modalFormStype.controls['briefDescription'].invalid"
                                 class="error" style="color: red;margin-top: 5px">
                                 Brief Description is required

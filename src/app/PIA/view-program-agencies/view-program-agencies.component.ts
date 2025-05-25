@@ -146,6 +146,7 @@ export class ViewProgramAgenciesComponent implements OnInit ,AfterViewInit{
   },
       { 
         data: 'agencyName',
+        orderable: false,
         title: 'Agency Name'
     },
     { 
