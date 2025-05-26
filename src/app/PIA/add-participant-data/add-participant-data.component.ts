@@ -341,7 +341,7 @@ export class AddParticipantDataComponent implements OnInit {
 
   Submitform() {
     
-    let payload:any={...this.ParticipantDataForm.value, "programIds": [this.ParticipantDataForm.value.programIds], "organizationId": this.ParticipantDataForm.value.organizationId[0]?.organizationId }
+    let payload:any={...this.ParticipantDataForm.value, "programIds": [this.ParticipantDataForm.value.programIds], "organizationId": this.ParticipantDataForm.value.organizationId?.[0]?.organizationId }
     // if(this.ParticipantDataForm.value.programIds?.length>0){
     //   payload['programIds']=this.ParticipantDataForm.value.programIds
     // }
@@ -358,7 +358,7 @@ export class AddParticipantDataComponent implements OnInit {
     delete payload['certificateIssueDate'];
   }
   else{
-    payload['certificateIssueDate']=moment(payload['certificateIssueDate']).format('DD-MM-YYYY')
+    payload['certificateIssueDate']=payload['certificateIssueDate']?moment(payload['certificateIssueDate']).format('DD-MM-YYYY'):null
   }
    
     this.submitedData.push(this.ParticipantDataForm.value)
