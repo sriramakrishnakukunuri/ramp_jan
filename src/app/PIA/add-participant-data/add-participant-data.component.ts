@@ -27,6 +27,8 @@ export class AddParticipantDataComponent implements OnInit {
   programIds: any = '';
   loginsessionDetails: any;
   participantdetailsId: any;
+  EditProgramId: any;
+  DefaultDisabled: boolean = false;
   constructor(private fb: FormBuilder,
     private toastrService: ToastrService,
     private _commonService: CommonServiceService,
@@ -121,12 +123,20 @@ export class AddParticipantDataComponent implements OnInit {
     this.getAllDistricts()
     this.getAllSectors()
     this.typeOragnization('SHG')
-    this.participantdetailsId = this.route.snapshot.paramMap.get('id');
+    // = this.route.snapshot.paramMap.get('id');
+    // this.participantdetailsId = this.route.snapshot.params
+    this.participantdetailsId = this.route.snapshot.paramMap.get('id')?.split('-')[0];
+    this.EditProgramId = this.route.snapshot.paramMap.get('id')?.split('-')[1];
+    console.log(this.participantdetailsId, 'participantdetailsId');
+
     if (this.participantdetailsId) {
       setTimeout(() => {
         this.getParticipantDetailsById(this.participantdetailsId);
       }, 500);
       
+    }
+    else{
+      this.DefaultDisabled= true;
     }
     console.log(this.participantdetailsId, 'programId');
   }
@@ -189,6 +199,7 @@ export class AddParticipantDataComponent implements OnInit {
     this._commonService.getById(APIS.participantdata.getParticipantDetailsById, id).subscribe({
       next: (res: any) => {
         if(res.data){
+          this.getDataByMobileNumber(res.data.mobileNo)
           this.editRow(res.data, 0);
         }
         else{
@@ -342,15 +353,7 @@ export class AddParticipantDataComponent implements OnInit {
   Submitform() {
     
     let payload:any={...this.ParticipantDataForm.value, "programIds": [this.ParticipantDataForm.value.programIds], "organizationId": this.ParticipantDataForm.value.organizationId?.[0]?.organizationId }
-    // if(this.ParticipantDataForm.value.programIds?.length>0){
-    //   payload['programIds']=this.ParticipantDataForm.value.programIds
-    // }
-    // else{
-    //   if( typeof this.ParticipantDataForm.value.programIds=='string')
-    //     {
-    //       payload['programIds']=[Number(this.ParticipantDataForm.value.programIds)]
-    //     }
-    // }
+   console.log(typeof payload['programIds'])
     if(this.f2['isAspirant'].value!='Existing Oragnization'){
     delete payload['organizationId']
   }
@@ -366,7 +369,11 @@ export class AddParticipantDataComponent implements OnInit {
 
     sessionStorage.setItem('ParticipantData', JSON.stringify(this.submitedData));
   if(this.isedit){
-      payload['programIds']=this.ParticipantDataForm.value.programIds
+    // console.log(this.participantId,this.previousParticipationDetails?.programIds,payload.programIds)
+    if(Object?.keys(this.previousParticipationDetails)?.length){
+      payload['programIds']=[...payload.programIds,...this.previousParticipationDetails?.programIds]
+    }
+    // payload['programIds']=[this.ParticipantDataForm.value.programIds]
     payload['participantId']=this.participantId
     this._commonService
         .add(APIS.participantdata.update, payload).subscribe({
@@ -398,8 +405,14 @@ export class AddParticipantDataComponent implements OnInit {
     });
   }
   else{
+    let Url=APIS.participantdata.add
+    if(Object?.keys(this.previousParticipationDetails)?.length){
+      Url=APIS.participantdata.update
+      payload['programIds']=[...payload.programIds,...this.previousParticipationDetails?.programIds]
+      payload['participantId']=this.previousParticipationDetails?.participantId
+    }
     this._commonService
-      .add(APIS.participantdata.add, payload).subscribe({
+      .add(Url, payload).subscribe({
         next: (data: any) => {
           if(data?.status==400){
             this.toastrService.error(data?.message, "Participant Data Error!");
@@ -442,36 +455,51 @@ export class AddParticipantDataComponent implements OnInit {
     const [day, month, year] = date.split('-');
     return `${year}-${month}-${day}`; // Convert to yyyy-MM-dd format
   }
+  previousParticipationDetails: any = {};
   getDataByMobileNumber(MobileNumber:any){
-  this._commonService.getById(APIS.captureOutcome.getParticipantData,MobileNumber).subscribe({
-    next: (res: any) => {
-      console.log(res)
-      if(res.status==400){
-        this.ParticipantDataForm.reset()
-        this.ParticipantDataForm.patchValue({mobileNo:MobileNumber})
-      }
-      else{
-        let item = res?.data;
-        this.ParticipantDataForm.patchValue({ ...item, certificateIssueDate: item.certificateIssueDate?this.convertToISOFormat(item.certificateIssueDate):'',isAspirant:item.organizationId?'Existing Oragnization':'Aspirant',organizationId:this.OrganizationData.filter((data:any)=>{
-          if(data.organizationId==item?.organizationId){
-                return data
-              }
-        })})
-      }
-     
-    },
-    error: (err) => {
-      this.ParticipantDataForm.reset()
-        this.ParticipantDataForm.patchValue({mobileNo:MobileNumber})
-      new Error(err);
+    this.previousParticipationDetails={}
+    if(MobileNumber.length==10){
+      this.DefaultDisabled=false
+      this._commonService.getById(APIS.captureOutcome.getParticipantData,MobileNumber).subscribe({
+        next: (res: any) => {
+          console.log(res)
+          if(res.status==400){
+            this.previousParticipationDetails={}
+            this.ParticipantDataForm.reset()
+            this.ParticipantDataForm.patchValue({mobileNo:MobileNumber})
+          }
+          else{
+            let item = res?.data;
+            this.previousParticipationDetails = item;
+            if(!this.isedit){
+              this.ParticipantDataForm.patchValue({ ...item, certificateIssueDate: item.certificateIssueDate?this.convertToISOFormat(item.certificateIssueDate):'',isAspirant:item.organizationId?'Existing Oragnization':'Aspirant',organizationId:this.OrganizationData.filter((data:any)=>{
+                if(data.organizationId==item?.organizationId){
+                      return data
+                    }
+              })})
+            }
+            
+          }
+         
+        },
+        error: (err) => {
+          this.previousParticipationDetails={}
+          this.ParticipantDataForm.reset()
+            this.ParticipantDataForm.patchValue({mobileNo:MobileNumber})
+          new Error(err);
+        }
+      })
     }
-  })
+    else{
+      
+    }
+ 
 }
   editRow(item: any, i: any) {
     this.isedit=true
     this.participantId=item.participantId
    console.log(this.OrganizationData)
-    this.ParticipantDataForm.patchValue({ ...item, certificateIssueDate: item.certificateIssueDate?this.convertToISOFormat(item.certificateIssueDate):'',isAspirant:item.organizationId?'Existing Oragnization':'Aspirant',organizationId:this.OrganizationData.filter((data:any)=>{
+    this.ParticipantDataForm.patchValue({ ...item,programIds :item.programIds?.[0],certificateIssueDate: item.certificateIssueDate?this.convertToISOFormat(item.certificateIssueDate):'',isAspirant:item.organizationId?'Existing Oragnization':'Aspirant',organizationId:this.OrganizationData.filter((data:any)=>{
       if(data.organizationId==item?.organizationId){
             return data
           }
