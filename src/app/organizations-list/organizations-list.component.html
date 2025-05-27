@@ -138,6 +138,14 @@
                     </div>
                 </div>
                 <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-12 col-sm-6 col-md-6 col-lg-6">
+                            <!-- <button type="button" [ngClass]="{'disabled': !programIds}" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModalDeleteConfirm">Final Submission</button> -->
+                        </div>
+                        <div class="col-12 col-12 col-sm-6 col-md-6 col-lg-6 text-end">
+                            <button type="button" (click)="downloadProgram()" class="btn btn-secondary">Download Resources</button> &nbsp;&nbsp;
+                        </div>
+                    </div>
                     <div class="dtable-container">                        
                         <table id="view-table-resourcePerson1" class="display" style="width:100%">
                             <thead class="bg-lime-green text-white">

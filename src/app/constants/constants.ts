@@ -32,6 +32,7 @@ export const APIS = {
         sessionFilesDelete: API_BASE_URL + '/program-session-files/', 
         uploadProgram: API_BASE_URL + '/program/import', 
         downloadProgramsData: API_BASE_URL + '/program/pdf/',
+        downloadResourceData: API_BASE_URL + '/resource/excel/',
         downloadSessionsData: API_BASE_URL + '/program/session/pdf/',
         updateOverDue: API_BASE_URL + '/',
         // get: API_BASE_URL + '/program/get',

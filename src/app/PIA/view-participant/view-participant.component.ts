@@ -367,7 +367,9 @@ export class ViewParticipantComponent implements OnInit {
     }
 
   editRow(item: any) {
-      this.router.navigateByUrl('/add-participant-data-edit/' + item.participantId);
+    console.log(item, "item")
+    // this.router.navigate(['add-participant-data-edit', {partId:item.participantId,program:this.programIds}]);
+      this.router.navigateByUrl('/add-participant-data-edit/' + item.participantId+'-'+this.programIds);
     }
     // Upload documnet
 
