@@ -369,7 +369,7 @@ export class AddParticipantDataComponent implements OnInit {
 
     sessionStorage.setItem('ParticipantData', JSON.stringify(this.submitedData));
   if(this.isedit){
-    // console.log(this.participantId,this.previousParticipationDetails?.programIds,payload.programIds)
+    console.log(this.participantId,this.previousParticipationDetails?.programIds,payload.programIds)
     if(Object?.keys(this.previousParticipationDetails)?.length){
       payload['programIds']=[...payload.programIds,...this.previousParticipationDetails?.programIds]
     }
@@ -457,8 +457,9 @@ export class AddParticipantDataComponent implements OnInit {
   }
   previousParticipationDetails: any = {};
   getDataByMobileNumber(MobileNumber:any){
+    // console.log(MobileNumber,String(MobileNumber).length,MobileNumber.length==10)
     this.previousParticipationDetails={}
-    if(MobileNumber.length==10){
+    if(String(MobileNumber).length){
       this.DefaultDisabled=false
       this._commonService.getById(APIS.captureOutcome.getParticipantData,MobileNumber).subscribe({
         next: (res: any) => {
