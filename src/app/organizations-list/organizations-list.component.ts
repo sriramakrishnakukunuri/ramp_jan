@@ -25,7 +25,7 @@ export class OrganizationsListComponent implements OnInit {
   constructor(private http: HttpClient) { 
     this.loginsessionDetails = JSON.parse(sessionStorage.getItem('user') || '{}');    
   }
-
+  agencyId: any = '';
   ngOnInit(): void {
     this.getAgenciesList()
     if(this.loginsessionDetails?.userRole == 'ADMIN'){
@@ -34,6 +34,7 @@ export class OrganizationsListComponent implements OnInit {
 
     }
     else{
+      this.agencyId = this.loginsessionDetails.agencyId;
       this.getLocationsByAgency(this.loginsessionDetails.agencyId);
       this.getResourcesByAgency(this.loginsessionDetails.agencyId);
     }
@@ -88,13 +89,16 @@ export class OrganizationsListComponent implements OnInit {
 
   getResourcesByAgency(event?: any) {
     if(event=='All Agency'){
+      this.agencyId=-1
       this.fetchResources()
     }
     else{
       if(event){
+        this.agencyId=event
         event = event
       }else {
         event = this.agencyList[0].agencyId;
+        this.agencyId = event;
       }
       let agencyId = event;
       this.resources = '';
@@ -232,5 +236,15 @@ export class OrganizationsListComponent implements OnInit {
     }, (error) => {
       
     });
+  }
+  downloadProgram(){
+    let linkUrl = APIS.programCreation.downloadResourceData+this.agencyId
+    const link = document.createElement("a");
+    link.setAttribute("download", linkUrl);
+    link.setAttribute("target", "_blank");
+    link.setAttribute("href", APIS.programCreation.downloadResourceData+this.agencyId);
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
   }
 }

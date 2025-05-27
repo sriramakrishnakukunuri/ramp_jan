@@ -71,7 +71,7 @@ export class UpdateProgramExecutionComponent implements OnInit {
   agencyProgramList: any;
   programId: any = ''
   getProgramsByAgency() {
-    this._commonService.getDataByUrl(`${APIS.programCreation.getProgramsListByAgencyStatus + '/' + this.agencyId + '?status=Sessions Created'}`).subscribe({
+    this._commonService.getDataByUrl(`${APIS.programCreation.getProgramsListByAgencyStatus + '/' + this.agencyId + '?status=Program Execution'}`).subscribe({
       next: (res: any) => {
         this.agencyProgramList = res?.data
       },
@@ -386,10 +386,12 @@ export class UpdateProgramExecutionComponent implements OnInit {
     if (this.mediaExecutionForm.invalid) return;
     this.mediaExecutionForm.value.programId = Number(this.programId)
     let objectnew: any = [this.mediaExecutionForm.value]
+    console.log('objectnew', objectnew) 
     const formData = new FormData();
     const API_ADD_URL = APIS.programExecutions.saveProgramExecution;
     const apiCalls = objectnew.map((element: any, index: any) => {
-      element['sessionDate'] = moment(element['date']).format('DD-MM-YYYY');
+      console.log('element', element)
+      element['sessionDate'] =  element['sessionDate']? moment(element['sessionDate']).format('DD-MM-YYYY'):moment(element['Date']).format('DD-MM-YYYY');
       formData.set("data", JSON.stringify(element));
       return this._commonService.uploadImageResource(API_ADD_URL, formData);
     })
