@@ -72,6 +72,14 @@
                     </div>
                 </div>
                 <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-12 col-sm-6 col-md-6 col-lg-6">
+                            <!-- <button type="button" [ngClass]="{'disabled': !programIds}" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModalDeleteConfirm">Final Submission</button> -->
+                        </div>
+                        <div class="col-12 col-12 col-sm-6 col-md-6 col-lg-6 text-end">
+                            <button type="button" (click)="downloadLocation()" class="btn btn-secondary">Download Location</button> 
+                        </div>
+                    </div>
                     <div class="dtable-container">                        
                         <table id="view-table-locations" class="display" style="width:100%">
                             <thead class="bg-lime-green text-white">
@@ -88,7 +96,7 @@
                                     <th>Latitude</th>
                                     <th>Longitutde</th>
                                     <th>Google Map Url</th>
-                                    <!-- <th class="text-center">Edit / Delete</th> -->
+                                    <th *ngIf="loginsessionDetails?.userRole != 'ADMIN'" class="text-center">Edit / Delete</th>
                                 </tr>
                             </thead>
                             <tbody *ngIf="locationsList">
@@ -96,8 +104,8 @@
                                     <td class="text-start">{{i+1}}</td>
                                     <td *ngIf="loginsessionDetails?.userRole == 'ADMIN'" >{{item?.agencyName}}</td>
                                     <td>{{item?.locationName}}</td>
-                                    <td>{{item?.locationName}}</td>
-                                    <td>{{item?.locationName}}</td>
+                                    <td>{{item?.district}}</td>
+                                    <td>{{item?.mandal}}</td>
                                     <td>{{item?.typeOfVenue}}</td>
                                     <td>{{item?.capacity}}</td>
                                     <td>{{item?.ownershipType}}</td>
@@ -106,10 +114,10 @@
                                     <td>{{item?.longitude}}</td>
                                     <td>{{item?.googleMapUrl}}</td>
                                     
-                                    <!-- <td class="text-center">
-                                        <button type="button" class="btn btn-default text-lime-green btn-sm"><span class="bi bi-pencil"></span></button>
-                                        <button type="button" class="btn btn-default text-danger btn-sm"><span class="bi bi-trash"></span></button>
-                                    </td> -->
+                                    <td class="text-center" *ngIf="loginsessionDetails?.userRole != 'ADMIN'">
+                                        <button type="button" class="btn btn-default text-lime-green btn-sm" (click)="EditLocation(item)"><span class="bi bi-pencil"></span></button>
+                                        <button type="button" class="btn btn-default text-danger btn-sm" (click)="deleteExpenditure('Location',item.locationId)"><span class="bi bi-trash"></span></button>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -141,7 +149,7 @@
                             <!-- <button type="button" [ngClass]="{'disabled': !programIds}" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModalDeleteConfirm">Final Submission</button> -->
                         </div>
                         <div class="col-12 col-12 col-sm-6 col-md-6 col-lg-6 text-end">
-                            <button type="button" (click)="downloadProgram()" class="btn btn-secondary">Download Resources</button> &nbsp;&nbsp;
+                            <button type="button" (click)="downladResource()" class="btn btn-secondary">Download Resource</button> 
                         </div>
                     </div>
                     <div class="dtable-container">                        
@@ -156,7 +164,7 @@
                                     <th>Specialization</th>
                                     <th>Mobile Number</th>
                                     <th>Email</th>
-                                    <!-- <th class="text-center">Edit / Delete</th> -->
+                                    <th *ngIf="loginsessionDetails?.userRole != 'ADMIN'" class="text-center">Edit / Delete</th>
                                 </tr>
                             </thead>
                             <tbody *ngIf="resources">
@@ -170,10 +178,10 @@
                                     <td>{{item?.specialization}}</td>
                                     <td>{{item?.mobileNo}}</td>
                                     <td>{{item?.email}}</td>
-                                    <!-- <td class="text-center">
-                                        <button type="button" class="btn btn-default text-lime-green btn-sm"><span class="bi bi-pencil"></span></button>
-                                        <button type="button" class="btn btn-default text-danger btn-sm"><span class="bi bi-trash"></span></button>
-                                    </td> -->
+                                    <td class="text-center" *ngIf="loginsessionDetails?.userRole != 'ADMIN'">
+                                        <button type="button" class="btn btn-default text-lime-green btn-sm" (click)="EditResource(item)"><span class="bi bi-pencil"></span></button>
+                                        <button type="button" class="btn btn-default text-danger btn-sm" (click)="deleteExpenditure('Resource',item.resourceId)"><span class="bi bi-trash"></span></button>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -198,6 +206,14 @@
                     </div>
                 </div>
                 <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-12 col-sm-6 col-md-6 col-lg-6">
+                            <!-- <button type="button" [ngClass]="{'disabled': !programIds}" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModalDeleteConfirm">Final Submission</button> -->
+                        </div>
+                        <div class="col-12 col-12 col-sm-6 col-md-6 col-lg-6 text-end">
+                            <button type="button" (click)="downladOrganization()" class="btn btn-secondary">Download Organization</button> 
+                        </div>
+                    </div>
                     <div class="dtable-container">                        
                         <table id="view-table-organization" class="display" style="width:100%">
                             <thead class="bg-lime-green text-white">
@@ -240,11 +256,11 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalDeleteLabel">Delete Physical Targets</h5>
+        <h5 class="modal-title" id="exampleModalDeleteLabel">Delete {{deleteType}}</h5>
         <button type="button" class="btn-close" (click)="closeModalDelete()" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        Are you sure you want to delete Physical Targets?.
+        Are you sure you want to delete {{deleteType}}?.
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" (click)="closeModalDelete()">Close</button>
@@ -254,3 +270,387 @@
     </div>
   </div>
 </div>
+<!-- begin:: modal add new location -->
+<div class="modal fade" id="updateLocationbyId" tabindex="-1" aria-labelledby="addLocationLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+        <form [formGroup]="locationForm" (ngSubmit)="onModalSubmitLocation()">
+            <div class="modal-content">
+                <div class="modal-header py-2">
+                    <h6 class="modal-title" id="addLocationLabel">Edit Location</h6>
+                    <button type="button" class="btn-close me-1" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+                            <div class="mb-3">
+                                <label class="form-label fs-md fw-600">Location Name <span class="c-red"> *</span></label>
+                                <input type="text" class="form-control" placeholder="Location Name"
+                                    formControlName="locationName">
+                            </div>
+                            <div *ngIf="fLocation['locationName'].touched && !fLocation['locationName'].valid && !fLocation['locationName']?.errors?.['pattern']" class="error">Location Name is required</div>
+                            <div *ngIf="fLocation['locationName'].touched && !fLocation['locationName'].valid && fLocation['locationName']?.errors?.['pattern']" class="error">Location Name Should be Characters</div>
+                       
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+                            <div class="mb-3">
+                                <label class="form-label fs-md fw-600">Max Capacity <span class="c-red"> *</span></label>
+                                <input type="number" class="form-control" placeholder="Max capacity"
+                                    formControlName="capacity">
+                            </div>
+                            <div *ngIf="fLocation['capacity'].touched && !fLocation['capacity'].valid && !fLocation['capacity']?.errors?.['pattern']" class="error">Max Capacity is required</div>
+                            <div *ngIf="fLocation['capacity'].touched && !fLocation['capacity'].valid && fLocation['capacity']?.errors?.['pattern']" class="error">Max Capacity Should be Greater than Zero</div>
+                       
+                        </div>
+                        
+                        <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+                            <div class="mb-3">
+                                <label class="form-label fs-md fw-600">Location Co-ordinates</label>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <input type="number" class="form-control" placeholder="Latitude"
+                                            formControlName="latitude">
+                                    </div>
+                                    <div class="col-6">
+                                        <input type="number" class="form-control" placeholder="Longitutde"
+                                            formControlName="longitude">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                            <div class=" mb-3">
+                                <!-- <input type="text" class="form-control" id="district" placeholder="" formControlName="distId"> -->
+                                <label class="form-label fs-md fw-600">District <span class="c-red"> *</span></label>
+                                <select class="form-select" id="district" formControlName="district" (change)="GetMandalByDistrict($any($event.target).value)" >
+                                    <option value="">Select District</option>
+                                    <option *ngFor="let list of allDistricts" value="{{list?.districtName}}">{{list?.districtName}}</option>
+                                </select>
+                               
+                                <!-- <label for="district">District <span class="c-red"> *</span></label> -->
+                            </div>
+                            <div *ngIf="fLocation['district'].touched && !fLocation['district'].valid" class="error" style="padding-top:  5px;">District is required</div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                            <!-- form-floating -->
+                            <div class=" mb-3">
+                                <label class="form-label fs-md fw-600">Mandal <span class="c-red"> *</span></label>
+                                <select class="form-select" id="District" formControlName="mandal" >
+                                  <option value="">Select Mandal</option>
+                                  <option *ngFor="let list of MandalList" value="{{list?.mandalName}}">{{list?.mandalName}}</option>
+                                  <!-- <option value="1">Mandal 1</option> -->
+                                </select>
+                               
+                                <!-- <label for="Mandal">Mandal <span class="c-red"> *</span></label> -->
+                            </div>
+                            <div *ngIf="fLocation['mandal'].touched && !fLocation['mandal'].valid" class="error" style="padding-top:  5px;">Mandal is required</div>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="mb-3">
+                                <label class="form-label fs-md fw-600">Type Of Venue <span class="c-red"> *</span></label>
+                                <div class="row">
+                                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="typeOfVenue"
+                                                id="Training" formControlName="typeOfVenue" value="Training Facility">
+                                            <label class="form-check-label fs-md" for="Training">Training
+                                                Facility</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="typeOfVenue"
+                                                id="Conference" formControlName="typeOfVenue"
+                                                value="Conference Facility">
+                                            <label class="form-check-label fs-md" for="Conference">Conference
+                                                Facility</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-4 col-lg-6">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="typeOfVenue"
+                                                id="Convention" formControlName="typeOfVenue" value="Convention Center">
+                                            <label class="form-check-label fs-md" for="Convention">Convention
+                                                Center</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="typeOfVenue"
+                                                id="Function" formControlName="typeOfVenue" value="Function Hall">
+                                            <label class="form-check-label fs-md" for="Function">Function Hall</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="typeOfVenue" id="grounf"
+                                                formControlName="typeOfVenue" value="Open Ground">
+                                            <label class="form-check-label fs-md" for="grounf">Open Ground</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="typeOfVenue" id="Others"
+                                                formControlName="typeOfVenue" value="Others">
+                                            <label class="form-check-label fs-md" for="Others">Others</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- <div class="row">
+                                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="checkbox" id="checkbox1" value="option1">
+                                            <label class="form-check-label fs-md" for="checkbox1">Training Facility</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="checkbox" id="checkbox2" value="option2">
+                                            <label class="form-check-label fs-md" for="checkbox2">Conference Facility</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="checkbox" id="checkbox3" value="option2">
+                                            <label class="form-check-label fs-md" for="checkbox3">Convention Center</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="checkbox" id="checkbox4" value="option2">
+                                            <label class="form-check-label fs-md" for="checkbox4">Function Hall</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="checkbox" id="checkbox5" value="option2">
+                                            <label class="form-check-label fs-md" for="checkbox5">Open Ground</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="checkbox" id="others" value="option2">
+                                            <label class="form-check-label fs-md" for="others">Others</label>
+                                        </div>
+                                    </div>
+                                </div> -->
+                                <div class="show-other mt-3 " *ngIf="this.fLocation['typeOfVenue'].value=='Others'">
+                                    <input type="text" class="form-control" formControlName="OthersType"
+                                        placeholder="Other Details">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                            <div class="mb-3">
+                                <label class="form-label fs-md fw-600">Google Map Location URL</label>
+                                <input type="text" class="form-control" placeholder="" formControlName="googleMapUrl">
+                            </div>
+                            <!-- <div *ngIf="fLocation['googleMapUrl'].touched && !fLocation['googleMapUrl'].valid && !fLocation['googleMapUrl']?.errors?.['pattern']" class="error">Google Map Location URL is required</div> -->
+                            <div *ngIf="fLocation['googleMapUrl'].touched && fLocation['googleMapUrl']?.errors?.['pattern']" class="error">Please Valid URL</div>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="mb-3">
+                                <label class="form-label fs-md fw-600">Type Of Ownership</label>
+                                <div class="row">
+                                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="ownershipType"
+                                                id="ownFacility" formControlName="ownershipType" value="Own Facility">
+                                            <label class="form-check-label fs-md" for="ownFacility">Own Facility</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="ownershipType"
+                                                id="leasedFacility" formControlName="ownershipType"
+                                                value="Leased Facility">
+                                            <label class="form-check-label fs-md" for="leasedFacility">Leased
+                                                Facility</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-4 col-lg-6">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="ownershipType"
+                                                id="rentActivity" formControlName="ownershipType"
+                                                value="Rented for the activity">
+                                            <label class="form-check-label fs-md" for="rentActivity">Rented for the
+                                                activity</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        
+                        <div class="col-12 col-sm-12 col-md-6 col-lg-3">
+                            <div class="mb-3">
+                                <label class="form-label fs-md fw-600">Pictures Of Facility</label>
+                                <input type="file" class="form-control" placeholder="" formControlName="filePath">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-end">
+                        <button type="submit" class="btn btn-lime-green" [ngClass]="{'disabled': locationForm.invalid}" [disabled]="!locationForm.valid" data-bs-dismiss="modal">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</div>
+<!-- end:: modal add new location -->
+
+
+<!-- begin:: modal add new resource person -->
+<div class="modal fade" id="updatedbbyResource" tabindex="-1" aria-labelledby="addResourceLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <form [formGroup]="modalFormStype" (ngSubmit)="onModalSubmitType()">
+            <div class="modal-content">
+                <div class="modal-header py-2">
+                    <h6 class="modal-title" id="addResourceLabel"> Edit Resource Person</h6>
+                    <button type="button" class="btn-close me-1" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12 col-sm-6">
+                            <div class="form-floating mb-3">
+                                <label class="form-check-label"> </label>
+                                <input type="checkbox" class="form-check-input me-2" (change)="changeStatus($any($event.target).checked)" formControlName="isVIP" >VIP
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-sm-6">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="floatingSelectGender" formControlName="name"
+                                    placeholder="Resource Person" />
+                                <label for="floatingSelectGender">Resource Person<span class="c-red"> *</span></label>
+                                <div *ngIf="modalFormStype.controls['name'].touched && !modalFormStype.controls['name'].valid && modalFormStype.controls['name']?.errors?.['pattern']"
+                                    class="error" style="color: red;margin-top: 5px">Resource Person Should be
+                                    Characters</div>
+                                <div *ngIf="modalFormStype.controls['name'].touched && modalFormStype.controls['name'].invalid && !modalFormStype.controls['name']?.errors?.['pattern']"
+                                    class="error" style="color: red; margin-top: 5px;">
+                                    Resource Person is required
+                                </div>
+                            </div>
+                        </div>
+                        <!-- isVIP -->
+                      
+                      
+                        <div class="col-12 col-sm-6">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" formControlName="mobileNo"
+                                    placeholder="Mobile No" />
+                                <label>Mobile No<span *ngIf="!fresouce['isVIP'].value" class="c-red"> *</span></label>
+                                <!-- <div *ngIf="modalFormStype.controls['mobileNo'].touched && modalFormStype.controls['mobileNo'].invalid" class="error" style="color: red;margin-top: 5px">
+                                    Mobile No is required
+                                </div> -->
+                                <div *ngIf="modalFormStype.controls['mobileNo'].touched && !modalFormStype.controls['mobileNo'].valid && !modalFormStype.controls['mobileNo']?.errors?.['pattern']"
+                                    class="error" style="color: red;margin-top: 5px">Mobile No is required</div>
+                                <div *ngIf="modalFormStype.controls['mobileNo'].touched && !modalFormStype.controls['mobileNo'].valid && modalFormStype.controls['mobileNo']?.errors?.['pattern']"
+                                    class="error" style="color: red;margin-top: 5px">Mobile No Starts with 6,7,8,9 and
+                                    should be 10 digits</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-sm-6">
+                            <div class="form-floating mb-3">
+                                <input type="email" class="form-control" formControlName="email" placeholder="Email" />
+                                <label>Email<span class="c-red" *ngIf="!fresouce['isVIP'].value" > *</span></label>
+                                <div *ngIf="modalFormStype.controls['email'].touched && modalFormStype.controls['email'].invalid"
+                                    class="error" style="color: red;margin-top: 5px">
+                                    Email is required
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" formControlName="organizationName"
+                                    placeholder="Organization Name" />
+                                <label>Organization Name<span *ngIf="!fresouce['isVIP'].value"  class="c-red"> *</span></label>
+                                <!-- <div *ngIf="modalFormStype.controls['organizationName'].touched && modalFormStype.controls['organizationName'].invalid" class="error" style="color: red;margin-top: 5px">
+                                    Organization Name is required
+                                </div> -->
+                                <div *ngIf="modalFormStype.controls['organizationName'].touched && !modalFormStype.controls['organizationName'].valid && modalFormStype.controls['organizationName']?.errors?.['pattern']"
+                                    class="error" style="color: red;margin-top: 5px"> Organization Name Should be
+                                    Characters and numerics</div>
+                                <div *ngIf="modalFormStype.controls['organizationName'].touched && modalFormStype.controls['organizationName'].invalid && !modalFormStype.controls['organizationName']?.errors?.['pattern']"
+                                    class="error" style="color: red; margin-top: 5px;">
+                                    Organization Name is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-sm-6">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" formControlName="qualification"
+                                    placeholder="Qualification" />
+                                <label>Qualification<span *ngIf="!fresouce['isVIP'].value"  class="c-red"> *</span></label>
+                                <div *ngIf="modalFormStype.controls['qualification'].touched && modalFormStype.controls['qualification'].invalid"
+                                    class="error" style="color: red;margin-top: 5px">
+                                    Qualification is required
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" formControlName="designation"
+                                    placeholder="Designation" />
+                                <label>Designation<span *ngIf="!fresouce['isVIP'].value"  class="c-red"> *</span></label>
+                                <div *ngIf="modalFormStype.controls['designation'].touched && modalFormStype.controls['designation'].invalid"
+                                    class="error" style="color: red;margin-top: 5px">
+                                    Designation is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-sm-6">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" formControlName="specialization"
+                                    placeholder="Specialization" />
+                                <label>Specialization<span *ngIf="!fresouce['isVIP'].value"  class="c-red"> *</span></label>
+                                <div *ngIf="modalFormStype.controls['specialization'].touched && modalFormStype.controls['specialization'].invalid"
+                                    class="error" style="color: red;margin-top: 5px">
+                                    Specialization is required
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <div class="form-floating mb-3">
+                                <select class="form-select" formControlName="gender">
+                                    <option value="M">Male</option>
+                                    <option value="F">Female</option>
+                                    <option value="T">Trans-Gender</option>
+                                </select>
+                                <label>Gender<span class="c-red"> *</span></label>
+                                <div *ngIf="modalFormStype.controls['gender'].touched && modalFormStype.controls['gender'].invalid"
+                                    class="error" style="color: red;margin-top: 5px">
+                                    Gender is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-floating mb-3">
+                            <textarea class="form-control" formControlName="briefDescription"
+                                placeholder="Brief Description"></textarea>
+                            <label>Brief Description <span *ngIf="!fresouce['isVIP'].value"  class="c-red"> *</span></label>
+                            <div *ngIf="modalFormStype.controls['briefDescription'].touched && modalFormStype.controls['briefDescription'].invalid"
+                                class="error" style="color: red;margin-top: 5px">
+                                Brief Description is required
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-lime-green" [ngClass]="{'disabled': modalFormStype.invalid}"
+                        [disabled]="modalFormStype.invalid">Update</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- end:: modal add new resource person -->

@@ -119,7 +119,7 @@ export class AddProgramSessionsComponent implements OnInit {
             this.getSessionResource();
           },
           error: (err) => {
-            this.toastrService.error(err.message, "Location Creation Error!");
+            this.toastrService.error(err.message, "Resource Person Error!");
             new Error(err);
           },
         });

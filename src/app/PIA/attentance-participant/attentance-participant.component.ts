@@ -208,4 +208,15 @@ export class AttentanceParticipantComponent implements OnInit,AfterViewInit {
           modalInstance.hide();
         }
       }
+      //  downlad Resource starts
+   downladAttandence(){
+    let linkUrl = APIS.Attendance.downladattendance+this.programIds
+    const link = document.createElement("a");
+    link.setAttribute("download", linkUrl);
+    link.setAttribute("target", "_blank");
+    link.setAttribute("href", APIS.Attendance.downladattendance+this.programIds);
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+  }
 }

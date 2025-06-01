@@ -79,6 +79,14 @@ export const APIS = {
         getSectors: API_BASE_URL + '/getallsectors',
         getMandal: API_BASE_URL + '/getAllmandalsOfDistrictsById/',
         getMandalName: API_BASE_URL + '/getAllmandalsOfDistrictsByName/',
+        DeleteLocation: API_BASE_URL + '/locations/delete/',
+        deleteResource: API_BASE_URL + '/resource/delete/',
+        deleteOrganization: API_BASE_URL + '/resource/delete/',
+        updateLocation: API_BASE_URL + '/locations/update/',
+        updateResource: API_BASE_URL + '/resource/update/',
+        downloadLocation:  API_BASE_URL + '/location/excel/',
+        downladOrganization:  API_BASE_URL + '/organization/excel',
+        downladResource:  API_BASE_URL + '/resource/excel/',
     },
     captureOutcome:{
         getParticipantData: API_BASE_URL + '/getParticipantsByMobileNo/',
@@ -98,6 +106,7 @@ export const APIS = {
     Attendance:{
         getDeatails:API_BASE_URL +`/program/attendence/`,
         saveAttendance:API_BASE_URL +`/program/attendence`,
+        downladattendance:API_BASE_URL +`/program/attendance/pdf/`,
     },
     rawMaterial:{
         getDeatails:API_BASE_URL +`/program/rawmaterial/`,
