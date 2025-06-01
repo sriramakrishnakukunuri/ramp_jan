@@ -59,6 +59,8 @@ import { ViewAllAgencySessionsComponent } from './PIA/view-all-agency-sessions/v
 import { ViewCompletedComponent } from './PIA/view-completed/view-completed.component';
 import { CollageHomeComponent } from './PIA/collage-home/collage-home.component';
 import { CollageCreationComponent } from './PIA/collage-creation/collage-creation.component';
+import { PhysicalTargetsComponent } from './PIA/physical-targets/physical-targets.component';
+import { ViewAllAgencyCompletedComponent } from './PIA/view-all-agency-completed/view-all-agency-completed.component';
 
 @NgModule({
     imports: [
@@ -123,6 +125,8 @@ import { CollageCreationComponent } from './PIA/collage-creation/collage-creatio
         ViewCompletedComponent,
         CollageCreationComponent,
         CollageHomeComponent,
+        PhysicalTargetsComponent,
+        ViewAllAgencyCompletedComponent,
 
     ],
     exports:[MaterialModule],

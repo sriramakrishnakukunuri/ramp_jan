@@ -5,7 +5,7 @@ import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { Image } from '../../_models/image.model';
 import { Agency } from '../../_models/agencies.model';
 import { Program } from '../../_models/program.model';
-
+import { Router, NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'app-collage-home',
@@ -25,7 +25,8 @@ export class CollageHomeComponent implements OnInit {
 
   constructor(
     private imageService: ImageService,
-    private library: FaIconLibrary
+    private library: FaIconLibrary,
+    public router: Router
   ) {
     this.library.addIcons(faDownload);
   }
@@ -103,7 +104,8 @@ export class CollageHomeComponent implements OnInit {
 
   redirectToCollageCreation(): void {
     console.log("selected images:",this.selectedImages);
-    window.location.href = '/collage-creation';
+    //window.location.href = '/collage-creation';
+    this.router.navigate(['/collage-creation'])
   }
   getDownloadUrl(fileUrl: string): void {
     const link = document.createElement('a');

@@ -116,8 +116,6 @@
                     </div>
                 </div>
             </div>
-
-
             <div class="card mb-4" *ngIf="SelectedCategory=='Resources'">                
                 <div class="card-header bg-transparent">                    
                     <div class="row align-items-center">
@@ -182,7 +180,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="card mb-4" *ngIf="SelectedCategory=='Organizations'">                
                 <div class="card-header bg-transparent">                    
                     <div class="row align-items-center">
@@ -233,10 +230,27 @@
                         </table>
                     </div>
                 </div>
-            </div>
-
-            
-            
+            </div>            
         </div>
     </section>
 </main>
+
+<div class="modal fade" id="exampleModalDeleteProgram" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalDeleteLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalDeleteLabel">Delete Physical Targets</h5>
+        <button type="button" class="btn-close" (click)="closeModalDelete()" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete Physical Targets?.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeModalDelete()">Close</button>
+        <button type="button" class="btn btn-lime-green"
+          (click)="ConfirmdeleteTargets(deletePhysicalId)">Confirm</button>
+      </div>
+    </div>
+  </div>
+</div>

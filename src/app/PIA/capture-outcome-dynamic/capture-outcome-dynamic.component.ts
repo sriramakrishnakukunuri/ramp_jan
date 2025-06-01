@@ -73,6 +73,7 @@ export class CaptureOutcomeDynamicComponent implements OnInit {
     if(this.ParticipantData?.participantId){
       this._commonService.getById(APIS.captureOutcome.getDynamicFormDataBasedOnOutCome+this.ParticipantData?.participantId+'/',Outcome).subscribe({
         next: (res: any) => {
+          if(res.status==200){
           let object:any
           this.ListOfDynamicFormData = res?.data?.outcomeForm;
           res.data?.outcomeForm?.map((item:any)=>{
@@ -84,8 +85,17 @@ export class CaptureOutcomeDynamicComponent implements OnInit {
             // }
             
           })
+        }
+        else{
+          this.toastrService.error(res?.message, "Capture Program Outcome!");
+          this.ListOfDynamicFormData = []
+          this.OutComeForm.reset()
+        }
         },
         error: (err) => {
+          this.toastrService.error(err?.error?.message, "Capture Program Outcome!");
+          this.ListOfDynamicFormData = []
+          this.OutComeForm.reset()
           new Error(err);
         }
       })
