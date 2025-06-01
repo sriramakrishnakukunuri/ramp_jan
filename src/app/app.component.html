@@ -11,186 +11,245 @@
 </nav> -->
 
 <header *ngIf="user">
-    <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-white">
-        <div class="container-fluid">
-            <div class="d-flex align-items-center justify-content-between w-100">
-                <div>
-                    <a class="navbar-brand" href="#">
-                        <img src="assets/img/logo.png" alt="Logo" class="img-fluid">
-                    </a>
-                </div>    
-                <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasNavbar2" aria-labelledby="offcanvasNavbar2Label">
-                    <div class="offcanvas-header">
-                      <h5 class="offcanvas-title" id="offcanvasNavbar2Label">RAMP</h5>
-                      <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                    </div>
-                    <div class="offcanvas-body">
-                        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-
-                            <li class="nav-item" *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR,Role.CALL_CENTER,Role.Admin]">
-                                <a class="nav-link" routerLink="/global-dashboard" routerLinkActive="active" id="dropdown3" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Dashboard
-                                </a>                               
-                            </li>
-                            <li class="nav-item" *appHasRole="[Role.CALL_CENTER]">
-                                <a class="nav-link" routerLink="/participant-details" routerLinkActive="active" id="dropdown3" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Program Participation Verification
-                                </a>                               
-                            </li>
-                            <li class="nav-item" *appHasRole="[Role.CALL_CENTER]">
-                                <a class="nav-link" routerLinkActive="active" id="dropdown3" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Outcome Verification
-                                </a>                               
-                            </li>
-
-                            <li class="nav-item dropdown" *appHasRole="[Role.Admin]">
-                                <a class="nav-link" href="#" id="homeDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <span>Programs Per Agencies</span> <span class="bi bi-chevron-down"></span>
-                                </a>
-                                <ul class="dropdown-menu" aria-labelledby="homeDropdown">                                    
-                                    <li><a class="dropdown-item" routerLink="/veiw-program" routerLinkActive="active">View Programs</a></li>               
-                                    <!-- <li><a class="dropdown-item" routerLink="/view-agency-sessions" routerLinkActive="active">View Sessions</a></li>  -->
-                                    <li><a class="dropdown-item"routerLink="/view-Completed-data" routerLinkActive="active">View Participants</a></li>                                    
-                                    <!-- <li><a class="dropdown-item" routerLink="/bulk-expenditure" routerLinkActive="active">Bulk Expenditure</a></li> -->
-                                </ul>
-                            </li>
-
-                            <li class="nav-item" *appHasRole="[Role.Admin]">
-                                <a class="nav-link" id="homeDropdown" role="button" routerLink="/view-table-organization" routerLinkActive="active" aria-expanded="false">
-                                    <span>Masters List</span> 
-                                </a>                                
-                            </li>
-                            <li class="nav-item" *appHasRole="[Role.Admin]">
-                                <a class="nav-link" routerLink="/program-monitoring" routerLinkActive="active" id="dropdown3" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Program Monitoring
-                                </a>                                
-                            </li>
-                            <li class="nav-item dropdown" *appHasRole="[Role.Admin]">
-                                <a class="nav-link" href="#" id="homeDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <span>Reports</span> <span class="bi bi-chevron-down"></span>
-                                </a>
-                                <ul class="dropdown-menu" aria-labelledby="homeDropdown">
-                                    <li><a class="dropdown-item" routerLink="/collage-home" routerLinkActive="active">Create Collage</a></li>                                     
-                                    <li><a class="dropdown-item" routerLink="/program-summary" routerLinkActive="active">Program Summary</a></li>             
-                                </ul>
-                            </li>
-                            
-                            <li class="nav-item dropdown" *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]">
-                                <a class="nav-link" href="#" id="homeDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <span>Program Creation</span> <span class="bi bi-chevron-down"></span>
-                                </a>
-                                <ul class="dropdown-menu" aria-labelledby="homeDropdown">
-                                    <li><a class="dropdown-item" routerLink="/program-creation" routerLinkActive="active">Add Program</a></li>
-                                    <li><a class="dropdown-item" routerLink="/add-sessions" routerLinkActive="active">Add Sessions</a></li>  
-                                    <li><a class="dropdown-item" routerLink="/veiw-program-creation" routerLinkActive="active">View My Programs</a></li> 
-                                         
-                                    <li><a class="dropdown-item" routerLink="/veiw-program" routerLinkActive="active">View All Agencies Programs</a></li>                                
-                                </ul>
-                            </li>
-                            <li class="nav-item dropdown" *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]">
-                                <a class="nav-link" href="#" id="dropdown2" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Participant Details <span class="bi bi-chevron-down"></span>
-                                </a>
-                                <ul class="dropdown-menu" aria-labelledby="dropdown2">                                
-                                <!-- <li><a class="dropdown-item" routerLink="/update-program-execution" routerLinkActive="active">Program Execution</a></li> -->
-                                <li><a class="dropdown-item" routerLink="/add-participant-data" routerLinkActive="active">Add Participant</a></li>
-                                <li><a class="dropdown-item" routerLink="/view-participant-data" routerLinkActive="active">View Participant</a></li>
-                                <!-- <li><a class="dropdown-item" href="#">View Completed</a></li> -->
-                                </ul>
-                            </li>
-                            <li class="nav-item dropdown" *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]">
-                                <a class="nav-link" href="#" id="dropdown2" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Program Execution <span class="bi bi-chevron-down"></span>
-                                </a>
-                                <ul class="dropdown-menu" aria-labelledby="dropdown2">    
-                                <li><a class="dropdown-item" routerLink="/attendance-Participant" routerLinkActive="active">Particpant Attendance Details</a></li>  
-                                <li><a class="dropdown-item" routerLink="/rawMaterials-Participant" routerLinkActive="active">Particpant Raw Material Details</a></li>                             
-                                <li><a class="dropdown-item" routerLink="/update-program-execution" routerLinkActive="active">Program Execution</a></li>
-                                <li><a class="dropdown-item" routerLink="/program-expenditure" routerLinkActive="active">Program Expenditure</a></li>
-                                <li><a class="dropdown-item" routerLink="/bulk-expenditure" routerLinkActive="active">Bulk Expenditure</a></li>
-                                
-                                <!-- <li><a class="dropdown-item" routerLink="/add-participant-data" routerLinkActive="active">Add Participant</a></li>
-                                <li><a class="dropdown-item" routerLink="/view-participant-data" routerLinkActive="active">View Participant</a></li> -->
-                                <li><a class="dropdown-item" routerLink="/view-Completed-data" routerLinkActive="active">View Completed</a></li>
-                                </ul>
-                            </li>
-                            <li class="nav-item dropdown isDisabled" *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]">
-                                <a class="nav-link" href="#" id="dropdown3" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Update Outcomes <span class="bi bi-chevron-down"></span>
-                                </a>
-                                <ul class="dropdown-menu" aria-labelledby="dropdown3">
-                                    <li><a class="dropdown-item" routerLink="/capture-outcome" routerLinkActive="active">Capture Outcome</a></li>
-                                <!-- <li><a class="dropdown-item" href="#">Capture Outcome</a></li>
-                                <li><a class="dropdown-item" href="#">Organisation Updates</a></li>                                 -->
-                                <li><a class="dropdown-item" routerLink="/shg-training" routerLinkActive="active">SHG Training Status</a></li>
-                                </ul>
-                            </li>
-                            <li class="nav-item" *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]">
-                                <a class="nav-link" id="homeDropdown" role="button" routerLink="/view-table-organization" routerLinkActive="active" aria-expanded="false">
-                                    <span>Masters List</span> 
-                                </a>                                
-                            </li>
-                            
-
-                            <li class="nav-item isDisabled" *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]">
-                                <a class="nav-link" routerLink="/esdp-training" routerLinkActive="active" id="dropdown3" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    ESDP Training Program
-                                </a>
-                            </li>
-                            <li class="nav-item dropdown" *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]" >
-                                <a class="nav-link" href="#" id="homeDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <span>Reports</span> <span class="bi bi-chevron-down"></span>
-
-                                </a>
-                                <ul class="dropdown-menu" aria-labelledby="homeDropdown">                                    
-                                    
-                                    <li><a class="dropdown-item" routerLink="/program-summary" routerLinkActive="active">Program Summary</a></li>
-                                    <li><a class="dropdown-item" routerLink="/collage-home" routerLinkActive="active">Create Collage</a></li>  
-                                                 
-                                </ul>
-                            </li>
-                            <li class="nav-item dropdown isDisabled" *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]">
-                                <a class="nav-link" href="#" id="dropdown3" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Counsellor<span class="bi bi-chevron-down"></span>
-                                </a>
-                                <ul class="dropdown-menu" aria-labelledby="dropdown3">
-                                    <li><a class="dropdown-item" routerLink="/MSME-councellor-registeration" routerLinkActive="active">Counsellor Registration</a></li>
-                                <li><a class="dropdown-item"routerLink="/view-MSME-councellor" routerLinkActive="active">View Counsellor Registration</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </div>
-                </div>   
-                <div class="d-flex align-items-center justify-content-between">
-                    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar2" aria-controls="offcanvasNavbar2" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <ul class="navbar-nav me-auto ms-2">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link" href="#" id="homeDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <span class="bi bi-person-circle fs-3"></span>
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="homeDropdown">
-                            <li><a class="dropdown-item" routerLink="/profile" routerLinkActive="active"><span class="bi bi-person fs-5 me-2"></span> My Profile</a></li>
-                            <li><a class="dropdown-item" routerLink="/password-settings" routerLinkActive="active"><span class="bi bi-key fs-5 me-2"></span> Change Password</a></li>
-                            <li *appHasRole="[Role.Admin]"><a class="dropdown-item" routerLink="/user-registration" routerLinkActive="active"><span class="bi bi-person-circle fs-5 me-2"></span> Register User</a></li>
-                            <li><a class="dropdown-item" (click)="logout()"><span class="bi bi-box-arrow-right fs-5 me-2"></span> Logout</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+  <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-white">
+    <div class="container-fluid">
+      <div class="d-flex align-items-center justify-content-between w-100">
+        <div>
+          <a class="navbar-brand" href="#">
+            <img src="assets/img/logo.png" alt="Logo" class="img-fluid">
+          </a>
         </div>
-    </nav>
+        <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasNavbar2"
+          aria-labelledby="offcanvasNavbar2Label">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasNavbar2Label">RAMP</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"
+              aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+
+              <li class="nav-item"
+                *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR,Role.CALL_CENTER,Role.Admin]">
+                <a class="nav-link" routerLink="/global-dashboard" routerLinkActive="active" id="dropdown3"
+                  role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Dashboard
+                </a>
+              </li>
+              <li class="nav-item" *appHasRole="[Role.CALL_CENTER]">
+                <a class="nav-link" routerLink="/participant-details" routerLinkActive="active" id="dropdown3"
+                  role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Program Participation Verification
+                </a>
+              </li>
+              <li class="nav-item" *appHasRole="[Role.CALL_CENTER]">
+                <a class="nav-link" routerLinkActive="active" id="dropdown3" role="button" data-bs-toggle="dropdown"
+                  aria-expanded="false">
+                  Outcome Verification
+                </a>
+              </li>
+              <li class="nav-item dropdown" *appHasRole="[Role.Admin]">
+                <a class="nav-link" href="#" id="homeDropdown" role="button" data-bs-toggle="dropdown"
+                  aria-expanded="false">
+                  <span>Targets</span> <span class="bi bi-chevron-down"></span>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="homeDropdown">
+                  <!-- <li><a class="dropdown-item" routerLink="/veiw-program" routerLinkActive="active">View Programs</a></li>                -->
+                  <!-- <li><a class="dropdown-item" routerLink="/view-agency-sessions" routerLinkActive="active">View Sessions</a></li>  -->
+                  <!-- <li><a class="dropdown-item"routerLink="/view-Completed-data" routerLinkActive="active">View Participants</a></li>     -->
+                  <li><a class="dropdown-item" routerLink="/physical-targets" routerLinkActive="active">Physical
+                      Targets</a></li>
+                  <!-- <li><a class="dropdown-item" routerLink="/bulk-expenditure" routerLinkActive="active">Bulk Expenditure</a></li> -->
+                </ul>
+              </li>
+              <li class="nav-item dropdown" *appHasRole="[Role.Admin]">
+                <a class="nav-link" href="#" id="homeDropdown" role="button" data-bs-toggle="dropdown"
+                  aria-expanded="false">
+                  <span>Programs Per Agencies</span> <span class="bi bi-chevron-down"></span>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="homeDropdown">
+                  <li><a class="dropdown-item" routerLink="/veiw-program" routerLinkActive="active">View Programs</a>
+                  </li>
+                  <!-- <li><a class="dropdown-item" routerLink="/view-agency-sessions" routerLinkActive="active">View Sessions</a></li>  -->
+                  <li><a class="dropdown-item" routerLink="/view-Completed-data" routerLinkActive="active">View
+                      Participants</a></li>
+                  <!-- <li><a class="dropdown-item" routerLink="/bulk-expenditure" routerLinkActive="active">Bulk Expenditure</a></li> -->
+                </ul>
+              </li>
+
+              <li class="nav-item" *appHasRole="[Role.Admin]">
+                <a class="nav-link" id="homeDropdown" role="button" routerLink="/view-table-organization"
+                  routerLinkActive="active" aria-expanded="false">
+                  <span>Masters List</span>
+                </a>
+              </li>
+              <li class="nav-item" *appHasRole="[Role.Admin]">
+                <a class="nav-link" routerLink="/program-monitoring" routerLinkActive="active" id="dropdown3"
+                  role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Program Monitoring
+                </a>
+              </li>
+              <li class="nav-item dropdown" *appHasRole="[Role.Admin]">
+                <a class="nav-link" href="#" id="homeDropdown" role="button" data-bs-toggle="dropdown"
+                  aria-expanded="false">
+                  <span>Reports</span> <span class="bi bi-chevron-down"></span>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="homeDropdown">
+                  <li><a class="dropdown-item" routerLink="/collage-home" routerLinkActive="active">Create Collage</a>
+                  </li>
+                  <li><a class="dropdown-item" routerLink="/program-summary" routerLinkActive="active">Program
+                      Summary</a></li>
+                </ul>
+              </li>
+
+              <li class="nav-item dropdown" *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]">
+                <a class="nav-link" href="#" id="homeDropdown" role="button" data-bs-toggle="dropdown"
+                  aria-expanded="false">
+                  <span>Program Creation</span> <span class="bi bi-chevron-down"></span>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="homeDropdown">
+                  <li><a class="dropdown-item" routerLink="/program-creation" routerLinkActive="active">Add Program</a>
+                  </li>
+                  <li><a class="dropdown-item" routerLink="/add-sessions" routerLinkActive="active">Add Sessions</a>
+                  </li>
+                  <li><a class="dropdown-item" routerLink="/veiw-program-creation" routerLinkActive="active">View My
+                      Programs</a></li>
+
+                  <li><a class="dropdown-item" routerLink="/veiw-program" routerLinkActive="active">View All Agencies
+                      Programs</a></li>
+                </ul>
+              </li>
+              <li class="nav-item dropdown" *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]">
+                <a class="nav-link" href="#" id="dropdown2" role="button" data-bs-toggle="dropdown"
+                  aria-expanded="false">
+                  Participant Details <span class="bi bi-chevron-down"></span>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="dropdown2">
+                  <!-- <li><a class="dropdown-item" routerLink="/update-program-execution" routerLinkActive="active">Program Execution</a></li> -->
+                  <li><a class="dropdown-item" routerLink="/add-participant-data" routerLinkActive="active">Add
+                      Participant</a></li>
+                  <li><a class="dropdown-item" routerLink="/view-participant-data" routerLinkActive="active">View
+                      Participant</a></li>
+                  <!-- <li><a class="dropdown-item" href="#">View Completed</a></li> -->
+                </ul>
+              </li>
+              <li class="nav-item dropdown" *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]">
+                <a class="nav-link" href="#" id="dropdown2" role="button" data-bs-toggle="dropdown"
+                  aria-expanded="false">
+                  Program Execution <span class="bi bi-chevron-down"></span>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="dropdown2">
+                  <li><a class="dropdown-item" routerLink="/attendance-Participant" routerLinkActive="active">Particpant
+                      Attendance Details</a></li>
+                  <li><a class="dropdown-item" routerLink="/rawMaterials-Participant"
+                      routerLinkActive="active">Particpant Raw Material Details</a></li>
+                  <li><a class="dropdown-item" routerLink="/update-program-execution" routerLinkActive="active">Program
+                      Execution</a></li>
+                  <li><a class="dropdown-item" routerLink="/program-expenditure" routerLinkActive="active">Program
+                      Expenditure</a></li>
+                  <li><a class="dropdown-item" routerLink="/bulk-expenditure" routerLinkActive="active">Bulk
+                      Expenditure</a></li>
+                  <!-- <li><a class="dropdown-item" routerLink="/program-summary" routerLinkActive="active">Program Summary</a></li> -->
+                  <!-- <li><a class="dropdown-item" routerLink="/add-participant-data" routerLinkActive="active">Add Participant</a></li>
+                                <li><a class="dropdown-item" routerLink="/view-participant-data" routerLinkActive="active">View Participant</a></li> -->
+                  <li><a class="dropdown-item" routerLink="/view-Completed-data" routerLinkActive="active">View
+                      Completed</a></li>
+                </ul>
+              </li>
+              <li class="nav-item dropdown isDisabled" *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]">
+                <a class="nav-link" href="#" id="dropdown3" role="button" data-bs-toggle="dropdown"
+                  aria-expanded="false">
+                  Update Outcomes <span class="bi bi-chevron-down"></span>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="dropdown3">
+                  <li><a class="dropdown-item" routerLink="/capture-outcome" routerLinkActive="active">Capture
+                      Outcome</a></li>
+                  <!-- <li><a class="dropdown-item" href="#">Capture Outcome</a></li>
+                                <li><a class="dropdown-item" href="#">Organisation Updates</a></li>                                 -->
+                  <li><a class="dropdown-item" routerLink="/shg-training" routerLinkActive="active">SHG Training
+                      Status</a></li>
+                </ul>
+              </li>
+              <li class="nav-item" *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]">
+                <a class="nav-link" id="homeDropdown" role="button" routerLink="/view-table-organization"
+                  routerLinkActive="active" aria-expanded="false">
+                  <span>Masters List</span>
+                </a>
+              </li>
+
+
+              <li class="nav-item isDisabled" *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]">
+                <a class="nav-link" routerLink="/esdp-training" routerLinkActive="active" id="dropdown3" role="button"
+                  data-bs-toggle="dropdown" aria-expanded="false">
+                  ESDP Training Program
+                </a>
+              </li>
+              <li class="nav-item dropdown" *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]">
+                <a class="nav-link" href="#" id="homeDropdown" role="button" data-bs-toggle="dropdown"
+                  aria-expanded="false">
+                  <span>Reports</span> <span class="bi bi-chevron-down"></span>
+
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="homeDropdown">
+
+                  <li><a class="dropdown-item" routerLink="/program-summary" routerLinkActive="active">Program
+                      Summary</a></li>
+                  <li><a class="dropdown-item" routerLink="/collage-home" routerLinkActive="active">Create Collage</a>
+                  </li>
+
+                </ul>
+              </li>
+              <li class="nav-item dropdown" *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]">
+                <a class="nav-link" href="#" id="dropdown3" role="button" data-bs-toggle="dropdown"
+                  aria-expanded="false">
+                  Counsellor<span class="bi bi-chevron-down"></span>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="dropdown3">
+                  <li><a class="dropdown-item" routerLink="/MSME-councellor-registeration"
+                      routerLinkActive="active">Counsellor Registration</a></li>
+                  <li><a class="dropdown-item" routerLink="/view-MSME-councellor" routerLinkActive="active">View
+                      Counsellor Registration</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="d-flex align-items-center justify-content-between">
+          <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar2"
+            aria-controls="offcanvasNavbar2" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <ul class="navbar-nav me-auto ms-2">
+            <li class="nav-item dropdown">
+              <a class="nav-link" href="#" id="homeDropdown" role="button" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                <span class="bi bi-person-circle fs-3"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="homeDropdown">
+                <li><a class="dropdown-item" routerLink="/profile" routerLinkActive="active"><span
+                      class="bi bi-person fs-5 me-2"></span> My Profile</a></li>
+                <li><a class="dropdown-item" routerLink="/password-settings" routerLinkActive="active"><span
+                      class="bi bi-key fs-5 me-2"></span> Change Password</a></li>
+                <li *appHasRole="[Role.Admin]"><a class="dropdown-item" routerLink="/user-registration"
+                    routerLinkActive="active"><span class="bi bi-person-circle fs-5 me-2"></span> Register User</a></li>
+                <li><a class="dropdown-item" (click)="logout()"><span class="bi bi-box-arrow-right fs-5 me-2"></span>
+                    Logout</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </nav>
 </header>
 
 <!-- main app container class="container"-->
 <div>
-    <router-outlet></router-outlet>
+  <router-outlet></router-outlet>
 </div>
 
 <!-- credits -->
 <div class="text-center mt-4">
-    <p>
-    </p>
+  <p>
+  </p>
 </div>

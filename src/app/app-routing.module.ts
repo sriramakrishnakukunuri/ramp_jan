@@ -39,6 +39,8 @@ import { ViewCompletedComponent } from './PIA/view-completed/view-completed.comp
 
 import { CollageHomeComponent } from './PIA/collage-home/collage-home.component';
 import { CollageCreationComponent } from './PIA/collage-creation/collage-creation.component';
+import { PhysicalTargetsComponent } from './PIA/physical-targets/physical-targets.component';
+import { ViewAllAgencyCompletedComponent } from './PIA/view-all-agency-completed/view-all-agency-completed.component';
 
 const routes: Routes = [
     {
@@ -179,6 +181,12 @@ const routes: Routes = [
         data: { roles:  [Role.Admin,Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
     },
     {
+        path: 'view-Completed-data-new',
+        component: ViewAllAgencyCompletedComponent,
+        canActivate: [AuthGuard],
+        data: { roles:  [Role.Admin,Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
+    },
+    {
         path: 'program-sessions',
         component: ProgramSessionsComponent,
         canActivate: [AuthGuard],
@@ -249,6 +257,12 @@ const routes: Routes = [
         component: VerificationParticipantComponent,
         canActivate: [AuthGuard],
         data: { roles:  [Role.CALL_CENTER] }
+    },
+    {
+        path: 'physical-targets',
+        component: PhysicalTargetsComponent,
+        canActivate: [AuthGuard],
+        data: { roles: [Role.Admin,Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
     },
     {
         path: 'login',

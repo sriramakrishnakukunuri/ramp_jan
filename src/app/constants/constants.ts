@@ -39,6 +39,13 @@ export const APIS = {
         // update: API_BASE_URL + '/program/update',
         // delete: API_BASE_URL + '/program/delete',
     },
+    physicalTagets:{
+        getTargets: API_BASE_URL + '/targets/physical/agency/',
+        saveTargets: API_BASE_URL + '/targets/physical/save',
+        updateTargets: API_BASE_URL + '/targets/physical/update/',
+        deleteTargets: API_BASE_URL + '/targets/physical/',
+        getTargetById: API_BASE_URL + '/targets/physical/',
+    },
     participantdata:{
         add: API_BASE_URL + '/participant/save',
         update: API_BASE_URL + '/updateParticipant',
