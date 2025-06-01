@@ -5,6 +5,9 @@ import DataTable from 'datatables.net-dt';
 import 'datatables.net-buttons-dt';
 import 'datatables.net-responsive-dt';
 import { event } from 'jquery';
+import { CommonServiceService } from '@app/_services/common-service.service';
+import { ToastrService } from 'ngx-toastr';
+declare var bootstrap: any;
 declare var $: any;
 
 
@@ -22,7 +25,8 @@ export class OrganizationsListComponent implements OnInit {
   loginsessionDetails: any;
   SelectedCategory: any='Location';
   dataTableResources:any
-  constructor(private http: HttpClient) { 
+  constructor(private http: HttpClient,private toastrService: ToastrService,
+    private _commonService: CommonServiceService,) { 
     this.loginsessionDetails = JSON.parse(sessionStorage.getItem('user') || '{}');    
   }
   agencyId: any = '';
@@ -247,4 +251,54 @@ export class OrganizationsListComponent implements OnInit {
     link.click();
     link.remove();
   }
+
+
+  // delete 
+   // delete Expenditure
+   deletePhysicalId:any ={}
+   deleteExpenditure(item: any) {
+    this.deletePhysicalId = item?.physicalTargetId;
+    console.log(this.deletePhysicalId, 'deletePhysicalId');
+    document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+    const myModal = new bootstrap.Modal(document.getElementById('exampleModalDeleteProgram'));
+    myModal.show();
+     
+   
+ }
+
+ ConfirmdeleteTargets(item:any){
+     this._commonService
+     .deleteId(APIS.physicalTagets.deleteTargets,item).subscribe({
+       next: (data: any) => {
+         if(data?.status==400){
+           this.toastrService.error(data?.message, "Physical Target Error!");
+           this.closeModalDelete();
+           this.deletePhysicalId =''
+         }
+         else{
+           this.closeModalDelete();
+           this.deletePhysicalId =''
+         this.toastrService.success( 'Physical Target Deleted Successfully', "Physical Target Success!");
+         }
+         
+       },
+       error: (err) => {
+         this.closeModalDelete();
+         this.deletePhysicalId ={}
+         this.toastrService.error(err.message, "Physical Target Error!");
+         new Error(err);
+       },
+     });
+
+   }
+   
+   closeModalDelete(): void {
+    document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+    const editSessionModal = document.getElementById('exampleModalDeleteProgram');
+  if (editSessionModal) {
+    const modalInstance = bootstrap.Modal.getInstance(editSessionModal);
+    modalInstance.hide();
+  }
+  // this.GetProgramsByAgency(this.selectedAgencyId);
+   } 
 }

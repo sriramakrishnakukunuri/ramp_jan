@@ -41,7 +41,8 @@ export class CollageCreationComponent implements OnInit {
   constructor(
     private toPngService: ToPngService,
     private sanitizer: DomSanitizer,
-    private imageService: ImageService
+    private imageService: ImageService,
+    public router: Router
   ) {}
 
   ngOnInit(): void {
@@ -152,7 +153,9 @@ export class CollageCreationComponent implements OnInit {
       
       console.log('Upload success:', response);
       alert('Collage uploaded successfully!');
-      window.location.href="/collage-home"
+      // window.location.href="/collage-home"
+      this.router.navigate(['/collage-home'])
+      
 
       
       this.handleClearCollage();

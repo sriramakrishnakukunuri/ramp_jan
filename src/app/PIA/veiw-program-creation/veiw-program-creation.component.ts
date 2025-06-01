@@ -76,7 +76,6 @@ export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
 
   getProgramDetails(): any {
     this.tableList = '';
-
     this._commonService.getDataByUrl(APIS.programCreation.getProgramsListByAgencyDetails+this.loginsessionDetails.agencyId).subscribe({
       next: (dataList: any) => {
         this.tableList = dataList.data;
@@ -581,7 +580,7 @@ if (editSessionModal) {
       const modal1 = new bootstrap.Modal(document.getElementById('addDocumentModel'));
       modal1.show();
       this.selectedfiles=[]
-       this.fileInput.nativeElement.value = ''
+      this.fileInput.nativeElement.value = ''
     }
     selectUploadedFiles: File = null!
     multipleFiles: any;
