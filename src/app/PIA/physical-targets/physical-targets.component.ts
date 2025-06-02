@@ -107,18 +107,61 @@ export class PhysicalTargetsComponent implements OnInit {
       }
     );
   }
+  tableheaderList:any
     GetProgramsByAgency(value?: any) {
-      this.tableList=''
+      this.tableList=[]
+      this.tableheaderList =[]
+      // Destroy existing DataTable if it exists
+      
       this._commonService.getDataByUrl(APIS.physicalTagets.getTargets+value).subscribe({
         next: (dataList: any) => {
-          this.tableList = dataList.data;
-          this.reinitializeDataTable(value)
+          if(Object.keys(dataList.data ).length) {
+            console.log(dataList.data, 'dataList');
+            const allYears = new Set<string>();
+            this.tableheaderList = Object.values(dataList.data).map((item:any) => {
+              item.financialYear.forEach((fy: any) => allYears.add(fy.financialYear));
+              return item;
+            });
+            this.tableheaderList = Array.from(allYears).sort();
+            Object.keys(dataList.data || {}).map((key: any) => {
+              this.tableList.push(dataList.data[key]) 
+            })
+            // if ($.fn.DataTable.isDataTable('#view-physical-table')) {
+            //     $('#view-physical-table').DataTable().destroy();
+            //   }
+            // this.reinitializeDataTable(value);
+          }
+          else{
+            this.tableheaderList=[this.getCurrentFinancialYear()]
+            this.tableList=[]
+          }
+          // if ($.fn.DataTable.isDataTable('#view-physical-table')) {
+          //   $('#view-physical-table').DataTable().destroy();
+          // }
+        
+          console.log(this.tableheaderList,  this.tableList,'tableheaderList');
+          // this.reinitializeDataTable(value)
           console.log(this.tableList, 'tableList');
         },
         error: (error: any) => {
+          this.tableheaderList=[this.getCurrentFinancialYear()]
+          this.tableList=[]
           this.toastrService.error(error?.error?.message);
         }
       });
+    }
+    getYearData(item: any, year: string) {
+      // Find the data for this specific year
+      const yearData = item.financialYear.find((fy: any) => fy.financialYear === year);
+      
+      // Return the data or zeros if not found
+      return yearData || {
+        total: 0,
+        q1: 0,
+        q2: 0,
+        q3: 0,
+        q4: 0
+      };
     }
     editRow:boolean = false;
     physicalTargetId:any=''
