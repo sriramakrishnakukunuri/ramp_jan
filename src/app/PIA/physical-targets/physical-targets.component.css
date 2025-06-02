@@ -1,0 +1,9 @@
+.data-table-Own{
+overflow-x: auto;
+overflow-y: auto;
+height: 600px;
+white-space: nowrap;
+}
+.data-container{
+    width: 100%;
+}
