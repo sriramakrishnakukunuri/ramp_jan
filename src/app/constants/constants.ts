@@ -46,6 +46,13 @@ export const APIS = {
         deleteTargets: API_BASE_URL + '/targets/physical/',
         getTargetById: API_BASE_URL + '/targets/physical/',
     },
+    FinancialTagets:{
+        getTargets: API_BASE_URL + '/api/outcome-targets?',
+        saveTargets: API_BASE_URL + '/targets/physical/save',
+        updateTargets: API_BASE_URL + '/targets/physical/update/',
+        deleteTargets: API_BASE_URL + '/targets/physical/',
+        getTargetById: API_BASE_URL + '/targets/physical/',
+    },
     participantdata:{
         add: API_BASE_URL + '/participant/save',
         update: API_BASE_URL + '/updateParticipant',
