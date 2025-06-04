@@ -158,7 +158,7 @@ export class FinancialTargetsComponent implements OnInit {
         error: (error: any) => {
           this.tableheaderList=[this.selectedFinancialYear]
           this.tableList=[]
-          this.toastrService.error(error?.error?.message);
+          this.toastrService.error(error?.error?.message || 'Error fetching data', 'Error');
         }
       });
     }
