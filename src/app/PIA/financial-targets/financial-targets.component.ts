@@ -11,11 +11,11 @@ declare var bootstrap: any;
 declare var $: any;
 
 @Component({
-  selector: 'app-physical-targets',
-  templateUrl: './physical-targets.component.html',
-  styleUrls: ['./physical-targets.component.css']
+  selector: 'app-financial-targets',
+  templateUrl: './financial-targets.component.html',
+  styleUrls: ['./financial-targets.component.css']
 })
-export class PhysicalTargetsComponent implements OnInit {
+export class FinancialTargetsComponent implements OnInit {
   localStorageData: any;
   sessionDetailsList: any;
   tableList: any;
@@ -34,13 +34,15 @@ export class PhysicalTargetsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.generateFinancialYears() 
     this.getAgenciesList() 
     this.GetOutComes()
-    this.generateFinancialYears() 
+    
     this.formDetails()
   }
 
   selectedAgencyId: any;
+  FinanCialYear: any;
   getAgenciesList() {
       this.agencyList = [];
       this._commonService.getDataByUrl(APIS.masterList.agencyList).subscribe((res: any) => {
@@ -63,7 +65,7 @@ export class PhysicalTargetsComponent implements OnInit {
       })
     }
     financialYears:any=[]
-    selectedFinancialYear: string = '';
+    selectedFinancialYear: any = '';
     generateFinancialYears() {
       const currentYear = new Date().getFullYear();
       const fixedYear = 2024; // Fixed year for the first two entries 
@@ -71,11 +73,11 @@ export class PhysicalTargetsComponent implements OnInit {
     
       for (let i = 2024; i < currentYear; i++) {
         const year = i;
-        this.financialYears.push(`${year}-${(year + 1).toString().slice(-2)}`);
+        this.financialYears.push(`${year}-${(year + 1)}`);
       }
       for (let i = 0; i <= range; i++) {
         const year = currentYear + i;
-        this.financialYears.push(`${year}-${(year + 1).toString().slice(-2)}`);
+        this.financialYears.push(`${year}-${(year + 1)}`);
       }
       
       // Set default selection to current financial year
@@ -89,7 +91,7 @@ export class PhysicalTargetsComponent implements OnInit {
       const month = today.getMonth() + 1; // January is 0
       
       // Adjust based on your financial year start (April in this example)
-      return month >= 4 ? `${year}-${(year + 1).toString().slice(-2)}` : `${year - 1}-${year.toString().slice(-2)}`;
+      return month >= 4 ? `${year}-${(year + 1)}` : `${year - 1}-${year}`;
     }
 
   get f2() {
@@ -108,31 +110,41 @@ export class PhysicalTargetsComponent implements OnInit {
     );
   }
   tableheaderList:any
-    GetProgramsByAgency(value?: any) {
+  getBasedOnYearSelection(val:any){
+    this.getDataByAgencyAndYear(this.selectedAgencyId,val)
+  }
+    GetProgramsByAgency(value: any) {
       this.tableList=[]
       this.tableheaderList =[]
+      this.getDataByAgencyAndYear(value,this.selectedFinancialYear)
       // Destroy existing DataTable if it exists
       
-      this._commonService.getDataByUrl(APIS.physicalTagets.getTargets+value).subscribe({
+     
+    }
+    getDataByAgencyAndYear(agency: any,year:any) {
+      this._commonService.getDataByUrl(APIS.FinancialTagets.getTargets+'year='+year+'&agencyId='+agency).subscribe({
         next: (dataList: any) => {
-          if(Object.keys(dataList.data ).length) {
-            console.log(dataList.data, 'dataList');
+          if(dataList?.length) {
+            console.log(dataList, 'dataList');
             const allYears = new Set<string>();
-            this.tableheaderList = Object.values(dataList.data).map((item:any) => {
-              item.financialYear.forEach((fy: any) => allYears.add(fy.financialYear));
-              return item;
-            });
-            this.tableheaderList = Array.from(allYears).sort();
-            Object.keys(dataList.data || {}).map((key: any) => {
-              this.tableList.push(dataList.data[key]) 
-            })
+            // this.tableheaderList = Object.values(dataList.data).map((item:any) => {
+            //   item.financialYear.forEach((fy: any) => allYears.add(fy.financialYear));
+            //   return item;
+            // });
+            // this.tableheaderList = Array.from(allYears).sort();
+            this.tableheaderList=[this.selectedFinancialYear]
+            this.tableList = dataList
+            // Object.keys(dataList.data || {}).map((key: any) => {
+            //   this.tableList.push(dataList.data[key]) 
+            // })
             // if ($.fn.DataTable.isDataTable('#view-physical-table')) {
             //     $('#view-physical-table').DataTable().destroy();
             //   }
-            // this.reinitializeDataTable(value);
+            this.reinitializeDataTable();
           }
           else{
-            this.tableheaderList=[this.getCurrentFinancialYear()]
+            // this.tableheaderList=[this.getCurrentFinancialYear()]
+            this.tableheaderList=[this.selectedFinancialYear]
             this.tableList=[]
           }
           // if ($.fn.DataTable.isDataTable('#view-physical-table')) {
@@ -144,9 +156,9 @@ export class PhysicalTargetsComponent implements OnInit {
           console.log(this.tableList, 'tableList');
         },
         error: (error: any) => {
-          this.tableheaderList=[this.getCurrentFinancialYear()]
+          this.tableheaderList=[this.selectedFinancialYear]
           this.tableList=[]
-          this.toastrService.error(error?.error?.message);
+          this.toastrService.error(error?.error?.message || 'Error fetching data', 'Error');
         }
       });
     }
@@ -211,7 +223,7 @@ export class PhysicalTargetsComponent implements OnInit {
         destroy: true, // Ensure reinitialization doesn't cause issues
       });
     }
-    reinitializeDataTable(agencyId:any) {
+    reinitializeDataTable() {
       if (this.dataTable) {
         this.dataTable.destroy();
       }
