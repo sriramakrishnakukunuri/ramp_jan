@@ -69,9 +69,9 @@ export class FinancialTargetsComponent implements OnInit {
     generateFinancialYears() {
       const currentYear = new Date().getFullYear();
       const fixedYear = 2024; // Fixed year for the first two entries 
-      const range = 5; // Show 5 years before and after current year
+      const range = 2; // Show 5 years before and after current year
     
-      for (let i = 2024; i <= currentYear; i++) {
+      for (let i = 2024; i < currentYear; i++) {
         const year = i;
         this.financialYears.push(`${year}-${(year + 1)}`);
       }
