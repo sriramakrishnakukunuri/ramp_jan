@@ -41,6 +41,7 @@ import { CollageHomeComponent } from './PIA/collage-home/collage-home.component'
 import { CollageCreationComponent } from './PIA/collage-creation/collage-creation.component';
 import { PhysicalTargetsComponent } from './PIA/physical-targets/physical-targets.component';
 import { ViewAllAgencyCompletedComponent } from './PIA/view-all-agency-completed/view-all-agency-completed.component';
+import { FinancialTargetsComponent } from './PIA/financial-targets/financial-targets.component';
 
 const routes: Routes = [
     {
@@ -257,6 +258,12 @@ const routes: Routes = [
         component: VerificationParticipantComponent,
         canActivate: [AuthGuard],
         data: { roles:  [Role.CALL_CENTER] }
+    },
+    {
+        path: 'financial-targets',
+        component: FinancialTargetsComponent,
+        canActivate: [AuthGuard],
+        data: { roles: [Role.Admin,Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
     },
     {
         path: 'physical-targets',
