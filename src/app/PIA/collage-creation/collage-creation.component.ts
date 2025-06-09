@@ -148,15 +148,11 @@ export class CollageCreationComponent implements OnInit {
         console.error('No program selected!');
         return;
       }
-
       const response = await this.toPngService.uploadImage(dataUrl, fileName, this.selectedProgram);
-      
       console.log('Upload success:', response);
       alert('Collage uploaded successfully!');
       // window.location.href="/collage-home"
       this.router.navigate(['/collage-home'])
-      
-
       
       this.handleClearCollage();
     } catch (err) {
@@ -210,13 +206,15 @@ export class CollageCreationComponent implements OnInit {
     this.collageImages[index] = image;
   }
 
-  getAspectRatioValue(): string {
-    switch (this.aspectRatio) {
-      case '16:9': return '16 / 9';
-      case '4:3': return '4 / 3';
-      default: return '1 / 1';
-    }
+  getAspectRatioValue(): number {
+  switch (this.aspectRatio) {
+    case '16:9': return 16 / 9;
+    case '4:3': return 4 / 3;
+    case '1:1': return 1;
+    default: return 1;
   }
+}
+
   
   getAgencies(): void {
   this.imageService.getAgencies().subscribe(
@@ -230,15 +228,20 @@ export class CollageCreationComponent implements OnInit {
   }
 
   getPrograms(agencyId: number): void {
-    this.imageService.getPrograms(agencyId).subscribe(
-      (res) => {
-        this.programs = res.data;
-      },
-      (err) => {
-        console.error('Error fetching programs:', err);
-      }
-    );
-  }
+  this.imageService.getPrograms(agencyId).subscribe(
+    (res) => {
+      this.programs = res.data.filter(
+        (program: any) =>
+          program.status === 'Program Execution Updated' ||
+          program.status === 'Program Expenditure Updated'
+      );
+      console.log('Filtered programs:', this.programs);
+    },
+    (err) => {
+      console.error('Error fetching programs:', err);
+    }
+  );
+}
 
   getProgramImages(programId: number): void {
     this.imageService.getAllImages(programId).subscribe(

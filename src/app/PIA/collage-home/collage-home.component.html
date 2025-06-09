@@ -1,59 +1,109 @@
-<div class="home-container">
-    <div class="home-header">
-      <div class="home-title">
-        <h1>Photo Collage</h1>
-        <span>Welcome to the Photo Collage App!</span>
-        <div class="home-button">
-          <button class="home-button-field" (click)="redirectToCollageCreation()">
-            Create Collage
-          </button>
-        </div>
-      </div>
+<div 
+  class="container-fluid p-1 position-relative" 
+  style="width: 100%; height: 100%; font-family: Arial, Helvetica, sans-serif;"
+>
+  <div 
+    class="d-flex justify-content-between align-items-center px-4 py-3 bg-white rounded mb-3"
+    style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; box-shadow: 0 2px 3px rgba(0, 0, 0, 0.02);"
+  >
+    <!-- Filter Section -->
+    <div class="d-flex flex-column">
+      <label 
+        for="agencyFilter" 
+        class="form-label fw-semibold mb-1"
+        style="color: #2c3e50; font-size: 14px;"
+      >
+        Filter by Agency
+      </label>
+      <select 
+        id="agencyFilter" 
+        class="form-select form-select-sm" 
+        (change)="onAgencyChange($event)"
+        style="width: 220px; background-color: #f1f3f5; color: #2c3e50; border: 1px solid #ced4da; font-size: 14px;"
+      >
+        <option value="">All Agencies</option>
+        <option 
+          *ngFor="let agency of agencies" 
+          [value]="agency.agencyId"
+        >
+          {{ agency.agencyName }}
+        </option>
+      </select>
     </div>
-  
-    <div class="home-content">
-      <div class="filter-container">
-        <label for="agencyFilter">Filter by Agency:</label>
-        <select id="agencyFilter"  (change)="onAgencyChange($event)">
-          <option value="">All Agencies</option>
-          <option *ngFor="let agency of agencies" [value]="agency.agencyId">
-            {{ agency.agencyName }}
-          </option>
-        </select>
 
-      </div>
-      <p class="home-content-title">Recent Collage Images</p>
-      <div class="home-image-grid">
-        <div *ngIf="(filteredImages ?? []).length > 0; else noImages" class="home-image-grid">
-          <div *ngFor="let image of filteredImages" class="home-image-item">
-            <img
-              [src]="getImageSrc(image.fileUrl)"
-              [alt]="getFileName(image.fileUrl)"
-              style="width: 100%; height: 200px"
-            />
-            <p class="collage-image-Name">{{ getFileName(image.fileUrl) }}</p>
 
-            <a
-              (click)="getDownloadUrl(image.fileUrl)"
-              class="download-button"
-              style="display: inline-flex; align-items: center; gap: 6px; padding: 2px 12px;
-                    background-color: #155E95; color: #fff; border-radius: 4px;
-                    text-decoration: none; font-size: 13px; margin: 4px;cursor: pointer;"
+    <!-- Button Section -->
+    <button 
+      class="btn btn-sm fw-semibold shadow-sm" 
+      (click)="redirectToCollageCreation()"
+      style="background-color: #1abc9c; color: white; padding: 8px 16px; border-radius: 4px;"
+    >
+      + Create Collage
+    </button>
+  </div>
+
+
+  <div class="mb-3 bg-white">
+    <p 
+      class="fw-semibold mb-0"
+      style="font-size: 1.125rem; color: #3a4a9e; letter-spacing: 0.3px; font-weight: 500; margin-left:18px;"
+    >
+      Recent Collage Images
+    </p>
+    <div 
+      class="d-flex flex-wrap gap-3 p-3"
+      style="max-height: 600px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: #aaa transparent;"
+    >
+      <ng-container *ngIf="(filteredImages ?? []).length > 0; else noImages">
+        <div 
+          *ngFor="let image of filteredImages" 
+          class="card shadow-sm border border-light-subtle rounded-1 overflow-hidden p-1" 
+          style="width: 350px; transition: transform 0.3s ease, box-shadow 0.3s ease;"
+          onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 8px 16px rgba(0,0,0,0.1)'"
+          onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 8px rgba(0,0,0,0.05)'"
+        >
+          <img 
+            [src]="getImageSrc(image.fileUrl)" 
+            class="card-img-top"
+            (error)="image.error = true"
+            *ngIf="!image.error"
+            style="height: 190px; width: 100%; object-fit: cover;"
+          />
+
+          <div 
+            *ngIf="image.error"
+            class="d-flex flex-column align-items-center justify-content-center bg-light text-muted"
+            style="height: 190px; width: 100%; font-size: 14px;"
+          >
+            <i class="bi bi-image" style="font-size: 2rem;"></i>
+            <span class="mt-1">Image not found</span>
+          </div>
+
+
+
+          <!-- Footer row: name + download -->
+          <div class="d-flex justify-content-between align-items-center px-3 py-2 bg-light border-top">
+            <p 
+              class="text-truncate mb-0 fw-medium text-dark"
+              style="max-width: 200px; font-size: 13.5px;"
+            >
+              {{ getFileName(image.fileUrl) }}
+            </p>
+            <a 
+              (click)="getDownloadUrl(image.fileUrl)" 
+              class="btn btn-sm d-flex align-items-center gap-1"
+              style="background-color: #0d6efd; color: white; font-size: 13px;"
               download
             >
-              <!-- <fa-icon [icon]="['fas', 'download']"></fa-icon> -->
-              Download
+              <i class="bi bi-download"></i> Download
             </a>
           </div>
         </div>
+      </ng-container>
 
-
-        <ng-template #noImages>
-          <p>No collage images found.</p>
-        </ng-template>
-
-      </div>
+      <ng-template #noImages>
+        <p class="text-muted ps-3">No collage images found.</p>
+      </ng-template>
     </div>
-  
+
 </div>
-  
