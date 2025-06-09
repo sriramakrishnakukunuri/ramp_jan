@@ -22,7 +22,8 @@ export class CollageCreationComponent implements OnInit {
   draggingSource: 'selected' | 'collage' | null = null;
   images: any[] = []; 
   showDbImages: boolean = false; 
-  selectedImage: string | null = null; 
+  selectedImage: string | null = null;
+  user :any; 
 
   maxImages: number = 4;
   zoomLevels: { [index: number]: number } = {};
@@ -47,6 +48,8 @@ export class CollageCreationComponent implements OnInit {
 
   ngOnInit(): void {
     console.log('Fetching collage images and all images...');
+    this.user = JSON.parse(sessionStorage.getItem('user') || '{}');
+    console.log('User:', this.user);
     this.updateMaxImages();
     this.getAgencies();
   }  
