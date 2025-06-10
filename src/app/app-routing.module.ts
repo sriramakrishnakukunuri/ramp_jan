@@ -42,6 +42,7 @@ import { CollageCreationComponent } from './PIA/collage-creation/collage-creatio
 import { PhysicalTargetsComponent } from './PIA/physical-targets/physical-targets.component';
 import { ViewAllAgencyCompletedComponent } from './PIA/view-all-agency-completed/view-all-agency-completed.component';
 import { FinancialTargetsComponent } from './PIA/financial-targets/financial-targets.component';
+import { OauthRedirectComponent } from './oauth-redirect.component';
 
 const routes: Routes = [
     {
@@ -270,6 +271,10 @@ const routes: Routes = [
         component: PhysicalTargetsComponent,
         canActivate: [AuthGuard],
         data: { roles: [Role.Admin,Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
+    },
+    {
+        path: 'oauth2/redirect',
+        component: OauthRedirectComponent
     },
     {
         path: 'login',

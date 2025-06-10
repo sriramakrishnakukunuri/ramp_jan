@@ -62,6 +62,7 @@ import { CollageCreationComponent } from './PIA/collage-creation/collage-creatio
 import { PhysicalTargetsComponent } from './PIA/physical-targets/physical-targets.component';
 import { ViewAllAgencyCompletedComponent } from './PIA/view-all-agency-completed/view-all-agency-completed.component';
 import { FinancialTargetsComponent } from './PIA/financial-targets/financial-targets.component';
+import { OauthRedirectComponent } from './oauth-redirect.component';
 
 @NgModule({
     imports: [
@@ -129,7 +130,7 @@ import { FinancialTargetsComponent } from './PIA/financial-targets/financial-tar
         PhysicalTargetsComponent,
         ViewAllAgencyCompletedComponent,
         FinancialTargetsComponent,
-
+        OauthRedirectComponent
     ],
     exports:[MaterialModule],
     providers: [

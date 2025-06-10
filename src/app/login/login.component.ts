@@ -74,4 +74,15 @@ export class LoginComponent implements OnInit {
                 }
             });
     }
+
+    clientId = '211431254491-4tp9r0cakfnr4u7946bmh0ncmsb407lj.apps.googleusercontent.com';
+    redirectUri = 'http://localhost:4200/oauth2/redirect'; // Adjust as needed
+    backendTokenExchangeUrl = 'http://localhost:8086/api/oauth2/access_token'; // Your backend API
+
+    loginAsGuest() {
+        const scope = encodeURIComponent('openid profile email');
+        const responseType = 'code';
+        const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${this.clientId}&redirect_uri=${this.redirectUri}&response_type=${responseType}&scope=${scope}&access_type=offline&prompt=consent`;
+        window.location.href = authUrl;
+    }
 }
