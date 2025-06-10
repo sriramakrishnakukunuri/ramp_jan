@@ -5,7 +5,7 @@ import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { Image } from '../../_models/image.model';
 import { Agency } from '../../_models/agencies.model';
 import { Program } from '../../_models/program.model';
-import { Router, NavigationEnd } from '@angular/router';
+import { Router} from '@angular/router';
 
 @Component({
   selector: 'app-collage-home',
@@ -22,17 +22,20 @@ export class CollageHomeComponent implements OnInit {
   filteredImages: any[] = [];
   selectedAgencyId: number | null | string= null;
   selectedProgramId: number | null | string= 'select Program'; 
+  user: any;
+
 
   constructor(
     private imageService: ImageService,
     private library: FaIconLibrary,
-    public router: Router
+    public router: Router,
   ) {
     this.library.addIcons(faDownload);
   }
 
   ngOnInit(): void {
-    console.log('Fetching collage images...');
+    this.user = JSON.parse(sessionStorage.getItem('user') || '{}');  
+    console.log('Logged-in User:', this.user);
     this.imageService.getCollageImages().subscribe(
       (res: any[]) => {
         this.collageImages = res.filter((fileob: any) =>

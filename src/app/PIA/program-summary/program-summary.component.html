@@ -21,7 +21,7 @@
                                 <label for="Agencies" style="font-weight: 600;">List Of Programs</label>
                                 <select class="form-select" [(ngModel)]="programIds" (change)="dropdownProgramsList($event,'table')">
                                     <option value="">Select Program</option>
-                                <option *ngFor="let list of agencyProgramList" value="{{list.programId}}">{{list.programTitle}}</option>
+                                    <option *ngFor="let list of agencyProgramList" value="{{list.programId}}">{{list.programTitle}}</option>
                                 </select>
                             </div>
                         </div>
@@ -227,8 +227,13 @@
         </div>
         <div class="text-center mt-3" id="program-collage-image">
             <h5>Program Collage Image</h5>
-            <img src="assets/img/Program1.png" 
-            alt="Spring" class="img-fluid" style="width: 70%; height: auto;"/>
+            <img 
+                *ngIf="programCollageImage"
+                [src]="programCollageImage" 
+                alt="Program Collage" 
+                class="img-fluid" 
+                style="width: 50%; height: auto;" 
+            />
         </div>
 
         <div class="card shadow-none" id="participant-details">
