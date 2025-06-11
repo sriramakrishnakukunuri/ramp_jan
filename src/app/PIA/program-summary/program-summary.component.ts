@@ -62,22 +62,41 @@ export class ProgramSummaryComponent implements OnInit {
     }
     agencyProgramList: any;
       getProgramsByAgency(agency:any) {
-        this._commonService.getDataByUrl(`${APIS.programCreation.getProgramsListByAgency+(agency?agency:this.loginsessionDetails.agencyId)}`).subscribe({
-          next: (res: any) => {
+        this.agencyId=agency
+        this.imageService.getPrograms(this.loginsessionDetails.agencyId?this.loginsessionDetails.agencyId:this.agencyId).subscribe(
+          (res) => {
             this.PrigramSummaryData = {}
-            this.agencyProgramList = res?.data
-            if(res.data?.length){
-              this.programIds = this.agencyProgramList[0].programId;
+            this.agencyProgramList = res.data.filter(
+              (program: any) =>
+                program.status === 'Program Execution Updated' ||
+                program.status === 'Program Expenditure Updated'
+            );
+
+            this.programIds = this.agencyProgramList[0].programId;
               this.getParticipantsByProgramID(this.programIds)
               this.setProgramCollageImage(this.programIds);
               this.getData()
-            }
-          
+            console.log('Filtered programs:', this.agencyProgramList);
           },
-          error: (err) => {
-            new Error(err);
+          (err) => {
+            console.error('Error fetching programs:', err);
           }
-        })
+        );
+        // this._commonService.getDataByUrl(`${APIS.programCreation.getProgramsListByAgencyStatus+'/'+(this.loginsessionDetails.agencyId?this.loginsessionDetails.agencyId:this.agencyId)+'?status=Program Execution Updated'}`).subscribe({
+        // // this._commonService.add(`${APIS.programCreation.updateSessionByStatus}${this.programCreationMain.value.programId}?status=Program Expenditure Updated`, data).subscribe({
+        //       next: (res: any) => {
+        //     this.PrigramSummaryData = {}
+        //     this.agencyProgramList = res?.data
+        //     if(res.data?.length){
+              
+        //     }
+           
+          
+        //   },
+        //   error: (err) => {
+        //     new Error(err);
+        //   }
+        // })
         
       }
       PrigramSummaryData:any

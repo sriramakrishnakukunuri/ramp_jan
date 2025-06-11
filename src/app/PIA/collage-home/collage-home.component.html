@@ -7,8 +7,9 @@
     style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; box-shadow: 0 2px 3px rgba(0, 0, 0, 0.02);"
   >
     <!-- Filter Section -->
-    <div class="d-flex flex-column">
-      <label 
+    <div class="d-flex flex-column" >
+      <ng-container *ngIf = "user.userRole === 'ADMIN'">
+        <label 
         for="agencyFilter" 
         class="form-label fw-semibold mb-1"
         style="color: #2c3e50; font-size: 14px;"
@@ -17,8 +18,8 @@
       </label>
       <select 
         id="agencyFilter" 
-        class="form-select form-select-sm" 
-        (change)="onAgencyChange($event)"
+        class="form-select form-select-sm"  [(ngModel)]="selectedAgencyId"
+        (change)="onAgencyChange($any($event.target).value)"
         style="width: 220px; background-color: #f1f3f5; color: #2c3e50; border: 1px solid #ced4da; font-size: 14px;"
       >
         <option value="">All Agencies</option>
@@ -29,6 +30,8 @@
           {{ agency.agencyName }}
         </option>
       </select>
+      </ng-container>
+     
     </div>
 
 
