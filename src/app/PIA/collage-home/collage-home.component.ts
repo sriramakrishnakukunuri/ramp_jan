@@ -24,12 +24,18 @@ export class CollageHomeComponent implements OnInit {
   selectedProgramId: number | null | string= 'select Program'; 
   user: any;
 
-
+  agencyId: any;
+  loginsessionDetails:any
   constructor(
     private imageService: ImageService,
     private library: FaIconLibrary,
     public router: Router,
   ) {
+    this.loginsessionDetails = JSON.parse(sessionStorage.getItem('user') || '{}');    
+    this.selectedAgencyId = this.loginsessionDetails?.agencyId;
+    if(this.selectedAgencyId){
+      this.onAgencyChange(this.selectedAgencyId)
+    }
     this.library.addIcons(faDownload);
   }
 
@@ -62,7 +68,7 @@ export class CollageHomeComponent implements OnInit {
   }
 
   onAgencyChange(event: any): void {
-    const agencyId = +event.target.value;
+    const agencyId = +event;
     if (!agencyId) {
       // Reset filter if no agency selected
       this.filteredImages = [...this.collageImages];
@@ -111,6 +117,13 @@ export class CollageHomeComponent implements OnInit {
     this.router.navigate(['/collage-creation'])
   }
   getDownloadUrl(fileUrl: string): void {
+    // const link = document.createElement("a");
+    // link.setAttribute("download", fileUrl);
+    // link.setAttribute("target", "_blank");
+    // link.setAttribute("href", fileUrl);
+    // document.body.appendChild(link);
+    // link.click();
+    // link.remove();
     const link = document.createElement('a');
     link.href = fileUrl;
     link.download = this.getFileName(fileUrl);
