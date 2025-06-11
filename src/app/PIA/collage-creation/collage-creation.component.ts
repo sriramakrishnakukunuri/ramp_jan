@@ -22,7 +22,8 @@ export class CollageCreationComponent implements OnInit {
   draggingSource: 'selected' | 'collage' | null = null;
   images: any[] = []; 
   showDbImages: boolean = false; 
-  selectedImage: string | null = null; 
+  selectedImage: string | null = null;
+  user :any; 
 
   maxImages: number = 4;
   zoomLevels: { [index: number]: number } = {};
@@ -35,24 +36,34 @@ export class CollageCreationComponent implements OnInit {
   selectedAgency: number | null = null;
   selectedProgram: number | null = null;
   collageName: string = 'program-collage';
-
-
-
+  agencyId: any;
+  loginsessionDetails:any
   constructor(
     private toPngService: ToPngService,
     private sanitizer: DomSanitizer,
     private imageService: ImageService,
     public router: Router
-  ) {}
+  ) {
+    this.loginsessionDetails = JSON.parse(sessionStorage.getItem('user') || '{}');    
+    this.selectedAgency = this.loginsessionDetails.agencyId;
+    if(this.selectedAgency){
+      this.onAgencyChange(this.selectedAgency)
+    }
+  }
+  
+
+ 
 
   ngOnInit(): void {
     console.log('Fetching collage images and all images...');
+    this.user = JSON.parse(sessionStorage.getItem('user') || '{}');
+    console.log('User:', this.user);
     this.updateMaxImages();
     this.getAgencies();
   }  
 
-  onAgencyChange(event: Event): void {
-    const selectedAgencyId = Number((event.target as HTMLSelectElement).value);
+  onAgencyChange(event: any): void {
+    const selectedAgencyId = Number(event);
     this.selectedAgency = selectedAgencyId;
     this.selectedProgram = null; // Reset selected program
     if (this.selectedAgency) {
@@ -61,7 +72,7 @@ export class CollageCreationComponent implements OnInit {
   }
   
   onProgramChange(event: Event): void {
-    const selectedProgram = Number((event.target as HTMLSelectElement).value);
+    const selectedProgram = Number(event);
     const selectedProgramName = this.programs.find(program => program.programId === selectedProgram);
 
     this.selectedProgram = selectedProgram; // store selected program ID
@@ -148,15 +159,11 @@ export class CollageCreationComponent implements OnInit {
         console.error('No program selected!');
         return;
       }
-
       const response = await this.toPngService.uploadImage(dataUrl, fileName, this.selectedProgram);
-      
       console.log('Upload success:', response);
       alert('Collage uploaded successfully!');
       // window.location.href="/collage-home"
       this.router.navigate(['/collage-home'])
-      
-
       
       this.handleClearCollage();
     } catch (err) {
@@ -210,13 +217,15 @@ export class CollageCreationComponent implements OnInit {
     this.collageImages[index] = image;
   }
 
-  getAspectRatioValue(): string {
-    switch (this.aspectRatio) {
-      case '16:9': return '16 / 9';
-      case '4:3': return '4 / 3';
-      default: return '1 / 1';
-    }
+  getAspectRatioValue(): number {
+  switch (this.aspectRatio) {
+    case '16:9': return 16 / 9;
+    case '4:3': return 4 / 3;
+    case '1:1': return 1;
+    default: return 1;
   }
+}
+
   
   getAgencies(): void {
   this.imageService.getAgencies().subscribe(
@@ -230,15 +239,21 @@ export class CollageCreationComponent implements OnInit {
   }
 
   getPrograms(agencyId: number): void {
-    this.imageService.getPrograms(agencyId).subscribe(
-      (res) => {
-        this.programs = res.data;
-      },
-      (err) => {
-        console.error('Error fetching programs:', err);
-      }
-    );
-  }
+    
+  this.imageService.getPrograms(agencyId).subscribe(
+    (res) => {
+      this.programs = res.data.filter(
+        (program: any) =>
+          program.status === 'Program Execution Updated' ||
+          program.status === 'Program Expenditure Updated'
+      );
+      console.log('Filtered programs:', this.programs);
+    },
+    (err) => {
+      console.error('Error fetching programs:', err);
+    }
+  );
+}
 
   getProgramImages(programId: number): void {
     this.imageService.getAllImages(programId).subscribe(

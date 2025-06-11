@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ImageService } from '../../_services/image.service';
 import { Router } from '@angular/router';
 import { CommonServiceService } from '@app/_services/common-service.service';
 import { APIS } from '@app/constants/constants';
@@ -19,8 +20,21 @@ export class ProgramSummaryComponent implements OnInit {
   loginsessionDetails: any;
   agencyId: any;
   programIds:any
+
+  posts: any[] = []; 
+  paginatedPosts: any[] = [];
+  currentPage: number = 1;
+  pageSize: number = 5;
+  totalPages: number = 0;
+  showAllRows: boolean = false;
+  showPagination: boolean = true;
+  collageImages: any[]=[];
+  filteredImages: any[] = [];
+  programCollageImage: string = '';
+  
   constructor(private fb: FormBuilder,
     private toastrService: ToastrService,
+    private imageService: ImageService,
     private _commonService: CommonServiceService, private router: Router,) { 
       this.agencyId = JSON.parse(sessionStorage.getItem('user') || '{}').agencyId;
     }
@@ -29,11 +43,12 @@ export class ProgramSummaryComponent implements OnInit {
       this.loginsessionDetails = JSON.parse(sessionStorage.getItem('user') || '{}');  
       if(this.loginsessionDetails.userRole == 'ADMIN') {
         this.getAgenciesList()
+        
       }
       else{
         this.getProgramsByAgency( this.agencyId )
       }  
-      
+      this.loadCollageImages();
     }
     agencyList: any;  
     getAgenciesList() {
@@ -47,21 +62,41 @@ export class ProgramSummaryComponent implements OnInit {
     }
     agencyProgramList: any;
       getProgramsByAgency(agency:any) {
-        this._commonService.getDataByUrl(`${APIS.programCreation.getProgramsListByAgency+(agency?agency:this.loginsessionDetails.agencyId)}`).subscribe({
-          next: (res: any) => {
+        this.agencyId=agency
+        this.imageService.getPrograms(this.loginsessionDetails.agencyId?this.loginsessionDetails.agencyId:this.agencyId).subscribe(
+          (res) => {
             this.PrigramSummaryData = {}
-            this.agencyProgramList = res?.data
-            if(res.data?.length){
-              this.programIds = this.agencyProgramList[0].programId;
+            this.agencyProgramList = res.data.filter(
+              (program: any) =>
+                program.status === 'Program Execution Updated' ||
+                program.status === 'Program Expenditure Updated'
+            );
+
+            this.programIds = this.agencyProgramList[0].programId;
               this.getParticipantsByProgramID(this.programIds)
+              this.setProgramCollageImage(this.programIds);
               this.getData()
-            }
-          
+            console.log('Filtered programs:', this.agencyProgramList);
           },
-          error: (err) => {
-            new Error(err);
+          (err) => {
+            console.error('Error fetching programs:', err);
           }
-        })
+        );
+        // this._commonService.getDataByUrl(`${APIS.programCreation.getProgramsListByAgencyStatus+'/'+(this.loginsessionDetails.agencyId?this.loginsessionDetails.agencyId:this.agencyId)+'?status=Program Execution Updated'}`).subscribe({
+        // // this._commonService.add(`${APIS.programCreation.updateSessionByStatus}${this.programCreationMain.value.programId}?status=Program Expenditure Updated`, data).subscribe({
+        //       next: (res: any) => {
+        //     this.PrigramSummaryData = {}
+        //     this.agencyProgramList = res?.data
+        //     if(res.data?.length){
+              
+        //     }
+           
+          
+        //   },
+        //   error: (err) => {
+        //     new Error(err);
+        //   }
+        // })
         
       }
       PrigramSummaryData:any
@@ -69,6 +104,8 @@ export class ProgramSummaryComponent implements OnInit {
         this.PrigramSummaryData = {}
         this.programIds = event.target.value;
         this.getParticipantsByProgramID(this.programIds);
+        this.setProgramCollageImage(this.programIds);
+        console.log("program id:",this.programIds);
         if (type == 'table' && event.target.value) {
           this.getData()
         }
@@ -117,18 +154,16 @@ export class ProgramSummaryComponent implements OnInit {
       }
       CalculateOragnizationPercentage(Data: any,val:any) {
         let total = Data.noOfSHGs + Data.noOfMSMEs + Data.noOfStartups+ Data.noOfAspirants;
-        let percentage:any = ((val / total) * 100).toFixed(2);
-        console.log(percentage,total,val)
-        
+        let percentage:any = ((val / total) * 100).toFixed(2);        
         return isNaN(percentage) ? 0 : percentage
 
       }
-
+      
       // Download PDF
       handleDownloadPDF() {
         const downloadButton = document.getElementById('pdf-download-button');
         const summaryEl = document.getElementById('program-summary-container');
-        const imageEl = document.getElementById('spring-image');
+        const imageEl = document.getElementById('program-collage-image');
         const detailsEl = document.getElementById('participant-details');
       
         if (!summaryEl || !imageEl || !detailsEl) return;
@@ -162,7 +197,7 @@ export class ProgramSummaryComponent implements OnInit {
           pdf.addImage(summaryData, 'PNG', marginX, currentY, summaryWidth, summaryHeight);
           currentY += summaryHeight + 20; // Add spacing
       
-          // Render second section (spring-image) with 10% increased size
+          // Render second section (program-collage-image) with 10% increased size
           const imageCanvas = await html2canvas(imageEl, { scale: 2, useCORS: true });
           let imageWidth = pageWidth - 2 * marginX;
           let imageHeight = (imageWidth / imageCanvas.width) * imageCanvas.height;
@@ -200,23 +235,51 @@ export class ProgramSummaryComponent implements OnInit {
           this.paginatedPosts = originalPosts;
           this.showPagination = true;
         }, 100);
+      };
+
+
+
+
+      
+      loadCollageImages(): void {
+        this.imageService.getCollageImages().subscribe(
+          (res: any[]) => {
+            this.collageImages = res.filter((fileob: any) =>
+              fileob.fileUrl?.match(/\.(jpeg|jpg|png|gif|png)$/i)
+            );
+            this.filteredImages = [...this.collageImages];
+          },
+          (err) => {
+            console.error('Error fetching collage images:', err);
+            this.filteredImages = [];
+          }
+        );
       }
-      
-      
-      
-      posts: any[] = []; 
-      paginatedPosts: any[] = [];
-      currentPage: number = 1;
-      pageSize: number = 5;
-      totalPages: number = 0;
-      showAllRows: boolean = false;
-      showPagination: boolean = true;
+
+      setProgramCollageImage(programId: number): void {
+        console.log("Program ID:", programId);
+        console.log("filteredImages available:", this.filteredImages?.length);
+
+        const match = this.filteredImages.find((img) =>
+          Number(img.programId) === Number(programId) && !!img.fileUrl
+        );
+
+        console.log("Match found:", match);
+
+        if (match) {
+          this.programCollageImage = match.fileUrl.replace(/\\/g, '/');
+          console.log("Program Collage Image URL:", this.programCollageImage);
+        } else {
+          this.programCollageImage = '';
+          console.warn("No image found for programId:", programId);
+        }
+      }
+
 
 
       getParticipantsByProgramID(agencyid:number): void {
         this._commonService.ProgramsWithAgenciesData(APIS.programSummary.getParticipantsBYProgram,agencyid).subscribe((res)=>{
           this.posts = res.data;
-          console.log(this.posts)
           this.totalPages = Math.ceil(this.posts.length / this.pageSize);
           this.updatePaginatedPosts();
         }, (error) => {

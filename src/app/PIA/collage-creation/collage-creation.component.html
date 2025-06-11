@@ -1,141 +1,285 @@
-<div class="collagecreation-container">
-    <div class="header">
-        <!-- <h3>Collage Creation</h3> -->
-        <div class="filter-container">
-            <div class="filter-row">
-                <label for="agency-select">Select Agency:</label>
-                <select
-                    id="agency-select"
-                    [(ngModel)]="selectedAgency"
-                    (change)="onAgencyChange($event)"
-                >
-                    <option [value]="null">-- Select an Agency --</option>
-                    <option *ngFor="let agency of agencies" [value]="agency.agencyId">
-                    {{ agency.agencyName }}
-                    </option>
-                </select>
-            </div>
-
-            <div class="filter-row">
-                <label for="program-select">Select Program:</label>
-                <select
-                    id="program-select"
-                    [(ngModel)]="selectedProgram"
-                    [disabled]="!selectedAgency"
-                    (change)="onProgramChange($event)"
-                >
-                    <option [value]="null">-- Select a Program --</option>
-                    <option *ngFor="let program of programs" [value]="program.programId">
-                    {{ program.programTitle }}
-                    </option>
-
-                </select>
-            </div>
-
-        </div>
+<div class="m-0.5 mt-2 p-0 bg-white border shadow-sm">
+  <!-- Header Section -->
+  <div class="p-1 rounded mb-3 bg-light" style="border-bottom: 1px solid #dfe2e6;">
+    <h5 class="text-center fw-bold" style="color: #2c3e50; font-size: 16px;">Collage Creation</h5>
+    <div class="row g-3 align-items-end ps-2">
+      <div class="col-md-3 " *ngIf = "user.userRole === 'ADMIN'">
+        <label 
+          for="agency-select" 
+          class="form-label fw-semibold" 
+          style="color: #2c3e50; font-size: 14px;"
+        >
+          Select Agency:
+        </label>
+        <select 
+          class="form-select form-select-sm" 
+          aria-label="Select Agency"
+          id="agency-select" 
+          [(ngModel)]="selectedAgency" 
+          (change)="onAgencyChange($any($event.target).value)"
+          style="
+            background-color: #fff; 
+            border: 1px solid #ced4da; 
+            color: #2c3e50; 
+            font-size: 14px; 
+            box-shadow: none;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            height: 38px;
+            margin-top: -0.2rem;
+          "
+        >
+          <option [value]="null">-- Select an Agency --</option>
+          <option *ngFor="let agency of agencies" [value]="agency.agencyId">
+            {{ agency.agencyName }}
+          </option>
+        </select>
+      </div>
+      <div class="col-md-3">
+        <label 
+          for="program-select" 
+          class="form-label fw-semibold" 
+          style="color: #2c3e50; font-size: 14px;"
+        >
+          Select Program:
+        </label>
+        <select 
+          class="form-select form-select-sm" 
+          id="program-select" 
+          [(ngModel)]="selectedProgram" 
+          [disabled]="!selectedAgency" 
+          (change)="onProgramChange($any($event.target).value)"
+          style="
+            background-color: #fff; 
+            border: 1px solid #ced4da; 
+            color: #2c3e50; 
+            font-size: 14px; 
+            box-shadow: none;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            height: 38px;
+            margin-top: -0.2rem;
+          "
+        >
+          <option [value]="null">-- Select a Program --</option>
+          <option *ngFor="let program of programs" [value]="program.programId">
+            {{ program.programTitle }}
+          </option>
+        </select>
+      </div>
     </div>
-    <div class="header-container">
-        <div class="header-left">
-            <!-- Image Selection -->
-            <div class="image-selection">
-                <input id="file-upload" type="file" accept="image/*" multiple 
-                (change)="handleImageSelection($event)" style="display: none;" />
-                <label 
-                    for="file-upload" 
-                    class="file-upload-label" 
-                    [class.disabled]="!selectedProgram"
-                    [style.pointerEvents]="!selectedProgram ? 'none' : 'auto'"
-                    [style.opacity]="!selectedProgram ? '0.5' : '1'"
-                    [attr.title]="!selectedProgram ? 'Select Program to enable it' : null">
-                    <img src="assets/img/image_selection.png" alt="Select" width="50" height="50" />
-                    <span class="image-selection-button">Select Images</span>
-                </label>
-            </div>
-            <div class="dbimages-button">
-                <button 
-                    (click)="showDbImages = true" 
-                    [disabled]="!selectedProgram"
-                    [ngStyle]="{ opacity: !selectedProgram ? '0.5' : '1', cursor: !selectedProgram ? 'not-allowed' : 'pointer' }"
-                    [attr.title]="!selectedProgram ? 'Select Program to enable it' : null">
-                    <img src="assets/img/db_icon.png"/>
-                    <span class="image-selection-button">Select Database Images</span>
-                </button>
+  </div>
 
-            </div>
-            
-        </div>
-
-        <!-- Collage Settings -->
-        <div class="collage-settings">
-            <div class="setting-row">
-                <label>Collage Mode</label>
-                <select [(ngModel)]="collageMode" (change)="handleCollageModeChange($event)">
-                    <option value="2x2">2x2</option>
-                    <option value="3x3">3x3</option>
-                </select>
-            </div>
-
-            <div class="setting-row">
-                <label>Aspect Ratio</label>
-                <select [(ngModel)]="aspectRatio">
-                    <option value="1:1">1:1</option>
-                    <option value="16:9">16:9</option>
-                    <option value="4:3">4:3</option>
-                </select>
-            </div>
-
-            <div class="setting-row">
-                <label>Background</label>
-                <input type="color" [(ngModel)]="backgroundColor" />
-            </div>
-
-            <div class="setting-row">
-                <label>Padding</label>
-                <input type="number" [(ngModel)]="padding" min="0" />
-            </div>
-        </div>
-
-        <!-- Collage Name and Action Buttons -->
-        <div class="header-right">
-            <div class="collage-name-container">
-                <label for="collageName">Collage Name:</label>
-                <input [(ngModel)]="collageName" id="collageName" type="text" />
-            </div>
-
-            <div class="buttons-container">
-                <button (click)="handleSaveCollage()">Save Collage</button>
-                <button (click)="handleClearCollage()">Clear Collage</button>
-              </div>              
-        </div>
+  <!-- Collage Creation Section -->
+  <div 
+    class="d-flex flex-column flex-md-row justify-content-between align-items-center p-3 bg-white border-bottom" 
+    style="padding: 2px 15px; border-radius: 5px; height: 95px;"
+  >
+  <div class="d-flex flex-row justify-content-center align-items-center" >
+    <div class="d-flex flex-grow-1">
+      <div *ngIf = " user.userRole === 'ADMIN'"
+        class="image-selection d-flex align-items-center me-1" 
+        style="height: 100%; width: 200px; border: 2px dashed #777777;"
+      >
+        <input 
+          id="file-upload" 
+          type="file" 
+          accept="image/*" 
+          multiple 
+          (change)="handleImageSelection($event)" 
+          style="display: none;" 
+        />
+        <label
+          for="file-upload"
+          class="d-flex flex-column align-items-center justify-content-center rounded"
+          [class.disabled]="!selectedProgram"
+          [style.pointerEvents]="!selectedProgram ? 'none' : 'auto'"
+          [style.opacity]="!selectedProgram ? '0.5' : '1'"
+          [attr.title]="!selectedProgram ? 'Select Program to enable it' : null"
+          style="padding: 2px 10px; width: 100%; height: 100%; cursor: pointer; font-size: 14px;"
+        >
+          <img src="assets/img/image_selection.png" alt="Select" width="50" height="50" />
+          <span
+            class="text-white  py-1 px-3 mt-1 d-inline-block fw-semibold w-100 text-center"
+            style="cursor: pointer; font-size: 14px;background-color: #254D70;"
+          >
+            Select Images
+          </span>
+        </label>
+      </div>
+      <div class="dbimages-button" style="border: 2px dashed #777777; height: 100%; width: 200px;">
+        <button
+          class="p-0 d-flex flex-column justify-content-center align-items-center w-100 h-100"
+          style="background-color: transparent; border-radius: 5px; outline: none; border: none; margin: 0;"
+          (click)="selectedProgram && (showDbImages = true)"
+          [style.cursor]="!selectedProgram ? 'not-allowed' : 'pointer'"
+          [style.opacity]="!selectedProgram ? '0.5' : '1'"
+          [style.pointerEvents]="!selectedProgram ? 'none' : 'auto'"
+          [attr.title]="!selectedProgram ? 'Select Program to enable it' : null"
+        >
+          <img src="assets/img/db_icon.png" alt="db icon" style="width: 52px; height: 52px;" />
+          <span
+            class="text-white py-1 px-3 mt-1 d-inline-block fw-semibold"
+            style="font-size: 14px; background-color: #254D70;"
+          >
+            Select Database Images
+          </span>
+        </button>
+      </div>
     </div>
-    
-    <p style="margin: 0px;">Selected images</p>
-    <div class="selected-images-container">
-        <div *ngIf="selectedImages.length === 0">No images selected</div>
-        <div *ngFor="let image of selectedImages; let i = index">
-            <img [src]="image" alt="" 
-                 draggable="true" 
-                 (dragstart)="handleDragStart(i, 'selected')"/>
-        </div>
-        
-    </div>
-    
+    <!-- Collage Settings -->
+    <div class="d-grid" style="grid-template-columns: auto auto; gap: 12px; width: 400px; margin: 0 40px;">
+      <!-- Collage Mode -->
+      <div class="d-flex flex-row-reverse align-items-center justify-content-between p-1 rounded shadow-sm bg-info text-white border border-dark-subtle" style="width: 180px;background-color: #3D90D7 !important;">
+        <label class="flex-grow-1 ps-2 fw-semibold small">Collage Mode</label>
+        <select
+          class="form-select form-select-sm bg-light text-dark border-1"
+          style="width: 70px;"
+          [(ngModel)]="collageMode"
+          (change)="handleCollageModeChange($event)">
+          <option value="2x2">2x2</option>
+          <option value="3x3">3x3</option>
+        </select>
+      </div>
 
-    <!-- Collage Preview -->
-    <div class="collage-container">
-        <div id="collage-preview" class="collage-preview-container" [ngStyle]="{
-            'display': 'grid',
-            'gridTemplateColumns': collageMode === '2x2' ? 'repeat(2, 1fr)' : 'repeat(3, 1fr)',
-            'gridTemplateRows': collageMode === '2x2' ? 'repeat(2, 1fr)' : 'repeat(3, 1fr)',
-            'gap': padding + 'px',
-            'backgroundColor': backgroundColor,
-            'width': collageMode === '2x2' ? '700px' : '850px',
-            'height': collageMode === '2x2' ? '500px' : '700px',
-            'marginTop': '40px',
-            'padding': '10px',
-            'paddingBottom':'20px',
-            'boxShadow': '0 2px 5px rgba(0,0,0,0.2)'
-        }">
+      <!-- Aspect Ratio -->
+      <div class="d-flex flex-row-reverse align-items-center justify-content-between p-1 rounded shadow-sm bg-info text-white border border-dark-subtle" style="width: 180px;background-color: #3D90D7 !important;">
+        <label class="flex-grow-1 ps-2 fw-semibold small">Aspect Ratio</label>
+        <select
+          class="form-select form-select-sm bg-light text-dark border-1"
+          style="width: 70px;"
+          [(ngModel)]="aspectRatio">
+          <option value="1:1">1:1</option>
+          <option value="16:9">16:9</option>
+          <option value="4:3">4:3</option>
+        </select>
+      </div>
+
+      <!-- Background -->
+      <div class="d-flex flex-row-reverse align-items-center justify-content-between p-1 rounded shadow-sm bg-info text-white border border-dark-subtle" style="width: 180px;background-color: #3D90D7 !important;">
+        <label class="flex-grow-1 ps-2 fw-semibold small">Background</label>
+        <input
+          type="color"
+          [(ngModel)]="backgroundColor"
+          class="form-control form-control-color p-0 border-1"
+          style="width: 70px;" />
+      </div>
+
+      <!-- Padding -->
+      <div class="d-flex flex-row-reverse align-items-center justify-content-between p-1 rounded shadow-sm bg-info text-white border border-dark-subtle" style="width: 180px;background-color: #3D90D7 !important;">
+        <label class="flex-grow-1 ps-2 fw-semibold small">Padding</label>
+        <input
+          type="number"
+          min="0"
+          [(ngModel)]="padding"
+          class="form-control form-control-sm bg-light text-dark border-1"
+          style="width: 70px; " />
+      </div>
+    </div>
+  </div>
+    <!-- Collage Name and Action Buttons -->
+    <div class="header-right d-flex align-items-center">
+      <!-- Collage Name Input -->
+      <div class="collage-name-container me-3 mt-3">
+        <label for="collageName" class="form-label mb-1" style="font-size: 14px;">
+          Collage Name:
+        </label>
+        <input
+          [(ngModel)]="collageName"
+          id="collageName"
+          type="text"
+          class="form-control"
+          style="max-width: 250px; border-radius: 6px; border: 1px solid #ced4da; background-color: #e9ecef;"
+          placeholder="Enter collage name"
+          readonly
+        />
+      </div>
+
+      <!-- Buttons -->
+      <div class="buttons-container d-flex flex-column justify-content-between" style="width: 140px; padding: 3px 0;">
+        <!-- Save Collage Button -->
+        <!-- Save Collage Button -->
+        <button
+          type="button"
+          (click)="handleSaveCollage()"
+          class="btn fw-bold text-white mb-2 d-flex align-items-center gap-2"
+          style="background-color: #3ac496; border-radius: 3px; font-size: 15px; border: none; box-shadow: 0 2px 6px rgba(0,0,0,0.1);"
+        >
+          <i class="bi bi-save"></i>
+          Save Collage
+        </button>
+
+        <!-- Clear Collage Button -->
+        <button
+          type="button"
+          (click)="handleClearCollage()"
+          class="btn fw-bold text-white d-flex align-items-center gap-2"
+          style="background-color: #3ac496; border-radius: 3px; font-size: 15px; border: none; box-shadow: 0 2px 6px rgba(0,0,0,0.1);"
+        >
+          <i class="bi bi-broom"></i>
+          Clear Collage
+        </button>
+
+      </div>
+    </div>
+
+  </div>
+  <div 
+    class="rounded shadow-sm p-3 mb-4 bg-light"
+    style=" border: 1px solid #dee2e6;"
+  >
+    <p class="fw-semibold text-dark mb-2" style="font-size: 15px;">Selected Images</p>
+    <div 
+      class="d-flex flex-wrap gap-2 p-2 rounded"
+      [ngStyle]="{
+        'background-color': selectedImages.length > 0 ? '#2e3b4e' : 'transparent',
+        'height': 'fit-content',
+        'max-height': '250px',
+        'overflow-y': 'auto'
+      }"
+    >
+      <ng-container *ngIf="selectedImages.length > 0; else noImages">
+        <div 
+          *ngFor="let image of selectedImages; let i = index" 
+          class="position-relative border border-light-subtle rounded overflow-hidden"
+          style="width: 201px; height: 150px; background-color: #1f1f1f;"
+        >
+          <img 
+            [src]="image" 
+            alt="Selected" 
+            draggable="true" 
+            (dragstart)="handleDragStart(i, 'selected')"
+            class="img-fluid h-100 w-100 object-fit-cover"
+            style="border-radius: 4px;"
+          />
+        </div>
+      </ng-container>
+
+      <ng-template #noImages>
+        <div>No images selected</div>
+      </ng-template>
+    </div>
+  </div>
+
+  <!-- Collage Preview -->
+
+<div class="collage-container d-flex flex-column justify-content-center align-items-center">
+        <div
+    id="collage-preview"
+    class="collage-preview-container shadow-sm"
+    [ngStyle]="{
+      display: 'grid',
+      gridTemplateColumns: collageMode === '2x2' ? 'repeat(2, 1fr)' : 'repeat(3, 1fr)',
+      gridTemplateRows: collageMode === '2x2' ? 'repeat(2, 1fr)' : 'repeat(3, 1fr)',
+      gap: padding + 'px',
+      backgroundColor: backgroundColor,
+      width: collageMode === '2x2' ? '720px' : '870px',
+      height: collageMode === '2x2' ? '520px' : '710px',
+      marginTop: '40px',
+      padding: '12px',
+      border: '1px solid #dee2e6',
+      borderRadius: '0.2rem',
+      boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
+    }"
+  >
             <div *ngFor="let image of collageImages; let i = index" 
                  class="collage-image"
                  [draggable]="image ? true : false"
@@ -179,56 +323,73 @@
         </div>    
     </div>
 </div>
-<div class="modal-backdrop" *ngIf="showDbImages">
-    <div class="modal-container" *ngIf="showDbImages">
-      <div class="modal-title-header">
-        <h3>Database Images</h3>
-        <button class="close-btn" (click)="showDbImages = false">X</button>
-      </div>
-      <div class="modal-body">
-        <div class="home-image-grid">
-            <div *ngIf="(images ?? []).length > 0; else noFooterImages">
-                <div
-                *ngFor="let img of images"
-                class="home-image-item"
-                [ngStyle]="{ position: 'relative', cursor: 'pointer', display: 'inline-block', margin: '10px' }"
-                (click)="selectImageFromDB(img)"
-                >
-                <img
-                    [src]="img"
-                    alt="Image"
-                    [ngStyle]="{ width: '274px', height: '190px', borderRadius: '8px' }"
-                    [class.selected]="isSelected(img)"
-                />
-                <div
-                    *ngIf="isSelected(img)"
-                    class="tick-overlay"
-                    style="
-                    position: absolute;
-                    top: 8px;
-                    right: 8px;
-                    background-color: rgba(0, 188, 212, 0.8);
-                    color: white;
-                    font-size: 20px;
-                    border-radius: 50%;
-                    width: 30px;
-                    height: 30px;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    "
-                >
-                    ✓
-                </div>
-                </div>
-            </div>
+  
 
-            <ng-template #noFooterImages>
-                <p>No images found</p>
-            </ng-template>
-            </div>
 
+
+<div 
+  class="position-fixed top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center"
+  style="background-color: rgba(0, 0, 0, 0.6); z-index: 1050;"
+  *ngIf="showDbImages"
+>
+  <div 
+    class="bg-white rounded-4 shadow-lg p-4 position-relative"
+    style="width: 100%; max-width: 960px; max-height: 90vh; overflow-y: auto;"
+  >
+    <!-- Close Button -->
+    <button 
+      type="button" 
+      class="btn-close position-absolute top-0 end-0 m-3" 
+      aria-label="Close" 
+      (click)="showDbImages = false"
+    ></button>
+
+    <!-- Header -->
+    <h5 class="text-center text-dark mb-4 ">Select Database Image</h5>
+
+    <!-- Image Grid -->
+    <div style="max-height: 500px; overflow-y: auto;">
+      <div class="row g-3">
+        <ng-container *ngIf="(images ?? []).length > 0; else noFooterImages">
+          <div 
+            class="col-12 col-sm-6 col-md-4"
+            *ngFor="let img of images"
+          >
+            <div 
+              class="card position-relative shadow-sm"
+              [ngClass]="{'border-primary border-2': isSelected(img)}"
+              style="cursor: pointer; transition: transform 0.2s;"
+              (click)="selectImageFromDB(img)"
+              onmouseover="this.style.transform='scale(1.02)'" 
+              onmouseout="this.style.transform='scale(1)'"
+            >
+              <img 
+                [src]="img" 
+                class="card-img-top" 
+                alt="Image"
+                style="height: 190px; object-fit: cover; border-top-left-radius: 8px; border-top-right-radius: 8px;"
+              />
+              <div class="card-body p-2 text-center">
+                <small class="text-muted">Click to select</small>
+              </div>
+
+              <!-- Selected Checkmark -->
+              <div 
+                *ngIf="isSelected(img)" 
+                class="position-absolute top-0 end-0 translate-middle badge rounded-circle"
+                style="background-color: rgba(0, 188, 212, 0.9); color: white; width: 30px; height: 30px; font-size: 18px; display: flex; align-items: center; justify-content: center; z-index: 10;"
+              >
+                ✓
+              </div>
+            </div>
+          </div>
+        </ng-container>
+        <ng-template #noFooterImages>
+          <div class="text-center text-muted py-4">
+            <p>No images found.</p>
+          </div>
+        </ng-template>
       </div>
     </div>
   </div>
-  
+</div>

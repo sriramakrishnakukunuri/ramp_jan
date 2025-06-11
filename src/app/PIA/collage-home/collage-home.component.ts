@@ -5,7 +5,7 @@ import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { Image } from '../../_models/image.model';
 import { Agency } from '../../_models/agencies.model';
 import { Program } from '../../_models/program.model';
-import { Router, NavigationEnd } from '@angular/router';
+import { Router} from '@angular/router';
 
 @Component({
   selector: 'app-collage-home',
@@ -22,17 +22,26 @@ export class CollageHomeComponent implements OnInit {
   filteredImages: any[] = [];
   selectedAgencyId: number | null | string= null;
   selectedProgramId: number | null | string= 'select Program'; 
+  user: any;
 
+  agencyId: any;
+  loginsessionDetails:any
   constructor(
     private imageService: ImageService,
     private library: FaIconLibrary,
-    public router: Router
+    public router: Router,
   ) {
+    this.loginsessionDetails = JSON.parse(sessionStorage.getItem('user') || '{}');    
+    this.selectedAgencyId = this.loginsessionDetails?.agencyId;
+    if(this.selectedAgencyId){
+      this.onAgencyChange(this.selectedAgencyId)
+    }
     this.library.addIcons(faDownload);
   }
 
   ngOnInit(): void {
-    console.log('Fetching collage images...');
+    this.user = JSON.parse(sessionStorage.getItem('user') || '{}');  
+    console.log('Logged-in User:', this.user);
     this.imageService.getCollageImages().subscribe(
       (res: any[]) => {
         this.collageImages = res.filter((fileob: any) =>
@@ -59,7 +68,7 @@ export class CollageHomeComponent implements OnInit {
   }
 
   onAgencyChange(event: any): void {
-    const agencyId = +event.target.value;
+    const agencyId = +event;
     if (!agencyId) {
       // Reset filter if no agency selected
       this.filteredImages = [...this.collageImages];
@@ -108,6 +117,13 @@ export class CollageHomeComponent implements OnInit {
     this.router.navigate(['/collage-creation'])
   }
   getDownloadUrl(fileUrl: string): void {
+    // const link = document.createElement("a");
+    // link.setAttribute("download", fileUrl);
+    // link.setAttribute("target", "_blank");
+    // link.setAttribute("href", fileUrl);
+    // document.body.appendChild(link);
+    // link.click();
+    // link.remove();
     const link = document.createElement('a');
     link.href = fileUrl;
     link.download = this.getFileName(fileUrl);

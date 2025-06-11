@@ -71,11 +71,11 @@ export class PhysicalTargetsComponent implements OnInit {
     
       for (let i = 2024; i < currentYear; i++) {
         const year = i;
-        this.financialYears.push(`${year}-${(year + 1).toString().slice(-2)}`);
+        this.financialYears.push(`${year}-${(year + 1)}`);
       }
       for (let i = 0; i <= range; i++) {
         const year = currentYear + i;
-        this.financialYears.push(`${year}-${(year + 1).toString().slice(-2)}`);
+        this.financialYears.push(`${year}-${(year + 1)}`);
       }
       
       // Set default selection to current financial year
@@ -89,7 +89,7 @@ export class PhysicalTargetsComponent implements OnInit {
       const month = today.getMonth() + 1; // January is 0
       
       // Adjust based on your financial year start (April in this example)
-      return month >= 4 ? `${year}-${(year + 1).toString().slice(-2)}` : `${year - 1}-${year.toString().slice(-2)}`;
+      return month >= 4 ? `${year}-${(year + 1)}` : `${year - 1}-${year}`;
     }
 
   get f2() {

@@ -206,6 +206,8 @@ export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
         render: function(data:any, type:any, row:any,meta: any) {
           // console.log(data,row,meta)
             // if (this.loginsessionDetails?.userRole == 'AGENCY_MANAGER' || this.loginsessionDetails?.userRole == 'AGENCY_EXECUTOR') {
+            //  <button type="button" class="btn btn-default btn-sm text-danger editable-btn ${row.status=='Program Scheduled' ? '' : 'isdisable'}" data-id="${row.id}" title="Edit"><span class="bi bi-pencil"></span></button>
+            // <button type="button" class="btn btn-default btn-sm text-danger overDue-btn ${!row.overdue ? 'isdisable' : ''}" data-id="${row.id}" title="Over-due"><span class="bi bi-alarm-fill"></span></button>
                 return `  <button type="button" class="btn btn-default btn-sm text-lime-green edit-btn" 
                 title="Sessions" data-bs-toggle="modal" data-bs-target="#viewModal" 
                 data-id="${row.id}" title="View">
