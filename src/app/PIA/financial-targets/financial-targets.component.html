@@ -32,7 +32,7 @@
             </div>
           </div>
           <div class="card-body">
-            <table id="view-physical-table" class="table table-bordered table-striped nowrap w-100 fsize-10">
+            <table  class="table table-bordered table-striped nowrap w-100 fsize-10">
                 <thead class="bg-lime-green text-white">
                   <tr>
                     <th class="text-center"  rowspan="3">Output</th>
@@ -59,7 +59,7 @@
                 </ng-container></tr>
     
                 </thead>
-                <tbody *ngIf="tableList?.length">
+                <tbody >
                   <tr *ngFor="let item of tableList; let i = index">
                     <td>{{item?.outcomeName}}</td>
                     <td>{{item?.totalTarget}}</td>
@@ -92,12 +92,12 @@
                       </button>
                     </td> -->
                   </tr>
-    
                 </tbody>
                 <tbody *ngIf="!tableList?.length">
                   <tr>
                     <td class="text-center" colspan="7">Data Not Available</td>
                   </tr>
+                  
                 </tbody>
                 </table>
             
