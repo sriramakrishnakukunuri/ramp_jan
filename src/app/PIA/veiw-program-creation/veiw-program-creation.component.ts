@@ -57,7 +57,6 @@ export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
         this.tableList = dataList.data;
          
         dataList.data.map((item: any) => {
-          console.log(item)
           if(item?.district){
             item['district'] = item?.district
           }
@@ -80,7 +79,6 @@ export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
       next: (dataList: any) => {
         this.tableList = dataList.data;
         dataList.data.map((item: any) => {
-          console.log(item)
           if(item?.district){
             item['district'] = item?.district
           }
@@ -213,7 +211,7 @@ export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
                 data-id="${row.id}" title="View">
                 <span class="bi bi-eye"></span>
               </button>
-                <button type="button" class="btn btn-default btn-sm text-danger editable-btn  data-id="${row.id}" title="Edit"><span class="bi bi-pencil"></span></button>
+                <button type="button" class="btn btn-default btn-sm text-danger editable-btn"  data-id="${row.id}" title="Edit"><span class="bi bi-pencil"></span></button>
              
              
               `;
@@ -265,7 +263,7 @@ export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
       title: 'District',
       orderable: false ,
       render: function(data, type, row, meta:any) {
-        console.log(data,meta,type, row)
+        // console.log(data,meta,type, row)
           return row?.district ? row?.district : '-';   
       },
       className: 'dt-center'
@@ -531,7 +529,7 @@ if (editSessionModal) {
          myModal.show();
        }
       else{
-        console.log(item,'warming')
+        // console.log(item,'warming')
         this.toastrService.warning('Selected Program has Participants Added hence can not be deleted!', "Delete not Allowed!");
         return;
       }
@@ -638,7 +636,7 @@ if (editSessionModal) {
       this._commonService.add(APIS.programCreation.uploadProgram, formData).pipe().subscribe(
         {
           next: (res: any) => {
-            console.log(res, "res")
+            // console.log(res, "res")
             this.toastrService.success('Program Data Uploaded successfully', "Program Data Success!");
              this.getProgramDetails()
              this.reinitializeDataTable();
@@ -646,7 +644,7 @@ if (editSessionModal) {
             // console.log(data)
           },
           error: (err) => {
-            console.log(err, "error")
+            // console.log(err, "error")
             this.toastrService.success('Program Data Uploaded successfully', "Program Data Success!");
             this.getProgramDetails()
             this.reinitializeDataTable();

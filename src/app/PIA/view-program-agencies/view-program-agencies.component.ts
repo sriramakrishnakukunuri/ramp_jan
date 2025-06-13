@@ -53,7 +53,7 @@ export class ViewProgramAgenciesComponent implements OnInit ,AfterViewInit{
     }
   
     sessionDetails(dataList: any): any {
-      console.log(dataList)
+      // console.log(dataList)
       this.sessionDetailsList = dataList.programSessionList;
     }
   
@@ -83,7 +83,7 @@ export class ViewProgramAgenciesComponent implements OnInit ,AfterViewInit{
         { 
             title: 'S.No',
             render: function(data, type, row, meta:any) {
-              console.log(data,meta,type, row)
+              // console.log(data,meta,type, row)
                 return meta.settings?._iDisplayStart+meta.row  + 1;
             },
             className: 'dt-center'
@@ -92,7 +92,7 @@ export class ViewProgramAgenciesComponent implements OnInit ,AfterViewInit{
           title: 'Actions',
           data: null,
           render: function(data:any, type:any, row:any,meta: any) {
-            console.log(data,row,meta)
+            // console.log(data,row,meta)
               // if (this.loginsessionDetails?.userRole == 'AGENCY_MANAGER' || this.loginsessionDetails?.userRole == 'AGENCY_EXECUTOR') {
                   return `  <button type="button" class="btn btn-default btn-sm text-lime-green edit-btn" 
                   title="Sessions" data-bs-toggle="modal" data-bs-target="#viewModal" 
@@ -135,7 +135,7 @@ export class ViewProgramAgenciesComponent implements OnInit ,AfterViewInit{
     title: 'District',
     orderable: false ,
     render: function(data, type, row, meta:any) {
-      console.log(data,meta,type, row)
+      // console.log(data,meta,type, row)
         return row?.district ? row?.district : '-';   
     },
     className: 'dt-center'
@@ -331,7 +331,7 @@ export class ViewProgramAgenciesComponent implements OnInit ,AfterViewInit{
       this._commonService.getById(APIS.programCreation.programSummary, this.selectedAgencyId).subscribe({
         next: (res: any) => {          
           // this.PrigramSummaryData = res?.data   
-        console.log( this.PrigramSummaryData)
+        // console.log( this.PrigramSummaryData)
         this.PrigramSummaryData = res?.data
         },
         error: (err) => {
