@@ -260,7 +260,7 @@ export class ViewAllAgencyCompletedComponent implements OnInit,AfterViewInit {
     },
       { 
         data: 'programType',
-        title: 'Type Of Program',
+        title: 'Budget Head',
         render: function(data, type, row) {
           return data ? data : '';
         }

@@ -142,7 +142,7 @@ export class ViewProgramAgenciesComponent implements OnInit ,AfterViewInit{
 },
     { 
       data: 'programType',
-      title: 'Type Of Program'
+      title: 'Budget Head'
   },
       { 
         data: 'agencyName',

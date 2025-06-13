@@ -33,37 +33,37 @@
                     </div>
                     <div class="row mb-3">
                         <div class="col-12 col-sm-12 col-md-2 col-lg-2">
-                            <div class="card bg-primary text-white text-center shadow-none p-2 pb-4">
+                            <div class="card bg-primary text-white text-center shadow-none  p-2">
                                 <label class="mb-2">Total Programs Scheduled</label>
                                 <p class="fw-bold fs-6 mb-0">{{PrigramSummaryData?.programScheduled || 0}}</p>
                             </div>
                         </div>
                         <div class="col-12 col-sm-12 col-md-2 col-lg-2">
-                            <div class="card bg-warning text-white text-center shadow-none p-2 pb-4">
+                            <div class="card bg-warning text-white text-center shadow-none  p-2">
                                 <label class="mb-2" >Programs In-Progress</label>
                                 <p class="fw-bold fs-6 mb-0 fw-600">{{PrigramSummaryData?.programInProcess || 0}}</p>
                             </div>
                         </div>
-                        <div class="col-12 col-sm-12 col-md-2 col-lg-2">
+                        <div class="col-12 col-sm-12 col-md-3 col-lg-3">
                             <div class="card bg-success text-white text-center shadow-none p-2">
-                                <label>Programs Completed & Data Uploaded</label>
+                                <label class="mb-2">Programs Completed & Data Uploaded</label>
                                 <p class="fw-bold fs-6 mb-0">{{PrigramSummaryData?.programsCompleted || 0}}</p>
                             </div>
                         </div>
-                        <div class="col-12 col-sm-12 col-md-2 col-lg-2">
+                        <div class="col-12 col-sm-12 col-md-3 col-lg-3">
                             <div class="card  text-white text-center shadow-none p-2" style="background-color: chocolate;">
-                                <label>Programs Completed - Data Pending</label>
+                                <label class="mb-2">Programs Completed - Data Pending</label>
                                 <p class="fw-bold fs-6 mb-0">{{PrigramSummaryData?.programsCompletedDataPending || 0}}</p>
                             </div>
                         </div>
-                        <div class="col-12 col-sm-12 col-md-2 col-lg-2">
-                            <div class="card bg-danger text-white text-center shadow-none p-2 pb-4">
+                        <!-- <div class="col-12 col-sm-12 col-md-2 col-lg-2">
+                            <div class="card bg-danger text-white text-center shadow-none  ">
                                 <label class="mb-2">Programs Over Due</label>
                                 <p class="fw-bold fs-6 mb-0">{{PrigramSummaryData?.programOverDue || 0}}</p>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="col-12 col-sm-12 col-md-2 col-lg-2">
-                            <div class="card bg-info text-white text-center shadow-none p-2 pb-4">
+                            <div class="card bg-info text-white text-center shadow-none  p-2">
                                 <label class="mb-2">Programs Yet To Begin</label>
                                 <p class="fw-bold fs-6 mb-0">{{PrigramSummaryData?.programYetBegin || 0}}</p>
                             </div>
@@ -81,7 +81,7 @@
                                     <th>End Date</th>
                                     <th>In Time</th>
                                     <th>Out Time</th>
-                                    <th>Type Of Program</th>
+                                    <th>Budget Head</th>
                                     <th>District</th>
                                     <th>Title Of Program</th>
                                     <th>Status</th>

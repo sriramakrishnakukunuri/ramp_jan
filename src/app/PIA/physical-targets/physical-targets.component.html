@@ -28,65 +28,63 @@
           <div class="text-end">
             <p class="fw-600">PT - Physical Target, FT - Financial Target</p>
           </div>
-          <div class="data-container">
-            <div class="data-table-Own">
-              <table class="table table-bordered table-striped nowrap w-100">
-                <thead class="bg-lime-green text-white">
-                  <tr>
-                    <th class="text-center"  rowspan="2">Output</th>
-                    <th class="text-center"  rowspan="2">Grand Total</th>
-                    <ng-container *ngFor="let item of this.tableheaderList">
-                      <th  class="text-center"  colspan="5">FY{{item}}</th>
-                    </ng-container>
-                   
-                </tr>
+          <div class="table-container">
+            <table class="table table-bordered table-striped nowrap w-100">
+              <thead class="bg-lime-green text-white">
                 <tr>
+                  <th class="text-center"  rowspan="2">Output</th>
+                  <th class="text-center"  rowspan="2">Grand Total</th>
                   <ng-container *ngFor="let item of this.tableheaderList">
-                    <th class="text-center"  >Total</th>
-                    <th class="text-center" >Q1(Apr-Jun)</th>
-                    <th class="text-center" >Q2(Jul-Sep)</th>
-                    <th class="text-center" >Q3(Oct-Dec)</th>
-                    <th class="text-center" >Q4(Jan-Mar)</th>
+                    <th  class="text-center"  colspan="5">FY{{item}}</th>
                   </ng-container>
-                   
-    
-                </tr>
-    
-                </thead>
-                <tbody *ngIf="tableList.length">
-                  <tr *ngFor="let item of tableList; let i = index">
-                    <td>{{item?.outcomeTableName}}</td>
-                    <td>{{item?.grandTotal}}</td>
-                   
-                    <ng-container *ngFor="let list of this.tableheaderList; let i = index;">
-                      <ng-container *ngIf="getYearData(item, list) as yearData">
-                        <td>{{yearData.total || 0}}</td>
-                        <td>{{yearData.q1 || 0}}</td>
-                        <td>{{yearData.q2 || 0}}</td>
-                        <td>{{yearData.q3 || 0}}</td>
-                        <td>{{yearData.q4 || 0}}</td>
-                      </ng-container>
+                 
+              </tr>
+              <tr>
+                <ng-container *ngFor="let item of this.tableheaderList">
+                  <th class="text-center"  >Total</th>
+                  <th class="text-center" >Q1(Apr-Jun)</th>
+                  <th class="text-center" >Q2(Jul-Sep)</th>
+                  <th class="text-center" >Q3(Oct-Dec)</th>
+                  <th class="text-center" >Q4(Jan-Mar)</th>
+                </ng-container>
+                 
+  
+              </tr>
+  
+              </thead>
+              <tbody *ngIf="tableList.length">
+                <tr *ngFor="let item of tableList; let i = index">
+                  <td>{{item?.outcomeTableName}}</td>
+                  <td>{{item?.grandTotal}}</td>
+                 
+                  <ng-container *ngFor="let list of this.tableheaderList; let i = index;">
+                    <ng-container *ngIf="getYearData(item, list) as yearData">
+                      <td>{{yearData.total || 0}}</td>
+                      <td>{{yearData.q1 || 0}}</td>
+                      <td>{{yearData.q2 || 0}}</td>
+                      <td>{{yearData.q3 || 0}}</td>
+                      <td>{{yearData.q4 || 0}}</td>
                     </ng-container>
-                    <!-- <td class="text-center">
-                      <button type="button" class="btn btn-default btn-sm text-lime-green"
-                        (click)="openTargetsModal('edit',item)">
-                        <span class="bi bi-pencil"></span>
-                      </button>
-                      <button type="button" class="btn btn-default btn-sm text-danger ms-2"
-                        (click)="deleteExpenditure(item)">
-                        <span class="bi bi-trash"></span>
-                      </button>
-                    </td> -->
-                  </tr>
-    
-                </tbody>
-                <tbody *ngIf="!tableList.length">
-                  <tr>
-                    <td class="text-center" colspan="7">Data Not Available</td>
-                  </tr>
-                </tbody>
-                </table>
-            </div>
+                  </ng-container>
+                  <!-- <td class="text-center">
+                    <button type="button" class="btn btn-default btn-sm text-lime-green"
+                      (click)="openTargetsModal('edit',item)">
+                      <span class="bi bi-pencil"></span>
+                    </button>
+                    <button type="button" class="btn btn-default btn-sm text-danger ms-2"
+                      (click)="deleteExpenditure(item)">
+                      <span class="bi bi-trash"></span>
+                    </button>
+                  </td> -->
+                </tr>
+  
+              </tbody>
+              <tbody *ngIf="!tableList.length">
+                <tr>
+                  <td class="text-center" colspan="7">Data Not Available</td>
+                </tr>
+              </tbody>
+              </table>
           </div>
           
           
