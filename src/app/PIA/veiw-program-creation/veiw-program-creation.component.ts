@@ -213,8 +213,8 @@ export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
                 data-id="${row.id}" title="View">
                 <span class="bi bi-eye"></span>
               </button>
-                <button type="button" class="btn btn-default btn-sm text-danger editable-btn ${row.overdue ? 'isdisable' : ''}" data-id="${row.id}" title="Edit"><span class="bi bi-pencil"></span></button>
-                <button type="button" class="btn btn-default btn-sm text-danger overDue-btn ${!row.overdue ? 'isdisable' : ''}" data-id="${row.id}" title="Over-due"><span class="bi bi-alarm-fill"></span></button>
+                <button type="button" class="btn btn-default btn-sm text-danger editable-btn  data-id="${row.id}" title="Edit"><span class="bi bi-pencil"></span></button>
+             
              
               `;
             // }
@@ -272,7 +272,7 @@ export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
   },
     { 
       data: 'programType',
-      title: 'Type Of Program',
+      title: 'Budget Head',
       render: function(data, type, row) {
         return data ? data : '';
       }

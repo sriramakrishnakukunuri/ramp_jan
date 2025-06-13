@@ -206,6 +206,11 @@ export class FinancialTargetsComponent implements OnInit {
     this.GetProgramsByAgency(this.selectedAgencyId);
      } 
     initializeDataTable() {
+        // Destroy existing instance if it exists
+  if ($.fn.DataTable.isDataTable('#view-physical-table')) {
+    $('#view-physical-table').DataTable().destroy();
+  }
+
       this.dataTable = new DataTable('#view-physical-table', {
         // scrollX: true,
         // scrollCollapse: true,    
@@ -223,6 +228,7 @@ export class FinancialTargetsComponent implements OnInit {
         destroy: true, // Ensure reinitialization doesn't cause issues
       });
     }
+
     reinitializeDataTable() {
       if (this.dataTable) {
         this.dataTable.destroy();
