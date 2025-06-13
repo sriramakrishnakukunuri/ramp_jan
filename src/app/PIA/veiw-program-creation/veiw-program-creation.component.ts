@@ -213,7 +213,7 @@ export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
                 data-id="${row.id}" title="View">
                 <span class="bi bi-eye"></span>
               </button>
-                <button type="button" class="btn btn-default btn-sm text-danger editable-btn  data-id="${row.id}" title="Edit"><span class="bi bi-pencil"></span></button>
+                <button type="button" class="btn btn-default btn-sm text-danger editable-btn"  data-id="${row.id}" title="Edit"><span class="bi bi-pencil"></span></button>
              
              
               `;
