@@ -235,6 +235,8 @@ export class ProgramCreationComponent implements OnInit, AfterViewInit {
     maindata['endDate'] = moment(maindata['endDate']).format('DD-MM-YYYY')
     maindata['locationId'] = Number(this.programCreationMain.value?.programLocation)
     maindata['agencyId'] = Number(this.agencyId)
+    maindata['activityId'] = Number(this.programCreationMain.value?.activityId)
+    maindata['subActivityId'] = Number(this.programCreationMain.value?.subActivityId)
     this.loading = true;
     if(this.programId) {
       maindata['programId'] = Number(this.programId)
