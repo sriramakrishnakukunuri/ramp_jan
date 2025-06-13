@@ -243,14 +243,14 @@ export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
             return data ? data : '';
           }
       },
-      // { 
-      //     data: 'endTime',
-      //     title: 'Out Time',
-      //     className: 'text-center',
-      //     render: function(data, type, row) {
-      //       return data ? data : '';
-      //     }
-      // },
+      { 
+          data: 'endTime',
+          title: 'Out Time',
+          className: 'text-center',
+          render: function(data, type, row) {
+            return data ? data : '';
+          }
+      },
       { 
         data: 'programLocationName',
         title: 'Program Location',
