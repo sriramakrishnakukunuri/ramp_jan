@@ -139,5 +139,21 @@ export class CaptureOutcomeDynamicComponent implements OnInit {
     
 
   }
- 
+  addArrayItem(fieldName: string, inputElement: HTMLInputElement) {
+    const newValue = inputElement.value.trim();
+    if (newValue) {
+        const currentArray = this.f2[fieldName].value || [];
+        currentArray.push(newValue);
+        this.f2[fieldName].setValue(currentArray);
+        inputElement.value = ''; // Clear the input
+        this.f2[fieldName].markAsTouched();
+    }
+}
+
+removeArrayItem(fieldName: string, index: number) {
+    const currentArray = this.f2[fieldName].value || [];
+    currentArray.splice(index, 1);
+    this.f2[fieldName].setValue(currentArray);
+    this.f2[fieldName].markAsTouched();
+}
 }

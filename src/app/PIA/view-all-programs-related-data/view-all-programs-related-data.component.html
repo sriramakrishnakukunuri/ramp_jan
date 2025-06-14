@@ -1,0 +1,424 @@
+<main class="mt-4">
+    <section>
+        <div class="card mb-3">
+            <div class="card-header bg-transparent">
+                <div class="row align-items-center">
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-6">
+                        <h6 class="fw-600 mb-2 mb-sm-0">Completed Programs</h6>
+                    </div>
+                    <ng-container *ngIf="loginsessionDetails?.userRole == 'ADMIN'">
+                        <div class="col-12 col-sm-3 col-md-3 col-lg-3">
+                            <label for="Agencies" style="font-weight: 600;">List Of Agencies</label>
+                            <select class="form-select" [(ngModel)]="selectedAgencyId" (change)="getProgramsByAgencyAdmin($any($event.target).value)">    
+                                <!-- <option value="All Agencies">All Agencies</option>                                   -->
+                                <option *ngFor="let list of agencyList" value="{{list.agencyId}}">{{list.agencyName}}</option>
+                            </select>
+                        </div>
+                        <div class="col-12 col-sm-3 col-md-3 col-lg-3">
+                            <label for="Agencies" style="font-weight: 600;">List Of Programs</label>
+                            <select class="form-select" [(ngModel)]="programIds" (change)="dropdownProgramsList($event,'table')">
+                                <!-- <option value="All Programs">All Programs</option>   -->
+                            <option *ngFor="let list of agencyProgramList" value="{{list.programId}}">{{list.programTitle}}</option>
+                            </select>
+                        </div>
+                    </ng-container>   
+                    <ng-container *ngIf="loginsessionDetails?.userRole != 'ADMIN'">
+                        <div class="col-12 col-sm-3 col-md-3 col-lg-3">
+                            <label for="Agencies" style="font-weight: 600;">List Of Programs</label>
+                            <select class="form-select" [(ngModel)]="programIds" (change)="dropdownProgramsList($event,'table')">
+                                <!-- <option value="">Select Program</option> -->
+                            <option *ngFor="let list of agencyProgramList" value="{{list.programId}}">{{list.programTitle}}</option>
+                            </select>
+                        </div>
+                    </ng-container>
+                   
+                </div>
+            </div>
+            <div class="card-body">
+                <nav>
+                    <div class="nav nav-tabs mb-3" id="nav-tab" role="tablist">
+                        <button [ngClass]="{ 'active':activeTab==='nav-five'}" (click)="onTabChange('nav-five')" class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-five" type="button" role="tab" aria-controls="nav-home" aria-selected="true"> Program Details</button>
+                      <button [ngClass]="{ 'active':activeTab==='nav-ones'}" (click)="onTabChange('nav-ones')" class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-ones" type="button" role="tab" aria-controls="nav-home" aria-selected="true"> Session Details</button>
+                      <button [ngClass]="{ 'active':activeTab==='nav-twos'}" (click)="onTabChange('nav-twos')" class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-twos" type="button" role="tab" aria-controls="nav-profile" aria-selected="false"> Participant Details </button>
+                      <button [ngClass]="{ 'active':activeTab==='nav-three'}" (click)="onTabChange('nav-three')" class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-three" type="button" role="tab" aria-controls="nav-profile" aria-selected="false"> Attendance Details</button>
+                      <button [ngClass]="{ 'active':activeTab==='nav-four'}" (click)="onTabChange('nav-four')" class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-four" type="button" role="tab" aria-controls="nav-profile" aria-selected="false"> Expenditure Details</button>
+                   </div>
+                  </nav>
+              
+                  <div class="tab-content border bg-light" id="nav-tabContent" >
+                    <div class="tab-pane fade active show" id="nav-five" role="tabpanel" aria-labelledby="nav-home-tab" [ngClass]="{ 'active':activeTab==='nav-five'}" *ngIf="activeTab==='nav-five'" >
+                       
+                        <div class="card-body p-0">
+                            <div class="p-3">
+                              <div class="row">
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                                  <div class="mb-3">
+                                    <label class="fs-md fw-600 mb-1 d-block">Title Of Program</label>
+                                    <label class="fs-md fw-600">{{ProgramData?.programTitle}}</label>
+                                    <!-- <input type="text" class="form-control" formControlName="state">
+                                    <div *ngIf="programForm.get('state')?.invalid && programForm.get('state')?.touched" class="text-danger">
+                                      State is required
+                                    </div> -->
+                                  </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                                  <div class="mb-3">
+                                    <label class="fs-md fw-600 mb-1 d-block">Start Date</label>
+                                    <label class="fs-md fw-600">{{ProgramData?.startDate}}</label>
+                                    <!-- <input type="text" class="form-control" formControlName="district">
+                                    <div *ngIf="programForm.get('district')?.invalid && programForm.get('district')?.touched" class="text-danger">
+                                      District is required
+                                    </div> -->
+                                  </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                                  <div class="mb-3">
+                                    <label class="fs-md fw-600 mb-1 d-block">End Date</label>
+                                    <label class="fs-md fw-600">{{ProgramData?.endDate}}</label>
+                                    <!-- <input type="date" class="form-control" formControlName="dateOfMonitoring">
+                                    <div *ngIf="programForm.get('dateOfMonitoring')?.invalid && programForm.get('dateOfMonitoring')?.touched" class="text-danger">
+                                      Date is required
+                                    </div> -->
+                                  </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                                  <div class="mb-3">
+                                    <label class="fs-md fw-600 mb-1 d-block">In Time</label>
+                                    <label class="fs-md fw-600">{{ProgramData?.startTime}}</label>
+                                    <!-- <input type="text" class="form-control" formControlName="agencyName"> -->
+                                  </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                                  <div class="mb-3">
+                                    <label class="fs-md fw-600 mb-1 d-block">Out Time</label>
+                                    <label class="fs-md fw-600">{{ProgramData?.endTime}}</label>
+                                    <!-- <input type="text" class="form-control" formControlName="programType"> -->
+                                  </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                                  <div class="mb-3">
+                                    <label class="fs-md fw-600 mb-1 d-block">Budget Head</label>
+                                    <label class="fs-md fw-600">{{ProgramData?.programType}}</label>
+                                    <!-- <input type="text" class="form-control" formControlName="programName"> -->
+                                  </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                                  <div class="mb-3">
+                                    <label class="fs-md fw-600 mb-1 d-block">Status</label>
+                                    <label class="fs-md fw-600">{{ProgramData?.status}}</label>
+                                    <!-- <input type="text" class="form-control" formControlName="venueName"> -->
+                                  </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                                  <div class="mb-3">
+                                    <label class="fs-md fw-600 mb-1 d-block">Type of Activity</label>
+                                    <label class="fs-md fw-600">{{ProgramData?.activityName}}</label>
+                                    <!-- <input type="text" class="form-control" formControlName="hostingAgencyName"> -->
+                                  </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                                    <div class="mb-3">
+                                      <label class="fs-md fw-600 mb-1 d-block">Sub Activity</label>
+                                      <label class="fs-md fw-600">{{ProgramData?.subActivityName}}</label>
+                                      <!-- <input type="text" class="form-control" formControlName="hostingAgencyName"> -->
+                                    </div>
+                                  </div>
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                                  <div class="mb-3">
+                                    <label class="fs-md fw-600 mb-1 d-block">Name of the SPOC</label>
+                                    <label class="fs-md fw-600">{{ProgramData?.spocName}}</label>
+                                    <!-- <input type="text" class="form-control" formControlName="spocName"> -->
+                                  </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                                  <div class="mb-3">
+                                    <label class="fs-md fw-600 mb-1 d-block">SPOC Contact Number</label>
+                                    <label class="fs-md fw-600">{{ProgramData?.spocContactNo}}</label>
+                                    <!-- <input type="tel" class="form-control" formControlName="spocContact">
+                                    <div *ngIf="programForm.get('spocContact')?.invalid && programForm.get('spocContact')?.touched" class="text-danger">
+                                      Valid 10-digit number required
+                                    </div> -->
+                                  </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                                    <div class="mb-3">
+                                      <label class="fs-md fw-600 mb-1 d-block">Program Location</label>
+                                      <label class="fs-md fw-600">{{ProgramData?.programLocationName}}</label>
+                                      <!-- <input type="tel" class="form-control" formControlName="spocContact">
+                                      <div *ngIf="programForm.get('spocContact')?.invalid && programForm.get('spocContact')?.touched" class="text-danger">
+                                        Valid 10-digit number required
+                                      </div> -->
+                                    </div>
+                                  </div>
+                               
+                              </div>
+                            </div>
+                          </div>
+                    </div>
+                    <div class="tab-pane fade active show" id="nav-ones" role="tabpanel" aria-labelledby="nav-home-tab" [ngClass]="{ 'active':activeTab==='nav-ones'}" *ngIf="activeTab==='nav-ones'" >
+                        <div class="table-container">
+                            <table id="session-table" class="table table-bordered nowrap w-100">
+                                <thead class="bg-lime-green text-white">
+                                    <tr>
+                                        <th>S.No</th>
+                                        <th>Date</th>
+                                        <th>Start Time</th>
+                                        <th>End Time</th>
+                                        <th>Type of Session</th>
+                                        <th>Methodology</th>
+                                        <th>Session Details</th>
+                                        <th>Resource Person</th>
+                                        <th>Streaming URL</th>
+                                        <th>Upload File</th>
+                                       
+                                    </tr>
+                                </thead>
+                                <tbody *ngFor="let item of ProgramData?.programSessionList; let i = index">
+                                    <tr>
+                                        <td>{{i + 1}}</td>
+                                        <td>{{item.sessionDate}}</td>
+                                        <td>{{item.startTime}}</td>
+                                        <td>{{item.endTime }}</td>
+                                        <td>{{item.sessionTypeName}}</td>
+                                        <td>{{item.sessionTypeMethodology}}</td>
+                                        <td>{{item.sessionDetails}}</td>
+                                        <td>{{item.resourceName}}</td>
+                                        <td>{{item.sessionStreamingUrl}}</td>
+                                        <td>
+                                            <ng-container *ngIf="item.files?.length > 0">
+                                                <!-- <button class="btn btn-secondary" type="button"
+                                                    data-bs-toggle="collapse"
+                                                    [attr.data-bs-target]="'#collapseFiles' + i"
+                                                    aria-expanded="false"
+                                                    [attr.aria-controls]="'collapseFiles' + i">
+                                                    Files List
+                                                </button>                                         -->
+        
+                                                <i *ngIf="!collapseStates[i]" class="fa fa-arrow-circle-down" role="button"
+                                                    data-bs-toggle="collapse" [attr.data-bs-target]="'#collapseFiles' + i"
+                                                    aria-expanded="false" [attr.aria-controls]="'collapseFiles' + i"
+                                                    (click)="toggleIcon(i)"></i>
+                                                <i *ngIf="collapseStates[i]" class="fa fa-arrow-circle-up" role="button"
+                                                    data-bs-toggle="collapse" [attr.data-bs-target]="'#collapseFiles' + i"
+                                                    aria-expanded="false" [attr.aria-controls]="'collapseFiles' + i"
+                                                    (click)="toggleIcon(i)"></i>
+                                                <!-- 
+                                                <ng-container *ngFor="let file of item.files let first = first ;let last = last; let i = index">
+                                                    <a href="{{file.filePath}}" target="_blank">{{file.filePath}}</a>
+                                                    <span *ngIf="!last">, </span>
+                                                </ng-container>
+                                                -->
+                                            </ng-container>
+                                            <ng-container *ngIf="!item.files?.length">
+                                                <span>No Uploads</span>
+                                            </ng-container>
+                                        </td>
+                                      
+                                    </tr>
+                                    <tr>
+                                      
+                                        <td colspan="10" class="sub-table">
+                                            <div [id]="'collapseFiles' + i" class="collapse mt-2">
+                                                <div class="file-carousel-container">
+                                                    <div class="file-carousel">
+                                                        <div *ngFor="let file of item.files; let jj=index" class="file-card">
+        
+                                                            <!-- Delete Icon -->
+                                                            <!-- <i class="fas fa-trash delete-icon" 
+                                                                (click)="deleteFile(file,jj)" 
+                                                                title="Delete file"></i> -->
+        
+                                                            <div class="file-icon">
+                                                                <i [ngClass]="getFileIcon(file.filePath)"
+                                                                    [ngStyle]="{'color': getIconColor(file.filePath)}"
+                                                                    class="fa-3x"></i>
+                                                            </div>
+                                                            <div class="file-name">
+                                                                <a (click)="showPreviewPopup(file)" [attr.href]="previewData"
+                                                                    target="_blank" class="text-primary text-decoration-none">
+                                                                    Download
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+        
+                                        </td>
+        
+        
+                                    </tr>
+                                </tbody>
+                                <tbody *ngIf="ProgramData?.length==0">
+                                <tr>
+                                    <td colspan="100%" class="text-center">No Data Found</td>
+                                </tr>
+                            </tbody>
+                                
+                            </table>
+                        </div>
+                       
+                    </div>
+                    <div class="tab-pane fade show" id="nav-twos" role="tabpanel" aria-labelledby="nav-profile-tab" [ngClass]="{ 'active':activeTab==='nav-twos'}" *ngIf="activeTab==='nav-twos'">
+                        <table id="view-table-participant1" class="table table-borderless table-striped nowrap">
+                            <thead class="bg-lime-green text-white">
+                                <tr>
+                                    <th>S.No</th>
+                                    <th>IsAspirant</th>
+                                    <th>Oragnization Name</th>
+                                    <th>Name of the Participant</th>
+                                    <th>Gender</th>
+                                    <th>Disability</th>
+                                    <th>Aadhar No.</th>
+                                    <th>Category</th>
+                                    <th>Mobile No.</th>
+                                    <th>Email</th>
+                                    <th>Designation/Current Trade</th>
+                                    <th>Previous Participant</th>
+                                    <th>Pre-Training Assessment</th>
+                                    <th>Post Training Assessment</th>
+                                    <th>Certificate Issue Date</th>
+                                    <th>Issue Date</th>
+                                    <th>Methodology Used for Needs Assessment</th>
+                                  
+                                </tr>
+                            </thead>
+                            <tbody *ngIf="submitedData">
+                                <tr  *ngFor="let item of submitedData; let i=index">
+                                    <td class="text-start">{{i+1}}</td>
+                                    <td>{{item?.organizationName?'No':'Yes'}}</td>
+                                    <td >{{item?.isAspirant=='Aspirant'?'':item?.organizationName}}</td>
+                                    <td>{{item?.participantName}}</td>
+                                    <td>{{item?.gender}}</td>
+                                    <td>{{item?.disability}}</td>
+                                    <td>{{item?.aadharNo}}</td>
+                                    <td>{{item?.category}}</td>
+                                    <td>{{item?.mobileNo}}</td>
+                                    <td>{{item?.email}}</td>
+                                    <td>{{item?.designation}}</td>
+                                    <td>{{item?.isParticipatedBefore}}</td>
+                                    <td>{{item?.preTrainingAssessmentConducted}}</td>
+                                    <td>{{item?.postTrainingAssessmentConducted}}</td>
+                                    <td>{{item?.isCertificateIssued=='Y'?'Yes':'No'}}</td>
+                                    <td>{{item?.isCertificateIssued=='Y'?item?.certificateIssueDate:''}}</td>
+                                    <td>{{item?.needAssessmentMethodology}}</td>
+                                  
+                                </tr>
+                            </tbody>
+                            <tbody *ngIf="submitedData?.length==0">
+                                <tr>
+                                    <td colspan="100%" class="text-center">No Data Found</td>
+                                </tr>
+                            </tbody>
+                        </table> 
+                       
+                    </div>
+                    <div class="tab-pane fade show" id="nav-three" role="tabpanel" aria-labelledby="nav-profile-tab" [ngClass]="{ 'active':activeTab==='nav-three'}" *ngIf="activeTab==='nav-three'">
+                        <div class="table-container">
+                            <table class="table table-bordered nowrap">
+                                <thead class="bg-lime-green text-white">
+                                    <tr>
+                                        <th>S.No</th>
+                                        <th>Participant Name</th>
+                                        <th>Mobile No</th>
+                                        <!-- <th>Member Id</th>
+                                        <th>Member Name</th> -->
+                                        <th *ngFor="let header of getAttendanceHeaders(); let i = index">
+                                            Day {{i + 1}}
+                                        </th>
+                                        <th>Percentage of present</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <ng-container *ngIf="ParticipantAttendanceData?.participantAttendanceList?.length > 0; else noData">
+                                        <tr  *ngFor="let item of  this.ParticipantAttendanceData.participantAttendanceList; let i = index">
+                                            <td>{{ i + 1 }}</td>
+                                            <td>{{ item?.participantName }}</td>
+                                            <td>{{ item?.mobileNo }}</td>
+                                          
+                                            <td class="text-center"   *ngFor="let dataInner of item.attendanceData1; let j = index">
+                                                <ng-container >
+                                                    {{dataInner[j]}}
+                                                </ng-container>
+                                            </td> 
+                                            <td>{{item?.percentage}}%</td>
+                                        </tr>
+                                    </ng-container>
+                                    <ng-template #noData>
+                                        <tr>
+                                            <td colspan="100%" class="text-center">No Data Found</td>
+                                        </tr>
+                                    </ng-template>
+                                </tbody>
+                            </table>
+                        </div>
+                      
+                      </div>
+                      <div class="tab-pane fade show" id="nav-four" role="tabpanel" aria-labelledby="nav-profile-tab" [ngClass]="{ 'active':activeTab==='nav-four'}" *ngIf="activeTab==='nav-four'">
+                        <div class="table-container">
+                            <table  class="table table-bordered nowrap w-100">
+                                <thead class="bg-lime-green text-white">
+                                    <tr>
+                                        <th>S.No</th>
+                                        <th>Type Of Expenditure</th>
+                                        <th>Head of Expense</th>
+                                        <th>Amount (INR)</th>
+                                        <th>Bill No.</th>
+                                        <th>Bill Date</th>
+                                        <th>Payee Name</th>
+                                        <th>Bank</th>
+                                        <th>IFSC Code</th>
+                                        <th>Mode of Payment</th>
+                                      
+                                      
+                                    </tr>
+                                </thead>
+                                <tbody *ngIf="getExpenditureDataBoth?.length">
+                                    <tr  *ngFor="let item of getExpenditureDataBoth; let i=index">
+                                        <td class="text-start">{{i+1}}</td>
+                                        <td>{{item?.expenditureType}}</td>
+                                        <td>{{item?.headOfExpense}}</td>
+                                        <td>{{item?.cost?item?.cost:item?.allocatedCost}}</td>
+                                        <td>{{item?.billNo}}</td>
+                                        <td>{{item?.billDate}}</td>
+                                        <td>{{item?.payeeName}}</td>
+                                        <td>{{item?.bankName}}</td>
+                                        <td>{{item?.ifscCode}}</td>
+                                        <td>{{item?.modeOfPayment}}</td>
+                                        <!-- <td>{{item?.purpose}}</td> -->
+                                        <!-- <td>{{item?.uploadBillUrl}}</td> -->
+                                       
+                                    </tr>
+                                </tbody>
+                                <tbody *ngIf="getExpenditureDataBoth?.length">
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td>Total</td>
+                                        <td>{{TotalAmount}}</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                   
+                                </tbody>
+                                <tbody *ngIf="getExpenditureDataBoth?.length==0">
+                                    <tr>
+                                        <td colspan="100%" class="text-center">No Data Found</td>
+                                    </tr>
+                                </tbody>
+                              
+                            </table>
+                        </div>
+                        
+                      </div>
+                  </div> 
+            </div>
+            
+        </div>
+
+    </section>
+</main>

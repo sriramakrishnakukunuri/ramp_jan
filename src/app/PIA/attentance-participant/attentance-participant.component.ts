@@ -124,7 +124,7 @@ export class AttentanceParticipantComponent implements OnInit,AfterViewInit {
           attendanceData[index]=item
           attendanceData1.push(attendanceData)
         })
-        data['percentage'] = (data?.attendanceData?.filter((item:any)=>item=='P')?.length/data?.attendanceData?.length)*100
+        data['percentage'] = ((data?.attendanceData?.filter((item:any)=>item=='P')?.length/data?.attendanceData?.length)*100).toFixed(2)
         data['attendanceData1']=attendanceData1
       })
      
