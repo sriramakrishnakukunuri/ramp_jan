@@ -131,27 +131,27 @@
                             <div class="col-12 col-sm-12 col-md-4 col-lg-3">
                                 <h6 class="fw-400 mb-2 mb-sm-3 mb-md-0 mt-3">{{Feilds?.fieldDisplayName}}<span class="c-red"> *</span> :</h6>
                             </div>
-                          <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
+                          <div class="col-12 col-sm-12 col-md-4 col-lg-3 mb-3">
                             <ng-container *ngIf="Feilds?.fieldType=='text'" >
                                 <div class="form-floating mb-3 mb-sm-3 mb-md-0">
                                     <input type="text" class="form-control" id="" placeholder="{{Feilds?.fieldDisplayName}}" name="{{Feilds?.fieldName}}" formControlName="{{Feilds?.fieldName}}">
                                     <!-- <label for="{{Feilds?.fieldName}}">{{Feilds?.fieldDisplayName}}</label> -->
                                 </div>
-                                <div *ngIf="f2[Feilds?.fieldName].touched && !f2[Feilds?.fieldName].valid" class="error">{{Feilds?.fieldDisplayName}} is required</div>
+                                <div *ngIf="f2[Feilds?.fieldName]?.touched && !f2[Feilds?.fieldName]?.valid" class="error">{{Feilds?.fieldDisplayName}} is required</div>
                             </ng-container>
                             <ng-container *ngIf="Feilds?.fieldType=='date'" >
                                 <div class="form-floating mb-3 mb-sm-3 mb-md-0">
                                     <input type="date" class="form-control" id="" placeholder="{{Feilds?.fieldDisplayName}}" name="{{Feilds?.fieldName}}" formControlName="{{Feilds?.fieldName}}">
                                     <!-- <label for="{{Feilds?.fieldName}}">{{Feilds?.fieldDisplayName}}</label> -->
                                 </div>
-                                <div *ngIf="f2[Feilds?.fieldName].touched && !f2[Feilds?.fieldName].valid" class="error">{{Feilds?.fieldDisplayName}} is required</div>
+                                <div *ngIf="f2[Feilds?.fieldName]?.touched && !f2[Feilds?.fieldName]?.valid" class="error">{{Feilds?.fieldDisplayName}} is required</div>
                             </ng-container>
                             <ng-container *ngIf="Feilds?.fieldType=='number' || Feilds?.fieldType=='decimal'" >
                                 <div class="form-floating mb-3 mb-sm-3 mb-md-0">
                                     <input type="number" class="form-control" id="" placeholder="{{Feilds?.fieldDisplayName}}" name="{{Feilds?.fieldName}}" formControlName="{{Feilds?.fieldName}}">
                                     <!-- <label for="{{Feilds?.fieldName}}">{{Feilds?.fieldDisplayName}}</label> -->
                                 </div>
-                                <div *ngIf="f2[Feilds?.fieldName].touched && !f2[Feilds?.fieldName].valid" class="error">{{Feilds?.fieldDisplayName}} is required</div>
+                                <div *ngIf="f2[Feilds?.fieldName]?.touched && !f2[Feilds?.fieldName]?.valid" class="error">{{Feilds?.fieldDisplayName}} is required</div>
                             </ng-container>
                             <ng-container *ngIf="Feilds?.fieldType=='radio button'" >
                                 <div class="form-floating mb-3 mb-sm-3 mb-md-0">
@@ -167,7 +167,46 @@
                                     </div>
 
                                 </div>
-                                <div *ngIf="f2[Feilds?.fieldName].touched && !f2[Feilds?.fieldName].valid" class="error">{{Feilds?.fieldDisplayName}} is required</div>
+                                <div *ngIf="f2[Feilds?.fieldName]?.touched && !f2[Feilds?.fieldName]?.valid" class="error">{{Feilds?.fieldDisplayName}} is required</div>
+                            </ng-container>
+                            <ng-container *ngIf="Feilds?.fieldType=='dropdown'">
+                                <div class="form-floating mb-3 mb-sm-3 mb-md-0">
+                                    <select class="form-select" id="{{Feilds?.fieldName}}" name="{{Feilds?.fieldName}}" formControlName="{{Feilds?.fieldName}}">
+                                        <option value="" disabled selected>Select {{Feilds?.fieldDisplayName}}</option>
+                                        <option *ngFor="let option of Feilds?.fieldOptions" [value]="option">{{option}}</option>
+                                    </select>
+                                </div>
+                                <div *ngIf="f2[Feilds?.fieldName]?.touched && !f2[Feilds?.fieldName]?.valid" class="error">{{Feilds?.fieldDisplayName}} is required</div>
+                            </ng-container>
+                            <ng-container *ngIf="Feilds?.fieldType === 'array'">
+                                <div class="dynamic-array-container">
+                                    <!-- Display existing items -->
+                                    <div *ngFor="let item of f2[Feilds.fieldName]?.value; let i = index" class="array-item mb-2">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" 
+                                                   [formControlName]="Feilds.fieldName + '_' + i"
+                                                   [value]="item">
+                                            <button type="button" class="btn btn-danger" (click)="removeArrayItem(Feilds.fieldName, i)">
+                                                <i class="fas fa-times"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Add new item -->
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control" 
+                                               #newItemInput
+                                               placeholder="Add new {{Feilds.fieldDisplayName}}">
+                                        <button type="button" class="btn btn-primary" 
+                                                (click)="addArrayItem(Feilds.fieldName, newItemInput)">
+                                            <i class="fas fa-plus"></i> Add
+                                        </button>
+                                    </div>
+                                    
+                                    <div *ngIf="f2[Feilds?.fieldName]?.touched && !f2[Feilds?.fieldName]?.valid" class="error">
+                                        At least one {{Feilds.fieldDisplayName}} is required
+                                    </div>
+                                </div>
                             </ng-container>
                             <ng-container *ngIf="Feilds?.fieldType=='label'" >
                                 <div class="form-floating mb-3 mb-sm-3 mb-md-0">
@@ -183,7 +222,7 @@
                     </div>                        
                 </div>
                 <div class="text-end mb-3">
-                    <button type="button" class="btn btn-lime-green me-3" (click)="SubmitOutCome()" [disabled]="!OutComeForm.valid">Submit</button>
+                    <button type="button" class="btn btn-lime-green me-3" (click)="SubmitOutCome()" [ngClass]="{'disabled': OutComeForm.invalid}" >Submit</button>
                 </div>
             </form>
          </div>
