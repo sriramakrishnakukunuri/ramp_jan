@@ -6,23 +6,23 @@
                     <div class="col-12 col-sm-6 col-md-6 col-lg-6">
                         <h6 class="fw-600 mb-2 mb-sm-0">Completed Programs</h6>
                     </div>
-                    <ng-container *ngIf="loginsessionDetails?.userRole == 'ADMIN' && activeTab!='nav-five'">
+                    <ng-container *ngIf="loginsessionDetails?.userRole == 'ADMIN'">
                         <div class="col-12 col-sm-3 col-md-3 col-lg-3">
                             <label for="Agencies" style="font-weight: 600;">List Of Agencies</label>
                             <select class="form-select" [(ngModel)]="selectedAgencyId" (change)="getProgramsByAgencyAdmin($any($event.target).value)">    
-                                <option value="All Agencies">All Agencies</option>                                  
+                                <!-- <option value="All Agencies">All Agencies</option>                                   -->
                                 <option *ngFor="let list of agencyList" value="{{list.agencyId}}">{{list.agencyName}}</option>
                             </select>
                         </div>
                         <div class="col-12 col-sm-3 col-md-3 col-lg-3">
                             <label for="Agencies" style="font-weight: 600;">List Of Programs</label>
                             <select class="form-select" [(ngModel)]="programIds" (change)="dropdownProgramsList($event,'table')">
-                                <option value="All Programs">All Programs</option>  
+                                <!-- <option value="All Programs">All Programs</option>   -->
                             <option *ngFor="let list of agencyProgramList" value="{{list.programId}}">{{list.programTitle}}</option>
                             </select>
                         </div>
                     </ng-container>   
-                    <ng-container *ngIf="loginsessionDetails?.userRole != 'ADMIN' && activeTab!='nav-five'">
+                    <ng-container *ngIf="loginsessionDetails?.userRole != 'ADMIN'">
                         <div class="col-12 col-sm-3 col-md-3 col-lg-3">
                             <label for="Agencies" style="font-weight: 600;">List Of Programs</label>
                             <select class="form-select" [(ngModel)]="programIds" (change)="dropdownProgramsList($event,'table')">
@@ -47,58 +47,113 @@
               
                   <div class="tab-content border bg-light" id="nav-tabContent" >
                     <div class="tab-pane fade active show" id="nav-five" role="tabpanel" aria-labelledby="nav-home-tab" [ngClass]="{ 'active':activeTab==='nav-five'}" *ngIf="activeTab==='nav-five'" >
-                        <div class="table-container">
-                            <table id="view-table-program" class="table table-bordered nowrap w-100" style="width:100%">
-                                <thead class="bg-lime-green text-white">
-                                    <tr>
-                                        <th>S.No</th>
-                                      
-                                        <th>Start Date</th>
-                                        <th>End Date</th>
-                                        <th>In Time</th>
-                                        <th>Out Time</th>
-                                        <th>Budget Head</th>
-                                        <th>District</th>
-                                        <th>Title Of Program</th>
-                                        <th>Status</th>
-                                        <th>Agency Name</th>
-                                        <th>Type Of Activity</th>
-                                        <th>Sub Activity</th>
-                                        <!-- <th>No. Of Days</th> -->
-                                        <th>SPOC Name</th>
-                                        <th>SPOC Contact No.</th>
-                                        <th>Program Location</th>
-
-                                    </tr>
-                                </thead>
-                                <tbody *ngIf="agencyProgramList?.length > 0; else noData">
-                                    <tr *ngFor="let item of agencyProgramList; let i = index">
-                                        <td>{{ i + 1 }}</td>
-                                        <td>{{ item.startDate }}</td>
-                                        <td>{{ item.endDate }}</td>
-                                        <td class="text-center">{{ item.startTime }}</td>
-                                        <td class="text-center">{{ item.endTime }}</td>
-                                        <td>{{ item.programType }}</td>
-                                        <td>{{ item.district }}</td>
-                                        <td>{{ item.programTitle }}</td>
-                                        <td>{{ item.status }}</td>
-                                        <td>{{ item.agencyName }}</td>
-                                        <td>{{ item.activityName }}</td>
-                                        <td>{{ item.subActivityName }}</td>
-                                        <td>{{ item.spocName }}</td>
-                                        <td>{{ item.spocContactNo }}</td>
-                                        <td>{{ item.programLocationName }}</td>
-
-                                          </tr>
-                                          </tbody>
-                            </table>
-                            <ng-template #noData>
-                                <tr>
-                                    <td colspan="100%" class="text-center">No Data Found</td>
-                                </tr>
-                                   </ng-template>       
-                        </div>
                        
+                        <div class="card-body p-0">
+                            <div class="p-3">
+                              <div class="row">
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                                  <div class="mb-3">
+                                    <label class="fs-md fw-600 mb-1 d-block">Title Of Program</label>
+                                    <label class="fs-md fw-600">{{ProgramData?.programTitle}}</label>
+                                    <!-- <input type="text" class="form-control" formControlName="state">
+                                    <div *ngIf="programForm.get('state')?.invalid && programForm.get('state')?.touched" class="text-danger">
+                                      State is required
+                                    </div> -->
+                                  </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                                  <div class="mb-3">
+                                    <label class="fs-md fw-600 mb-1 d-block">Start Date</label>
+                                    <label class="fs-md fw-600">{{ProgramData?.startDate}}</label>
+                                    <!-- <input type="text" class="form-control" formControlName="district">
+                                    <div *ngIf="programForm.get('district')?.invalid && programForm.get('district')?.touched" class="text-danger">
+                                      District is required
+                                    </div> -->
+                                  </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                                  <div class="mb-3">
+                                    <label class="fs-md fw-600 mb-1 d-block">End Date</label>
+                                    <label class="fs-md fw-600">{{ProgramData?.endDate}}</label>
+                                    <!-- <input type="date" class="form-control" formControlName="dateOfMonitoring">
+                                    <div *ngIf="programForm.get('dateOfMonitoring')?.invalid && programForm.get('dateOfMonitoring')?.touched" class="text-danger">
+                                      Date is required
+                                    </div> -->
+                                  </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                                  <div class="mb-3">
+                                    <label class="fs-md fw-600 mb-1 d-block">In Time</label>
+                                    <label class="fs-md fw-600">{{ProgramData?.startTime}}</label>
+                                    <!-- <input type="text" class="form-control" formControlName="agencyName"> -->
+                                  </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                                  <div class="mb-3">
+                                    <label class="fs-md fw-600 mb-1 d-block">Out Time</label>
+                                    <label class="fs-md fw-600">{{ProgramData?.endTime}}</label>
+                                    <!-- <input type="text" class="form-control" formControlName="programType"> -->
+                                  </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                                  <div class="mb-3">
+                                    <label class="fs-md fw-600 mb-1 d-block">Budget Head</label>
+                                    <label class="fs-md fw-600">{{ProgramData?.programType}}</label>
+                                    <!-- <input type="text" class="form-control" formControlName="programName"> -->
+                                  </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                                  <div class="mb-3">
+                                    <label class="fs-md fw-600 mb-1 d-block">Status</label>
+                                    <label class="fs-md fw-600">{{ProgramData?.status}}</label>
+                                    <!-- <input type="text" class="form-control" formControlName="venueName"> -->
+                                  </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                                  <div class="mb-3">
+                                    <label class="fs-md fw-600 mb-1 d-block">Type of Activity</label>
+                                    <label class="fs-md fw-600">{{ProgramData?.activityName}}</label>
+                                    <!-- <input type="text" class="form-control" formControlName="hostingAgencyName"> -->
+                                  </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                                    <div class="mb-3">
+                                      <label class="fs-md fw-600 mb-1 d-block">Sub Activity</label>
+                                      <label class="fs-md fw-600">{{ProgramData?.subActivityName}}</label>
+                                      <!-- <input type="text" class="form-control" formControlName="hostingAgencyName"> -->
+                                    </div>
+                                  </div>
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                                  <div class="mb-3">
+                                    <label class="fs-md fw-600 mb-1 d-block">Name of the SPOC</label>
+                                    <label class="fs-md fw-600">{{ProgramData?.spocName}}</label>
+                                    <!-- <input type="text" class="form-control" formControlName="spocName"> -->
+                                  </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                                  <div class="mb-3">
+                                    <label class="fs-md fw-600 mb-1 d-block">SPOC Contact Number</label>
+                                    <label class="fs-md fw-600">{{ProgramData?.spocContactNo}}</label>
+                                    <!-- <input type="tel" class="form-control" formControlName="spocContact">
+                                    <div *ngIf="programForm.get('spocContact')?.invalid && programForm.get('spocContact')?.touched" class="text-danger">
+                                      Valid 10-digit number required
+                                    </div> -->
+                                  </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                                    <div class="mb-3">
+                                      <label class="fs-md fw-600 mb-1 d-block">Program Location</label>
+                                      <label class="fs-md fw-600">{{ProgramData?.programLocationName}}</label>
+                                      <!-- <input type="tel" class="form-control" formControlName="spocContact">
+                                      <div *ngIf="programForm.get('spocContact')?.invalid && programForm.get('spocContact')?.touched" class="text-danger">
+                                        Valid 10-digit number required
+                                      </div> -->
+                                    </div>
+                                  </div>
+                               
+                              </div>
+                            </div>
+                          </div>
                     </div>
                     <div class="tab-pane fade active show" id="nav-ones" role="tabpanel" aria-labelledby="nav-home-tab" [ngClass]="{ 'active':activeTab==='nav-ones'}" *ngIf="activeTab==='nav-ones'" >
                         <div class="table-container">
@@ -194,6 +249,12 @@
         
                                     </tr>
                                 </tbody>
+                                <tbody *ngIf="ProgramData?.length==0">
+                                <tr>
+                                    <td colspan="100%" class="text-center">No Data Found</td>
+                                </tr>
+                            </tbody>
+                                
                             </table>
                         </div>
                        
@@ -242,6 +303,11 @@
                                     <td>{{item?.isCertificateIssued=='Y'?item?.certificateIssueDate:''}}</td>
                                     <td>{{item?.needAssessmentMethodology}}</td>
                                   
+                                </tr>
+                            </tbody>
+                            <tbody *ngIf="submitedData?.length==0">
+                                <tr>
+                                    <td colspan="100%" class="text-center">No Data Found</td>
                                 </tr>
                             </tbody>
                         </table> 

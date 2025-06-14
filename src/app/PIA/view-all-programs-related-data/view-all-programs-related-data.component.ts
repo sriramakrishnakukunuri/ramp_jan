@@ -40,7 +40,7 @@ export class ViewAllProgramsRelatedDataComponent implements OnInit {
  
   onTabChange(activeTab:any){
     this.activeTab = activeTab;
-    if(activeTab=='nav-ones') { 
+    if(activeTab=='nav-ones' || activeTab=='nav-five') { 
       console.log(activeTab); 
       this.getProgramDetailsById(this.programIds)
     }
@@ -79,11 +79,23 @@ getAgenciesList() {
       this.onTabChange(this.activeTab);
     }
     else{
-      this._commonService.getDataByUrl(`${APIS.programCreation.getProgramsListByAgencyStatus}/${this.agencyId}?status=Program Expenditure Updated`).subscribe({
+      this._commonService.getDataByUrl(`${APIS.programCreation.getProgramsListByAgencyStatus}/${agency}?status=Program Expenditure Updated`).subscribe({
         next: (data: any) => {
           this.agencyProgramList = data?.data
-          this.programIds = this.agencyProgramList[0].programId
-          this.onTabChange(this.activeTab);
+          this.programIds = this.agencyProgramList?.[0]?.programId
+          console.log(this.agencyProgramList,this.agencyProgramList.length)
+          if(!this.agencyProgramList.length) {
+            this.ProgramData=[]
+            this.submitedData = []
+            this.ParticipantAttendanceData=[]
+            this.TotalAmount=0
+            this.getExpenditureDataBoth=[]
+
+          }
+          else{
+            this.onTabChange(this.activeTab);
+          }
+          
         },
         error: (err) => {
           console.error('Error loading programs:', err);
@@ -123,9 +135,9 @@ getAgenciesList() {
   }
 
   // Participant Related Data startes
-  submitedData:any
+  submitedData:any=[]
   getData() {
-    this.submitedData = ''
+    this.submitedData = []
     // sessionStorage.getItem('ParticipantData')
     // let resList = sessionStorage.getItem('ParticipantData') || ''
     // // let resList = sessionStorage.getItem('ParticipantData') || ''   
@@ -146,7 +158,7 @@ getAgenciesList() {
   
         },
         error: (err) => {
-          this.toastrService.error(err.message, "Participant Data Error!");
+          // this.toastrService.error(err.message, "Participant Data Error!");
           new Error(err);
         },
       });
@@ -164,7 +176,7 @@ getAgenciesList() {
   
         },
         error: (err) => {
-          this.toastrService.error(err.message, "Participant Data Error!");
+          // this.toastrService.error(err.message, "Participant Data Error!");
           new Error(err);
         },
       });
@@ -182,7 +194,7 @@ getAgenciesList() {
   
         },
         error: (err) => {
-          this.toastrService.error(err.message, "Participant Data Error!");
+          // this.toastrService.error(err.message, "Participant Data Error!");
           new Error(err);
         },
       });
@@ -418,7 +430,7 @@ getAgenciesList() {
           this.ParticipantAttendanceData.participantAttendanceList=this.getparticipantAttendanceList(res?.data?.participantAttendanceList)
         },
         error: (err) => {
-          this.toastrService.error(err.message, "Participant Data Error!");
+          // this.toastrService.error(err.message, "Participant Data Error!");
           new Error(err);
         },
       });
@@ -549,7 +561,7 @@ getAgenciesList() {
   }
   ProgramData: any
   getProgramDetailsById(programId: string) {
-    this.ProgramData = ''
+    this.ProgramData = []
     this._commonService.getById(APIS.programCreation.getSingleProgramsList, programId).subscribe({
       next: (data: any) => {
         this.ProgramData = data.data;
