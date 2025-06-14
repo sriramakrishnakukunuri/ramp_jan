@@ -4,9 +4,9 @@
             <div class="card-header bg-transparent">
                 <div class="row align-items-center">
                     <div class="col-12 col-sm-6 col-md-6 col-lg-6">
-                        <h6 class="fw-600 mb-2 mb-sm-0">View Completed Programs</h6>
+                        <h6 class="fw-600 mb-2 mb-sm-0">Completed Programs</h6>
                     </div>
-                    <ng-container *ngIf="loginsessionDetails?.userRole == 'ADMIN'">
+                    <ng-container *ngIf="loginsessionDetails?.userRole == 'ADMIN' && activeTab!='nav-five'">
                         <div class="col-12 col-sm-3 col-md-3 col-lg-3">
                             <label for="Agencies" style="font-weight: 600;">List Of Agencies</label>
                             <select class="form-select" [(ngModel)]="selectedAgencyId" (change)="getProgramsByAgencyAdmin($any($event.target).value)">    
@@ -22,7 +22,7 @@
                             </select>
                         </div>
                     </ng-container>   
-                    <ng-container *ngIf="loginsessionDetails?.userRole != 'ADMIN'">
+                    <ng-container *ngIf="loginsessionDetails?.userRole != 'ADMIN' && activeTab!='nav-five'">
                         <div class="col-12 col-sm-3 col-md-3 col-lg-3">
                             <label for="Agencies" style="font-weight: 600;">List Of Programs</label>
                             <select class="form-select" [(ngModel)]="programIds" (change)="dropdownProgramsList($event,'table')">
@@ -37,6 +37,7 @@
             <div class="card-body">
                 <nav>
                     <div class="nav nav-tabs mb-3" id="nav-tab" role="tablist">
+                        <button [ngClass]="{ 'active':activeTab==='nav-five'}" (click)="onTabChange('nav-five')" class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-five" type="button" role="tab" aria-controls="nav-home" aria-selected="true"> Program Details</button>
                       <button [ngClass]="{ 'active':activeTab==='nav-ones'}" (click)="onTabChange('nav-ones')" class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-ones" type="button" role="tab" aria-controls="nav-home" aria-selected="true"> Sessions</button>
                       <button [ngClass]="{ 'active':activeTab==='nav-twos'}" (click)="onTabChange('nav-twos')" class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-twos" type="button" role="tab" aria-controls="nav-profile" aria-selected="false"> Participants </button>
                       <button [ngClass]="{ 'active':activeTab==='nav-three'}" (click)="onTabChange('nav-three')" class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-three" type="button" role="tab" aria-controls="nav-profile" aria-selected="false"> Attendance </button>
@@ -45,6 +46,60 @@
                   </nav>
               
                   <div class="tab-content border bg-light" id="nav-tabContent" >
+                    <div class="tab-pane fade active show" id="nav-five" role="tabpanel" aria-labelledby="nav-home-tab" [ngClass]="{ 'active':activeTab==='nav-five'}" *ngIf="activeTab==='nav-five'" >
+                        <div class="table-container">
+                            <table id="view-table-program" class="table table-bordered nowrap w-100" style="width:100%">
+                                <thead class="bg-lime-green text-white">
+                                    <tr>
+                                        <th>S.No</th>
+                                      
+                                        <th>Start Date</th>
+                                        <th>End Date</th>
+                                        <th>In Time</th>
+                                        <th>Out Time</th>
+                                        <th>Budget Head</th>
+                                        <th>District</th>
+                                        <th>Title Of Program</th>
+                                        <th>Status</th>
+                                        <th>Agency Name</th>
+                                        <th>Type Of Activity</th>
+                                        <th>Sub Activity</th>
+                                        <!-- <th>No. Of Days</th> -->
+                                        <th>SPOC Name</th>
+                                        <th>SPOC Contact No.</th>
+                                        <th>Program Location</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody *ngIf="agencyProgramList?.length > 0; else noData">
+                                    <tr *ngFor="let item of agencyProgramList; let i = index">
+                                        <td>{{ i + 1 }}</td>
+                                        <td>{{ item.startDate }}</td>
+                                        <td>{{ item.endDate }}</td>
+                                        <td class="text-center">{{ item.startTime }}</td>
+                                        <td class="text-center">{{ item.endTime }}</td>
+                                        <td>{{ item.programType }}</td>
+                                        <td>{{ item.district }}</td>
+                                        <td>{{ item.programTitle }}</td>
+                                        <td>{{ item.status }}</td>
+                                        <td>{{ item.agencyName }}</td>
+                                        <td>{{ item.activityName }}</td>
+                                        <td>{{ item.subActivityName }}</td>
+                                        <td>{{ item.spocName }}</td>
+                                        <td>{{ item.spocContactNo }}</td>
+                                        <td>{{ item.programLocationName }}</td>
+
+                                          </tr>
+                                          </tbody>
+                            </table>
+                            <ng-template #noData>
+                                <tr>
+                                    <td colspan="100%" class="text-center">No Data Found</td>
+                                </tr>
+                                   </ng-template>       
+                        </div>
+                       
+                    </div>
                     <div class="tab-pane fade active show" id="nav-ones" role="tabpanel" aria-labelledby="nav-home-tab" [ngClass]="{ 'active':activeTab==='nav-ones'}" *ngIf="activeTab==='nav-ones'" >
                         <div class="table-container">
                             <table id="session-table" class="table table-bordered nowrap w-100">

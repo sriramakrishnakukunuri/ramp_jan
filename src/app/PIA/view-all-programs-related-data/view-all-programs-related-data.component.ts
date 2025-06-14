@@ -26,7 +26,7 @@ export class ViewAllProgramsRelatedDataComponent implements OnInit {
     }
 
   ngOnInit(): void {
-    this.activeTab = 'nav-ones';
+    this.activeTab = 'nav-five';
     this.loginsessionDetails = JSON.parse(sessionStorage.getItem('user') || '{}');  
     if(this.loginsessionDetails.userRole == 'ADMIN') {
       this.getAgenciesList()

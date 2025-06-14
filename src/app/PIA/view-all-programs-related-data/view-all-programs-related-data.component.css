@@ -9,18 +9,18 @@
     font-size: 1rem;
     font-weight: 500;
     color: #00b300;
-    background-color: #f8f9fa;
-    border: 1px solid transparent;
+    background-color: #fff;
+    /* border: 1px solid transparent;
     border-top-left-radius: 0.25rem;
-    border-top-right-radius: 0.25rem;
+    border-top-right-radius: 0.25rem; */
     margin-right: 0.25rem;
     transition: all 0.3s ease;
   }
   
   /* Hover state for tabs */
   .nav-tabs .nav-link:hover {
-    border-color: #e9ecef #e9ecef #dee2e6;
-    background-color: #e9ecef;
+    /* border-color: #e9ecef #e9ecef #dee2e6; */
+    background-color: #fff;
     color: #00b300;
   }
   
@@ -28,7 +28,7 @@
   .nav-tabs .nav-link.active {
     color: #00b300;
     background-color: #fff;
-    border-color: #dee2e6 #dee2e6 #fff;
+    /* border-color: #dee2e6 #dee2e6 #fff; */
     border-bottom: 3px solid #00b300;
   }
   
@@ -68,7 +68,7 @@
   
   /* Light background for the tab content */
   .bg-light {
-    background-color: #f8f9fa !important;
+    background-color: #fff !important;
   }
   .file-carousel-container {
     overflow-x: auto;
