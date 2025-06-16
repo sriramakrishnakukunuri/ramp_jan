@@ -54,6 +54,7 @@ export class ViewAllProgramsRelatedDataComponent implements OnInit {
     }
     else if(activeTab=='nav-four') { 
       console.log(activeTab)
+      this.TotalAmount=0
       this.getExpenditure()
     }
   }
