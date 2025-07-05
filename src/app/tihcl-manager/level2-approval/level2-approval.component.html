@@ -1,0 +1,162 @@
+ <main class="pt-80">
+        <section class="pt-3">
+            <div class="container-fluid">
+                <div class="card">
+                    <div class="card-header bg-theme text-white">
+                        <h6 class="mb-0">Pending Approvals - Level 2</h6>
+                    </div>
+                    <div class="card-body">
+                        <table id="pending_table" class="table nowrap display w-100 fs-md mt-0">
+                            <thead>
+                                <tr>
+                                    <th class="text-start">S.No</th>
+                                    <th>View</th>
+                                    <th>Date Application</th>
+                                    <th>Executive Name</th>
+                                    <th>Executive Feedback Date</th>
+                                    <th>Company Name</th>
+                                    <th>Promoter Name</th>
+                                    <th>Mobile No.</th>
+                                    <th>Industry</th>
+                                    <th>Sector</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="text-start">1</td>
+                                    <td><a href="#" data-bs-toggle="modal" data-bs-target="#viewModal"><span class="bi bi-eye"></span></a></td>
+                                    <td>10-05-2025</td>
+                                    <td>Executive Name 1</td>
+                                    <td>13-05-2025</td>
+                                    <td>ABC Pvt. Ltd</td>
+                                    <td>Promoter Name 1</td>
+                                    <td>9876543210</td>
+                                    <td>Industry 1</td>
+                                    <td>Sector 1</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-start">2</td>
+                                    <td><a href="#" data-bs-toggle="modal" data-bs-target="#viewModal"><span class="bi bi-eye"></span></a></td>
+                                    <td>10-05-2025</td>
+                                    <td>Executive Name 1</td>
+                                    <td>13-05-2025</td>
+                                    <td>ABC Pvt. Ltd</td>
+                                    <td>Promoter Name 1</td>
+                                    <td>9876543210</td>
+                                    <td>Industry 1</td>
+                                    <td>Sector 1</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-start">3</td>
+                                    <td><a href="#" data-bs-toggle="modal" data-bs-target="#viewModal"><span class="bi bi-eye"></span></a></td>
+                                    <td>10-05-2025</td>
+                                    <td>Executive Name 1</td>
+                                    <td>13-05-2025</td>
+                                    <td>ABC Pvt. Ltd</td>
+                                    <td>Promoter Name 1</td>
+                                    <td>9876543210</td>
+                                    <td>Industry 1</td>
+                                    <td>Sector 1</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-start">4</td>
+                                    <td><a href="#" data-bs-toggle="modal" data-bs-target="#viewModal"><span class="bi bi-eye"></span></a></td>
+                                    <td>10-05-2025</td>
+                                    <td>Executive Name 1</td>
+                                    <td>13-05-2025</td>
+                                    <td>ABC Pvt. Ltd</td>
+                                    <td>Promoter Name 1</td>
+                                    <td>9876543210</td>
+                                    <td>Industry 1</td>
+                                    <td>Sector 1</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal -->
+    <div class="modal fade" id="viewModal" tabindex="-1" aria-labelledby="viewModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h6 class="modal-title text-white fw-bold">View Application</h6>
+                    <button type="button" class="btn-close text-white" data-bs-dismiss="modal" aria-label="Close"><span class="bi bi-x-lg"></span></button>
+                </div>
+                <div class="modal-body">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" data-bs-toggle="modal" data-bs-target="#approvedModal" class="btn btn-primary" data-bs-dismiss="modal">Approve</button>
+                    <button type="button" data-bs-toggle="modal" data-bs-target="#rejectModal" class="btn btn-danger" data-bs-dismiss="modal">Reject</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- begin:: approved modal -->
+    <div class="modal fade" id="approvedModal" tabindex="-1" aria-labelledby="approvedModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header py-2">
+                    <h6 class="modal-title text-white">Confirmation</h6>
+                    <button type="button" class="btn-close text-white fs-4 p-0" data-bs-dismiss="modal" aria-label="Close"><span class="bi bi-x"></span></button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-center"> Are you sure you want to approve the application. Once Approved it can't be revoked!</p>
+
+                    <div class="text-center">
+                        <button type="button" data-bs-toggle="modal" data-bs-target="#successModal" class="btn btn-primary" data-bs-dismiss="modal">Yes</button>
+                        <button type="button" class="btn btn-danger ms-2" data-bs-dismiss="modal">No</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- begin:: success modal -->
+    <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header py-2">
+                <h6 class="modal-title text-white">Success</h6>
+                <button type="button" class="btn-close text-white fs-4 p-0" data-bs-dismiss="modal" aria-label="Close"><span class="bi bi-x"></span></button>
+            </div>
+            <div class="modal-body">
+                <p class="text-center">Successfully Approved</p>
+
+                <div class="text-center">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- begin:: reject modal -->
+    <div class="modal fade" id="rejectModal" tabindex="-1" aria-labelledby="rejectModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+          <div class="modal-content">
+              <div class="modal-header py-2">
+                <h6 class="modal-title text-white">Remarks</h6>
+                <button type="button" class="btn-close text-white fs-4 p-0" data-bs-dismiss="modal" aria-label="Close"><span class="bi bi-x"></span></button>
+              </div>
+              <div class="modal-body">
+                  <form>
+                    <div class="row">
+                        <div class="col-12 mb-3">
+                            <label class="fs-md fw-600 mb-1">Remarks</label>
+                            <textarea class="form-control" rows="5" placeholder="Write here"></textarea>
+                        </div>
+                    </div>
+                  </form>
+
+                  <div class="text-end">
+                      <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Submit</button>
+                  </div>
+              </div>
+          </div>
+      </div>
+    </div>

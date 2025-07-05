@@ -40,6 +40,11 @@ import { GetOutcomeComponent } from './PIA/get-outcome/get-outcome.component';
 import { ViewMsmeCouncellorDataComponent } from './PIA/view-msme-councellor-data/view-msme-councellor-data.component';
 import { ProgramSessionsComponent } from './PIA/program-sessions/program-sessions.component';
 import { LoanApplicationFormComponent } from './TIHCL/loan-application-form/loan-application-form.component';
+import { Level1ApprovalComponent } from './tihcl-manager/level1-approval/level1-approval.component';
+import { Level2ApprovalComponent } from './tihcl-manager/level2-approval/level2-approval.component';
+import { Level3ApprovalComponent } from './tihcl-manager/level3-approval/level3-approval.component';
+import { LoanAppilicationNewComponent } from './TIHCL/loan-appilication-new/loan-appilication-new.component';
+import { MultiselectDropdownComponent } from './seperate-components/multiselect-dropdown/multiselect-dropdown.component';
 
 @NgModule({
     imports: [
@@ -82,7 +87,7 @@ import { LoanApplicationFormComponent } from './TIHCL/loan-application-form/loan
         MsmeCouncellorRegisterationComponent,
         ViewParticipantComponent,
         GetOutcomeComponent,
-        ViewMsmeCouncellorDataComponent, ProgramSessionsComponent, LoanApplicationFormComponent,
+        ViewMsmeCouncellorDataComponent, ProgramSessionsComponent, LoanApplicationFormComponent, Level1ApprovalComponent, Level2ApprovalComponent, Level3ApprovalComponent, LoanAppilicationNewComponent, MultiselectDropdownComponent,
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

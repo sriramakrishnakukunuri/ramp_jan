@@ -25,6 +25,10 @@ import { GlobalDashboardComponent } from './Dashboard/global-dashboard/global-da
 import { ViewParticipantComponent } from './PIA/view-participant/view-participant.component';
 import { ProgramSessionsComponent } from './PIA/program-sessions/program-sessions.component';
 import { LoanApplicationFormComponent } from './TIHCL/loan-application-form/loan-application-form.component';
+import { Level1ApprovalComponent } from './tihcl-manager/level1-approval/level1-approval.component';
+import { Level2ApprovalComponent } from './tihcl-manager/level2-approval/level2-approval.component';
+import { Level3ApprovalComponent } from './tihcl-manager/level3-approval/level3-approval.component';
+import { LoanAppilicationNewComponent } from './TIHCL/loan-appilication-new/loan-appilication-new.component';
 
 const routes: Routes = [
     {
@@ -164,8 +168,21 @@ const routes: Routes = [
     },
     {
         path: 'loan-application-process',
-        component: LoanApplicationFormComponent
+        component: LoanAppilicationNewComponent
     },
+    {
+        path: 'Manager-approval-1',
+        component: Level1ApprovalComponent
+    },
+     {
+        path: 'Manager-approval-2',
+        component: Level2ApprovalComponent
+    },
+      {
+        path: 'Manager-approval-3',
+        component: Level3ApprovalComponent
+    },
+
 
     // otherwise redirect to home
     { path: '**', redirectTo: '' }

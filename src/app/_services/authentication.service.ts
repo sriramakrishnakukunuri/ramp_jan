@@ -28,27 +28,25 @@ export class AuthenticationService {
         let headers = new HttpHeaders({
             'Content-Type': 'application/json',
             'responseType': 'json',
-            userId: username,
-            password: password
         });   
-        return this.http.get<any>(`${environment.apiUrl}/login`, { headers: headers })
-            .pipe(map(user => {                
-                //store user details and jwt token in local storage to keep user logged in between page refreshes
-                if(user.status === 400){
-                    return user;
-                }
-                //user.role = 'Admin'
-                sessionStorage.setItem('user', JSON.stringify(user.data));
-                this.userSubject.next(user.data);
-                return user;
-            }));
-        // return this.http.post<any>(`${environment.apiUrl}/users/authenticate`, { username, password })
-        //     .pipe(map(user => {
-        //         // store user details and jwt token in local storage to keep user logged in between page refreshes
-        //         localStorage.setItem('user', JSON.stringify(user));
-        //         this.userSubject.next(user);
+        // return this.http.get<any>(`${environment.apiUrl}/login`, { headers: headers })
+        //     .pipe(map(user => {                
+        //         //store user details and jwt token in local storage to keep user logged in between page refreshes
+        //         if(user.status === 400){
+        //             return user;
+        //         }
+        //         //user.role = 'Admin'
+        //         sessionStorage.setItem('user', JSON.stringify(user.data));
+        //         this.userSubject.next(user.data);
         //         return user;
         //     }));
+        return this.http.post<any>(`${environment.apiUrl}/auth/login`, {"identifier": username,"password": password})
+            .pipe(map(user => {
+                // store user details and jwt token in local storage to keep user logged in between page refreshes
+                sessionStorage.setItem('user', JSON.stringify(user));
+                this.userSubject.next(user);
+                return user;
+            }));
     }
 
     logout() {
@@ -58,4 +56,15 @@ export class AuthenticationService {
         this.userSubject.next(null);
         this.router.navigate(['/login']);
     }
+    getDataBasedMobile(mobile: string) {
+         return this.http.get<any>(`${environment.apiUrl}/registrations/mobile/no/${mobile}`)
+            .pipe(map(user => {
+                // store user details and jwt token in local storage to keep user logged in between page refreshes
+              return user;
+               
+            }));
+    }
+
+
+
 }

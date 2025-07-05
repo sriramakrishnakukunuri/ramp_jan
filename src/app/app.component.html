@@ -16,90 +16,54 @@
             <div class="d-flex align-items-center justify-content-between w-100">
                 <div>
                     <a class="navbar-brand" href="#">
-                        <img src="assets/img/logo.png" alt="Logo" class="img-fluid">
+                        <img src="../assets/img/tihcl-logo.png" alt="Logo" class="img-fluid">
                     </a>
                 </div>    
                 <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasNavbar2" aria-labelledby="offcanvasNavbar2Label">
-                    <div class="offcanvas-header">
-                      <h5 class="offcanvas-title" id="offcanvasNavbar2Label">RAMP</h5>
-                      <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                    </div>
+                   
+                      
                     <div class="offcanvas-body">
-                        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-
-                            <li class="nav-item" *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]">
-                                <a class="nav-link" routerLink="/global-dashboard" routerLinkActive="active" id="dropdown3" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Dashboard
-                                </a>                               
-                            </li>
-
-                            <li class="nav-item dropdown" *appHasRole="[Role.Admin]">
-                                <a class="nav-link" href="#" id="homeDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <span>Programs Per Agencies</span> <span class="bi bi-chevron-down"></span>
-                                </a>
-                                <ul class="dropdown-menu" aria-labelledby="homeDropdown">                                    
-                                    <li><a class="dropdown-item" routerLink="/veiw-program-creation" routerLinkActive="active">View Programs</a></li>                                    
-                                    <li><a class="dropdown-item"routerLink="/view-program-participate" routerLinkActive="active">View Participants</a></li>
-                                </ul>
-                            </li>
-
-                            <li class="nav-item" *appHasRole="[Role.Admin]">
-                                <a class="nav-link" id="homeDropdown" role="button" routerLink="/view-table-organization" routerLinkActive="active" aria-expanded="false">
-                                    <span>Masters List</span> 
-                                </a>                                
-                            </li>
-                            
-                            <li class="nav-item dropdown" *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]">
-                                <a class="nav-link" href="#" id="homeDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <span>Program Creation</span> <span class="bi bi-chevron-down"></span>
-                                </a>
-                                <ul class="dropdown-menu" aria-labelledby="homeDropdown">
-                                    <li><a class="dropdown-item" routerLink="/program-creation" routerLinkActive="active">Add Program</a></li>
-                                    <li><a class="dropdown-item" routerLink="/veiw-program-creation" routerLinkActive="active">View Programs</a></li>                                    
-                                    <li><a class="dropdown-item" routerLink="/program-sessions" routerLinkActive="active">Add Session</a></li>                                    
-                                    
-                                </ul>
-                            </li>
-                            <li class="nav-item dropdown" *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]">
-                                <a class="nav-link" href="#" id="dropdown2" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Program Execution <span class="bi bi-chevron-down"></span>
-                                </a>
-                                <ul class="dropdown-menu" aria-labelledby="dropdown2">                                
-                                <li><a class="dropdown-item" routerLink="/update-program-execution" routerLinkActive="active">Program Execution</a></li>
-                                <li><a class="dropdown-item" routerLink="/add-participant-data" routerLinkActive="active">Add Participant</a></li>
-                                <li><a class="dropdown-item" routerLink="/view-participant-data" routerLinkActive="active">View Participant</a></li>
-                                <li><a class="dropdown-item" href="#">View Completed</a></li>
-                                </ul>
-                            </li>
-                            <li class="nav-item dropdown isDisabled" *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]">
-                                <a class="nav-link" href="#" id="dropdown3" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Update Outcomes <span class="bi bi-chevron-down"></span>
-                                </a>
-                                <ul class="dropdown-menu" aria-labelledby="dropdown3">
-                                    <li><a class="dropdown-item" routerLink="/capture-outcome" routerLinkActive="active">Capture Outcome</a></li>
-                                <!-- <li><a class="dropdown-item" href="#">Capture Outcome</a></li> -->
-                                <li><a class="dropdown-item" href="#">Organisation Updates</a></li>                                
-                                <li><a class="dropdown-item" routerLink="/shg-training" routerLinkActive="active">SHG Training Status</a></li>
-                                </ul>
-                            </li>
-                            
-
-                            <li class="nav-item isDisabled" *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]">
-                                <a class="nav-link" routerLink="/esdp-training" routerLinkActive="active" id="dropdown3" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    ESDP Training Program
-                                </a>
-                            </li>
-
-                            <li class="nav-item dropdown isDisabled" *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]">
-                                <a class="nav-link" href="#" id="dropdown3" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Counsellor<span class="bi bi-chevron-down"></span>
-                                </a>
-                                <ul class="dropdown-menu" aria-labelledby="dropdown3">
-                                    <li><a class="dropdown-item" routerLink="/MSME-councellor-registeration" routerLinkActive="active">Counsellor Registration</a></li>
-                                <li><a class="dropdown-item"routerLink="/view-MSME-councellor" routerLinkActive="active">View Counsellor Registration</a></li>
-                                </ul>
-                            </li>
+                        
+                      <ul class="navbar-nav justify-content-end flex-grow-1 pe-3" *appHasRole="[Role.TIHCL_EXECUTOR]">
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page">Dashboard</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle active"id="executorAppsDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Applications
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="executorAppsDropdown">
+                            <li><a class="dropdown-item active" routerLinkActive="active">New</a></li>
+                            <li><a class="dropdown-item" routerLink="application-pending.html" routerLinkActive="active">Pending</a></li>
                         </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" routerLinkActive="active">Repayment</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link"routerLinkActive="active">>Update Performance</a>
+                    </li>
+                        </ul>
+                    <ul class="navbar-nav justify-content-end flex-grow-1 pe-3" *appHasRole="[Role.TIHCL_MANAGER]">
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page"  routerLinkActive="active">Dashboard</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle active" id="managerApprovalsDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Pending Approvals
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="managerApprovalsDropdown">
+                            <li><a class="dropdown-item active" routerLink="Manager-approval-1" routerLinkActive="active">Level 1</a></li>
+                            <li><a class="dropdown-item" routerLink="Manager-approval-2" routerLinkActive="active">Level 2</a></li>
+                            <li><a class="dropdown-item" routerLink="Manager-approval-3" routerLinkActive="active">Level 3</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" routerLinkActive="active">View Application</a>
+                    </li>
+                </ul>
                     </div>
                 </div>   
                 <div class="d-flex align-items-center justify-content-between">
@@ -107,14 +71,14 @@
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <ul class="navbar-nav me-auto ms-2">
-                        <li class="nav-item dropdown">
+                        <li class="nav-item dropdown" >
                             <a class="nav-link" href="#" id="homeDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <span class="bi bi-person-circle fs-3"></span>
                             </a>
-                            <ul class="dropdown-menu" aria-labelledby="homeDropdown">
-                            <li><a class="dropdown-item" routerLink="/profile" routerLinkActive="active"><span class="bi bi-person fs-5 me-2"></span> My Profile</a></li>
-                            <li><a class="dropdown-item" routerLink="/password-settings" routerLinkActive="active"><span class="bi bi-key fs-5 me-2"></span> Change Password</a></li>
-                            <li *appHasRole="[Role.Admin]"><a class="dropdown-item" routerLink="/user-registration" routerLinkActive="active"><span class="bi bi-person-circle fs-5 me-2"></span> Register User</a></li>
+                            <ul class="dropdown-menu" aria-labelledby="homeDropdown" style="left: auto !important;">
+                            <!-- <li><a class="dropdown-item" routerLink="/profile" routerLinkActive="active"><span class="bi bi-person fs-5 me-2"></span> My Profile</a></li> -->
+                            <!-- <li><a class="dropdown-item" routerLink="/password-settings" routerLinkActive="active"><span class="bi bi-key fs-5 me-2"></span> Change Password</a></li> -->
+                            <!-- <li *appHasRole="[Role.Admin]"><a class="dropdown-item" routerLink="/user-registration" routerLinkActive="active"><span class="bi bi-person-circle fs-5 me-2"></span> Register User</a></li> -->
                             <li><a class="dropdown-item" (click)="logout()"><span class="bi bi-box-arrow-right fs-5 me-2"></span> Logout</a></li>
                             </ul>
                         </li>
@@ -123,6 +87,9 @@
             </div>
         </div>
     </nav>
+    
+    
+   
 </header>
 
 <!-- main app container class="container"-->

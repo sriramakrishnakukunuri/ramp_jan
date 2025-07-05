@@ -1,0 +1,760 @@
+<header>
+    <nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light">
+
+        <div class="container-fluid">
+            <a class="navbar-brand">
+                <img src="../../../assets/img/tihcl-logo.png" alt="" class="img-fluid-new" width="100px"
+                    height="auto">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <div class="d-none d-sm-none d-md-none d-lg-block me-5">
+                    <p class="mb-0">
+                        <span class="bi bi-geo-alt"></span> Location: Hyderabad, India |
+                        <span class="bi bi-envelope"></span> Mail: compliance@tihcl.com |
+                        <span class="bi bi-telephone"></span> Contact: 040-232363990
+                    </p>
+                </div>
+                <!-- <div class="application-status" *ngIf="showApplicationMenu == false">
+                    <a (click)="showApplicationStatus('yes')" class="btn btn-outline-primary">Application Status</a>
+                </div> -->
+                <!-- <div class="application-status" *ngIf="showApplicationMenu == true">
+                    <a  class="btn btn-outline-primary">New Application</a>
+                </div> -->
+            </div>
+        </div>
+    </nav>
+</header>
+<main class="pt-80" >
+    <section class="pt-3">
+        <div class="container-fluid">
+          <div class="card mb-3">
+            <div class="card-header bg-theme text-white">
+                <h6 class="mb-0">Application Status</h6>
+            </div>
+            <div class="card-body">                  
+              <div class="px-4 mt-3">
+                <div class="progress px-1" style="height: 3px;">
+                  <div class="progress-bar" role="progressbar" [style.width]="(currentStep-1)*50 + '%'"  aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <div class="step-container d-flex justify-content-between">
+                  <div class="step-circle" [class.active]="currentStep >= 1"><span class="bi bi-pencil"></span></div>
+                  <div class="step-circle" [class.active]="currentStep >= 2"><span class="bi bi-file-earmark-text"></span></div>
+                  <div class="step-circle" [class.active]="currentStep >= 3"><span class="bi bi-eye"></span></div>
+                </div>
+                <div class="step-container step-label d-flex justify-content-between">
+                  <div class="fs-md fw-600" [class.active]="currentStep >= 1" (click)="currentStep = 1">Registration</div>
+                  <div class="fs-md fw-600" [class.active]="currentStep >= 2" (click)="currentStep = 2">Application</div>
+                  <div class="fs-md fw-600" [class.active]="currentStep >= 3" (click)="currentStep = 3">Status</div>
+                </div>
+              </div>
+              
+              <div class="row mt-3">
+                <div class="col-12">  
+                  <form [formGroup]="applicationForm" id="multi-step-form">
+                    <!-- Step 1 - Registration -->
+                    <div class="step step-1" *ngIf="currentStep === 1">
+                      <div class="card">
+                        <div class="card-header bg-theme text-white">
+                            <h6 class="mb-0">Registration</h6>
+                        </div>
+                        <div class="card-body">
+                          <div class="row">
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                              <div class="form-floating mb-3" >
+                                <input type="text" class="form-control" id="nameEnterprise" 
+                                  formControlName="enterpriseName" placeholder="Name of the enterprise">
+                                <label for="nameEnterprise">Name of the Enterprise</label>
+                                <div *ngIf="applicationForm.get('enterpriseName')?.invalid && applicationForm.get('enterpriseName')?.touched && !applicationForm.get('enterpriseName')?.hasError('minlength')" class="text-danger">
+                                  Enterprise name is required
+                                </div>
+                                 <div *ngIf="applicationForm.get('enterpriseName')?.hasError('minlength')" class="text-danger">
+                                     Enterprise name must be at least 3 characters
+                                 </div>
+                              </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                              <div class="form-floating mb-3" [ngClass]="applicationForm.get('enterpriseName')?.valid ? '' :'isDisabled'">
+                                <input type="text" class="form-control" id="namePromoter" 
+                                  formControlName="promoterName" placeholder="Name of the Promoter">
+                                <label for="namePromoter">Name of the Promoter</label>
+                                <div *ngIf="applicationForm.get('promoterName')?.invalid && applicationForm.get('promoterName')?.touched && !applicationForm.get('promoterName')?.hasError('minlength')" class="text-danger">
+                                  Promoter name is required
+                                </div>
+                                 <div *ngIf="applicationForm.get('promoterName')?.hasError('minlength')" class="text-danger">
+                                     Promoter name must be at least 3 characters
+                                 </div>
+                              </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                              <div class="form-floating mb-3" [ngClass]="applicationForm.get('promoterName')?.valid ? '' :'isDisabled'">
+                                <select class="form-select" id="constitution" 
+                                  formControlName="constitution" aria-label="">
+                                  <option value="">Select Constitution</option>
+                                  <option value="sole property">sole property</option>
+                                  <option value="Partnership">Partnership</option>
+                                  <option value="LLP">LLP</option>
+                                  <option value="Limited Company">Limited Company</option>
+                                </select>
+                                <label for="constitution">Constitution</label>
+                                <div *ngIf="applicationForm.get('constitution')?.invalid && applicationForm.get('constitution')?.touched" class="text-danger">
+                                  Constitution is required
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                              <div class="form-floating mb-3" [ngClass]="applicationForm.get('constitution')?.valid ? '' :'isDisabled'">
+                                <input type="date" class="form-control" id="dateProduction"   max="{{ today | date:'yyyy-MM-dd' }}"
+                                  formControlName="productionDate" placeholder="Date of Commencement of production">
+                                <label for="dateProduction">Date of Commencement Production</label>
+                                <div *ngIf="applicationForm.get('productionDate')?.invalid && applicationForm.get('productionDate')?.touched" class="text-danger">
+                                  Commencement date is required
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                              <div class="form-floating mb-3" [ngClass]="applicationForm.get('productionDate')?.valid ? '' :'isDisabled'">
+                                <input type="text" class="form-control" id="udyamRegNumber" 
+                                  formControlName="udyamRegNumber" placeholder="Udyam Registration Number">
+                                <label for="udyamRegNumber">Udyam Registration Number</label>
+                              </div>
+                                <div *ngIf="applicationForm.get('udyamRegNumber')?.invalid && applicationForm.get('udyamRegNumber')?.touched && !applicationForm.get('udyamRegNumber')?.hasError('invalidUdyamFormat')" class="text-danger">
+                                  Udyam registration number is required
+                                </div>
+                               <div *ngIf="applicationForm.get('udyamRegNumber')?.hasError('invalidUdyamFormat')" class="text-danger">
+                                    Invalid format. Correct Format: UDYAM-XX-00-1234567 OR udyam-xx-12-1234567
+                                 </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                              <div class="form-floating mb-3" [ngClass]="applicationForm.get('udyamRegNumber')?.valid ? '' :'isDisabled'">
+                                <input type="number" class="form-control" id="altContactNumber" 
+                                  formControlName="altContactNumber" placeholder="Alternative Contact Details">
+                                <label for="altContactNumber">Alternative Contact Details</label>
+                                <div *ngIf="applicationForm.get('altContactNumber')?.invalid && applicationForm.get('altContactNumber')?.touched && !applicationForm.get('altContactNumber')?.hasError('pattern')" class="text-danger">
+                                  Contact details are required
+                                </div>
+                                <div *ngIf="applicationForm.get('altContactNumber')?.hasError('pattern')" class="text-danger">
+                                 contact No Starts with 6,7,8,9 and should be 10 digits
+                                </div>
+                              </div>
+                            </div>
+                               <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                              <div class="form-floating mb-3" [ngClass]="applicationForm.get('udyamRegNumber')?.valid ? '' :'isDisabled'">
+                                <input type="text" class="form-control" id="email" 
+                                  formControlName="email" placeholder="Email">
+                                <label for="email">Email Id</label>
+                                <div *ngIf="applicationForm.get('email')?.invalid && applicationForm.get('email')?.touched" class="text-danger">
+                                  Valid email is required
+                                </div>
+                              </div>
+                            </div>
+                              <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                              <div class="form-floating mb-3" [ngClass]="applicationForm.get('udyamRegNumber')?.valid ? '' :'isDisabled'">
+                                <select class="form-select" id="industrialPark" 
+                                  formControlName="industrialPark" aria-label="">
+                                  <option value="">Select Industrial Park</option>
+                                  <option value="Industrial Park 1">Industrial Park 1</option>
+                                </select>
+                                <label for="industrialPark">Industrial Park</label>
+                              </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                              <div class="form-floating mb-3" [ngClass]="applicationForm.get('industrialPark')?.valid ? '' :'isDisabled'">
+                                <select class="form-select" id="state"  (change)="ChangeDistrict($any($event.target).value)"
+                                  formControlName="state" aria-label="">
+                                  <option value="">Select State</option>
+                                  <option value="Telangana">Telangana</option>
+                                  <option value="others">Others</option>
+                                </select>
+                                <label for="state">State</label>
+                                <div *ngIf="applicationForm.get('state')?.invalid && applicationForm.get('state')?.touched" class="text-danger">
+                                  State is required
+                                </div>
+                              </div>
+                            </div>
+                          
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                              <div class="form-floating mb-3" [ngClass]="applicationForm.get('state')?.valid ? '' :'isDisabled'">
+                                <select class="form-select" id="district" (change)="GetMandalByDistrict($any($event.target).value)"
+                                  formControlName="district" aria-label="">
+                                  <option value="">Select District</option>
+                                  <option *ngFor="let list of allDistricts" value="{{list.districtId}}">{{list.districtName}}</option>
+                                </select>
+                                <label for="district">District</label>
+                                <div *ngIf="applicationForm.get('district')?.invalid && applicationForm.get('district')?.touched" class="text-danger">
+                                  District is required
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                              <div class="form-floating mb-3" [ngClass]="applicationForm.get('district')?.valid ? '' :'isDisabled'">
+                                <select class="form-select" id="mandal" 
+                                  formControlName="mandal" aria-label="">
+                                  <option value="">Select Mandal</option>
+                                   <option *ngFor="let list of MandalList" value="{{list.mandalId}}">{{list.mandalName}}</option>
+                                </select>
+                                <label for="mandal">Mandal</label>
+                                <div *ngIf="applicationForm.get('mandal')?.invalid && applicationForm.get('mandal')?.touched" class="text-danger">
+                                  Mandal is required
+                                </div>
+                              </div>
+                            </div>
+                          <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                              <div class="form-floating mb-3" [ngClass]="applicationForm.get('mandal')?.valid ? '' :'isDisabled'">
+                                <input type="text" class="form-control" id="Address" 
+                                  formControlName="address" placeholder="Address">
+                                <label for="Address">Address</label>
+                                <div *ngIf="applicationForm.get('address')?.invalid && applicationForm.get('address')?.touched && !applicationForm.get('address')?.hasError('minlength')" class="text-danger">
+                                  Address is required
+                                </div>
+                                 <div *ngIf="applicationForm.get('address')?.hasError('minlength')" class="text-danger">
+                                     Address must be at least 3 characters
+                                 </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="text-end">
+                            <button type="button" class="btn btn-primary" (click)="nextStep()" [ngClass]="{'isDisabled':applicationForm.invalid}">Next <span class="bi bi-arrow-right ms-2"></span></button>
+                          </div>
+                        </div>
+                      </div>                      
+                    </div>
+                
+                    <!-- Step 2 - Application -->
+                    <div class="step step-2" *ngIf="currentStep === 2">
+                      <div class="card mb-3">
+                        <div class="card-header bg-theme text-white">
+                            <h6 class="mb-0">Application</h6>
+                        </div>
+                        <div class="card-body">
+                          <div class="row">
+                            <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+                              <div class="mb-3">
+                                <div>
+                                  <label class="form-label fs-md fw-600 mb-1">Enterprise category?</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                  <input class="form-check-input" type="radio" formControlName="enterpriseCategory" id="inlineRadio1" value="Micro">
+                                  <label class="form-check-label fs-md" for="inlineRadio1">Micro</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                  <input class="form-check-input" type="radio" formControlName="enterpriseCategory" id="inlineRadio2" value="Small">
+                                  <label class="form-check-label fs-md" for="inlineRadio2">Small</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                  <input class="form-check-input" type="radio" formControlName="enterpriseCategory" id="inlineRadio3" value="Medium">
+                                  <label class="form-check-label fs-md" for="inlineRadio3">Medium</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                  <input class="form-check-input" type="radio" formControlName="enterpriseCategory" id="inlineRadio4" value="Large">
+                                  <label class="form-check-label fs-md" for="inlineRadio4">Large</label>
+                                </div>
+                                <div *ngIf="applicationForm.get('enterpriseCategory')?.invalid && applicationForm.get('enterpriseCategory')?.touched" class="text-danger">
+                                  Enterprise category is required
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+                              <div class="mb-3">
+                                <div>
+                                  <label class="form-label fs-md fw-600 mb-1">Nature of activity?</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                  <input class="form-check-input" type="radio" formControlName="natureOfActivity" id="manufacturing" value="Manufacturing">
+                                  <label class="form-check-label fs-md" for="manufacturing">Manufacturing</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                  <input class="form-check-input" type="radio" formControlName="natureOfActivity" id="services" value="Services">
+                                  <label class="form-check-label fs-md" for="services">services</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                  <input class="form-check-input" type="radio" formControlName="natureOfActivity" id="trading" value="Trading">
+                                  <label class="form-check-label fs-md" for="trading">Trading</label>
+                                </div>
+                                <div *ngIf="applicationForm.get('natureOfActivity')?.invalid && applicationForm.get('natureOfActivity')?.touched" class="text-danger">
+                                  Nature of activity is required
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+                              <div class="form-floating mb-3">
+                                <select class="form-select" id="sector" formControlName="sector" aria-label="">
+                                  <option value="">Select Sector</option>
+                                  <option value="Group">Group</option>
+                                  <option value="Division">Division</option>
+                                </select>
+                                <label for="sector">Sector</label>
+                                <div *ngIf="applicationForm.get('sector')?.invalid && applicationForm.get('sector')?.touched" class="text-danger">
+                                  Sector is required
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                              <div class="mb-3">
+                                <div>
+                                  <label class="form-label fs-md fw-600 mb-1">Operational Status of the unit</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                  <input class="form-check-input" (change)="operationalChange('YES')" type="radio" formControlName="operationStatus" id="unitYes" [value]="true">
+                                  <label class="form-check-label fs-md" for="unitYes">Yes</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                  <input class="form-check-input" (change)="operationalChange('NO')" type="radio" formControlName="operationStatus" id="unitNo" [value]="false">
+                                  <label class="form-check-label fs-md" for="unitNo">No</label>
+                                </div>
+                              </div>
+
+                              <div class="show-hide" id="operationalYes" *ngIf="operationStatus === true">
+                                <div class="row">
+                                   <div class="col-12 col-sm-6 col-md-6 col-lg-4">
+                                  <div class="mb-3">
+                                    <div>
+                                      <label class="form-label fs-md fw-600 mb-1">Operating Satisfactorily</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                      <input class="form-check-input" type="radio" formControlName="operatingSatisfactorily" id="true" [value]="true">
+                                      <label class="form-check-label fs-md" for="true">yes</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                      <input class="form-check-input" type="radio" formControlName="operatingSatisfactorily" id="false" [value]="false">
+                                      <label class="form-check-label fs-md" for="false">No</label>
+
+                                    </div>
+                                    <div *ngIf="applicationForm.get('operatingSatisfactorily')?.invalid && applicationForm.get('operatingSatisfactorily')?.touched" class="text-danger">
+                                      This field is required
+                                    </div>
+                                  </div>
+                                  </div>
+                                  <!-- <div class="col-12 col-sm-6 col-md-6 col-lg-4">
+                                    <div class="form-floating mb-3">
+                                      <input type="text" class="form-control" id="operating" 
+                                        formControlName="operatingSatisfactorily" placeholder="Operating">
+                                      <label for="operating">Operating Satisfactorily</label>
+                                    </div>
+                                  </div> -->
+                                  <div class="col-12 col-sm-6 col-md-6 col-lg-4">
+
+                                    <div class="form-floating" [ngClass]="{'isDisabled':applicationForm.get('operatingSatisfactorily')?.value==true}">
+                                      <!-- <select class="form-select" id="operatingDiff" formControlName="operatingDifficulties">
+                                        <option value="">Select</option>
+                                        <option value="Financial">Financial</option>
+                                        <option value="Supply Chain">Supply Chain</option>
+                                        <option value="Labor">Labor</option>
+                                        <option value="Market Demand">Market Demand</option>
+                                        <option value="Regulatory">Regulatory</option>
+                                        <option value="Other">Other</option>
+                                      
+                                      </select> -->
+                                      <app-multiselect-dropdown formControlName="operatingDifficulties"></app-multiselect-dropdown>
+                                      <!-- <label for="operatingDiff">Operating with difficulties</label> -->
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div class="show-hide" id="operationalNo" *ngIf="operationStatus === false">
+                                <div class="row">
+                                  <div class="col-12 col-sm-6 col-md-6 col-lg-4">
+                                    <div class="form-floating mb-3">
+                                      <input type="date" class="form-control" id="date"  max="{{ today | date:'yyyy-MM-dd' }}"
+                                        formControlName="issueDate" placeholder="Since When">
+                                      <label for="date">Since when?</label>
+                                    </div>
+                                  </div>
+                                  <div class="col-12 col-sm-6 col-md-6 col-lg-4">
+                                    <div class="form-floating mb-3">
+                                      <input type="text" class="form-control" id="reasons" 
+                                        formControlName="reasonForNotOperating" placeholder="Reasons for not operating">
+                                      <label for="reasons">Reasons for not operating</label>
+                                    </div>
+                                  </div>
+                                  <div class="col-12 col-sm-6 col-md-6 col-lg-4">
+                                    <div class="mb-3">
+                                      <div>
+                                        <label class="form-label fs-md fw-600 mb-1">Whether intention to restart</label>
+                                      </div>
+                                      <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" formControlName="restartIntent" id="restartYes" [value]="true">
+                                        <label class="form-check-label fs-md" for="restartYes">Yes</label>
+                                      </div>
+                                      <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" formControlName="restartIntent" id="restartNo" [value]="false">
+                                        <label class="form-check-label fs-md" for="restartNo">No</label>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="col-12 col-sm-6 col-md-6 col-lg-4">
+                                    <div class="form-floating mb-3">
+                                      <input type="text" class="form-control" id="support" 
+                                        formControlName="restartSupport" placeholder="What support do you need to restart?">
+                                      <label for="support">What support do you need to restart?</label>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                              <div class="mb-3">
+                                <div>
+                                  <label class="form-label fs-md fw-600 mb-1">Existing Credit with facilities with bank/NBFC/FI & SFC ?</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                  <input class="form-check-input" type="radio" (change)="existingChange('YES')" formControlName="existingCredit" id="bankYes" [value]="true">
+                                  <label class="form-check-label fs-md" for="bankYes">Yes</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                  <input class="form-check-input" type="radio" (change)="existingChange('NO')" formControlName="existingCredit" id="bankNo" [value]="false">
+                                  <label class="form-check-label fs-md" for="bankNo">No</label>
+                                </div>
+                              </div>
+
+                              <div class="border rounded-3 p-3 mb-3 show-hide1" id="creditYes" *ngIf="existingStatus === true">
+                                <div class="table-responsive">
+                                  <table class="table table-bordered">
+                                    <thead class="bg-theme text-white">
+                                      <tr>
+                                        <th>S.No</th>
+                                        <th>Actions</th>
+                                        <th>Bank/Fis Name</th>
+                                        <th>Nature of Loan  </th>
+                                        <th>Limit sanctioned (In Rs)</th>
+                                        <th>Outstanding Amount (In Rs)</th>
+                                        <th>Overdue Amount (In Rs)</th>
+                                        <th>Overdue Since (Date)</th>
+                                      </tr>
+                                    </thead>
+                                     <tbody>
+                        <tr *ngFor="let item of this.applicationForm.value.creditFacilityDetails;let i=index">
+                          <td class="text-start">{{i+1}}</td>
+                          <td class="text-center">
+                             <button type="button" class="btn btn-default text-danger btn-sm" (click)="editCreditDetails(item)"><span class="bi bi-pencil"></span></button>
+                            <button type="button" class="btn btn-default text-danger btn-sm" (click)="deleteCreditDetail(i)"><span class="bi bi-trash"></span></button>
+                          </td>
+                          <td>{{item?.bankName}}</td>
+                          <td>{{item?.natureOfLoan}}</td>
+                          <td>{{item?.limitSanctioned}}</td>
+                          <td>{{item?.outstandingAmount}}</td>
+                          <td>{{item?.overdueAmount}}</td>
+                          <td>{{item?.overdueSince}}</td>
+                        </tr>
+                      </tbody>
+                                  </table>
+                                </div>
+                                <button type="button" class="btn btn-sm btn-primary mb-3" (click)="addCreditDetail()">Add More</button>
+                                <div class="">
+                                  <div>
+                                    <label class="form-label fs-md fw-600 mb-1">Status of the unit</label>
+                                  </div>
+                                  <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" formControlName="unitStatus" id="Standard" value="Standard">
+                                    <label class="form-check-label fs-md" for="Standard">Standard</label>
+                                  </div>
+                                  <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" formControlName="unitStatus" id="sma" value="sma">
+                                    <label class="form-check-label fs-md" for="sma">SMA</label>
+                                  </div>
+                                  <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" formControlName="unitStatus" id="npa" value="npa">
+                                    <label class="form-check-label fs-md" for="npa">NPAL</label>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div class="show-hide1" id="creditNo" *ngIf="existingStatus === false">
+                                <div class="row">
+                                  <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                                    <div class="form-floating mb-3">
+                                      <input type="number" class="form-control" id="limits" 
+                                        formControlName="requiredCreditLimit" placeholder="">
+                                      <label for="limits">Any requirement for credit limits ?</label>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                              <div class="mb-3">
+                                <div>
+                                  <label class="form-label fs-md fw-600 mb-1">Investment Subsidy / other incentives Sanctioned Govt</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                  <input class="form-check-input" type="radio" formControlName="investmentSubsidy" 
+                                  (change)="investmentChange('YES')" id="subsidyYes" [value]="true">
+                                  <label class="form-check-label fs-md" for="subsidyYes">Yes</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                  <input class="form-check-input" type="radio" formControlName="investmentSubsidy" 
+                                  (change)="investmentChange('NO')" id="subsidyNo" [value]="false">
+                                  <label class="form-check-label fs-md" for="subsidyNo">No</label>
+                                </div>
+                              </div>
+
+                              <div class="show-hide2" id="investmentYes" *ngIf="investmentBorrower === true">
+                                <div class="row">
+                                  <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                                    <div class="form-floating mb-3">
+                                      <input type="text" class="form-control" id="sanctioned" 
+                                        formControlName="totalAmountSanctioned" placeholder="">
+                                      <label for="sanctioned">Total Amount Sanctioned</label>
+                                    </div>
+                                  </div>
+                                  <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                                    <div class="form-floating mb-3">
+                                      <input type="text" class="form-control" id="amount" 
+                                        formControlName="amountReleased" placeholder="">
+                                      <label for="amount">Amount Released</label>
+                                    </div>
+                                  </div>
+                                  <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                                    <div class="form-floating mb-3">
+                                      <input type="text" class="form-control" id="amountReleased" 
+                                        formControlName="amountToBeReleased" placeholder="">
+                                      <label for="amountReleased">Amount to be Released</label>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                              <div class="mb-3">
+                                <div>
+                                  <label class="form-label fs-md fw-600 mb-1">How do you maintain your books of accounts?</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                  <input class="form-check-input" type="radio" formControlName="maintainingAccountBy" id="Manual" value="Manual">
+                                  <label class="form-check-label fs-md" for="Manual">Manual</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                  <input class="form-check-input" type="radio" formControlName="maintainingAccountBy" id="software" value="Any software application">
+                                  <label class="form-check-label fs-md" for="software">Any software application</label>
+
+                                </div>
+                                <div *ngIf="applicationForm.get('maintainingAccountBy')?.invalid && applicationForm.get('maintainingAccountBy')?.touched" class="text-danger">
+                                  This field is required
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                              <div class="mb-3">
+                                <label for="comments" class="form-label fs-md fw-600" mb-1>How can we help you?</label>
+                                <textarea class="form-control" id="comments" formControlName="helpMsg" rows="3" placeholder="Write here"></textarea>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="d-flex align-items-center justify-content-between">
+                            <button type="button" class="btn btn-secondary" (click)="prevStep()"><span class="bi bi-arrow-left me-2"></span> Previous</button>
+                            <button type="button" class="btn btn-primary" (click)="submitForm()"  [disabled]="applicationForm.invalid"> Submit <span class="bi bi-check2 ms-2"></span></button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+               
+                    <!-- Step 3 - Status -->
+                    <div class="step step-3" *ngIf="currentStep === 3">
+                      <div class="card mb-3">
+                        <div class="card-header bg-theme text-white">
+                            <h6 class="mb-0">Status</h6>
+                        </div>
+                        <div class="card-body">
+                          <div class="row">
+                            <div class="col-12 col-sm-12 col-md-6 offset-md-3 col-lg-4 offset-lg-4">
+                              <div class="text-center mb-5">
+                                <img src="assets/img/success.png" alt="status successfully" class="img-fluid w-75">
+                              </div>
+                              <div class="card border-0 bg-light p-3 rounded-3">
+                                <div class="d-flex align-items-center justify-content-between mb-3">
+                                  <div>
+                                    <p class="fw-600 fs-md mb-0">Application No.</p>
+                                  </div>
+                                  <div>
+                                    <p class="fs-md fw-600 mb-0">{{enterPrenuerResponseData?.applicationNo}}</p>
+                                  </div>
+                                </div>
+                                <div class="d-flex align-items-center justify-content-between mb-3">
+                                  <div>
+                                    <p class="fw-600 fs-md mb-0">Date Of Submission</p>
+                                  </div>
+                                  <div>
+                                    <p class="fs-md mb-0">{{enterPrenuerResponseData?.createdOn}}</p>
+                                  </div>
+                                </div>
+                                <div class="d-flex align-items-center justify-content-between">
+                                  <div>
+                                    <p class="fw-600 fs-md mb-0">Application Status</p>
+                                  </div>
+                                  <div>
+                                    <p class="fs-md text-warning mb-0">{{enterPrenuerResponseData?.applicationStatus}}</p>
+                                  </div>
+                                </div>
+                                <!-- <div class="d-flex align-items-center justify-content-between">
+                                    <div>
+                                      <p class="fw-600 fs-md mb-0"></p>
+                                    </div>
+                                    <div>
+                                      <p class="fs-md text-warning mb-0">
+                                        <button class="btn btn-primary" (click)="logout()">Finish</button>
+                                      </p>
+                                    </div>
+                                  </div> -->
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </section>
+</main>
+
+<div class="modal fade" tabindex="-1" role="dialog" #exampleModal aria-labelledby="mySmallModalLabel" aria-hidden="true"
+    id="exampleModal">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header  bg-theme">
+                <h5 class="modal-title" id="myModalLabel">Notice:</h5>
+            </div>
+            <div class="modal-body">
+                <h5 class="modal-title" id="myModalLabel">Currently, only Telangana units can be done.</h5>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="modal-btn-si"
+                    (click)="checkValidate('yes')">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="addDelivery" #addDelivery tabindex="-1" aria-labelledby="addResourceLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header  bg-theme">
+                <h5 class="modal-title" id="myModalLabel">Add Credit Details:</h5>
+                 <button type="button" class="btn-close me-1" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="creditDetailsForm">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="bankName" placeholder="Bank/FI Name" 
+                                       formControlName="bankName">
+                                <label for="bankName">Bank/FI Name</label>
+                                <div *ngIf="creditDetailsForm.get('bankName')?.invalid && 
+                                           (creditDetailsForm.get('bankName')?.dirty || 
+                                           creditDetailsForm.get('bankName')?.touched)" 
+                                     class="text-danger">
+                                    Bank/FI name is required
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-floating mb-3">
+                                <select class="form-select" id="natureOfLoan" formControlName="natureOfLoan">
+                                    <option value="" disabled selected>Select Nature of Loan</option>
+                                    <option value="Short-term Loans">Short-term Loans</option>
+                                    <option value="Medium-term Loans">Medium-term Loans</option>
+                                    <option value="Long-term Loans">Long-term Loans</option>
+                                </select>
+                                <label for="natureOfLoan">Nature of Loan</label>
+                                <div *ngIf="creditDetailsForm.get('natureOfLoan')?.invalid && 
+                                           (creditDetailsForm.get('natureOfLoan')?.dirty || 
+                                           creditDetailsForm.get('natureOfLoan')?.touched)" 
+                                     class="text-danger">
+                                    Nature of loan is required
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-floating mb-3">
+                                <input type="number" class="form-control" id="limitSanctioned" placeholder="Limit Sanctioned"
+                                       formControlName="limitSanctioned">
+                                <label for="limitSanctioned">Limit Sanctioned (In Rs)</label>
+                                <div *ngIf="creditDetailsForm.get('limitSanctioned')?.invalid && 
+                                           (creditDetailsForm.get('limitSanctioned')?.dirty || 
+                                           creditDetailsForm.get('limitSanctioned')?.touched)" 
+                                     class="text-danger">
+                                    <div *ngIf="creditDetailsForm.get('limitSanctioned')?.errors?.['required']">
+                                        Limit sanctioned is required
+                                    </div>
+                                    <div *ngIf="creditDetailsForm.get('limitSanctioned')?.errors?.['min']">
+                                        Limit must be positive
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-floating mb-3">
+                                <input type="number" class="form-control" id="outstandingAmount" placeholder="Outstanding Amount"
+                                       formControlName="outstandingAmount">
+                                <label for="outstandingAmount">Outstanding Amount (In Rs)</label>
+                                <div *ngIf="creditDetailsForm.get('outstandingAmount')?.invalid && 
+                                           (creditDetailsForm.get('outstandingAmount')?.dirty || 
+                                           creditDetailsForm.get('outstandingAmount')?.touched)" 
+                                     class="text-danger">
+                                    <div *ngIf="creditDetailsForm.get('outstandingAmount')?.errors?.['required']">
+                                        Outstanding amount is required
+                                    </div>
+                                    <div *ngIf="creditDetailsForm.get('outstandingAmount')?.errors?.['min']">
+                                        Amount must be positive
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-floating mb-3">
+                                <input type="number" class="form-control" id="overdueAmount" placeholder="Overdue Amount"
+                                       formControlName="overdueAmount">
+                                <label for="overdueAmount">Overdue Amount (In Rs)</label>
+                                <div *ngIf="creditDetailsForm.get('overdueAmount')?.invalid && 
+                                           (creditDetailsForm.get('overdueAmount')?.dirty || 
+                                           creditDetailsForm.get('overdueAmount')?.touched)" 
+                                     class="text-danger">
+                                    <div *ngIf="creditDetailsForm.get('overdueAmount')?.errors?.['required']">
+                                        Overdue amount is required
+                                    </div>
+                                    <div *ngIf="creditDetailsForm.get('overdueAmount')?.errors?.['min']">
+                                        Amount must be positive
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-floating mb-3">
+                                <input type="date" class="form-control" id="overdueSince" placeholder="Overdue Since"
+                                       formControlName="overdueSince" max="{{ today | date:'yyyy-MM-dd' }}">
+                                <label for="overdueSince">Overdue Since (Date)</label>
+                                <div *ngIf="creditDetailsForm.get('overdueSince')?.invalid && 
+                                           (creditDetailsForm.get('overdueSince')?.dirty || 
+                                           creditDetailsForm.get('overdueSince')?.touched)" 
+                                     class="text-danger">
+                                    Please enter a valid date
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="text-end">
+                                <button type="button" class="btn btn-primary" 
+                                        [disabled]="!creditDetailsForm.valid" data-bs-dismiss="modal" (click)="submitCreditDetails()">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

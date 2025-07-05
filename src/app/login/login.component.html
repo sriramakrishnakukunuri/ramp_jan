@@ -58,38 +58,78 @@
 <section class="login-content">
     <div class="container-fluid">
         <div class="row align-items-center vh-100">
-            <div class="col-12 col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-4 offset-lg-4" *ngIf="defaultOTPScreen == false">
+
+            <div class="col-12 col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-4 offset-lg-4"  *ngIf="defaultOTPScreen == false">
                 <div class="gradient-bg shadow-theme p-3">
                     <div class="text-center mb-4">
                         <img src="../../../assets/img/tihcl-logo.png" alt="Logo" class="img-fluid" width="120">
                     </div>
+
                     <h5 class="text-center mb-3">Login to your account</h5>
-                    <form>
+                       <div class="user-type-selector">
+                    <div class="user-type active" id="team-member" [(ngModel)]="loginType" (click)="switchLoginType('team-member')">
+                        <i class="fas fa-users"></i>
+                        <span>Team Member</span>
+                    </div>
+                    <div class="user-type" id="entrepreneur" [(ngModel)]="loginType" (click)="switchLoginType('entrepreneur')">
+                        <i class="fas fa-user-tie"></i>
+                        <span>Entrepreneur</span>
+                    </div>
+                </div>
+                      <div class="gradient-bg shadow-theme p-3"  *ngIf="defaultOTPScreen == false && loginType == 'team-member'">
+                        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                            <div class="form-floating mb-3">
+                                <input type="text" formControlName="identifier" class="form-control" name="identifier" id="identifier" placeholder="User Name" autofocus>
+                                <label for="identifier">User Name</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                               <i *ngIf="passwordshowConfirm" class="bi bi-eye password-key-login"   (click)="passwordshowConfirm = !passwordshowConfirm"></i>
+                                        <i *ngIf="!passwordshowConfirm" class="bi bi-eye-slash password-key-login"  (click)="passwordshowConfirm = !passwordshowConfirm"></i>                              
+                                        <input [type]="passwordshowConfirm ? 'text' : 'password'"  formControlName="password" placeholder="Password" class="form-control form-control-lg" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+                                        <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                                            <div *ngIf="f.password.errors.required">Password is required</div>
+                                        </div>
+                                <label for="password">Password</label>
+                            </div>
+                        
+                            <div class="d-grid mb-3">
+                                <button [ngClass]="{'disabled': loading}" class="btn btn-primary">
+                                    <span *ngIf="loading" class="spinner-border spinner-border-sm me-1"></span>
+                                    Login
+                                </button>
+                                <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>
+                            </div>
+                        </form>
+                        <div class="text-center">
+                            <a href="#" class="fs-md text-dark">Forgot Password?</a>
+                        </div>
+                    </div>  
+                    <ng-container *ngIf="defaultOTPScreen == false && loginType == 'entrepreneur'" >
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="phone" placeholder="Phone No.">
+                            <input type="number" class="form-control" id="phone" placeholder="Phone No."  [(ngModel)]="phoneNumber" >
                             <label for="phone">Mobile No.</label>
                         </div>
 
                         <div class="d-grid mb-3">
                             <a (click)="OTPVerify()" class="btn btn-primary">Get OTP</a>
                         </div>
-
+                        <div *ngIf="Mobileerror" class="alert alert-danger mt-3 mb-0">{{Mobileerror}}</div>
                         <div class="text-center mb-4">
                             <p>Authorised Person <a>Login</a></p>
                         </div>                        
-                    </form>
+                    </ng-container>
                 </div>
             </div>
-            <div class="col-12 col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-4 offset-lg-4" *ngIf="defaultOTPScreen == true">
+            <div class="col-12 col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-4 offset-lg-4" *ngIf="defaultOTPScreen == true && loginType == 'entrepreneur'">
                 <div class="gradient-bg shadow-theme p-3">
                     <div class="text-center mb-4">
-                        <img src="../../../assets/img/tihcl-logo.png"alt="Logo" class="img-fluid" width="150">
+                        <img src="../../assets/img/otp.png"alt="Logo" class="img-fluid" width="150">
                     </div>
                     <h5 class="text-center mb-3">Verify Phone</h5>
                     <p class="text-center text-muted">We sent OTP Verification to your mobile number</p>
-                    <form>
+                    <form [formGroup]="otpForm" >
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="otp" placeholder="OTP">
+                            <input type="text" class="form-control" formControlName="otp"  id="otp" placeholder="OTP">
                             <label for="otp">Enter OTP</label>
                         </div>
 
@@ -101,10 +141,11 @@
                             </div>
                             <div class="col-6">
                                 <div class="d-grid mb-4">
-                                    <a (click)="OTPVerify('SUBMIT')" class="btn btn-primary">Submit</a>
+                                    <a (click)="OTPVerify('SUBMIT')" [ngClass]="{'disabled': this.fOtp.otp.invalid}" class="btn btn-primary">Submit</a>
                                 </div>
                             </div>
                         </div>
+                          <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>
 
                         <div class="text-center">
                             <p class="mb-0">I don't recieve a code! <a (click)="OTPVerify('BACK')">Resend Code</a></p>

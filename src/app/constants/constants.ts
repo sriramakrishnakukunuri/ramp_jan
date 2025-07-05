@@ -53,5 +53,26 @@ export const APIS = {
         getOutcomelistData: API_BASE_URL + '/program/outcome/tables',
         getDynamicFormDataBasedOnOutCome: API_BASE_URL + '/program/outcome/details/',
         saveOutComes:API_BASE_URL + '/program/outcome/save/',
+    },
+
+
+    // TIHCL MANAGER APIS
+      tihclMasterList: {
+        getDistricts: API_BASE_URL + '/getAllDistricts',
+        getMandal: API_BASE_URL + '/getAllmandalsOfDistrictsById/',
+    },
+    tihclEnterprenuer:{
+        submitLoanApplication: API_BASE_URL + '/registrations/save',
+    },
+    tihclManager:{
+        getLevelOneData: API_BASE_URL + '/registrations/status?status=PRELIMINARY_ASSESSMENT',
+        getLevelTwoData: API_BASE_URL + '/programs/level2/approval/',
+        getLevelThreeData: API_BASE_URL + '/programs/level3/approval/',
+        approveLevelOne: API_BASE_URL + '/programs/level1/approve/',
+        approveLevelTwo: API_BASE_URL + '/programs/level2/approve/',
+        approveLevelThree: API_BASE_URL + '/programs/level3/approve/',
+        rejectLevelOne: API_BASE_URL + '/programs/level1/reject/',
+        rejectLevelTwo: API_BASE_URL + '/programs/level2/reject/',
+        rejectLevelThree: API_BASE_URL + '/programs/level3/reject/',    
     }
 }
