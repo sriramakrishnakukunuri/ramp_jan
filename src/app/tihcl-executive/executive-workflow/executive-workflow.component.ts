@@ -32,7 +32,7 @@ currentStep:any = 1;
         this._commonService.setCurrentStep(1);
         // sessionStorage.setItem('ApplicationData', JSON.stringify(applicationData));
      }else if(applicationData.status === 'PRELIMINARY_ASSESSMENT'){
-      this.currentStep.setCurrentStep(2)
+     this._commonService.setCurrentStep(2)
       this.currentStep=2
      }
   
@@ -43,6 +43,12 @@ currentStep:any = 1;
     this._commonService.getDataByUrl(url).subscribe({
       next: (dataList: any) => {
         sessionStorage.setItem('ApplicationData', JSON.stringify(dataList?.data));
+        console.log(dataList?.data,dataList?.data.applicationStatus,dataList?.data.applicationStatus === 'PRELIMINARY_ASSESSMENT')
+        if(dataList?.data.applicationStatus === 'PRELIMINARY_ASSESSMENT'){
+          this.currentStep=2
+          this._commonService.setCurrentStep(2)
+          
+        }
         return dataList?.data
          
         // Handle the dataList as needed
@@ -54,8 +60,9 @@ currentStep:any = 1;
   }
 progressBarStatusUpdate(event:any) {
   console.log(event)
-    if(event.update === true) {     
-     this.ngOnInit()
+    if(event.update === true) {  
+       const applicationData = JSON.parse(sessionStorage.getItem('ApplicationData') || '{}');   
+      this.getDtataByUrl(APIS.tihclExecutive.registerData + applicationData.registrationUsageId)
       
     }
   }

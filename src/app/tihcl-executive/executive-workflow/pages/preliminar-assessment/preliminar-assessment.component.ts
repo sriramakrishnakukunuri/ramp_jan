@@ -377,9 +377,6 @@ applicationData:any
         }
       }
     });
-    
-    console.log(this.totalScore)
-    
     // Calculate percentage (max possible score is 100 if all questions scored 10)
     // this.totalScore = Math.min(Math.round((this.totalScore / 100) * 100), 100);
   }
