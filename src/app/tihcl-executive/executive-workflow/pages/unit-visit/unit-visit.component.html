@@ -1,0 +1,343 @@
+<fieldset>
+                        <div class="card border rounded-2 shadow-none mb-3">
+                          <div class="card-header bg-theme text-white">
+                              <h6 class="mb-0">Unit Visit</h6>
+                          </div>
+                          <div class="card-body">
+                            <div class="row">
+                              <div class="col-12 col-sm-12 col-md-4 col-lg-3">
+                                <div class="form-floating mb-3">
+                                  <input type="text" class="form-control" id="visitedInput" placeholder="">
+                                  <label for="visitedInput">Visited by </label>
+                                </div>
+                              </div>
+                              <div class="col-12 col-sm-12 col-md-4 col-lg-3">
+                                <div class="form-floating mb-3">
+                                  <input type="datetime" class="form-control" id="dtInput" placeholder="">
+                                  <label for="dtInput">Date & Time of Visit </label>
+                                </div>
+                              </div>
+                              <div class="col-12 col-sm-12 col-md-4 col-lg-3">
+                                <div class="form-floating mb-3">
+                                  <input type="text" class="form-control" id="designationInput" placeholder="">
+                                  <label for="designationInput">Name of the person met & Designation </label>
+                                </div>
+                              </div>
+                              <div class="col-12 col-sm-12 col-md-4 col-lg-3">
+                                <div class="form-floating mb-3">
+                                  <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
+                                    <option selected>Select Land Details </option>
+                                    <option value="1">Owned</option>
+                                    <option value="2">Leased</option>
+                                    <option value="3">Other </option>
+                                  </select>
+                                  <label for="floatingSelect">Land Details </label>
+                                </div>
+                              </div>
+                              <div class="col-12 col-sm-12 col-md-4 col-lg-3">
+                                <div class="form-floating mb-3 mb-lg-0">
+                                  <input type="text" class="form-control" id="factoryAddress" placeholder="">
+                                  <label for="factoryAddress">Factory Address</label>
+                                </div>
+                              </div>
+                              <div class="col-12 col-sm-12 col-md-4 col-lg-3">
+                                <div class="form-check">
+                                  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                  <label class="form-check-label fs-md" for="flexCheckDefault">
+                                    Same as factory address
+                                  </label>
+                                </div>
+                              </div>
+                              <div class="col-12 col-sm-12 col-md-4 col-lg-3">
+                                <div class="form-floating mb-3 mb-lg-0">
+                                  <input type="text" class="form-control" id="registerAddress" placeholder="">
+                                  <label for="registerAddress">Register Address</label>
+                                </div>
+                              </div>
+                            </div>
+
+                            <hr>
+
+                            <div>
+                              <div class="d-flex align-items-center justify-content-between mb-3">
+                                <div>
+                                  <h6 class="fw-600">Factory Shed & Building details</h6>
+                                </div>
+                                <div>
+                                  <button type="button" data-bs-toggle="modal" data-bs-target="#addmachinary" class="btn btn-primary btn-sm"><span class="bi bi-plus-lg"></span> Add</button>
+                                </div>
+                              </div>
+                              <div class="table-responsive">
+                                <table class="table table-bordered fs-md">
+                                  <thead>
+                                    <tr>
+                                      <th>S.No</th>
+                                      <th>Types of machine</th>
+                                      <th>Purpose</th>
+                                      <th>No. of machines</th>
+                                      <th>Cost of machine purchased</th>
+                                      <th>Current condition</th>
+                                      <th>Value of machinery</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr>
+                                      <td>1</td>
+                                      <td>Machine 1</td>
+                                      <td>Purpose 1</td>
+                                      <td>3</td>
+                                      <td>400000</td>
+                                      <td>Better</td>
+                                      <td>10</td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+                              <div class="row">
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                                  <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="upgradation">
+                                    <label class="form-check-label fs-md" for="upgradation">
+                                      Is upgradation required?
+                                    </label>
+                                  </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                                  <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="upgradation">
+                                    <label class="form-check-label fs-md" for="upgradation">
+                                      Is machinery properly aligned?
+                                    </label>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                            <hr>
+
+                            <div class="row mb-3">
+                              <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                                <h6 class="fw-600 fs-md">Company Name Board</h6>
+                                <div class="form-check form-check-inline">
+                                  <input class="form-check-input" type="radio" name="nameBoard" id="boardYes" value="">
+                                  <label class="form-check-label fs-md" for="boardYes">Yes</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                  <input class="form-check-input" type="radio" name="nameBoard" id="boardNo" value="">
+                                  <label class="form-check-label fs-md" for="boardNo">No</label>
+                                </div>
+                              </div>
+                              <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                                <h6 class="fw-600 fs-md">Financed Bank Name Board</h6>
+                                <div class="form-check form-check-inline">
+                                  <input class="form-check-input" type="radio" name="nameBoard" id="boardYes1" value="">
+                                  <label class="form-check-label fs-md" for="boardYes1">Yes</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                  <input class="form-check-input" type="radio" name="nameBoard" id="boardNo1" value="">
+                                  <label class="form-check-label fs-md" for="boardNo1">No</label>
+                                </div>
+                              </div>
+                            </div>
+
+                            <hr>
+
+                            <div>
+                              <h6 class="fs-md">Staff at the time of Visit </h6>
+                              <div class="row">
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                                  <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="officeStaff" placeholder="">
+                                    <label for="officeStaff">Office Staff</label>
+                                  </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                                  <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="factoryWorkers" placeholder="">
+                                    <label for="factoryWorkers">Factory Workers</label>
+                                  </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                                  <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="temporaryWorkers" placeholder="">
+                                    <label for="temporaryWorkers">Temporary Workers</label>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                            <hr>
+
+                            <div class="row">
+                              <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                                <div class="mb-3">
+                                  <label class="d-block fw-600 fs-md">Employees Attendance Register</label>
+                                  <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="register" id="registerYes" value="">
+                                    <label class="form-check-label fs-md" for="registerYes">Yes</label>
+                                  </div>
+                                  <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="register" id="registerNo" value="">
+                                    <label class="form-check-label fs-md" for="registerNo">No</label>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                                <div class="form-floating mb-3">
+                                  <input type="text" class="form-control" id="inconsistencies" placeholder="">
+                                  <label for="inconsistencies">Are there any inconsistencies with no. of people working?</label>
+                                </div>
+                              </div>
+                              <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                                <div class="form-floating mb-3">
+                                  <input type="text" class="form-control" id="sold" placeholder="">
+                                  <label for="sold">What are the products manufactured and sold</label>
+                                </div>
+                              </div>
+                              <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                                <div class="form-floating mb-3">
+                                  <input type="text" class="form-control" id="seasonal" placeholder="">
+                                  <label for="seasonal">Whether production is seasonal or throughout the year?</label>
+                                </div>
+                              </div>
+                              <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                                <div class="form-floating mb-3">
+                                  <input type="text" class="form-control" id="shifts" placeholder="">
+                                  <label for="shifts">No. of Shifts </label>
+                                </div>
+                              </div>
+                              <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                                <h6 class="fw-600 fs-md">Are stocks stored property</h6>
+                                <div class="form-check form-check-inline">
+                                  <input class="form-check-input" type="radio" name="stocks" id="stocksYes" value="">
+                                  <label class="form-check-label fs-md" for="stocksYes">Yes</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                  <input class="form-check-input" type="radio" name="stocks" id="stocksNo" value="">
+                                  <label class="form-check-label fs-md" for="stocksNo">No</label>
+                                </div>
+                              </div>
+                              <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                                <h6 class="fw-600 fs-md">Does unit have adequate storage capacity?</h6>
+                                <div class="form-check form-check-inline">
+                                  <input class="form-check-input" type="radio" name="capacity" id="capacityYes" value="">
+                                  <label class="form-check-label fs-md" for="capacityYes">Yes</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                  <input class="form-check-input" type="radio" name="capacity" id="capacityNo" value="">
+                                  <label class="form-check-label fs-md" for="capacityNo">No</label>
+                                </div>
+                              </div>
+                            </div>
+
+                            <hr>
+
+                            <div>
+                              <label class="fs-md fw-600">Stocks Record</label>
+                              <div class="row">
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                                  <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="stocks1" placeholder="">
+                                    <label for="stocks1">Whether Stocks register is maintained?</label>
+                                  </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                                  <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="stocks2" placeholder="">
+                                    <label for="stocks2">Is it up to date</label>
+                                  </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                                  <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="stocks3" placeholder="">
+                                    <label for="stocks3">Value of the stock as(In Rs)</label>
+                                  </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                                  <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="stocks4" placeholder="">
+                                    <label for="stocks4">Raw material</label>
+                                  </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                                  <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="stocks5" placeholder="">
+                                    <label for="stocks5">Work in Progress</label>
+                                  </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                                  <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="stocks5" placeholder="">
+                                    <label for="stocks5">Finished Goods</label>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                            <hr>
+
+                            <div class="row">
+                              <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                                <div class="form-floating mb-3">
+                                  <input type="text" class="form-control" id="max" placeholder="">
+                                  <label for="max">Maximum production in units </label>
+                                </div>
+                              </div>
+                              <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                                <div class="form-floating mb-3">
+                                  <input type="text" class="form-control" id="min" placeholder="">
+                                  <label for="min">Minimum production in units </label>
+                                </div>
+                              </div>
+                              <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                                <div class="form-floating mb-3">
+                                  <input type="text" class="form-control" id="current" placeholder="">
+                                  <label for="current">Current production in units </label>
+                                </div>
+                              </div>
+                            </div>
+
+                            <hr>
+
+                            <div class="row">
+                              <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                                <div class="form-floating mb-3">
+                                  <input type="text" class="form-control" id="cost" placeholder="">
+                                  <label for="cost">Cost per unit</label>
+                                </div>
+                              </div>
+                              <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                                <div class="form-floating mb-3">
+                                  <input type="text" class="form-control" id="selling" placeholder="">
+                                  <label for="selling">Selling price per unit</label>
+                                </div>
+                              </div>
+                              <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                                <div class="form-floating mb-3">
+                                  <input type="text" class="form-control" id="profit" placeholder="">
+                                  <label for="profit">Profit margin(%)</label>
+                                </div>
+                              </div>
+                            </div>
+                            <hr>
+
+                            <h6 class="fs-md fw-600">Electricity Bill</h6>
+                            <div class="row">
+                              <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                                <div class="form-floating mb-3">
+                                  <input type="text" class="form-control" id="recent" placeholder="">
+                                  <label for="recent">Recent Consumption </label>
+                                </div>
+                              </div>
+                              <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                                <div class="form-floating mb-3">
+                                  <input type="text" class="form-control" id="maximum" placeholder="">
+                                  <label for="maximum">Maximum Consumption</label>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <input type="button" name="previous" class="previous btn btn-secondary float-start" value="Previous"/>
+                        <input type="button" name="next" class="next btn btn-primary float-end" value="Next"/>
+                      </fieldset>

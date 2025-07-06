@@ -1,0 +1,49 @@
+.step-circle {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background-color: #e9ecef;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6c757d;
+}
+
+.step-circle.active {
+  background-color: #0082f1;
+  color: white;
+}
+
+.step-label div {
+  color: #6c757d;
+  margin-top: 56px;
+}
+
+.step-label div.active {
+  color: #0082f1;
+  font-weight: bold;
+}
+
+.step.active {
+  display: block;
+}
+
+.form-check-input:checked {
+  background-color: #0082f1;
+  border-color: #0082f1;
+}
+
+.btn-primary {
+  background-color: #0082f1;
+  border-color: #0082f1;
+}
+
+.bg-theme {
+  background-color: #0082f1 !important;
+}
+
+.isDisabled{
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.5;
+}

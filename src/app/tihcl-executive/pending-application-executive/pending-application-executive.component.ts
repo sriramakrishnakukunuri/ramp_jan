@@ -8,45 +8,45 @@ import 'datatables.net-buttons-dt';
 import 'datatables.net-responsive-dt';
 
 @Component({
-  selector: 'app-level1-approval',
-  templateUrl: './level1-approval.component.html',
-  styleUrls: ['./level1-approval.component.css']
+  selector: 'app-pending-application-executive',
+  templateUrl: './pending-application-executive.component.html',
+  styleUrls: ['./pending-application-executive.component.css']
 })
-export class Level1ApprovalComponent implements OnInit {
-loginsessionDetails:any
-tableList:any=[]
-currentPage = 1;
+export class PendingApplicationExecutiveComponent implements OnInit {
+ currentPage = 1;
   pageSize = 10;
   totalItems = 100;
   pagedData: any[] = [];
+loginsessionDetails:any
+tableList:any=[]
  constructor(
      private toastrService: ToastrService,
      private _commonService: CommonServiceService,
      private router: Router,
    ) { 
-     this.loginsessionDetails = JSON.parse(sessionStorage.getItem('user') || '{}');    
+    //  this.loginsessionDetails = JSON.parse(sessionStorage.getItem('user') || '{}');    
    }
   ngOnInit(): void {
-    this.getLevelOneData(1, 10);
+    this.getNewApplications(1, 10);
   }
-   onPageChange(event: {page: number, pageSize: number}): void {
+  onPageChange(event: {page: number, pageSize: number}): void {
     this.currentPage = event.page;
     this.pageSize = event.pageSize;
-     this.getLevelOneData(this.currentPage,  this.pageSize);
+     this.getNewApplications(this.currentPage,  this.pageSize);
   }
- getLevelOneData(pageNo:any,PageSize:any): any {
+ getNewApplications(pageNo:any,PageSize:any): any {
     this.tableList = '';
-    this._commonService.getDataByUrl(APIS.tihclManager.getLevelOneData+'&pageNo=' + (pageNo-1) + '&pageSize=' + PageSize).subscribe({
+    this._commonService.getDataByUrl(APIS.tihclExecutive.getPendingApplications+'?pageNo=' + (pageNo-1) + '&pageSize=' + PageSize).subscribe({
       next: (dataList: any) => {
         this.tableList = dataList.data;
-        this.totalItems=dataList?.totalElements
+         this.totalItems=dataList?.totalElements
         // this.reinitializeDataTable();
       },
       error: (error: any) => {
-        this.totalItems=0
+         this.totalItems=0
         this.toastrService.error(error.error.message);
       }
     });
   }
-  
 }
+

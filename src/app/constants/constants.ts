@@ -64,6 +64,12 @@ export const APIS = {
     tihclEnterprenuer:{
         submitLoanApplication: API_BASE_URL + '/registrations/save',
     },
+    tihclExecutive:{
+        getNewApplications:API_BASE_URL+`/registrations/new/applications`,
+        getPendingApplications:API_BASE_URL+`/registrations/under-processing`,
+        registerData: API_BASE_URL + '/registrations/usage/id/',
+        submitPrimilinary:API_BASE_URL+`/registrations/preliminary/save/`
+    },
     tihclManager:{
         getLevelOneData: API_BASE_URL + '/registrations/status?status=PRELIMINARY_ASSESSMENT',
         getLevelTwoData: API_BASE_URL + '/programs/level2/approval/',

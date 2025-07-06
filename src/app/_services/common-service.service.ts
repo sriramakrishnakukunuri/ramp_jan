@@ -7,12 +7,17 @@ import { catchError, forkJoin, Observable, throwError } from 'rxjs';
   providedIn: 'root'
 })
 export class CommonServiceService {
-
+  private currentStep = 1;
   constructor(private http: HttpClient) { }
   private formatErrors(error: HttpErrorResponse) {
     return throwError(() => error);
   }
-
+ setCurrentStep(step: number) {
+    this.currentStep = step;
+  }
+  getCurrentStep(): number {
+    return this.currentStep;
+  }
   public add(URL: any, payload: any): Observable<any> {
     return this.http.post(URL, payload).pipe(catchError(this.formatErrors));
   }

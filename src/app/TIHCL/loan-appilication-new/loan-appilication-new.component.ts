@@ -185,6 +185,9 @@ export class LoanAppilicationNewComponent implements OnInit {
   //     overdueSince: ['']
   //   });
   // }
+  get fCredit() {
+    return this.creditDetailsForm.controls;
+  }
    createCreditDetail(item?: any): void {
     this.creditDetailsForm=this.fb.group({
       bankName: ['', Validators.required],
@@ -476,7 +479,7 @@ this.applicationForm.get('operatingDifficulties')?.updateValueAndValidity()
     const creditFacilityDetails: any = this.applicationForm.get('creditFacilityDetails')?.value? this.applicationForm.get('creditFacilityDetails')?.value : [];
     this._commonService.add(APIS.tihclEnterprenuer.submitLoanApplication, {...this.applicationForm.value,creditFacilityDetails:creditFacilityDetails,status: "Assessment Completed"}).subscribe({
       next: (response) => {
-        if(response.status === '200') {
+        if(response.status === 200) {
            this.enterPrenuerResponseData = response.data;
            sessionStorage.setItem('enterpreneur', JSON.stringify(this.enterPrenuerResponseData));
           this.applicationForm.reset();

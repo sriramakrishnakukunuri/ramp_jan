@@ -730,7 +730,11 @@
                                     <div *ngIf="creditDetailsForm.get('overdueAmount')?.errors?.['min']">
                                         Amount must be positive
                                     </div>
+                                    
                                 </div>
+                                 <div *ngIf="fCredit['overdueAmount']?.value > fCredit['outstandingAmount']?.value" class="text-danger">
+                                 Overdue Amount cannot be greater than Outstanding Amount
+                                    </div>
                             </div>
                         </div>
                         <div class="col-12">
@@ -749,7 +753,7 @@
                         <div class="col-12">
                             <div class="text-end">
                                 <button type="button" class="btn btn-primary" 
-                                        [disabled]="!creditDetailsForm.valid" data-bs-dismiss="modal" (click)="submitCreditDetails()">Submit</button>
+                                        [disabled]="!creditDetailsForm.valid || fCredit['overdueAmount']?.value > fCredit['outstandingAmount']?.value" data-bs-dismiss="modal" (click)="submitCreditDetails()">Submit</button>
                             </div>
                         </div>
                     </div>

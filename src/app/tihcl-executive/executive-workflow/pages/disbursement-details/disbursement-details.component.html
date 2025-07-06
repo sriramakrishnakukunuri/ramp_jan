@@ -1,0 +1,133 @@
+ <fieldset>
+                        <div class="card border rounded-2 shadow-none mb-3">
+                            <div class="card-header bg-theme text-white">
+                                <h6 class="mb-0">Disbursement Details</h6>
+                            </div>
+                            <div class="card-body">
+                              <div class="row">
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                  <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="sanctionedAmt" placeholder="">
+                                    <label for="sanctionedAmt">Total Sanctioned Amount</label>
+                                  </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                  <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="disbursmentAmt" placeholder="">
+                                    <label for="disbursmentAmt">Total Disbursed Amount</label>
+                                  </div>
+                                </div>
+                                <!-- <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                  <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="pendingAmt" placeholder="">
+                                    <label for="pendingAmt">Pending Amount</label>
+                                  </div>
+                                </div> -->
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                  <div class="form-floating mb-3">
+                                    <input type="date" class="form-control" id="dateDisbursement" placeholder="">
+                                    <label for="dateDisbursement">Date of disbursement</label>
+                                  </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                  <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="bankName" placeholder="">
+                                    <label for="bankName">Bank Name</label>
+                                  </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                  <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="ifscCode" placeholder="">
+                                    <label for="ifscCode">IFSC Code</label>
+                                  </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                  <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="acountName" placeholder="">
+                                    <label for="acountName">Account Name</label>
+                                  </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                  <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="acountNumber" placeholder="">
+                                    <label for="acountNumber">Account Number</label>
+                                  </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                  <div class="form-floating mb-3">
+                                    <input type="date" class="form-control" id="collectionDate" placeholder="">
+                                    <label for="collectionDate">Collection Date</label>
+                                  </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                  <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="feeAmount" placeholder="">
+                                    <label for="feeAmount">Processing Fee Collected Amount</label>
+                                  </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                  <div class="mb-3">
+                                    <h6 class="fw-600 fs-md">TSipass upload</h6>
+                                    <div class="form-check form-check-inline">
+                                      <input class="form-check-input" type="radio" name="tsiRadio" id="applicableTsi" value="yesSecurity">
+                                      <label class="form-check-label fs-md" for="applicableTsi">Applicable</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                      <input class="form-check-input" type="radio" name="tsiRadio" id="notapplicableTsi" value="">
+                                      <label class="form-check-label fs-md" for="notapplicableTsi">Not Applicable</label>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                  <div class="mb-3">
+                                    <h6 class="fw-600 fs-md">ROC Filling</h6>
+                                    <div class="form-check form-check-inline">
+                                      <input class="form-check-input" type="radio" name="rocRadio" id="applicableRoc" value="yesSecurity">
+                                      <label class="form-check-label fs-md" for="applicableRoc">Applicable</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                      <input class="form-check-input" type="radio" name="rocRadio" id="notapplicableRoc" value="">
+                                      <label class="form-check-label fs-md" for="notapplicableRoc">Not Applicable</label>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div class="border rounded-3 p-2">
+                                <div class="row align-items-center mb-3">
+                                  <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                                    <label class="fs-md fw-bold mb-1">Add Disbursement</label>
+                                  </div>
+                                  <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                                    <div class="text-start text-sm-end text-xl-end">
+                                      <button type="button" data-bs-toggle="modal" data-bs-target="#addDisbursement" class="btn btn-outline-primary btn-sm border-0 ms-3"><span class="bi bi-plus-lg"></span> Add</button>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="table-responsive">
+                                  <table class="table table-borderless table-striped fs-md">
+                                    <thead class="bg-theme text-white">
+                                      <tr>
+                                        <th>S.No</th>
+                                        <th>Date</th>
+                                        <th>Amount</th>
+                                        <th>Details</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      <tr>
+                                        <td>1</td>
+                                        <td>13-05-2025</td>
+                                        <td>200000</td>
+                                        <td>Lorem ipsum dolor sit, amet consectetur adipisicing elit.</td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          
+                          <input type="button" name="previous" class="previous btn btn-secondary float-start" value="Previous"/>
+                          <!-- <input type="submit" name="submit" class="submit btn btn-primary float-end" value="Submit"/> -->
+                      </fieldset>

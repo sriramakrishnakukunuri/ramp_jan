@@ -1,0 +1,51 @@
+<main class="pt-80">
+        <section class="pt-3">
+            <div class="container-fluid">
+                <div class="card">
+                    <div class="card-header bg-theme text-white">
+                        <h6 class="mb-0">Pending Application</h6>
+                    </div>
+                    <div class="card-body">
+                        <table id="pending_table" class="table nowrap display w-100 fs-md mt-0">
+                            <thead>
+                                <tr>
+                                   <th class="text-start">S.No</th>
+                                    <th>Application No</th>
+                                    <th>Enterprise</th>
+                                    <th class="text-start">Promoter</th>
+                                    <th>Contact</th>
+                                    <th>Date Of Application</th>
+                                    <th>Status</th>
+                                    <th class="text-center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                 <tr *ngFor="let item of tableList; let i = index">
+                                    <td class="text-start">{{ i + 1 }}</td>
+
+                                    <td>{{ item.applicationNo }}</td>
+                                    <td>{{ item.enterpriseName }}</td>
+                                    <td class="text-start">{{ item.promoterName }}</td>
+                                    <td>{{ item.contactNumber }}</td>
+                                    <td>{{ item.createdOn  }}</td>
+                                    <td>{{ item.applicationStatus }}</td>
+                                     <td class="text-center">
+                                        <a >
+                                            <span class="bi bi-eye"></span>
+                                        </a>
+                                    </td>
+                                </tr>
+                           
+                            </tbody>
+                        </table>
+                         <app-pagination
+                                 [currentPage]="currentPage"
+                                 [totalItems]="totalItems"
+                                [pageSize]="pageSize"
+                                (pageChange)="onPageChange($event)">
+                         </app-pagination>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>

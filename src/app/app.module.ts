@@ -45,6 +45,19 @@ import { Level2ApprovalComponent } from './tihcl-manager/level2-approval/level2-
 import { Level3ApprovalComponent } from './tihcl-manager/level3-approval/level3-approval.component';
 import { LoanAppilicationNewComponent } from './TIHCL/loan-appilication-new/loan-appilication-new.component';
 import { MultiselectDropdownComponent } from './seperate-components/multiselect-dropdown/multiselect-dropdown.component';
+import { NewApplicationExecutiveComponent } from './tihcl-executive/new-application-executive/new-application-executive.component';
+import { PendingApplicationExecutiveComponent } from './tihcl-executive/pending-application-executive/pending-application-executive.component';
+import { ExecutiveWorkflowComponent } from './tihcl-executive/executive-workflow/executive-workflow.component';
+import { PreliminarAssessmentComponent } from './tihcl-executive/executive-workflow/pages/preliminar-assessment/preliminar-assessment.component';
+import { ManagerApprovalComponent } from './tihcl-executive/executive-workflow/pages/manager-approval/manager-approval.component';
+import { UnitVisitComponent } from './tihcl-executive/executive-workflow/pages/unit-visit/unit-visit.component';
+import { DiagnosticReportComponent } from './tihcl-executive/executive-workflow/pages/diagnostic-report/diagnostic-report.component';
+import { DiConcernLetterComponent } from './tihcl-executive/executive-workflow/pages/di-concern-letter/di-concern-letter.component';
+import { RampChecklistComponent } from './tihcl-executive/executive-workflow/pages/ramp-checklist/ramp-checklist.component';
+import { PrimaryNocComponent } from './tihcl-executive/executive-workflow/pages/primary-noc/primary-noc.component';
+import { SanctionedDetailsComponent } from './tihcl-executive/executive-workflow/pages/sanctioned-details/sanctioned-details.component';
+import { DisbursementDetailsComponent } from './tihcl-executive/executive-workflow/pages/disbursement-details/disbursement-details.component';
+import { PaginationComponent } from './seperate-components/multiselect-dropdown/pagination/pagination.component';
 
 @NgModule({
     imports: [
@@ -87,7 +100,7 @@ import { MultiselectDropdownComponent } from './seperate-components/multiselect-
         MsmeCouncellorRegisterationComponent,
         ViewParticipantComponent,
         GetOutcomeComponent,
-        ViewMsmeCouncellorDataComponent, ProgramSessionsComponent, LoanApplicationFormComponent, Level1ApprovalComponent, Level2ApprovalComponent, Level3ApprovalComponent, LoanAppilicationNewComponent, MultiselectDropdownComponent,
+        ViewMsmeCouncellorDataComponent, ProgramSessionsComponent, LoanApplicationFormComponent, Level1ApprovalComponent, Level2ApprovalComponent, Level3ApprovalComponent, LoanAppilicationNewComponent, MultiselectDropdownComponent, NewApplicationExecutiveComponent, PendingApplicationExecutiveComponent, ExecutiveWorkflowComponent, PreliminarAssessmentComponent, ManagerApprovalComponent, UnitVisitComponent, DiagnosticReportComponent, DiConcernLetterComponent, RampChecklistComponent, PrimaryNocComponent, SanctionedDetailsComponent, DisbursementDetailsComponent, PaginationComponent,
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

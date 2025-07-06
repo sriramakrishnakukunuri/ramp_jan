@@ -29,6 +29,9 @@ import { Level1ApprovalComponent } from './tihcl-manager/level1-approval/level1-
 import { Level2ApprovalComponent } from './tihcl-manager/level2-approval/level2-approval.component';
 import { Level3ApprovalComponent } from './tihcl-manager/level3-approval/level3-approval.component';
 import { LoanAppilicationNewComponent } from './TIHCL/loan-appilication-new/loan-appilication-new.component';
+import { NewApplicationExecutiveComponent } from './tihcl-executive/new-application-executive/new-application-executive.component';
+import { PendingApplicationExecutiveComponent } from './tihcl-executive/pending-application-executive/pending-application-executive.component';
+import { ExecutiveWorkflowComponent } from './tihcl-executive/executive-workflow/executive-workflow.component';
 
 const routes: Routes = [
     {
@@ -172,15 +175,39 @@ const routes: Routes = [
     },
     {
         path: 'Manager-approval-1',
-        component: Level1ApprovalComponent
+        component: Level1ApprovalComponent,
+         canActivate: [AuthGuard],
+        data: { roles: [Role.TIHCL_MANAGER] }
     },
      {
         path: 'Manager-approval-2',
-        component: Level2ApprovalComponent
+        component: Level2ApprovalComponent,
+        canActivate: [AuthGuard],
+        data: { roles: [Role.TIHCL_MANAGER] }
     },
       {
         path: 'Manager-approval-3',
-        component: Level3ApprovalComponent
+        component: Level3ApprovalComponent,
+        canActivate: [AuthGuard],
+        data: { roles: [Role.TIHCL_MANAGER] }
+    },
+     {
+        path: 'new-application',
+        component: NewApplicationExecutiveComponent,
+        canActivate: [AuthGuard],
+        data: { roles: [Role.TIHCL_EXECUTOR] }
+    },
+    {
+        path: 'pending-application',
+        component: PendingApplicationExecutiveComponent,
+        canActivate: [AuthGuard],
+        data: { roles: [Role.TIHCL_EXECUTOR] }
+    },
+      {
+        path: 'executive-workflow',
+        component: ExecutiveWorkflowComponent,
+        canActivate: [AuthGuard],
+        data: { roles: [Role.TIHCL_EXECUTOR] }
     },
 
 

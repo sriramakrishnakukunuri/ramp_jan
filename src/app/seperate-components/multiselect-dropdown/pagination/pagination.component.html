@@ -1,0 +1,48 @@
+<div class="pagination-container">
+  <!-- Page size selection -->
+  <div class="page-size-selector">
+    <label for="pageSize">Items per page:</label>
+    <select 
+      id="pageSize" 
+      [(ngModel)]="pageSize" 
+      (change)="onPageSizeChange()"
+      class="form-select">
+      <option *ngFor="let size of pageSizeOptions" [value]="size">{{size}}</option>
+    </select>
+  </div>
+
+  <!-- Page navigation -->
+  <div class="page-navigation">
+    <button 
+      (click)="goToFirstPage()" 
+      [disabled]="currentPage === 1"
+      class="page-button">
+      &laquo; First
+    </button>
+    
+    <button 
+      (click)="goToPreviousPage()" 
+      [disabled]="currentPage === 1"
+      class="page-button">
+      &lsaquo; Prev
+    </button>
+
+    <span *ngIf="totalPages > 0" class="page-info">
+      Page {{currentPage}} of {{totalPages}}
+    </span>
+
+    <button 
+      (click)="goToNextPage()" 
+      [disabled]="currentPage === totalPages || totalPages === 0"
+      class="page-button">
+      Next &rsaquo;
+    </button>
+    
+    <button 
+      (click)="goToLastPage()" 
+      [disabled]="currentPage === totalPages || totalPages === 0"
+      class="page-button">
+      Last &raquo;
+    </button>
+  </div>
+</div>

@@ -71,9 +71,12 @@ export class LoginComponent implements OnInit {
                       this.loading = false;
                         if(res.userRole === Role.Admin){
                             this.router.navigateByUrl('/veiw-program-creation');
-                        }else if(res.userRole === Role.TIHCL_MANAGER || res.userRole === Role.TIHCL_EXECUTOR){
+                        }else if(res.userRole === Role.TIHCL_MANAGER ){
                             this.router.navigateByUrl('/Manager-approval-1');
                         }  
+                        else if(res.userRole === Role.TIHCL_EXECUTOR){
+                            this.router.navigateByUrl('/new-application');
+                        }
                 },
                 error: error => {
                     this.error = 'Invalid credentials. Please try again.';

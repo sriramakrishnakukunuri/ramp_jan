@@ -1,0 +1,627 @@
+<div class="card border rounded-2 shadow-none mb-3">
+  <div class="card-header bg-theme text-white">
+    <h6 class="mb-0">Preliminary Assessment</h6>
+  </div>
+  <div class="card-body">
+    <form [formGroup]="assessmentForm" (ngSubmit)="onSubmit()">
+      <ul class="list-group list-group-flush mb-3">
+        <!-- Firm Name -->
+        <li class="list-group-item px-0">
+          <div class="row">
+            <div class="col-12 col-sm-3 col-md-3 col-lg-3 col-xl-2">
+              <label class="fs-md fw-600">Name Of Firm</label>
+            </div>
+            <div class="col-12 col-sm-5 col-md-4 col-lg-4 col-xl-4">
+              <label class="fs-md">{{ assessmentForm.get('enterpriseName')?.value }}</label>
+            </div>
+            <div class="col-12 col-sm-4 col-md-5 col-lg-5 col-xl-6" *ngIf="!this.confirmationdata?.includes('1')">
+              <div class="text-start text-sm-end text-xl-end">
+                <button type="button" class="btn btn-outline-success border-0 btn-sm" (click)="confirmation('1')">Confirm</button>
+                <button type="button" data-bs-toggle="modal" data-bs-target="#nameFirm"
+                  (click)="openEachModal('enterpriseName')"
+                  class="btn btn-outline-primary btn-sm border-0 ms-3">Update</button>
+              </div>
+
+            </div>
+              <div class="col-12 col-sm-4 col-md-5 col-lg-5 col-xl-6" *ngIf="this.confirmationdata?.includes('1')">
+              <div class="text-start text-sm-end text-xl-end">
+                <button type="button" class="btn btn-outline-success isDisabled btn-sm">Confirmed</button>
+               
+              
+            </div>
+                </div>
+          </div>
+        </li>
+
+        <!-- Udyam Number -->
+        <li class="list-group-item px-0">
+          <div class="row">
+            <div class="col-12 col-sm-3 col-md-3 col-lg-3 col-xl-2">
+              <label class="fs-md fw-600">Udyam Number</label>
+            </div>
+            <div class="col-12 col-sm-5 col-md-4 col-lg-4 col-xl-4">
+              <label class="fs-md">{{ assessmentForm.get('udyamRegNumber')?.value }}</label>
+            </div>
+            <div class="col-12 col-sm-4 col-md-5 col-lg-5 col-xl-6" *ngIf="!this.confirmationdata?.includes('2')">
+              <div class="text-start text-sm-end text-xl-end">
+                <button type="button" class="btn btn-outline-success border-0 btn-sm" (click)="confirmation('2')">Confirm</button>
+                <button type="button" data-bs-toggle="modal" data-bs-target="#udyamRegNumber"
+                  (click)="openEachModal('udyamRegNumber')"
+                  class="btn btn-outline-primary btn-sm border-0 ms-3">Update</button>
+              </div>
+            </div>
+             <div class="col-12 col-sm-4 col-md-5 col-lg-5 col-xl-6" *ngIf="this.confirmationdata?.includes('2')">
+              <div class="text-start text-sm-end text-xl-end">
+                <button type="button" class="btn btn-outline-success isDisabled btn-sm">Confirmed</button>
+               
+              
+            </div>
+                </div>
+          </div>
+        </li>
+
+        <!-- Size of Unit -->
+        <li class="list-group-item px-0">
+          <div class="row">
+            <div class="col-12 col-sm-3 col-md-3 col-lg-3 col-xl-2">
+              <label class="fs-md fw-600">Size Of Unit</label>
+            </div>
+            <div class="col-12 col-sm-5 col-md-4 col-lg-4 col-xl-4">
+              <label class="fs-md">{{ assessmentForm.get('enterpriseCategory')?.value }}</label>
+            </div>
+            <div class="col-12 col-sm-4 col-md-5 col-lg-5 col-xl-6" *ngIf="!this.confirmationdata?.includes('3')">
+              <div class="text-start text-sm-end text-xl-end">
+                <button type="button" class="btn btn-outline-success border-0 btn-sm" (click)="confirmation('3')">Confirm</button>
+                <button type="button" data-bs-toggle="modal" data-bs-target="#addSize"
+                  (click)="openEachModal('enterpriseCategory')"
+                  class="btn btn-outline-primary btn-sm border-0 ms-3">Update</button>
+              </div>
+            </div>
+             <div class="col-12 col-sm-4 col-md-5 col-lg-5 col-xl-6" *ngIf="this.confirmationdata?.includes('3')">
+              <div class="text-start text-sm-end text-xl-end">
+                <button type="button" class="btn btn-outline-success isDisabled btn-sm">Confirmed</button>
+               
+              
+            </div>
+            </div>
+          </div>
+        </li>
+
+        <!-- Nature of Activity -->
+        <li class="list-group-item px-0">
+          <div class="row">
+            <div class="col-12 col-sm-3 col-md-3 col-lg-3 col-xl-2">
+              <label class="fs-md fw-600">Nature Of Activity</label>
+            </div>
+            <div class="col-12 col-sm-5 col-md-4 col-lg-4 col-xl-4">
+              <label class="fs-md">{{ assessmentForm.get('natureOfActivity')?.value }}</label>
+            </div>
+            <div class="col-12 col-sm-4 col-md-5 col-lg-5 col-xl-6" *ngIf="!this.confirmationdata?.includes('4')">
+              <div class="text-start text-sm-end text-xl-end">
+                <button type="button" class="btn btn-outline-success border-0 btn-sm" (click)="confirmation('4')">Confirm</button>
+                <button type="button" data-bs-toggle="modal" data-bs-target="#addnature"
+                  (click)="openEachModal('natureOfActivity')"
+                  class="btn btn-outline-primary btn-sm border-0 ms-3">Update</button>
+              </div>
+            </div>
+               <div class="col-12 col-sm-4 col-md-5 col-lg-5 col-xl-6" *ngIf="this.confirmationdata?.includes('4')">
+              <div class="text-start text-sm-end text-xl-end">
+                <button type="button" class="btn btn-outline-success isDisabled btn-sm">Confirmed</button>
+               
+              
+            </div>
+            </div>
+          </div>
+        </li>
+
+        <!-- Factory Location -->
+        <li class="list-group-item px-0">
+          <p class="fw-bold">Factory Location</p>
+          <div class="row">
+            <div class="col-12 col-sm-6 col-md-3 col-lg-2 col-xl-2">
+              <label class="d-block fs-md fw-600">District</label>
+              <label class="d-block fs-md">{{ assessmentForm.get('district')?.value }}</label>
+            </div>
+            <div class="col-12 col-sm-6 col-md-3 col-lg-3 col-xl-3">
+              <label class="d-block fs-md fw-600">Mandal</label>
+              <label class="fs-md">{{ assessmentForm.get('mandal')?.value }}</label>
+            </div>
+            <div class="col-12 col-sm-6 col-md-3 col-lg-4 col-xl-4">
+              <label class="d-block fs-md fw-600">Address</label>
+              <label class="fs-md">{{ assessmentForm.get('address')?.value }}</label>
+            </div>
+            <div class="col-12 col-sm-6 col-md-3 col-lg-3 col-xl-3" *ngIf="!this.confirmationdata?.includes('5')">
+              <div class="text-start text-sm-end text-xl-end">
+                <button type="button" class="btn btn-outline-success border-0 btn-sm" (click)="confirmation('5')">Confirm</button>
+                <button type="button" data-bs-toggle="modal" data-bs-target="#factoryLocation"
+                  (click)="openEachModal('factoryLocation')"
+                  class="btn btn-outline-primary btn-sm border-0 ms-3">Update</button>
+              </div>
+            </div>
+             <div class="col-12 col-sm-4 col-md-5 col-lg-5 col-xl-3" *ngIf="this.confirmationdata?.includes('5')">
+              <div class="text-start text-sm-end text-xl-end">
+                <button type="button" class="btn btn-outline-success isDisabled btn-sm">Confirmed</button>
+               
+              
+            </div>
+            </div>
+          </div>
+        </li>
+
+        <!-- Confirmation of Loans -->
+        <li class="list-group-item px-0">
+          <div class="row">
+            <div class="col-12 col-sm-3 col-md-3 col-lg-3 col-xl-2">
+              <label class="fs-md fw-600">Confirmation of Loans Credit Facilities</label>
+            </div>
+            <div class="col-12 col-sm-5 col-md-4 col-lg-4 col-xl-4">
+              <label class="fs-md">{{ assessmentForm.get('existingCredit')?.value?'Yes':'No' }}</label>
+            </div>
+            <div class="col-12 col-sm-4 col-md-5 col-lg-5 col-xl-6" *ngIf="!this.confirmationdata?.includes('6')">
+              <div class="text-start text-sm-end text-xl-end">
+                <button type="button" class="btn btn-outline-success border-0 btn-sm" (click)="confirmation('6')">Confirm</button>
+                <button type="button" data-bs-toggle="modal" data-bs-target="#addCredit"
+                  (click)="openEachModal('existingCredit')"
+                  class="btn btn-outline-primary btn-sm border-0 ms-3">Update</button>
+              </div>
+            </div>
+             <div class="col-12 col-sm-4 col-md-5 col-lg-5 col-xl-6" *ngIf="this.confirmationdata?.includes('6')">
+              <div class="text-start text-sm-end text-xl-end">
+                <button type="button" class="btn btn-outline-success isDisabled btn-sm">Confirmed</button>
+               
+              
+            </div>
+            </div>
+          </div>
+        </li>
+
+        <!-- Loans Table -->
+        <li class="list-group-item px-0" *ngIf="assessmentForm.get('existingCredit')?.value">
+          <div class="row">
+            <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+              <label class="fs-md fw-600">Loans</label>
+            </div>
+            <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+              <div class="text-start text-sm-end text-xl-end" >
+                <button type="button" data-bs-toggle="modal" data-bs-target="#addLoan"  [ngClass]="{'isDisabled': assessmentForm.get('existingCredit')?.value!=true}"
+                  class="btn btn-outline-primary btn-sm border-0 ms-3" (click)="addCreditDetail()"><span
+                    class="bi bi-plus-lg"></span> Add</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="table-responsive">
+            <table class="table table-bordered">
+              <thead class="bg-theme text-white">
+                <tr>
+                  <th>S.No</th>
+                  <th>Actions</th>
+                  <th>Bank/Fis Name</th>
+                  <th>Nature of Loan </th>
+                  <th>Limit sanctioned (In Rs)</th>
+                  <th>Outstanding Amount (In Rs)</th>
+                  <th>Overdue Amount (In Rs)</th>
+                  <th>Overdue Since (Date)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of this.assessmentForm.value.creditFacilityDetails;let i=index">
+                  <td class="text-start">{{i+1}}</td>
+                  <td class="text-center">
+                    <button type="button" class="btn btn-default text-danger btn-sm"
+                      (click)="editCreditDetails(item)"><span class="bi bi-pencil"></span></button>
+                    <button type="button" class="btn btn-default text-danger btn-sm"
+                      (click)="deleteCreditDetail(i)"><span class="bi bi-trash"></span></button>
+                  </td>
+                  <td>{{item?.bankName}}</td>
+                  <td>{{item?.natureOfLoan}}</td>
+                  <td>{{item?.limitSanctioned}}</td>
+                  <td>{{item?.outstandingAmount}}</td>
+                  <td>{{item?.overdueAmount}}</td>
+                  <td>{{item?.overdueSince}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </li>
+      </ul>
+
+      <!-- GST and Product Information -->
+      <div class="row">
+        <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4">
+          <div class="mb-3">
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="gst" placeholder="GST" formControlName="gstNumber">
+              <label for="gst">GST Number</label>
+              <div *ngIf="assessmentForm.get('gstNumber')?.invalid && assessmentForm.get('gstNumber')?.touched"
+                class="text-danger small">
+                GST number is required
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4">
+          <div class="mb-3">
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="product" placeholder="Type Of Product"
+                formControlName="typeOfProduct">
+              <label for="product">Type Of Product</label>
+              <div *ngIf="assessmentForm.get('typeOfProduct')?.invalid && assessmentForm.get('typeOfProduct')?.touched"
+                class="text-danger small">
+                Product type is required
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-sm-6 col-md-8 col-lg-8 col-xl-8">
+          <div class="mb-3">
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="whereProduct" placeholder="Where is the Product Used"
+                formControlName="productUsage">
+              <label for="whereProduct">Where is the Product Used?</label>
+              <div *ngIf="assessmentForm.get('productUsage')?.invalid && assessmentForm.get('productUsage')?.touched"
+                class="text-danger small">
+                Product usage information is required
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Problems and Solutions -->
+      <div>
+        <div class="mb-3">
+          <label class="fs-md fw-600 mb-1">What are your problems?</label>
+          <div>
+            <textarea class="form-control" rows="3" placeholder="Write here" formControlName="problemsFaced"></textarea>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label class="fs-md fw-600 mb-1">What is the expected solutions?</label>
+          <div>
+            <textarea class="form-control" rows="3" placeholder="Write here"
+              formControlName="expectedSolution"></textarea>
+          </div>
+        </div>
+
+        <!-- Stress Score -->
+        <div class="mb-3">
+          <h6 class="fs-md fw-600 mb-1">Stress Score</h6>
+          <div class="accordion mb-2">
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="risk-headingOne">
+                <button class="accordion-button collapsed fs-md fw-600 px-3 py-2" type="button"
+                  data-bs-toggle="collapse" data-bs-target="#risk-collapseOne" aria-expanded="false"
+                  aria-controls="risk-collapseOne">
+                  Score Calculation
+                </button>
+              </h2>
+              <div id="risk-collapseOne" class="accordion-collapse collapse" aria-labelledby="risk-headingOne">
+                <div class="accordion-body p-2">
+                  <div class="table-responsive">
+                    <table class="table table-striped table-borderless mb-0">
+                      <thead>
+                        <tr>
+                          <th>S.No</th>
+                          <th>Issues / Problems</th>
+                          <th>Probable Cause</th>
+                          <th>Impact</th>
+                          <th>Risk Categorisation</th>
+                        </tr>
+                      </thead>
+                      <tbody class="fs-md">
+                        <tr *ngFor="let question of stressScoreOptions">
+                          <td>{{ question.id }}</td>
+                          <td>{{ question.issue }}</td>
+                          <td>{{ question.Probable_Cause }}</td>
+                          <td>{{ question.impact }}</td>
+                          <td>
+                            <select class="form-select" [formControlName]="'stressScore_' + question.id" (change)="calculateScore()">
+                              <option value="">Select Categorisation</option>
+                              <option *ngFor="let option of question.options" [value]="option.label">
+                                {{ option.label }}
+                              </option>
+                            </select>
+                            <div *ngIf="assessmentForm.get('stressScore_' + question.id)?.invalid && 
+                                       assessmentForm.get('stressScore_' + question.id)?.touched"
+                              class="text-danger small">
+                              Please select an option
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="text-end">
+            <p class="badge bg-dark rounded-pill fs-md mb-0">Total Score: <span>{{ totalScore }}%</span></p>
+          </div>
+        </div>
+
+        <!-- Observations -->
+        <div class="mb-3">
+          <label class="fs-md fw-600 mb-1">Observations</label>
+          <div>
+            <textarea class="form-control" rows="3" placeholder="Write here" formControlName="observations"></textarea>
+          </div>
+        </div>
+
+        <!-- Status Update -->
+        <div class="mb-3">
+          <label class="fs-md fw-600 mb-1">Status Update</label>
+          <div class="mb-2">
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" formControlName="statusUpdate" id="consider"
+                value="consider">
+              <label class="form-check-label fs-md" for="consider">Application can be considered</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" formControlName="statusUpdate" id="notconsider"
+                value="notconsider">
+              <label class="form-check-label fs-md" for="notconsider">Application cannot be considered</label>
+            </div>
+            <div *ngIf="assessmentForm.get('statusUpdate')?.invalid && assessmentForm.get('statusUpdate')?.touched"
+              class="text-danger small">
+              Please select a status
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <input type="submit" name="next" class="btn btn-primary float-end" value="Submit for Manager Approval" />
+    </form>
+  </div>
+</div>
+
+
+<div class="modal fade" id="addDelivery" #addDelivery tabindex="-1" aria-labelledby="addResourceLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header  bg-theme">
+        <h5 class="modal-title" id="myModalLabel">Add Credit Details:</h5>
+        <button type="button" class="btn-close me-1" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="creditDetailsForm">
+          <div class="row">
+            <div class="col-12">
+              <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="bankName" placeholder="Bank/FI Name"
+                  formControlName="bankName">
+                <label for="bankName">Bank/FI Name</label>
+                <div *ngIf="creditDetailsForm.get('bankName')?.invalid && 
+                                           (creditDetailsForm.get('bankName')?.dirty || 
+                                           creditDetailsForm.get('bankName')?.touched)" class="text-danger">
+                  Bank/FI name is required
+                </div>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="form-floating mb-3">
+                <select class="form-select" id="natureOfLoan" formControlName="natureOfLoan">
+                  <option value="" disabled selected>Select Nature of Loan</option>
+                  <option value="Short-term Loans">Short-term Loans</option>
+                  <option value="Medium-term Loans">Medium-term Loans</option>
+                  <option value="Long-term Loans">Long-term Loans</option>
+                </select>
+                <label for="natureOfLoan">Nature of Loan</label>
+                <div *ngIf="creditDetailsForm.get('natureOfLoan')?.invalid && 
+                                           (creditDetailsForm.get('natureOfLoan')?.dirty || 
+                                           creditDetailsForm.get('natureOfLoan')?.touched)" class="text-danger">
+                  Nature of loan is required
+                </div>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="form-floating mb-3">
+                <input type="number" class="form-control" id="limitSanctioned" placeholder="Limit Sanctioned"
+                  formControlName="limitSanctioned">
+                <label for="limitSanctioned">Limit Sanctioned (In Rs)</label>
+                <div *ngIf="creditDetailsForm.get('limitSanctioned')?.invalid && 
+                                           (creditDetailsForm.get('limitSanctioned')?.dirty || 
+                                           creditDetailsForm.get('limitSanctioned')?.touched)" class="text-danger">
+                  <div *ngIf="creditDetailsForm.get('limitSanctioned')?.errors?.['required']">
+                    Limit sanctioned is required
+                  </div>
+                  <div *ngIf="creditDetailsForm.get('limitSanctioned')?.errors?.['min']">
+                    Limit must be positive
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="form-floating mb-3">
+                <input type="number" class="form-control" id="outstandingAmount" placeholder="Outstanding Amount"
+                  formControlName="outstandingAmount">
+                <label for="outstandingAmount">Outstanding Amount (In Rs)</label>
+                <div *ngIf="creditDetailsForm.get('outstandingAmount')?.invalid && 
+                                           (creditDetailsForm.get('outstandingAmount')?.dirty || 
+                                           creditDetailsForm.get('outstandingAmount')?.touched)" class="text-danger">
+                  <div *ngIf="creditDetailsForm.get('outstandingAmount')?.errors?.['required']">
+                    Outstanding amount is required
+                  </div>
+                  <div *ngIf="creditDetailsForm.get('outstandingAmount')?.errors?.['min']">
+                    Amount must be positive
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="form-floating mb-3">
+                <input type="number" class="form-control" id="overdueAmount" placeholder="Overdue Amount"
+                  formControlName="overdueAmount">
+                <label for="overdueAmount">Overdue Amount (In Rs)</label>
+                <div *ngIf="creditDetailsForm.get('overdueAmount')?.invalid && 
+                                           (creditDetailsForm.get('overdueAmount')?.dirty || 
+                                           creditDetailsForm.get('overdueAmount')?.touched)" class="text-danger">
+                  <div *ngIf="creditDetailsForm.get('overdueAmount')?.errors?.['required']" class="text-danger">
+                    Overdue amount is required
+                  </div>
+                  <div *ngIf="creditDetailsForm.get('overdueAmount')?.errors?.['min']" class="text-danger">
+                    Amount must be positive
+                  </div>
+
+                </div>
+                <div
+                  *ngIf="creditDetailsForm.get('overdueAmount')?.value > creditDetailsForm.get('outstandingAmount')?.value"
+                  class="text-danger">
+                  Overdue amount must be less than or equal to outstanding amount
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="form-floating mb-3">
+              <input type="date" class="form-control" id="overdueSince" placeholder="Overdue Since"
+                formControlName="overdueSince" max="{{ today | date:'yyyy-MM-dd' }}">
+              <label for="overdueSince">Overdue Since (Date)</label>
+              <div *ngIf="creditDetailsForm.get('overdueSince')?.invalid && 
+                                           (creditDetailsForm.get('overdueSince')?.dirty || 
+                                           creditDetailsForm.get('overdueSince')?.touched)" class="text-danger">
+                Please enter a valid date
+              </div>
+
+            </div>
+            <div class="col-12">
+              <div class="text-end">
+                <button type="button" class="btn btn-primary"
+                  [disabled]="!creditDetailsForm.valid || creditDetailsForm.get('overdueAmount')?.value > creditDetailsForm.get('outstandingAmount')?.value"
+                  data-bs-dismiss="modal" (click)="submitCreditDetails()">Submit</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade"  id="UpdateLoanModal" tabindex="-1" role="dialog" #UpdateLoanModal aria-labelledby="mySmallModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header  bg-theme">
+        <h5 class="modal-title" id="myModalLabel">Update</h5>
+        <button type="button" class="btn-close me-1" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="updateFormFields" (ngSubmit)="onSubmit()">
+          <div class="form-floating mb-3" *ngIf="updateby === 'enterpriseName'">
+            <input type="text" class="form-control" id="enterpriseName" placeholder="Enterprise Name"
+              formControlName="enterpriseName">
+            <label for="enterpriseName">Enterprise Name</label>
+            <div
+              *ngIf="updateFormFields.get('enterpriseName')?.invalid && updateFormFields.get('enterpriseName')?.touched"
+              class="text-danger small">
+              Enterprise name is required
+            </div>
+          </div>
+          <div class="form-floating mb-3" *ngIf="updateby === 'udyamRegNumber'">
+            <input type="text" class="form-control" id="udyamRegNumber" placeholder="Udyam Registration Number"
+              formControlName="udyamRegNumber">
+            <label for="udyamRegNumber">Udyam Registration Number</label>
+            <div
+              *ngIf="updateFormFields.get('udyamRegNumber')?.invalid && updateFormFields.get('udyamRegNumber')?.touched"
+              class="text-danger small">
+              Udyam registration number is required
+            </div>
+          </div>
+          <div class="form-floating mb-3" *ngIf="updateby === 'enterpriseCategory'">
+            <select class="form-select" id="enterpriseCategory" formControlName="enterpriseCategory">
+              <option value="" disabled selected>Select Size of Unit</option>
+              <option value="Micro">Micro</option>
+              <option value="Small">Small</option>
+              <option value="Medium">Medium</option>
+            </select>
+          </div>
+          <div class="form-floating mb-3" *ngIf="updateby === 'natureOfActivity'">
+            <input type="text" class="form-control" id="natureOfActivity" placeholder="Nature of Activity"
+              formControlName="natureOfActivity">
+            <label for="natureOfActivity">Nature of Activity</label>
+            <div
+              *ngIf="updateFormFields.get('natureOfActivity')?.invalid && updateFormFields.get('natureOfActivity')?.touched"
+              class="text-danger small">
+              Nature of activity is required
+            </div>
+          </div>
+          <ng-container *ngIf="updateby === 'factoryLocation'">
+            <div class="row">
+              <div class="col-12 col-sm-6 col-md-6 col-lg-6">
+                <div class="form-floating mb-3">
+                  <select class="form-select" id="district" (change)="GetMandalByDistrict($any($event.target).value)"
+                    formControlName="district" aria-label="">
+                    <option value="">Select District</option>
+                    <option *ngFor="let list of allDistricts" value="{{list.districtName}}">{{list.districtName}}</option>
+                  </select>
+                  <label for="district">District</label>
+                  <div *ngIf="updateFormFields.get('district')?.invalid && updateFormFields.get('district')?.touched"
+                    class="text-danger">
+                    District is required
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 col-sm-6 col-md-6 col-lg-6">
+                <div class="form-floating mb-3">
+                  <select class="form-select" id="mandal" formControlName="mandal" aria-label="">
+                    <option value="">Select Mandal</option>
+                    <option *ngFor="let list of MandalList" value="{{list.mandalName}}">{{list.mandalName}}</option>
+                  </select>
+                  <label for="mandal">Mandal</label>
+                  <div *ngIf="updateFormFields.get('mandal')?.invalid && updateFormFields.get('mandal')?.touched"
+                    class="text-danger">
+                    Mandal is required
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="form-floating mb-3">
+                  <input type="text" class="form-control" id="Address" formControlName="address" placeholder="Address">
+                  <label for="Address">Address</label>
+                  <div
+                    *ngIf="updateFormFields.get('address')?.invalid && updateFormFields.get('address')?.touched && !updateFormFields.get('address')?.hasError('minlength')"
+                    class="text-danger">
+                    Address is required
+                  </div>
+                  <div *ngIf="updateFormFields.get('address')?.hasError('minlength')" class="text-danger">
+                    Address must be at least 3 characters
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="updateby === 'existingCredit'">
+
+
+            <div class="mb-3">
+              <div>
+                <label class="form-label fs-md fw-600 mb-1">Existing Credit with facilities with bank/NBFC/FI & SFC
+                  ?</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" 
+                  formControlName="existingCredit" id="bankYes" [value]="true">
+                <label class="form-check-label fs-md" for="bankYes">Yes</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio"
+                  formControlName="existingCredit" id="bankNo" [value]="false">
+                <label class="form-check-label fs-md" for="bankNo">No</label>
+              </div>
+            </div>
+          </ng-container>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" id="modal-btn-si" 
+              (click)="updateForm()">update</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

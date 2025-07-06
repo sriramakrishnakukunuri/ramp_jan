@@ -1,0 +1,102 @@
+ <fieldset>
+                          <div class="card border rounded-2 shadow-none mb-3">
+                            <div class="card-header bg-theme text-white">
+                                <h6 class="mb-0">Sanctioned Details</h6>
+                            </div>
+                            <div class="card-body">
+                              <div class="row">
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                  <div class="form-floating mb-3">
+                                    <input type="date" class="form-control" id="dateInput" placeholder="">
+                                    <label for="dateInput">Sanctioned Date</label>
+                                  </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                  <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="amtInput" placeholder="">
+                                    <label for="amtInput">Sanctioned Amount</label>
+                                  </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                  <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="roiInput" placeholder="">
+                                    <label for="roiInput">ROI</label>
+                                  </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                  <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="tenorInput" placeholder="">
+                                    <label for="tenorInput">Tenor</label>
+                                  </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                  <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="moratoriumInput" placeholder="">
+                                    <label for="moratoriumInput">Moratorium Period(in Months)</label>
+                                  </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                  <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="dsraInput" placeholder="">
+                                    <label for="dsraInput">DSRA Amount</label>
+                                  </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                  <div class="mb-3">
+                                    <h6 class="fw-600 fs-md">Security</h6>
+                                    <div class="form-check form-check-inline">
+                                      <input class="form-check-input" type="radio" name="securityRadio" id="securityYes" value="yesSecurity">
+                                      <label class="form-check-label fs-md" for="securityYes">Yes</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                      <input class="form-check-input" type="radio" name="securityRadio" id="securityNo" value="">
+                                      <label class="form-check-label fs-md" for="securityNo">No</label>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-3 show-hide5 yesSecurity" style="display: none;">
+                                  <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="commentsInput" placeholder="">
+                                    <label for="commentsInput">Description</label>
+                                  </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-3 show-hide5 yesSecurity" style="display: none;">
+                                  <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="valueInput" placeholder="">
+                                    <label for="valueInput">Value</label>
+                                  </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                  <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="termsInput" placeholder="">
+                                    <label for="termsInput">Terms of sanction</label>
+                                  </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                  <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="remarksInput" placeholder="">
+                                    <label for="remarksInput">Remarks</label>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="card border rounded-2 shadow-none mb-3">
+                            <div class="card-header bg-theme text-white">
+                                <h6 class="mb-0">Sanctioned Letter Upload</h6>
+                            </div>
+                            <div class="card-body">
+                              <div class="row">
+                                <div class="col-12 col-sm-12 col-md-4 col-lg-3">
+                                  <div class="form-floating">
+                                    <input type="file" class="form-control" id="letterUpload" placeholder="">
+                                    <label for="letterUpload">Sanctioned Letter Upload</label>
+                                  </div>
+                                </div>                                
+                              </div>
+                            </div>
+                          </div>
+                          
+                          <input type="button" name="previous" class="previous btn btn-secondary float-start" value="Previous"/>
+                          <input type="button" name="next" class="next btn btn-primary float-end" value="Submit For Manager Approval"/>
+                      </fieldset>
