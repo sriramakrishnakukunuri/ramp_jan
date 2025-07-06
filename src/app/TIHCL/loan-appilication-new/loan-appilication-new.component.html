@@ -501,23 +501,26 @@
                                 <div class="row">
                                   <div class="col-12 col-sm-6 col-md-4 col-lg-4">
                                     <div class="form-floating mb-3">
-                                      <input type="text" class="form-control" id="sanctioned" 
+                                      <input type="number" class="form-control" id="sanctioned" (input)="ChangeAmount(this.applicationForm.get('amountReleased')?.value ,$any($event.target).value)"
                                         formControlName="totalAmountSanctioned" placeholder="">
                                       <label for="sanctioned">Total Amount Sanctioned</label>
                                     </div>
                                   </div>
                                   <div class="col-12 col-sm-6 col-md-4 col-lg-4">
                                     <div class="form-floating mb-3">
-                                      <input type="text" class="form-control" id="amount" 
+                                      <input type="number" class="form-control" id="amount"  (input)="ChangeAmount($any($event.target).value,this.applicationForm.get('totalAmountSanctioned')?.value)"
                                         formControlName="amountReleased" placeholder="">
                                       <label for="amount">Amount Released</label>
+                                    </div>
+                                    <div *ngIf="this.applicationForm.get('amountReleased')?.value > this.applicationForm.get('totalAmountSanctioned')?.value" class="text-danger">
+                                     Amount Released cannot be greater than Total Amount Sanctioned
                                     </div>
                                   </div>
                                   <div class="col-12 col-sm-6 col-md-4 col-lg-4">
                                     <div class="form-floating mb-3">
-                                      <input type="text" class="form-control" id="amountReleased" 
+                                      <input type="number" class="form-control" id="amountToBeReleased" 
                                         formControlName="amountToBeReleased" placeholder="">
-                                      <label for="amountReleased">Amount to be Released</label>
+                                      <label for="amountToBeReleased">Amount to be Released</label>
                                     </div>
                                   </div>
                                 </div>

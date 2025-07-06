@@ -483,9 +483,9 @@ this.applicationForm.get('operatingDifficulties')?.updateValueAndValidity()
            this.enterPrenuerResponseData = response.data;
            sessionStorage.setItem('enterpreneur', JSON.stringify(this.enterPrenuerResponseData));
           this.applicationForm.reset();
-          this.toastrService.success('Form submitted successfully');
+          this.toastrService.success('Application Form submitted successfully');
         } else {
-          this.toastrService.error('Form submission failed');
+          this.toastrService.error('Application Form submission failed');
         }
         this.nextStep(); // Move to status step after submission
       },
@@ -523,6 +523,18 @@ this.applicationForm.get('operatingDifficulties')?.updateValueAndValidity()
     } else {
       const modal = bootstrap.Modal.getInstance(this.exampleModal.nativeElement);
       modal.hide();
+    }
+  }
+  ChangeAmount(amountRelease:any,total:any){
+    if(amountRelease && total){
+
+      this.applicationForm.get('amountToBeReleased')?.patchValue(Number(total)-Number(amountRelease))
+    }
+    else if(total){
+         this.applicationForm.get('amountToBeReleased')?.patchValue(total)
+    }
+    else{
+      this.applicationForm.get('amountToBeReleased')?.patchValue(total)
     }
   }
 }

@@ -23,6 +23,7 @@ export class LoginComponent implements OnInit {
         private router: Router,
         private authenticationService: AuthenticationService
     ) {
+         this.switchLoginType('team-member'); 
         // redirect to home if already logged in
         if (this.authenticationService.userValue) {
             this.router.navigate(['/program-creation']);
@@ -90,7 +91,12 @@ export class LoginComponent implements OnInit {
     OTPVerify(value?:any) {
         this.Mobileerror = '';
         this.error=''
-        if(value == 'BACK') return this.defaultOTPScreen = false;
+        if(value == 'BACK'){
+             this.defaultOTPScreen = false;
+             this.loginType='entrepreneur';
+             this.switchLoginType('entrepreneur')
+             return
+        } 
         if(value == 'SUBMIT') {
 
           if(this.fOtp.otp.valid && this.fOtp.otp.value == '123456'){ 

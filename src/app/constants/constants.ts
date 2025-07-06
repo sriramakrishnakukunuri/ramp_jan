@@ -74,7 +74,7 @@ export const APIS = {
         getLevelOneData: API_BASE_URL + '/registrations/status?status=PRELIMINARY_ASSESSMENT',
         getLevelTwoData: API_BASE_URL + '/programs/level2/approval/',
         getLevelThreeData: API_BASE_URL + '/programs/level3/approval/',
-        approveLevelOne: API_BASE_URL + '/programs/level1/approve/',
+        approveLevelOne: API_BASE_URL + '/registrations/status/updation/',
         approveLevelTwo: API_BASE_URL + '/programs/level2/approve/',
         approveLevelThree: API_BASE_URL + '/programs/level3/approve/',
         rejectLevelOne: API_BASE_URL + '/programs/level1/reject/',

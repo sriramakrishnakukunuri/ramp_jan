@@ -67,11 +67,11 @@
 
                     <h5 class="text-center mb-3">Login to your account</h5>
                        <div class="user-type-selector">
-                    <div class="user-type active" id="team-member" [(ngModel)]="loginType" (click)="switchLoginType('team-member')">
+                    <div class="user-type" [ngClass]="{'active':loginType=='team-member'}" id="team-member" [(ngModel)]="loginType" (click)="switchLoginType('team-member')">
                         <i class="fas fa-users"></i>
                         <span>Team Member</span>
                     </div>
-                    <div class="user-type" id="entrepreneur" [(ngModel)]="loginType" (click)="switchLoginType('entrepreneur')">
+                    <div class="user-type" [ngClass]="{'active':loginType=='entrepreneur'}" id="entrepreneur" [(ngModel)]="loginType" (click)="switchLoginType('entrepreneur')">
                         <i class="fas fa-user-tie"></i>
                         <span>Entrepreneur</span>
                     </div>
