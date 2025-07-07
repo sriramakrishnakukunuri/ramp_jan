@@ -65,9 +65,9 @@ export class PreliminarAssessmentComponent implements OnInit {
     Probable_Cause: "Diversion of fund. Nonrealization of Book Debts. Lack of concentration on Marketing. Production bottleneck. Mismanagement. Poor quality. Increased competition.",
     impact: "Low cashflow- unable to operate / Unable to meet overheads / cashflow mismatch / unable to make repayments to Banks/FIs / Account is out of order.",
     options: [
-      { value: 1, label: "Temporarily(2)" },
-      { value: 2, label: "Frequently(6)" },
-      { value: 3, label: "Permanently(10)" },
+      { value: 1, label: "Fair Chance to increase(4)" },
+      { value: 2, label: "Moderate Chance to increase(6)" },
+      { value: 3, label: "Bleak Chance(10)" },
       { value: 4, label: "Not Viable (1)" },
       { value: 5, label: "Not Applicable (0 && This question should be removed from the calculation of score)" }
     ]
@@ -78,9 +78,9 @@ export class PreliminarAssessmentComponent implements OnInit {
     Probable_Cause: "Casual in nature. Lack of sufficient cash-flow / cash flow mismatches.",
     impact: "Haulting production",
     options: [
-      { value: 1, label: "Occasionally(3)" },
-      { value: 2, label: "Frequently(7)" },
-      { value: 3, label: "Chronic(10)" },
+      { value: 1, label: "Temporary cash flow mismatches(4)" },
+      { value: 2, label: "Cash Flow mismatches coupled with diversion of funds(6)" },
+      { value: 3, label: "Mis-utilization of cash flows and major diversions(10)" },
       { value: 4, label: "Not Viable (1)" },
       { value: 5, label: "Not Applicable (0 && This question should be removed from the calculation of score)" }
     ]
@@ -91,9 +91,9 @@ export class PreliminarAssessmentComponent implements OnInit {
     Probable_Cause: "May be for urgent settlement. Inadequate internal accrual. Lack of planning. May be a deliberate act.",
     impact: "Low capacity utilization / decline in cashflow- unable to operate / Unable to meet overheads / cashflow mismatch / unable to make repayments to Banks/FIs / Account is out of order.",
     options: [
-      { value: 1, label: "Minor diversion(3)" },
-      { value: 2, label: "Significant diversion(7)" },
-      { value: 3, label: "Severe diversion(10)" },
+      { value: 1, label: "Diversion with definite source of resources to rebuild working capital in a specific timeline(5)" },
+      { value: 2, label: "Diversion without identified source to rebuild the working capital(8)" },
+      { value: 3, label: "Permanent diversion(10)" },
       { value: 4, label: "Not Viable (1)" },
       { value: 5, label: "Not Applicable (0 && This question should be removed from the calculation of score)" }
     ]
@@ -104,9 +104,9 @@ export class PreliminarAssessmentComponent implements OnInit {
     Probable_Cause: "Suppliers trying to dump the product. Lack of production planning. Inadequate cash flow. Diversion of funds. Overtrading. Non realisation of Trade receivables within the contacted credit period. Decline in demand",
     impact: "Low capacity utilization / decline in cashflow- unable to operate / Unable to meet overheads / cashflow mismatch / unable to make repayments to Banks/FIs / Account is out of order.",
     options: [
-      { value: 1, label: "Slight increase(3)" },
-      { value: 2, label: "Moderate increase(6)" },
-      { value: 3, label: "Severe increase(10)" },
+      { value: 1, label: "Temporary phenomena due to unforeseen Internal(2)" },
+      { value: 2, label: "External factors, with definite timeline for correction(6)" },
+      { value: 3, label: "Issues related to production, marketing, temporary diversion of funds, which require considerable time to correct (10)" },
       { value: 4, label: "Not Viable (1)" },
       { value: 5, label: "Not Applicable (0 && This question should be removed from the calculation of score)" }
     ]
@@ -117,7 +117,7 @@ export class PreliminarAssessmentComponent implements OnInit {
     Probable_Cause: "Stress, Incipient sickness or sickness of the Unit.",
     impact: "Sealing of the unit / Initiate recovery procedure / Winding of the unit",
     options: [
-      { value: 1, label: "SMA 2(5)" },
+      { value: 1, label: "SMA 1/2/3 (2)" },
       { value: 2, label: "NPA(10)" },
       { value: 3, label: "Not Viable (1)" },
       { value: 4, label: "Not Applicable (0 && This question should be removed from the calculation of score)" }
@@ -129,9 +129,9 @@ export class PreliminarAssessmentComponent implements OnInit {
     Probable_Cause: "To have better market share. Improper planning.",
     impact: "Diversion of funds / Low capacity utilization / decline in cashflow- unable to operate / Unable to meet overheads / cashflow mismatch / unable to make repayments to Banks/FIs / Account is out of order.",
     options: [
-      { value: 1, label: "Minor expansion issues(3)" },
-      { value: 2, label: "Significant expansion issues(7)" },
-      { value: 3, label: "Severe expansion issues(10)" },
+      { value: 1, label: "Non-significant(2)" },
+      { value: 2, label: "Significant(6)" },
+      { value: 3, label: "Serious(10)" },
       { value: 4, label: "Not Viable (1)" },
       { value: 5, label: "Not Applicable (0 && This question should be removed from the calculation of score)" }
     ]
@@ -141,10 +141,10 @@ export class PreliminarAssessmentComponent implements OnInit {
     issue: "Leverage Position",
     Probable_Cause: "",
     impact: "Long term liquidity issues / Low capacity utilization / decline in cashflow- unable to operate / Unable to meet overheads / cashflow mismatch / unable to make repayments to Banks/FIs / Account is out of order.",
-    options: [
-      { value: 1, label: "Moderate leverage(4)" },
-      { value: 2, label: "High leverage(7)" },
-      { value: 3, label: "Extreme leverage(10)" },
+     options: [
+      { value: 1, label: "Non-significant(2)" },
+      { value: 2, label: "Significant(6)" },
+      { value: 3, label: "Serious(10)" },
       { value: 4, label: "Not Viable (1)" },
       { value: 5, label: "Not Applicable (0 && This question should be removed from the calculation of score)" }
     ]
@@ -154,10 +154,10 @@ export class PreliminarAssessmentComponent implements OnInit {
     issue: "Liquidity Position",
     Probable_Cause: "",
     impact: "Short term liquidity issues/ Low capacity utilization / decline in cashflow- unable to operate / Unable to meet overheads / cashflow mismatch / unable to make repayments to Banks/FIs / Account is out of order.",
-    options: [
-      { value: 1, label: "Tight liquidity(4)" },
-      { value: 2, label: "Severe liquidity crunch(7)" },
-      { value: 3, label: "Critical liquidity(10)" },
+   options: [
+      { value: 1, label: "Non-significant(2)" },
+      { value: 2, label: "Significant(6)" },
+      { value: 3, label: "Serious(10)" },
       { value: 4, label: "Not Viable (1)" },
       { value: 5, label: "Not Applicable (0 && This question should be removed from the calculation of score)" }
     ]
