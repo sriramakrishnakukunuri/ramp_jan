@@ -1,6 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators, FormArray, AbstractControl } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthenticationService } from '@app/_services';
 import { CommonServiceService } from '@app/_services/common-service.service';
 import { APIS } from '@app/constants/constants';
 import { ToastrService } from 'ngx-toastr';
@@ -23,7 +24,7 @@ export class LoanAppilicationNewComponent implements OnInit {
   currentStep = 1;
   today: any;
   enterPrenuerResponseData: any;
-  constructor(private fb: FormBuilder, private toastrService: ToastrService,
+  constructor(private fb: FormBuilder, private toastrService: ToastrService,private authenticationService: AuthenticationService,
     private _commonService: CommonServiceService, private router: Router,) {
         
       
@@ -34,16 +35,16 @@ export class LoanAppilicationNewComponent implements OnInit {
     this.applicationForm = this.fb.group({
       // Step 1 - Registration
       enterpriseName: ['', [Validators.required, Validators.pattern(/^[a-zA-Z]+(\s[a-zA-Z]+)*$/),Validators.minLength(3)]],
-      promoterName: ['', [Validators.required, Validators.pattern(/^[a-zA-Z]+(\s[a-zA-Z]+)*$/),Validators.minLength(3)]],
+      promoterName: ['', [Validators.required, Validators.pattern(/^[a-zA-Z]+(\s[a-zA-Z]+(.))*$/),Validators.minLength(3)]],
       constitution: ['', Validators.required],
       productionDate: ['', Validators.required],
        udyamRegNumber: ['', [Validators.required, this.udyamRegNumberValidator]],
-      altContactNumber: ['', [Validators.required,Validators.pattern(/^[6789]\d{9}$/)]],
+      altContactNumber: ['', [Validators.pattern(/^[6789]\d{9}$/)]],
       state: ['', Validators.required],
       industrialPark: ['', Validators.required],
       district: ['', Validators.required],
       mandal: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.email]],
       address: ['', [Validators.required, Validators.minLength(3)]],
       // Step 2 - Application
       enterpriseCategory: ['', ],
@@ -160,11 +161,19 @@ export class LoanAppilicationNewComponent implements OnInit {
     })
   }
   MandalList:any
-  GetMandalByDistrict(event: any) {
+   GetMandalByDistrict(event: any) {
     this.applicationForm.get('mandal')?.reset();
 
+      const districId=this.allDistricts.filter((item:any)=>{
+        console.log(item)
+        if(event==item.districtName){
+          return item
+        }
+      })
+      console.log(districId)
     this.MandalList=[]
-    this._commonService.getDataByUrl(APIS.tihclMasterList.getMandal + event).subscribe({
+    if(districId.length){
+        this._commonService.getDataByUrl(APIS.tihclMasterList.getMandal + districId[0]?.districtId).subscribe({
       next: (data: any) => {
         this.MandalList = data.data;
       },
@@ -172,8 +181,24 @@ export class LoanAppilicationNewComponent implements OnInit {
         this.MandalList = [];
       }
     })
+    }
+  
 
   }
+  // GetMandalByDistrict(event: any) {
+  //   this.applicationForm.get('mandal')?.reset();
+
+  //   this.MandalList=[]
+  //   this._commonService.getDataByUrl(APIS.tihclMasterList.getMandal + event).subscribe({
+  //     next: (data: any) => {
+  //       this.MandalList = data.data;
+  //     },
+  //     error: (err: any) => {
+  //       this.MandalList = [];
+  //     }
+  //   })
+
+  // }
   // createCreditDetail(): FormGroup {
 
   //   return this.fb.group({
@@ -282,6 +307,20 @@ export class LoanAppilicationNewComponent implements OnInit {
     this.applicationForm.get('issueDate')?.updateValueAndValidity()
     this.applicationForm.get('reasonForNotOperating')?.updateValueAndValidity()
   }
+  operatingSatisfactorilyChange(value: string): void{
+    // this.operatingSatisfactorily = value === 'YES';
+    if(value=='YES'){
+       this.applicationForm.get('operatingDifficulties')?.setValidators(null);
+       this.applicationForm.get('operatingDifficulties')?.patchValue([]);
+       this.applicationForm.get('operatingDifficulties')?.updateValueAndValidity();
+    }
+    else{
+       this.applicationForm.get('operatingDifficulties')?.setValidators([Validators.required]);
+       this.applicationForm.get('operatingDifficulties')?.patchValue([]);
+       this.applicationForm.get('operatingDifficulties')?.updateValueAndValidity();
+    }
+
+  }
 
   existingChange(value: string): void {
     this.existingStatus = value === 'YES';
@@ -352,7 +391,7 @@ this.applicationForm.get('requiredCreditLimit')?.setValidators([Validators.requi
 this.applicationForm.get('investmentSubsidy')?.patchValue(false);
 this.applicationForm.get('investmentSubsidy')?.setValidators([Validators.required]);
 this.applicationForm.get('maintainingAccountBy')?.setValidators([Validators.required]);
-this.applicationForm.get('helpMsg')?.setValidators([Validators.required]);
+this.applicationForm.get('helpMsg')?.setValidators(null);
 this.applicationForm.get('enterpriseName')?.setValidators(null);
 this.applicationForm.get('promoterName')?.setValidators(null);
 this.applicationForm.get('constitution')?.setValidators(null);
@@ -414,12 +453,12 @@ console.log(this.applicationForm.value);
       this.applicationForm.get('constitution')?.setValidators([Validators.required]);
       this.applicationForm.get('productionDate')?.setValidators([Validators.required]);
       this.applicationForm.get('udyamRegNumber')?.setValidators([Validators.required, this.udyamRegNumberValidator]);
-      this.applicationForm.get('altContactNumber')?.setValidators([Validators.required, Validators.pattern(/^[6789]\d{9}$/)]);
+      this.applicationForm.get('altContactNumber')?.setValidators([Validators.pattern(/^[6789]\d{9}$/)]);
       this.applicationForm.get('state')?.setValidators([Validators.required]);
       this.applicationForm.get('industrialPark')?.setValidators([Validators.required]);
       this.applicationForm.get('district')?.setValidators([Validators.required]);
       this.applicationForm.get('mandal')?.setValidators([Validators.required]);
-      this.applicationForm.get('email')?.setValidators([Validators.required, Validators.email]);
+      this.applicationForm.get('email')?.setValidators([Validators.email]);
       this.applicationForm.get('address')?.setValidators([Validators.required, Validators.minLength(3)]);
       this.applicationForm.get('operatingDifficulties')?.setValidators([Validators.required]);
       
@@ -512,6 +551,7 @@ this.applicationForm.get('operatingDifficulties')?.updateValueAndValidity()
   }
 
   logout(): void {
+    this.authenticationService.logout();
     // Implement logout logic
   }
 
@@ -537,4 +577,5 @@ this.applicationForm.get('operatingDifficulties')?.updateValueAndValidity()
       this.applicationForm.get('amountToBeReleased')?.patchValue(total)
     }
   }
+  
 }

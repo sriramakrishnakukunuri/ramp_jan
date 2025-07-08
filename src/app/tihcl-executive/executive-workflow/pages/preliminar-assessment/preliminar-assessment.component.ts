@@ -204,7 +204,7 @@ export class PreliminarAssessmentComponent implements OnInit {
         deliveryDetailsArray.removeAt(index);
       }
        const modal = new bootstrap.Modal(this.addDelivery.nativeElement);
-      modal.show(); 
+       modal.show(); 
   }
 
   deleteCreditDetail(index: number) {
@@ -233,6 +233,16 @@ applicationData:any
     this._commonService.getDataByUrl(url).subscribe({
       next: (dataList: any) => {
          this.assessmentForm.patchValue(dataList.data);
+         console.log(dataList.data)
+          const deliveryDetailsArray = this.assessmentForm.get('creditFacilityDetails') as FormArray;
+          // Push the new form group
+          if( dataList?.data?.creditFacilityDetails.length){
+              dataList?.data?.creditFacilityDetails.map((item:any)=>{
+             deliveryDetailsArray.push(this.fb.group(item))
+          })
+          }
+        
+        
          this.loansData = dataList.data.creditFacilityDetails || [];
          
         // Handle the dataList as needed
@@ -328,13 +338,13 @@ applicationData:any
       existingCredit: ['', Validators.required],
       
       // Additional details
-      gstNumber: ['', Validators.required],
+      gstNumber: [''],
       typeOfProduct: ['', Validators.required],
       productUsage: ['', Validators.required],
       
       // Problems and solutions
-      problemsFaced: [''],
-      expectedSolution: [''],
+      problemsFaced: ['',Validators.required],
+      expectedSolution: ['',Validators.required],
       
       // Stress scores (dynamically added)
       
@@ -342,7 +352,9 @@ applicationData:any
       observations: [''],
       statusUpdate: ['', Validators.required],
     });
-
+    for (let i = 1; i <= 10; i++) {
+     this.assessmentForm.removeControl(`stressScore_${i}`);
+   }
     // Initialize stress score controls
     this.stressScoreOptions.forEach((question:any) => {
       this.assessmentForm.addControl(`stressScore_${question.id}`, this.fb.control('', Validators.required));
@@ -363,22 +375,31 @@ applicationData:any
   // Calculate total stress score
   calculateScore() {
     this.totalScore = 0;
+    let count=0
     this.stressScoreOptions.forEach((question:any) => {
       const control = this.assessmentForm.get(`stressScore_${question.id}`);
       if (control?.value ) { // Skip "Not Applicable" options
         const selectedOption = question.options.find((opt:any) => opt.label === control.value);
         if (selectedOption) {
+         
           // Extract score from label (e.g., "Mild delay(2)" -> 2)
           const scoreMatch = selectedOption.label.match(/\((\d+)\)/);
+
           console.log(scoreMatch)
           if (scoreMatch) {
+             count++
             this.totalScore += parseInt(scoreMatch[1], 10);
           }
         }
       }
+
     });
+    // this.totalScore= this.totalScore/count
+    console.log(count,Math.round((this.totalScore / count) * 10),'sk')
     // Calculate percentage (max possible score is 100 if all questions scored 10)
-    // this.totalScore = Math.min(Math.round((this.totalScore / 100) * 100), 100);
+    // this.totalScore = Math.min(Math.round((this.totalScore / count) * 100), 100);
+    this.totalScore=Math.round((this.totalScore / count) * 10)
+      console.log( this.totalScore,'djjd')
   }
    calculateScore1() {
     this.totalScore = 0;
@@ -426,22 +447,23 @@ applicationData:any
   // Submit the form
   onSubmit() {
   
-    const riskAssessment = this.generateRiskResponse();
+  
+    console.log(this.assessmentForm?.value)
+     if (this.assessmentForm.valid) {
+        const riskAssessment = this.generateRiskResponse();
     const totalScore=this.calculateScore1()
   console.log(riskAssessment)
   
 
 // Remove all stressScore controls from the form
-for (let i = 1; i <= 10; i++) {
-  this.assessmentForm.removeControl(`stressScore_${i}`);
+      for (let i = 1; i <= 10; i++) {
+        this.assessmentForm.removeControl(`stressScore_${i}`);
 }
 
   // If you want to remove a control named 'stressScore' from the form, use:
     
      const creditFacilityDetails: any = this.assessmentForm.get('creditFacilityDetails')?.value? this.assessmentForm.get('creditFacilityDetails')?.value : [];
     this.calculateScore();
-    console.log(this.assessmentForm?.value)
-     if (this.assessmentForm.valid) {
       // Calculate final score
      
       

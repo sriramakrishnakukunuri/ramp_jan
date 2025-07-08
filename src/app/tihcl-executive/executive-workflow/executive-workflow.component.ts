@@ -35,7 +35,15 @@ currentStep:any = 1;
      this._commonService.setCurrentStep(2)
       this.currentStep=2
      }
-  
+     else if(applicationData.status === 'REJECTED_MANAGER_APPROVAL_1'){
+     this._commonService.setCurrentStep(2)
+      this.currentStep=2
+     }
+     else if(applicationData.status === 'MANAGER_APPROVAL_1'){
+     this._commonService.setCurrentStep(3)
+      this.currentStep=3
+     }
+     
      this.currentStep = this._commonService.getCurrentStep();
      
   }

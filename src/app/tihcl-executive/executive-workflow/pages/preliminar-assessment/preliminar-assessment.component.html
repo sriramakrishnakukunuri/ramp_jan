@@ -247,7 +247,7 @@
             <div class="form-floating mb-3">
               <input type="text" class="form-control" id="product" placeholder="Type Of Product"
                 formControlName="typeOfProduct">
-              <label for="product">Type Of Product</label>
+              <label for="product">Type Of Product<span class="text-danger">*</span></label>
               <div *ngIf="assessmentForm.get('typeOfProduct')?.invalid && assessmentForm.get('typeOfProduct')?.touched"
                 class="text-danger small">
                 Product type is required
@@ -260,7 +260,7 @@
             <div class="form-floating mb-3">
               <input type="text" class="form-control" id="whereProduct" placeholder="Where is the Product Used"
                 formControlName="productUsage">
-              <label for="whereProduct">Where is the Product Used?</label>
+              <label for="whereProduct">Where is the Product Used?<span class="text-danger">*</span></label>
               <div *ngIf="assessmentForm.get('productUsage')?.invalid && assessmentForm.get('productUsage')?.touched"
                 class="text-danger small">
                 Product usage information is required
@@ -273,13 +273,13 @@
       <!-- Problems and Solutions -->
       <div>
         <div class="mb-3">
-          <label class="fs-md fw-600 mb-1">What are your problems?</label>
+          <label class="fs-md fw-600 mb-1">What are your problems?<span class="text-danger">*</span></label>
           <div>
             <textarea class="form-control" rows="3" placeholder="Write here" formControlName="problemsFaced"></textarea>
           </div>
         </div>
         <div class="mb-3">
-          <label class="fs-md fw-600 mb-1">What is the expected solutions?</label>
+          <label class="fs-md fw-600 mb-1">What is the expected solutions?<span class="text-danger">*</span></label>
           <div>
             <textarea class="form-control" rows="3" placeholder="Write here"
               formControlName="expectedSolution"></textarea>
@@ -288,7 +288,7 @@
 
         <!-- Stress Score -->
         <div class="mb-3">
-          <h6 class="fs-md fw-600 mb-1">Stress Score</h6>
+          <h6 class="fs-md fw-600 mb-1">Stress Score<span class="text-danger">*</span></h6>
           <div class="accordion mb-2">
             <div class="accordion-item">
               <h2 class="accordion-header" id="risk-headingOne">
@@ -518,20 +518,27 @@
               formControlName="enterpriseName">
             <label for="enterpriseName">Enterprise Name</label>
             <div
-              *ngIf="updateFormFields.get('enterpriseName')?.invalid && updateFormFields.get('enterpriseName')?.touched"
+              *ngIf="updateFormFields.get('enterpriseName')?.invalid && updateFormFields.get('enterpriseName')?.touched && !updateFormFields.get('enterpriseName')?.hasError('minlength')"
               class="text-danger small">
               Enterprise name is required
             </div>
+            <div *ngIf="updateFormFields.get('enterpriseName')?.hasError('minlength')" class="text-danger">
+                Enterprise name must be at least 3 characters
+            </div>
+                              
           </div>
           <div class="form-floating mb-3" *ngIf="updateby === 'udyamRegNumber'">
             <input type="text" class="form-control" id="udyamRegNumber" placeholder="Udyam Registration Number"
               formControlName="udyamRegNumber">
             <label for="udyamRegNumber">Udyam Registration Number</label>
             <div
-              *ngIf="updateFormFields.get('udyamRegNumber')?.invalid && updateFormFields.get('udyamRegNumber')?.touched"
+              *ngIf="updateFormFields.get('udyamRegNumber')?.invalid && updateFormFields.get('udyamRegNumber')?.touched  && !updateFormFields.get('udyamRegNumber')?.hasError('invalidUdyamFormat')"
               class="text-danger small">
               Udyam registration number is required
             </div>
+            <div *ngIf="updateFormFields.get('udyamRegNumber')?.hasError('invalidUdyamFormat')" class="text-danger">
+                  Invalid format. Correct Format: UDYAM-XX-00-1234567 OR udyam-xx-12-1234567
+              </div>
           </div>
           <div class="form-floating mb-3" *ngIf="updateby === 'enterpriseCategory'">
             <select class="form-select" id="enterpriseCategory" formControlName="enterpriseCategory">
