@@ -70,7 +70,7 @@ export class BulkExpenditureComponent implements OnInit {
         modeOfPayment: new FormControl("", [Validators.required]),
         remarks: new FormControl("", ),
         checkDate:new FormControl("", ),
-        checkNo:new FormControl("", [Validators.required,Validators.pattern(/^[1-9]\d*$/)]),
+        checkNo:new FormControl("", [Validators.pattern(/^[0-9]\d*$/)]),
         uploadBillUrl: new FormControl("",),
       })
     }
@@ -139,10 +139,10 @@ export class BulkExpenditureComponent implements OnInit {
          this.BulkExpenditureForm.get('checkNo')?.updateValueAndValidity();
         this.BulkExpenditureForm.get('checkDate')?.updateValueAndValidity();
       }
-       else if(val=='CHECK'){
+       else if(val=='CHEQUE'){
         this.BulkExpenditureForm.get('bankName')?.setValidators(null);
         this.BulkExpenditureForm.get('transactionId')?.setValidators(null);
-        this.BulkExpenditureForm.get('checkNo')?.setValidators([Validators.required,Validators.pattern(/^[1-9]\d*$/)]);
+        this.BulkExpenditureForm.get('checkNo')?.setValidators([Validators.required,Validators.pattern(/^[0-9]\d*$/)]);
         this.BulkExpenditureForm.get('checkDate')?.setValidators([Validators.required]);
         this.BulkExpenditureForm.get('ifscCode')?.setValidators(null);
         this.BulkExpenditureForm.get('bankName')?.enable();

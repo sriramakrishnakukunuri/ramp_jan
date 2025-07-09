@@ -183,7 +183,7 @@ export class ProgramExpenditureComponent implements OnInit {
       modeOfPayment: new FormControl("", [Validators.required]),
       purpose: new FormControl("", ),
       checkDate:new FormControl("", [Validators.required]),
-      checkNo:new FormControl("", [Validators.required,Validators.pattern(/^[1-9]\d*$/)]),
+      checkNo:new FormControl("", [Validators.pattern(/^[0-9]\d*$/)]),
       uploadBillUrl: new FormControl("", ),
     })
   }
@@ -253,11 +253,11 @@ export class ProgramExpenditureComponent implements OnInit {
        this.PrePostExpenditureForm.get('checkNo')?.updateValueAndValidity();
       this.PrePostExpenditureForm.get('checkDate')?.updateValueAndValidity();
     }
-      else if(val=='CHECK'){
+      else if(val=='CHEQUE'){
       this.PrePostExpenditureForm.get('bankName')?.setValidators(null);
       this.PrePostExpenditureForm.get('transactionId')?.setValidators(null);
       this.PrePostExpenditureForm.get('ifscCode')?.setValidators(null);
-        this.PrePostExpenditureForm.get('checkNo')?.setValidators([Validators.required,Validators.pattern(/^[1-9]\d*$/)]);
+        this.PrePostExpenditureForm.get('checkNo')?.setValidators([Validators.required,Validators.pattern(/^[0-9]\d*$/)]);
         this.PrePostExpenditureForm.get('checkDate')?.setValidators([Validators.required]);
       this.PrePostExpenditureForm.get('bankName')?.enable();
       this.PrePostExpenditureForm.get('transactionId')?.enable();
