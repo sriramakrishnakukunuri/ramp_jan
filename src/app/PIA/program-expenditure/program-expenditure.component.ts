@@ -182,6 +182,8 @@ export class ProgramExpenditureComponent implements OnInit {
       ifscCode: new FormControl("", [Validators.pattern(/^[A-Z]{4}0[A-Z0-9]{6}$/)]),
       modeOfPayment: new FormControl("", [Validators.required]),
       purpose: new FormControl("", ),
+      checkDate:new FormControl("", [Validators.required]),
+      checkNo:new FormControl("", [Validators.required,Validators.pattern(/^[1-9]\d*$/)]),
       uploadBillUrl: new FormControl("", ),
     })
   }
@@ -192,6 +194,8 @@ export class ProgramExpenditureComponent implements OnInit {
       this.PrePostExpenditureForm.get('transactionId')?.setValidators(null);
       this.PrePostExpenditureForm.get('ifscCode')?.setValidators(null);
       this.PrePostExpenditureForm.get('bankName')?.patchValue('');
+      this.PrePostExpenditureForm.get('checkNo')?.setValidators(null);
+        this.PrePostExpenditureForm.get('checkDate')?.setValidators(null);
       this.PrePostExpenditureForm.get('transactionId')?.patchValue('');
       this.PrePostExpenditureForm.get('ifscCode')?.patchValue('');
       this.PrePostExpenditureForm.get('bankName')?.clearValidators();
@@ -200,38 +204,74 @@ export class ProgramExpenditureComponent implements OnInit {
       this.PrePostExpenditureForm.get('bankName')?.disable();
       this.PrePostExpenditureForm.get('transactionId')?.disable();
       this.PrePostExpenditureForm.get('ifscCode')?.disable();
+      this.PrePostExpenditureForm.get('checkNo')?.patchValue('');
+      this.PrePostExpenditureForm.get('checkDate')?.patchValue('');
       this.PrePostExpenditureForm.get('bankName')?.updateValueAndValidity();
       this.PrePostExpenditureForm.get('transactionId')?.updateValueAndValidity();
       this.PrePostExpenditureForm.get('ifscCode')?.updateValueAndValidity();
+       this.PrePostExpenditureForm.get('checkNo')?.updateValueAndValidity();
+      this.PrePostExpenditureForm.get('checkDate')?.updateValueAndValidity();
 
     }
     else if(val=='BANK_TRANSFER'){
       this.PrePostExpenditureForm.get('bankName')?.setValidators([Validators.required]);
       this.PrePostExpenditureForm.get('transactionId')?.setValidators(null);
       this.PrePostExpenditureForm.get('ifscCode')?.setValidators([Validators.required,Validators.pattern(/^[A-Z]{4}0[A-Z0-9]{6}$/)]);
+      this.PrePostExpenditureForm.get('checkNo')?.setValidators(null);
+        this.PrePostExpenditureForm.get('checkDate')?.setValidators(null);
       this.PrePostExpenditureForm.get('bankName')?.enable();
       this.PrePostExpenditureForm.get('transactionId')?.disable();
       this.PrePostExpenditureForm.get('ifscCode')?.enable();
       this.PrePostExpenditureForm.get('bankName')?.patchValue('');
       this.PrePostExpenditureForm.get('transactionId')?.patchValue('');
       this.PrePostExpenditureForm.get('ifscCode')?.patchValue('');
+      this.PrePostExpenditureForm.get('checkNo')?.patchValue('');
+      this.PrePostExpenditureForm.get('checkDate')?.patchValue('');
       this.PrePostExpenditureForm.get('bankName')?.updateValueAndValidity();
       this.PrePostExpenditureForm.get('transactionId')?.updateValueAndValidity();
       this.PrePostExpenditureForm.get('ifscCode')?.updateValueAndValidity();
+       this.PrePostExpenditureForm.get('checkNo')?.updateValueAndValidity();
+      this.PrePostExpenditureForm.get('checkDate')?.updateValueAndValidity();
     }
     else if(val=='UPI'){
       this.PrePostExpenditureForm.get('bankName')?.setValidators(null);
       this.PrePostExpenditureForm.get('transactionId')?.setValidators([Validators.required]);
       this.PrePostExpenditureForm.get('ifscCode')?.setValidators(null);
+      this.PrePostExpenditureForm.get('checkNo')?.setValidators(null);
+        this.PrePostExpenditureForm.get('checkDate')?.setValidators(null);
       this.PrePostExpenditureForm.get('bankName')?.disable();
       this.PrePostExpenditureForm.get('transactionId')?.enable();
       this.PrePostExpenditureForm.get('ifscCode')?.disable();
       this.PrePostExpenditureForm.get('bankName')?.patchValue('');
       this.PrePostExpenditureForm.get('transactionId')?.patchValue('');
       this.PrePostExpenditureForm.get('ifscCode')?.patchValue('');
+      this.PrePostExpenditureForm.get('checkNo')?.patchValue('');
+      this.PrePostExpenditureForm.get('checkDate')?.patchValue('');
       this.PrePostExpenditureForm.get('bankName')?.updateValueAndValidity();
       this.PrePostExpenditureForm.get('transactionId')?.updateValueAndValidity();
       this.PrePostExpenditureForm.get('ifscCode')?.updateValueAndValidity();
+       this.PrePostExpenditureForm.get('checkNo')?.updateValueAndValidity();
+      this.PrePostExpenditureForm.get('checkDate')?.updateValueAndValidity();
+    }
+      else if(val=='CHECK'){
+      this.PrePostExpenditureForm.get('bankName')?.setValidators(null);
+      this.PrePostExpenditureForm.get('transactionId')?.setValidators(null);
+      this.PrePostExpenditureForm.get('ifscCode')?.setValidators(null);
+        this.PrePostExpenditureForm.get('checkNo')?.setValidators([Validators.required,Validators.pattern(/^[1-9]\d*$/)]);
+        this.PrePostExpenditureForm.get('checkDate')?.setValidators([Validators.required]);
+      this.PrePostExpenditureForm.get('bankName')?.enable();
+      this.PrePostExpenditureForm.get('transactionId')?.enable();
+      this.PrePostExpenditureForm.get('ifscCode')?.enable();
+      this.PrePostExpenditureForm.get('bankName')?.patchValue('');
+      this.PrePostExpenditureForm.get('transactionId')?.patchValue('');
+      this.PrePostExpenditureForm.get('ifscCode')?.patchValue('');
+       this.PrePostExpenditureForm.get('checkNo')?.patchValue('');
+      this.PrePostExpenditureForm.get('checkDate')?.patchValue('');
+      this.PrePostExpenditureForm.get('bankName')?.updateValueAndValidity();
+      this.PrePostExpenditureForm.get('transactionId')?.updateValueAndValidity();
+      this.PrePostExpenditureForm.get('ifscCode')?.updateValueAndValidity();
+      this.PrePostExpenditureForm.get('checkNo')?.updateValueAndValidity();
+      this.PrePostExpenditureForm.get('checkDate')?.updateValueAndValidity();
     }
   }
   formDetailsBulk() {
@@ -345,7 +385,7 @@ export class ProgramExpenditureComponent implements OnInit {
       console.log(item)
       this.PrePostExpenditureForm.reset()
       item['uploadBillUrl']=''
-      this.PrePostExpenditureForm.patchValue({...item,headOfExpenseId:this.getExpenseIdByName(item?.headOfExpense),billDate:this.convertToISOFormat(item?.billDate)})
+      this.PrePostExpenditureForm.patchValue({...item,headOfExpenseId:this.getExpenseIdByName(item?.headOfExpense),billDate:this.convertToISOFormat(item?.billDate),checkDate:this.convertToISOFormat(item?.checkDate)})
       // this.PrePostExpenditureForm.get('uploadBillUrl')?.setValue(item?.uploadBillUrl)
   
       console.log(item)
@@ -361,7 +401,7 @@ export class ProgramExpenditureComponent implements OnInit {
       console.log(item)
      
       this.BulkExpenditureForm.reset()
-      this.BulkExpenditureForm.patchValue({...item,headOfExpenseId:this.getExpenseIdByName(item?.headOfExpense),billDate:this.convertToISOFormat(item?.billDate)})
+      this.BulkExpenditureForm.patchValue({...item,headOfExpenseId:this.getExpenseIdByName(item?.headOfExpense),billDate:this.convertToISOFormat(item?.billDate),checkDate:this.convertToISOFormat(item?.checkDate)})
       this.getHeadOfExpenseId(this.getExpenseIdByName(item?.headOfExpense))
       console.log(item?.itemName,this.getExpenseIdByName(item?.headOfExpense))
       this.getBulkDataByItem(item?.itemName,this.getExpenseIdByName(item?.headOfExpense))
@@ -446,6 +486,7 @@ export class ProgramExpenditureComponent implements OnInit {
       subActivityId:Number(this.programCreationMain.value.subActivityId),programId:Number(this.programCreationMain.value.programId),...this.PrePostExpenditureForm.value,
       headOfExpenseId:Number(this.PrePostExpenditureForm.value.headOfExpenseId),
       billDate:moment(this.PrePostExpenditureForm.value.billDate).format('DD-MM-YYYY'),
+      checkDate:moment(this.PrePostExpenditureForm.value.checkDate).format('DD-MM-YYYY'),
       agencyId:this.agencyId}
     console.log(payload)
     const formData = new FormData();
