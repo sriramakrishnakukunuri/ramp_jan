@@ -1,5 +1,5 @@
 import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
-import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { CommonServiceService } from '@app/_services/common-service.service';
 import { APIS } from '@app/constants/constants';
 import { data } from 'jquery';
@@ -324,21 +324,21 @@ applicationData:any
     } );
     this.assessmentForm = this.fb.group({
       // Basic information
-      enterpriseName: ['ABC Pvt Ltd', Validators.required],
-      udyamRegNumber: ['URN00918288', Validators.required],
-      enterpriseCategory: ['Micro', Validators.required],
-      natureOfActivity: ['Manufacturing', Validators.required],
+      enterpriseName: ['', Validators.required],
+      udyamRegNumber: ['', Validators.required],
+      enterpriseCategory: ['', Validators.required],
+      natureOfActivity: ['', Validators.required],
       
       // Factory location
-      district: ['Ranga Reddy', Validators.required],
-      mandal: ['Shadnagar', Validators.required],
-      address: ['Sr.No. 528, Elikatta Industrial Area, Shadnagar, Telangana 509410', Validators.required],
+      district: ['', Validators.required],
+      mandal: ['', Validators.required],
+      address: ['', Validators.required],
       creditFacilityDetails: this.fb.array([]),
       // Credit facilities
       existingCredit: ['', Validators.required],
       
       // Additional details
-      gstNumber: [''],
+      gstNumber: ['',this.gstValidator()],
       typeOfProduct: ['', Validators.required],
       productUsage: ['', Validators.required],
       
@@ -360,7 +360,28 @@ applicationData:any
       this.assessmentForm.addControl(`stressScore_${question.id}`, this.fb.control('', Validators.required));
     });
   }
+    private gstValidator(): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      if (!control.value) {
+        return null;
+      }
 
+      const gstin = control.value.toUpperCase().trim();
+      const gstRegex = /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/;
+
+      // Format validation
+      if (!gstRegex.test(gstin)) {
+        return { invalidFormat: true };
+      }
+
+      // // Checksum validation
+      // if (!this.validateChecksum(gstin)) {
+      //   return { invalidChecksum: true };
+      // }
+
+      return null;
+    };
+   }
   // Add a new loan to the table
   addLoan() {
     if (this.assessmentForm.get('loanForm')?.valid) {

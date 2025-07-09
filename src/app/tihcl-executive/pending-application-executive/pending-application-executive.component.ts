@@ -48,5 +48,9 @@ tableList:any=[]
       }
     });
   }
+   selectApplication(item: any) { // Set the current step to 1
+    sessionStorage.setItem('ApplicationData', JSON.stringify(item));
+    this.router.navigate(['/executive-workflow']);
+  }
 }
 

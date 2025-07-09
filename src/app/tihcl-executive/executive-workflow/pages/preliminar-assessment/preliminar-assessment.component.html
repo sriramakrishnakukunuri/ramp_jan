@@ -233,10 +233,13 @@
             <div class="form-floating mb-3">
               <input type="text" class="form-control" id="gst" placeholder="GST" formControlName="gstNumber">
               <label for="gst">GST Number</label>
-              <div *ngIf="assessmentForm.get('gstNumber')?.invalid && assessmentForm.get('gstNumber')?.touched"
+              <div *ngIf="assessmentForm.get('gstNumber')?.invalid && assessmentForm.get('gstNumber')?.touched && !assessmentForm.get('gstNumber')?.errors?.invalidFormat"
                 class="text-danger small">
                 GST number is required
               </div>
+               <div *ngIf="assessmentForm.get('gstNumber')?.errors?.invalidFormat" class="text-danger small">
+                 Invalid format. Example: 22AAAAA0000A1Z5
+             </div>
             </div>
           </div>
         </div>
@@ -277,6 +280,10 @@
           <div>
             <textarea class="form-control" rows="3" placeholder="Write here" formControlName="problemsFaced"></textarea>
           </div>
+           <div *ngIf="assessmentForm.get('problemsFaced')?.invalid && assessmentForm.get('problemsFaced')?.touched"
+                class="text-danger small">
+                problem is required
+              </div>
         </div>
         <div class="mb-3">
           <label class="fs-md fw-600 mb-1">What is the expected solutions?<span class="text-danger">*</span></label>
@@ -284,6 +291,10 @@
             <textarea class="form-control" rows="3" placeholder="Write here"
               formControlName="expectedSolution"></textarea>
           </div>
+           <div *ngIf="assessmentForm.get('expectedSolution')?.invalid && assessmentForm.get('expectedSolution')?.touched"
+                class="text-danger small">
+                Expected solutions is required
+              </div>
         </div>
 
         <!-- Stress Score -->

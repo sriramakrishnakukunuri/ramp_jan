@@ -27,19 +27,19 @@ currentStep:any = 1;
      if(!applicationData || Object.keys(applicationData).length === 0) {
 
      }
-     else if(applicationData.status === 'APPLICATION_SUBMITTED') {
+     else if(applicationData.status === 'APPLICATION_SUBMITTED' || applicationData.applicationStatus === 'APPLICATION_SUBMITTED' ) {
         this.getDtataByUrl(APIS.tihclExecutive.registerData + applicationData.registrationUsageId);
         this._commonService.setCurrentStep(1);
         // sessionStorage.setItem('ApplicationData', JSON.stringify(applicationData));
-     }else if(applicationData.status === 'PRELIMINARY_ASSESSMENT'){
+     }else if(applicationData.status === 'PRELIMINARY_ASSESSMENT' || applicationData.applicationStatus === 'PRELIMINARY_ASSESSMENT'){
      this._commonService.setCurrentStep(2)
       this.currentStep=2
      }
-     else if(applicationData.status === 'REJECTED_MANAGER_APPROVAL_1'){
+     else if(applicationData.status === 'REJECTED_MANAGER_APPROVAL_1' || applicationData.applicationStatus === 'REJECTED_MANAGER_APPROVAL_1'){
      this._commonService.setCurrentStep(2)
       this.currentStep=2
      }
-     else if(applicationData.status === 'MANAGER_APPROVAL_1'){
+     else if(applicationData.status === 'MANAGER_APPROVAL_1' || applicationData.applicationStatus === 'MANAGER_APPROVAL_1'){
      this._commonService.setCurrentStep(3)
       this.currentStep=3
      }
@@ -52,7 +52,7 @@ currentStep:any = 1;
       next: (dataList: any) => {
         sessionStorage.setItem('ApplicationData', JSON.stringify(dataList?.data));
         console.log(dataList?.data,dataList?.data.applicationStatus,dataList?.data.applicationStatus === 'PRELIMINARY_ASSESSMENT')
-        if(dataList?.data.applicationStatus === 'PRELIMINARY_ASSESSMENT'){
+        if(dataList?.data.applicationStatus === 'PRELIMINARY_ASSESSMENT' || dataList?.data.status === 'PRELIMINARY_ASSESSMENT'){
           this.currentStep=2
           this._commonService.setCurrentStep(2)
           
