@@ -69,6 +69,8 @@ export class BulkExpenditureComponent implements OnInit {
         ifscCode: new FormControl("", [Validators.pattern(/^[A-Z]{4}0[A-Z0-9]{6}$/)]),
         modeOfPayment: new FormControl("", [Validators.required]),
         remarks: new FormControl("", ),
+        checkDate:new FormControl("", ),
+        checkNo:new FormControl("", [Validators.required,Validators.pattern(/^[1-9]\d*$/)]),
         uploadBillUrl: new FormControl("",),
       })
     }
@@ -78,6 +80,8 @@ export class BulkExpenditureComponent implements OnInit {
         this.BulkExpenditureForm.get('bankName')?.setValidators(null);
         this.BulkExpenditureForm.get('transactionId')?.setValidators(null);
         this.BulkExpenditureForm.get('ifscCode')?.setValidators(null);
+        this.BulkExpenditureForm.get('checkNo')?.setValidators(null);
+        this.BulkExpenditureForm.get('checkDate')?.setValidators(null);
         this.BulkExpenditureForm.get('bankName')?.patchValue('');
         this.BulkExpenditureForm.get('transactionId')?.patchValue('');
         this.BulkExpenditureForm.get('ifscCode')?.patchValue('');
@@ -87,37 +91,72 @@ export class BulkExpenditureComponent implements OnInit {
         this.BulkExpenditureForm.get('bankName')?.disable();
         this.BulkExpenditureForm.get('transactionId')?.disable();
         this.BulkExpenditureForm.get('ifscCode')?.disable();
+         this.BulkExpenditureForm.get('checkNo')?.patchValue('');
+        this.BulkExpenditureForm.get('checkDate')?.patchValue('');
         this.BulkExpenditureForm.get('bankName')?.updateValueAndValidity();
         this.BulkExpenditureForm.get('transactionId')?.updateValueAndValidity();
         this.BulkExpenditureForm.get('ifscCode')?.updateValueAndValidity();
-
+         this.BulkExpenditureForm.get('checkNo')?.updateValueAndValidity();
+        this.BulkExpenditureForm.get('checkDate')?.updateValueAndValidity();
       }
       else if(val=='BANK_TRANSFER'){
         this.BulkExpenditureForm.get('bankName')?.setValidators([Validators.required]);
         this.BulkExpenditureForm.get('transactionId')?.setValidators(null);
         this.BulkExpenditureForm.get('ifscCode')?.setValidators([Validators.required,Validators.pattern(/^[A-Z]{4}0[A-Z0-9]{6}$/)]);
+        this.BulkExpenditureForm.get('checkNo')?.setValidators(null);
+        this.BulkExpenditureForm.get('checkDate')?.setValidators(null);
         this.BulkExpenditureForm.get('bankName')?.enable();
         this.BulkExpenditureForm.get('transactionId')?.disable();
         this.BulkExpenditureForm.get('ifscCode')?.enable();
         this.BulkExpenditureForm.get('bankName')?.patchValue('');
         this.BulkExpenditureForm.get('transactionId')?.patchValue('');
         this.BulkExpenditureForm.get('ifscCode')?.patchValue('');
+         this.BulkExpenditureForm.get('checkNo')?.patchValue('');
+        this.BulkExpenditureForm.get('checkDate')?.patchValue('');
         this.BulkExpenditureForm.get('bankName')?.updateValueAndValidity();
         this.BulkExpenditureForm.get('transactionId')?.updateValueAndValidity();
         this.BulkExpenditureForm.get('ifscCode')?.updateValueAndValidity();
+         this.BulkExpenditureForm.get('checkNo')?.updateValueAndValidity();
+        this.BulkExpenditureForm.get('checkDate')?.updateValueAndValidity();
       }
       else if(val=='UPI'){
         this.BulkExpenditureForm.get('bankName')?.setValidators(null);
         this.BulkExpenditureForm.get('transactionId')?.setValidators([Validators.required,Validators.pattern(/^[^\s].*/)]);
         this.BulkExpenditureForm.get('ifscCode')?.setValidators(null);
+        this.BulkExpenditureForm.get('checkNo')?.setValidators(null);
+        this.BulkExpenditureForm.get('checkDate')?.setValidators(null);
         this.BulkExpenditureForm.get('bankName')?.disable();
         this.BulkExpenditureForm.get('transactionId')?.enable();
         this.BulkExpenditureForm.get('ifscCode')?.disable();
         this.BulkExpenditureForm.get('bankName')?.patchValue('');
         this.BulkExpenditureForm.get('transactionId')?.patchValue('');
         this.BulkExpenditureForm.get('ifscCode')?.patchValue('');
+         this.BulkExpenditureForm.get('checkNo')?.patchValue('');
+        this.BulkExpenditureForm.get('checkDate')?.patchValue('');
         this.BulkExpenditureForm.get('bankName')?.updateValueAndValidity();
         this.BulkExpenditureForm.get('transactionId')?.updateValueAndValidity();
+        this.BulkExpenditureForm.get('ifscCode')?.updateValueAndValidity();
+         this.BulkExpenditureForm.get('checkNo')?.updateValueAndValidity();
+        this.BulkExpenditureForm.get('checkDate')?.updateValueAndValidity();
+      }
+       else if(val=='CHECK'){
+        this.BulkExpenditureForm.get('bankName')?.setValidators(null);
+        this.BulkExpenditureForm.get('transactionId')?.setValidators(null);
+        this.BulkExpenditureForm.get('checkNo')?.setValidators([Validators.required,Validators.pattern(/^[1-9]\d*$/)]);
+        this.BulkExpenditureForm.get('checkDate')?.setValidators([Validators.required]);
+        this.BulkExpenditureForm.get('ifscCode')?.setValidators(null);
+        this.BulkExpenditureForm.get('bankName')?.enable();
+        this.BulkExpenditureForm.get('transactionId')?.enable();
+        this.BulkExpenditureForm.get('ifscCode')?.enable();
+        this.BulkExpenditureForm.get('bankName')?.patchValue('');
+        this.BulkExpenditureForm.get('transactionId')?.patchValue('');
+        this.BulkExpenditureForm.get('ifscCode')?.patchValue('');
+        this.BulkExpenditureForm.get('checkNo')?.patchValue('');
+        this.BulkExpenditureForm.get('checkDate')?.patchValue('');
+        this.BulkExpenditureForm.get('bankName')?.updateValueAndValidity();
+        this.BulkExpenditureForm.get('transactionId')?.updateValueAndValidity();
+        this.BulkExpenditureForm.get('checkNo')?.updateValueAndValidity();
+        this.BulkExpenditureForm.get('checkDate')?.updateValueAndValidity();
         this.BulkExpenditureForm.get('ifscCode')?.updateValueAndValidity();
       }
     }
@@ -171,7 +210,7 @@ export class BulkExpenditureComponent implements OnInit {
   //     modalInstance.show();
     // save Bulk expenditure
     BulkExpenditureSubmit(){
-      let payload={...this.BulkExpenditureForm.value,purchaseDate:moment(this.BulkExpenditureForm.value.purchaseDate).format('DD-MM-YYYY'), billDate:moment(this.BulkExpenditureForm.value.billDate).format('DD-MM-YYYY'),agencyId:this.agencyId}
+      let payload={...this.BulkExpenditureForm.value,purchaseDate:moment(this.BulkExpenditureForm.value.purchaseDate).format('DD-MM-YYYY'), billDate:moment(this.BulkExpenditureForm.value.billDate).format('DD-MM-YYYY'),checkDate:moment(this.BulkExpenditureForm.value.checkDate).format('DD-MM-YYYY'),agencyId:this.agencyId}
       const formData = new FormData();
       formData.append("request", JSON.stringify(payload));
 
@@ -353,7 +392,7 @@ getExpenseIdByName(expenseName: string): number | undefined {
     this.BulkExpenditureForm.reset()
     console.log(item)
      item['uploadBillUrl']=''
-    this.BulkExpenditureForm.patchValue({...item,headOfExpenseId:this.getExpenseIdByName(item?.headOfExpense),billDate:this.convertToISOFormat(item?.billDate),purchaseDate:this.convertToISOFormat(item?.purchaseDate)})
+    this.BulkExpenditureForm.patchValue({...item,headOfExpenseId:this.getExpenseIdByName(item?.headOfExpense),billDate:this.convertToISOFormat(item?.billDate),checkDate:this.convertToISOFormat(item?.checkDate),purchaseDate:this.convertToISOFormat(item?.purchaseDate)})
     
     modal1.show();
    }

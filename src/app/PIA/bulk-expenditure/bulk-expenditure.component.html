@@ -167,6 +167,9 @@
                             </div>
                             <div *ngIf="fBulk['billNo'].touched && !fBulk['billNo'].valid" class="error"
                             style="color: red;">Bill No. is required</div>
+                             <div *ngIf="fBulk['billNo'].errors?.['pattern']" class="error">
+                                    Please Enter only numeric Values.
+                            </div>
                         </div>
                         <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                             <div class="form-floating mb-3">
@@ -187,6 +190,7 @@
                                         <option value="BANK_TRANSFER">Bank Transfer</option>
                                         <option value="CASH">Cash</option>
                                         <option value="UPI">UPI</option>
+                                         <option value="CHECK">CHECK</option>
                                     </select>
                                     <label for="modePayment">Mode Of Payment<span class="c-red"> *</span></label>
                                 </div>
@@ -201,13 +205,32 @@
                                 <div *ngIf="fBulk['payeeName'].touched && !fBulk['payeeName'].valid" class="error"
                                 style="color: red;">Payee Name is required</div>
                             </div>
-                            <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-4" *ngIf="fBulk['modeOfPayment'].value!='CHECK'">
                                 <div class="form-floating mb-3 mb-sm-3 mb-md-0">
                                     <input type="text" class="form-control" id="transactionId" placeholder="transactionId" formControlName="transactionId"    name="transactionId" />
                                     <label for="bank">Transaction Id<span *ngIf="fBulk['modeOfPayment'].value=='UPI'" class="c-red"> *</span></label>
                                 </div>
                                 <div *ngIf="fBulk['transactionId'].touched && !fBulk['transactionId'].valid" class="error"
                                 style="color: red;">Transaction Id is required</div>
+                            </div>
+                              <div class="col-12 col-sm-6 col-md-4 col-lg-4" *ngIf="fBulk['modeOfPayment'].value=='CHECK'">
+                                <div class="form-floating mb-3 mb-sm-3 mb-md-0">
+                                    <input type="text" class="form-control" id="checkNo" placeholder="checkNo" formControlName="checkNo"   name="checkNo" />
+                                    <label for="bank">Check No<span *ngIf="fBulk['modeOfPayment'].value=='UPI'" class="c-red"> *</span></label>
+                                </div>
+                                <div *ngIf="fBulk['checkNo'].touched && !fBulk['checkNo'].valid && !fBulk['checkNo'].errors?.['pattern']" class="error"
+                                style="color: red;">Check No is required</div>
+                                <div *ngIf="fBulk['checkNo'].errors?.['pattern']" class="error">
+                                    Please Enter only numeric Values.
+                                     </div>
+                             </div>
+                             <div class="col-12 col-sm-6 col-md-4 col-lg-4" *ngIf="fBulk['modeOfPayment'].value=='CHECK'">
+                                <div class="form-floating mb-3 mb-sm-3 mb-md-0">
+                                     <input type="date" class="form-control" id="checkDate" placeholder="Check Date" formControlName="checkDate"    name="checkDate" >
+                                    <label for="bank">Check Date<span *ngIf="fBulk['modeOfPayment'].value=='UPI'" class="c-red"> *</span></label>
+                                </div>
+                                <div *ngIf="fBulk['checkDate'].touched && !fBulk['checkDate'].valid" class="error"
+                                style="color: red;">Check Date is required</div>
                             </div>
                             <div class="col-12 col-sm-6 col-md-4 col-lg-4">
                                 <div class="form-floating mb-3 mb-sm-3 mb-md-0">
@@ -237,7 +260,7 @@
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3 mt-2">
                                 <div class="form-floating mb-3">
                                     <input type="file" class="form-control" id="upload" placeholder="upload file" (change)="onFileChange($event)" formControlName="uploadBillUrl"  name="uploadBillUrl">
-                                    <label for="upload">Upload File</label>
+                                    <label for="upload">upload bill/invoice</label>
                                 </div>
                                 <div *ngIf="fileErrors" class="error">{{fileErrors}}</div>
                             </div>
