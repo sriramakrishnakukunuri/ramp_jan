@@ -533,7 +533,8 @@ this.applicationForm.get('operatingDifficulties')?.updateValueAndValidity()
 
   submitForm(): void {
     const creditFacilityDetails: any = this.applicationForm.get('creditFacilityDetails')?.value? this.applicationForm.get('creditFacilityDetails')?.value : [];
-    this._commonService.add(APIS.tihclEnterprenuer.submitLoanApplication, {...this.applicationForm.value,creditFacilityDetails:creditFacilityDetails,status: "Assessment Completed"}).subscribe({
+    const operatingDifficulties: any = this.applicationForm.get('operatingDifficulties')?.value? this.applicationForm.get('operatingDifficulties')?.value : [];
+    this._commonService.add(APIS.tihclEnterprenuer.submitLoanApplication, {...this.applicationForm.value,creditFacilityDetails:creditFacilityDetails,operatingDifficulties:operatingDifficulties, status: "Assessment Completed"}).subscribe({
       next: (response) => {
         if(response.status === 200) {
            this.enterPrenuerResponseData = response.data;
