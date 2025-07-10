@@ -173,32 +173,25 @@
                               </div>
                             </div>
                               <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                               <!-- <div class="dropdown">
-                                  <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Tutorials
-                                  <span class="caret"></span></button>
-                                  <ul class="dropdown-menu">
-                                    
-                                    
-                                    <li class="dropdown-submenu">
-                                      <a class="test" tabindex="-1" href="#">Industrial Park <span class="caret"></span></a>
-                                      <ul class="dropdown-menu">
-                                        <li><a tabindex="-1" href="#">option 1</a></li>
-                                        <li><a tabindex="-1" href="#">option 2</a></li>
-                                        <li><a tabindex="-1" href="#">option 3</a></li>
-                                       
-                                      </ul>
-                                    </li>
-                                    <li><a tabindex="-1" >Others</a></li>
-                                  </ul>
-                            </div> -->
-                              <div class="form-floating mb-3" [ngClass]="applicationForm.get('udyamRegNumber')?.valid ? '' :'isDisabled'">
+                                <div class="form-floating mb-3" [ngClass]="applicationForm.get('udyamRegNumber')?.valid ? '' :'isDisabled'">
+                                  <app-multi-level-dropdown 
+                                  [items]="multiLevelItems" 
+                                   formControlName="industrialPark"
+                                   [placeholder]="'Select a industrial Park*'"
+                                   (itemSelected)="onItemSelected($event)"> 
+                                </app-multi-level-dropdown>
+                                </div>
+                                <div *ngIf="applicationForm.get('industrialPark')?.invalid && applicationForm.get('industrialPark')?.touched" class="text-danger">
+                                  Industrial Park is required
+                                </div>
+                              <!-- <div class="form-floating mb-3" [ngClass]="applicationForm.get('udyamRegNumber')?.valid ? '' :'isDisabled'">
                                 <select class="form-select" id="industrialPark" 
                                   formControlName="industrialPark" aria-label="">
                                   <option value="">Select Industrial Park</option>
                                   <option value="Industrial Park 1">Industrial Park 1</option>
                                 </select>
                                 <label for="industrialPark">Industrial Park<span class="text-danger">*</span></label>
-                              </div>
+                              </div> -->
                             </div>
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                               <div class="form-floating mb-3" [ngClass]="applicationForm.get('industrialPark')?.valid ? '' :'isDisabled'">
@@ -480,7 +473,7 @@
                           <td>{{item?.limitSanctioned}}</td>
                           <td>{{item?.outstandingAmount}}</td>
                           <td>{{item?.overdueAmount}}</td>
-                          <td>{{item?.overdueSince}}</td>
+                          <td>{{item?.overdueDate}}</td>
                         </tr>
                       </tbody>
                                   </table>
@@ -626,7 +619,7 @@
                                     <p class="fw-600 fs-md mb-0">Date Of Submission</p>
                                   </div>
                                   <div>
-                                    <p class="fs-md mb-0">{{enterPrenuerResponseData?.dateOfSubmission}}</p>
+                                    <p class="fs-md mb-0">{{enterPrenuerResponseData?.dateOfSubmission?enterPrenuerResponseData?.dateOfSubmission:enterPrenuerResponseData?.createdOn}}</p>
                                   </div>
                                 </div>
                                 <div class="d-flex align-items-center justify-content-between">
@@ -780,12 +773,12 @@
                         </div>
                         <div class="col-12">
                             <div class="form-floating mb-3">
-                                <input type="date" class="form-control" id="overdueSince" placeholder="Overdue Since"
-                                       formControlName="overdueSince" max="{{ today | date:'yyyy-MM-dd' }}">
-                                <label for="overdueSince">Overdue Since (Date)<span class="text-danger">*</span></label>
-                                <div *ngIf="creditDetailsForm.get('overdueSince')?.invalid && 
-                                           (creditDetailsForm.get('overdueSince')?.dirty || 
-                                           creditDetailsForm.get('overdueSince')?.touched)" 
+                                <input type="date" class="form-control" id="overdueDate" placeholder="Overdue Since"
+                                       formControlName="overdueDate" max="{{ today | date:'yyyy-MM-dd' }}">
+                                <label for="overdueDate">Overdue Since (Date)<span class="text-danger">*</span></label>
+                                <div *ngIf="creditDetailsForm.get('overdueDate')?.invalid && 
+                                           (creditDetailsForm.get('overdueDate')?.dirty || 
+                                           creditDetailsForm.get('overdueDate')?.touched)" 
                                      class="text-danger">
                                     Please enter a valid date
                                 </div>

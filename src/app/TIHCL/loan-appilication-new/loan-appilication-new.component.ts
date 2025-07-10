@@ -26,7 +26,6 @@ export class LoanAppilicationNewComponent implements OnInit {
   enterPrenuerResponseData: any;
   constructor(private fb: FormBuilder, private toastrService: ToastrService,private authenticationService: AuthenticationService,
     private _commonService: CommonServiceService, private router: Router,) {
-        
       
    const today = new Date();
   today.setDate(today.getDate() - 1);
@@ -121,6 +120,22 @@ export class LoanAppilicationNewComponent implements OnInit {
         this.currentStep = 1; // Default to step 1 if no enterpreneur data is available
       }
   }
+    multiLevelItems:any = [
+    { 
+      name: 'Industrial Park',
+      children: [
+        { name: 'Option1' },
+        { name: 'Option2' },
+        { name: 'Option3' }
+      ]
+    },
+    { name: 'Others' }
+  ];
+onItemSelected(itemName: any) {
+    console.log('Selected item:', itemName);
+   this.applicationForm.get('industrialPark')?.patchValue(itemName)
+    // Handle the selected item
+  }
 
   udyamRegNumberValidator(control: AbstractControl): { [key: string]: boolean } | null {
     const value = control.value;
@@ -207,7 +222,7 @@ export class LoanAppilicationNewComponent implements OnInit {
   //     limitSanctioned: [''],
   //     outstandingAmount: [''],
   //     overdueAmount: [''],
-  //     overdueSince: ['']
+  //     overdueDate: ['']
   //   });
   // }
   get fCredit() {
@@ -220,7 +235,7 @@ export class LoanAppilicationNewComponent implements OnInit {
       limitSanctioned: ['', Validators.required],
       outstandingAmount: [false],
       overdueAmount: ['', ],
-      overdueSince: [, Validators.required]
+      overdueDate: [, Validators.required]
     });
   }
  submitCreditDetails(){   
@@ -239,7 +254,7 @@ export class LoanAppilicationNewComponent implements OnInit {
       limitSanctioned: [item.limitSanctioned, Validators.required],
       outstandingAmount: [item.outstandingAmount],
       overdueAmount: [item.overdueAmount],
-      overdueSince: [item.overdueSince, Validators.required]
+      overdueDate: [item.overdueDate, Validators.required]
     });
       const deliveryDetailsArray = this.applicationForm.get('creditFacilityDetails') as FormArray;
       const index = deliveryDetailsArray.controls.findIndex(control => control.value === item);
@@ -327,18 +342,20 @@ export class LoanAppilicationNewComponent implements OnInit {
     if (!this.existingStatus) {
       // this.applicationForm.get('requiredCreditLimit')?.reset();
         this.applicationForm.get('requiredCreditLimit')?.setValidators([Validators.required]);
+        this.applicationForm.get('requiredCreditLimit')?.patchValue(0);
         this.applicationForm.get('unitStatus')?.setValidators(null);
     } else {
       // this.creditDetails.clear();
       this.creditDetailsForm.reset();
+      this.applicationForm.get('requiredCreditLimit')?.patchValue(0);
       this.applicationForm.get('requiredCreditLimit')?.setValidators(null);
       this.applicationForm.get('creditFacilityDetails')?.patchValue(this.fb.array([]));
       // this.applicationForm.get('unitStatus')?.reset();
        this.applicationForm.get('unitStatus')?.setValidators([Validators.required]);
     }
     this.applicationForm.get('creditFacilityDetails')?.updateValueAndValidity()
-this.applicationForm.get('unitStatus')?.updateValueAndValidity()
-this.applicationForm.get('requiredCreditLimit')?.updateValueAndValidity()
+    this.applicationForm.get('unitStatus')?.updateValueAndValidity()
+    this.applicationForm.get('requiredCreditLimit')?.updateValueAndValidity()
 
     this.applicationForm?.updateValueAndValidity();
   }

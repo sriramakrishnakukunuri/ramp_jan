@@ -1,0 +1,124 @@
+/* dropdown.component.css */
+.dropdown {
+  position: relative;
+  display: inline-block;
+  width: 322px;
+  font-family: Arial, sans-serif;
+  user-select: none;
+}
+
+.dropdown-toggle {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+}
+
+.dropdown-toggle:hover {
+  border-color: #888;
+}
+
+.arrow {
+  font-size: 10px;
+  margin-left: 8px;
+  transition: transform 0.2s;
+}
+
+.dropdown.open .arrow {
+  transform: rotate(180deg);
+}
+
+/* Scrollable menu container */
+.dropdown-menu-container {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  max-height: 300px;
+  overflow-y: auto;
+  z-index: 1000;
+}
+
+/* Menu list - should NOT be scrollable */
+.dropdown-menu {
+    display: inline;
+  margin: 4px 0 0 0;
+  padding: 0;
+  list-style: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.dropdown-menu li {
+  padding: 8px 12px;
+  cursor: pointer;
+  position: relative;
+}
+
+.dropdown-menu li:not(.has-children):hover {
+  background-color: #f5f5f5;
+}
+
+.dropdown-menu li.disabled {
+  color: #999;
+  cursor: not-allowed;
+  background-color: transparent !important;
+}
+
+/* Key change: has-children position relative to viewport */
+.has-children {
+  position: static; /* Remove relative positioning */
+}
+
+.has-children > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Submenu positioned outside scrollable container */
+.submenu {
+  display: none;
+  position: fixed; /* Fixed positioning relative to viewport */
+  width: 200px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border: 1px solid #ccc;
+  border-radius: 0 4px 4px 4px;
+  background-color: white;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 1001; /* Above the dropdown */
+}
+
+.submenu.open {
+  display: block;
+}
+
+/* Position calculation for submenu */
+.has-children .submenu {
+  left: var(--submenu-left);
+  top: var(--submenu-top);
+}
+
+.submenu-arrow {
+  font-size: 10px;
+  margin-left: 8px;
+}
+
+.dropdown.disabled .dropdown-toggle {
+  background-color: #f5f5f5;
+  cursor: not-allowed;
+  color: #999;
+  border-color: #e0e0e0;
+}
+
+.dropdown.disabled .arrow {
+  color: #ccc;
+}
