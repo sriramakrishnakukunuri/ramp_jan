@@ -101,7 +101,7 @@
                                     <th>IFSC Code</th>
                                     <th>Mode of Payment</th>
                                     <!-- <th>Purpose</th> -->
-                                    <!-- <th>Upload Bill</th> -->
+                                    <th>Upload Bill/Invoice</th>
                                     <th class="text-center">Edit / Delete</th>
                                 </tr>
                             </thead>
@@ -119,6 +119,16 @@
                                     <td>{{item?.bankName}}</td>
                                     <td>{{item?.ifscCode}}</td>
                                     <td>{{item?.modeOfPayment}}</td>
+                                     <td>
+                                                 <ng-container *ngIf="item?.uploadBillUrl">
+                                                       <a (click)="showImagePreview(imageUrlDownloadPath,item?.uploadBillUrl)" rel="noopener noreferrer">
+                                                        <img src="{{imageUrlDownloadPath}}{{item?.uploadBillUrl}}" alt="Image 2" class="img-fluid" style="width: 50px; height: 50px;">
+                                                        </a>
+                                                  </ng-container>
+                                                <ng-container *ngIf="!item?.uploadBillUrl">
+                                                    <span class="text-danger">No Image</span>
+                                                </ng-container>
+                                         </td>
                                     <!-- <td>{{item?.purpose}}</td> -->
                                     <!-- <td>{{item?.uploadBillUrl}}</td> -->
                                     <td class="text-center">
@@ -482,6 +492,28 @@ aria-hidden="true">
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-lime-green" (click)="sessionSubmissionFinal()">Confirm</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="imagePreview" tabindex="-1" aria-labelledby="imagePreview" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header py-2">
+                <h6 class="modal-title text-white" id="addResourceLabel">Image Preview</h6>
+                
+                <a href="{{imagePreviewUrl}}" style="margin-left: 491px;" target="_blank" class="btn btn-secondary" *ngIf="imagePreviewUrl">Download</a>
+                
+                <button type="button" class="btn-close me-1" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <ng-container *ngIf="imagePreviewUrl">
+                    <img [src]="imagePreviewUrl" alt="Image Preview" class="img-fluid" style="width: 100%; height: auto;">
+                </ng-container>
+                <ng-container *ngIf="!imagePreviewUrl">
+                    <span class="text-danger">No Image Available</span>
+                </ng-container>                
+                
             </div>
         </div>
     </div>

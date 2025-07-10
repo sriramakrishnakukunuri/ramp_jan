@@ -129,6 +129,7 @@ export const APIS = {
         UpdateExpenditure:API_BASE_URL +`/program/expenditure/update/`,
         deleteBulkExpenditure:API_BASE_URL +`/bulk/expenditure/delete/`,
         downloadExpeditureData:API_BASE_URL +`/export-program-expenditure`,
+        saveRemarks:API_BASE_URL +`/save/remarks`
     },
     programSummary:{
         getProramData:API_BASE_URL +`/program/summary/`,

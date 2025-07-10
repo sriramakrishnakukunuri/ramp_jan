@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { CommonServiceService } from '@app/_services/common-service.service';
-import { APIS } from '@app/constants/constants';
+import { API_BASE_URL, APIS } from '@app/constants/constants';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import DataTable from 'datatables.net-dt';
@@ -166,7 +166,7 @@ export class BulkExpenditureComponent implements OnInit {
   }
   validateFileExtension(file: File): boolean {
     const allowedExtensions = ['jpg', 'jpeg', 'png','pdf'];
-    const fileExtension = file.name.split('.').pop()?.toLowerCase();
+    const fileExtension = file?.name?.split('.')?.pop()?.toLowerCase();
     return allowedExtensions.includes(fileExtension || '');
   }
   fileErrors:any=''
@@ -363,11 +363,28 @@ export class BulkExpenditureComponent implements OnInit {
           destroy: true, // Ensure reinitialization doesn't cause issues
         });
       }
+      imageUrlDownloadPath = `${API_BASE_URL}/program/file/download/`;
+imagePreviewUrl: any
+    showImagePreview(url: any, value: string) {
+    this.imagePreviewUrl = null; // Reset the image preview URL
+    this.imagePreviewUrl = url + value;
 
+    const editSessionModal = document.getElementById('imagePreview');
+    if (editSessionModal) {
+      const modalInstance = new bootstrap.Modal(editSessionModal);
+      modalInstance.show();
+    }
+  }
 //date converter
-convertToISOFormat(date: string): string {    
-  const [day, month, year] = date.split('-');
-  return `${year}-${month}-${day}`; // Convert to yyyy-MM-dd format
+convertToISOFormat(date: string): string {   
+  if(date) {
+    const [day, month, year] = date.split('-');
+    return `${year}-${month}-${day}`; // Convert to yyyy-MM-dd format
+  }
+  else{
+    return '';
+  }
+ 
 }
 getExpenseIdByName(expenseName: string): number | undefined {
   const expense = this.ExpenditureData.find((item:any) => item.expenseName === expenseName);
