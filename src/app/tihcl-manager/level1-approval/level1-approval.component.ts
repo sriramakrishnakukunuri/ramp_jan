@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import DataTable from 'datatables.net-dt';
 import 'datatables.net-buttons-dt';
 import 'datatables.net-responsive-dt';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 declare var bootstrap: any;
 declare var $: any;
 
@@ -17,6 +18,7 @@ declare var $: any;
 export class Level1ApprovalComponent implements OnInit {
 loginsessionDetails:any
 tableList:any=[]
+RejectForm!: FormGroup;
   currentPage = 1;
   pageSize = 10;
   totalItems = 100;
@@ -24,6 +26,7 @@ tableList:any=[]
   @ViewChild('successModal') successModal!: ElementRef;
    @ViewChild('ModalReject') ModalReject!: ElementRef;
  constructor(
+  private fb: FormBuilder,
      private toastrService: ToastrService,
      private _commonService: CommonServiceService,
      private router: Router,
@@ -31,8 +34,14 @@ tableList:any=[]
      this.loginsessionDetails = JSON.parse(sessionStorage.getItem('user') || '{}');    
    }
   ngOnInit(): void {
+    this.rejectDetail()
     this.getLevelOneData(1, 10);
   }
+   rejectDetail(): void {
+      this.RejectForm=this.fb.group({
+        remarks: ['', Validators.required],
+      });
+    }
    onPageChange(event: {page: number, pageSize: number}): void {
     this.currentPage = event.page;
     this.pageSize = event.pageSize;
@@ -56,7 +65,7 @@ tableList:any=[]
   ShowDataForApproval(item:any){
     this.approvalData=item
   }
-  Remarks:any
+  Remarks:any=''
   Approved(){
     // https://tihcl.com/tihcl/api/registrations/status/updation/TH647249?appStatus=MANAGER_APPROVAL_1&reasonForRejection=null
     this._commonService.updatedataByUrl(APIS.tihclManager.approveLevelOne+this.approvalData?.applicationNo+'?appStatus=MANAGER_APPROVAL_1&reasonForRejection=null').subscribe({
@@ -71,14 +80,18 @@ tableList:any=[]
     });
   }
   Reject(){
+    console.log(this.Remarks,this.RejectForm.value)
     // https://tihcl.com/tihcl/api/registrations/status/updation/TH647249?appStatus=REJECTED_MANAGER_APPROVAL_1&reasonForRejection=by%20some%20reason
-     this._commonService.updatedataByUrl(APIS.tihclManager.approveLevelOne+this.approvalData?.applicationNo+'?appStatus=REJECTED_MANAGER_APPROVAL_1&reasonForRejection='+this.Remarks).subscribe({
+     
+    this._commonService.updatedataByUrl(APIS.tihclManager.approveLevelOne+this.approvalData?.applicationNo+'?appStatus=REJECTED_MANAGER_APPROVAL_1&reasonForRejection='+this.RejectForm.value?.remarks).subscribe({
       next: (response) => {
+        this.RejectForm.reset()
         const modal = new bootstrap.Modal(this.ModalReject.nativeElement);
           modal.show(); 
      this.getLevelOneData(this.currentPage,  this.pageSize);
       },
       error: (error) => {
+        this.RejectForm.reset()
         console.error('Error submitting form:', error);
       }
     });

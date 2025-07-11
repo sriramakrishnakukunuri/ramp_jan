@@ -251,10 +251,11 @@
               <input type="text" class="form-control" id="product" placeholder="Type Of Product"
                 formControlName="typeOfProduct">
               <label for="product">Type Of Product<span class="text-danger">*</span></label>
-              <div *ngIf="assessmentForm.get('typeOfProduct')?.invalid && assessmentForm.get('typeOfProduct')?.touched"
+              <div *ngIf="assessmentForm.get('typeOfProduct')?.invalid && assessmentForm.get('typeOfProduct')?.touched && !assessmentForm.get('typeOfProduct')?.hasError('pattern')" 
                 class="text-danger small">
-                Product type is required
+                Type Of Product is required
               </div>
+              <div *ngIf="assessmentForm.get('typeOfProduct')?.hasError('pattern')" class="text-danger" > Type Of Product Should be Characters Only</div>
             </div>
           </div>
         </div>
@@ -264,10 +265,12 @@
               <input type="text" class="form-control" id="whereProduct" placeholder="Where is the Product Used"
                 formControlName="productUsage">
               <label for="whereProduct">Where is the Product Used?<span class="text-danger">*</span></label>
-              <div *ngIf="assessmentForm.get('productUsage')?.invalid && assessmentForm.get('productUsage')?.touched"
+              <div *ngIf="assessmentForm.get('productUsage')?.invalid && assessmentForm.get('productUsage')?.touched && !assessmentForm.get('productUsage')?.hasError('pattern')" 
                 class="text-danger small">
                 Product usage information is required
               </div>
+              <div *ngIf="assessmentForm.get('productUsage')?.hasError('pattern')" class="text-danger" > Product usage Should be Characters Only</div>
+
             </div>
           </div>
         </div>
@@ -280,10 +283,11 @@
           <div>
             <textarea class="form-control" rows="3" placeholder="Write here" formControlName="problemsFaced"></textarea>
           </div>
-           <div *ngIf="assessmentForm.get('problemsFaced')?.invalid && assessmentForm.get('problemsFaced')?.touched"
+           <div *ngIf="assessmentForm.get('problemsFaced')?.invalid && assessmentForm.get('problemsFaced')?.touched && !assessmentForm.get('problemsFaced')?.hasError('pattern')"
                 class="text-danger small">
                 problem is required
               </div>
+               <div *ngIf="assessmentForm.get('problemsFaced')?.hasError('pattern')" class="text-danger" >problem Should be Characters and Numbers</div>
         </div>
         <div class="mb-3">
           <label class="fs-md fw-600 mb-1">What is the expected solutions?<span class="text-danger">*</span></label>
@@ -291,10 +295,11 @@
             <textarea class="form-control" rows="3" placeholder="Write here"
               formControlName="expectedSolution"></textarea>
           </div>
-           <div *ngIf="assessmentForm.get('expectedSolution')?.invalid && assessmentForm.get('expectedSolution')?.touched"
+           <div *ngIf="assessmentForm.get('expectedSolution')?.invalid && assessmentForm.get('expectedSolution')?.touched && !assessmentForm.get('expectedSolution')?.hasError('pattern')" 
                 class="text-danger small">
                 Expected solutions is required
               </div>
+                <div *ngIf="assessmentForm.get('expectedSolution')?.hasError('pattern')" class="text-danger" >Expected solutions Should be Characters and Numbers</div>
         </div>
 
         <!-- Stress Score -->
@@ -356,10 +361,15 @@
 
         <!-- Observations -->
         <div class="mb-3">
-          <label class="fs-md fw-600 mb-1">Observations</label>
+          <label class="fs-md fw-600 mb-1">Observations<span class="text-danger">*</span></label>
           <div>
-            <textarea class="form-control" rows="3" placeholder="Write here" formControlName="observations"></textarea>
+            <textarea class="form-control" rows="3" placeholder="Write here" name="observations" formControlName="observations"></textarea>
           </div>
+          <div *ngIf="assessmentForm.get('observations')?.invalid && assessmentForm.get('observations')?.touched && !assessmentForm.get('observations')?.hasError('pattern')"
+              class="text-danger small">
+             Observations is required
+            </div>
+            <div *ngIf="assessmentForm.get('observations')?.hasError('pattern')" class="text-danger" >Observations Should be Characters and Numbers</div>
         </div>
 
         <!-- Status Update -->
@@ -367,12 +377,12 @@
           <label class="fs-md fw-600 mb-1">Status Update</label>
           <div class="mb-2">
             <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" formControlName="statusUpdate" id="consider"
+              <input class="form-check-input" type="radio" name="statusUpdate"  formControlName="statusUpdate" id="consider"
                 value="consider">
               <label class="form-check-label fs-md" for="consider">Application can be considered</label>
             </div>
             <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" formControlName="statusUpdate" id="notconsider"
+              <input class="form-check-input" type="radio" name="statusUpdate" formControlName="statusUpdate" id="notconsider"
                 value="notconsider">
               <label class="form-check-label fs-md" for="notconsider">Application cannot be considered</label>
             </div>
@@ -529,13 +539,14 @@
               formControlName="enterpriseName">
             <label for="enterpriseName">Enterprise Name</label>
             <div
-              *ngIf="updateFormFields.get('enterpriseName')?.invalid && updateFormFields.get('enterpriseName')?.touched && !updateFormFields.get('enterpriseName')?.hasError('minlength')"
+              *ngIf="updateFormFields.get('enterpriseName')?.invalid && updateFormFields.get('enterpriseName')?.touched && !updateFormFields.get('enterpriseName')?.hasError('minlength') && !updateFormFields.get('enterpriseName')?.hasError('pattern')"
               class="text-danger small">
               Enterprise name is required
             </div>
-            <div *ngIf="updateFormFields.get('enterpriseName')?.hasError('minlength')" class="text-danger">
+            <div *ngIf="updateFormFields.get('enterpriseName')?.hasError('minlength') && !updateFormFields.get('enterpriseName')?.hasError('pattern')" class="text-danger">
                 Enterprise name must be at least 3 characters
             </div>
+            <div *ngIf="updateFormFields.get('enterpriseName')?.hasError('pattern')" class="text-danger" >  Enterprise name Should be Characters and Numeric</div>
                               
           </div>
           <div class="form-floating mb-3" *ngIf="updateby === 'udyamRegNumber'">
@@ -560,8 +571,13 @@
             </select>
           </div>
           <div class="form-floating mb-3" *ngIf="updateby === 'natureOfActivity'">
-            <input type="text" class="form-control" id="natureOfActivity" placeholder="Nature of Activity"
-              formControlName="natureOfActivity">
+            <select class="form-select" id="natureOfActivity" formControlName="natureOfActivity">
+              <option value="" disabled selected>Select Nature of Activity</option>
+              <option value="Manufacturing">Manufacturing</option>
+              <option value="Services">Services</option>
+              <option value="Trading">Trading</option>
+            </select>
+           
             <label for="natureOfActivity">Nature of Activity</label>
             <div
               *ngIf="updateFormFields.get('natureOfActivity')?.invalid && updateFormFields.get('natureOfActivity')?.touched"
@@ -635,8 +651,8 @@
             </div>
           </ng-container>
           <div class="modal-footer">
-            <button type="button" class="btn btn-primary" id="modal-btn-si" 
-              (click)="updateForm()">update</button>
+            <button type="button" class="btn btn-primary" id="modal-btn-si"  
+              (click)="updateForm()" [ngClass]="{'isDisabled':updateFormFields.invalid}">update</button>
           </div>
         </form>
       </div>

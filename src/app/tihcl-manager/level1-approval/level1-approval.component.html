@@ -296,17 +296,17 @@
                 <button type="button" class="btn-close text-white fs-4 p-0" data-bs-dismiss="modal" aria-label="Close"><span class="bi bi-x"></span></button>
               </div>
               <div class="modal-body">
-                  <form>
+                  <form [formGroup]="RejectForm">
                     <div class="row">
                         <div class="col-12 mb-3">
                             <label class="fs-md fw-600 mb-1">Remarks</label>
-                            <textarea class="form-control" rows="5" [(ngModel)]="Remarks" placeholder="Write here"></textarea>
+                            <textarea class="form-control" rows="5" formControlName="remarks"   name ="remarks" placeholder="Write here"></textarea>
                         </div>
                     </div>
                   </form>
 
                   <div class="text-end">
-                      <button type="button" class="btn btn-primary" (click)="Reject()" [ngClass]="{'isDisabled':!Remarks}" data-bs-dismiss="modal">Submit</button>
+                      <button type="button" class="btn btn-primary" (click)="Reject()" [ngClass]="{'isDisabled':RejectForm.invalid}"  data-bs-dismiss="modal">Submit</button>
                   </div>
               </div>
           </div>

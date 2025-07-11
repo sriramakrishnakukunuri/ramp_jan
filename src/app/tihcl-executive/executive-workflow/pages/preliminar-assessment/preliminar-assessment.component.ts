@@ -220,11 +220,12 @@ export class PreliminarAssessmentComponent implements OnInit {
 applicationData:any
   constructor(private fb: FormBuilder,private toastrService: ToastrService,
         private _commonService: CommonServiceService,) {
+           const applicationData = JSON.parse(sessionStorage.getItem('ApplicationData') || '{}');
+           this.applicationData=applicationData
            this.initializeForm();
            this.createCreditDetail()
            this.getAllDistricts()
-          const applicationData = JSON.parse(sessionStorage.getItem('ApplicationData') || '{}');
-          this.applicationData=applicationData
+         
           this.getDtataByUrl(APIS.tihclExecutive.registerData + applicationData.registrationUsageId);
    
   }
@@ -311,20 +312,20 @@ applicationData:any
   }
   initializeForm() {
     this.updateFormFields = this.fb.group({
-        enterpriseName: ['', [Validators.required, Validators.pattern(/^[a-zA-Z]+(\s[a-zA-Z]+)*$/),Validators.minLength(3)]],
+        enterpriseName: ['', [Validators.required,  Validators.pattern(/^(?=.*[a-zA-Z])[a-zA-Z0-9 .]+$/),Validators.minLength(3)]],
        udyamRegNumber: ['', [Validators.required, this.udyamRegNumberValidator]],
-      enterpriseCategory: ['Micro', Validators.required],
-      natureOfActivity: ['Manufacturing', Validators.required],
+      enterpriseCategory: ['', Validators.required],
+      natureOfActivity: ['', Validators.required],
       
       // Factory location
-      district: ['Ranga Reddy', Validators.required],
-      mandal: ['Shadnagar', Validators.required],
+      district: ['', Validators.required],
+      mandal: ['', Validators.required],
       existingCredit:[''],
       address: ['Sr.No. 528, Elikatta Industrial Area, Shadnagar, Telangana 509410', Validators.required],
     } );
     this.assessmentForm = this.fb.group({
       // Basic information
-      enterpriseName: ['', Validators.required],
+      enterpriseName: ['', [Validators.required]],
       udyamRegNumber: ['', Validators.required],
       enterpriseCategory: ['', Validators.required],
       natureOfActivity: ['', Validators.required],
@@ -339,17 +340,17 @@ applicationData:any
       
       // Additional details
       gstNumber: ['',this.gstValidator()],
-      typeOfProduct: ['', Validators.required],
-      productUsage: ['', Validators.required],
+      typeOfProduct: ['', [Validators.required, Validators.pattern(/^[a-zA-Z .]+$/)]],
+      productUsage: ['', [Validators.required, Validators.pattern(/^[a-zA-Z .]+$/)]],
       
       // Problems and solutions
-      problemsFaced: ['',Validators.required],
-      expectedSolution: ['',Validators.required],
+      problemsFaced: ['',[Validators.required, Validators.pattern(/^(?=.*[a-zA-Z])[a-zA-Z0-9 .]+$/)]],
+      expectedSolution: ['',[Validators.required, Validators.pattern(/^(?=.*[a-zA-Z])[a-zA-Z0-9 .]+$/)]],
       
       // Stress scores (dynamically added)
       
       // Observations and status
-      observations: [''],
+      observations: ['',[Validators.required, Validators.pattern(/^(?=.*[a-zA-Z])[a-zA-Z0-9 .]+$/)]],
       statusUpdate: ['', Validators.required],
     });
     for (let i = 1; i <= 10; i++) {
@@ -469,7 +470,7 @@ applicationData:any
   onSubmit() {
   
   
-    console.log(this.assessmentForm?.value)
+    console.log(this.assessmentForm?.value,this.applicationData)
      if (this.assessmentForm.valid) {
         const riskAssessment = this.generateRiskResponse();
     const totalScore=this.calculateScore1()
@@ -533,9 +534,15 @@ applicationData:any
 updateby:any
 openEachModal(item:any){
   this.updateby = item;
-
+   Object.keys(this.updateFormFields.controls).forEach(key => {
+      const control = this.updateFormFields.get(key);
+      control?.clearValidators();
+      control?.updateValueAndValidity();
+    });
    if(item === 'factoryLocation'){
-    
+    this.updateFormFields.get('district')?.setValidators(Validators.required)
+     this.updateFormFields.get('mandal')?.setValidators(Validators.required)
+      this.updateFormFields.get('mandal')?.setValidators(Validators.required)
     this.GetMandalByDistrict(this.assessmentForm.get('district')?.value);
       const modal = new bootstrap.Modal(this.UpdateLoanModal.nativeElement, {
       backdrop: false // Disable default backdrop
@@ -548,21 +555,38 @@ openEachModal(item:any){
     });
    }
    else if(item === 'existingCredit'){
+    this.updateFormFields.get('existingCredit')?.setValidators(Validators.required)
     this.updateFormFields.get('existingCredit')?.patchValue(this.assessmentForm.get('existingCredit')?.value || false);
       const modal = new bootstrap.Modal(this.UpdateLoanModal.nativeElement, {
      backdrop: false // Disable default backdrop
     });
-modal.show()
+      modal.show()
    }
   else{
+    if(item=='udyamRegNumber'){
+       this.updateFormFields.get('udyamRegNumber')?.setValidators([Validators.required, this.udyamRegNumberValidator])
+    }
+    else if(item=='enterpriseName'){
+       this.updateFormFields.get(item)?.setValidators([Validators.required, Validators.pattern(/^(?=.*[a-zA-Z])[a-zA-Z0-9 .]+$/),Validators.minLength(3)])
+    }
+    else{
+       this.updateFormFields.get(item)?.setValidators([Validators.required])
+    }
+    
+     
     const modal = new bootstrap.Modal(this.UpdateLoanModal.nativeElement, {
   backdrop: false // Disable default backdrop
 });
 modal.show()
   }
+
    this.updateFormFields.patchValue({
     [item]: this.assessmentForm.get(item)?.value
   });
+   Object.keys(this.updateFormFields.controls).forEach(key => {
+      const control = this.updateFormFields.get(key);
+      control?.updateValueAndValidity();
+    });
 
 }
 

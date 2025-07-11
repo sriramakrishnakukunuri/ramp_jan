@@ -33,7 +33,7 @@ export class LoanAppilicationNewComponent implements OnInit {
 
     this.applicationForm = this.fb.group({
       // Step 1 - Registration
-      enterpriseName: ['', [Validators.required, Validators.pattern(/^[a-zA-Z]+(\s[a-zA-Z]+)*$/),Validators.minLength(3)]],
+      enterpriseName: ['', [Validators.required, Validators.pattern(/^(?=.*[a-zA-Z])[a-zA-Z0-9]+$/),Validators.minLength(3)]],
       promoterName: ['', [Validators.required, Validators.pattern(/^[a-zA-Z]+(\s[a-zA-Z]+(.))*$/),Validators.minLength(3)]],
       constitution: ['', Validators.required],
       productionDate: ['', Validators.required],

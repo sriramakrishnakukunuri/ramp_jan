@@ -16,7 +16,7 @@ applicationData:any
       private _commonService: CommonServiceService,) { 
     const applicationData = JSON.parse(sessionStorage.getItem('ApplicationData') || '{}');
     this.applicationData=applicationData
-    this.getDtataByUrl(APIS.tihclExecutive.registerData + applicationData.registrationUsageId);
+    this.getDtataByUrl(APIS.tihclExecutive.registerData + (applicationData.registrationUsageId? applicationData?.registrationUsageId:applicationData?.registrationId))
   }
 
   ngOnInit(): void {
