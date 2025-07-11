@@ -1,343 +1,709 @@
+
 <fieldset>
-                        <div class="card border rounded-2 shadow-none mb-3">
-                          <div class="card-header bg-theme text-white">
-                              <h6 class="mb-0">Unit Visit</h6>
-                          </div>
-                          <div class="card-body">
-                            <div class="row">
-                              <div class="col-12 col-sm-12 col-md-4 col-lg-3">
-                                <div class="form-floating mb-3">
-                                  <input type="text" class="form-control" id="visitedInput" placeholder="">
-                                  <label for="visitedInput">Visited by </label>
-                                </div>
-                              </div>
-                              <div class="col-12 col-sm-12 col-md-4 col-lg-3">
-                                <div class="form-floating mb-3">
-                                  <input type="datetime" class="form-control" id="dtInput" placeholder="">
-                                  <label for="dtInput">Date & Time of Visit </label>
-                                </div>
-                              </div>
-                              <div class="col-12 col-sm-12 col-md-4 col-lg-3">
-                                <div class="form-floating mb-3">
-                                  <input type="text" class="form-control" id="designationInput" placeholder="">
-                                  <label for="designationInput">Name of the person met & Designation </label>
-                                </div>
-                              </div>
-                              <div class="col-12 col-sm-12 col-md-4 col-lg-3">
-                                <div class="form-floating mb-3">
-                                  <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
-                                    <option selected>Select Land Details </option>
-                                    <option value="1">Owned</option>
-                                    <option value="2">Leased</option>
-                                    <option value="3">Other </option>
-                                  </select>
-                                  <label for="floatingSelect">Land Details </label>
-                                </div>
-                              </div>
-                              <div class="col-12 col-sm-12 col-md-4 col-lg-3">
-                                <div class="form-floating mb-3 mb-lg-0">
-                                  <input type="text" class="form-control" id="factoryAddress" placeholder="">
-                                  <label for="factoryAddress">Factory Address</label>
-                                </div>
-                              </div>
-                              <div class="col-12 col-sm-12 col-md-4 col-lg-3">
-                                <div class="form-check">
-                                  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                  <label class="form-check-label fs-md" for="flexCheckDefault">
-                                    Same as factory address
-                                  </label>
-                                </div>
-                              </div>
-                              <div class="col-12 col-sm-12 col-md-4 col-lg-3">
-                                <div class="form-floating mb-3 mb-lg-0">
-                                  <input type="text" class="form-control" id="registerAddress" placeholder="">
-                                  <label for="registerAddress">Register Address</label>
-                                </div>
-                              </div>
-                            </div>
+  <form [formGroup]="unitVisitForm" (ngSubmit)="onSubmit()">
+    <div class="card border rounded-2 shadow-none mb-3">
+      <div class="card-header bg-theme text-white">
+        <h6 class="mb-0">Unit Visit</h6>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <!-- Visited By -->
+          <div class="col-12 col-sm-12 col-md-4 col-lg-3">
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="visitedInput" name="visitedBy" placeholder="" formControlName="visitedBy">
+              <label for="visitedInput">Visited by</label>
+              <div *ngIf="unitVisitForm.get('visitedBy')?.invalid && (unitVisitForm.get('visitedBy')?.dirty || unitVisitForm.get('visitedBy')?.touched)"
+                   class="text-danger">
+                Visited by is required
+              </div>
+            </div>
+          </div>
 
-                            <hr>
+          <!-- Date of Visit -->
+          <div class="col-12 col-sm-12 col-md-4 col-lg-3">
+            <div class="form-floating mb-3">
+              <input type="date" class="form-control" id="dateInput" name="dateOfVisit" placeholder="" formControlName="dateOfVisit">
+              <label for="dateInput">Date of Visit</label>
+              <div *ngIf="unitVisitForm.get('dateOfVisit')?.invalid && (unitVisitForm.get('dateOfVisit')?.dirty || unitVisitForm.get('dateOfVisit')?.touched)"
+                   class="text-danger">
+                Date of Visit is required
+              </div>
+            </div>
+          </div>
 
-                            <div>
-                              <div class="d-flex align-items-center justify-content-between mb-3">
-                                <div>
-                                  <h6 class="fw-600">Factory Shed & Building details</h6>
-                                </div>
-                                <div>
-                                  <button type="button" data-bs-toggle="modal" data-bs-target="#addmachinary" class="btn btn-primary btn-sm"><span class="bi bi-plus-lg"></span> Add</button>
-                                </div>
-                              </div>
-                              <div class="table-responsive">
-                                <table class="table table-bordered fs-md">
-                                  <thead>
-                                    <tr>
-                                      <th>S.No</th>
-                                      <th>Types of machine</th>
-                                      <th>Purpose</th>
-                                      <th>No. of machines</th>
-                                      <th>Cost of machine purchased</th>
-                                      <th>Current condition</th>
-                                      <th>Value of machinery</th>
-                                    </tr>
-                                  </thead>
-                                  <tbody>
-                                    <tr>
-                                      <td>1</td>
-                                      <td>Machine 1</td>
-                                      <td>Purpose 1</td>
-                                      <td>3</td>
-                                      <td>400000</td>
-                                      <td>Better</td>
-                                      <td>10</td>
-                                    </tr>
-                                  </tbody>
-                                </table>
-                              </div>
-                              <div class="row">
-                                <div class="col-12 col-sm-6 col-md-4 col-lg-4">
-                                  <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="upgradation">
-                                    <label class="form-check-label fs-md" for="upgradation">
-                                      Is upgradation required?
-                                    </label>
-                                  </div>
-                                </div>
-                                <div class="col-12 col-sm-6 col-md-4 col-lg-4">
-                                  <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="upgradation">
-                                    <label class="form-check-label fs-md" for="upgradation">
-                                      Is machinery properly aligned?
-                                    </label>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
+          <!-- Time of Visit -->
+          <div class="col-12 col-sm-12 col-md-4 col-lg-3">
+            <div class="form-floating mb-3">
+              <input type="time" class="form-control" id="timeInput" name="timeOfVisit" placeholder="" formControlName="timeOfVisit">
+              <label for="timeInput">Time of Visit</label>
+              <div *ngIf="unitVisitForm.get('timeOfVisit')?.invalid && (unitVisitForm.get('timeOfVisit')?.dirty || unitVisitForm.get('timeOfVisit')?.touched)"
+                   class="text-danger">
+               Time of Visit is required
+              </div>
+            </div>
+          </div>
 
-                            <hr>
+          <!-- Name of the person met -->
+          <div class="col-12 col-sm-12 col-md-4 col-lg-3">
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="nameInput" name="nameOfThePerson" placeholder="" formControlName="nameOfThePerson">
+              <label for="nameInput">Name of the person met</label>
+              <div *ngIf="unitVisitForm.get('nameOfThePerson')?.invalid && (unitVisitForm.get('nameOfThePerson')?.dirty || unitVisitForm.get('nameOfThePerson')?.touched)"
+                   class="text-danger">
+                Name of the person met is required
+              </div>
+            </div>
+          </div>
 
-                            <div class="row mb-3">
-                              <div class="col-12 col-sm-6 col-md-4 col-lg-4">
-                                <h6 class="fw-600 fs-md">Company Name Board</h6>
-                                <div class="form-check form-check-inline">
-                                  <input class="form-check-input" type="radio" name="nameBoard" id="boardYes" value="">
-                                  <label class="form-check-label fs-md" for="boardYes">Yes</label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                  <input class="form-check-input" type="radio" name="nameBoard" id="boardNo" value="">
-                                  <label class="form-check-label fs-md" for="boardNo">No</label>
-                                </div>
-                              </div>
-                              <div class="col-12 col-sm-6 col-md-4 col-lg-4">
-                                <h6 class="fw-600 fs-md">Financed Bank Name Board</h6>
-                                <div class="form-check form-check-inline">
-                                  <input class="form-check-input" type="radio" name="nameBoard" id="boardYes1" value="">
-                                  <label class="form-check-label fs-md" for="boardYes1">Yes</label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                  <input class="form-check-input" type="radio" name="nameBoard" id="boardNo1" value="">
-                                  <label class="form-check-label fs-md" for="boardNo1">No</label>
-                                </div>
-                              </div>
-                            </div>
+          <!-- Designation -->
+          <div class="col-12 col-sm-12 col-md-4 col-lg-3">
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="designationInput" name="designation" placeholder="" formControlName="designation">
+              <label for="designationInput">Designation</label>
+              <div *ngIf="unitVisitForm.get('designation')?.invalid && (unitVisitForm.get('designation')?.dirty || unitVisitForm.get('designation')?.touched)"
+                   class="text-danger">
+                Designation is required
+              </div>
+            </div>
+          </div>
 
-                            <hr>
+          <!-- Land Details -->
+          <div class="col-12 col-sm-12 col-md-4 col-lg-3">
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="landDetails" name="selectLandDetails" placeholder="" formControlName="selectLandDetails">
+              <label for="landDetails">Land Details</label>
+              <div *ngIf="unitVisitForm.get('selectLandDetails')?.invalid && (unitVisitForm.get('selectLandDetails')?.dirty || unitVisitForm.get('selectLandDetails')?.touched)"
+                   class="text-danger">
+                Land Details is required
+              </div>
+            </div>
+          </div>
 
-                            <div>
-                              <h6 class="fs-md">Staff at the time of Visit </h6>
-                              <div class="row">
-                                <div class="col-12 col-sm-6 col-md-4 col-lg-4">
-                                  <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="officeStaff" placeholder="">
-                                    <label for="officeStaff">Office Staff</label>
-                                  </div>
-                                </div>
-                                <div class="col-12 col-sm-6 col-md-4 col-lg-4">
-                                  <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="factoryWorkers" placeholder="">
-                                    <label for="factoryWorkers">Factory Workers</label>
-                                  </div>
-                                </div>
-                                <div class="col-12 col-sm-6 col-md-4 col-lg-4">
-                                  <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="temporaryWorkers" placeholder="">
-                                    <label for="temporaryWorkers">Temporary Workers</label>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
+          <!-- Factory Address -->
+          <div class="col-12 col-sm-12 col-md-4 col-lg-3">
+            <div class="form-floating mb-3 mb-lg-0">
+              <input type="text" class="form-control" id="factoryAddress" name="factoryAddress" placeholder="" formControlName="factoryAddress">
+              <label for="factoryAddress">Factory Address</label>
+              <div *ngIf="unitVisitForm.get('factoryAddress')?.invalid && (unitVisitForm.get('factoryAddress')?.dirty || unitVisitForm.get('factoryAddress')?.touched)"
+                   class="text-danger">
+                Factory Address is required
+              </div>
+            </div>
+          </div>
 
-                            <hr>
+          <!-- Same as factory address -->
+          <div class="col-12 col-sm-12 col-md-4 col-lg-3">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="flexCheckDefault" name="isSameAsFactoryAddress" formControlName="isSameAsFactoryAddress">
+              <label class="form-check-label fs-md" for="flexCheckDefault">
+                Same as factory address
+              </label>
+            </div>
+          </div>
 
-                            <div class="row">
-                              <div class="col-12 col-sm-6 col-md-4 col-lg-4">
-                                <div class="mb-3">
-                                  <label class="d-block fw-600 fs-md">Employees Attendance Register</label>
-                                  <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="register" id="registerYes" value="">
-                                    <label class="form-check-label fs-md" for="registerYes">Yes</label>
-                                  </div>
-                                  <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="register" id="registerNo" value="">
-                                    <label class="form-check-label fs-md" for="registerNo">No</label>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="col-12 col-sm-6 col-md-4 col-lg-4">
-                                <div class="form-floating mb-3">
-                                  <input type="text" class="form-control" id="inconsistencies" placeholder="">
-                                  <label for="inconsistencies">Are there any inconsistencies with no. of people working?</label>
-                                </div>
-                              </div>
-                              <div class="col-12 col-sm-6 col-md-4 col-lg-4">
-                                <div class="form-floating mb-3">
-                                  <input type="text" class="form-control" id="sold" placeholder="">
-                                  <label for="sold">What are the products manufactured and sold</label>
-                                </div>
-                              </div>
-                              <div class="col-12 col-sm-6 col-md-4 col-lg-4">
-                                <div class="form-floating mb-3">
-                                  <input type="text" class="form-control" id="seasonal" placeholder="">
-                                  <label for="seasonal">Whether production is seasonal or throughout the year?</label>
-                                </div>
-                              </div>
-                              <div class="col-12 col-sm-6 col-md-4 col-lg-4">
-                                <div class="form-floating mb-3">
-                                  <input type="text" class="form-control" id="shifts" placeholder="">
-                                  <label for="shifts">No. of Shifts </label>
-                                </div>
-                              </div>
-                              <div class="col-12 col-sm-6 col-md-4 col-lg-4">
-                                <h6 class="fw-600 fs-md">Are stocks stored property</h6>
-                                <div class="form-check form-check-inline">
-                                  <input class="form-check-input" type="radio" name="stocks" id="stocksYes" value="">
-                                  <label class="form-check-label fs-md" for="stocksYes">Yes</label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                  <input class="form-check-input" type="radio" name="stocks" id="stocksNo" value="">
-                                  <label class="form-check-label fs-md" for="stocksNo">No</label>
-                                </div>
-                              </div>
-                              <div class="col-12 col-sm-6 col-md-4 col-lg-4">
-                                <h6 class="fw-600 fs-md">Does unit have adequate storage capacity?</h6>
-                                <div class="form-check form-check-inline">
-                                  <input class="form-check-input" type="radio" name="capacity" id="capacityYes" value="">
-                                  <label class="form-check-label fs-md" for="capacityYes">Yes</label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                  <input class="form-check-input" type="radio" name="capacity" id="capacityNo" value="">
-                                  <label class="form-check-label fs-md" for="capacityNo">No</label>
-                                </div>
-                              </div>
-                            </div>
+          <!-- Register Address -->
+          <div class="col-12 col-sm-12 col-md-4 col-lg-3">
+            <div class="form-floating mb-3 mb-lg-0">
+              <input type="text" class="form-control" id="registerAddress" name="registerAddress" placeholder="" formControlName="registerAddress">
+              <label for="registerAddress">Register Address</label>
+              <div *ngIf="unitVisitForm.get('registerAddress')?.invalid && (unitVisitForm.get('registerAddress')?.dirty || unitVisitForm.get('registerAddress')?.touched)"
+                   class="text-danger">
+                Register Address is required
+              </div>
+            </div>
+          </div>
+        </div>
 
-                            <hr>
+        <hr>
 
-                            <div>
-                              <label class="fs-md fw-600">Stocks Record</label>
-                              <div class="row">
-                                <div class="col-12 col-sm-6 col-md-4 col-lg-4">
-                                  <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="stocks1" placeholder="">
-                                    <label for="stocks1">Whether Stocks register is maintained?</label>
-                                  </div>
-                                </div>
-                                <div class="col-12 col-sm-6 col-md-4 col-lg-4">
-                                  <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="stocks2" placeholder="">
-                                    <label for="stocks2">Is it up to date</label>
-                                  </div>
-                                </div>
-                                <div class="col-12 col-sm-6 col-md-4 col-lg-4">
-                                  <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="stocks3" placeholder="">
-                                    <label for="stocks3">Value of the stock as(In Rs)</label>
-                                  </div>
-                                </div>
-                                <div class="col-12 col-sm-6 col-md-4 col-lg-4">
-                                  <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="stocks4" placeholder="">
-                                    <label for="stocks4">Raw material</label>
-                                  </div>
-                                </div>
-                                <div class="col-12 col-sm-6 col-md-4 col-lg-4">
-                                  <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="stocks5" placeholder="">
-                                    <label for="stocks5">Work in Progress</label>
-                                  </div>
-                                </div>
-                                <div class="col-12 col-sm-6 col-md-4 col-lg-4">
-                                  <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="stocks5" placeholder="">
-                                    <label for="stocks5">Finished Goods</label>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
+        <!-- Factory Shed & Building details -->
+        <div>
+          <div class="d-flex align-items-center justify-content-between mb-3">
+            <div>
+              <h6 class="fw-600">Factory Shed & Building details</h6>
+            </div>
+            <div>
+              <button type="button" data-bs-toggle="modal" data-bs-target="#addmachinary" class="btn btn-primary btn-sm">
+                <span class="bi bi-plus-lg"></span> Add
+              </button>
+            </div>
+          </div>
+            <div class="table-responsive">
+            <table class="table table-bordered fs-md">
+              <thead>
+                <tr>
+                  <th>S.No</th>
+                  <th>Actions</th>
+                  <th>Types of machine</th>
+                  <th>Purpose</th>
+                  <th>No. of machines</th>
+                  <th>Cost of machine purchased</th>
+                  <th>Current condition</th>
+                  <th>Value of machinery</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr *ngFor="let item of this.unitVisitForm.value?.factoryDetails;let i=index">
+                  <td>{{i + 1}}</td>
+                    <td class="text-center">
+                    <button type="button" class="btn btn-default text-danger btn-sm"
+                      (click)="editCreditDetails(item)"><span class="bi bi-pencil"></span></button>
+                    <button type="button" class="btn btn-default text-danger btn-sm"
+                      (click)="deleteCreditDetail(i)"><span class="bi bi-trash"></span></button>
+                  </td>
+                  <td>
+                    {{item?.typesOfMachine}}
+                  </td>
+                  <td>
+                     {{item?.purpose}}
+                  </td>
+                  <td>
+                     {{item?.noOfMachines}}
+                  </td>
+                  <td>
+                     {{item?.costOfMachinePurchased}}
+                  </td>
+                  <td>
+                     {{item?.currentCondition}}
+                  </td>
+                  <td>
+                     {{item?.valueOfMachinery}}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="row">
+            <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="upgradation" name="isUpgradationRequired" formControlName="isUpgradationRequired">
+                <label class="form-check-label fs-md" for="upgradation">
+                  Is upgradation required?
+                </label>
+              </div>
+            </div>
+            <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="aligned" name="isMachineryProperlyAligned" formControlName="isMachineryProperlyAligned">
+                <label class="form-check-label fs-md" for="aligned">
+                  Is machinery properly aligned?
+                </label>
+                <div *ngIf="unitVisitForm.get('isMachineryProperlyAligned')?.invalid && (unitVisitForm.get('isMachineryProperlyAligned')?.dirty || unitVisitForm.get('isMachineryProperlyAligned')?.touched)"
+                     class="text-danger">
+                  Is machinery properly aligned is required
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
-                            <hr>
+        <hr>
 
-                            <div class="row">
-                              <div class="col-12 col-sm-6 col-md-4 col-lg-4">
-                                <div class="form-floating mb-3">
-                                  <input type="text" class="form-control" id="max" placeholder="">
-                                  <label for="max">Maximum production in units </label>
-                                </div>
-                              </div>
-                              <div class="col-12 col-sm-6 col-md-4 col-lg-4">
-                                <div class="form-floating mb-3">
-                                  <input type="text" class="form-control" id="min" placeholder="">
-                                  <label for="min">Minimum production in units </label>
-                                </div>
-                              </div>
-                              <div class="col-12 col-sm-6 col-md-4 col-lg-4">
-                                <div class="form-floating mb-3">
-                                  <input type="text" class="form-control" id="current" placeholder="">
-                                  <label for="current">Current production in units </label>
-                                </div>
-                              </div>
-                            </div>
+        <!-- Company Name Board -->
+        <div class="row mb-3">
+          <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+            <h6 class="fw-600 fs-md">Company Name Board</h6>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="isCompanyNameBoard" id="boardYes" value="true" formControlName="isCompanyNameBoard">
+              <label class="form-check-label fs-md" for="boardYes">Yes</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="isCompanyNameBoard" id="boardNo" value="false" formControlName="isCompanyNameBoard">
+              <label class="form-check-label fs-md" for="boardNo">No</label>
+            </div>
+            <div *ngIf="unitVisitForm.get('isCompanyNameBoard')?.invalid && (unitVisitForm.get('isCompanyNameBoard')?.dirty || unitVisitForm.get('isCompanyNameBoard')?.touched)"
+                 class="text-danger">
+              Company Name Board is required
+            </div>
+          </div>
+          
+          <!-- Financed Bank Name Board -->
+          <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+            <h6 class="fw-600 fs-md">Financed Bank Name Board</h6>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="isFinancedBankNameBoard" id="boardYes1" value="true" formControlName="isFinancedBankNameBoard">
+              <label class="form-check-label fs-md" for="boardYes1">Yes</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="isFinancedBankNameBoard" id="boardNo1" value="false" formControlName="isFinancedBankNameBoard">
+              <label class="form-check-label fs-md" for="boardNo1">No</label>
+            </div>
+            <div *ngIf="unitVisitForm.get('isFinancedBankNameBoard')?.invalid && (unitVisitForm.get('isFinancedBankNameBoard')?.dirty || unitVisitForm.get('isFinancedBankNameBoard')?.touched)"
+                 class="text-danger">
+              Financed Bank Name Board is required
+            </div>
+          </div>
+        </div>
 
-                            <hr>
+        <hr>
 
-                            <div class="row">
-                              <div class="col-12 col-sm-6 col-md-4 col-lg-4">
-                                <div class="form-floating mb-3">
-                                  <input type="text" class="form-control" id="cost" placeholder="">
-                                  <label for="cost">Cost per unit</label>
-                                </div>
-                              </div>
-                              <div class="col-12 col-sm-6 col-md-4 col-lg-4">
-                                <div class="form-floating mb-3">
-                                  <input type="text" class="form-control" id="selling" placeholder="">
-                                  <label for="selling">Selling price per unit</label>
-                                </div>
-                              </div>
-                              <div class="col-12 col-sm-6 col-md-4 col-lg-4">
-                                <div class="form-floating mb-3">
-                                  <input type="text" class="form-control" id="profit" placeholder="">
-                                  <label for="profit">Profit margin(%)</label>
-                                </div>
-                              </div>
-                            </div>
-                            <hr>
+        <!-- Staff at the time of Visit -->
+        <div>
+          <h6 class="fs-md">Staff at the time of Visit </h6>
+          <div class="row">
+            <!-- Office Staff -->
+            <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+              <div class="form-floating mb-3">
+                <input type="number" class="form-control" id="officeStaff" name="officeStaff" placeholder="" formControlName="officeStaff" min="0">
+                <label for="officeStaff">Office Staff</label>
+                <div *ngIf="unitVisitForm.get('officeStaff')?.errors?.['required'] && (unitVisitForm.get('officeStaff')?.dirty || unitVisitForm.get('officeStaff')?.touched)"
+                     class="text-danger">
+                  Office Staff is required
+                </div>
+                <div *ngIf="unitVisitForm.get('officeStaff')?.errors?.['min']" class="text-danger">
+                  Value cannot be negative
+                </div>
+              </div>
+            </div>
+            
+            <!-- Factory Workers -->
+            <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+              <div class="form-floating mb-3">
+                <input type="number" class="form-control" id="factoryWorkers" name="factoryWorkers" placeholder="" formControlName="factoryWorkers" min="0">
+                <label for="factoryWorkers">Factory Workers</label>
+                <div *ngIf="unitVisitForm.get('factoryWorkers')?.errors?.['required'] && (unitVisitForm.get('factoryWorkers')?.dirty || unitVisitForm.get('factoryWorkers')?.touched)"
+                     class="text-danger">
+                  Factory Workers is required
+                </div>
+                <div *ngIf="unitVisitForm.get('factoryWorkers')?.errors?.['min']" class="text-danger">
+                  Value cannot be negative
+                </div>
+              </div>
+            </div>
+            
+            <!-- Temporary Workers -->
+            <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+              <div class="form-floating mb-3">
+                <input type="number" class="form-control" id="temporaryWorkers" name="temporaryWorkers" placeholder="" formControlName="temporaryWorkers" min="0">
+                <label for="temporaryWorkers">Temporary Workers</label>
+                <div *ngIf="unitVisitForm.get('temporaryWorkers')?.errors?.['required'] && (unitVisitForm.get('temporaryWorkers')?.dirty || unitVisitForm.get('temporaryWorkers')?.touched)"
+                     class="text-danger">
+                  Temporary Workers is required
+                </div>
+                <div *ngIf="unitVisitForm.get('temporaryWorkers')?.errors?.['min']" class="text-danger">
+                  Value cannot be negative
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
-                            <h6 class="fs-md fw-600">Electricity Bill</h6>
-                            <div class="row">
-                              <div class="col-12 col-sm-6 col-md-4 col-lg-4">
-                                <div class="form-floating mb-3">
-                                  <input type="text" class="form-control" id="recent" placeholder="">
-                                  <label for="recent">Recent Consumption </label>
-                                </div>
-                              </div>
-                              <div class="col-12 col-sm-6 col-md-4 col-lg-4">
-                                <div class="form-floating mb-3">
-                                  <input type="text" class="form-control" id="maximum" placeholder="">
-                                  <label for="maximum">Maximum Consumption</label>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <input type="button" name="previous" class="previous btn btn-secondary float-start" value="Previous"/>
-                        <input type="button" name="next" class="next btn btn-primary float-end" value="Next"/>
-                      </fieldset>
+        <hr>
+
+        <div class="row">
+          <!-- Employees Attendance Register -->
+          <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+            <div class="mb-3">
+              <label class="d-block fw-600 fs-md">Employees Attendance Register</label>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="isEmpAttendanceRegister" id="registerYes" value="true" formControlName="isEmpAttendanceRegister">
+                <label class="form-check-label fs-md" for="registerYes">Yes</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="isEmpAttendanceRegister" id="registerNo" value="false" formControlName="isEmpAttendanceRegister">
+                <label class="form-check-label fs-md" for="registerNo">No</label>
+              </div>
+              <div *ngIf="unitVisitForm.get('isEmpAttendanceRegister')?.invalid && (unitVisitForm.get('isEmpAttendanceRegister')?.dirty || unitVisitForm.get('isEmpAttendanceRegister')?.touched)"
+                   class="text-danger">
+                Employees Attendance Register is required
+              </div>
+            </div>
+          </div>
+          
+          <!-- Inconsistencies -->
+          <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="inconsistencies" name="inconsistenciesWithPeopleWorking" placeholder="" formControlName="inconsistenciesWithPeopleWorking">
+              <label for="inconsistencies">Are there any inconsistencies with no. of people working?</label>
+            </div>
+          </div>
+          
+          <!-- Products manufactured and sold -->
+          <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="sold" name="productsMfgAndSold" placeholder="" formControlName="productsMfgAndSold">
+              <label for="sold">What are the products manufactured and sold</label>
+              <div *ngIf="unitVisitForm.get('productsMfgAndSold')?.invalid && (unitVisitForm.get('productsMfgAndSold')?.dirty || unitVisitForm.get('productsMfgAndSold')?.touched)"
+                   class="text-danger">
+                products manufactured and sold is required
+              </div>
+            </div>
+          </div>
+          
+          <!-- Production seasonal or throughout the year -->
+          <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="seasonal" name="seasonalOrThroughtoutYear" placeholder="" formControlName="seasonalOrThroughtoutYear">
+              <label for="seasonal">Whether production is seasonal or throughout the year?</label>
+              <div *ngIf="unitVisitForm.get('seasonalOrThroughtoutYear')?.invalid && (unitVisitForm.get('seasonalOrThroughtoutYear')?.dirty || unitVisitForm.get('seasonalOrThroughtoutYear')?.touched)"
+                   class="text-danger">
+                Seasonal or throughout the year is required
+              </div>
+            </div>
+          </div>
+          
+          <!-- Number of Shifts -->
+          <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+            <div class="form-floating mb-3">
+              <input type="number" class="form-control" id="shifts" name="noOfShifts" placeholder="" formControlName="noOfShifts" min="1">
+              <label for="shifts">No. of Shifts</label>
+              <div *ngIf="unitVisitForm.get('noOfShifts')?.errors?.['required'] && (unitVisitForm.get('noOfShifts')?.dirty || unitVisitForm.get('noOfShifts')?.touched)"
+                   class="text-danger">
+                No. of Shifts is required
+              </div>
+              <div *ngIf="unitVisitForm.get('noOfShifts')?.errors?.['min']" class="text-danger">
+                Minimum 1 shift required
+              </div>
+            </div>
+          </div>
+          
+          <!-- Stocks stored properly -->
+          <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+            <h6 class="fw-600 fs-md">Are stocks stored property</h6>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="isStocksStoredProperty" id="stocksYes" value="true" formControlName="isStocksStoredProperty">
+              <label class="form-check-label fs-md" for="stocksYes">Yes</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="isStocksStoredProperty" id="stocksNo" value="false" formControlName="isStocksStoredProperty">
+              <label class="form-check-label fs-md" for="stocksNo">No</label>
+            </div>
+            <div *ngIf="unitVisitForm.get('isStocksStoredProperty')?.invalid && (unitVisitForm.get('isStocksStoredProperty')?.dirty || unitVisitForm.get('isStocksStoredProperty')?.touched)"
+                 class="text-danger">
+              stored property is required
+            </div>
+          </div>
+          
+          <!-- Adequate storage capacity -->
+          <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+            <h6 class="fw-600 fs-md">Does unit have adequate storage capacity?</h6>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="isAdequateStorageCapacity" id="capacityYes" value="true" formControlName="isAdequateStorageCapacity">
+              <label class="form-check-label fs-md" for="capacityYes">Yes</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="isAdequateStorageCapacity" id="capacityNo" value="false" formControlName="isAdequateStorageCapacity">
+              <label class="form-check-label fs-md" for="capacityNo">No</label>
+            </div>
+            <div *ngIf="unitVisitForm.get('isAdequateStorageCapacity')?.invalid && (unitVisitForm.get('isAdequateStorageCapacity')?.dirty || unitVisitForm.get('isAdequateStorageCapacity')?.touched)"
+                 class="text-danger">
+              storage capacity is required
+            </div>
+          </div>
+        </div>
+
+        <hr>
+
+        <!-- Stocks Record -->
+        <div>
+          <label class="fs-md fw-600">Stocks Record</label>
+          <div class="row">
+            <!-- Stocks register maintained -->
+            <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+              <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="stocks1" name="stocksMaintaned" placeholder="" formControlName="stocksMaintaned">
+                <label for="stocks1">Whether Stocks register is maintained?</label>
+              </div>
+            </div>
+            
+            <!-- Is it up to date -->
+            <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+              <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="stocks2" name="isUptoDate" placeholder="" formControlName="isUptoDate">
+                <label for="stocks2">Is it up to date</label>
+                <div *ngIf="unitVisitForm.get('isUptoDate')?.invalid && (unitVisitForm.get('isUptoDate')?.dirty || unitVisitForm.get('isUptoDate')?.touched)"
+                     class="text-danger">
+                  Is it up to date is required
+                </div>
+              </div>
+            </div>
+            
+            <!-- Value of the stock -->
+            <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+              <div class="form-floating mb-3">
+                <input type="number" class="form-control" id="stocks3" name="valueOfTheStock" placeholder="" formControlName="valueOfTheStock" min="0">
+                <label for="stocks3">Value of the stock as(In Rs)</label>
+                <div *ngIf="unitVisitForm.get('valueOfTheStock')?.errors?.['required'] && (unitVisitForm.get('valueOfTheStock')?.dirty || unitVisitForm.get('valueOfTheStock')?.touched)"
+                     class="text-danger">
+                  Value of the stock is required
+                </div>
+                <div *ngIf="unitVisitForm.get('valueOfTheStock')?.errors?.['min']" class="text-danger">
+                  Value cannot be negative
+                </div>
+              </div>
+            </div>
+            
+            <!-- Raw material -->
+            <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+              <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="stocks4" name="rawMaterials" placeholder="" formControlName="rawMaterials">
+                <label for="stocks4">Raw material</label>
+              </div>
+            </div>
+            
+            <!-- Work in Progress -->
+            <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+              <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="stocks5" name="workInProgress" placeholder="" formControlName="workInProgress">
+                <label for="stocks5">Work in Progress</label>
+              </div>
+            </div>
+            
+            <!-- Finished Goods -->
+            <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+              <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="stocks6" name="finishedGoods" placeholder="" formControlName="finishedGoods">
+                <label for="stocks6">Finished Goods</label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <hr>
+
+        <!-- Production Units -->
+        <div class="row">
+          <!-- Maximum production -->
+          <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+            <div class="form-floating mb-3">
+              <input type="number" class="form-control" id="max" name="maxProductionInUnit" placeholder="" formControlName="maxProductionInUnit" min="0">
+              <label for="max">Maximum production in units</label>
+              <div *ngIf="unitVisitForm.get('maxProductionInUnit')?.errors?.['required'] && (unitVisitForm.get('maxProductionInUnit')?.dirty || unitVisitForm.get('maxProductionInUnit')?.touched)"
+                   class="text-danger">
+                Maximum production in units is required
+              </div>
+              <div *ngIf="unitVisitForm.get('maxProductionInUnit')?.errors?.['min']" class="text-danger">
+                Value cannot be negative
+              </div>
+            </div>
+          </div>
+          
+          <!-- Minimum production -->
+          <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+            <div class="form-floating mb-3">
+              <input type="number" class="form-control" id="min" name="minProductionInUnit" placeholder="" formControlName="minProductionInUnit" min="0">
+              <label for="min">Minimum production in units</label>
+              <div *ngIf="unitVisitForm.get('minProductionInUnit')?.errors?.['required'] && (unitVisitForm.get('minProductionInUnit')?.dirty || unitVisitForm.get('minProductionInUnit')?.touched)"
+                   class="text-danger">
+                Minimum production in units is required
+              </div>
+              <div *ngIf="unitVisitForm.get('minProductionInUnit')?.errors?.['min']" class="text-danger">
+                Value cannot be negative
+              </div>
+            </div>
+          </div>
+          
+          <!-- Current production -->
+          <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+            <div class="form-floating mb-3">
+              <input type="number" class="form-control" id="current" name="currentProductionInUnit" placeholder="" formControlName="currentProductionInUnit" min="0">
+              <label for="current">Current production in units</label>
+              <div *ngIf="unitVisitForm.get('currentProductionInUnit')?.errors?.['required'] && (unitVisitForm.get('currentProductionInUnit')?.dirty || unitVisitForm.get('currentProductionInUnit')?.touched)"
+                   class="text-danger">
+                Current production in units is required
+              </div>
+              <div *ngIf="unitVisitForm.get('currentProductionInUnit')?.errors?.['min']" class="text-danger">
+                Value cannot be negative
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <hr>
+
+        <!-- Cost and Pricing -->
+        <div class="row">
+          <!-- Cost per unit -->
+          <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+            <div class="form-floating mb-3">
+              <input type="number" class="form-control" id="cost" name="costPerUnit" placeholder="" formControlName="costPerUnit" min="0">
+              <label for="cost">Cost per unit</label>
+              <div *ngIf="unitVisitForm.get('costPerUnit')?.errors?.['required'] && (unitVisitForm.get('costPerUnit')?.dirty || unitVisitForm.get('costPerUnit')?.touched)"
+                   class="text-danger">
+                Cost per unit is required
+              </div>
+              <div *ngIf="unitVisitForm.get('costPerUnit')?.errors?.['min']" class="text-danger">
+                Value cannot be negative
+              </div>
+            </div>
+          </div>
+          
+          <!-- Selling price per unit -->
+          <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+            <div class="form-floating mb-3">
+              <input type="number" class="form-control" id="selling" name="sellingPricePerUnit" placeholder="" formControlName="sellingPricePerUnit" min="0">
+              <label for="selling">Selling price per unit</label>
+              <div *ngIf="unitVisitForm.get('sellingPricePerUnit')?.errors?.['required'] && (unitVisitForm.get('sellingPricePerUnit')?.dirty || unitVisitForm.get('sellingPricePerUnit')?.touched)"
+                   class="text-danger">
+                Selling price per unit is required
+              </div>
+              <div *ngIf="unitVisitForm.get('sellingPricePerUnit')?.errors?.['min']" class="text-danger">
+                Value cannot be negative
+              </div>
+            </div>
+          </div>
+          
+          <!-- Profit margin -->
+          <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+            <div class="form-floating mb-3">
+              <input type="number" class="form-control" id="profit" name="profitMargin" placeholder="" formControlName="profitMargin" min="0">
+              <label for="profit">Profit margin(%)</label>
+              <div *ngIf="unitVisitForm.get('profitMargin')?.errors?.['required'] && (unitVisitForm.get('profitMargin')?.dirty || unitVisitForm.get('profitMargin')?.touched)"
+                   class="text-danger">
+                Profit margin(%) is required
+              </div>
+              <div *ngIf="unitVisitForm.get('profitMargin')?.errors?.['min']" class="text-danger">
+                Value cannot be negative
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <hr>
+
+        <!-- Electricity Bill -->
+        <h6 class="fs-md fw-600">Electricity Bill</h6>
+        <div class="row">
+          <!-- Recent Consumption -->
+          <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+            <div class="form-floating mb-3">
+              <input type="number" class="form-control" id="recent" name="recentConsumption" placeholder="" formControlName="recentConsumption" min="0">
+              <label for="recent">Recent Consumption</label>
+              <div *ngIf="unitVisitForm.get('recentConsumption')?.errors?.['required'] && (unitVisitForm.get('recentConsumption')?.dirty || unitVisitForm.get('recentConsumption')?.touched)"
+                   class="text-danger">
+                Recent Consumption is required
+              </div>
+              <div *ngIf="unitVisitForm.get('recentConsumption')?.errors?.['min']" class="text-danger">
+                Value cannot be negative
+              </div>
+            </div>
+          </div>
+          
+          <!-- Maximum Consumption -->
+          <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+            <div class="form-floating mb-3">
+              <input type="number" class="form-control" id="maximum" name="maxConsumption" placeholder="" formControlName="maxConsumption" min="0">
+              <label for="maximum">Maximum Consumption</label>
+              <div *ngIf="unitVisitForm.get('maxConsumption')?.errors?.['required'] && (unitVisitForm.get('maxConsumption')?.dirty || unitVisitForm.get('maxConsumption')?.touched)"
+                   class="text-danger">
+                Maximum Consumption is required
+              </div>
+              <div *ngIf="unitVisitForm.get('maxConsumption')?.errors?.['min']" class="text-danger">
+                Value cannot be negative
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <input type="button" name="previous" class="previous btn btn-secondary float-start" value="Previous"/>
+     <input type="button" name="Save" class="next btn btn-primary float-end" (click)="saveExistingData()" value="Save"/>
+    <input type="submit" name="next" class="next btn btn-primary float-end" value="Next"/>
+  </form>
+</fieldset>
+<!-- begin:: add machinary modal -->
+<div class="modal fade" id="addmachinary" #addmachinary   tabindex="-1" aria-labelledby="addmachinaryLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header py-2 bg-theme">
+        <h6 class="modal-title text-white" id="addResourceLabel">Add Machinary</h6>
+        <button type="button" class="btn-close text-white fs-4 p-0" data-bs-dismiss="modal" (click)="onClose()" aria-label="Close">
+          <span class="bi bi-x"></span>
+        </button>
+      </div>
+      <div class="modal-body">
+       <form [formGroup]="machineForm" (ngSubmit)="onSubmitModel()">
+        <div class="row">
+          <div class="col-12 col-sm-6 col-md-6 col-lg-6">
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" name="typesOfMachine" id="typesMachine" 
+                    formControlName="typesOfMachine" placeholder="">
+              <label for="typesMachine">Types of machine</label>
+              <div *ngIf="machineForm.get('typesOfMachine')?.invalid && 
+                        (machineForm.get('typesOfMachine')?.dirty || machineForm.get('typesOfMachine')?.touched)"
+                  class="text-danger">
+                Types of machine is required
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-sm-6 col-md-6 col-lg-6">
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="purpose"  name="purpose"
+                    formControlName="purpose" placeholder="">
+              <label for="purpose">Purpose</label>
+              <div *ngIf="machineForm.get('purpose')?.invalid && 
+                        (machineForm.get('purpose')?.dirty || machineForm.get('purpose')?.touched)"
+                  class="text-danger">
+                Purpose is required
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-sm-6 col-md-6 col-lg-6">
+            <div class="form-floating mb-3">
+              <input type="number" class="form-control" id="machines"  name="noOfMachines"
+                    formControlName="noOfMachines" placeholder="" min="1">
+              <label for="machines">No. of machines</label>
+              <div *ngIf="machineForm.get('noOfMachines')?.errors?.['required'] && 
+                        (machineForm.get('noOfMachines')?.dirty || machineForm.get('noOfMachines')?.touched)"
+                  class="text-danger">
+                No. of machines is required
+              </div>
+              <div *ngIf="machineForm.get('noOfMachines')?.errors?.['min']" class="text-danger">
+                Minimum 1 machine required
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-sm-6 col-md-6 col-lg-6">
+            <div class="form-floating mb-3">
+              <input type="number" class="form-control" id="machineCost"  name="costOfMachinePurchased"
+                    formControlName="costOfMachinePurchased" placeholder="" min="0">
+              <label for="machineCost">Cost of machine purchased</label>
+              <div *ngIf="machineForm.get('costOfMachinePurchased')?.errors?.['required'] && 
+                        (machineForm.get('costOfMachinePurchased')?.dirty || machineForm.get('costOfMachinePurchased')?.touched)"
+                  class="text-danger">
+                Cost of machine purchased is required
+              </div>
+              <div *ngIf="machineForm.get('costOfMachinePurchased')?.errors?.['min']" class="text-danger">
+                Cost cannot be negative
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-sm-6 col-md-6 col-lg-6">
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="currentCondition"  name="currentCondition"
+                    formControlName="currentCondition" placeholder="">
+              <label for="currentCondition">Current condition</label>
+              <div *ngIf="machineForm.get('currentCondition')?.invalid && 
+                        (machineForm.get('currentCondition')?.dirty || machineForm.get('currentCondition')?.touched)"
+                  class="text-danger">
+                Current condition is required
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-sm-6 col-md-6 col-lg-6">
+            <div class="form-floating mb-3">
+              <input type="number" class="form-control" id="valueMachinary"  name="valueOfMachinery"
+                    formControlName="valueOfMachinery" placeholder="" min="0">
+              <label for="valueMachinary">Value of machinery</label>
+              <div *ngIf="machineForm.get('valueOfMachinery')?.errors?.['required'] && 
+                        (machineForm.get('valueOfMachinery')?.dirty || machineForm.get('valueOfMachinery')?.touched)"
+                  class="text-danger">
+                Value of machinery is required
+              </div>
+              <div *ngIf="machineForm.get('valueOfMachinery')?.errors?.['min']" class="text-danger">
+                Value cannot be negative
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-end">
+          <button type="button" class="btn btn-secondary me-2" (click)="onClose()">Cancel</button>
+          <button type="submit" class="btn btn-primary">Add Machine</button>
+        </div>
+      </form>
+
+      </div>
+    </div>
+  </div>
+</div>
