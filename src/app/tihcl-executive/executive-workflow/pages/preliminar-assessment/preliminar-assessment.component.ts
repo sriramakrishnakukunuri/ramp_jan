@@ -218,8 +218,11 @@ export class PreliminarAssessmentComponent implements OnInit {
   // Total stress score
   totalScore = 0;
 applicationData:any
+loginsessionDetails:any
   constructor(private fb: FormBuilder,private toastrService: ToastrService,
         private _commonService: CommonServiceService,) {
+           this.loginsessionDetails = JSON.parse(sessionStorage.getItem('user') || '{}');    
+          console.log(this.loginsessionDetails)
            const applicationData = JSON.parse(sessionStorage.getItem('ApplicationData') || '{}');
            this.applicationData=applicationData
            this.initializeForm();
@@ -494,7 +497,8 @@ applicationData:any
         ...this.assessmentForm.value,
         riskCategoryScore:totalScore,
         riskCategories:riskAssessment,
-        applicationStatus: "PRELIMINARY_ASSESSMENT"
+        applicationStatus: "PRELIMINARY_ASSESSMENT",
+        executiveName:this.loginsessionDetails?.firstName+this.loginsessionDetails?.lastName
         
 
       };

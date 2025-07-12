@@ -1,6 +1,7 @@
 import { environment } from "src/environments/environment";
 
 export const API_BASE_URL = environment.apiUrl;
+export const UploadPath='https://tihcl.s3.us-east-1.amazonaws.com/'
 export const APIS = {
     programCreation:{
         addprogram: API_BASE_URL + '/program/create',
@@ -68,17 +69,34 @@ export const APIS = {
         getNewApplications:API_BASE_URL+`/registrations/new/applications`,
         getPendingApplications:API_BASE_URL+`/registrations/under-processing`,
         registerData: API_BASE_URL + '/registrations/usage/id/',
-        submitPrimilinary:API_BASE_URL+`/registrations/preliminary/save/`
+        submitPrimilinary:API_BASE_URL+`/registrations/preliminary/save/`,
+        saveUnitVisit:API_BASE_URL+`/unitvisit/save`,
+        updateUnitVisit:API_BASE_URL+`/unitvisit/update/`,
+        getUnitVisit:API_BASE_URL+`/unitvisit/fetch/`,
+        getUnitVisitById:API_BASE_URL+`/unitvisit/fetch/registration/`,
+        saveRampCheckList:  API_BASE_URL+`/rampchecklist/save`
+
     },
     tihclManager:{
         getLevelOneData: API_BASE_URL + '/registrations/status?status=PRELIMINARY_ASSESSMENT',
-        getLevelTwoData: API_BASE_URL + '/programs/level2/approval/',
-        getLevelThreeData: API_BASE_URL + '/programs/level3/approval/',
+        getLevelTwoData: API_BASE_URL + '/registrations/status?status=UNIT_VISIT',
+        getLevelThreeData:API_BASE_URL + '/registrations/status?status=SANCTION_LETTER_UPLOAD',
         approveLevelOne: API_BASE_URL + '/registrations/status/updation/',
         approveLevelTwo: API_BASE_URL + '/programs/level2/approve/',
         approveLevelThree: API_BASE_URL + '/programs/level3/approve/',
         rejectLevelOne: API_BASE_URL + '/programs/level1/reject/',
         rejectLevelTwo: API_BASE_URL + '/programs/level2/reject/',
         rejectLevelThree: API_BASE_URL + '/programs/level3/reject/',    
+    },
+      tihclDIC:{
+        getLevelDICData: API_BASE_URL + '/registrations/status?status=MANAGER_APPROVAL_2',
+        approveLevelDIC: API_BASE_URL + '/programs/level2/approve/',    
+        updateRgistrationwithDic:API_BASE_URL + '/registrations/update/dicNocFilePath/', 
+        updateRgistrationwithprimaryLenderNoc:API_BASE_URL + '/registrations/update/primaryLenderNocFilePath/',
+    },
+    tihcl_uploads:{
+        
+       globalUpload: API_BASE_URL + '/files/upload',    
     }
+
 }

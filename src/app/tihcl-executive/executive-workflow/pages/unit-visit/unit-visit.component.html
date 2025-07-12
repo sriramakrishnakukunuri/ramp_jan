@@ -1,6 +1,6 @@
 
 <fieldset>
-  <form [formGroup]="unitVisitForm" (ngSubmit)="onSubmit()">
+  <form [formGroup]="unitVisitForm">
     <div class="card border rounded-2 shadow-none mb-3">
       <div class="card-header bg-theme text-white">
         <h6 class="mb-0">Unit Visit</h6>
@@ -181,6 +181,10 @@
                   Is upgradation required?
                 </label>
               </div>
+                <div *ngIf="unitVisitForm.get('isUpgradationRequired')?.invalid && (unitVisitForm.get('isUpgradationRequired')?.dirty || unitVisitForm.get('isUpgradationRequired')?.touched)"
+                     class="text-danger">
+                  Is upgradation required? is required
+                </div>
             </div>
             <div class="col-12 col-sm-6 col-md-4 col-lg-4">
               <div class="form-check">
@@ -204,14 +208,14 @@
           <div class="col-12 col-sm-6 col-md-4 col-lg-4">
             <h6 class="fw-600 fs-md">Company Name Board</h6>
             <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" name="isCompanyNameBoard" id="boardYes" value="true" formControlName="isCompanyNameBoard">
+              <input class="form-check-input" type="radio" name="isCompanyNameBoard" id="boardYes" [value]="true" formControlName="isCompanyNameBoard">
               <label class="form-check-label fs-md" for="boardYes">Yes</label>
             </div>
             <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" name="isCompanyNameBoard" id="boardNo" value="false" formControlName="isCompanyNameBoard">
+              <input class="form-check-input" type="radio" name="isCompanyNameBoard" id="boardNo" [value]="false" formControlName="isCompanyNameBoard">
               <label class="form-check-label fs-md" for="boardNo">No</label>
             </div>
-            <div *ngIf="unitVisitForm.get('isCompanyNameBoard')?.invalid && (unitVisitForm.get('isCompanyNameBoard')?.dirty || unitVisitForm.get('isCompanyNameBoard')?.touched)"
+            <div *ngIf="unitVisitForm.get('isCompanyNameBoard')?.invalid && unitVisitForm.get('isCompanyNameBoard')?.touched"
                  class="text-danger">
               Company Name Board is required
             </div>
@@ -221,14 +225,14 @@
           <div class="col-12 col-sm-6 col-md-4 col-lg-4">
             <h6 class="fw-600 fs-md">Financed Bank Name Board</h6>
             <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" name="isFinancedBankNameBoard" id="boardYes1" value="true" formControlName="isFinancedBankNameBoard">
+              <input class="form-check-input" type="radio" name="isFinancedBankNameBoard" id="boardYes1" [value]="true" formControlName="isFinancedBankNameBoard">
               <label class="form-check-label fs-md" for="boardYes1">Yes</label>
             </div>
             <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" name="isFinancedBankNameBoard" id="boardNo1" value="false" formControlName="isFinancedBankNameBoard">
+              <input class="form-check-input" type="radio" name="isFinancedBankNameBoard" id="boardNo1" [value]="false" formControlName="isFinancedBankNameBoard">
               <label class="form-check-label fs-md" for="boardNo1">No</label>
             </div>
-            <div *ngIf="unitVisitForm.get('isFinancedBankNameBoard')?.invalid && (unitVisitForm.get('isFinancedBankNameBoard')?.dirty || unitVisitForm.get('isFinancedBankNameBoard')?.touched)"
+            <div *ngIf="unitVisitForm.get('isFinancedBankNameBoard')?.invalid && unitVisitForm.get('isFinancedBankNameBoard')?.touched"
                  class="text-danger">
               Financed Bank Name Board is required
             </div>
@@ -296,14 +300,14 @@
             <div class="mb-3">
               <label class="d-block fw-600 fs-md">Employees Attendance Register</label>
               <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="isEmpAttendanceRegister" id="registerYes" value="true" formControlName="isEmpAttendanceRegister">
+                <input class="form-check-input" type="radio" name="isEmpAttendanceRegister" id="registerYes" [value]="true" formControlName="isEmpAttendanceRegister">
                 <label class="form-check-label fs-md" for="registerYes">Yes</label>
               </div>
               <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="isEmpAttendanceRegister" id="registerNo" value="false" formControlName="isEmpAttendanceRegister">
+                <input class="form-check-input" type="radio" name="isEmpAttendanceRegister" id="registerNo" [value]="false" formControlName="isEmpAttendanceRegister">
                 <label class="form-check-label fs-md" for="registerNo">No</label>
               </div>
-              <div *ngIf="unitVisitForm.get('isEmpAttendanceRegister')?.invalid && (unitVisitForm.get('isEmpAttendanceRegister')?.dirty || unitVisitForm.get('isEmpAttendanceRegister')?.touched)"
+              <div *ngIf="unitVisitForm.get('isEmpAttendanceRegister')?.invalid && unitVisitForm.get('isEmpAttendanceRegister')?.touched"
                    class="text-danger">
                 Employees Attendance Register is required
               </div>
@@ -316,6 +320,10 @@
               <input type="text" class="form-control" id="inconsistencies" name="inconsistenciesWithPeopleWorking" placeholder="" formControlName="inconsistenciesWithPeopleWorking">
               <label for="inconsistencies">Are there any inconsistencies with no. of people working?</label>
             </div>
+             <div *ngIf="unitVisitForm.get('inconsistenciesWithPeopleWorking')?.invalid && unitVisitForm.get('inconsistenciesWithPeopleWorking')?.touched"
+                   class="text-danger">
+                  This field is required
+              </div>
           </div>
           
           <!-- Products manufactured and sold -->
@@ -361,14 +369,14 @@
           <div class="col-12 col-sm-6 col-md-4 col-lg-4">
             <h6 class="fw-600 fs-md">Are stocks stored property</h6>
             <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" name="isStocksStoredProperty" id="stocksYes" value="true" formControlName="isStocksStoredProperty">
+              <input class="form-check-input" type="radio" name="isStocksStoredProperty" id="stocksYes" [value]="true" formControlName="isStocksStoredProperty">
               <label class="form-check-label fs-md" for="stocksYes">Yes</label>
             </div>
             <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" name="isStocksStoredProperty" id="stocksNo" value="false" formControlName="isStocksStoredProperty">
+              <input class="form-check-input" type="radio" name="isStocksStoredProperty" id="stocksNo" [value]="false" formControlName="isStocksStoredProperty">
               <label class="form-check-label fs-md" for="stocksNo">No</label>
             </div>
-            <div *ngIf="unitVisitForm.get('isStocksStoredProperty')?.invalid && (unitVisitForm.get('isStocksStoredProperty')?.dirty || unitVisitForm.get('isStocksStoredProperty')?.touched)"
+            <div *ngIf="unitVisitForm.get('isStocksStoredProperty')?.invalid && unitVisitForm.get('isStocksStoredProperty')?.touched"
                  class="text-danger">
               stored property is required
             </div>
@@ -378,14 +386,14 @@
           <div class="col-12 col-sm-6 col-md-4 col-lg-4">
             <h6 class="fw-600 fs-md">Does unit have adequate storage capacity?</h6>
             <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" name="isAdequateStorageCapacity" id="capacityYes" value="true" formControlName="isAdequateStorageCapacity">
+              <input class="form-check-input" type="radio" name="isAdequateStorageCapacity" id="capacityYes" [value]="true" formControlName="isAdequateStorageCapacity">
               <label class="form-check-label fs-md" for="capacityYes">Yes</label>
             </div>
             <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" name="isAdequateStorageCapacity" id="capacityNo" value="false" formControlName="isAdequateStorageCapacity">
+              <input class="form-check-input" type="radio" name="isAdequateStorageCapacity" id="capacityNo" [value]="false" formControlName="isAdequateStorageCapacity">
               <label class="form-check-label fs-md" for="capacityNo">No</label>
             </div>
-            <div *ngIf="unitVisitForm.get('isAdequateStorageCapacity')?.invalid && (unitVisitForm.get('isAdequateStorageCapacity')?.dirty || unitVisitForm.get('isAdequateStorageCapacity')?.touched)"
+            <div *ngIf="unitVisitForm.get('isAdequateStorageCapacity')?.invalid && unitVisitForm.get('isAdequateStorageCapacity')?.touched"
                  class="text-danger">
               storage capacity is required
             </div>
@@ -404,10 +412,29 @@
                 <input type="text" class="form-control" id="stocks1" name="stocksMaintaned" placeholder="" formControlName="stocksMaintaned">
                 <label for="stocks1">Whether Stocks register is maintained?</label>
               </div>
+               <div *ngIf="unitVisitForm.get('stocksMaintaned')?.invalid && (unitVisitForm.get('stocksMaintaned')?.dirty || unitVisitForm.get('stocksMaintaned')?.touched)"
+                     class="text-danger">
+                  Stocks register is required
+                </div>
             </div>
             
             <!-- Is it up to date -->
-            <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+             <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+            <h6 class="fw-600 fs-md">Is it up to date</h6>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="isUptoDate" id="isUptoDateyes" [value]="true" formControlName="isUptoDate">
+              <label class="form-check-label fs-md" for="isUptoDateyes">Yes</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="isUptoDate" id="isUptoDateno" [value]="false" formControlName="isUptoDate">
+              <label class="form-check-label fs-md" for="isUptoDateno">No</label>
+            </div>
+            <div *ngIf="unitVisitForm.get('isUptoDate')?.invalid && unitVisitForm.get('isUptoDate')?.touched"
+                 class="text-danger">
+              Is it up to date is required
+            </div>
+          </div>
+            <!-- <div class="col-12 col-sm-6 col-md-4 col-lg-4">
               <div class="form-floating mb-3">
                 <input type="text" class="form-control" id="stocks2" name="isUptoDate" placeholder="" formControlName="isUptoDate">
                 <label for="stocks2">Is it up to date</label>
@@ -416,7 +443,7 @@
                   Is it up to date is required
                 </div>
               </div>
-            </div>
+            </div> -->
             
             <!-- Value of the stock -->
             <div class="col-12 col-sm-6 col-md-4 col-lg-4">
@@ -439,6 +466,10 @@
                 <input type="text" class="form-control" id="stocks4" name="rawMaterials" placeholder="" formControlName="rawMaterials">
                 <label for="stocks4">Raw material</label>
               </div>
+              <div *ngIf="unitVisitForm.get('rawMaterials')?.errors?.['required'] && (unitVisitForm.get('rawMaterials')?.dirty || unitVisitForm.get('rawMaterials')?.touched)"
+                     class="text-danger">
+                  Raw material is required
+                </div>
             </div>
             
             <!-- Work in Progress -->
@@ -447,6 +478,10 @@
                 <input type="text" class="form-control" id="stocks5" name="workInProgress" placeholder="" formControlName="workInProgress">
                 <label for="stocks5">Work in Progress</label>
               </div>
+              <div *ngIf="unitVisitForm.get('workInProgress')?.errors?.['required'] && (unitVisitForm.get('workInProgress')?.dirty || unitVisitForm.get('workInProgress')?.touched)"
+                     class="text-danger">
+                  Work in Progress is required
+                </div>
             </div>
             
             <!-- Finished Goods -->
@@ -455,6 +490,10 @@
                 <input type="text" class="form-control" id="stocks6" name="finishedGoods" placeholder="" formControlName="finishedGoods">
                 <label for="stocks6">Finished Goods</label>
               </div>
+              <div *ngIf="unitVisitForm.get('finishedGoods')?.errors?.['required'] && (unitVisitForm.get('finishedGoods')?.dirty || unitVisitForm.get('finishedGoods')?.touched)"
+                     class="text-danger">
+                  Finished Goods is required
+                </div>
             </div>
           </div>
         </div>
@@ -597,8 +636,9 @@
       </div>
     </div>
     <input type="button" name="previous" class="previous btn btn-secondary float-start" value="Previous"/>
-     <input type="button" name="Save" class="next btn btn-primary float-end" (click)="saveExistingData()" value="Save"/>
-    <input type="submit" name="next" class="next btn btn-primary float-end" value="Next"/>
+    <input type="button" name="Final Submission" class="next btn btn-primary float-end" value="Final Submission" (click)="onSubmit()" />
+     <input type="button" name="Save" class="next btn btn-primary float-end me-3" (click)="saveExistingData()" value="Save"/>
+    
   </form>
 </fieldset>
 <!-- begin:: add machinary modal -->

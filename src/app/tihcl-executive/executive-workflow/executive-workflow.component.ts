@@ -16,12 +16,17 @@ export class ExecutiveWorkflowComponent implements OnInit {
       private router: Router,) { 
       }
 statusList: any = [
-        'APPLICATION_SUBMITTED', 'PRELIMINARY_ASSESSMENT', 'MANAGER_APPROVAL_1', 'UNIT_VISIT', 'DIAGNOSTIC_REPORT', 'MANAGER_APPROVAL_2', 'DIC_NOC', 'CREDIT_APPRAISAL', 'PRIMARY_LENDER_NOC', 'SANCTION_LETTER_UPLOAD', 'MANAGER_APPROVAL_3', 'LOAN_SANCTIONED', 'DISBURSEMENT_PARTIAL', 'DISBURSEMENT_COMPLETED', 'LOAN_REPAYMENT_REGULAR', 'LOAN_REPAYMENT_DUE', 'LOAN_REPAYMENT_COMPLETED', 'REJECTED_MANAGER_APPROVAL_1', 'REJECTED_MANAGER_APPROVAL_2', 'REJECTED_MANAGER_APPROVAL_3'
+        'APPLICATION_SUBMITTED', 'PRELIMINARY_ASSESSMENT', 'MANAGER_APPROVAL_1', 'UNIT_VISIT', 'DIAGNOSTIC_REPORT', 'MANAGER_APPROVAL_2', 'DIC_NOC', 'CREDIT_APPRAISAL', 'PRIMARY_LENDER_NOC', 'SANCTION_LETTER_UPLOAD', 'MANAGER_APPROVAL_3', 'SANCTION_LETTER_UPLOAD', 'DISBURSEMENT_PARTIAL', 'DISBURSEMENT_COMPLETED', 'LOAN_REPAYMENT_REGULAR', 'LOAN_REPAYMENT_DUE', 'LOAN_REPAYMENT_COMPLETED', 'REJECTED_MANAGER_APPROVAL_1', 'REJECTED_MANAGER_APPROVAL_2', 'REJECTED_MANAGER_APPROVAL_3'
       ];
 
 currentStep:any = 1;
   ngOnInit(): void {
-      const applicationData = JSON.parse(sessionStorage.getItem('ApplicationData') || '{}');
+     
+    this.stepperChanges()
+     
+  }
+  stepperChanges(){
+     const applicationData = JSON.parse(sessionStorage.getItem('ApplicationData') || '{}');
      console.log('Application Data:', applicationData);
      if(!applicationData || Object.keys(applicationData).length === 0) {
 
@@ -42,9 +47,39 @@ currentStep:any = 1;
      this._commonService.setCurrentStep(3)
       this.currentStep=3
      }
-     
+      else if(applicationData.status === 'UNIT_VISIT' || applicationData.applicationStatus === 'UNIT_VISIT'){
+     this._commonService.setCurrentStep(5)
+      this.currentStep=5
+     }
+      else if(applicationData.status === 'MANAGER_APPROVAL_2' || applicationData.applicationStatus === 'MANAGER_APPROVAL_2'){
+     this._commonService.setCurrentStep(6)
+      this.currentStep=6
+     }
+      else if(applicationData.status === 'DIC_APPROVAL' || applicationData.applicationStatus === 'DIC_APPROVAL'){
+     this._commonService.setCurrentStep(6)
+      this.currentStep=6
+     }
+      else if(applicationData.status === 'DIC_NOC' || applicationData.applicationStatus === 'DIC_NOC'){
+     this._commonService.setCurrentStep(7)
+      this.currentStep=7
+     }
+      else if(applicationData.status === 'CREDIT_APPRAISAL' || applicationData.applicationStatus === 'CREDIT_APPRAISAL'){
+     this._commonService.setCurrentStep(8)
+      this.currentStep=8
+     }
+      else if(applicationData.status === 'PRIMARY_LENDER_NOC' || applicationData.applicationStatus === 'PRIMARY_LENDER_NOC'){
+     this._commonService.setCurrentStep(9)
+      this.currentStep=9
+     }
+     else if(applicationData.status === 'SANCTION_LETTER_UPLOAD' || applicationData.applicationStatus === 'SANCTION_LETTER_UPLOAD'){
+     this._commonService.setCurrentStep(10)
+      this.currentStep=10
+     }
+      else if(applicationData.status === 'MANAGER_APPROVAL_3' || applicationData.applicationStatus === 'MANAGER_APPROVAL_3'){
+     this._commonService.setCurrentStep(11)
+      this.currentStep=11
+     }
      this.currentStep = this._commonService.getCurrentStep();
-     
   }
   getDtataByUrl(url: string) {
     this._commonService.getDataByUrl(url).subscribe({
@@ -54,8 +89,9 @@ currentStep:any = 1;
         if(dataList?.data.applicationStatus === 'PRELIMINARY_ASSESSMENT' || dataList?.data.status === 'PRELIMINARY_ASSESSMENT'){
           this.currentStep=2
           this._commonService.setCurrentStep(2)
-          
+           
         }
+        this.stepperChanges()
         return dataList?.data
          
         // Handle the dataList as needed

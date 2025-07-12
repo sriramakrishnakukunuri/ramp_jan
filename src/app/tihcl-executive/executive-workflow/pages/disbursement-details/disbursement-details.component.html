@@ -1,133 +1,232 @@
- <fieldset>
-                        <div class="card border rounded-2 shadow-none mb-3">
-                            <div class="card-header bg-theme text-white">
-                                <h6 class="mb-0">Disbursement Details</h6>
-                            </div>
-                            <div class="card-body">
-                              <div class="row">
-                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                                  <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="sanctionedAmt" placeholder="">
-                                    <label for="sanctionedAmt">Total Sanctioned Amount</label>
-                                  </div>
-                                </div>
-                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                                  <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="disbursmentAmt" placeholder="">
-                                    <label for="disbursmentAmt">Total Disbursed Amount</label>
-                                  </div>
-                                </div>
-                                <!-- <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                                  <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="pendingAmt" placeholder="">
-                                    <label for="pendingAmt">Pending Amount</label>
-                                  </div>
-                                </div> -->
-                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                                  <div class="form-floating mb-3">
-                                    <input type="date" class="form-control" id="dateDisbursement" placeholder="">
-                                    <label for="dateDisbursement">Date of disbursement</label>
-                                  </div>
-                                </div>
-                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                                  <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="bankName" placeholder="">
-                                    <label for="bankName">Bank Name</label>
-                                  </div>
-                                </div>
-                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                                  <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="ifscCode" placeholder="">
-                                    <label for="ifscCode">IFSC Code</label>
-                                  </div>
-                                </div>
-                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                                  <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="acountName" placeholder="">
-                                    <label for="acountName">Account Name</label>
-                                  </div>
-                                </div>
-                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                                  <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="acountNumber" placeholder="">
-                                    <label for="acountNumber">Account Number</label>
-                                  </div>
-                                </div>
-                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                                  <div class="form-floating mb-3">
-                                    <input type="date" class="form-control" id="collectionDate" placeholder="">
-                                    <label for="collectionDate">Collection Date</label>
-                                  </div>
-                                </div>
-                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                                  <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="feeAmount" placeholder="">
-                                    <label for="feeAmount">Processing Fee Collected Amount</label>
-                                  </div>
-                                </div>
-                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                                  <div class="mb-3">
-                                    <h6 class="fw-600 fs-md">TSipass upload</h6>
-                                    <div class="form-check form-check-inline">
-                                      <input class="form-check-input" type="radio" name="tsiRadio" id="applicableTsi" value="yesSecurity">
-                                      <label class="form-check-label fs-md" for="applicableTsi">Applicable</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                      <input class="form-check-input" type="radio" name="tsiRadio" id="notapplicableTsi" value="">
-                                      <label class="form-check-label fs-md" for="notapplicableTsi">Not Applicable</label>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                                  <div class="mb-3">
-                                    <h6 class="fw-600 fs-md">ROC Filling</h6>
-                                    <div class="form-check form-check-inline">
-                                      <input class="form-check-input" type="radio" name="rocRadio" id="applicableRoc" value="yesSecurity">
-                                      <label class="form-check-label fs-md" for="applicableRoc">Applicable</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                      <input class="form-check-input" type="radio" name="rocRadio" id="notapplicableRoc" value="">
-                                      <label class="form-check-label fs-md" for="notapplicableRoc">Not Applicable</label>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
+<fieldset>
+  <form [formGroup]="disbursementForm" (ngSubmit)="onSubmit()">
+    <div class="card border rounded-2 shadow-none mb-3">
+      <div class="card-header bg-theme text-white">
+        <h6 class="mb-0">Disbursement Details</h6>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="sanctionedAmt" formControlName="sanctionedAmt" placeholder="">
+              <label for="sanctionedAmt">Total Sanctioned Amount</label>
+              <div *ngIf="f.sanctionedAmt.invalid && (f.sanctionedAmt.dirty || f.sanctionedAmt.touched)"
+                class="text-danger">
+                <small *ngIf="f.sanctionedAmt.errors?.required">This field is required</small>
+                <small *ngIf="f.sanctionedAmt.errors?.pattern">Please enter a valid amount</small>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="disbursmentAmt" formControlName="disbursmentAmt"
+                placeholder="">
+              <label for="disbursmentAmt">Total Disbursed Amount</label>
+              <div *ngIf="f.disbursmentAmt.invalid && (f.disbursmentAmt.dirty || f.disbursmentAmt.touched)"
+                class="text-danger">
+                <small *ngIf="f.disbursmentAmt.errors?.required">This field is required</small>
+                <small *ngIf="f.disbursmentAmt.errors?.pattern">Please enter a valid amount</small>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+            <div class="form-floating mb-3">
+              <input type="date" class="form-control" id="dateDisbursement" formControlName="dateDisbursement"
+                placeholder="">
+              <label for="dateDisbursement">Date of disbursement</label>
+              <div *ngIf="f.dateDisbursement.invalid && (f.dateDisbursement.dirty || f.dateDisbursement.touched)"
+                class="text-danger">
+                <small *ngIf="f.dateDisbursement.errors?.required">This field is required</small>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="bankName" formControlName="bankName" placeholder="">
+              <label for="bankName">Bank Name</label>
+              <div *ngIf="f.bankName.invalid && (f.bankName.dirty || f.bankName.touched)" class="text-danger">
+                <small *ngIf="f.bankName.errors?.required">This field is required</small>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="ifscCode" formControlName="ifscCode" placeholder="">
+              <label for="ifscCode">IFSC Code</label>
+              <div *ngIf="f.ifscCode.invalid && (f.ifscCode.dirty || f.ifscCode.touched)" class="text-danger">
+                <small *ngIf="f.ifscCode.errors?.required">This field is required</small>
+                <small *ngIf="f.ifscCode.errors?.pattern">Please enter a valid IFSC code</small>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="acountName" formControlName="acountName" placeholder="">
+              <label for="acountName">Account Name</label>
+              <div *ngIf="f.acountName.invalid && (f.acountName.dirty || f.acountName.touched)" class="text-danger">
+                <small *ngIf="f.acountName.errors?.required">This field is required</small>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="acountNumber" formControlName="acountNumber" placeholder="">
+              <label for="acountNumber">Account Number</label>
+              <div *ngIf="f.acountNumber.invalid && (f.acountNumber.dirty || f.acountNumber.touched)"
+                class="text-danger">
+                <small *ngIf="f.acountNumber.errors?.required">This field is required</small>
+                <small *ngIf="f.acountNumber.errors?.pattern">Please enter a valid account number</small>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+            <div class="form-floating mb-3">
+              <input type="date" class="form-control" id="collectionDate" formControlName="collectionDate"
+                placeholder="">
+              <label for="collectionDate">Collection Date</label>
+              <div *ngIf="f.collectionDate.invalid && (f.collectionDate.dirty || f.collectionDate.touched)"
+                class="text-danger">
+                <small *ngIf="f.collectionDate.errors?.required">This field is required</small>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="feeAmount" formControlName="feeAmount" placeholder="">
+              <label for="feeAmount">Processing Fee Collected Amount</label>
+              <div *ngIf="f.feeAmount.invalid && (f.feeAmount.dirty || f.feeAmount.touched)" class="text-danger">
+                <small *ngIf="f.feeAmount.errors?.required">This field is required</small>
+                <small *ngIf="f.feeAmount.errors?.pattern">Please enter a valid amount</small>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+            <div class="mb-3">
+              <h6 class="fw-600 fs-md">TSipass upload</h6>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" formControlName="tsiPass" id="applicableTsi"
+                  value="yesSecurity">
+                <label class="form-check-label fs-md" for="applicableTsi">Applicable</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" formControlName="tsiPass" id="notapplicableTsi"
+                  value="notApplicable">
+                <label class="form-check-label fs-md" for="notapplicableTsi">Not Applicable</label>
+              </div>
+              <div *ngIf="f.tsiPass.invalid && (f.tsiPass.dirty || f.tsiPass.touched)" class="text-danger">
+                <small>This field is required</small>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+            <div class="mb-3">
+              <h6 class="fw-600 fs-md">ROC Filling</h6>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" formControlName="rocFilling" id="applicableRoc"
+                  value="yesSecurity">
+                <label class="form-check-label fs-md" for="applicableRoc">Applicable</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" formControlName="rocFilling" id="notapplicableRoc"
+                  value="notApplicable">
+                <label class="form-check-label fs-md" for="notapplicableRoc">Not Applicable</label>
+              </div>
+              <div *ngIf="f.rocFilling.invalid && (f.rocFilling.dirty || f.rocFilling.touched)" class="text-danger">
+                <small>This field is required</small>
+              </div>
+            </div>
+          </div>
+        </div>
 
-                              <div class="border rounded-3 p-2">
-                                <div class="row align-items-center mb-3">
-                                  <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
-                                    <label class="fs-md fw-bold mb-1">Add Disbursement</label>
-                                  </div>
-                                  <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
-                                    <div class="text-start text-sm-end text-xl-end">
-                                      <button type="button" data-bs-toggle="modal" data-bs-target="#addDisbursement" class="btn btn-outline-primary btn-sm border-0 ms-3"><span class="bi bi-plus-lg"></span> Add</button>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="table-responsive">
-                                  <table class="table table-borderless table-striped fs-md">
-                                    <thead class="bg-theme text-white">
-                                      <tr>
-                                        <th>S.No</th>
-                                        <th>Date</th>
-                                        <th>Amount</th>
-                                        <th>Details</th>
-                                      </tr>
-                                    </thead>
-                                    <tbody>
-                                      <tr>
-                                        <td>1</td>
-                                        <td>13-05-2025</td>
-                                        <td>200000</td>
-                                        <td>Lorem ipsum dolor sit, amet consectetur adipisicing elit.</td>
-                                      </tr>
-                                    </tbody>
-                                  </table>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          
-                          <input type="button" name="previous" class="previous btn btn-secondary float-start" value="Previous"/>
-                          <!-- <input type="submit" name="submit" class="submit btn btn-primary float-end" value="Submit"/> -->
-                      </fieldset>
+        <div class="border rounded-3 p-2">
+          <div class="row align-items-center mb-3">
+            <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+              <label class="fs-md fw-bold mb-1">Add Disbursement</label>
+            </div>
+            <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+              <div class="text-start text-sm-end text-xl-end">
+                <button type="button" data-bs-toggle="modal" data-bs-target="#addDisbursement" class="btn btn-outline-primary btn-sm border-0 ms-3"><span class="bi bi-plus-lg"></span> Add</button>
+              </div>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <table class="table table-borderless table-striped fs-md">
+              <thead class="bg-theme text-white">
+                <tr>
+                  <th>S.No</th>
+                  <th>Date</th>
+                  <th>Amount</th>
+                  <th>Details</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of disbursements">
+                  <td>{{ item.id }}</td>
+                  <td>{{ item.date }}</td>
+                  <td>{{ item.amount | currency:'INR' }}</td>
+                  <td>{{ item.details }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button type="button" (click)="onPrevious()" class="btn btn-secondary float-start">Previous</button>
+    <button type="submit" class="btn btn-primary float-end">Submit</button>
+  </form>
+</fieldset>
+
+
+
+<!-- begin:: add disubursement modal -->
+<div class="modal fade" id="addDisbursement" tabindex="-1" aria-labelledby="addisbursementLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header py-2">
+        <h6 class="modal-title text-white">Add Disbursement</h6>
+        <button type="button" class="btn-close text-white fs-4 p-0" data-bs-dismiss="modal" aria-label="Close"><span
+            class="bi bi-x"></span></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="addDisbursementForm">
+          <div class="row">
+            <div class="col-12 col-sm-6 col-md-6 col-lg-6">
+              <div class="form-floating mb-3">
+                <input type="date" class="form-control" id="date1" formControlName="date" placeholder="">
+                <label for="date1">Date</label>
+                <div *ngIf="af.date.invalid && (af.date.dirty || af.date.touched)" class="text-danger">
+                  <small>Date is required</small>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-sm-6 col-md-6 col-lg-6">
+              <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="amt1" formControlName="amount" placeholder="">
+                <label for="amt1">Amount</label>
+                <div *ngIf="af.amount.invalid && (af.amount.dirty || af.amount.touched)" class="text-danger">
+                  <small *ngIf="af.amount.errors?.required">Amount is required</small>
+                  <small *ngIf="af.amount.errors?.pattern">Please enter a valid amount</small>
+                </div>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="details" formControlName="details" placeholder="">
+                <label for="details">Details</label>
+                <div *ngIf="af.details.invalid && (af.details.dirty || af.details.touched)" class="text-danger">
+                  <small>Details are required</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+
+        <div class="text-end">
+          <button type="button" class="btn btn-primary"  data-bs-dismiss="modal" aria-label="Close" (click)="addDisbursement()">Add</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
