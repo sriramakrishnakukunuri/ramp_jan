@@ -73,8 +73,13 @@ export const APIS = {
         saveUnitVisit:API_BASE_URL+`/unitvisit/save`,
         updateUnitVisit:API_BASE_URL+`/unitvisit/update/`,
         getUnitVisit:API_BASE_URL+`/unitvisit/fetch/`,
+        getUnitVisitDelete:API_BASE_URL+`/unitvisit/delete/`,
         getUnitVisitById:API_BASE_URL+`/unitvisit/fetch/registration/`,
-        saveRampCheckList:  API_BASE_URL+`/rampchecklist/save`
+        getSentiondataById:API_BASE_URL+`/sanction/details/registration/id/`,
+        saveRampCheckList:  API_BASE_URL+`/rampchecklist/save`,
+        saveSanction:  API_BASE_URL+`/sanction/details/save`,
+        saveDisbursement:  API_BASE_URL+`/disbursement/details/save`,
+        getdisbursementDelete:API_BASE_URL+`/disbursement/details/disbursement/id/`,
 
     },
     tihclManager:{

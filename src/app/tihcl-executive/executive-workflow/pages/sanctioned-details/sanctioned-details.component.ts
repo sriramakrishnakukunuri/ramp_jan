@@ -77,7 +77,7 @@ managrData:any
         "applicationNo": this.applicationData?.applicationNo,
         "applicationStatus": "SANCTION_LETTER_UPLOAD"
       };
-       this._commonService.add(APIS.tihclExecutive.saveRampCheckList,payload).subscribe({
+       this._commonService.add(APIS.tihclExecutive.saveSanction,payload).subscribe({
              next: (response) => {
                 this.progressBarStatusUpdate.emit({"update":true})
              },

@@ -51,208 +51,99 @@
     </main>
 
     <!-- Modal -->
- 
-<div class="modal fade" id="viewModal" tabindex="-1" aria-labelledby="viewModalLabel" aria-hidden="true">
+ <div class="modal fade" id="viewModal" tabindex="-1" aria-labelledby="viewModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-xl">
         <div class="modal-content">
             <div class="modal-header bg-theme">
-                <h6 class="modal-title text-white fw-bold">Unit Visit Details - {{ approvalData?.applicationNo || 'N/A' }}</h6>
+                <h6 class="modal-title text-white fw-bold">Sanction Details - {{ approvalData?.applicationNo || 'N/A' }}</h6>
                 <button type="button" class="btn-close text-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <!-- Visit Information Section -->
+                <!-- Sanction Details Section -->
                 <div class="card mb-4">
                     <div class="card-header bg-light">
-                        <h6 class="mb-0 fw-bold">Visit Information</h6>
+                        <h6 class="mb-0 fw-bold">Sanction Information</h6>
                     </div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                 <div class="mb-3">
-                                    <label class="d-block fs-md fw-600 mb-1">Visited By</label>
-                                    <label class="d-block fs-md">{{ ExistingunitVisit?.visitedBy || 'N/A' }}</label>
+                                    <label class="d-block fs-md fw-600 mb-1">Sanctioned Date</label>
+                                    <label class="d-block fs-md">{{ (ExistingunitVisit?.sanctionedDate | date: 'dd-MMM-yyyy') || 'N/A' }}</label>
                                 </div>
                             </div>
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                 <div class="mb-3">
-                                    <label class="d-block fs-md fw-600 mb-1">Date of Visit</label>
-                                    <label class="d-block fs-md">{{ (ExistingunitVisit?.dateOfVisit | date: 'dd-MMM-yyyy') || 'N/A' }}</label>
+                                    <label class="d-block fs-md fw-600 mb-1">Sanctioned Amount</label>
+                                    <label class="d-block fs-md">{{ (ExistingunitVisit?.sanctionedAmount | currency:'INR') || 'N/A' }}</label>
                                 </div>
                             </div>
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                 <div class="mb-3">
-                                    <label class="d-block fs-md fw-600 mb-1">Time of Visit</label>
-                                    <label class="d-block fs-md">{{ ExistingunitVisit?.timeOfVisit || 'N/A' }}</label>
+                                    <label class="d-block fs-md fw-600 mb-1">ROI (%)</label>
+                                    <label class="d-block fs-md">{{ ExistingunitVisit?.roi || 'N/A' }}</label>
                                 </div>
                             </div>
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                 <div class="mb-3">
-                                    <label class="d-block fs-md fw-600 mb-1">Person Met</label>
-                                    <label class="d-block fs-md">{{ ExistingunitVisit?.nameOfThePerson || 'N/A' }}</label>
+                                    <label class="d-block fs-md fw-600 mb-1">Tenor (Months)</label>
+                                    <label class="d-block fs-md">{{ ExistingunitVisit?.tenor || 'N/A' }}</label>
                                 </div>
                             </div>
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                 <div class="mb-3">
-                                    <label class="d-block fs-md fw-600 mb-1">Designation</label>
-                                    <label class="d-block fs-md">{{ ExistingunitVisit?.designation || 'N/A' }}</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Address Details Section -->
-                <div class="card mb-4">
-                    <div class="card-header bg-light">
-                        <h6 class="mb-0 fw-bold">Address Details</h6>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                                <div class="mb-3">
-                                    <label class="d-block fs-md fw-600 mb-1">Land Details</label>
-                                    <label class="d-block fs-md">{{ ExistingunitVisit?.selectLandDetails || 'N/A' }}</label>
+                                    <label class="d-block fs-md fw-600 mb-1">Moratorium Period</label>
+                                    <label class="d-block fs-md">{{ ExistingunitVisit?.moratoriumPeriod || 'N/A' }} months</label>
                                 </div>
                             </div>
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                 <div class="mb-3">
-                                    <label class="d-block fs-md fw-600 mb-1">Factory Address</label>
-                                    <label class="d-block fs-md">{{ ExistingunitVisit?.factoryAddress || 'N/A' }}</label>
+                                    <label class="d-block fs-md fw-600 mb-1">DSRA Amount</label>
+                                    <label class="d-block fs-md">{{ (ExistingunitVisit?.dsraAmount | currency:'INR') || 'N/A' }}</label>
                                 </div>
                             </div>
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                 <div class="mb-3">
-                                    <label class="d-block fs-md fw-600 mb-1">Same as Factory</label>
-                                    <label class="d-block fs-md">{{ ExistingunitVisit?.isSameAsFactoryAddress ? 'Yes' : 'No' }}</label>
+                                    <label class="d-block fs-md fw-600 mb-1">Security Provided</label>
+                                    <label class="d-block fs-md">{{ ExistingunitVisit?.isSecurityProvided ? 'Yes' : 'No' }}</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3" *ngIf="ExistingunitVisit?.isSecurityProvided">
+                                <div class="mb-3">
+                                    <label class="d-block fs-md fw-600 mb-1">Security Description</label>
+                                    <label class="d-block fs-md">{{ ExistingunitVisit?.securityDescription || 'N/A' }}</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3" *ngIf="ExistingunitVisit?.isSecurityProvided">
+                                <div class="mb-3">
+                                    <label class="d-block fs-md fw-600 mb-1">Security Value</label>
+                                    <label class="d-block fs-md">{{ (ExistingunitVisit?.securityValue | currency:'INR') || 'N/A' }}</label>
                                 </div>
                             </div>
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                 <div class="mb-3">
-                                    <label class="d-block fs-md fw-600 mb-1">Register Address</label>
-                                    <label class="d-block fs-md">{{ ExistingunitVisit?.registerAddress || 'N/A' }}</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Machinery Details Section -->
-                <div class="card mb-4">
-                    <div class="card-header bg-light">
-                        <h6 class="mb-0 fw-bold">Machinery Details</h6>
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-bordered fs-md">
-                                <thead>
-                                    <tr>
-                                        <th>S.No</th>
-                                        <th>Type of Machine</th>
-                                        <th>Purpose</th>
-                                        <th>Quantity</th>
-                                        <th>Purchase Cost</th>
-                                        <th>Condition</th>
-                                        <th>Current Value</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr *ngFor="let item of ExistingunitVisit?.factoryDetails; let i = index">
-                                        <td>{{i + 1}}</td>
-                                        <td>{{item?.typesOfMachine || 'N/A'}}</td>
-                                        <td>{{item?.purpose || 'N/A'}}</td>
-                                        <td>{{item?.noOfMachines || 'N/A'}}</td>
-                                        <td>{{item?.costOfMachinePurchased || 'N/A'}}</td>
-                                        <td>{{item?.currentCondition || 'N/A'}}</td>
-                                        <td>{{item?.valueOfMachinery || 'N/A'}}</td>
-                                    </tr>
-                                    <tr *ngIf="!ExistingunitVisit?.factoryDetails?.length">
-                                        <td colspan="7" class="text-center">No machinery details available</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="row mt-3">
-                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                                <div class="mb-3">
-                                    <label class="d-block fs-md fw-600 mb-1">Upgradation Required</label>
-                                    <label class="d-block fs-md">{{ ExistingunitVisit?.isUpgradationRequired ? 'Yes' : 'No' }}</label>
+                                    <label class="d-block fs-md fw-600 mb-1">Terms of Sanction</label>
+                                    <label class="d-block fs-md">{{ ExistingunitVisit?.termsOfSanction || 'N/A' }}</label>
                                 </div>
                             </div>
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                 <div class="mb-3">
-                                    <label class="d-block fs-md fw-600 mb-1">Machinery Aligned</label>
-                                    <label class="d-block fs-md">{{ ExistingunitVisit?.isMachineryProperlyAligned ? 'Yes' : 'No' }}</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Staff Details Section -->
-                <div class="card mb-4">
-                    <div class="card-header bg-light">
-                        <h6 class="mb-0 fw-bold">Staff Details</h6>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                                <div class="mb-3">
-                                    <label class="d-block fs-md fw-600 mb-1">Office Staff</label>
-                                    <label class="d-block fs-md">{{ ExistingunitVisit?.officeStaff || 'N/A' }}</label>
-                                </div>
-                            </div>
-                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                                <div class="mb-3">
-                                    <label class="d-block fs-md fw-600 mb-1">Factory Workers</label>
-                                    <label class="d-block fs-md">{{ ExistingunitVisit?.factoryWorkers || 'N/A' }}</label>
-                                </div>
-                            </div>
-                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                                <div class="mb-3">
-                                    <label class="d-block fs-md fw-600 mb-1">Temporary Workers</label>
-                                    <label class="d-block fs-md">{{ ExistingunitVisit?.temporaryWorkers || 'N/A' }}</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Production Details Section -->
-                <div class="card mb-4">
-                    <div class="card-header bg-light">
-                        <h6 class="mb-0 fw-bold">Production Details</h6>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                                <div class="mb-3">
-                                    <label class="d-block fs-md fw-600 mb-1">Max Production</label>
-                                    <label class="d-block fs-md">{{ ExistingunitVisit?.maxProductionInUnit || 'N/A' }}</label>
-                                </div>
-                            </div>
-                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                                <div class="mb-3">
-                                    <label class="d-block fs-md fw-600 mb-1">Min Production</label>
-                                    <label class="d-block fs-md">{{ ExistingunitVisit?.minProductionInUnit || 'N/A' }}</label>
-                                </div>
-                            </div>
-                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                                <div class="mb-3">
-                                    <label class="d-block fs-md fw-600 mb-1">Current Production</label>
-                                    <label class="d-block fs-md">{{ ExistingunitVisit?.currentProductionInUnit || 'N/A' }}</label>
+                                    <label class="d-block fs-md fw-600 mb-1">Remarks</label>
+                                    <label class="d-block fs-md">{{ ExistingunitVisit?.remarks || 'N/A' }}</label>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-           <div class="modal-footer">
+            <div class="modal-footer">
                 <button type="button" data-bs-toggle="modal" data-bs-target="#approvedModal" class="btn btn-primary" data-bs-dismiss="modal">Approve</button>
                 <button type="button" data-bs-toggle="modal" data-bs-target="#rejectModal" class="btn btn-danger" data-bs-dismiss="modal">Reject</button>
             </div>
         </div>
     </div>
 </div>
+
     <!-- begin:: approved modal -->
     <div class="modal fade" id="approvedModal" tabindex="-1" aria-labelledby="approvedModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">

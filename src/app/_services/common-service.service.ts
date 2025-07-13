@@ -2,6 +2,7 @@ import { HttpClient,HttpErrorResponse, HttpHeaders } from '@angular/common/http'
 import { Injectable } from '@angular/core';
 import { APIS } from '@app/constants/constants';
 import { catchError, forkJoin, Observable, throwError } from 'rxjs';
+import { saveAs } from 'file-saver';
 
 @Injectable({
   providedIn: 'root'
@@ -34,6 +35,9 @@ export class CommonServiceService {
   public getById(URL: any, id: any,): Observable<any> {
     return this.http.get(URL+id).pipe(catchError(this.formatErrors));
   }
+   public deleteById(URL: any, id: any,): Observable<any> {
+    return this.http.delete(URL+id).pipe(catchError(this.formatErrors));
+  }
 
   uploadImage(formData:any): Observable<any> {
     const url = APIS.programCreation.addSessions;
@@ -43,6 +47,41 @@ export class CommonServiceService {
   public getDataByUrl(URL: any): Observable<any> {
     return this.http.get(URL).pipe(catchError(this.formatErrors));
   }
+     private extractFileNameFromPath(path: string): string {
+    return path.split('/').pop() || 'download';
+  }
+    private readonly s3BaseUrl = 'https://tihcl.s3.us-east-1.amazonaws.com';
+     downloadFromS3(filePath: string, customFileName?: string): void {
+    const url = `${filePath}`;
+    const fileName = customFileName || this.extractFileNameFromPath(filePath);
+    
+    this.http.get(url, { responseType: 'blob' }).subscribe((blob:any) => {
+      saveAs(blob, fileName);
+    }, (error:any) => {
+      console.error('Download failed:', error);
+      // Handle error (show toast/message)
+    });
+  }
+  // Method to download file from S3 URL
+  downloadFile(s3Url: string, fileName: string): void {
+    // For direct S3 download (if bucket is public)
+    this.http.get(s3Url, { responseType: 'blob' }).subscribe(blob => {
+      this.saveFile(blob, fileName);
+    });
+    
+    // Note: For private buckets, you should use a backend service to generate
+    // signed URLs or proxy the download
+  }
+
+  private saveFile(blob: Blob, fileName: string): void {
+    const a = document.createElement('a');
+    const objectUrl = URL.createObjectURL(blob);
+    a.href = objectUrl;
+    a.download = fileName;
+    a.click();
+    URL.revokeObjectURL(objectUrl);
+  }
+
   requestDataFromMultipleSources( url1:any, url2:any, fileData:any,sessionData:any): Observable<any[]> {    
     let response1 = this.http.post(url1, fileData).pipe(catchError(this.formatErrors));
     let response2=this.http.post(url2, sessionData).pipe(catchError(this.formatErrors));

@@ -34,7 +34,7 @@ export class UnitVisitComponent implements OnInit {
     this.unitVisitForm = this.fb.group({
       visitedBy: ['', Validators.required],
       dateOfVisit: ['', Validators.required],
-      timeOfVisit: ['', Validators.required],
+      timeOfVisit: ['00:00', Validators.required],
       nameOfThePerson: ['', Validators.required],
       designation: ['', Validators.required],
       selectLandDetails: ['', Validators.required],
@@ -75,6 +75,7 @@ export class UnitVisitComponent implements OnInit {
 createForm(): void {
     this.machineForm = this.fb.group({
       typesOfMachine: ['', Validators.required],
+      id:[null],
       purpose: ['', Validators.required],
       noOfMachines: ['', [Validators.required, Validators.min(1)]],
       costOfMachinePurchased: ['', [Validators.required, Validators.min(0)]],
@@ -142,7 +143,7 @@ createForm(): void {
       recentConsumption: data?.recentConsumption,
       maxConsumption: data?.maxConsumption
       });
-      this.factoryDetailsArray.patchValue([])
+      this.factoryDetailsArray.clear();
        data?.factoryDetails.forEach((machine:any) => {
       this.addMachineDetail(machine);
     });
@@ -154,7 +155,8 @@ createForm(): void {
       noOfMachines: [machine ? machine.noOfMachines : ''],
       costOfMachinePurchased: [machine ? machine.costOfMachinePurchased : ''],
       currentCondition: [machine ? machine.currentCondition : ''],
-      valueOfMachinery: [machine ? machine.valueOfMachinery : '']
+      valueOfMachinery: [machine ? machine.valueOfMachinery : ''],
+      id:[machine?machine.id:null]
     });
     this.factoryDetailsArray.push(machineGroup);
   }
@@ -203,6 +205,21 @@ createForm(): void {
   }
   saveExistingData(){
      if(this.unitVisitForm.valid && this.unitVisitForm.value?.factoryDetails?.length && Object.keys( this.ExistingunitVisit).length){
+         let payload:any={...this.unitVisitForm.value, "applicationNo": this.applicationData?.applicationNo,"applicationStatus": "UNIT_VISIT"}
+         this._commonService.update(APIS.tihclExecutive.updateUnitVisit,payload,this.ExistingunitVisit?.id).subscribe({
+          next: (response) => {
+           this.getDataById(response?.data?.id)
+           this.progressBarStatusUpdate.emit({"update":true})
+            this.toastrService.success('Unit Visit Data Updated Successfully','Unit Visit');
+
+            //  this.progressBarStatusUpdate.emit({"update":true})
+    
+          },
+          error: (error) => {
+            console.error('Error submitting form:', error);
+          }
+        });
+      }else  if(this.unitVisitForm.valid && this.unitVisitForm.value?.factoryDetails?.length){
          let payload:any={...this.unitVisitForm.value, "applicationNo": this.applicationData?.applicationNo,"applicationStatus": "UNIT_VISIT"}
          this._commonService.update(APIS.tihclExecutive.updateUnitVisit,payload,this.ExistingunitVisit?.id).subscribe({
           next: (response) => {
@@ -282,6 +299,7 @@ createForm(): void {
    editCreditDetails(item: any) {
      this.machineForm = this.fb.group({
       typesOfMachine: [item?.typesOfMachine, Validators.required],
+       id:[item?.id?item.id:null],
       purpose: [item?.purpose, Validators.required],
       noOfMachines: [item?.noOfMachines, [Validators.required, Validators.min(1)]],
       costOfMachinePurchased: [item?.costOfMachinePurchased, [Validators.required, Validators.min(0)]],
@@ -297,7 +315,18 @@ createForm(): void {
          modal.show(); 
     }
   
-    deleteCreditDetail(index: number) {
+    deleteCreditDetail(item:any,index: number) {
+      console.log(item)
+      if(item?.id){
+         this._commonService.deleteById(APIS.tihclExecutive.getUnitVisitDelete,item?.id).subscribe({
+             next: (response) => {
+                // this.progressBarStatusUpdate.emit({"update":true})
+             },
+             error: (error) => {
+               console.error('Error submitting form:', error);
+             }
+           });
+      }
       const deliveryDetailsArray = this.unitVisitForm.get('factoryDetails') as FormArray;
       deliveryDetailsArray.removeAt(index);
     }

@@ -79,6 +79,10 @@ currentStep:any = 1;
      this._commonService.setCurrentStep(11)
       this.currentStep=11
      }
+       else if(applicationData.status === 'DISBURSEMENT_PARTIAL' || applicationData.applicationStatus === 'DISBURSEMENT_PARTIAL'){
+     this._commonService.setCurrentStep(11)
+      this.currentStep=11
+     }
      this.currentStep = this._commonService.getCurrentStep();
   }
   getDtataByUrl(url: string) {

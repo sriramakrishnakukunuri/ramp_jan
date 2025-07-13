@@ -124,7 +124,7 @@ export class DicApprovalComponent implements OnInit {
      });
    }
    updateRegistration(data?:any){
-    this._commonService.updatedata(APIS.tihclDIC.updateRgistrationwithDic+this.approvalData?.applicationNo+'?dicNocFilePath='+(UploadPath+data?.filePath)+'&appStatus=DIC_APPROVAL',{}).subscribe({
+    this._commonService.updatedata(APIS.tihclDIC.updateRgistrationwithDic+this.approvalData?.applicationNo+'?dicNocFilePath='+(data?.filePath)+'&appStatus=DIC_APPROVAL',{}).subscribe({
        next: (response) => {
             const modal = new bootstrap.Modal(this.successModal.nativeElement);
             modal.show(); 

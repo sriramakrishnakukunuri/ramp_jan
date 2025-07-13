@@ -4,6 +4,9 @@ import { CommonServiceService } from '@app/_services/common-service.service';
 import { APIS,UploadPath } from '@app/constants/constants';
 import { ToastrService } from 'ngx-toastr';
 
+import { HttpClient } from '@angular/common/http';
+
+
 @Component({
   selector: 'app-di-concern-letter',
   templateUrl: './di-concern-letter.component.html',
@@ -15,7 +18,7 @@ export class DiConcernLetterComponent implements OnInit {
 applicationData:any
  @Output() progressBarStatusUpdate:any = new EventEmitter();
   constructor(private fb: FormBuilder,private toastrService: ToastrService,
-      private _commonService: CommonServiceService,) { 
+      private _commonService: CommonServiceService,private http: HttpClient) { 
     const applicationData = JSON.parse(sessionStorage.getItem('ApplicationData') || '{}');
     this.applicationData=applicationData
     this.getDtataByUrl(APIS.tihclExecutive.registerData + (applicationData.registrationUsageId? applicationData?.registrationUsageId:applicationData?.registrationId))
@@ -36,6 +39,9 @@ applicationData:any
     }
     DownloadDic(){
       // dicNocFilePath
+      console.log(this.managrData?.dicNocFilePath)
+      // let  s3BaseUrl = 'https://tihcl.s3.us-east-1.amazonaws.com';
+      // this._commonService.downloadFile(s3BaseUrl,this.managrData?.dicNocFilePath)
       let linkUrl =   this.managrData?.dicNocFilePath
         const link = document.createElement("a");
         link.setAttribute("download", linkUrl);
@@ -45,6 +51,7 @@ applicationData:any
         link.click();
         link.remove();
     }
+  
     Approved(){
         // https://tihcl.com/tihcl/api/registrations/status/updation/TH647249?appStatus=MANAGER_APPROVAL_1&reasonForRejection=null
         this._commonService.updatedataByUrl(APIS.tihclManager.approveLevelOne+this.applicationData?.applicationNo+'?appStatus=DIC_NOC&reasonForRejection=null').subscribe({

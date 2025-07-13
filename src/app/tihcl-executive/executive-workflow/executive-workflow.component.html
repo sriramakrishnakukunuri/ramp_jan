@@ -17,7 +17,7 @@
               <div class="step-circle fs-9" [class.active]="currentStep >= 3">3</div>
               <div class="step-circle fs-9" [class.active]="currentStep >= 4">4</div>
               <div class="step-circle fs-9" [class.active]="currentStep >= 5">5</div>
-              <div class="step-circle fs-9" [class.active]="currentStep >= 6">6</div>
+              <div class="step-circle fs-9" [class.active]="currentStep >= 6" >6</div>
               <div class="step-circle fs-9" [class.active]="currentStep >= 7">7</div>
               <div class="step-circle fs-9" [class.active]="currentStep >= 8">8</div>
               <div class="step-circle fs-9" [class.active]="currentStep >= 9">9</div>
@@ -34,7 +34,7 @@
               </div>
               <div class="fs-md fw-600" [class.active]="currentStep >= 5" >Manager Approval 2
               </div>
-              <div class="fs-md fw-600" [class.active]="currentStep >= 6" >DIC Concern Letter
+              <div class="fs-md fw-600" [class.active]="currentStep >= 6" (click)="currentStep=6">DIC Concern Letter
               </div>
               <div class="fs-md fw-600" [class.active]="currentStep >= 7" >Ramp Checklist &
                 Credit Appraisal Upload</div>
@@ -96,7 +96,7 @@
                 </div>
                 <!-- Step 11 - Status -->
                 <div class="step step-11" *ngIf="currentStep === 11">
-                    <app-disbursement-details></app-disbursement-details>
+                    <app-disbursement-details (progressBarStatusUpdate)="progressBarStatusUpdate($event)"></app-disbursement-details>
                 </div>
               </form>
             </div>

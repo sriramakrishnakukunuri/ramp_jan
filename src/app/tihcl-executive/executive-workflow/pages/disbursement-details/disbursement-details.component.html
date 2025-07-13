@@ -8,24 +8,24 @@
         <div class="row">
           <div class="col-12 col-sm-6 col-md-4 col-lg-3">
             <div class="form-floating mb-3">
-              <input type="text" class="form-control" id="sanctionedAmt" formControlName="sanctionedAmt" placeholder="">
+              <input type="number" class="form-control" id="sanctionedAmt" formControlName="sanctionedAmt" placeholder="">
               <label for="sanctionedAmt">Total Sanctioned Amount</label>
-              <div *ngIf="f.sanctionedAmt.invalid && (f.sanctionedAmt.dirty || f.sanctionedAmt.touched)"
+              <div *ngIf="f['sanctionedAmt']?.invalid && (f['sanctionedAmt']?.dirty || f['sanctionedAmt']?.touched)"
                 class="text-danger">
-                <small *ngIf="f.sanctionedAmt.errors?.required">This field is required</small>
-                <small *ngIf="f.sanctionedAmt.errors?.pattern">Please enter a valid amount</small>
+                <small *ngIf="f['sanctionedAmt']?.errors?.required">Total Sanctioned Amount is required</small>
+                <small *ngIf="f['sanctionedAmt']?.errors?.pattern">Please enter a valid amount</small>
               </div>
             </div>
           </div>
           <div class="col-12 col-sm-6 col-md-4 col-lg-3">
             <div class="form-floating mb-3">
-              <input type="text" class="form-control" id="disbursmentAmt" formControlName="disbursmentAmt"
+              <input type="number" class="form-control" id="disbursmentAmt" formControlName="disbursmentAmt"
                 placeholder="">
               <label for="disbursmentAmt">Total Disbursed Amount</label>
-              <div *ngIf="f.disbursmentAmt.invalid && (f.disbursmentAmt.dirty || f.disbursmentAmt.touched)"
+              <div *ngIf="f['disbursmentAmt']?.invalid && (f['disbursmentAmt']?.dirty || f['disbursmentAmt']?.touched)"
                 class="text-danger">
-                <small *ngIf="f.disbursmentAmt.errors?.required">This field is required</small>
-                <small *ngIf="f.disbursmentAmt.errors?.pattern">Please enter a valid amount</small>
+                <small *ngIf="f['disbursmentAmt']?.errors?.required">Total Disbursed Amount is required</small>
+                <small *ngIf="f['disbursmentAmt']?.errors?.pattern">Please enter a valid amount</small>
               </div>
             </div>
           </div>
@@ -34,9 +34,9 @@
               <input type="date" class="form-control" id="dateDisbursement" formControlName="dateDisbursement"
                 placeholder="">
               <label for="dateDisbursement">Date of disbursement</label>
-              <div *ngIf="f.dateDisbursement.invalid && (f.dateDisbursement.dirty || f.dateDisbursement.touched)"
+              <div *ngIf="f['dateDisbursement']?.invalid && (f['dateDisbursement']?.dirty || f['dateDisbursement']?.touched)"
                 class="text-danger">
-                <small *ngIf="f.dateDisbursement.errors?.required">This field is required</small>
+                <small *ngIf="f['dateDisbursement']?.errors?.required">Date of disbursement is required</small>
               </div>
             </div>
           </div>
@@ -44,8 +44,8 @@
             <div class="form-floating mb-3">
               <input type="text" class="form-control" id="bankName" formControlName="bankName" placeholder="">
               <label for="bankName">Bank Name</label>
-              <div *ngIf="f.bankName.invalid && (f.bankName.dirty || f.bankName.touched)" class="text-danger">
-                <small *ngIf="f.bankName.errors?.required">This field is required</small>
+              <div *ngIf="f['bankName']?.invalid && (f['bankName']?.dirty || f['bankName']?.touched)" class="text-danger">
+                <small *ngIf="f['bankName']?.errors?.required">Bank Name is required</small>
               </div>
             </div>
           </div>
@@ -53,9 +53,9 @@
             <div class="form-floating mb-3">
               <input type="text" class="form-control" id="ifscCode" formControlName="ifscCode" placeholder="">
               <label for="ifscCode">IFSC Code</label>
-              <div *ngIf="f.ifscCode.invalid && (f.ifscCode.dirty || f.ifscCode.touched)" class="text-danger">
-                <small *ngIf="f.ifscCode.errors?.required">This field is required</small>
-                <small *ngIf="f.ifscCode.errors?.pattern">Please enter a valid IFSC code</small>
+              <div *ngIf="f['ifscCode']?.invalid && (f['ifscCode']?.dirty || f['ifscCode']?.touched)" class="text-danger">
+                <small *ngIf="f['ifscCode']?.errors?.required">IFSC Code is required</small>
+                <small *ngIf="f['ifscCode']?.errors?.pattern">Invalid IFSC format. Correct format: AAAA0BBBBBB (4 Captial letters, then 0, then 6 letters/numbers)</small>
               </div>
             </div>
           </div>
@@ -63,19 +63,19 @@
             <div class="form-floating mb-3">
               <input type="text" class="form-control" id="acountName" formControlName="acountName" placeholder="">
               <label for="acountName">Account Name</label>
-              <div *ngIf="f.acountName.invalid && (f.acountName.dirty || f.acountName.touched)" class="text-danger">
-                <small *ngIf="f.acountName.errors?.required">This field is required</small>
+              <div *ngIf="f['acountName']?.invalid && (f['acountName']?.dirty || f['acountName']?.touched)" class="text-danger">
+                <small *ngIf="f['acountName']?.errors?.required">Account Name is required</small>
               </div>
             </div>
           </div>
           <div class="col-12 col-sm-6 col-md-4 col-lg-3">
             <div class="form-floating mb-3">
-              <input type="text" class="form-control" id="acountNumber" formControlName="acountNumber" placeholder="">
+              <input type="number" class="form-control" id="acountNumber" formControlName="acountNumber" placeholder="">
               <label for="acountNumber">Account Number</label>
-              <div *ngIf="f.acountNumber.invalid && (f.acountNumber.dirty || f.acountNumber.touched)"
+              <div *ngIf="f['acountNumber']?.invalid && (f['acountNumber']?.dirty || f['acountNumber']?.touched)"
                 class="text-danger">
-                <small *ngIf="f.acountNumber.errors?.required">This field is required</small>
-                <small *ngIf="f.acountNumber.errors?.pattern">Please enter a valid account number</small>
+                <small *ngIf="f['acountNumber']?.errors?.required">Account Number is required</small>
+                <small *ngIf="f['acountNumber']?.errors?.pattern">Please enter a valid account number</small>
               </div>
             </div>
           </div>
@@ -84,19 +84,19 @@
               <input type="date" class="form-control" id="collectionDate" formControlName="collectionDate"
                 placeholder="">
               <label for="collectionDate">Collection Date</label>
-              <div *ngIf="f.collectionDate.invalid && (f.collectionDate.dirty || f.collectionDate.touched)"
+              <div *ngIf="f['collectionDate']?.invalid && (f['collectionDate']?.dirty || f['collectionDate']?.touched)"
                 class="text-danger">
-                <small *ngIf="f.collectionDate.errors?.required">This field is required</small>
+                <small *ngIf="f['collectionDate']?.errors?.required">Collection Date is required</small>
               </div>
             </div>
           </div>
           <div class="col-12 col-sm-6 col-md-4 col-lg-3">
             <div class="form-floating mb-3">
-              <input type="text" class="form-control" id="feeAmount" formControlName="feeAmount" placeholder="">
+              <input type="number" class="form-control" id="feeAmount" formControlName="feeAmount" placeholder="">
               <label for="feeAmount">Processing Fee Collected Amount</label>
-              <div *ngIf="f.feeAmount.invalid && (f.feeAmount.dirty || f.feeAmount.touched)" class="text-danger">
-                <small *ngIf="f.feeAmount.errors?.required">This field is required</small>
-                <small *ngIf="f.feeAmount.errors?.pattern">Please enter a valid amount</small>
+              <div *ngIf="f['feeAmount']?.invalid && (f['feeAmount']?.dirty || f['feeAmount']?.touched)" class="text-danger">
+                <small *ngIf="f['feeAmount']?.errors?.required">Processing Fee Collected Amount is required</small>
+                <small *ngIf="f['feeAmount']?.errors?.pattern">Please enter a valid amount</small>
               </div>
             </div>
           </div>
@@ -113,8 +113,8 @@
                   value="notApplicable">
                 <label class="form-check-label fs-md" for="notapplicableTsi">Not Applicable</label>
               </div>
-              <div *ngIf="f.tsiPass.invalid && (f.tsiPass.dirty || f.tsiPass.touched)" class="text-danger">
-                <small>This field is required</small>
+              <div *ngIf="f['tsiPass']?.invalid && (f['tsiPass']?.dirty || f['tsiPass']?.touched)" class="text-danger">
+                <small>TSipass upload is required</small>
               </div>
             </div>
           </div>
@@ -131,8 +131,8 @@
                   value="notApplicable">
                 <label class="form-check-label fs-md" for="notapplicableRoc">Not Applicable</label>
               </div>
-              <div *ngIf="f.rocFilling.invalid && (f.rocFilling.dirty || f.rocFilling.touched)" class="text-danger">
-                <small>This field is required</small>
+              <div *ngIf="f['rocFilling']?.invalid && (f['rocFilling']?.dirty || f['rocFilling']?.touched)" class="text-danger">
+                <small>ROC Filling is required</small>
               </div>
             </div>
           </div>
@@ -154,15 +154,22 @@
               <thead class="bg-theme text-white">
                 <tr>
                   <th>S.No</th>
+                  <th>Actions</th>
                   <th>Date</th>
                   <th>Amount</th>
                   <th>Details</th>
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let item of disbursements">
-                  <td>{{ item.id }}</td>
-                  <td>{{ item.date }}</td>
+                <tr *ngFor="let item of disbursements let i=index">
+                   <td>{{i + 1}}</td>
+                    <td >
+                    <button type="button" class="btn btn-default text-danger btn-sm"
+                      (click)="editCreditDetails(item,i)"><span class="bi bi-pencil"></span></button>
+                    <button type="button" class="btn btn-default text-danger btn-sm"
+                      (click)="deleteCreditDetail(item,i)"><span class="bi bi-trash"></span></button>
+                  </td>
+                  <td>{{ item.disbursementDate }}</td>
                   <td>{{ item.amount | currency:'INR' }}</td>
                   <td>{{ item.details }}</td>
                 </tr>
@@ -174,7 +181,8 @@
     </div>
 
     <button type="button" (click)="onPrevious()" class="btn btn-secondary float-start">Previous</button>
-    <button type="submit" class="btn btn-primary float-end">Submit</button>
+    <button type="submit" class="btn btn-primary float-end " [ngClass]="{'isDisabled':applicationData?.applicationStatus?applicationData?.applicationStatus=='DISBURSEMENT_COMPLETED' :applicationData?.status=='DISBURSEMENT_COMPLETED'}">Submit</button>
+    <!-- <button type="button" class="btn btn-primary float-end me-3" (click)='finalSave()'>Final Submisiion</button> -->
   </form>
 </fieldset>
 
@@ -194,10 +202,10 @@
           <div class="row">
             <div class="col-12 col-sm-6 col-md-6 col-lg-6">
               <div class="form-floating mb-3">
-                <input type="date" class="form-control" id="date1" formControlName="date" placeholder="">
+                <input type="date" class="form-control" id="date1" formControlName="disbursementDate" placeholder="">
                 <label for="date1">Date</label>
-                <div *ngIf="af.date.invalid && (af.date.dirty || af.date.touched)" class="text-danger">
-                  <small>Date is required</small>
+                <div *ngIf="af['disbursementDate']?.invalid && (af['disbursementDate']?.dirty || af['disbursementDate']?.touched)" class="text-danger">
+                  <small>Disbursement Date is required</small>
                 </div>
               </div>
             </div>
@@ -205,9 +213,9 @@
               <div class="form-floating mb-3">
                 <input type="text" class="form-control" id="amt1" formControlName="amount" placeholder="">
                 <label for="amt1">Amount</label>
-                <div *ngIf="af.amount.invalid && (af.amount.dirty || af.amount.touched)" class="text-danger">
-                  <small *ngIf="af.amount.errors?.required">Amount is required</small>
-                  <small *ngIf="af.amount.errors?.pattern">Please enter a valid amount</small>
+                <div *ngIf="af.amount.invalid && (af['amount']?.dirty || af['amount']?.touched)" class="text-danger">
+                  <small *ngIf="af['amount']?.errors?.required">Amount is required</small>
+                  <small *ngIf="af['amount']?.errors?.pattern">Please enter a valid amount</small>
                 </div>
               </div>
             </div>
@@ -215,7 +223,7 @@
               <div class="form-floating mb-3">
                 <input type="text" class="form-control" id="details" formControlName="details" placeholder="">
                 <label for="details">Details</label>
-                <div *ngIf="af.details.invalid && (af.details.dirty || af.details.touched)" class="text-danger">
+                <div *ngIf="af['details']?.invalid && (af['details']?.dirty || af['details']?.touched)" class="text-danger">
                   <small>Details are required</small>
                 </div>
               </div>
