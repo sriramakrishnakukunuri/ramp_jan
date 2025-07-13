@@ -370,8 +370,8 @@
                                         <th>Bank</th>
                                         <th>IFSC Code</th>
                                         <th>Mode of Payment</th>
-                                        <th>Upload Bill/Invoice</th>
-                                        <!-- <th>Remark</th> -->
+                                        <!-- <th>Upload Bill/Invoice</th> -->
+                                        <th>{{loginsessionDetails?.userRole == 'ADMIN'?'Remarks':'Response'}}</th>
                                       
                                       
                                     </tr>
@@ -379,7 +379,7 @@
                                 <tbody *ngIf="getExpenditureDataBoth?.length">
                                     <tr  *ngFor="let item of getExpenditureDataBoth; let i=index">
                                            <td class="text-center">
-                                        <button type="button" [ngClass]="{'disabled':item?.expenditureType=='BULK'}" class="btn btn-default text-lime-green btn-sm"  (click)="openRemarks(item)"><span class="bi bi-pencil"></span></button>
+                                        <button type="button"  class="btn btn-default text-lime-green btn-sm"  (click)="openRemarks(item)"><span class="bi bi-pencil"></span></button>
                                     </td>
                                         <td class="text-start">{{i+1}}</td>
                                         <td>{{item?.expenditureType}}</td>
@@ -391,7 +391,7 @@
                                         <td>{{item?.bankName}}</td>
                                         <td>{{item?.ifscCode}}</td>
                                         <td>{{item?.modeOfPayment}}</td>
-                                          <td>
+                                          <!-- <td>
                                                  <ng-container *ngIf="item?.uploadBillUrl">
                                                        <a (click)="showImagePreview(imageUrlDownloadPath,item?.uploadBillUrl)" rel="noopener noreferrer">
                                                         <img src="{{imageUrlDownloadPath}}{{item?.uploadBillUrl}}" alt="Image 2" class="img-fluid" style="width: 50px; height: 50px;">
@@ -400,8 +400,19 @@
                                                 <ng-container *ngIf="!item?.uploadBillUrl">
                                                     <span class="text-danger">No Image</span>
                                                 </ng-container>
-                                         </td>
-                                        <!-- <td>{{item?.remark}}</td> -->
+                                         </td> -->
+                                           <td *ngIf="item.remarksOrResponse.length>1">
+                                                <i class="bx docu-hv-text" style="position: relative;">
+                                                    {{item.remarksOrResponse[0]}}..
+                                                    <div class="statusmes-data" style="width: auto !important;background-color: #ffc107;"> 
+                                                            <p> {{item?.remarksOrResponse}}
+                                                    </div>
+                                                        </i>
+                                           </td>
+                                            <td *ngIf="item.remarksOrResponse.length<=1 ">
+                                                {{item.remarksOrResponse?.[0]}}                        
+                                            </td>
+                                        <!-- <td>{{item?.remarksOrResponse}}</td> -->
                                         <!-- <td>{{item?.purpose}}</td> -->
                                         <!-- <td>{{item?.uploadBillUrl}}</td> -->
                                        
@@ -445,7 +456,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="addRemarkslabel">Add Remark</h5>
+                <h5 class="modal-title" id="addRemarkslabel">Add {{loginsessionDetails?.userRole == 'ADMIN'?'Remarks':'Response'}}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"  aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -454,10 +465,10 @@
                         <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                             <div class="form-floating mb-3">
                                 <input type="text" class="form-control" formControlName="remark"  name="remark" id="consumed" >
-                                <label for="consumed">Remark</label>
+                                <label for="consumed">{{loginsessionDetails?.userRole == 'ADMIN'?'Remarks':'Response'}}</label>
                             </div>
                             <div *ngIf="fRemark['remark'].touched && !fRemark['remark'].valid"  class="error"
-                            style="color: red;">Remark is required</div>
+                            style="color: red;">{{loginsessionDetails?.userRole == 'ADMIN'?'Remarks':'Response'}} is required</div>
                             
                         </div>
                     </div>

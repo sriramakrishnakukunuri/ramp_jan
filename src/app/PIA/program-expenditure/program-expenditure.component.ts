@@ -496,11 +496,11 @@ export class ProgramExpenditureComponent implements OnInit {
   }
   //save pre and post expenditure 
   ExpenditureSubmit(){
+   this.PrePostExpenditureForm.value.checkDate=this.PrePostExpenditureForm.value.checkDate?moment(this.PrePostExpenditureForm.value.checkDate).format('DD-MM-YYYY'):null;
     let payload={...this.programCreationMain.value ,activityId:Number(this.programCreationMain.value.activityId),
       subActivityId:Number(this.programCreationMain.value.subActivityId),programId:Number(this.programCreationMain.value.programId),...this.PrePostExpenditureForm.value,
       headOfExpenseId:Number(this.PrePostExpenditureForm.value.headOfExpenseId),
       billDate:moment(this.PrePostExpenditureForm.value.billDate).format('DD-MM-YYYY'),
-      checkDate:moment(this.PrePostExpenditureForm.value.checkDate).format('DD-MM-YYYY'),
       agencyId:this.agencyId}
     console.log(payload)
     const formData = new FormData();

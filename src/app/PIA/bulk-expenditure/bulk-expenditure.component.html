@@ -32,7 +32,7 @@
                                 <th>Payee Name</th>
                                 <th>Bank</th>
                                 <th>IFSC Code</th>
-                                <th>Upload Bill/Invoice</th>
+                                <!-- <th>Upload Bill/Invoice</th> -->
                                 <th class="text-center" *ngIf="loginsessionDetails?.userRole != 'ADMIN'">Edit / Delete</th>
                             </tr>
                         </thead>
@@ -52,7 +52,7 @@
                                 <td>{{item?.payeeName}}</td>
                                 <td>{{item?.bankName}}</td>
                                 <td>{{item?.ifscCode}}</td>
-                                 <td>
+                                 <!-- <td>
                                                  <ng-container *ngIf="item?.uploadBillUrl">
                                                        <a (click)="showImagePreview(imageUrlDownloadPath,item?.uploadBillUrl)" rel="noopener noreferrer">
                                                         <img src="{{imageUrlDownloadPath}}{{item?.uploadBillUrl}}" alt="Image 2" class="img-fluid" style="width: 50px; height: 50px;">
@@ -61,7 +61,7 @@
                                                 <ng-container *ngIf="!item?.uploadBillUrl">
                                                     <span class="text-danger">No Image</span>
                                                 </ng-container>
-                                         </td>
+                                         </td> -->
                                 <td class="text-center" *ngIf="loginsessionDetails?.userRole != 'ADMIN'">
                                     <button type="button" class="btn btn-default text-lime-green btn-sm" (click)="OpenModal('edit',item)"><span class="bi bi-pencil"></span></button>
                                     <button type="button" class="btn btn-default text-danger btn-sm" (click)="deleteExpenditure(item)"><span class="bi bi-trash"></span></button>

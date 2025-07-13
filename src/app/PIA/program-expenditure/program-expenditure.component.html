@@ -101,7 +101,7 @@
                                     <th>IFSC Code</th>
                                     <th>Mode of Payment</th>
                                     <!-- <th>Purpose</th> -->
-                                    <th>Upload Bill/Invoice</th>
+                                    <!-- <th>Upload Bill/Invoice</th> -->
                                     <th class="text-center">Edit / Delete</th>
                                 </tr>
                             </thead>
@@ -119,7 +119,7 @@
                                     <td>{{item?.bankName}}</td>
                                     <td>{{item?.ifscCode}}</td>
                                     <td>{{item?.modeOfPayment}}</td>
-                                     <td>
+                                     <!-- <td>
                                                  <ng-container *ngIf="item?.uploadBillUrl">
                                                        <a (click)="showImagePreview(imageUrlDownloadPath,item?.uploadBillUrl)" rel="noopener noreferrer">
                                                         <img src="{{imageUrlDownloadPath}}{{item?.uploadBillUrl}}" alt="Image 2" class="img-fluid" style="width: 50px; height: 50px;">
@@ -128,7 +128,7 @@
                                                 <ng-container *ngIf="!item?.uploadBillUrl">
                                                     <span class="text-danger">No Image</span>
                                                 </ng-container>
-                                         </td>
+                                         </td> -->
                                     <!-- <td>{{item?.purpose}}</td> -->
                                     <!-- <td>{{item?.uploadBillUrl}}</td> -->
                                     <td class="text-center">

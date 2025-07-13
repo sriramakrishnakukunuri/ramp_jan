@@ -482,7 +482,9 @@ getAgenciesList() {
             this.getPost()
             this.reinitializeDataTable();
             this.getExpenditureData?.map((item:any)=>{
+
               this.TotalAmount+=item?.cost
+
             })
            }
            else{
@@ -634,11 +636,11 @@ getAgenciesList() {
     }
   }
   expenditureId:any
-  
+  expenditureType:any
 openRemarks(item:any){
   this.RemarkForm.reset()
     item?.remark?this.fRemark['remark'].patchValue(item?.remark):this.fRemark['remark'].patchValue('')
-  
+    this.expenditureType=item?.expenditureType
      if(item?.expenditureType=='PRE' || item?.expenditureType=='POST'){
          this.expenditureId=item?.programExpenditureId
     }
@@ -654,18 +656,32 @@ openRemarks(item:any){
     }
 
     SubmitRemarks(){
-     const payload={
+      let payload:any
+      let url:any
+      if(this.expenditureType=='PRE' || this.expenditureType=='POST'){
+        url=APIS.programExpenditure.saveRemarks
+        payload={
         "userId": this.loginsessionDetails?.userId,
        "remark": this.fRemark['remark'].value,
         "expenditureId": this.expenditureId
       }
-            this._commonService.updatedata(APIS.programExpenditure.saveRemarks,payload).subscribe({
+      }
+      else{
+        url=APIS.programExpenditure.saveRemarksBulk
+        payload={
+        "userId": this.loginsessionDetails?.userId,
+       "remark": this.fRemark['remark'].value,
+        "transactionId": this.expenditureId
+      }
+      }
+  
+            this._commonService.updatedata(url,payload).subscribe({
             next: (res: any) => {
-             
+             this.getExpenditure()
               this.toastrService.success('Remark Added Successfully', "Expenditure Data!");
             },
             error: (err) => {
-               
+               this.getExpenditure()
               this.toastrService.error(err.message, "Expenditure Data Error!");
               new Error(err);
             },

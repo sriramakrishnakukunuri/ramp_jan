@@ -210,7 +210,8 @@ export class BulkExpenditureComponent implements OnInit {
   //     modalInstance.show();
     // save Bulk expenditure
     BulkExpenditureSubmit(){
-      let payload={...this.BulkExpenditureForm.value,purchaseDate:moment(this.BulkExpenditureForm.value.purchaseDate).format('DD-MM-YYYY'), billDate:moment(this.BulkExpenditureForm.value.billDate).format('DD-MM-YYYY'),checkDate:moment(this.BulkExpenditureForm.value.checkDate).format('DD-MM-YYYY'),agencyId:this.agencyId}
+       this.BulkExpenditureForm.value.checkDate=this.BulkExpenditureForm.value.checkDate?moment(this.BulkExpenditureForm.value.checkDate).format('DD-MM-YYYY'):null;
+      let payload={...this.BulkExpenditureForm.value,purchaseDate:moment(this.BulkExpenditureForm.value.purchaseDate).format('DD-MM-YYYY'), billDate:moment(this.BulkExpenditureForm.value.billDate).format('DD-MM-YYYY'),agencyId:this.agencyId}
       const formData = new FormData();
       formData.append("request", JSON.stringify(payload));
 
