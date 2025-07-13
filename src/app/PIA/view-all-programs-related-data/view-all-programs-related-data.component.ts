@@ -19,6 +19,7 @@ export class ViewAllProgramsRelatedDataComponent implements OnInit {
   agencyId: any;
   programIds:any
   activeTab:any;
+   @ViewChild('addRemarks') addRemarks!: ElementRef;
   constructor(private fb: FormBuilder,
     private toastrService: ToastrService,
     private _commonService: CommonServiceService, private router: Router,) { 
@@ -26,6 +27,7 @@ export class ViewAllProgramsRelatedDataComponent implements OnInit {
     }
 
   ngOnInit(): void {
+    this.formDetailsRemark()
     this.activeTab = 'nav-five';
     this.loginsessionDetails = JSON.parse(sessionStorage.getItem('user') || '{}');  
     if(this.loginsessionDetails.userRole == 'ADMIN') {
@@ -480,7 +482,9 @@ getAgenciesList() {
             this.getPost()
             this.reinitializeDataTable();
             this.getExpenditureData?.map((item:any)=>{
+
               this.TotalAmount+=item?.cost
+
             })
            }
            else{
@@ -608,4 +612,85 @@ getAgenciesList() {
    
    
   }
+  RemarkForm!: FormGroup;
+  get fRemark() {
+    return this.RemarkForm.controls;
+  }
+  formDetailsRemark() {
+    this.RemarkForm = new FormGroup({
+      remark: new FormControl("", [Validators.required]),
+      userId:new FormControl("")
+      
+    })
+  }
+  imageUrlDownloadPath = `${API_BASE_URL}/program/file/download/`;
+  imagePreviewUrl: any
+    showImagePreview(url: any, value: string) {
+    this.imagePreviewUrl = null; // Reset the image preview URL
+    this.imagePreviewUrl = url + value;
+
+    const editSessionModal = document.getElementById('imagePreview');
+    if (editSessionModal) {
+      const modalInstance = new bootstrap.Modal(editSessionModal);
+      modalInstance.show();
+    }
+  }
+  expenditureId:any
+  expenditureType:any
+openRemarks(item:any){
+  this.RemarkForm.reset()
+    item?.remark?this.fRemark['remark'].patchValue(item?.remark):this.fRemark['remark'].patchValue('')
+    this.expenditureType=item?.expenditureType
+     if(item?.expenditureType=='PRE' || item?.expenditureType=='POST'){
+         this.expenditureId=item?.programExpenditureId
+    }
+     else{
+      this.expenditureId=item?.bulkExpenditureTransactionId
+              
+    }
+        const previewModal = document.getElementById('addRemarksModel');
+    if (previewModal) {
+      const modalInstance = new bootstrap.Modal(previewModal);
+      modalInstance.show();
+    }
+    }
+
+    SubmitRemarks(){
+      let payload:any
+      let url:any
+      if(this.expenditureType=='PRE' || this.expenditureType=='POST'){
+        url=APIS.programExpenditure.saveRemarks
+        payload={
+        "userId": this.loginsessionDetails?.userId,
+       "remark": this.fRemark['remark'].value,
+        "expenditureId": this.expenditureId
+      }
+      }
+      else{
+        url=APIS.programExpenditure.saveRemarksBulk
+        payload={
+        "userId": this.loginsessionDetails?.userId,
+       "remark": this.fRemark['remark'].value,
+        "transactionId": this.expenditureId
+      }
+      }
+  
+            this._commonService.updatedata(url,payload).subscribe({
+            next: (res: any) => {
+             this.getExpenditure()
+              this.toastrService.success('Remark Added Successfully', "Expenditure Data!");
+            },
+            error: (err) => {
+               this.getExpenditure()
+              this.toastrService.error(err.message, "Expenditure Data Error!");
+              new Error(err);
+            },
+          });
+            const editSessionModal = document.getElementById('addRemarksModel');
+              if (editSessionModal) {
+                const modalInstance = bootstrap.Modal.getInstance(editSessionModal);
+                modalInstance.hide();
+              }
+
+            }
 }

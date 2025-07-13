@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { CommonServiceService } from '@app/_services/common-service.service';
-import { APIS } from '@app/constants/constants';
+import { API_BASE_URL, APIS } from '@app/constants/constants';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import DataTable from 'datatables.net-dt';
@@ -55,6 +55,7 @@ export class ProgramExpenditureComponent implements OnInit {
   activityList: any
   subActivitiesList: any
   programCreationMain!: FormGroup;
+  
   BulkExpenditureForm!: FormGroup;
   PrePostExpenditureForm!: FormGroup;
   ExpenditureData:any=[]
@@ -152,6 +153,7 @@ export class ProgramExpenditureComponent implements OnInit {
       expenditureType: new FormControl("PRE", [Validators.required]),
     })
   }
+  
   formDetailsPre() {
     // {
 
@@ -418,6 +420,18 @@ export class ProgramExpenditureComponent implements OnInit {
    }
     
   }
+  imageUrlDownloadPath = `${API_BASE_URL}/program/file/download/`;
+  imagePreviewUrl: any
+    showImagePreview(url: any, value: string) {
+    this.imagePreviewUrl = null; // Reset the image preview URL
+    this.imagePreviewUrl = url + value;
+
+    const editSessionModal = document.getElementById('imagePreview');
+    if (editSessionModal) {
+      const modalInstance = new bootstrap.Modal(editSessionModal);
+      modalInstance.show();
+    }
+  }
   //date converter
   convertToISOFormat(date: string): string {    
     if(date){
@@ -436,7 +450,7 @@ export class ProgramExpenditureComponent implements OnInit {
   validateFileExtension(file: File): boolean {
 
     const allowedExtensions = [ 'jpg','png','pdf','jpeg'];
-    const fileExtension = file.name.split('.').pop()?.toLowerCase();
+    const fileExtension = file?.name?.split('.')?.pop()?.toLowerCase();
     console.log(fileExtension)
     return allowedExtensions.includes(fileExtension || '');
   }
@@ -482,11 +496,11 @@ export class ProgramExpenditureComponent implements OnInit {
   }
   //save pre and post expenditure 
   ExpenditureSubmit(){
+   this.PrePostExpenditureForm.value.checkDate=this.PrePostExpenditureForm.value.checkDate?moment(this.PrePostExpenditureForm.value.checkDate).format('DD-MM-YYYY'):null;
     let payload={...this.programCreationMain.value ,activityId:Number(this.programCreationMain.value.activityId),
       subActivityId:Number(this.programCreationMain.value.subActivityId),programId:Number(this.programCreationMain.value.programId),...this.PrePostExpenditureForm.value,
       headOfExpenseId:Number(this.PrePostExpenditureForm.value.headOfExpenseId),
       billDate:moment(this.PrePostExpenditureForm.value.billDate).format('DD-MM-YYYY'),
-      checkDate:moment(this.PrePostExpenditureForm.value.checkDate).format('DD-MM-YYYY'),
       agencyId:this.agencyId}
     console.log(payload)
     const formData = new FormData();
@@ -863,4 +877,6 @@ export class ProgramExpenditureComponent implements OnInit {
               link.click();
               link.remove();
             }
+
+          
 }
