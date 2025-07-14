@@ -34,11 +34,11 @@ export class ProgramMonitoringNewComponent implements OnInit {
     4:'Program Delivery Details',
     5:'Program Execution',
     6:'Logistics & Facilities Evaluation',
-    7:'Post-Training Assessment',
-    8:'Document Checklist',
-    9:'Observations, Challenges, Best Practices',
-    10:'Overall Program Rating (by Monitor)',
-    11:'Additional Remarks / Recommendations'
+    // 7:'Post-Training Assessment',
+    7:'Document Checklist',
+    // 9:'Observations, Challenges, Best Practices',
+    // 10:'Overall Program Rating (by Monitor)',
+    8:'Additional Remarks / Recommendations'
    }
   ngOnInit(): void {
     // Load data if editing (example with ID 152)
@@ -95,7 +95,7 @@ export class ProgramMonitoringNewComponent implements OnInit {
     { parameter: 'Toilet Hygiene', key: 'toiletHygiene' },
     { parameter: 'Projector / AV Equipment', key: 'avEquipment' },
     { parameter: 'Stationary Availability', key: 'stationary' },
-    { parameter: 'speaker accommodation and travel arrangements', key: 'speakerAccommodation' },
+    { parameter: 'Speaker accommodation and travel arrangements', key: 'speakerAccommodation' },
     // { parameter: 'Speaker Travel Arrangements', key: 'travelArrangements' }
   ];
   get fMon(){
@@ -153,9 +153,9 @@ export class ProgramMonitoringNewComponent implements OnInit {
       programDeliveryDetails: this.fb.array([]),
 
       // Step 5: Program Execution
-      timingPunctuality: [''],
-      sessionContinuity: [''],
-      participantInterestLevel: [''],
+      timingPunctuality: [false],
+      sessionContinuity: [false],
+      participantInterestLevel: [false],
       // overallEnergyEngagement: [''],
       // unforeseenIssues: [''],
       // participantQueries: [''],
