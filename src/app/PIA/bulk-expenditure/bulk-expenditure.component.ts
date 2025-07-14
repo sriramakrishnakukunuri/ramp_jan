@@ -212,6 +212,7 @@ export class BulkExpenditureComponent implements OnInit {
     BulkExpenditureSubmit(){
        this.BulkExpenditureForm.value.checkDate=this.BulkExpenditureForm.value.checkDate?moment(this.BulkExpenditureForm.value.checkDate).format('DD-MM-YYYY'):null;
       let payload={...this.BulkExpenditureForm.value,purchaseDate:moment(this.BulkExpenditureForm.value.purchaseDate).format('DD-MM-YYYY'), billDate:moment(this.BulkExpenditureForm.value.billDate).format('DD-MM-YYYY'),agencyId:this.agencyId}
+      payload['uploadBillUrl']=null;
       const formData = new FormData();
       formData.append("request", JSON.stringify(payload));
 

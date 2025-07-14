@@ -502,10 +502,11 @@ export class ProgramExpenditureComponent implements OnInit {
       headOfExpenseId:Number(this.PrePostExpenditureForm.value.headOfExpenseId),
       billDate:moment(this.PrePostExpenditureForm.value.billDate).format('DD-MM-YYYY'),
       agencyId:this.agencyId}
+      payload['uploadBillUrl']=null
     console.log(payload)
     const formData = new FormData();
-      formData.append("request", JSON.stringify(payload));
-
+     
+       formData.append("request", JSON.stringify(payload));
       if (this.PrePostExpenditureForm.value.uploadBillUrl) {
         formData.append("files", this.uploadedFiles[0]);
         }
