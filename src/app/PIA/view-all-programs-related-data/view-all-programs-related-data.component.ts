@@ -617,13 +617,27 @@ getAgenciesList() {
     return this.RemarkForm.controls;
   }
   formDetailsRemark() {
-    this.RemarkForm = new FormGroup({
-      remark: new FormControl("", [Validators.required]),
+    if(this.loginsessionDetails?.userRole == 'ADMIN'){
+       this.RemarkForm = new FormGroup({
+      spiuComments: new FormControl("", [Validators.required]),
+      agencyComments: new FormControl("", ),
+      status:new FormControl("", [Validators.required]),
       userId:new FormControl("")
       
     })
+    }
+    else{
+      this.RemarkForm = new FormGroup({
+      spiuComments: new FormControl("", ),
+      agencyComments: new FormControl("", [Validators.required]),
+      status:new FormControl("", [Validators.required]),
+      userId:new FormControl("")
+      
+    })
+    }
+   
   }
-  imageUrlDownloadPath = `${API_BASE_URL}/program/file/download/`;
+  imageUrlDownloadPath = `https://metaverseedu.in/`;
   imagePreviewUrl: any
     showImagePreview(url: any, value: string) {
     this.imagePreviewUrl = null; // Reset the image preview URL
@@ -639,7 +653,7 @@ getAgenciesList() {
   expenditureType:any
 openRemarks(item:any){
   this.RemarkForm.reset()
-    item?.remark?this.fRemark['remark'].patchValue(item?.remark):this.fRemark['remark'].patchValue('')
+    item?.status?this.fRemark['status'].patchValue(item?.status):this.fRemark['status'].patchValue('')
     this.expenditureType=item?.expenditureType
      if(item?.expenditureType=='PRE' || item?.expenditureType=='POST'){
          this.expenditureId=item?.programExpenditureId
@@ -659,26 +673,48 @@ openRemarks(item:any){
       let payload:any
       let url:any
       if(this.expenditureType=='PRE' || this.expenditureType=='POST'){
-        url=APIS.programExpenditure.saveRemarks
-        payload={
-        "userId": this.loginsessionDetails?.userId,
-       "remark": this.fRemark['remark'].value,
-        "expenditureId": this.expenditureId
+        url=APIS.programExpenditure.saveRemarks+'?status='+this.fRemark['status'].value
+        if(this.loginsessionDetails?.userRole == 'ADMIN'){
+            payload={
+            "userId": this.loginsessionDetails?.userId,
+            "spiuComments": this.fRemark['spiuComments'].value,
+            "expenditureId": this.expenditureId
+       }
+       
+        }
+        else{
+          payload={
+            "userId": this.loginsessionDetails?.userId,
+            "agencyComments": this.fRemark['agencyComments'].value,
+            "expenditureId": this.expenditureId
+       }
+      
       }
-      }
+    }
       else{
-        url=APIS.programExpenditure.saveRemarksBulk
-        payload={
-        "userId": this.loginsessionDetails?.userId,
-       "remark": this.fRemark['remark'].value,
-        "transactionId": this.expenditureId
+        url=APIS.programExpenditure.saveRemarksBulk+'?status='+this.fRemark['status'].value
+          if(this.loginsessionDetails?.userRole == 'ADMIN'){
+            payload={
+            "userId": this.loginsessionDetails?.userId,
+            "spiuComments": this.fRemark['spiuComments'].value,
+            "transactionId": this.expenditureId
+       }
+       
+        }
+        else{
+          payload={
+            "userId": this.loginsessionDetails?.userId,
+            "agencyComments": this.fRemark['agencyComments'].value,
+            "transactionId": this.expenditureId
+       }
+      
       }
       }
   
             this._commonService.updatedata(url,payload).subscribe({
             next: (res: any) => {
              this.getExpenditure()
-              this.toastrService.success('Remark Added Successfully', "Expenditure Data!");
+              this.toastrService.success('Data Added Successfully', "Expenditure Data!");
             },
             error: (err) => {
                this.getExpenditure()
@@ -693,4 +729,30 @@ openRemarks(item:any){
               }
 
             }
+  downloadPDF(url:any){
+    let linkUrl = 'https://metaverseedu.in/'+url
+    const link = document.createElement("a");
+    link.setAttribute("download", linkUrl);
+    link.setAttribute("target", "_blank");
+    link.setAttribute("href", linkUrl);
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+  }
+  downloadImage(url:any) {
+  const imageUrl = 'https://metaverseedu.in/'+url;
+
+  // const fileName = 'ProgramScreenshot.png'; // Optional: rename the file
+
+  const link = document.createElement('a');
+  link.href = imageUrl;
+  link.download = imageUrl;
+
+  // Required for cross-origin download support
+  link.target = '_blank';
+
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
 }
