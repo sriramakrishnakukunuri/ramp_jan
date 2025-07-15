@@ -141,12 +141,12 @@ export const APIS = {
         saveProgramExecution:API_BASE_URL +`/program/execution/images`,
     },
     programMonitoring:{
-        getProgramMonitoringById:API_BASE_URL +`/program/details/for/feedback/`,
-        getProgramMonitoringByIdUpdated:API_BASE_URL +`/program/feedback/id/`,
-        getProgramMonitoringByIdProgram:API_BASE_URL +`/program/feedback/`,
+        getProgramMonitoringById:API_BASE_URL +`/new/program/details/for/feedback/`,
+        getProgramMonitoringByIdUpdated:API_BASE_URL +`/new/program/feedback/id/`,
+        getProgramMonitoringByIdProgram:API_BASE_URL +`/new/program/feedback/`,
         // getProgramMonitoringById:API_BASE_URL +`/program/monitoring/`,
-        saveProgramMonitoring:API_BASE_URL +`/program/feedback/save`,
-        updateProgramMonitoring:API_BASE_URL +`/program/feedback/update/`,
+        saveProgramMonitoring:API_BASE_URL +`/new/program/feedback/save`,
+        updateProgramMonitoring:API_BASE_URL +`/new/program/feedback/update/`,
     },
     collageCreation:{
         GET_ALL_IMAGES: API_BASE_URL+`/program/file/paths/`,

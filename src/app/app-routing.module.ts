@@ -43,6 +43,7 @@ import { PhysicalTargetsComponent } from './PIA/physical-targets/physical-target
 import { ViewAllAgencyCompletedComponent } from './PIA/view-all-agency-completed/view-all-agency-completed.component';
 import { FinancialTargetsComponent } from './PIA/financial-targets/financial-targets.component';
 import { ViewAllProgramsRelatedDataComponent } from './PIA/view-all-programs-related-data/view-all-programs-related-data.component';
+import { ProgramMonitoringNewComponent } from './PIA/program-monitoring-new/program-monitoring-new.component';
 
 const routes: Routes = [
     {
@@ -92,9 +93,15 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         data: { roles: [Role.Admin,Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
     },
-      {
+    //   {
+    //     path: 'program-monitoring',
+    //     component: ProgramMonitoringComponent,
+    //     canActivate: [AuthGuard],
+    //     data: { roles: [Role.Admin,Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
+    // },
+     {
         path: 'program-monitoring',
-        component: ProgramMonitoringComponent,
+        component: ProgramMonitoringNewComponent,
         canActivate: [AuthGuard],
         data: { roles: [Role.Admin,Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
     },

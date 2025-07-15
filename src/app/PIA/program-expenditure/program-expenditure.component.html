@@ -500,7 +500,7 @@ aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header py-2">
-                <h6 class="modal-title text-white" id="addResourceLabel">Image Preview</h6>
+                <h6 class="modal-title text-white" id="addResourceLabel">Preview</h6>
                 
                 <a href="{{imagePreviewUrl}}" style="margin-left: 491px;" target="_blank" class="btn btn-secondary" *ngIf="imagePreviewUrl">Download</a>
                 
@@ -511,7 +511,7 @@ aria-hidden="true">
                     <img [src]="imagePreviewUrl" alt="Image Preview" class="img-fluid" style="width: 100%; height: auto;">
                 </ng-container>
                 <ng-container *ngIf="!imagePreviewUrl">
-                    <span class="text-danger">No Image Available</span>
+                    <span class="text-danger">No file Available</span>
                 </ng-container>                
                 
             </div>
