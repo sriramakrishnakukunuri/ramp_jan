@@ -197,7 +197,7 @@ export class ProgramExpenditureComponent implements OnInit {
       this.PrePostExpenditureForm.get('ifscCode')?.setValidators(null);
       this.PrePostExpenditureForm.get('bankName')?.patchValue('');
       this.PrePostExpenditureForm.get('checkNo')?.setValidators(null);
-        this.PrePostExpenditureForm.get('checkDate')?.setValidators(null);
+      this.PrePostExpenditureForm.get('checkDate')?.setValidators(null);
       this.PrePostExpenditureForm.get('transactionId')?.patchValue('');
       this.PrePostExpenditureForm.get('ifscCode')?.patchValue('');
       this.PrePostExpenditureForm.get('bankName')?.clearValidators();
@@ -387,6 +387,7 @@ export class ProgramExpenditureComponent implements OnInit {
       console.log(item)
       this.PrePostExpenditureForm.reset()
       item['uploadBillUrl']=''
+      this.modeOfPayment(item?.modeOfPayment)
       this.PrePostExpenditureForm.patchValue({...item,headOfExpenseId:this.getExpenseIdByName(item?.headOfExpense),billDate:this.convertToISOFormat(item?.billDate),checkDate:this.convertToISOFormat(item?.checkDate)})
       // this.PrePostExpenditureForm.get('uploadBillUrl')?.setValue(item?.uploadBillUrl)
   
@@ -416,6 +417,7 @@ export class ProgramExpenditureComponent implements OnInit {
       const modal1 = new bootstrap.Modal(this.BulkEvenModal.nativeElement);
       modal1.show();
     }
+    
    
    }
     

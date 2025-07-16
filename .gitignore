@@ -43,3 +43,7 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+#sudo apt-get install default-jdk
+#chmod +x build-and-package.sh
+#./build-version.sh
