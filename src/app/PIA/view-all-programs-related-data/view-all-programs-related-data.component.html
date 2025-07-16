@@ -359,7 +359,7 @@
                             <table  class="table table-bordered nowrap w-100">
                                 <thead class="bg-lime-green text-white">
                                     <tr>
-                                        <th class="text-center">Edit {{this.loginsessionDetails?.userRole == 'ADMIN'?'SPIU Comment':'Agency Response'}}</th>
+                                        <!-- <th class="text-center">Edit {{this.loginsessionDetails?.userRole == 'ADMIN'?'SPIU Comment':'Agency Response'}}</th> -->
                                         <th>S.No</th>
                                         <th>Type Of Expenditure</th>
                                         <th>Head of Expense</th>
@@ -380,9 +380,9 @@
                                 </thead>
                                 <tbody *ngIf="getExpenditureDataBoth?.length">
                                     <tr  *ngFor="let item of getExpenditureDataBoth; let i=index">
-                                           <td class="text-center">
+                                           <!-- <td class="text-center">
                                         <button type="button"  class="btn btn-default text-lime-green btn-sm"  (click)="openRemarks(item)"><span class="bi bi-pencil"></span></button>
-                                    </td>
+                                    </td> -->
                                         <td class="text-start">{{i+1}}</td>
                                         <td>{{item?.expenditureType}}</td>
                                         <td>{{item?.headOfExpense}}</td>

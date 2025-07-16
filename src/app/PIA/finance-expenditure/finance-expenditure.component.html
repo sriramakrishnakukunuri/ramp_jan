@@ -1,0 +1,522 @@
+<main class="mt-4">
+    <section>
+        <div class="card mb-3">
+            <div class="card-header bg-transparent">
+                <div class="row align-items-center">
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-6">
+                        <h6 class="fw-600 mb-2 mb-sm-0">Expenditure Verification</h6>
+                    </div>
+                    <ng-container *ngIf="loginsessionDetails?.userRole == 'ADMIN'">
+                        <div class="col-12 col-sm-3 col-md-3 col-lg-3">
+                            <label for="Agencies" style="font-weight: 600;">List Of Agencies</label>
+                            <select class="form-select" [(ngModel)]="selectedAgencyId" (change)="getProgramsByAgencyAdmin($any($event.target).value)">    
+                                <!-- <option value="All Agencies">All Agencies</option>                                   -->
+                                <option *ngFor="let list of agencyList" value="{{list.agencyId}}">{{list.agencyName}}</option>
+                            </select>
+                        </div>
+                        <div class="col-12 col-sm-3 col-md-3 col-lg-3">
+                            <label for="Agencies" style="font-weight: 600;">List Of Programs</label>
+                            <select class="form-select" [(ngModel)]="programIds" (change)="dropdownProgramsList($event,'table')">
+                                <!-- <option value="All Programs">All Programs</option>   -->
+                            <option *ngFor="let list of agencyProgramList" value="{{list.programId}}">{{list.programTitle}}</option>
+                            </select>
+                        </div>
+                    </ng-container>   
+                    <ng-container *ngIf="loginsessionDetails?.userRole != 'ADMIN'">
+                        <div class="col-12 col-sm-3 col-md-3 col-lg-3">
+                            <label for="Agencies" style="font-weight: 600;">List Of Programs</label>
+                            <select class="form-select" [(ngModel)]="programIds" (change)="dropdownProgramsList($event,'table')">
+                                <!-- <option value="">Select Program</option> -->
+                            <option *ngFor="let list of agencyProgramList" value="{{list.programId}}">{{list.programTitle}}</option>
+                            </select>
+                        </div>
+                    </ng-container>
+                   
+                </div>
+            </div>
+            <div class="card-body">
+                 <div class="table-container">
+                            <table  class="table table-bordered nowrap w-100">
+                                <thead class="bg-lime-green text-white">
+                                    <tr>
+                                        <th class="text-center">Add {{this.loginsessionDetails?.userRole == 'ADMIN'?'SPIU Comment':'Agency Response'}}</th>
+                                        <th>Edit</th>
+                                        <th>S.No</th>
+                                        <th>Type Of Expenditure</th>
+                                        <th>Head of Expense</th>
+                                        <th>Amount (INR)</th>
+                                        <th>Bill No.</th>
+                                        <th>Bill Date</th>
+                                        <th>Payee Name</th>
+                                        <th>Bank</th>
+                                        <th>IFSC Code</th>
+                                        <th>Mode of Payment</th>
+                                        <th>Status</th>
+                                        <th>Upload Bill/Invoice</th>
+                                         <th>SPIU Comment</th>
+                                        <th>Agency Response</th>
+                                      
+                                      
+                                    </tr>
+                                </thead>
+                                <tbody *ngIf="getExpenditureDataBoth?.length">
+                                    <tr  *ngFor="let item of getExpenditureDataBoth; let i=index">
+                                           <td class="text-center">
+                                        <button type="button"  class="btn btn-default text-lime-green btn-sm"  (click)="openRemarks(item)"><span class="bi bi-pencil"></span></button>
+                                    </td>
+                                     <td class="text-center">
+                                        <button type="button" class="btn btn-default text-lime-green btn-sm" [ngClass]="{'disabled':item?.status=='APPROVED'}"  (click)="OpenModal('edit',item)"><span class="bi bi-pencil"></span></button>
+                                    </td>
+                                        <td class="text-start">{{i+1}}</td>
+                                        <td>{{item?.expenditureType}}</td>
+                                        <td>{{item?.headOfExpense}}</td>
+                                        <td>{{item?.cost?item?.cost:item?.allocatedCost}}</td>
+                                        <td>{{item?.billNo}}</td>
+                                        <td>{{item?.billDate}}</td>
+                                        <td>{{item?.payeeName}}</td>
+                                        <td>{{item?.bankName}}</td>
+                                        <td>{{item?.ifscCode}}</td>
+                                        <td>{{item?.modeOfPayment}}</td>
+                                        <td>{{item?.status}}</td>
+                                          <td *ngIf="item?.uploadBillUrl?.split('.')[1]!='pdf'">
+                                                 <ng-container *ngIf="item?.uploadBillUrl?.split('public_html/')?.[1]">
+                                                       <a (click)="showImagePreview(imageUrlDownloadPath,item?.uploadBillUrl?.split('public_html/')?.[1])" rel="noopener noreferrer">
+                                                        <img src="{{imageUrlDownloadPath}}{{item?.uploadBillUrl?.split('public_html/')?.[1]}}" alt="Image 2" class="img-fluid" style="width: 50px; height: 50px;">
+                                                        </a>
+                                                  </ng-container>
+                                                <ng-container *ngIf="!item?.uploadBillUrl?.split('public_html/')?.[1]">
+                                                    <span class="text-danger">No File</span>
+                                                </ng-container>
+                                         </td>
+                                         <td *ngIf="item?.uploadBillUrl?.split('.')[1]=='pdf'">
+                                            <ng-container >
+                                               <a (click)="downloadPDF(item?.uploadBillUrl?.split('public_html/')?.[1])"> <i class="fas fa-file-pdf"></i></a>
+                                            </ng-container>
+                                         </td>
+                                           <td *ngIf="item.spiuComments.length>1">
+                                                <i class="bx docu-hv-text" style="position: relative;">
+                                                    {{item.spiuComments[0]}}..
+                                                    <div class="statusmes-data" style="width: auto !important;background-color: #ffc107;"> 
+                                                            <p> {{item?.spiuComments}}
+                                                    </div>
+                                                        </i>
+                                           </td>
+                                            <td *ngIf="item.spiuComments.length<=1 ">
+                                                {{item.spiuComments?.[0]}}                        
+                                            </td>
+                                              <td *ngIf="item.agencyComments.length>1">
+                                                <i class="bx docu-hv-text" style="position: relative;">
+                                                    {{item.agencyComments[0]}}..
+                                                    <div class="statusmes-data" style="width: auto !important;background-color: #ffc107;"> 
+                                                            <p> {{item?.agencyComments}}
+                                                    </div>
+                                                        </i>
+                                           </td>
+                                            <td *ngIf="item.agencyComments.length<=1 ">
+                                                {{item.agencyComments?.[0]}}                        
+                                            </td>
+                                        <!-- <td>{{item?.remarksOrResponse}}</td> -->
+                                        <!-- <td>{{item?.purpose}}</td> -->
+                                        <!-- <td>{{item?.uploadBillUrl}}</td> -->
+                                       
+                                    </tr>
+                                </tbody>
+                                <tbody *ngIf="getExpenditureDataBoth?.length">
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>Total</td>
+                                        <td>{{TotalAmount}}</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                   
+                                </tbody>
+                                <tbody *ngIf="getExpenditureDataBoth?.length==0">
+                                    <tr>
+                                        <td colspan="100%" class="text-center">No Data Found</td>
+                                    </tr>
+                                </tbody>
+                              
+                            </table>
+                        </div>
+            </div>
+            
+        </div>
+
+    </section>
+</main>
+
+<div class="modal fade" id="addRemarksModel"  #addRemarksModel tabindex="-1" role="dialog" aria-labelledby="addRemarkslabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addRemarkslabel">Add {{loginsessionDetails?.userRole == 'ADMIN'?'Remarks':'Response'}}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"  aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+               <form [formGroup]="RemarkForm">
+                    <div class="row">
+                          <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                            
+                            <div class="form-floating mb-3">
+                               <select class="form-select" formControlName="status"  name="status" id="status" >
+                                <option value="NEED_CLARIFICATION">NEED CLARIFICATION</option>
+                                 <option value="APPROVED">APPROVED</option>
+                                  <option value="REJECTED">REJECTED</option>
+                               </select>
+                                <label for="status">Status</label>
+                            </div>
+                            <div *ngIf="fRemark['status'].touched && !fRemark['status'].valid"  class="error"
+                            style="color: red;">Status is required</div>
+                            
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12" *ngIf="loginsessionDetails?.userRole == 'ADMIN'">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" formControlName="spiuComments"  name="spiuComments" id="consumed" >
+                                <label for="consumed">SPIU Comments</label>
+                            </div>
+                            <div *ngIf="fRemark['spiuComments'].touched && !fRemark['spiuComments'].valid"  class="error"
+                            style="color: red;">SPIU Comments is required</div>
+                            
+                        </div>
+                         <div class="col-12 col-sm-12 col-md-12 col-lg-12" *ngIf="loginsessionDetails?.userRole != 'ADMIN'">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" formControlName="agencyComments"  name="agencyComments" id="consumed" >
+                                <label for="consumed">Agency Response</label>
+                            </div>
+                            <div *ngIf="fRemark['agencyComments'].touched && !fRemark['agencyComments'].valid"  class="error"
+                            style="color: red;">Agency Response is required</div>
+                            
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-lime-green" (click)="SubmitRemarks()">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="imagePreview" tabindex="-1" aria-labelledby="imagePreview" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header py-2">
+                <h6 class="modal-title text-white" id="addResourceLabel">File Preview</h6>
+                
+                <a href="{{imagePreviewUrl}}" style="margin-left: 491px;" target="_blank" class="btn btn-secondary" *ngIf="imagePreviewUrl">Download</a>
+                
+                <button type="button" class="btn-close me-1" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <ng-container *ngIf="imagePreviewUrl">
+                    <img [src]="imagePreviewUrl" alt="Image Preview" class="img-fluid" style="width: 100%; height: auto;">
+                </ng-container>
+                <ng-container *ngIf="!imagePreviewUrl">
+                    <span class="text-danger">No Preview Available</span>
+                </ng-container>                
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+
+ <!-- begin:: pre/post event expenditure modal -->
+ <div class="modal fade" #addPreEventModal id="addPreEventModal" tabindex="-1" aria-labelledby="preEventLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-xl">
+        <div class="modal-content">
+            <div class="modal-header py-2">
+                <h6 class="modal-title text-white" id="addResourceLabel">{{isEdit?'Edit':'Add'}} {{this.expenditureType=='PRE'?'Pre':'Post'}} Event Expenditure</h6>
+                <button type="button" class="btn-close me-1" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="PrePostExpenditureForm">
+                    <div class="row">
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                            <div class="form-floating mb-3">
+                                <select class="form-select" formControlName="headOfExpenseId"   name="headOfExpenseId" id="headExpense">
+                                    <option value="#">Select Head of expense</option>
+                                    <option value="{{list.expenseId}}" *ngFor="let list of ExpenditureData">{{list.expenseName}}</option>
+                                </select>
+                                <label for="headExpense">Head of Expense<span class="c-red"> *</span></label>
+                            </div>
+                            <div *ngIf="fPre['headOfExpenseId'].touched && !fPre['headOfExpenseId'].valid" class="error"
+                            style="color: red;">Head of Expense is required</div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                            <div class="form-floating mb-3">
+                                <input type="number" class="form-control"  formControlName="cost"  name="cost"  id="amount" placeholder="amount">
+                                <label for="amount">Amount(INR)<span class="c-red"> *</span></label>
+                            </div>
+                            <div *ngIf="fPre['cost'].touched && !fPre['cost'].valid && !fPre['cost'].errors?.['pattern']" class="error"
+                            style="color: red;">Amount(INR) is required</div>
+                            <div *ngIf="fPre['cost'].errors?.['pattern']" class="error">
+                                Please enter a number greater than zero.
+                              </div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="bill" formControlName="billNo"  name="billNo" placeholder="bill">
+                                <label for="bill">Bill No.<span class="c-red"> *</span></label>
+                            </div>
+                            <div *ngIf="fPre['billNo'].touched && !fPre['billNo'].valid" class="error"
+                            style="color: red;">Bill No is required</div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                            <div class="form-floating mb-3">
+                                <input type="date" class="form-control" id="billDate" formControlName="billDate"  name="billDate" placeholder="bill date">
+                                <label for="billDate">Bill Date<span class="c-red"> *</span></label>
+                            </div>
+                            <div *ngIf="fPre['billDate'].touched && !fPre['billDate'].valid" class="error"
+                            style="color: red;">Bill Date is required</div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                            <div class="form-floating mb-3">
+                                <select class="form-select" id="modePayment" formControlName="modeOfPayment"  name="modeOfPayment" (change)="modeOfPayment($any($event.target).value)">
+                                    <option value="#">Select Mode</option>
+                                    <option value="BANK_TRANSFER">Bank Transfer</option>
+                                        <option value="CASH">Cash</option>
+                                        <option value="UPI">UPI</option>
+                                        <option value="CHEQUE">CHEQUE</option>
+                                </select>
+                                <label for="modePayment">Mode Of Payment<span class="c-red"> *</span></label>
+                            </div>
+                            <div *ngIf="fPre['modeOfPayment'].touched && !fPre['modeOfPayment'].valid" class="error"
+                            style="color: red;">Mode Of Payment is required</div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="payeename" formControlName="payeeName"  name="payeeName" placeholder="payeename">
+                                <label for="payeename">Payee Name<span class="c-red"> *</span></label>
+                            </div>
+                            <div *ngIf="fPre['payeeName'].touched && !fPre['payeeName'].valid" class="error"
+                            style="color: red;">Payee Name is required</div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-4" *ngIf="fPre['modeOfPayment'].value!='CHEQUE'">
+                            <div class="form-floating mb-3 mb-sm-3 mb-md-0">
+                                <input type="text" class="form-control" id="transactionId" placeholder="transactionId" formControlName="transactionId"    name="transactionId" />
+                                <label for="bank">Transaction Id<span *ngIf="fPre['modeOfPayment'].value=='UPI'" class="c-red"> *</span></label>
+                            </div>
+                            <div *ngIf="fPre['transactionId'].touched && !fPre['transactionId'].valid" class="error"
+                            style="color: red;">Transaction Id is required</div>
+                        </div>
+                         <div class="col-12 col-sm-6 col-md-4 col-lg-3" *ngIf="fPre['modeOfPayment'].value=='CHEQUE'">
+                                <div class="form-floating mb-3 mb-sm-3 mb-md-0">
+                                    <input type="text" class="form-control" id="checkNo" placeholder="checkNo" formControlName="checkNo"   name="checkNo" />
+                                    <label for="bank">Cheque No<span *ngIf="fPre['modeOfPayment'].value=='UPI'" class="c-red"> *</span></label>
+                                </div>
+                                <div *ngIf="fPre['checkNo'].touched && !fPre['checkNo'].valid && !fPre['checkNo'].errors?.['pattern']" class="error"
+                                style="color: red;">Cheque No is required</div>
+                                 <div *ngIf="fPre['checkNo'].errors?.['pattern']" class="error">
+                                    Please Enter only numeric Values. </div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3" *ngIf="fPre['modeOfPayment'].value=='CHEQUE'">
+                                <div class="form-floating mb-3 mb-sm-3 mb-md-0">
+                                     <input type="date" class="form-control" id="checkDate" placeholder="Cheque Date" formControlName="checkDate"    name="checkDate" >
+                                    <label for="bank">Cheque Date<span *ngIf="fPre['modeOfPayment'].value=='UPI'" class="c-red"> *</span></label>
+                                </div>
+                                <div *ngIf="fPre['checkDate'].touched && !fPre['checkDate'].valid" class="error"
+                                style="color: red;">Cheque Date is required</div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                            <div class="form-floating mb-3" >
+                                <input type="text" class="form-control" id="bank" formControlName="bankName"  name="bankName" placeholder="bank">
+                                <label for="bank">Bank<span *ngIf="fPre['modeOfPayment'].value=='BANK_TRANSFER'" class="c-red"> *</span></label>
+                            </div>
+                            <div *ngIf="fPre['bankName'].touched && !fPre['bankName'].valid" class="error"
+                            style="color: red;">Bank is required</div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="ifsc" formControlName="ifscCode"  name="ifscCode" placeholder="ifsc">
+                                <label for="ifsc">IFSC Code<span *ngIf="fPre['modeOfPayment'].value=='BANK_TRANSFER'" class="c-red"> *</span></label>
+                            </div>
+                            <div *ngIf="fPre['ifscCode'].touched && !fPre['ifscCode'].valid && !fPre['ifscCode']?.errors?.['pattern']" class="error"
+                            style="color: red;">IFSC Code is required</div>
+                            <div *ngIf="fPre['ifscCode']?.errors?.['pattern']" class="error">Invalid IFSC format. Correct format: AAAA0BBBBBB (4 Captial letters, then 0, then 6 letters/numbers)</div>
+                        </div>
+                       
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="purpose" placeholder="purpose" formControlName="purpose"  name="purpose">
+                                <label for="purpose">Purpose</label>
+                            </div>
+                           
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                            <div class="form-floating mb-3">
+                                <input type="file" class="form-control" id="upload" placeholder="upload file" (change)="onFileChange($event)" formControlName="uploadBillUrl"  name="uploadBillUrl">
+                                <label for="upload">upload bill/invoice</label>
+                            </div>
+                            <div *ngIf="fileErrors" class="error">{{fileErrors}}</div>
+                        </div>
+                    </div>
+                </form>
+                <div style="float: left;" class="text-danger mb-2">
+                    <strong>Note:</strong> Please upload files in .jpg, .jpeg, ,.png or .pdf format only.
+                    <br> Maximum file size: 500kb
+                </div>
+                <div class="text-end mt-3" >
+                    <button type="button" class="btn btn-lime-green" data-bs-dismiss="modal" [ngClass]="{'disabled': PrePostExpenditureForm.invalid || fileErrors}" (click)="ExpenditureSubmit()">{{isEdit?'Update':'Add'}} Expenditure</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end:: pre/post event expenditure modal -->
+
+ <!-- begin:: bulk expenditure modal -->
+ <div class="modal fade" id="bulkModal"  #BulkEvenModal tabindex="-1" aria-labelledby="bulkLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-xl">
+        <div class="modal-content">
+            <div class="modal-header py-2">
+                <h6 class="modal-title text-white" id="addResourceLabel">Bulk Expenditure</h6>
+                <button type="button" class="btn-close me-1" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="BulkExpenditureForm">
+                    <div class="row">
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                            <div class="form-floating mb-3">
+                                <select class="form-select" id="headExpense" formControlName="headOfExpenseId"   name="headOfExpenseId" (change)="getHeadOfExpenseId($any($event.target).value)" >
+                                    <option value="#">Select Head of expense</option>
+                                    <option value="{{list.expenseId}}" *ngFor="let list of ExpenditureData">{{list.expenseName}}</option>
+                                </select>
+                                <label for="headExpense">Head of Expense <span class="c-red"> *</span></label>
+                            </div>
+                            <div *ngIf="fBulk['headOfExpenseId'].touched && !fBulk['headOfExpenseId'].valid" class="error"
+                            style="color: red;">Head of Expense is required</div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                            <div class="form-floating mb-3">
+                                <select class="form-select" id="item" formControlName="itemName"   name="itemName" (change)="getBulkDataByItem($any($event.target).value,this.fBulk['headOfExpenseId'].value)">
+                                    <option value="">Select Item</option>
+                                    <option value="{{list}}" *ngFor="let list of GetItemsData">{{list}}</option>
+                                </select>
+                                <!-- <input type="text" class="form-control" placeholder="Item Name" formControlName="itemName"   name="itemName" id="item" /> -->
+                                <label for="item">Name of Item <span class="c-red"> *</span></label>
+                            </div>
+                            <div *ngIf="fBulk['itemName'].touched && !fBulk['itemName'].valid" class="error"
+                            style="color: red;">Name of Item  is required</div>
+                        </div>
+                        <!-- <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" placeholder="Write here" formControlName="headOfExpenseId"   name="headOfExpenseId" id="description" />
+                                <label for="description">Description</label>
+                            </div>
+                        </div> -->
+                    </div>
+                    <!-- <fieldset class="mb-3">
+                        <legend class="text-lime-green">Quantity Purchased</legend>
+                        <div class="row">                                
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                                <div class="form-floating mb-3">
+                                    <input type="date" class="form-control" placeholder="purchaseDate" formControlName="purchaseDate"   name="purchaseDate" id="purchaseDate" />
+                                    <label for="purchaseDate">Purchase Date <span class="c-red"> *</span></label>
+                                </div>
+                                <div *ngIf="fBulk['purchaseDate'].touched && !fBulk['purchaseDate'].valid" class="error"
+                                style="color: red;">Purchase Date  is required</div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                                <div class="form-floating mb-3">
+                                    <input type="number" class="form-control" id="quantity"  formControlName="purchasedQuantity"    name="purchasedQuantity" placeholder="total quantity" />
+                                    <label for="quantity">Quantity Purchased <span class="c-red"> *</span></label>
+                                </div>
+                                <div *ngIf="fBulk['purchasedQuantity'].touched && !fBulk['purchasedQuantity'].valid" class="error"
+                                style="color: red;">Quantity Purchased  is required</div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                                <div class="form-floating mb-3">
+                                    <input type="number" class="form-control" id="bill" formControlName="unitCost"    name="unitCost"  placeholder="bill" />
+                                    <label for="bill">Unit Price <span class="c-red"> *</span></label>
+                                </div>
+                                <div *ngIf="fBulk['availableQuantity'].touched && !fBulk['unitCost'].valid" class="error"
+                                style="color: red;">Unit Price   is required</div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                                <div class="form-floating mb-0">
+                                    <input type="text" class="form-control" id="cost" formControlName="purchasedQuantity"    name="purchasedQuantity"  placeholder="cost date" />
+                                    <label for="cost">Total Cost</label>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset> -->
+                    <fieldset class="mb-3">
+                        <legend class="text-lime-green">Quantity Purchased</legend>
+                        <div class="row">
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                                <div class="form-floating mb-3">
+                                    <input type="text" readonly class="form-control" formControlName="purchasedQuantity"   name="purchasedQuantity"  id="quantity" placeholder="total quantity">
+                                    <label for="quantity">Total Quantity Purchased</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                                <div class="form-floating mb-3">
+                                    <input type="text" readonly class="form-control" formControlName="unitCost"   name="unitCost"  id="bill" placeholder="bill">
+                                    <label for="bill">Unit Price</label>
+                                </div>
+                                <div *ngIf="fPre['cost'].errors?.['pattern']" class="error">
+                                    Please enter a Price greater than zero.
+                                  </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                                <div class="form-floating mb-3">
+                                    <input type="date" readonly class="form-control" formControlName="purchaseDate"   name="purchaseDate"  id="billDate" placeholder="bill date">
+                                    <label for="billDate">Date Of Purchase</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                                <div class="form-floating mb-3 mb-sm-0">
+                                    <input type="text" readonly class="form-control" formControlName="consumedQuantityFromBulk"   name="consumedQuantityFromBulk"  id="payeename" placeholder="payeename">
+                                    <label for="payeename">Quantity Consumed Already</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                                <div class="form-floating mb-0">
+                                    <input type="text" readonly class="form-control" formControlName="availableQuantity"   name="availableQuantity"  id="bank" placeholder="bank">
+                                    <label for="bank">Quantity Available</label>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                   
+                    <div class="row">
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                            <div class="form-floating mb-3">
+                                <input type="number" class="form-control" formControlName="consumedQuantity"  name="consumedQuantity" id="consumed" placeholder="consumed" (input)="calcCostAllocated($any($event.target).value)">
+                                <label for="consumed">Quantity Consumed For This Program</label>
+                            </div>
+                            <div *ngIf="fBulk['consumedQuantity'].touched && !fBulk['consumedQuantity'].valid && !fBulk['consumedQuantity'].errors?.['pattern']"  class="error"
+                            style="color: red;">Quantity Consumed For This Program is required</div>
+                            <div *ngIf="fBulk['consumedQuantity'].value > fBulk['availableQuantity'].value && !fBulk['consumedQuantity'].errors?.['pattern']" class="error"> Entered Quantity should be less than Or equal to Available Qunatity</div>
+                            <div *ngIf="fBulk['consumedQuantity'].errors?.['pattern']" class="error">
+                                Please enter a Qunatity greater than zero.
+                              </div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                            <div class="form-floating mb-3">
+                                <input type="number" class="form-control" id="cose" readonly formControlName="allocatedCost"  name="allocatedCost" placeholder="cost">
+                                <label for="codt">Cost Allocated</label>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="text-end mt-3" >
+                    <button type="button" class="btn btn-lime-green" data-bs-dismiss="modal" [ngClass]="{'disabled': BulkExpenditureForm.invalid || fBulk['consumedQuantity'].value >fBulk['availableQuantity'].value}" (click)="BulkExpenditureSubmit()">Add Bulk Expenditure</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end:: bulk expenditure modal -->
