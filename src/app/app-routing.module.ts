@@ -44,6 +44,7 @@ import { ViewAllAgencyCompletedComponent } from './PIA/view-all-agency-completed
 import { FinancialTargetsComponent } from './PIA/financial-targets/financial-targets.component';
 import { ViewAllProgramsRelatedDataComponent } from './PIA/view-all-programs-related-data/view-all-programs-related-data.component';
 import { ProgramMonitoringNewComponent } from './PIA/program-monitoring-new/program-monitoring-new.component';
+import { FinanceExpenditureComponent } from './PIA/finance-expenditure/finance-expenditure.component';
 
 const routes: Routes = [
     {
@@ -99,6 +100,12 @@ const routes: Routes = [
     //     canActivate: [AuthGuard],
     //     data: { roles: [Role.Admin,Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
     // },
+     {
+        path: 'expenditure-verification',
+        component: FinanceExpenditureComponent,
+        canActivate: [AuthGuard],
+        data: { roles: [Role.Admin,Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
+    },
      {
         path: 'program-monitoring',
         component: ProgramMonitoringNewComponent,
