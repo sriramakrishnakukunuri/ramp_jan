@@ -70,6 +70,13 @@ export class CaptureOutcomeDynamicComponent implements OnInit {
     this.formData={}
     this.OutComeForm=new FormGroup({outcomesName:new FormControl('',[Validators.required])})
     this.OutComeForm.patchValue({outcomesName:Outcome})
+    let type:any=''
+    console.log(Outcome.includes('ZEDCertification'),Outcome)
+    if(Outcome.includes('ZEDCertification')){
+      type=Outcome.split('-')
+      console.log(type)
+      Outcome=type[0]+'?type='+type[1]
+    }
     if(this.ParticipantData?.participantId){
       this._commonService.getById(APIS.captureOutcome.getDynamicFormDataBasedOnOutCome+this.ParticipantData?.participantId+'/',Outcome).subscribe({
         next: (res: any) => {
