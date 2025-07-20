@@ -25,8 +25,10 @@ currentStep:any = 1;
     this.stepperChanges()
      
   }
+  apllictaionDataGlobal:any
   stepperChanges(){
      const applicationData = JSON.parse(sessionStorage.getItem('ApplicationData') || '{}');
+     this.apllictaionDataGlobal=applicationData
      console.log('Application Data:', applicationData);
      if(!applicationData || Object.keys(applicationData).length === 0) {
 
@@ -48,6 +50,10 @@ currentStep:any = 1;
       this.currentStep=3
      }
       else if(applicationData.status === 'UNIT_VISIT' || applicationData.applicationStatus === 'UNIT_VISIT'){
+     this._commonService.setCurrentStep(4)
+      this.currentStep=5
+     }
+      else if(applicationData.status === 'DIAGNOSTIC_REPORT' || applicationData.applicationStatus === 'DIAGNOSTIC_REPORT'){
      this._commonService.setCurrentStep(5)
       this.currentStep=5
      }
@@ -109,7 +115,7 @@ progressBarStatusUpdate(event:any) {
   console.log(event)
     if(event.update === true) {  
        const applicationData = JSON.parse(sessionStorage.getItem('ApplicationData') || '{}'); 
-
+       this.apllictaionDataGlobal=applicationData
       //  console.log(applicationData,applicationData?.registrationUsageId?applicationData?.registrationUsageId:applicationData?.registrationId)
       this.getDtataByUrl(APIS.tihclExecutive.registerData + (applicationData.registrationUsageId? applicationData?.registrationUsageId:applicationData?.registrationId))
       // this.getDtataByUrl(APIS.tihclExecutive.registerData + applicationData.registrationUsageId)

@@ -279,27 +279,27 @@
       <!-- Problems and Solutions -->
       <div>
         <div class="mb-3">
-          <label class="fs-md fw-600 mb-1">What are your problems?<span class="text-danger">*</span></label>
+          <label class="fs-md fw-600 mb-1">What are the problems being faced by the unit?<span class="text-danger">*</span></label>
           <div>
             <textarea class="form-control" rows="3" placeholder="Write here" formControlName="problemsFaced"></textarea>
           </div>
            <div *ngIf="assessmentForm.get('problemsFaced')?.invalid && assessmentForm.get('problemsFaced')?.touched && !assessmentForm.get('problemsFaced')?.hasError('pattern')"
                 class="text-danger small">
-                problem is required
+                Problem is required
               </div>
-               <div *ngIf="assessmentForm.get('problemsFaced')?.hasError('pattern')" class="text-danger" >problem Should be Characters and Numbers</div>
+               <div *ngIf="assessmentForm.get('problemsFaced')?.hasError('pattern')" class="text-danger" >Problem Should be Characters and Numbers</div>
         </div>
         <div class="mb-3">
-          <label class="fs-md fw-600 mb-1">What is the expected solutions?<span class="text-danger">*</span></label>
+          <label class="fs-md fw-600 mb-1">What are the recommended solutions?<span class="text-danger">*</span></label>
           <div>
             <textarea class="form-control" rows="3" placeholder="Write here"
               formControlName="expectedSolution"></textarea>
           </div>
            <div *ngIf="assessmentForm.get('expectedSolution')?.invalid && assessmentForm.get('expectedSolution')?.touched && !assessmentForm.get('expectedSolution')?.hasError('pattern')" 
                 class="text-danger small">
-                Expected solutions is required
+                Recommended  solutions is required
               </div>
-                <div *ngIf="assessmentForm.get('expectedSolution')?.hasError('pattern')" class="text-danger" >Expected solutions Should be Characters and Numbers</div>
+                <div *ngIf="assessmentForm.get('expectedSolution')?.hasError('pattern')" class="text-danger" >Recommended  solutions Should be Characters and Numbers</div>
         </div>
 
         <!-- Stress Score -->
@@ -361,7 +361,7 @@
 
         <!-- Observations -->
         <div class="mb-3">
-          <label class="fs-md fw-600 mb-1">Observations<span class="text-danger">*</span></label>
+          <label class="fs-md fw-600 mb-1">Executive Views<span class="text-danger">*</span></label>
           <div>
             <textarea class="form-control" rows="3" placeholder="Write here" name="observations" formControlName="observations"></textarea>
           </div>
@@ -369,11 +369,11 @@
               class="text-danger small">
              Observations is required
             </div>
-            <div *ngIf="assessmentForm.get('observations')?.hasError('pattern')" class="text-danger" >Observations Should be Characters and Numbers</div>
+            <div *ngIf="assessmentForm.get('observations')?.hasError('pattern')" class="text-danger" >Executive Views Should be Characters and Numbers</div>
         </div>
 
         <!-- Status Update -->
-        <div class="mb-3">
+        <!-- <div class="mb-3">
           <label class="fs-md fw-600 mb-1">Status Update</label>
           <div class="mb-2">
             <div class="form-check form-check-inline">
@@ -391,7 +391,7 @@
               Please select a status
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
 
       <!-- Submit Button -->

@@ -42,48 +42,48 @@ export class RampChecklistComponent implements OnInit {
   initializeForm(): void {
     this.rampChecklistForm = this.fb.group({
       // Section 1: Sourcing of Applications
-      isBorrowerIdentified: [false],
-      isStress: [false],
-      isStressDueToWillfulReasons: [false],
+      isBorrowerIdentified: [true],
+      isStress: [true],
+      isStressDueToWillfulReasons: [true],
       
       // Section 2: KYC and Due Diligence
-      isBriefProfile: [false],
-      isBriefHistoryAccount: [false],
-      isKycDocumentVerified: [false],
-      isProperAndEffective: [false],
+      isBriefProfile: [true],
+      isBriefHistoryAccount: [true],
+      isKycDocumentVerified: [true],
+      isProperAndEffective: [true],
       
       // Section 3: Required Documents
-      isLoanApplicationDocs: [false],
-      isExistingBankingArrangements: [false],
-      isNocCertificate: [false],
-      isPresentRequest: [false],
+      isLoanApplicationDocs: [true],
+      isExistingBankingArrangements: [true],
+      isNocCertificate: [true],
+      isPresentRequest: [true],
       
       // Section 4: Processing
       isAnalyzeAndIdentify: [false],
-      isTechnicalFeasibility: [false],
-      isAnalysisOfCreditBureauReports: [false],
-      isDemandForProductAndMarketPotential: [false],
-      isOrderBookPosition: [false],
-      isListOfTopBuyersAndSuppliers: [false],
-      isExistingMarketingArrangements: [false],
-      isAnalysisOfFinancials: [false],
-      isEstablishingFinancialViability: [false],
-      isAvailabilityOfSecurity: [false],
-      isCapacityAndResources: [false],
-      isPendingStatutoryDues: [false],
+      isTechnicalFeasibility: [true],
+      isAnalysisOfCreditBureauReports: [true],
+      isDemandForProductAndMarketPotential: [true],
+      isOrderBookPosition: [true],
+      isListOfTopBuyersAndSuppliers: [true],
+      isExistingMarketingArrangements: [true],
+      isAnalysisOfFinancials: [true],
+      isEstablishingFinancialViability: [true],
+      isAvailabilityOfSecurity: [true],
+      isCapacityAndResources: [true],
+      isPendingStatutoryDues: [true],
       
       // Section 5: Unit Visit
-      isCapacityUtilization: [false],
-      isProcessingTheProposal:[false],
-      isAchievementOfBreakevenProductionLevels: [false],
-      isAvailabilityOfSkilledManpower: [false],
-      isSupplyChainMechanism: [false],
-      isAvailabilityOfRequiredInfrastructure: [false],
-      isPollutionControlPermissions: [false],
+      isCapacityUtilization: [true],
+      isProcessingTheProposal:[true],
+      isAchievementOfBreakevenProductionLevels: [true],
+      isAvailabilityOfSkilledManpower: [true],
+      isSupplyChainMechanism: [true],
+      isAvailabilityOfRequiredInfrastructure: [true],
+      isPollutionControlPermissions: [true],
       
       // Section 6: Risk Management
-      isVariousRiskElements: [false],
-      isProposalClearedFromRiskAngle: [false],
+      isVariousRiskElements: [true],
+      isProposalClearedFromRiskAngle: [true],
       
       // File Upload
       creditApprasialPath: ['',[Validators?.required]]
@@ -103,7 +103,7 @@ export class RampChecklistComponent implements OnInit {
       isExistingBankingArrangements: true,
       isNocCertificate: true,
       isPresentRequest: true,
-      isAnalyzeAndIdentify: true,
+      isAnalyzeAndIdentify: false,
       isTechnicalFeasibility: true,
       isAnalysisOfCreditBureauReports: true,
       isDemandForProductAndMarketPotential: true,

@@ -33,7 +33,7 @@ export class DisbursementDetailsComponent implements OnInit {
     this.disbursementForm = this.fb.group({
       sanctionedAmt: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
       disbursmentAmt: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
-      dateDisbursement: ['', Validators.required],
+      dateDisbursement: [null],
       bankName: ['', Validators.required],
       ifscCode: ['', [Validators.required, Validators.pattern(/^[A-Z]{4}0[A-Z0-9]{6}$/)]],
       acountName: ['', Validators.required],

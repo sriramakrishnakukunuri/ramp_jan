@@ -3,7 +3,13 @@
     <div class="container-fluid">
       <div class="card mb-3">
         <div class="card-header bg-theme text-white">
-          <h6 class="mb-0">Application Status</h6>
+          <div class="d-flex justify-content-between align-items-center">
+            <span class="mb-0 fw-600">Application Status</span>
+            <div class="d-flex align-items-center ms-auto">
+              <span class="mb-0 fw-600 me-4">Company Name : {{this.apllictaionDataGlobal?.enterpriseName}}</span>
+              <span class="mb-0 fw-600">Application No : {{this.apllictaionDataGlobal?.applicationNo}}</span>
+            </div>
+          </div>
         </div>
         <div class="card-body">
           <div class="px-4 mt-3">
@@ -34,7 +40,7 @@
               </div>
               <div class="fs-md fw-600" [class.active]="currentStep >= 5" >Manager Approval 2
               </div>
-              <div class="fs-md fw-600" [class.active]="currentStep >= 6" (click)="currentStep=6">DIC Concern Letter
+              <div class="fs-md fw-600" [class.active]="currentStep >= 6" >DIC Consent Letter
               </div>
               <div class="fs-md fw-600" [class.active]="currentStep >= 7" >Ramp Checklist &
                 Credit Appraisal Upload</div>
@@ -68,7 +74,7 @@
                 </div>
                     <!-- Step 4 - Status -->
                 <div class="step step-4" *ngIf="currentStep === 4">
-                    <app-diagnostic-report></app-diagnostic-report>
+                    <app-diagnostic-report (progressBarStatusUpdate)="progressBarStatusUpdate($event)"></app-diagnostic-report>
                 </div>
                 <!-- Step 5 - Status -->
                 <div class="step step-5" *ngIf="currentStep === 5">

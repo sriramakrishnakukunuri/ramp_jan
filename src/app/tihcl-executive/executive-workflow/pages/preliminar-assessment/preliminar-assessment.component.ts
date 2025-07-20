@@ -354,7 +354,7 @@ loginsessionDetails:any
       
       // Observations and status
       observations: ['',[Validators.required, Validators.pattern(/^(?=.*[a-zA-Z])[a-zA-Z0-9 .]+$/)]],
-      statusUpdate: ['', Validators.required],
+      statusUpdate: [''],
     });
     for (let i = 1; i <= 10; i++) {
      this.assessmentForm.removeControl(`stressScore_${i}`);

@@ -80,11 +80,14 @@ export const APIS = {
         saveSanction:  API_BASE_URL+`/sanction/details/save`,
         saveDisbursement:  API_BASE_URL+`/disbursement/details/save`,
         getdisbursementDelete:API_BASE_URL+`/disbursement/details/disbursement/id/`,
+        getDiagnostic:API_BASE_URL+'/diagnostic-reports/getBy/usage/',
+        saveDiagnostic:API_BASE_URL+'/diagnostic-reports/save'
+
 
     },
     tihclManager:{
         getLevelOneData: API_BASE_URL + '/registrations/status?status=PRELIMINARY_ASSESSMENT',
-        getLevelTwoData: API_BASE_URL + '/registrations/status?status=UNIT_VISIT',
+        getLevelTwoData: API_BASE_URL + '/registrations/status?status=DIAGNOSTIC_REPORT',
         getLevelThreeData:API_BASE_URL + '/registrations/status?status=SANCTION_LETTER_UPLOAD',
         approveLevelOne: API_BASE_URL + '/registrations/status/updation/',
         approveLevelTwo: API_BASE_URL + '/programs/level2/approve/',

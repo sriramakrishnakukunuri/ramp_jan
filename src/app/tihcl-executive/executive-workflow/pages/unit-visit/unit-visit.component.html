@@ -70,13 +70,28 @@
           <!-- Land Details -->
           <div class="col-12 col-sm-12 col-md-4 col-lg-3">
             <div class="form-floating mb-3">
+                <select class="form-select" id="landDetails" formControlName="selectLandDetails">
+                  <option value="" disabled selected>Select Option</option>
+                  <option value="Leased">Leased</option>
+                  <option value="Owned">Owned</option>
+                  <option value="Rent">Rent</option>
+                  <option value="Sub Leased">Sub Leased</option>
+                </select>
+                <label for="landDetails">Land Details</label>
+                <div *ngIf="unitVisitForm.get('selectLandDetails')?.invalid && 
+                                           (unitVisitForm.get('selectLandDetails')?.dirty || 
+                                           unitVisitForm.get('selectLandDetails')?.touched)" class="text-danger">
+                 Land Details is required
+                </div>
+              </div>
+            <!-- <div class="form-floating mb-3">
               <input type="text" class="form-control" id="landDetails" name="selectLandDetails" placeholder="" formControlName="selectLandDetails">
               <label for="landDetails">Land Details</label>
               <div *ngIf="unitVisitForm.get('selectLandDetails')?.invalid && (unitVisitForm.get('selectLandDetails')?.dirty || unitVisitForm.get('selectLandDetails')?.touched)"
                    class="text-danger">
                 Land Details is required
               </div>
-            </div>
+            </div> -->
           </div>
 
           <!-- Factory Address -->
@@ -116,11 +131,11 @@
 
         <hr>
 
-        <!-- Factory Shed & Building details -->
+        <!-- Machinery details -->
         <div>
           <div class="d-flex align-items-center justify-content-between mb-3">
             <div>
-              <h6 class="fw-600">Factory Shed & Building details</h6>
+              <h6 class="fw-600">Machinery details</h6>
             </div>
             <div>
               <button type="button" data-bs-toggle="modal" data-bs-target="#addmachinary" class="btn btn-primary btn-sm">
@@ -134,12 +149,12 @@
                 <tr>
                   <th>S.No</th>
                   <th>Actions</th>
-                  <th>Types of machine</th>
+                  <th>Name of machine</th>
                   <th>Purpose</th>
                   <th>No. of machines</th>
                   <th>Cost of machine purchased</th>
                   <th>Current condition</th>
-                  <th>Value of machinery</th>
+                  <th>Current value of machinery</th>
                 </tr>
               </thead>
               <tbody >
@@ -249,10 +264,10 @@
             <div class="col-12 col-sm-6 col-md-4 col-lg-4">
               <div class="form-floating mb-3">
                 <input type="number" class="form-control" id="officeStaff" name="officeStaff" placeholder="" formControlName="officeStaff" min="0">
-                <label for="officeStaff">Office Staff</label>
+                <label for="officeStaff">Skilled</label>
                 <div *ngIf="unitVisitForm.get('officeStaff')?.errors?.['required'] && (unitVisitForm.get('officeStaff')?.dirty || unitVisitForm.get('officeStaff')?.touched)"
                      class="text-danger">
-                  Office Staff is required
+                  Skilled is required
                 </div>
                 <div *ngIf="unitVisitForm.get('officeStaff')?.errors?.['min']" class="text-danger">
                   Value cannot be negative
@@ -264,10 +279,10 @@
             <div class="col-12 col-sm-6 col-md-4 col-lg-4">
               <div class="form-floating mb-3">
                 <input type="number" class="form-control" id="factoryWorkers" name="factoryWorkers" placeholder="" formControlName="factoryWorkers" min="0">
-                <label for="factoryWorkers">Factory Workers</label>
+                <label for="factoryWorkers">Unskilled</label>
                 <div *ngIf="unitVisitForm.get('factoryWorkers')?.errors?.['required'] && (unitVisitForm.get('factoryWorkers')?.dirty || unitVisitForm.get('factoryWorkers')?.touched)"
                      class="text-danger">
-                  Factory Workers is required
+                  Unskilled is required
                 </div>
                 <div *ngIf="unitVisitForm.get('factoryWorkers')?.errors?.['min']" class="text-danger">
                   Value cannot be negative
@@ -279,10 +294,10 @@
             <div class="col-12 col-sm-6 col-md-4 col-lg-4">
               <div class="form-floating mb-3">
                 <input type="number" class="form-control" id="temporaryWorkers" name="temporaryWorkers" placeholder="" formControlName="temporaryWorkers" min="0">
-                <label for="temporaryWorkers">Temporary Workers</label>
+                <label for="temporaryWorkers">Total</label>
                 <div *ngIf="unitVisitForm.get('temporaryWorkers')?.errors?.['required'] && (unitVisitForm.get('temporaryWorkers')?.dirty || unitVisitForm.get('temporaryWorkers')?.touched)"
                      class="text-danger">
-                  Temporary Workers is required
+                  Total is required
                 </div>
                 <div *ngIf="unitVisitForm.get('temporaryWorkers')?.errors?.['min']" class="text-danger">
                   Value cannot be negative
@@ -294,7 +309,7 @@
 
         <hr>
 
-        <div class="row">
+        <div class="row mb-3">
           <!-- Employees Attendance Register -->
           <div class="col-12 col-sm-6 col-md-4 col-lg-4">
             <div class="mb-3">
@@ -313,7 +328,9 @@
               </div>
             </div>
           </div>
-          
+          <hr>
+          </div>
+          <div class="row">
           <!-- Inconsistencies -->
           <div class="col-12 col-sm-6 col-md-4 col-lg-4">
             <div class="form-floating mb-3">
@@ -340,14 +357,27 @@
           
           <!-- Production seasonal or throughout the year -->
           <div class="col-12 col-sm-6 col-md-4 col-lg-4">
-            <div class="form-floating mb-3">
+             <div class="form-floating mb-3">
+                <select class="form-select" id="seasonal" formControlName="seasonalOrThroughtoutYear">
+                  <option value="" disabled selected>Select Option</option>
+                  <option value="Seasonal">Seasonal</option>
+                  <option value="Throughout the Year">Throughout the Year</option>
+                </select>
+                <label for="seasonal">Whether production is seasonal or throughout the year?</label>
+                <div *ngIf="unitVisitForm.get('seasonalOrThroughtoutYear')?.invalid && 
+                                           (unitVisitForm.get('seasonalOrThroughtoutYear')?.dirty || 
+                                           unitVisitForm.get('seasonalOrThroughtoutYear')?.touched)" class="text-danger">
+                  Seasonal or throughout the year is required
+                </div>
+              </div>
+            <!-- <div class="form-floating mb-3">
               <input type="text" class="form-control" id="seasonal" name="seasonalOrThroughtoutYear" placeholder="" formControlName="seasonalOrThroughtoutYear">
               <label for="seasonal">Whether production is seasonal or throughout the year?</label>
               <div *ngIf="unitVisitForm.get('seasonalOrThroughtoutYear')?.invalid && (unitVisitForm.get('seasonalOrThroughtoutYear')?.dirty || unitVisitForm.get('seasonalOrThroughtoutYear')?.touched)"
                    class="text-danger">
                 Seasonal or throughout the year is required
               </div>
-            </div>
+            </div> -->
           </div>
           
           <!-- Number of Shifts -->
@@ -365,7 +395,16 @@
             </div>
           </div>
           
-          <!-- Stocks stored properly -->
+         
+        </div>
+
+        <hr>
+
+        <!-- Stocks Record -->
+        <div>
+          <label class="fs-md fw-600">Stocks Record</label>
+          <div class="row">
+             <!-- Stocks stored properly -->
           <div class="col-12 col-sm-6 col-md-4 col-lg-4">
             <h6 class="fw-600 fs-md">Are stocks stored property</h6>
             <div class="form-check form-check-inline">
@@ -398,14 +437,6 @@
               storage capacity is required
             </div>
           </div>
-        </div>
-
-        <hr>
-
-        <!-- Stocks Record -->
-        <div>
-          <label class="fs-md fw-600">Stocks Record</label>
-          <div class="row">
             <!-- Stocks register maintained -->
             <div class="col-12 col-sm-6 col-md-4 col-lg-4">
               <div class="form-floating mb-3">
@@ -463,37 +494,46 @@
             <!-- Raw material -->
             <div class="col-12 col-sm-6 col-md-4 col-lg-4">
               <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="stocks4" name="rawMaterials" placeholder="" formControlName="rawMaterials">
-                <label for="stocks4">Raw material</label>
+                <input type="number" class="form-control" id="stocks4" name="rawMaterials" placeholder="" formControlName="rawMaterials" min="0">
+                <label for="stocks4">Raw material(In Rs)</label>
               </div>
               <div *ngIf="unitVisitForm.get('rawMaterials')?.errors?.['required'] && (unitVisitForm.get('rawMaterials')?.dirty || unitVisitForm.get('rawMaterials')?.touched)"
                      class="text-danger">
                   Raw material is required
                 </div>
+                 <div *ngIf="unitVisitForm.get('rawMaterials')?.errors?.['min']" class="text-danger">
+                Value cannot be negative
+              </div>
             </div>
             
             <!-- Work in Progress -->
             <div class="col-12 col-sm-6 col-md-4 col-lg-4">
               <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="stocks5" name="workInProgress" placeholder="" formControlName="workInProgress">
-                <label for="stocks5">Work in Progress</label>
+                <input type="number" class="form-control" id="stocks5" name="workInProgress" placeholder="" formControlName="workInProgress" min="0">
+                <label for="stocks5">Work in Progress(In Rs)</label>
               </div>
               <div *ngIf="unitVisitForm.get('workInProgress')?.errors?.['required'] && (unitVisitForm.get('workInProgress')?.dirty || unitVisitForm.get('workInProgress')?.touched)"
                      class="text-danger">
                   Work in Progress is required
                 </div>
+                <div *ngIf="unitVisitForm.get('workInProgress')?.errors?.['min']" class="text-danger">
+                Value cannot be negative
+              </div>
             </div>
             
             <!-- Finished Goods -->
             <div class="col-12 col-sm-6 col-md-4 col-lg-4">
               <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="stocks6" name="finishedGoods" placeholder="" formControlName="finishedGoods">
-                <label for="stocks6">Finished Goods</label>
+                <input type="number" class="form-control" id="stocks6" name="finishedGoods" placeholder="" formControlName="finishedGoods" min="0">
+                <label for="stocks6">Finished Goods(In Rs)</label>
               </div>
               <div *ngIf="unitVisitForm.get('finishedGoods')?.errors?.['required'] && (unitVisitForm.get('finishedGoods')?.dirty || unitVisitForm.get('finishedGoods')?.touched)"
                      class="text-danger">
                   Finished Goods is required
                 </div>
+                 <div *ngIf="unitVisitForm.get('finishedGoods')?.errors?.['min']" class="text-danger">
+                Value cannot be negative
+              </div>
             </div>
           </div>
         </div>
@@ -505,30 +545,30 @@
           <!-- Maximum production -->
           <div class="col-12 col-sm-6 col-md-4 col-lg-4">
             <div class="form-floating mb-3">
-              <input type="number" class="form-control" id="max" name="maxProductionInUnit" placeholder="" formControlName="maxProductionInUnit" min="0">
-              <label for="max">Maximum production in units</label>
+              <input type="text" class="form-control" id="max" name="maxProductionInUnit" placeholder="" formControlName="maxProductionInUnit">
+              <label for="max">Installed Capacity (In Units)</label>
               <div *ngIf="unitVisitForm.get('maxProductionInUnit')?.errors?.['required'] && (unitVisitForm.get('maxProductionInUnit')?.dirty || unitVisitForm.get('maxProductionInUnit')?.touched)"
                    class="text-danger">
-                Maximum production in units is required
+                Installed Capacity is required
               </div>
-              <div *ngIf="unitVisitForm.get('maxProductionInUnit')?.errors?.['min']" class="text-danger">
+              <!-- <div *ngIf="unitVisitForm.get('maxProductionInUnit')?.errors?.['min']" class="text-danger">
                 Value cannot be negative
-              </div>
+              </div> -->
             </div>
           </div>
           
           <!-- Minimum production -->
           <div class="col-12 col-sm-6 col-md-4 col-lg-4">
             <div class="form-floating mb-3">
-              <input type="number" class="form-control" id="min" name="minProductionInUnit" placeholder="" formControlName="minProductionInUnit" min="0">
-              <label for="min">Minimum production in units</label>
+              <input type="text" class="form-control" id="min" name="minProductionInUnit" placeholder="" formControlName="minProductionInUnit" >
+              <label for="min">Current Capacity Utilization (In Units)</label>
               <div *ngIf="unitVisitForm.get('minProductionInUnit')?.errors?.['required'] && (unitVisitForm.get('minProductionInUnit')?.dirty || unitVisitForm.get('minProductionInUnit')?.touched)"
                    class="text-danger">
-                Minimum production in units is required
+                Current Capacity Utilization is required
               </div>
-              <div *ngIf="unitVisitForm.get('minProductionInUnit')?.errors?.['min']" class="text-danger">
+              <!-- <div *ngIf="unitVisitForm.get('minProductionInUnit')?.errors?.['min']" class="text-danger">
                 Value cannot be negative
-              </div>
+              </div> -->
             </div>
           </div>
           
@@ -536,10 +576,10 @@
           <div class="col-12 col-sm-6 col-md-4 col-lg-4">
             <div class="form-floating mb-3">
               <input type="number" class="form-control" id="current" name="currentProductionInUnit" placeholder="" formControlName="currentProductionInUnit" min="0">
-              <label for="current">Current production in units</label>
+              <label for="current">Current production (In Percentage)</label>
               <div *ngIf="unitVisitForm.get('currentProductionInUnit')?.errors?.['required'] && (unitVisitForm.get('currentProductionInUnit')?.dirty || unitVisitForm.get('currentProductionInUnit')?.touched)"
                    class="text-danger">
-                Current production in units is required
+                Current production  is required
               </div>
               <div *ngIf="unitVisitForm.get('currentProductionInUnit')?.errors?.['min']" class="text-danger">
                 Value cannot be negative
@@ -551,8 +591,8 @@
         <hr>
 
         <!-- Cost and Pricing -->
-        <div class="row">
-          <!-- Cost per unit -->
+        <!-- <div class="row">
+        
           <div class="col-12 col-sm-6 col-md-4 col-lg-4">
             <div class="form-floating mb-3">
               <input type="number" class="form-control" id="cost" name="costPerUnit" placeholder="" formControlName="costPerUnit" min="0">
@@ -567,7 +607,7 @@
             </div>
           </div>
           
-          <!-- Selling price per unit -->
+          
           <div class="col-12 col-sm-6 col-md-4 col-lg-4">
             <div class="form-floating mb-3">
               <input type="number" class="form-control" id="selling" name="sellingPricePerUnit" placeholder="" formControlName="sellingPricePerUnit" min="0">
@@ -582,7 +622,7 @@
             </div>
           </div>
           
-          <!-- Profit margin -->
+         
           <div class="col-12 col-sm-6 col-md-4 col-lg-4">
             <div class="form-floating mb-3">
               <input type="number" class="form-control" id="profit" name="profitMargin" placeholder="" formControlName="profitMargin" min="0">
@@ -596,7 +636,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
         
         <hr>
 
@@ -607,7 +647,7 @@
           <div class="col-12 col-sm-6 col-md-4 col-lg-4">
             <div class="form-floating mb-3">
               <input type="number" class="form-control" id="recent" name="recentConsumption" placeholder="" formControlName="recentConsumption" min="0">
-              <label for="recent">Recent Consumption</label>
+              <label for="recent">Recent Consumption (In Units)</label>
               <div *ngIf="unitVisitForm.get('recentConsumption')?.errors?.['required'] && (unitVisitForm.get('recentConsumption')?.dirty || unitVisitForm.get('recentConsumption')?.touched)"
                    class="text-danger">
                 Recent Consumption is required
@@ -658,11 +698,11 @@
             <div class="form-floating mb-3">
               <input type="text" class="form-control" name="typesOfMachine" id="typesMachine" 
                     formControlName="typesOfMachine" placeholder="">
-              <label for="typesMachine">Types of machine</label>
+              <label for="typesMachine">Name of machine</label>
               <div *ngIf="machineForm.get('typesOfMachine')?.invalid && 
                         (machineForm.get('typesOfMachine')?.dirty || machineForm.get('typesOfMachine')?.touched)"
                   class="text-danger">
-                Types of machine is required
+                Name of machine is required
               </div>
             </div>
           </div>
@@ -724,11 +764,11 @@
             <div class="form-floating mb-3">
               <input type="number" class="form-control" id="valueMachinary"  name="valueOfMachinery"
                     formControlName="valueOfMachinery" placeholder="" min="0">
-              <label for="valueMachinary">Value of machinery</label>
+              <label for="valueMachinary">Current value of machinery</label>
               <div *ngIf="machineForm.get('valueOfMachinery')?.errors?.['required'] && 
                         (machineForm.get('valueOfMachinery')?.dirty || machineForm.get('valueOfMachinery')?.touched)"
                   class="text-danger">
-                Value of machinery is required
+                Current value of machinery is required
               </div>
               <div *ngIf="machineForm.get('valueOfMachinery')?.errors?.['min']" class="text-danger">
                 Value cannot be negative

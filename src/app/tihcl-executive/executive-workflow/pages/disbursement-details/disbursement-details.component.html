@@ -29,7 +29,7 @@
               </div>
             </div>
           </div>
-          <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+          <!-- <div class="col-12 col-sm-6 col-md-4 col-lg-3">
             <div class="form-floating mb-3">
               <input type="date" class="form-control" id="dateDisbursement" formControlName="dateDisbursement"
                 placeholder="">
@@ -39,7 +39,7 @@
                 <small *ngIf="f['dateDisbursement']?.errors?.required">Date of disbursement is required</small>
               </div>
             </div>
-          </div>
+          </div> -->
           <div class="col-12 col-sm-6 col-md-4 col-lg-3">
             <div class="form-floating mb-3">
               <input type="text" class="form-control" id="bankName" formControlName="bankName" placeholder="">
@@ -102,7 +102,7 @@
           </div>
           <div class="col-12 col-sm-6 col-md-4 col-lg-3">
             <div class="mb-3">
-              <h6 class="fw-600 fs-md">TSipass upload</h6>
+              <h6 class="fw-600 fs-md">TG-ipass upload</h6>
               <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" formControlName="tsiPass" id="applicableTsi"
                   value="yesSecurity">
@@ -114,7 +114,7 @@
                 <label class="form-check-label fs-md" for="notapplicableTsi">Not Applicable</label>
               </div>
               <div *ngIf="f['tsiPass']?.invalid && (f['tsiPass']?.dirty || f['tsiPass']?.touched)" class="text-danger">
-                <small>TSipass upload is required</small>
+                <small>TG-ipass upload is required</small>
               </div>
             </div>
           </div>
