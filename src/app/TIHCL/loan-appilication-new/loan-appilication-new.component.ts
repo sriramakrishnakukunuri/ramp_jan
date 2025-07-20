@@ -24,6 +24,31 @@ export class LoanAppilicationNewComponent implements OnInit {
   currentStep = 1;
   today: any;
   enterPrenuerResponseData: any;
+  statusList: any = [
+  "APPLICATION_SUBMITTED",
+  "PRELIMINARY_ASSESSMENT",
+  "MANAGER_APPROVAL_1",
+  "UNIT_VISIT",
+  "DIAGNOSTIC_REPORT",
+  "MANAGER_APPROVAL_2",
+  "DIC_NOC",
+  "CREDIT_APPRAISAL",
+  "PRIMARY_LENDER_NOC",
+  "SANCTION_LETTER_UPLOAD",
+  "MANAGER_APPROVAL_3",
+  "LOAN_SANCTIONED",
+  "DISBURSEMENT_PARTIAL",
+  "DISBURSEMENT_COMPLETED",
+  "LOAN_REPAYMENT_REGULAR",
+  "LOAN_REPAYMENT_DUE",
+  "LOAN_REPAYMENT_COMPLETED",
+  "REJECTED_MANAGER_APPROVAL_1",
+  "REJECTED_MANAGER_APPROVAL_2",
+  "REJECTED_MANAGER_APPROVAL_3",
+  "DIC_APPROVAL",
+  "DIC_REJECT"
+]
+StatusofApplication:any=''
   constructor(private fb: FormBuilder, private toastrService: ToastrService,private authenticationService: AuthenticationService,
     private _commonService: CommonServiceService, private router: Router,) {
       
@@ -72,8 +97,18 @@ export class LoanAppilicationNewComponent implements OnInit {
     });
     this.createCreditDetail()
     const enterpreneur = JSON.parse(sessionStorage.getItem('enterpreneur') || '{}');
+    console.log(enterpreneur)
       if(enterpreneur && Object.keys(enterpreneur).length > 0){
         this.enterPrenuerResponseData = enterpreneur;
+         if(enterpreneur?.status=='Assessment Completed' || enterpreneur?.applicationStatus=='APPLICATION_SUBMITTED'){
+          this.currentStep = 3; // Set to step 3 if status is 'Assessment Completed'
+        }
+        else if(enterpreneur?.applicationStatus){
+           this.currentStep = 3;
+        }
+        else{
+          this.currentStep = 1
+        }
         this.applicationForm.patchValue({
           enterpriseName: enterpreneur.enterpriseName || '',
           promoterName: enterpreneur.promoterName || '',
@@ -108,11 +143,24 @@ export class LoanAppilicationNewComponent implements OnInit {
           maintainingAccountBy: enterpreneur.maintainingAccountBy || '',
           helpMsg: enterpreneur.helpMsg || ''
         });
-        if(enterpreneur?.status=='Assessment Completed'){
-          this.currentStep = 3; // Set to step 3 if status is 'Assessment Completed'
+       
+        if (["APPLICATION_SUBMITTED", "PRELIMINARY_ASSESSMENT", "MANAGER_APPROVAL_1", "UNIT_VISIT", "DIAGNOSTIC_REPORT", "MANAGER_APPROVAL_2"].includes(enterpreneur?.applicationStatus)) {
+          this.StatusofApplication = 'Application Is Under Consideration';
         }
-        else{
-          this.currentStep = 1
+        else if (
+          ["DIC_NOC", "DIC_APPROVAL", "CREDIT_APPRAISAL", "PRIMARY_LENDER_NOC", "SANCTION_LETTER_UPLOAD", "MANAGER_APPROVAL_3"].includes(enterpreneur?.applicationStatus)
+        ) {
+          this.StatusofApplication = 'Application Is In Process';
+        }
+        else if (
+          ["DISBURSEMENT_PARTIAL", "DISBURSEMENT_COMPLETED", "LOAN_REPAYMENT_REGULAR", "LOAN_REPAYMENT_DUE", "LOAN_REPAYMENT_COMPLETED"].includes(enterpreneur?.applicationStatus)
+        ) {
+          this.StatusofApplication = 'Sanctioned';
+        }
+        else if (
+          ["REJECTED_MANAGER_APPROVAL_1", "REJECTED_MANAGER_APPROVAL_2", "REJECTED_MANAGER_APPROVAL_3", "DIC_REJECT"].includes(enterpreneur?.applicationStatus)
+        ) {
+          this.StatusofApplication = 'Application is not considered due ' + enterpreneur?.reasonForRejection;
         }
          // Set to step 2 if enterpreneur data is  
       }

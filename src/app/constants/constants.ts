@@ -102,6 +102,9 @@ export const APIS = {
         updateRgistrationwithDic:API_BASE_URL + '/registrations/update/dicNocFilePath/', 
         updateRgistrationwithprimaryLenderNoc:API_BASE_URL + '/registrations/update/primaryLenderNocFilePath/',
     },
+      tihclCOI:{
+        getApplicaionData: API_BASE_URL + '/registrations/application/status?',
+    },
     tihcl_uploads:{
         
        globalUpload: API_BASE_URL + '/files/upload',    

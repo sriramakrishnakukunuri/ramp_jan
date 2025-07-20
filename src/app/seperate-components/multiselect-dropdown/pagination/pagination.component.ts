@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-pagination',
@@ -10,13 +10,20 @@ export class PaginationComponent {
   @Input() totalItems: number = 0;
   @Input() pageSize: number = 10;
   @Output() pageChange = new EventEmitter<{page: number, pageSize: number}>();
-
+ @Input() key: any;
+  private prevKey: any;
   pageSizeOptions: number[] = [5, 10, 25, 50, 100];
 
   get totalPages(): number {
     return Math.ceil(this.totalItems / this.pageSize);
   }
-
+ ngOnChanges(changes: SimpleChanges): void {
+    if (changes['key'] && changes['key'].currentValue !== this.prevKey) {
+      this.prevKey = changes['key'].currentValue;
+      this.currentPage = 1;
+      this.pageSize = 10;
+    }
+  }
   onPageSizeChange(): void {
     this.currentPage = 1; // Reset to first page when page size changes
     this.emitPageChange();

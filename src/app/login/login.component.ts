@@ -81,6 +81,9 @@ export class LoginComponent implements OnInit {
                          else if(res.userRole === Role.TIHCL_DIC){
                             this.router.navigateByUrl('/DIC-NOC');
                         }
+                         else if(res.userRole === Role.TIHCL_COI){
+                            this.router.navigateByUrl('/view-application');
+                        }
                 },
                 error: error => {
                     this.error = 'Invalid credentials. Please try again.';

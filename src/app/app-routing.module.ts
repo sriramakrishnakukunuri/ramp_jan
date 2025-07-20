@@ -33,6 +33,7 @@ import { NewApplicationExecutiveComponent } from './tihcl-executive/new-applicat
 import { PendingApplicationExecutiveComponent } from './tihcl-executive/pending-application-executive/pending-application-executive.component';
 import { ExecutiveWorkflowComponent } from './tihcl-executive/executive-workflow/executive-workflow.component';
 import { DicApprovalComponent } from './tihcl-dic/dic-approval/dic-approval.component';
+import { ViewApplicationsComponent } from './tihcl-coi/view-applications/view-applications.component';
 
 const routes: Routes = [
     {
@@ -209,6 +210,12 @@ const routes: Routes = [
         component: ExecutiveWorkflowComponent,
         canActivate: [AuthGuard],
         data: { roles: [Role.TIHCL_EXECUTOR] }
+    },
+      {
+        path: 'view-application',
+        component: ViewApplicationsComponent,
+        canActivate: [AuthGuard],
+        data: { roles: [Role.TIHCL_COI] }
     },
       {
         path: 'DIC-NOC',
