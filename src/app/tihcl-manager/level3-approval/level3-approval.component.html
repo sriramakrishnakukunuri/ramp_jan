@@ -3,7 +3,7 @@
             <div class="container-fluid">
                 <div class="card">
                     <div class="card-header bg-theme text-white">
-                        <h6 class="mb-0 ">Pending Approvals - Level 3</h6>
+                        <h6 class="mb-0 ">Loan Sanctioned</h6>
                     </div>
                     <div class="card-body">
                         <table id="pending_table" class="table nowrap display w-100 fs-md mt-0">
@@ -35,9 +35,11 @@
                                     <td>{{ item.natureOfActivity }}</td>
                                     <td>{{ item.sector }}</td>
                                 </tr>
-                           
                             </tbody>
                         </table>
+                         <div *ngIf="tableList.length === 0" class="text-center py-3 text-muted">
+                         Data Not Available
+                       </div>
                          <app-pagination
                                  [currentPage]="currentPage"
                                  [totalItems]="totalItems"

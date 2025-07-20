@@ -375,8 +375,8 @@ onItemSelected(itemName: any) {
       this.applicationForm.get('amountReleased')?.reset();
       this.applicationForm.get('amountToBeReleased')?.reset();
     
-         this.applicationForm.get('totalAmountSanctioned')?.setValidators([Validators.required]);
-      this.applicationForm.get('amountReleased')?.setValidators([Validators.required]);
+         this.applicationForm.get('totalAmountSanctioned')?.setValidators([Validators.required, Validators.min(0)]);
+      this.applicationForm.get('amountReleased')?.setValidators([Validators.required, Validators.min(0)]);
       this.applicationForm.get('amountToBeReleased')?.setValidators([Validators.required]);
     }
     this.applicationForm.get('totalAmountSanctioned')?.updateValueAndValidity()

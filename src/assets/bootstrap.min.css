@@ -4650,7 +4650,8 @@ fieldset:disabled .btn {
     }
 
     .navbar-expand-lg .navbar-nav .dropdown-menu {
-        position: absolute
+        position: absolute;
+        width:fit-content;
     }
 
     .navbar-expand-lg .navbar-nav .nav-link {
