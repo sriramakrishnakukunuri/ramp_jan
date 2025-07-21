@@ -170,6 +170,7 @@ export class LoginComponent implements OnInit {
                     }
                 },
                 error: error => {
+                    sessionStorage.setItem('enterpreneur', JSON.stringify({contactNumber: mobile}));
                     this.router.navigate(['/loan-application-process']);
                     this.error = 'Server Error. Please try again later.';
                     this.loading = false;
