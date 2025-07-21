@@ -494,7 +494,8 @@
             <!-- Raw material -->
             <div class="col-12 col-sm-6 col-md-4 col-lg-4">
               <div class="form-floating mb-3">
-                <input type="number" class="form-control" id="stocks4" name="rawMaterials" placeholder="" formControlName="rawMaterials" min="0">
+                <!-- <input type="number" class="form-control" id="stocks4" name="rawMaterials" placeholder="" formControlName="rawMaterials" min="0"> -->
+                  <input type="text" class="form-control" id="stocks4" name="rawMaterials" placeholder="" formControlName="rawMaterials">
                 <label for="stocks4">Raw material(In Rs)</label>
               </div>
               <div *ngIf="unitVisitForm.get('rawMaterials')?.errors?.['required'] && (unitVisitForm.get('rawMaterials')?.dirty || unitVisitForm.get('rawMaterials')?.touched)"
@@ -509,7 +510,8 @@
             <!-- Work in Progress -->
             <div class="col-12 col-sm-6 col-md-4 col-lg-4">
               <div class="form-floating mb-3">
-                <input type="number" class="form-control" id="stocks5" name="workInProgress" placeholder="" formControlName="workInProgress" min="0">
+                <!-- <input type="number" class="form-control" id="stocks5" name="workInProgress" placeholder="" formControlName="workInProgress" min="0"> -->
+                <input type="text" class="form-control" id="stocks5" name="workInProgress" placeholder="" formControlName="workInProgress" >
                 <label for="stocks5">Work in Progress(In Rs)</label>
               </div>
               <div *ngIf="unitVisitForm.get('workInProgress')?.errors?.['required'] && (unitVisitForm.get('workInProgress')?.dirty || unitVisitForm.get('workInProgress')?.touched)"
@@ -524,7 +526,8 @@
             <!-- Finished Goods -->
             <div class="col-12 col-sm-6 col-md-4 col-lg-4">
               <div class="form-floating mb-3">
-                <input type="number" class="form-control" id="stocks6" name="finishedGoods" placeholder="" formControlName="finishedGoods" min="0">
+                <!-- <input type="number" class="form-control" id="stocks6" name="finishedGoods" placeholder="" formControlName="finishedGoods" min="0"> -->
+                 <input type="text" class="form-control" id="stocks6" name="finishedGoods" placeholder="" formControlName="finishedGoods" >
                 <label for="stocks6">Finished Goods(In Rs)</label>
               </div>
               <div *ngIf="unitVisitForm.get('finishedGoods')?.errors?.['required'] && (unitVisitForm.get('finishedGoods')?.dirty || unitVisitForm.get('finishedGoods')?.touched)"
@@ -545,7 +548,8 @@
           <!-- Maximum production -->
           <div class="col-12 col-sm-6 col-md-4 col-lg-4">
             <div class="form-floating mb-3">
-              <input type="text" class="form-control" id="max" name="maxProductionInUnit" placeholder="" formControlName="maxProductionInUnit">
+              <!-- <input type="text" class="form-control" id="max" name="maxProductionInUnit" placeholder="" formControlName="maxProductionInUnit"> -->
+              <input type="number" class="form-control" id="max" name="maxProductionInUnit" placeholder="" formControlName="maxProductionInUnit" min="0">
               <label for="max">Installed Capacity (In Units)</label>
               <div *ngIf="unitVisitForm.get('maxProductionInUnit')?.errors?.['required'] && (unitVisitForm.get('maxProductionInUnit')?.dirty || unitVisitForm.get('maxProductionInUnit')?.touched)"
                    class="text-danger">
@@ -560,7 +564,8 @@
           <!-- Minimum production -->
           <div class="col-12 col-sm-6 col-md-4 col-lg-4">
             <div class="form-floating mb-3">
-              <input type="text" class="form-control" id="min" name="minProductionInUnit" placeholder="" formControlName="minProductionInUnit" >
+              <!-- <input type="text" class="form-control" id="min" name="minProductionInUnit" placeholder="" formControlName="minProductionInUnit" > -->
+               <input type="number" class="form-control" id="min" name="minProductionInUnit" placeholder="" formControlName="minProductionInUnit" min="0" >
               <label for="min">Current Capacity Utilization (In Units)</label>
               <div *ngIf="unitVisitForm.get('minProductionInUnit')?.errors?.['required'] && (unitVisitForm.get('minProductionInUnit')?.dirty || unitVisitForm.get('minProductionInUnit')?.touched)"
                    class="text-danger">

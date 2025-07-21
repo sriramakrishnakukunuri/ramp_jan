@@ -160,7 +160,7 @@ StatusofApplication:any=''
         else if (
           ["REJECTED_MANAGER_APPROVAL_1", "REJECTED_MANAGER_APPROVAL_2", "REJECTED_MANAGER_APPROVAL_3", "DIC_REJECT"].includes(enterpreneur?.applicationStatus)
         ) {
-          this.StatusofApplication = 'Application is not considered due ' + enterpreneur?.reasonForRejection;
+          this.StatusofApplication = 'Application is not considered due to ' + enterpreneur?.reasonForRejection;
         }
          // Set to step 2 if enterpreneur data is  
       }

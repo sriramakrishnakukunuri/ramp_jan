@@ -23,6 +23,7 @@ export class UnitVisitComponent implements OnInit {
           private _commonService: CommonServiceService,) {
              const applicationData = JSON.parse(sessionStorage.getItem('ApplicationData') || '{}');
              this.applicationData=applicationData
+             console.log( this.applicationData,'srl')
     }
 
   ngOnInit(): void {
@@ -161,7 +162,7 @@ createForm(): void {
     this.factoryDetailsArray.push(machineGroup);
   }
   onSubmit(): void {
-    if(this.unitVisitForm.valid && this.unitVisitForm.value?.factoryDetails?.length && Object.keys( this.ExistingunitVisit).length){
+    if(this.unitVisitForm.valid && this.unitVisitForm.value?.factoryDetails?.length && Object.keys( this.ExistingunitVisit).length && this.ExistingunitVisit?.id){
          let payload:any={...this.unitVisitForm.value, "applicationNo": this.applicationData?.applicationNo,"applicationStatus": "UNIT_VISIT"}
          this._commonService.update(APIS.tihclExecutive.updateUnitVisit,payload,this.ExistingunitVisit?.id).subscribe({
           next: (response) => {
@@ -204,7 +205,8 @@ createForm(): void {
     }
   }
   saveExistingData(){
-     if(this.unitVisitForm.valid && this.unitVisitForm.value?.factoryDetails?.length && Object.keys( this.ExistingunitVisit).length){
+    console.log(this.ExistingunitVisit)
+     if(this.unitVisitForm.valid && this.unitVisitForm.value?.factoryDetails?.length && Object.keys( this.ExistingunitVisit).length && this.ExistingunitVisit?.id){
          let payload:any={...this.unitVisitForm.value, "applicationNo": this.applicationData?.applicationNo,"applicationStatus": "UNIT_VISIT"}
          this._commonService.update(APIS.tihclExecutive.updateUnitVisit,payload,this.ExistingunitVisit?.id).subscribe({
           next: (response) => {
@@ -219,7 +221,7 @@ createForm(): void {
             console.error('Error submitting form:', error);
           }
         });
-      }else  if(this.unitVisitForm.valid && this.unitVisitForm.value?.factoryDetails?.length){
+      }else  if(this.unitVisitForm.valid && this.unitVisitForm.value?.factoryDetails?.length && this.ExistingunitVisit?.id){
          let payload:any={...this.unitVisitForm.value, "applicationNo": this.applicationData?.applicationNo,"applicationStatus": "UNIT_VISIT"}
          this._commonService.update(APIS.tihclExecutive.updateUnitVisit,payload,this.ExistingunitVisit?.id).subscribe({
           next: (response) => {
@@ -235,7 +237,7 @@ createForm(): void {
           }
         });
       }
-      else  if(Object.keys(this.ExistingunitVisit).length){
+      else  if(Object.keys(this.ExistingunitVisit).length && this.ExistingunitVisit?.id){
 
          let payload:any={...this.unitVisitForm.value, "applicationNo": this.applicationData?.applicationNo,"applicationStatus": "MANAGER_APPROVAL_1"}
          this._commonService.update(APIS.tihclExecutive.updateUnitVisit,payload,this.ExistingunitVisit?.id).subscribe({
