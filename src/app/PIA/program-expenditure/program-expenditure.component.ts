@@ -354,9 +354,11 @@ export class ProgramExpenditureComponent implements OnInit {
   
   isEdit:any=false
   Expenditureid:any=''
+  editUploadUrl:any
   OpenModal(type:any,item?:any):any{
     this.Expenditureid=''
     this.fileErrors='';  
+    this.editUploadUrl=''
    if(type=='add'){
     this.isEdit=false
     if(this.programCreationMain.value.activityId && this.programCreationMain.value.subActivityId && this.programCreationMain.value.programId){
@@ -382,6 +384,7 @@ export class ProgramExpenditureComponent implements OnInit {
    }
    else{
     if(item?.expenditureType=='PRE' || item?.expenditureType=='POST'){
+      this.editUploadUrl=item?.uploadBillUrl;
       this.Expenditureid=item?.programExpenditureId
       this.isEdit=true
       console.log(item)
@@ -399,6 +402,7 @@ export class ProgramExpenditureComponent implements OnInit {
       modal1.show();
     }
     else{
+       this.editUploadUrl=item?.uploadBillUrl;
       this.Expenditureid=item?.bulkExpenditureTransactionId
       this.isEdit=true
       console.log(item)
@@ -422,18 +426,7 @@ export class ProgramExpenditureComponent implements OnInit {
    }
     
   }
-  imageUrlDownloadPath = `${API_BASE_URL}/program/file/download/`;
-  imagePreviewUrl: any
-    showImagePreview(url: any, value: string) {
-    this.imagePreviewUrl = null; // Reset the image preview URL
-    this.imagePreviewUrl = url + value;
 
-    const editSessionModal = document.getElementById('imagePreview');
-    if (editSessionModal) {
-      const modalInstance = new bootstrap.Modal(editSessionModal);
-      modalInstance.show();
-    }
-  }
   //date converter
   convertToISOFormat(date: string): string {    
     if(date){
@@ -503,8 +496,8 @@ export class ProgramExpenditureComponent implements OnInit {
       subActivityId:Number(this.programCreationMain.value.subActivityId),programId:Number(this.programCreationMain.value.programId),...this.PrePostExpenditureForm.value,
       headOfExpenseId:Number(this.PrePostExpenditureForm.value.headOfExpenseId),
       billDate:moment(this.PrePostExpenditureForm.value.billDate).format('DD-MM-YYYY'),
-      agencyId:this.agencyId}
-      payload['uploadBillUrl']=null
+      agencyId:this.agencyId,uploadBillUrl:this.editUploadUrl?this.editUploadUrl:null}
+      // payload['uploadBillUrl']=null
     console.log(payload)
     const formData = new FormData();
      
@@ -880,6 +873,19 @@ export class ProgramExpenditureComponent implements OnInit {
               link.click();
               link.remove();
             }
+ imageUrlDownloadPath = `https://metaverseedu.in/`;
+  imagePreviewUrl: any
+   type:any=''
+    showImagePreview(url: any, value: string,type:any) {
+    this.type=type
+    this.imagePreviewUrl = null; // Reset the image preview URL
+    this.imagePreviewUrl = url + value;
 
+    const editSessionModal = document.getElementById('imagePreview');
+    if (editSessionModal) {
+      const modalInstance = new bootstrap.Modal(editSessionModal);
+      modalInstance.show();
+    }
+  }
           
 }

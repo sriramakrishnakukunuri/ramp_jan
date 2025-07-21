@@ -153,19 +153,18 @@
                                 </div>
                                 <div *ngIf="f2[Feilds?.fieldName]?.touched && !f2[Feilds?.fieldName]?.valid" class="error">{{Feilds?.fieldDisplayName}} is required</div>
                             </ng-container>
-                            <ng-container *ngIf="Feilds?.fieldType=='radio button'" >
+                            <ng-container *ngIf="Feilds?.fieldType=='radio button'">
                                 <div class="form-floating mb-3 mb-sm-3 mb-md-0">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="{{Feilds?.fieldName}}" formControlName="{{Feilds?.fieldName}}"
-                                            value="true">
-                                        <label class="form-check-label">Yes</label>
+                                    <div class="d-flex align-items-center gap-4">
+                                        <div class="form-check me-4">
+                                            <input class="form-check-input" type="radio" name="{{Feilds?.fieldName}}" formControlName="{{Feilds?.fieldName}}" value="true" id="{{Feilds?.fieldName}}_yes">
+                                            <label class="form-check-label ms-1" for="{{Feilds?.fieldName}}_yes">Yes</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="{{Feilds?.fieldName}}" formControlName="{{Feilds?.fieldName}}" value="false" id="{{Feilds?.fieldName}}_no">
+                                            <label class="form-check-label ms-1" for="{{Feilds?.fieldName}}_no">No</label>
+                                        </div>
                                     </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="{{Feilds?.fieldName}}" formControlName="{{Feilds?.fieldName}}"
-                                            value="false">
-                                        <label class="form-check-label">No</label>
-                                    </div>
-
                                 </div>
                                 <div *ngIf="f2[Feilds?.fieldName]?.touched && !f2[Feilds?.fieldName]?.valid" class="error">{{Feilds?.fieldDisplayName}} is required</div>
                             </ng-container>

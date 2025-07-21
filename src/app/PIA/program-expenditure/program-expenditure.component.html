@@ -101,7 +101,7 @@
                                     <th>IFSC Code</th>
                                     <th>Mode of Payment</th>
                                     <!-- <th>Purpose</th> -->
-                                    <!-- <th>Upload Bill/Invoice</th> -->
+                                    <th>Upload Bill/Invoice</th>
                                     <th class="text-center">Edit / Delete</th>
                                 </tr>
                             </thead>
@@ -110,7 +110,7 @@
                                     <td class="text-start">{{i+1}}</td>
                                     <td>{{item?.expenditureType}}</td>
                                     <td>{{item?.headOfExpense}}</td>
-                                    <td>{{item?.cost?item?.cost:item?.allocatedCost}}</td>
+                                    <td>{{(item?.cost?item?.cost:item?.allocatedCost) | number:'1.0-1'}}</td>
                                     <td>{{item?.billNo}}</td>
                                     <td>{{item?.billDate}}</td>
                                      <td>{{item?.checkNo}}</td>
@@ -131,6 +131,21 @@
                                          </td> -->
                                     <!-- <td>{{item?.purpose}}</td> -->
                                     <!-- <td>{{item?.uploadBillUrl}}</td> -->
+                                      <td *ngIf="item?.uploadBillUrl?.split('.')[1]!='pdf'">
+                                                 <ng-container *ngIf="item?.uploadBillUrl?.split('public_html/')?.[1]">
+                                                       <a (click)="showImagePreview(imageUrlDownloadPath,item?.uploadBillUrl?.split('public_html/')?.[1],'img')" rel="noopener noreferrer">
+                                                        <img src="{{imageUrlDownloadPath}}{{item?.uploadBillUrl?.split('public_html/')?.[1]}}" alt="Image 2" class="img-fluid" style="width: 50px; height: 50px;">
+                                                        </a>
+                                                  </ng-container>
+                                                <ng-container *ngIf="!item?.uploadBillUrl?.split('public_html/')?.[1]">
+                                                    <span class="text-danger">No File</span>
+                                                </ng-container>
+                                         </td>
+                                         <td *ngIf="item?.uploadBillUrl?.split('.')[1]=='pdf'">
+                                            <ng-container >
+                                               <a (click)="showImagePreview(imageUrlDownloadPath,item?.uploadBillUrl?.split('public_html/')?.[1],'pdf')"> <i class="fas fa-file-pdf"></i></a>
+                                            </ng-container>
+                                         </td>
                                     <td class="text-center">
                                         <button type="button" class="btn btn-default text-lime-green btn-sm"  (click)="OpenModal('edit',item)"><span class="bi bi-pencil"></span></button>
                                         <button type="button" class="btn btn-default text-danger btn-sm"  (click)="deleteExpenditure(item)"><span class="bi bi-trash"></span></button>
@@ -142,7 +157,7 @@
                                     <td></td>
                                     <td></td>
                                     <td>Total</td>
-                                    <td>{{TotalAmount}}</td>
+                                    <td>{{TotalAmount | number:'1.0-1'}}</td>
                                     <td></td>
                                     
                                     <td></td>
@@ -512,6 +527,33 @@ aria-hidden="true">
                 </ng-container>
                 <ng-container *ngIf="!imagePreviewUrl">
                     <span class="text-danger">No file Available</span>
+                </ng-container>                
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="imagePreview" tabindex="-1" aria-labelledby="imagePreview" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header py-2">
+                <h6 class="modal-title text-white" id="addResourceLabel">File Preview</h6>
+                
+                <a href="{{imagePreviewUrl}}" style="margin-left: 491px;" target="_blank" class="btn btn-secondary" *ngIf="imagePreviewUrl">Download</a>
+                
+                <button type="button" class="btn-close me-1" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <ng-container *ngIf="imagePreviewUrl && type=='img'">
+                    <img [src]="imagePreviewUrl" alt="Image Preview" class="img-fluid" style="width: 100%; height: auto;">
+                </ng-container>
+                <ng-container *ngIf="imagePreviewUrl && type=='pdf'">
+                     <ngx-doc-viewer style="height:93vh;" [url]="imagePreviewUrl" viewer="google">
+                        </ngx-doc-viewer>
+                </ng-container>
+                <ng-container *ngIf="!imagePreviewUrl">
+                    <span class="text-danger">No Preview Available</span>
                 </ng-container>                
                 
             </div>

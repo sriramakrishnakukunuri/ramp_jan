@@ -33,7 +33,7 @@ export class FinanceExpenditureComponent implements OnInit {
     this.formDetailsPre()
     this.formDetailsBulk()
      this.getHeadOfExpenditure()
-    this.getAllActivityList()
+    
     this.activeTab = 'nav-five';
     this.loginsessionDetails = JSON.parse(sessionStorage.getItem('user') || '{}');  
     if(this.loginsessionDetails.userRole == 'ADMIN') {
@@ -41,20 +41,21 @@ export class FinanceExpenditureComponent implements OnInit {
     }
     else{
       this.getProgramsByAgency()
+       this.getAllActivityList()
     }
-   
+  
   }
 
 
-  selectedAgencyId:any;
   agencyList:any;
   // All Agency data  for admin login
 getAgenciesList() {
   this.agencyList = [];
   this._commonService.getDataByUrl(APIS.masterList.agencyList).subscribe((res: any) => {
     this.agencyList = res.data;
-    this.selectedAgencyId = res.data[0].agencyId
-    this.getProgramsByAgencyAdmin(this.selectedAgencyId)
+    this.agencyId = res.data[0].agencyId
+    this.getProgramsByAgencyAdmin(this.agencyId)
+     this.getAllActivityList()
   }, (error) => {
     this.toastrService.error(error.error.message);
   });
@@ -164,11 +165,11 @@ getAgenciesList() {
         if (data.search.value) {
           params += `&search=${encodeURIComponent(data.search.value)}`;
         }
-        if(this.selectedAgencyId=='All Agencies') {
+        if(this.agencyId=='All Agencies') {
           Url=APIS.participantdata.getDataByProgramBYDeatisl+-1+params
         }
         else if(this.programIds == 'All Programs') {
-          Url=APIS.participantdata.getDataByProgramBYDeatisl+-2+'?agencyId='+this.selectedAgencyId+'&page='+page+'&size='+size
+          Url=APIS.participantdata.getDataByProgramBYDeatisl+-2+'?agencyId='+this.agencyId+'&page='+page+'&size='+size
         }
         else{
          Url=APIS.participantdata.getDataByProgramBYDeatisl+this.programIds+params
@@ -343,6 +344,7 @@ getAgenciesList() {
   TotalAmount:any=0
   getExpenditure(){
     this.getExpenditureDataBoth=[]
+    this.TotalAmount=0
     if(this.programIds){ 
       this._commonService
         .getDataByUrl(APIS.programExpenditure.getExpenditure+'?programId='+this.programIds+'&expenditureType='+'PRE&agencyId='+this.agencyId).subscribe({
@@ -502,7 +504,7 @@ getAgenciesList() {
       this.RemarkForm = new FormGroup({
       spiuComments: new FormControl("", ),
       agencyComments: new FormControl("", [Validators.required]),
-      status:new FormControl("", [Validators.required]),
+      status:new FormControl("",),
       userId:new FormControl("")
       
     })
@@ -511,7 +513,9 @@ getAgenciesList() {
   }
   imageUrlDownloadPath = `https://metaverseedu.in/`;
   imagePreviewUrl: any
-    showImagePreview(url: any, value: string) {
+   type:any=''
+    showImagePreview(url: any, value: string,type:any) {
+    this.type=type
     this.imagePreviewUrl = null; // Reset the image preview URL
     this.imagePreviewUrl = url + value;
 
@@ -545,7 +549,13 @@ openRemarks(item:any){
       let payload:any
       let url:any
       if(this.expenditureType=='PRE' || this.expenditureType=='POST'){
-        url=APIS.programExpenditure.saveRemarks+'?status='+this.fRemark['status'].value
+        if(this.loginsessionDetails?.userRole != 'ADMIN'){
+           url=APIS.programExpenditure.saveRemarks
+        }
+        else{
+          url=APIS.programExpenditure.saveRemarks+'?status='+this.fRemark['status'].value
+        }
+        
         if(this.loginsessionDetails?.userRole == 'ADMIN'){
             payload={
             "userId": this.loginsessionDetails?.userId,
@@ -564,7 +574,13 @@ openRemarks(item:any){
       }
     }
       else{
-        url=APIS.programExpenditure.saveRemarksBulk+'?status='+this.fRemark['status'].value
+        if(this.loginsessionDetails?.userRole != 'ADMIN'){
+           url=APIS.programExpenditure.saveRemarksBulk
+        }
+        else{
+            url=APIS.programExpenditure.saveRemarksBulk+'?status='+this.fRemark['status'].value
+        }
+      
           if(this.loginsessionDetails?.userRole == 'ADMIN'){
             payload={
             "userId": this.loginsessionDetails?.userId,
@@ -682,7 +698,7 @@ openRemarks(item:any){
 
   getAllActivityList() {
     this.subActivitiesList = []
-    this._commonService.getById(APIS.programCreation.getActivityListbyId, this.agencyId).subscribe({
+    this._commonService.getById(APIS.programCreation.getActivityListbyId,  this.agencyId? this.agencyId:this.agencyId).subscribe({
       next: (data: any) => {
         this.activityList = data.data;
       },
@@ -930,9 +946,11 @@ openRemarks(item:any){
   
   isEdit:any=false
   Expenditureid:any=''
+  editUploadUrl:any
   OpenModal(type:any,item?:any):any{
     this.Expenditureid=''
     this.fileErrors='';  
+     this.editUploadUrl=''
    if(type=='add'){
     this.isEdit=false
     if(this.programCreationMain.value.activityId && this.programCreationMain.value.subActivityId && this.programCreationMain.value.programId){
@@ -957,6 +975,7 @@ openRemarks(item:any){
     }
    }
    else{
+     this.editUploadUrl=item?.uploadBillUrl;
     if(item?.expenditureType=='PRE' || item?.expenditureType=='POST'){
       this.Expenditureid=item?.programExpenditureId
       this.isEdit=true
@@ -1069,8 +1088,8 @@ openRemarks(item:any){
       subActivityId:Number(this.programCreationMain.value.subActivityId),programId:Number(this.programCreationMain.value.programId),...this.PrePostExpenditureForm.value,
       headOfExpenseId:Number(this.PrePostExpenditureForm.value.headOfExpenseId),
       billDate:moment(this.PrePostExpenditureForm.value.billDate).format('DD-MM-YYYY'),
-      agencyId:this.agencyId?Number(this.agencyId):Number(this.selectedAgencyId)}
-      payload['uploadBillUrl']=null
+      agencyId:this.agencyId?Number(this.agencyId):Number(this.agencyId),uploadBillUrl:this.editUploadUrl?this.editUploadUrl:null}
+      // payload['uploadBillUrl']=null
     console.log(payload)
     const formData = new FormData();
      
@@ -1140,7 +1159,7 @@ openRemarks(item:any){
       "activityId": Number(this.programCreationMain.value?.activityId),
       "subActivityId": Number(this.programCreationMain.value?.subActivityId),
       "programId": Number(this.programCreationMain.value?.programId),
-      "agencyId": this.agencyId?Number(this.agencyId):Number(this.selectedAgencyId),
+      "agencyId": this.agencyId?Number(this.agencyId):Number(this.agencyId),
       // "expenditureType": "PRE",
       "headOfExpenseId": this.BulkExpenditureForm.value?.headOfExpenseId,
       "bulkExpenditureId": this.BulkExpenditureForm.value?.bulkExpenditureId,

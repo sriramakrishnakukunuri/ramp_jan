@@ -70,6 +70,13 @@ export class CaptureOutcomeDynamicComponent implements OnInit {
     this.formData={}
     this.OutComeForm=new FormGroup({outcomesName:new FormControl('',[Validators.required])})
     this.OutComeForm.patchValue({outcomesName:Outcome})
+    let type:any=''
+    console.log(Outcome.includes('ZEDCertification'),Outcome)
+    if(Outcome.includes('ZEDCertification')){
+      type=Outcome.split('-')
+      console.log(type)
+      Outcome=type[0]+'?type='+type[1]
+    }
     if(this.ParticipantData?.participantId){
       this._commonService.getById(APIS.captureOutcome.getDynamicFormDataBasedOnOutCome+this.ParticipantData?.participantId+'/',Outcome).subscribe({
         next: (res: any) => {
@@ -107,7 +114,8 @@ export class CaptureOutcomeDynamicComponent implements OnInit {
   }
   SubmitOutCome(){
     if(Object.keys(this.ParticipantData)?.length){
-      console.log(this.OutComeForm.value,this.ParticipantData)
+      console.log(this.OutComeForm.value?.outcomesName,this.ParticipantData)
+    
     // {"ondcRegistrationDate": "01-01-2025","ondcRegistrationNo": "ONDC123","participantId": 1,"organizationId": 1,"agencyId": 1}
     let formData = new FormData();
     let payload:any={}
@@ -117,6 +125,11 @@ export class CaptureOutcomeDynamicComponent implements OnInit {
       }
       
     })
+        if(this.OutComeForm.value?.outcomesName.includes('ZEDCertification')){
+           payload['zedCertificationType']=this.OutComeForm.value?.outcomesName.split('-')?.[1]
+      this.OutComeForm.value['outcomesName']=this.OutComeForm.value?.outcomesName.split('-')?.[0]
+     
+    }
     formData.set("data", JSON.stringify({...payload,
       participantId:this.ParticipantData?.participantId,
       organizationId:this.ParticipantData?.organizationId,

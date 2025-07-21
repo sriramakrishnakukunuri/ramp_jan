@@ -9,7 +9,7 @@
                     <ng-container *ngIf="loginsessionDetails?.userRole == 'ADMIN'">
                         <div class="col-12 col-sm-3 col-md-3 col-lg-3">
                             <label for="Agencies" style="font-weight: 600;">List Of Agencies</label>
-                            <select class="form-select" [(ngModel)]="selectedAgencyId" (change)="getProgramsByAgencyAdmin($any($event.target).value)">    
+                            <select class="form-select" [(ngModel)]="agencyId" (change)="getProgramsByAgencyAdmin($any($event.target).value)">    
                                 <!-- <option value="All Agencies">All Agencies</option>                                   -->
                                 <option *ngFor="let list of agencyList" value="{{list.agencyId}}">{{list.agencyName}}</option>
                             </select>
@@ -39,7 +39,7 @@
                             <table  class="table table-bordered nowrap w-100">
                                 <thead class="bg-lime-green text-white">
                                     <tr>
-                                        <th class="text-center">Add {{this.loginsessionDetails?.userRole == 'ADMIN'?'SPIU Comment':'Agency Response'}}</th>
+                                       
                                         <th>Edit</th>
                                         <th>S.No</th>
                                         <th>Type Of Expenditure</th>
@@ -55,22 +55,21 @@
                                         <th>Upload Bill/Invoice</th>
                                          <th>SPIU Comment</th>
                                         <th>Agency Response</th>
+                                         <th class="text-center">Add {{this.loginsessionDetails?.userRole == 'ADMIN'?'SPIU Comment':'Agency Response'}}</th>
                                       
                                       
                                     </tr>
                                 </thead>
                                 <tbody *ngIf="getExpenditureDataBoth?.length">
                                     <tr  *ngFor="let item of getExpenditureDataBoth; let i=index">
-                                           <td class="text-center">
-                                        <button type="button"  class="btn btn-default text-lime-green btn-sm"  (click)="openRemarks(item)"><span class="bi bi-pencil"></span></button>
-                                    </td>
+                                         
                                      <td class="text-center">
                                         <button type="button" class="btn btn-default text-lime-green btn-sm" [ngClass]="{'disabled':item?.status=='APPROVED'}"  (click)="OpenModal('edit',item)"><span class="bi bi-pencil"></span></button>
                                     </td>
                                         <td class="text-start">{{i+1}}</td>
                                         <td>{{item?.expenditureType}}</td>
                                         <td>{{item?.headOfExpense}}</td>
-                                        <td>{{item?.cost?item?.cost:item?.allocatedCost}}</td>
+                                        <td>{{(item?.cost?item?.cost:item?.allocatedCost) | number:'1.0-1'}}</td>
                                         <td>{{item?.billNo}}</td>
                                         <td>{{item?.billDate}}</td>
                                         <td>{{item?.payeeName}}</td>
@@ -78,9 +77,9 @@
                                         <td>{{item?.ifscCode}}</td>
                                         <td>{{item?.modeOfPayment}}</td>
                                         <td>{{item?.status}}</td>
-                                          <td *ngIf="item?.uploadBillUrl?.split('.')[1]!='pdf'">
+                                           <td *ngIf="item?.uploadBillUrl?.split('.')[1]!='pdf'">
                                                  <ng-container *ngIf="item?.uploadBillUrl?.split('public_html/')?.[1]">
-                                                       <a (click)="showImagePreview(imageUrlDownloadPath,item?.uploadBillUrl?.split('public_html/')?.[1])" rel="noopener noreferrer">
+                                                       <a (click)="showImagePreview(imageUrlDownloadPath,item?.uploadBillUrl?.split('public_html/')?.[1],'img')" rel="noopener noreferrer">
                                                         <img src="{{imageUrlDownloadPath}}{{item?.uploadBillUrl?.split('public_html/')?.[1]}}" alt="Image 2" class="img-fluid" style="width: 50px; height: 50px;">
                                                         </a>
                                                   </ng-container>
@@ -90,7 +89,7 @@
                                          </td>
                                          <td *ngIf="item?.uploadBillUrl?.split('.')[1]=='pdf'">
                                             <ng-container >
-                                               <a (click)="downloadPDF(item?.uploadBillUrl?.split('public_html/')?.[1])"> <i class="fas fa-file-pdf"></i></a>
+                                               <a (click)="showImagePreview(imageUrlDownloadPath,item?.uploadBillUrl?.split('public_html/')?.[1],'pdf')"> <i class="fas fa-file-pdf"></i></a>
                                             </ng-container>
                                          </td>
                                            <td *ngIf="item.spiuComments.length>1">
@@ -115,6 +114,9 @@
                                             <td *ngIf="item.agencyComments.length<=1 ">
                                                 {{item.agencyComments?.[0]}}                        
                                             </td>
+                                              <td class="text-center">
+                                        <button type="button"  class="btn btn-default text-lime-green btn-sm"  (click)="openRemarks(item)"><span class="bi bi-pencil"></span></button>
+                                    </td>
                                         <!-- <td>{{item?.remarksOrResponse}}</td> -->
                                         <!-- <td>{{item?.purpose}}</td> -->
                                         <!-- <td>{{item?.uploadBillUrl}}</td> -->
@@ -126,9 +128,10 @@
                                         <td></td>
                                         <td></td>
                                         <td></td>
-                                        <td></td>
+                                       
                                         <td>Total</td>
-                                        <td>{{TotalAmount}}</td>
+                                        <td>{{TotalAmount | number:'1.0-1'}}</td>
+                                        <td></td>
                                         <td></td>
                                         <td></td>
                                         <td></td>
@@ -164,7 +167,7 @@
             <div class="modal-body">
                <form [formGroup]="RemarkForm">
                     <div class="row">
-                          <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                          <div class="col-12 col-sm-12 col-md-12 col-lg-12" *ngIf="loginsessionDetails?.userRole == 'ADMIN'">
                             
                             <div class="form-floating mb-3">
                                <select class="form-select" formControlName="status"  name="status" id="status" >
@@ -218,8 +221,12 @@
                 <button type="button" class="btn-close me-1" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <ng-container *ngIf="imagePreviewUrl">
+                <ng-container *ngIf="imagePreviewUrl && type=='img'">
                     <img [src]="imagePreviewUrl" alt="Image Preview" class="img-fluid" style="width: 100%; height: auto;">
+                </ng-container>
+                <ng-container *ngIf="imagePreviewUrl && type=='pdf'">
+                     <ngx-doc-viewer style="height:93vh;" [url]="imagePreviewUrl" viewer="google">
+                        </ngx-doc-viewer>
                 </ng-container>
                 <ng-container *ngIf="!imagePreviewUrl">
                     <span class="text-danger">No Preview Available</span>
