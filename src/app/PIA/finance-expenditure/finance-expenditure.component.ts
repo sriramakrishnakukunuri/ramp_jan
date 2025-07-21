@@ -344,6 +344,7 @@ getAgenciesList() {
   TotalAmount:any=0
   getExpenditure(){
     this.getExpenditureDataBoth=[]
+    this.TotalAmount=0
     if(this.programIds){ 
       this._commonService
         .getDataByUrl(APIS.programExpenditure.getExpenditure+'?programId='+this.programIds+'&expenditureType='+'PRE&agencyId='+this.agencyId).subscribe({
@@ -503,7 +504,7 @@ getAgenciesList() {
       this.RemarkForm = new FormGroup({
       spiuComments: new FormControl("", ),
       agencyComments: new FormControl("", [Validators.required]),
-      status:new FormControl("", [Validators.required]),
+      status:new FormControl("",),
       userId:new FormControl("")
       
     })
@@ -512,7 +513,9 @@ getAgenciesList() {
   }
   imageUrlDownloadPath = `https://metaverseedu.in/`;
   imagePreviewUrl: any
-    showImagePreview(url: any, value: string) {
+   type:any=''
+    showImagePreview(url: any, value: string,type:any) {
+    this.type=type
     this.imagePreviewUrl = null; // Reset the image preview URL
     this.imagePreviewUrl = url + value;
 
@@ -546,7 +549,13 @@ openRemarks(item:any){
       let payload:any
       let url:any
       if(this.expenditureType=='PRE' || this.expenditureType=='POST'){
-        url=APIS.programExpenditure.saveRemarks+'?status='+this.fRemark['status'].value
+        if(this.loginsessionDetails?.userRole != 'ADMIN'){
+           url=APIS.programExpenditure.saveRemarks
+        }
+        else{
+          url=APIS.programExpenditure.saveRemarks+'?status='+this.fRemark['status'].value
+        }
+        
         if(this.loginsessionDetails?.userRole == 'ADMIN'){
             payload={
             "userId": this.loginsessionDetails?.userId,
@@ -565,7 +574,13 @@ openRemarks(item:any){
       }
     }
       else{
-        url=APIS.programExpenditure.saveRemarksBulk+'?status='+this.fRemark['status'].value
+        if(this.loginsessionDetails?.userRole != 'ADMIN'){
+           url=APIS.programExpenditure.saveRemarksBulk
+        }
+        else{
+            url=APIS.programExpenditure.saveRemarksBulk+'?status='+this.fRemark['status'].value
+        }
+      
           if(this.loginsessionDetails?.userRole == 'ADMIN'){
             payload={
             "userId": this.loginsessionDetails?.userId,
@@ -931,9 +946,11 @@ openRemarks(item:any){
   
   isEdit:any=false
   Expenditureid:any=''
+  editUploadUrl:any
   OpenModal(type:any,item?:any):any{
     this.Expenditureid=''
     this.fileErrors='';  
+     this.editUploadUrl=''
    if(type=='add'){
     this.isEdit=false
     if(this.programCreationMain.value.activityId && this.programCreationMain.value.subActivityId && this.programCreationMain.value.programId){
@@ -958,6 +975,7 @@ openRemarks(item:any){
     }
    }
    else{
+     this.editUploadUrl=item?.uploadBillUrl;
     if(item?.expenditureType=='PRE' || item?.expenditureType=='POST'){
       this.Expenditureid=item?.programExpenditureId
       this.isEdit=true
@@ -1070,8 +1088,8 @@ openRemarks(item:any){
       subActivityId:Number(this.programCreationMain.value.subActivityId),programId:Number(this.programCreationMain.value.programId),...this.PrePostExpenditureForm.value,
       headOfExpenseId:Number(this.PrePostExpenditureForm.value.headOfExpenseId),
       billDate:moment(this.PrePostExpenditureForm.value.billDate).format('DD-MM-YYYY'),
-      agencyId:this.agencyId?Number(this.agencyId):Number(this.agencyId)}
-      payload['uploadBillUrl']=null
+      agencyId:this.agencyId?Number(this.agencyId):Number(this.agencyId),uploadBillUrl:this.editUploadUrl?this.editUploadUrl:null}
+      // payload['uploadBillUrl']=null
     console.log(payload)
     const formData = new FormData();
      

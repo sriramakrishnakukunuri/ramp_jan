@@ -470,6 +470,7 @@ getAgenciesList() {
   getExpenditureDataBoth:any=[]
   TotalAmount:any=0
   getExpenditure(){
+    this.TotalAmount=0
     this.getExpenditureDataBoth=[]
     if(this.programIds){ 
       this._commonService
@@ -481,6 +482,7 @@ getAgenciesList() {
             // this.getExpenditure()
             this.getPost()
             this.reinitializeDataTable();
+            
             this.getExpenditureData?.map((item:any)=>{
 
               this.TotalAmount+=item?.cost
@@ -511,6 +513,7 @@ getAgenciesList() {
             this.getExpenditureDataBoth=[...this.getExpenditureDataBoth,...data?.data]
             this.getBulkExpenditure()
             // this.reinitializeDataTable();
+
             this.getExpenditureData?.map((item:any)=>{
               this.TotalAmount+=item?.cost
             })
@@ -630,7 +633,7 @@ getAgenciesList() {
       this.RemarkForm = new FormGroup({
       spiuComments: new FormControl("", ),
       agencyComments: new FormControl("", [Validators.required]),
-      status:new FormControl("", [Validators.required]),
+      status:new FormControl("",),
       userId:new FormControl("")
       
     })
@@ -639,7 +642,9 @@ getAgenciesList() {
   }
   imageUrlDownloadPath = `https://metaverseedu.in/`;
   imagePreviewUrl: any
-    showImagePreview(url: any, value: string) {
+  type:any=''
+    showImagePreview(url: any, value: string,type:any) {
+    this.type=type
     this.imagePreviewUrl = null; // Reset the image preview URL
     this.imagePreviewUrl = url + value;
 
@@ -729,6 +734,7 @@ openRemarks(item:any){
               }
 
             }
+  
   downloadPDF(url:any){
     let linkUrl = 'https://metaverseedu.in/'+url
     const link = document.createElement("a");
