@@ -116,7 +116,7 @@
                          </div>
                          <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
                            <div class="text-start text-sm-end text-xl-end">
-                             <button type="button" (click)="openShareholderModal()"
+                             <button type="button" (click)="openShareholderModal()" *ngIf="freeze<=4"
                                class="btn btn-outline-primary btn-sm border-0 ms-3">
                                <span class="bi bi-plus-lg"></span> Add
                              </button>
@@ -146,7 +146,7 @@
                                    class="btn btn-default text-primary btn-sm">
                                    <span class="bi bi-pencil"></span>
                                  </button>
-                                 <button type="button" (click)="removeShareholder(i)"
+                                 <button type="button" (click)="removeShareholder(i,shareholder.get('id')?.value)"
                                    class="btn btn-default text-danger btn-sm">
                                    <span class="bi bi-trash"></span>
                                  </button>
@@ -171,7 +171,7 @@
                      </div>
 
                      <div class="text-end">
-                       <button type="button" (click)="saveBasicDetails()" class="btn btn-primary"
+                       <button type="button" (click)="saveBasicDetails()" class="btn btn-primary" *ngIf="freeze<=4"
                          [disabled]="basicDetails.invalid">
                          Save Basic Details
                        </button>
@@ -199,7 +199,7 @@
 
                        <div class="col-12 col-sm-4 col-md-4 col-lg-3 col-xl-3">
                          <div class="text-end">
-                           <button type="button" (click)="openBuyerModal()"
+                           <button type="button" (click)="openBuyerModal()" *ngIf="freeze<=4"
                              class="btn btn-outline-primary btn-sm border-0 ms-3">Add Buyer</button>
 
                          </div>
@@ -232,7 +232,7 @@
                                    class="btn btn-default text-primary btn-sm">
                                    <span class="bi bi-pencil"></span>
                                  </button>
-                                 <button type="button" (click)="removeBuyer(i)"
+                                 <button type="button" (click)="removeBuyer(i,buyer.get('id')?.value)"
                                    class="btn btn-default text-danger btn-sm">
                                    <span class="bi bi-trash"></span>
                                  </button>
@@ -257,7 +257,7 @@
                        </div>
                        <div class="col-12 col-sm-4 col-md-4 col-lg-3 col-xl-3">
                          <div class="text-end">
-                           <button type="button" (click)="openSupplierModal()"
+                           <button type="button" (click)="openSupplierModal()" *ngIf="freeze<=4"
                              class="btn btn-outline-primary btn-sm border-0 ms-3">Add
                              Supplier</button>
                          </div>
@@ -290,7 +290,7 @@
                                    class="btn btn-default text-primary btn-sm">
                                    <span class="bi bi-pencil"></span>
                                  </button>
-                                 <button type="button" (click)="removeSupplier(i)"
+                                 <button type="button" (click)="removeSupplier(i,supplier.get('id')?.value)"
                                    class="btn btn-default text-danger btn-sm">
                                    <span class="bi bi-trash"></span>
                                  </button>
@@ -306,7 +306,7 @@
                    </div>
                  </div>
                  <div class="text-end">
-                   <button type="button" (click)="saveBuyersDetails()" class="btn btn-primary"
+                   <button type="button" (click)="saveBuyersDetails()" class="btn btn-primary" *ngIf="freeze<=4"
                      [disabled]="basicDetails.invalid">
                      Save Details
                    </button>
@@ -491,7 +491,7 @@
                        </div>
                        <div class="col-12 col-sm-4 col-md-4 col-lg-3 col-xl-3">
                          <div class="text-end">
-                           <button type="button" (click)="openReceivableModal()"
+                           <button type="button" (click)="openReceivableModal()" *ngIf="freeze<=4"
                              class="btn btn-outline-primary btn-sm border-0 ms-3">Add
                              Receivable</button>
                          </div>
@@ -523,7 +523,7 @@
                                      class="btn btn-default text-primary btn-sm">
                                      <span class="bi bi-pencil"></span>
                                    </button>
-                                   <button type="button" (click)="removeReceivable(i)"
+                                   <button type="button" (click)="removeReceivable(i,receivable.get('id')?.value)"
                                      class="btn btn-default text-danger btn-sm">
                                      <span class="bi bi-trash"></span>
                                    </button>
@@ -558,7 +558,7 @@
                        </div>
                        <div class="col-12 col-sm-4 col-md-4 col-lg-3 col-xl-3">
                          <div class="text-end">
-                           <button type="button" (click)="openPayableModal()"
+                           <button type="button" (click)="openPayableModal()" *ngIf="freeze<=4"
                              class="btn btn-outline-primary btn-sm border-0 ms-3">Add
                              Payable</button>
                          </div>
@@ -590,7 +590,7 @@
                                      class="btn btn-default text-primary btn-sm">
                                      <span class="bi bi-pencil"></span>
                                    </button>
-                                   <button type="button" (click)="removePayable(i)"
+                                   <button type="button" (click)="removePayable(i,payable.get('id')?.value)"
                                      class="btn btn-default text-danger btn-sm">
                                      <span class="bi bi-trash"></span>
                                    </button>
@@ -616,7 +616,7 @@
                    </div>
                  </div>
                  <div class="text-end">
-                   <button type="button" (click)="saveReceivaablesDetails()" class="btn btn-primary"
+                   <button type="button" (click)="saveReceivaablesDetails()" class="btn btn-primary" *ngIf="freeze<=4"
                      [disabled]="basicDetails.invalid">
                      Save Details
                    </button>
@@ -879,7 +879,7 @@
                            </div>
                            <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
                              <div class="text-start text-sm-end text-xl-end">
-                               <button type="button" (click)="openOrderBookModal()"
+                               <button type="button" (click)="openOrderBookModal()" *ngIf="freeze<=4"
                                  class="btn btn-outline-primary btn-sm border-0 ms-3">
                                  <span class="bi bi-plus-lg"></span> Add
                                </button>
@@ -911,7 +911,7 @@
                                      class="btn btn-sm btn-outline-primary me-2">
                                      <i class="bi bi-pencil"></i>
                                    </button>
-                                   <button type="button" (click)="removeOrderBookPosition(i)"
+                                   <button type="button" (click)="removeOrderBookPosition(i,position.get('id')?.value)"
                                      class="btn btn-sm btn-outline-danger">
                                      <i class="bi bi-trash"></i>
                                    </button>
@@ -956,7 +956,7 @@
                              <div class="row">
                                <div class="col-12">
                                  <div class="text-end mb-2">
-                                   <button type="button" (click)="openUnsecuredLoansModal()"
+                                   <button type="button" (click)="openUnsecuredLoansModal()" *ngIf="freeze<=4"
                                      class="btn btn-outline-primary btn-sm border-0 ms-3">
                                      <span class="bi bi-plus-lg"></span> Add Loan
                                    </button>
@@ -986,7 +986,7 @@
                                            class="btn btn-sm btn-outline-primary me-2">
                                            <i class="bi bi-pencil"></i>
                                          </button>
-                                         <button type="button" (click)="removeUnsecuredLoan(i)"
+                                         <button type="button" (click)="removeUnsecuredLoan(i,loan.get('id')?.value)"
                                            class="btn btn-sm btn-outline-danger">
                                            <i class="bi bi-trash"></i>
                                          </button>
@@ -1106,7 +1106,7 @@
 
                    </div>
                    <div class="text-end">
-                     <button type="button" (click)="saveOperationalStatus()" class="btn btn-primary"
+                     <button type="button" (click)="saveOperationalStatus()" class="btn btn-primary" *ngIf="freeze<=4"
                        [disabled]="operationalStatus.invalid">
                        Save Operational Status
                      </button>
@@ -1264,7 +1264,7 @@
                  </div>
 
                  <div class="text-end mt-3">
-                   <button type="button" (click)="saveStressReason()" class="btn btn-primary">
+                   <button type="button" (click)="saveStressReason()" class="btn btn-primary" *ngIf="freeze<=4">
                      Save Reason
                    </button>
                    <div *ngIf="saveSuccess.stress" class="text-success small mt-2">
@@ -1287,7 +1287,7 @@
                          </div>
                          <div class="col-12 col-sm-4 col-md-4 col-lg-3 col-xl-3">
                            <div class="text-end">
-                             <button type="button" (click)="openBalancesheetModal()"
+                             <button type="button" (click)="openBalancesheetModal()" *ngIf="freeze<=4"
                                class="btn btn-outline-primary btn-sm border-0 ms-3">Add</button>
                            </div>
                          </div>
@@ -1639,7 +1639,7 @@
                  </div>
 
                  <div class="text-end">
-                   <button type="button" (click)="saveStatusUpdate()" class="btn btn-primary">
+                   <button type="button" (click)="saveStatusUpdate()" class="btn btn-primary" *ngIf="freeze<=4">
                      Save Status Update
                    </button>
                    <div *ngIf="saveSuccess.status" class="text-success small mt-2">
@@ -1658,8 +1658,8 @@
        </div>
      </div>
    </div>
-   <input type="button" name="previous" class="previous btn btn-secondary float-start" value="Previous" />
-   <input type="button" name="next" class="next btn btn-primary float-end" data-bs-toggle="modal"
+   <!-- <input type="button" name="previous" class="previous btn btn-secondary float-start" value="Previous" /> -->
+   <input type="button" name="next" class="next btn btn-primary float-end" data-bs-toggle="modal" *ngIf="freeze<=4"
      data-bs-target="#approvedModal" data-bs-dismiss="modal" value="Submit For Manager Approval" />
  </fieldset>
 

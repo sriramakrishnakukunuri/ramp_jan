@@ -6,8 +6,9 @@
           <div class="d-flex justify-content-between align-items-center">
             <span class="mb-0 fw-600">Application Status</span>
             <div class="d-flex align-items-center ms-auto">
+              <span class="mb-0 fw-600 me-4">Application No : {{this.apllictaionDataGlobal?.applicationNo}}</span>
               <span class="mb-0 fw-600 me-4">Company Name : {{this.apllictaionDataGlobal?.enterpriseName}}</span>
-              <span class="mb-0 fw-600">Application No : {{this.apllictaionDataGlobal?.applicationNo}}</span>
+              <span class="mb-0 fw-600 "> District : {{UserDetails?.district}}</span>
             </div>
           </div>
         </div>
@@ -31,9 +32,9 @@
               <div class="step-circle fs-9" [class.active]="currentStep >= 11">11</div>
             </div>
             <div class="step-container step-label d-flex justify-content-between">
-              <div class="fs-md fw-600" [class.active]="currentStep >= 1" >Preliminary
+              <div class="fs-md fw-600" [class.active]="currentStep >= 1"  >Preliminary
                 Assessment</div>
-              <div class="fs-md fw-600" [class.active]="currentStep >= 2" >Manager Approval 1
+              <div class="fs-md fw-600" [class.active]="currentStep >= 2">Manager Approval 1
               </div>
               <div class="fs-md fw-600" [class.active]="currentStep >= 3" >Unit Visit</div>
               <div class="fs-md fw-600" [class.active]="currentStep >= 4" >Diagnostic Report
@@ -46,11 +47,11 @@
                 Credit Appraisal Upload</div>
               <div class="fs-md fw-600" [class.active]="currentStep >= 8" >Primary Lender NOC
               </div>
-              <div class="fs-md fw-600" [class.active]="currentStep >= 9" >Sanctioned Details &
+              <div class="fs-md fw-600" [class.active]="currentStep >= 9">Sanctioned Details &
                 Upload Of Sanctioned Letter</div>
               <div class="fs-md fw-600" [class.active]="currentStep >= 10" >Manager Approval 3
               </div>
-              <div class="fs-md fw-600" [class.active]="currentStep >= 11" >Disbursement
+              <div class="fs-md fw-600" [class.active]="currentStep >= 11">Disbursement
                 Details</div>
             </div>
           </div>
@@ -60,53 +61,55 @@
               <form id="multi-step-form">
                 <!-- Step 1 - Registration -->
                 <div class="step step-1" *ngIf="currentStep === 1">
-                   <app-preliminar-assessment (progressBarStatusUpdate)="progressBarStatusUpdate($event)"></app-preliminar-assessment>
+                   <app-preliminar-assessment [freeze]="freezeValue" (progressBarStatusUpdate)="progressBarStatusUpdate($event)"></app-preliminar-assessment>
                 </div>
 
                 <!-- Step 2 - Application -->
                 <div class="step step-2" *ngIf="currentStep === 2">
-                    <app-manager-approval></app-manager-approval>
+                    <app-manager-approval [freeze]="freezeValue"></app-manager-approval>
                 </div>
 
                 <!-- Step 3 - Status -->
                 <div class="step step-3" *ngIf="currentStep === 3">
-                    <app-unit-visit  (progressBarStatusUpdate)="progressBarStatusUpdate($event)"></app-unit-visit>
+                    <app-unit-visit [freeze]="freezeValue"  (progressBarStatusUpdate)="progressBarStatusUpdate($event)"></app-unit-visit>
                 </div>
                     <!-- Step 4 - Status -->
                 <div class="step step-4" *ngIf="currentStep === 4">
-                    <app-diagnostic-report (progressBarStatusUpdate)="progressBarStatusUpdate($event)"></app-diagnostic-report>
+                    <app-diagnostic-report [freeze]="freezeValue" (progressBarStatusUpdate)="progressBarStatusUpdate($event)"></app-diagnostic-report>
                 </div>
                 <!-- Step 5 - Status -->
                 <div class="step step-5" *ngIf="currentStep === 5">
-                    <app-manager-approval></app-manager-approval>
+                    <app-manager-approval [freeze]="freezeValue"></app-manager-approval>
                 </div>
                 <!-- Step 6 - Status -->
                 <div class="step step-6" *ngIf="currentStep === 6">
-                    <app-di-concern-letter (progressBarStatusUpdate)="progressBarStatusUpdate($event)"></app-di-concern-letter>
+                    <app-di-concern-letter [freeze]="freezeValue" (progressBarStatusUpdate)="progressBarStatusUpdate($event)"></app-di-concern-letter>
                 </div>  
                 <!-- Step 7 - Status -->
                 <div class="step step-7" *ngIf="currentStep === 7">
-                    <app-ramp-checklist (progressBarStatusUpdate)="progressBarStatusUpdate($event)"></app-ramp-checklist>
+                    <app-ramp-checklist [freeze]="freezeValue" (progressBarStatusUpdate)="progressBarStatusUpdate($event)"></app-ramp-checklist>
                 </div>
                 <!-- Step 8 - Status -->
                 <div class="step step-8" *ngIf="currentStep === 8">
-                    <app-primary-noc (progressBarStatusUpdate)="progressBarStatusUpdate($event)"></app-primary-noc>
+                    <app-primary-noc [freeze]="freezeValue" (progressBarStatusUpdate)="progressBarStatusUpdate($event)"></app-primary-noc>
                 </div>
                 <!-- Step 9 - Status -->
                 <div class="step step-9" *ngIf="currentStep === 9">
-                    <app-sanctioned-details  (progressBarStatusUpdate)="progressBarStatusUpdate($event)"></app-sanctioned-details>
+                    <app-sanctioned-details [freeze]="freezeValue" (progressBarStatusUpdate)="progressBarStatusUpdate($event)"></app-sanctioned-details>
                 </div>
                 <!-- Step 10 - Status -->
                 <div class="step step-10" *ngIf="currentStep === 10">
-                    <app-manager-approval></app-manager-approval>
+                    <app-manager-approval [freeze]="freezeValue"></app-manager-approval>
                 </div>
                 <!-- Step 11 - Status -->
                 <div class="step step-11" *ngIf="currentStep === 11">
-                    <app-disbursement-details (progressBarStatusUpdate)="progressBarStatusUpdate($event)"></app-disbursement-details>
+                    <app-disbursement-details [freeze]="freezeValue" (progressBarStatusUpdate)="progressBarStatusUpdate($event)"></app-disbursement-details>
                 </div>
               </form>
             </div>
           </div>
+         <button type="button" class="previous btn btn-secondary float-start mt-3" (click)="PreviousStep()" >Previous</button>
+            <button type="button" class="next btn btn-primary float-end mt-3" [ngClass]="{'disabled':freezeValue==currentStep}" (click)="NextStep()">Next</button>
         </div>
       </div>
     </div>

@@ -188,8 +188,8 @@
       </div>
     </div>
     
-    <input type="button" name="previous" class="previous btn btn-secondary float-start" value="Previous" (click)="goToPrevious()"/>
-    <button type="submit" class="btn btn-primary float-end" [ngClass]="{'isDisabled':sanctionForm.invalid}">
+    <!-- <input type="button" name="previous" class="previous btn btn-secondary float-start" value="Previous" (click)="goToPrevious()"/> -->
+    <button type="submit" class="btn btn-primary float-end" [ngClass]="{'isDisabled':sanctionForm.invalid}" *ngIf="freeze<=9">
       Submit For Manager Approval
     </button>
   </form>

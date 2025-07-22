@@ -1,10 +1,11 @@
  // diagnostic-report.component.ts
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
 // import { DiagnosticReportService } from './diagnostic-report.service';
 import { ActivatedRoute } from '@angular/router';
 import { CommonServiceService } from '@app/_services/common-service.service';
 import { APIS } from '@app/constants/constants';
+import { observable } from 'rxjs';
 
 @Component({
   selector: 'app-diagnostic-report',
@@ -15,6 +16,7 @@ export class DiagnosticReportComponent implements OnInit {
   diagnosticForm!: FormGroup;
   @Output() progressBarStatusUpdate:any = new EventEmitter();
   shareholderForm!: FormGroup;
+  @Input() freeze:any
   showBuyerModal = false;
   showSupplierModal = false;
     buyerForm!: FormGroup;
@@ -158,7 +160,7 @@ applicationData:any
     }
   initShareholderForm(): void {
     this.shareholderForm = this.fb.group({
-      // id:[''],
+      id:[''],
       name: ['', Validators.required],
       mobileNo: ['', [Validators.required, Validators.pattern(/^[6789]\d{9}$/)]],
       numOfShares: ['', [Validators.required, Validators.min(1)]]
@@ -194,42 +196,42 @@ applicationData:any
   patchFormValues(data: any): void {
     // Basic Details
     this.basicDetails.patchValue({
-      name: data.name,
-      contactNo: data.contactNo,
-      gstNumber: data.gstNumber,
-      productManufactured: data.productManufactured,
-      demandForTheProduct: data.demandForTheProduct
+      name: data?.name,
+      contactNo: data?.contactNo,
+      gstNumber: data?.gstNumber,
+      productManufactured: data?.productManufactured,
+      demandForTheProduct: data?.demandForTheProduct
     });
 
     // Shareholders
-    data.shareholders.forEach((shareholder:any) => {
+    data?.shareholders.forEach((shareholder:any) => {
       this.addShareholder(shareholder);
     });
 
     // Top Buyers
-    data.topBuyers.forEach((buyer:any) => {
+    data?.topBuyers.forEach((buyer:any) => {
       this.addBuyer(buyer);
     });
 
     // Top Sellers
-    data.topSellers.forEach((seller:any) => {
+    data?.topSellers.forEach((seller:any) => {
       this.addSupplier(seller);
     });
 
     // Receivables
-    data.receivables.forEach((receivable:any) => {
+    data?.receivables.forEach((receivable:any) => {
       this.addReceivable(receivable);
     });
 
     // Payables
-    data.payables.forEach((payable:any) => {
+    data?.payables.forEach((payable:any) => {
       this.addPayable(payable);
     });
 
     // Operational Status
-    if (data.operationalStatus) {
+    if (data?.operationalStatus) {
       this.operationalStatus.patchValue({
-        skilledCount: data.operationalStatus.skilledCount,
+        skilledCount: data?.operationalStatus.skilledCount,
         unskilledCount: data.operationalStatus.unskilledCount,
         femaleCount: data.operationalStatus.femaleCount,
         installedCapacity: data.operationalStatus.installedCapacity,
@@ -247,10 +249,10 @@ applicationData:any
       });
 
       // Order Book Positions
-      data.operationalStatus?.orderBookPositions?.forEach((position:any) => {
+      data?.operationalStatus?.orderBookPositions?.forEach((position:any) => {
         this.addOrderBookPosition(position);
       });
-       data.operationalStatus?.unsecuredLoans?.forEach((position:any) => {
+       data?.operationalStatus?.unsecuredLoans?.forEach((position:any) => {
         this.addUnsecuredData(position);
       });
     }
@@ -325,7 +327,7 @@ formateBalnceSheet(data:any){
 
   addShareholder(data?: any): void {
     const shareholderGroup = this.fb.group({
-      // id: [data?.id || 0],
+      id: [data?.id || 0],
       name: [data?.name || '', Validators.required],
       mobileNo: [data?.mobileNo || '', [Validators.required, Validators.pattern(/^[6789]\d{9}$/)]],
       numOfShares: [data?.numOfShares || 0, [Validators.required, Validators.min(0)]]
@@ -340,7 +342,7 @@ formateBalnceSheet(data:any){
     if (this.isEditMode && editIndex !== null) {
       const shareholder = this.shareholders.at(editIndex);
       this.shareholderForm.patchValue({
-        // id:shareholder.get('id')?.value,
+        id:shareholder.get('id')?.value,
         name: shareholder.get('name')?.value,
         mobileNo: shareholder.get('mobileNo')?.value,
         numOfShares: shareholder.get('numOfShares')?.value
@@ -367,7 +369,14 @@ saveShareholder(): void {
     this.closeModal();
   }
 
-  removeShareholder(index: number): void {
+  removeShareholder(index: number,id:any): void {
+    this._commonService.deleteById(APIS.tihclExecutive.deleteDiagnostics.deleteShareholding,id).subscribe(
+        (res:any)=>{
+          
+      },
+      (error:any)=>{
+
+    })
     this.shareholders.removeAt(index);
   }
 
@@ -411,6 +420,7 @@ closeModal(): void {
   editType: any = null;
  initBuyerForm(): void {
     this.buyerForm = this.fb.group({
+      id:[''],
       buyerName: ['', Validators.required],
       purchasedQty: ['', [Validators.required, Validators.min(1)]],
       amount: ['', [Validators.required, Validators.min(0)]],
@@ -420,6 +430,7 @@ closeModal(): void {
 
   initSupplierForm(): void {
     this.supplierForm = this.fb.group({
+      id:[''],
       sellerName: ['', Validators.required],
       suppliedQty: ['', [Validators.required, Validators.min(1)]],
       amount: ['', [Validators.required, Validators.min(0)]],
@@ -435,6 +446,7 @@ closeModal(): void {
     if (this.isEditMode && editIndex !== null) {
       const buyer = this.buyers.at(editIndex);
       this.buyerForm.patchValue({
+        id:buyer.get('id')?.value,
         buyerName: buyer.get('buyerName')?.value,
         purchasedQty: buyer.get('purchasedQty')?.value,
         amount: buyer.get('amount')?.value,
@@ -455,6 +467,7 @@ closeModal(): void {
     if (this.isEditMode && editIndex !== null) {
       const supplier = this.suppliers.at(editIndex);
       this.supplierForm.patchValue({
+        id: supplier.get('id')?.value,
         sellerName: supplier.get('sellerName')?.value,
         suppliedQty: supplier.get('suppliedQty')?.value,
         amount: supplier.get('amount')?.value,
@@ -499,11 +512,25 @@ closeModal(): void {
     setTimeout(() => this.saveSuccess.suppliers = false, 3000);
   }
 
-  removeBuyer(index: number): void {
+  removeBuyer(index: number,id:any): void {
+     this._commonService.deleteById(APIS.tihclExecutive.deleteDiagnostics.deleteBuyer,id).subscribe(
+        (res:any)=>{
+          
+      },
+      (error:any)=>{
+
+    })
     this.buyers.removeAt(index);
   }
 
-  removeSupplier(index: number): void {
+  removeSupplier(index: number,id:any): void {
+     this._commonService.deleteById(APIS.tihclExecutive.deleteDiagnostics.deleteseller,id).subscribe(
+        (res:any)=>{
+          
+      },
+      (error:any)=>{
+
+    })
     this.suppliers.removeAt(index);
   }
 
@@ -547,6 +574,7 @@ closeModal(): void {
   payableForm!: FormGroup;
   initReceivableForm(): void {
     this.receivableForm = this.fb.group({
+      id:[''],
       toBeReceivedFrom: ['', Validators.required],
       receivableDate: ['', Validators.required],
       amount: ['', [Validators.required, Validators.min(0)]]
@@ -555,6 +583,7 @@ closeModal(): void {
 
   initPayableForm(): void {
     this.payableForm = this.fb.group({
+      id:[''],
       toBePaidTo: ['', Validators.required],
       payableDate: ['', Validators.required],
       payableAmount: ['', [Validators.required, Validators.min(0)]]
@@ -568,6 +597,7 @@ closeModal(): void {
     if (this.isEditMode && editIndex !== null) {
       const receivable = this.receivables.at(editIndex);
       this.receivableForm.patchValue({
+        id: receivable.get('id')?.value,
         toBeReceivedFrom: receivable.get('toBeReceivedFrom')?.value,
         receivableDate: receivable.get('receivableDate')?.value,
         amount: receivable.get('amount')?.value
@@ -586,6 +616,7 @@ closeModal(): void {
     if (this.isEditMode && editIndex !== null) {
       const payable = this.payables.at(editIndex);
       this.payableForm.patchValue({
+         id: payable.get('id')?.value,
         toBePaidTo: payable.get('toBePaidTo')?.value,
         payableDate: payable.get('payableDate')?.value,
         payableAmount: payable.get('payableAmount')?.value
@@ -629,11 +660,25 @@ closeModal(): void {
     setTimeout(() => this.saveSuccess.payables = false, 3000);
   }
 
-  removeReceivable(index: number): void {
+  removeReceivable(index: number,id:any): void {
+     this._commonService.deleteById(APIS.tihclExecutive.deleteDiagnostics.deletereceivable,id).subscribe(
+        (res:any)=>{
+          
+      },
+      (error:any)=>{
+
+    })
     this.receivables.removeAt(index);
   }
 
-  removePayable(index: number): void {
+  removePayable(index: number,id:any): void {
+      this._commonService.deleteById(APIS.tihclExecutive.deleteDiagnostics.deletepayable,id).subscribe(
+        (res:any)=>{
+          
+      },
+      (error:any)=>{
+
+    })
     this.payables.removeAt(index);
   }
 
@@ -824,7 +869,14 @@ orderBookPositionsModal = false;
     this.closeOperationalModals()
   }
 
-  removeOrderBookPosition(index: number) {
+  removeOrderBookPosition(index: number,id:any) {
+     this._commonService.deleteById(APIS.tihclExecutive.deleteDiagnostics.deleteorderBookPosition,id).subscribe(
+        (res:any)=>{
+          
+      },
+      (error:any)=>{
+
+    })
     this.orderBookPositions.removeAt(index);
   }
 
@@ -862,7 +914,14 @@ orderBookPositionsModal = false;
     this.closeOperationalModals()
   }
 
-  removeUnsecuredLoan(index: number) {
+  removeUnsecuredLoan(index: number,id:any) {
+     this._commonService.deleteById(APIS.tihclExecutive.deleteDiagnostics.deleteunsecured,id).subscribe(
+        (res:any)=>{
+          
+      },
+      (error:any)=>{
+
+    })
     this.unsecuredLoans.removeAt(index);
   }
 closeOperationalModals(){
@@ -1045,7 +1104,7 @@ saveStatusUpdate(): void {
 
   addBuyer(data?: any): void {
     const buyerGroup = this.fb.group({
-      // id: [data?.id || 0],
+      id: [data?.id || 0],
       buyerName: [data?.buyerName || '', Validators.required],
       purchasedQty: [data?.purchasedQty || 0, [Validators.required, Validators.min(0)]],
       amount: [data?.amount || 0, [Validators.required, Validators.min(0)]],
@@ -1058,7 +1117,7 @@ saveStatusUpdate(): void {
  
   addSupplier(data?: any): void {
     const supplierGroup = this.fb.group({
-      // id: [data?.id || 0],
+      id: [data?.id || 0],
       sellerName: [data?.sellerName || '', Validators.required],
       suppliedQty: [data?.suppliedQty || 0, [Validators.required, Validators.min(0)]],
       amount: [data?.amount || 0, [Validators.required, Validators.min(0)]],
@@ -1072,7 +1131,7 @@ saveStatusUpdate(): void {
 
   addReceivable(data?: any): void {
     const receivableGroup = this.fb.group({
-      // id: [data?.id || 0],
+      id: [data?.id || 0],
       toBeReceivedFrom: [data?.toBeReceivedFrom || '', Validators.required],
       receivableDate: [data?.receivableDate || '', Validators.required],
       amount: [data?.amount || 0, [Validators.required, Validators.min(0)]]
@@ -1084,7 +1143,7 @@ saveStatusUpdate(): void {
 
   addPayable(data?: any): void {
     const payableGroup = this.fb.group({
-      // id: [data?.id || 0],
+      id: [data?.id || 0],
       toBePaidTo: [data?.toBePaidTo || '', Validators.required],
       payableDate: [data?.payableDate || '', Validators.required],
       payableAmount: [data?.payableAmount || 0, [Validators.required, Validators.min(0)]]
@@ -1097,7 +1156,7 @@ saveStatusUpdate(): void {
 
   addOrderBookPosition(data?: any): void {
     const positionGroup = this.fb.group({
-      // id: [data?.id || 0],
+      id: [data?.id || 0],
       dateOfOrder: [data?.dateOfOrder || '', Validators.required],
       customerName: [data?.customerName || '', Validators.required],
       orderValue: [data?.orderValue || 0, [Validators.required, Validators.min(0)]],
@@ -1108,7 +1167,7 @@ saveStatusUpdate(): void {
   }
   addUnsecuredData(data?:any):void{
      const positionGroup = this.fb.group({
-      // id: [data?.id || 0],
+      id: [data?.id || 0],
       source: [data?.source || '', Validators.required],
       sinceWhen: [data?.sinceWhen || '', Validators.required],
       loanAmount: [data?.loanAmount || 0, [Validators.required, Validators.min(0)]],

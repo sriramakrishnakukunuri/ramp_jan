@@ -81,7 +81,17 @@ export const APIS = {
         saveDisbursement:  API_BASE_URL+`/disbursement/details/save`,
         getdisbursementDelete:API_BASE_URL+`/disbursement/details/disbursement/id/`,
         getDiagnostic:API_BASE_URL+'/diagnostic-reports/getBy/usage/',
-        saveDiagnostic:API_BASE_URL+'/diagnostic-reports/save'
+        saveDiagnostic:API_BASE_URL+'/diagnostic-reports/save',
+        deleteDiagnostics:{
+        deleteShareholding:API_BASE_URL+'/diagnostic-reports/Shareholding/delete/',
+        deleteBalanceSheet:API_BASE_URL+'/diagnostic-reports/balance-sheet/',
+        deleteBuyer:API_BASE_URL+'/diagnostic-reports/buyer/delete/',
+        deletepayable:API_BASE_URL+'/diagnostic-reports/payable/delete/',
+        deletereceivable:API_BASE_URL+'/diagnostic-reports/receivable/delete/',
+        deleteseller:API_BASE_URL+'/diagnostic-reports/seller/delete/',
+        deleteunsecured:API_BASE_URL+'/diagnostic-reports/unsecured-loans/',
+        deleteorderBookPosition:API_BASE_URL+'/diagnostic-reports/orderBookPosition/delete/',
+        }
 
 
     },

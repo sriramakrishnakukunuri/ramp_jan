@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CommonServiceService } from '@app/_services/common-service.service';
 import { APIS } from '@app/constants/constants';
@@ -15,7 +15,7 @@ export class DisbursementDetailsComponent implements OnInit {
   disbursements: any[] = [];
   isEditMode: boolean = false;
   currentEditIndex: number = -1;
-
+  @Input() freeze:any
   applicationData:any
    @Output() progressBarStatusUpdate:any = new EventEmitter();
    constructor(private fb: FormBuilder,private toastrService: ToastrService,

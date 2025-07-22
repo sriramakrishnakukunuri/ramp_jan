@@ -14,7 +14,7 @@
                                     <img src="assets/img/pending.gif" class="img-fluid" alt="pending" width="200"  />
                                     <h3 class="text-warning">Awaiting for DIC Approval</h3>
                                   </div>
-                                  <div class="success-content d-flex align-items-center justify-content-center flex-column mb-3" *ngIf="this.managrData?.applicationStatus=='DIC_APPROVAL' || this.managrData?.applicationStatus=='DIC_NOC' ">
+                                  <div class="success-content d-flex align-items-center justify-content-center flex-column mb-3" *ngIf="this.managrData?.applicationStatus=='DIC_APPROVAL' || this.managrData?.applicationStatus=='DIC_NOC' || freeze>currentStep ">
                                     <img src="assets/img/success.gif" class="img-fluid" alt="success" width="200">
                                     <h5>Approved</h5>
                                   </div>
@@ -23,7 +23,7 @@
                                     <h5>Rejected</h5>
                                     <p><span class=" fw-600">Reason Foe Rejection : </span><span class="text-theme">{{this.managrData?.reasonForRejection}}</span></p>
                                   </div> 
-                                  <div class="row" *ngIf="this.managrData?.applicationStatus=='DIC_APPROVAL' || this.managrData?.applicationStatus=='DIC_NOC' ">
+                                  <div class="row" *ngIf="this.managrData?.applicationStatus=='DIC_APPROVAL' || this.managrData?.applicationStatus=='DIC_NOC' || freeze>currentStep ">
                                     <div class="col-12 col-sm-12 col-md-4 offset-md-4">
                                       <div class="d-grid">
                                         <button type="button" (click)="DownloadDic()" class="btn btn-primary">Download NOC</button>
@@ -34,6 +34,6 @@
                               </div>
                             </div>
                           </div>
-                          <input type="button" name="previous" class="previous btn btn-secondary float-start" value="Previous"/>
-                          <input type="button" name="next" (click)="Approved()" class="next btn btn-primary float-end" value="Next"/>
+                          <!-- <input type="button" name="previous" class="previous btn btn-secondary float-start" value="Previous"/> -->
+                          <input type="button" name="next" (click)="Approved()" class="next btn btn-primary float-end" value="Confirm to Next" *ngIf="freeze<=6"/>
                       </fieldset>

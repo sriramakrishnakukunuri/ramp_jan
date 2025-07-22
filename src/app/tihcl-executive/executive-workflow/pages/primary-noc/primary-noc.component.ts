@@ -1,4 +1,4 @@
- import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CommonServiceService } from '@app/_services/common-service.service';
@@ -11,7 +11,7 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./primary-noc.component.css']
 })
 export class PrimaryNocComponent implements OnInit {
-
+@Input() freeze:any
   applicationData:any
   constructor(private fb: FormBuilder, private toastrService: ToastrService,
         private _commonService: CommonServiceService,

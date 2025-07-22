@@ -395,7 +395,7 @@
       </div>
 
       <!-- Submit Button -->
-      <input type="submit" name="next" class="btn btn-primary float-end" value="Submit for Manager Approval" />
+      <input *ngIf="freeze<=1" type="submit" name="next" class="btn btn-primary float-end"  value="Submit for Manager Approval" />
     </form>
   </div>
 </div>

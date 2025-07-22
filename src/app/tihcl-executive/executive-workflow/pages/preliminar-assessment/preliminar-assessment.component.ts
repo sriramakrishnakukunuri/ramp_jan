@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { CommonServiceService } from '@app/_services/common-service.service';
 import { APIS } from '@app/constants/constants';
@@ -20,6 +20,7 @@ export class PreliminarAssessmentComponent implements OnInit {
   @Output() progressBarStatusUpdate:any = new EventEmitter();
    @ViewChild('addDelivery') addDelivery!: ElementRef;
    @ViewChild('UpdateLoanModal') UpdateLoanModal!: ElementRef;
+   @Input() freeze:any
   // Loans table data
   loansData: any[] = [
     {
@@ -228,8 +229,8 @@ loginsessionDetails:any
            this.initializeForm();
            this.createCreditDetail()
            this.getAllDistricts()
-         
-          this.getDtataByUrl(APIS.tihclExecutive.registerData + applicationData.registrationUsageId);
+         console.log(applicationData)
+          this.getDtataByUrl(APIS.tihclExecutive.registerData + (applicationData.registrationUsageId?applicationData.registrationUsageId:applicationData.registrationId));
    
   }
 
@@ -237,14 +238,31 @@ loginsessionDetails:any
     this._commonService.getDataByUrl(url).subscribe({
       next: (dataList: any) => {
          this.assessmentForm.patchValue(dataList.data);
-         console.log(dataList.data)
+         console.log(dataList?.data)
           const deliveryDetailsArray = this.assessmentForm.get('creditFacilityDetails') as FormArray;
           // Push the new form group
-          if( dataList?.data?.creditFacilityDetails.length){
+          if( dataList?.data?.creditFacilityDetails?.length){
               dataList?.data?.creditFacilityDetails.map((item:any)=>{
              deliveryDetailsArray.push(this.fb.group(item))
           })
           }
+          if (dataList?.data && Array.isArray(dataList?.data.stressScore)) {
+            this.totalScore=dataList?.data?.riskCategoryScore
+            dataList.data?.stressScore.forEach((item: any) => {
+          // Find the question by issue
+          const question = this.stressScoreOptions.find((q: any) => q.issue === item.issue);
+          if (question) {
+            // Find the option label that starts with the riskCategorisation
+            const option = question.options.find((opt: any) =>
+              opt.label.startsWith(item.riskCategorisation)
+            );
+            if (option) {
+              // Patch the form control with the full label
+              this.assessmentForm.get(`stressScore_${question.id}`)?.patchValue(option.label);
+            }
+          }
+        });
+      }
         
         
          this.loansData = dataList.data.creditFacilityDetails || [];

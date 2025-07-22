@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { CommonServiceService } from '@app/_services/common-service.service';
 import { APIS } from '@app/constants/constants';
@@ -15,6 +15,7 @@ export class UnitVisitComponent implements OnInit {
 @ViewChild('addmachinary') addmachinary!: ElementRef;
   unitVisitForm!: FormGroup;
   factoryDetails: any[] = [];
+  @Input() freeze:any
   isSameAddress: boolean = true;
   machineForm!: FormGroup;
   applicationData:any

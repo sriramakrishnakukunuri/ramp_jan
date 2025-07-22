@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { CommonServiceService } from '@app/_services/common-service.service';
 import { APIS } from '@app/constants/constants';
@@ -12,14 +12,18 @@ import { ToastrService } from 'ngx-toastr';
 export class ManagerApprovalComponent implements OnInit {
   assessmentForm!: FormGroup;
 applicationData:any
+    @Input() freeze!:any
+    currentStep:any
   constructor(private fb: FormBuilder,private toastrService: ToastrService,
       private _commonService: CommonServiceService,) { 
+       this.currentStep = this._commonService.getCurrentStep();
     const applicationData = JSON.parse(sessionStorage.getItem('ApplicationData') || '{}');
     this.applicationData=applicationData
     this.getDtataByUrl(APIS.tihclExecutive.registerData + (applicationData.registrationUsageId? applicationData?.registrationUsageId:applicationData?.registrationId))
   }
 
   ngOnInit(): void {
+     console.log(this.freeze,this.currentStep)
   }
   managrData:any
    getDtataByUrl(url: string) {
