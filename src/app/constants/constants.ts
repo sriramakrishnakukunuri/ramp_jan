@@ -82,6 +82,7 @@ export const APIS = {
         getdisbursementDelete:API_BASE_URL+`/disbursement/details/disbursement/id/`,
         getDiagnostic:API_BASE_URL+'/diagnostic-reports/getBy/usage/',
         saveDiagnostic:API_BASE_URL+'/diagnostic-reports/save',
+        getSanctionRid:API_BASE_URL+'/sanction/details/registration/id/',
         deleteDiagnostics:{
         deleteShareholding:API_BASE_URL+'/diagnostic-reports/Shareholding/delete/',
         deleteBalanceSheet:API_BASE_URL+'/diagnostic-reports/balance-sheet/',

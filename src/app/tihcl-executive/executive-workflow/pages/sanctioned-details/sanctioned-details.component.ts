@@ -22,6 +22,7 @@ export class SanctionedDetailsComponent implements OnInit {
                 const applicationData = JSON.parse(sessionStorage.getItem('ApplicationData') || '{}');
               this.applicationData=applicationData
               this.getDtataByUrl(APIS.tihclExecutive.registerData + (applicationData.registrationUsageId? applicationData?.registrationUsageId:applicationData?.registrationId))
+              
             }
 managrData:any
    getDtataByUrl(url: string) {
@@ -34,8 +35,10 @@ managrData:any
         }
       });
     }
+    
   ngOnInit() {
     this.initializeForm();
+    this.getExistingData(APIS.tihclExecutive.getSanctionRid + (this.applicationData.registrationUsageId? this.applicationData?.registrationUsageId:this.applicationData?.registrationId))
     this.setupSecurityToggle(false);
   }
 
@@ -54,6 +57,32 @@ managrData:any
       remarks: [''],
       sanctionLetterPath: ['',[Validators?.required]],
     });
+  }
+  getExistingData(url:any){
+      this._commonService.getDataByUrl(url).subscribe({
+       next: (dataList: any) => {
+         if (dataList) {
+           this.sanctionForm.patchValue({
+        sanctionedDate: dataList?.sanctionedDate || '',
+        sanctionedAmount: dataList?.sanctionedAmount || 0,
+        roi: dataList?.roi || 0,
+        tenor: dataList?.tenor || 0,
+        moratoriumPeriod: dataList?.moratoriumPeriod || 0,
+        dsraAmount: dataList?.dsraAmount || 0,
+        isSecurityProvided: dataList?.isSecurityProvided || false,
+        securityDescription: dataList?.securityDescription || '',
+        securityValue: dataList?.securityValue || 0,
+        termsOfSanction: dataList?.termsOfSanction || '',
+        remarks: dataList?.remarks || '',
+        sanctionLetterPath: dataList?.sanctionLetterPath || ''
+           });
+           this.setupSecurityToggle(dataList?.isSecurityProvided);
+         }
+       },
+       error: (error: any) => {
+         this.toastrService.error(error.error.message);
+       }
+          });
   }
 
   setupSecurityToggle(event:any) {
