@@ -65,6 +65,10 @@ import { FinancialTargetsComponent } from './PIA/financial-targets/financial-tar
 import { ViewAllProgramsRelatedDataComponent } from './PIA/view-all-programs-related-data/view-all-programs-related-data.component';
 import { ProgramMonitoringNewComponent } from './PIA/program-monitoring-new/program-monitoring-new.component';
 import { FinanceExpenditureComponent } from './PIA/finance-expenditure/finance-expenditure.component';
+import { AssignCounsellorComponent } from './PIA/assign-counsellor/assign-counsellor.component';
+import { ViewApplicationComponent } from './PIA/view-application/view-application.component';
+import { RegistrationNewComponent } from './PIA/registration-new/registration-new.component';
+import { StartupAssesmentComponent } from './PIA/startup-assesment/startup-assesment.component';
 
 @NgModule({
     imports: [
@@ -135,6 +139,10 @@ import { FinanceExpenditureComponent } from './PIA/finance-expenditure/finance-e
         ViewAllProgramsRelatedDataComponent,
         ProgramMonitoringNewComponent,
         FinanceExpenditureComponent,
+        AssignCounsellorComponent,
+        ViewApplicationComponent,
+        RegistrationNewComponent,
+        StartupAssesmentComponent,
 
     ],
     exports:[MaterialModule],

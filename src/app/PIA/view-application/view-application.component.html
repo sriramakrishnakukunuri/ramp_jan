@@ -1,0 +1,102 @@
+ <main class="mt-4">
+        <section>
+            <div class="container-fluid">
+                <div class="card mb-3">
+                    <div class="card-header bg-transparent">
+                         <h6 class="fw-600 mb-2 mb-sm-2 mb-md-0">View Application</h6>
+                    </div>
+                    <div class="card-body">
+                        <table id="view-table" class="table table-bordered table-striped nowrap w-100">
+                            <thead class="bg-lime-green text-white">
+                                <tr>
+                                   <th>S.No</th>
+                                   <th>Sector Wise</th>
+                                   <th>District Wise</th>
+                                   <th>No. Of Applicants</th>
+                                   <th>Scheduled Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Tailoring</td>
+                                    <td>RangaReddy</td>
+                                    <td><a href="#" data-bs-toggle="modal" data-bs-target="#viewModal">42</a></td>
+                                    <td>01-Aug-2025</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Tailoring</td>
+                                    <td>Mahaboobnagar</td>
+                                    <td><a href="#" data-bs-toggle="modal" data-bs-target="#viewModal">81</a></td>
+                                    <td>28-Jul-2025</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>Tailoring</td>
+                                    <td>Medchal</td>
+                                    <td><a href="#" data-bs-toggle="modal" data-bs-target="#viewModal">16</a></td>
+                                    <td>28-Aug-2025</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div class="modal fade" id="viewModal" tabindex="-1" aria-labelledby="viewModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
+            <div class="modal-content">
+                <div class="modal-header py-2">
+                    <h6 class="modal-title" id="viewModalLabel">View</h6>
+                    <button type="button" class="btn-close me-1" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                   <table id="viewmodal-table" class="table table-bordered table-striped nowrap w-100">
+                        <thead class="bg-lime-green text-white">
+                            <tr>
+                                <th>S.No</th>
+                                <th>Participant Name</th>
+                                <th>Mobile No.</th>
+                                <th>SHG Name</th>
+                                <th>Mandal</th>
+                                <th>District</th>
+                                <th>Counsellor Name</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Ravi Kumar</td>
+                                <td>9876543210</td>
+                                <td>SHG Name 1</td>
+                                <td>Mandal 1</td>
+                                <td>RangaReddy</td>
+                                <td>Narayana Swamy</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Padmavathi</td>
+                                <td>9876543210</td>
+                                <td>SHG Name 1</td>
+                                <td>Mandal 1</td>
+                                <td>RangaReddy</td>
+                                <td>Narayana Swamy</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>Sharma</td>
+                                <td>9876543210</td>
+                                <td>SHG Name 1</td>
+                                <td>Mandal 1</td>
+                                <td>RangaReddy</td>
+                                <td>Narayana Swamy</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
