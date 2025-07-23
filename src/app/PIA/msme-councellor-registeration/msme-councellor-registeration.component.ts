@@ -58,9 +58,9 @@ export class MsmeCouncellorRegisterationComponent implements OnInit {
       "contactNo": new FormControl("", [Validators.required, Validators.pattern(/^[0-9]{10}$/)]),
       "altContactNo":new FormControl("", [Validators.required,Validators.pattern(/^[0-9]{10}$/)]),
       "emailId": new FormControl("", [Validators.required,]),
-      "allortedDistrictId": new FormControl("", [Validators.required,]),
-      "allortedMandalId": new FormControl("", [Validators.required,]),
-      "dateOfSelection": new FormControl("", [Validators.required,]),
+      "allortedDistrictId": new FormControl("",),
+      "allortedMandalId": new FormControl("", ),
+      "dateOfSelection": new FormControl("", ),
     }
   );
   }
@@ -69,7 +69,7 @@ export class MsmeCouncellorRegisterationComponent implements OnInit {
   }
   submitForm() {
    
-    this._commonService .add(APIS.counsellerData.add, {...this.CounsellerForm.value,dateOfRegistration:moment(this.CounsellerForm.value.dateOfRegistration).format('DD-MM-YYYY'),dateOfSelection:moment(this.CounsellerForm.value.dateOfSelection).format('DD-MM-YYYY'),dateOfBirth:moment(this.CounsellerForm.value.dateOfBirth).format('DD-MM-YYYY')}).subscribe({
+    this._commonService .add(APIS.counsellerData.add, {...this.CounsellerForm.value,dateOfRegistration:moment(this.CounsellerForm.value.dateOfRegistration).format('DD-MM-YYYY'),dateOfBirth:moment(this.CounsellerForm.value.dateOfBirth).format('DD-MM-YYYY')}).subscribe({
         next: (data: any) => {
          
           this.CounsellerForm.reset()
