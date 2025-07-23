@@ -8,11 +8,13 @@ import { IdleTimeoutService } from './_services/idle-timeout.service';
 export class AppComponent {
     user?: User | null;
     Role = Role
-
+    agencyData:any
     constructor(private authenticationService: AuthenticationService,
         private idleService: IdleTimeoutService
     ) {
         this.authenticationService.user.subscribe(x => this.user = x);
+        this.agencyData = JSON.parse(sessionStorage.getItem('user') || '{}')
+    console.log(this.agencyData,'agency',this.user,Role)
     }
 
     get isAdmin() {

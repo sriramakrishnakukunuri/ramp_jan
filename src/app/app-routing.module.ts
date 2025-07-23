@@ -45,6 +45,10 @@ import { FinancialTargetsComponent } from './PIA/financial-targets/financial-tar
 import { ViewAllProgramsRelatedDataComponent } from './PIA/view-all-programs-related-data/view-all-programs-related-data.component';
 import { ProgramMonitoringNewComponent } from './PIA/program-monitoring-new/program-monitoring-new.component';
 import { FinanceExpenditureComponent } from './PIA/finance-expenditure/finance-expenditure.component';
+import { ViewApplicationComponent } from './PIA/view-application/view-application.component';
+import { AssignCounsellorComponent } from './PIA/assign-counsellor/assign-counsellor.component';
+import { RegistrationNewComponent } from './PIA/registration-new/registration-new.component';
+import { StartupAssesmentComponent } from './PIA/startup-assesment/startup-assesment.component';
 
 const routes: Routes = [
     {
@@ -159,7 +163,13 @@ const routes: Routes = [
         component: ESDPTrainingComponent,
         canActivate: [AuthGuard],
         data: { roles:  [Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
-    },    
+    },   
+    {
+        path: 'view-application',
+        component: ViewApplicationComponent,
+        canActivate: [AuthGuard],
+        data: { roles:  [Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
+    }, 
     {
         path: 'shg-training',
         component: ShgTrainingStatusComponent,
@@ -169,6 +179,24 @@ const routes: Routes = [
     {
         path: 'MSME-councellor-registeration',
         component: MsmeCouncellorRegisterationComponent,
+        canActivate: [AuthGuard],
+        data: { roles:  [Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
+    },
+      {
+        path: 'assign-Counsellor',
+        component: AssignCounsellorComponent,
+        canActivate: [AuthGuard],
+        data: { roles:  [Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
+    },
+      {
+        path: 'Registration',
+        component: RegistrationNewComponent,
+        canActivate: [AuthGuard],
+        data: { roles:  [Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
+    },
+     {
+        path: 'assessment',
+        component: StartupAssesmentComponent,
         canActivate: [AuthGuard],
         data: { roles:  [Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
     },

@@ -14,10 +14,21 @@
   <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-white">
     <div class="container-fluid">
       <div class="d-flex align-items-center justify-content-between w-100">
-        <div>
-          <a class="navbar-brand" href="#">
-            <img src="assets/img/logo.png" alt="Logo" class="img-fluid">
+        <div class="d-flex align-items-center">
+          <ng-container *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]">
+             <a class="navbar-brand me-2" href="#"  *ngIf="this.user?.agencyName=='ALEAP'">
+            <img src="../assets/img/aleapLogo.jpeg" alt="Aleap Logo" class="img-fluid" style="height: 56px; width: 89px;">
           </a>
+          </ng-container>
+         <ng-container *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR,Role.CALL_CENTER,Role.Admin]">
+           <a class="navbar-brand me-2" href="#"   *ngIf="this.user?.agencyName!='ALEAP'">
+            <img src="../assets/img/Ramp final_logo.png" alt="Ramp Final Logo" class="img-fluid" style="height: 50px; width: 50px;">
+          </a>
+          <a class="navbar-brand" href="#"   *ngIf="this.user?.agencyName!='ALEAP'">
+            <img src="../assets/img/logo.png" alt="Logo" class="img-fluid" style="height: 50px; width: 50px;">
+          </a>
+         </ng-container>
+         
         </div>
         <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasNavbar2"
           aria-labelledby="offcanvasNavbar2Label">
@@ -206,11 +217,18 @@
               </li>
 
 
-              <li class="nav-item" *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]">
-                <a class="nav-link" routerLink="/esdp-training" routerLinkActive="active" id="dropdown3" role="button"
-                  data-bs-toggle="dropdown" aria-expanded="false">
-                  ESDP Training Program
+              <li class="nav-item dropdown" *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]">
+                <a class="nav-link" href="#" id="homeDropdown" role="button" data-bs-toggle="dropdown"
+                  aria-expanded="false">
+                   <span>ESPD Training</span> <span class="bi bi-chevron-down"></span>
                 </a>
+                 <ul class="dropdown-menu" aria-labelledby="homeDropdown">
+
+                  <li><a class="dropdown-item" routerLink="/esdp-training" routerLinkActive="active">ESPD Application</a></li>
+                  <li><a class="dropdown-item" routerLink="/view-application" routerLinkActive="active">View Application</a>
+                  </li>
+
+                </ul>
               </li>
               <li class="nav-item dropdown" *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]">
                 <a class="nav-link" href="#" id="homeDropdown" role="button" data-bs-toggle="dropdown"
@@ -235,8 +253,24 @@
                 <ul class="dropdown-menu" aria-labelledby="dropdown3">
                   <li><a class="dropdown-item" routerLink="/MSME-councellor-registeration"
                       routerLinkActive="active">Counsellor Registration</a></li>
+                       <li><a class="dropdown-item" routerLink="/assign-Counsellor"
+                      routerLinkActive="active">Assign Counsellor </a></li>
                   <li><a class="dropdown-item" routerLink="/view-MSME-councellor" routerLinkActive="active">View
                       Counsellor Registration</a></li>
+                </ul>
+              </li>
+                <li class="nav-item dropdown" *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]">
+                <a class="nav-link" href="#" id="homeDropdown" role="button" data-bs-toggle="dropdown"
+                  aria-expanded="false">
+                  <span>Others</span> <span class="bi bi-chevron-down"></span>
+
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="homeDropdown">
+
+                  <li><a class="dropdown-item" routerLink="/Registration" routerLinkActive="active">SHG / Startup Registration</a></li>
+                  <li><a class="dropdown-item" routerLink="/assessment" routerLinkActive="active">Startups Assessments</a>
+                  </li>
+
                 </ul>
               </li>
             </ul>
@@ -272,12 +306,43 @@
 </header>
 
 <!-- main app container class="container"-->
-<div>
+<div style="min-height: calc(100vh - 68px); padding-bottom: 60px;">
   <router-outlet></router-outlet>
 </div>
 
-<!-- credits -->
-<div class="text-center mt-4">
-  <p>
-  </p>
-</div>
+<!-- credits / footer -->
+<footer class="footer-custom fixed-bottom w-100">
+  <div class="container text-end">
+    <img src="../assets/img/GT Logo.png" alt="GT Logo" class="footer-logo" />
+  </div>
+</footer>
+<style>
+  .footer-custom {
+    background: #f8f9fa;
+    padding: 12px 0 8px 0;
+    border-top: 1px solid #e0e0e0;
+    box-shadow: 0 -2px 8px rgba(0,0,0,0.03);
+    margin-top: 0;
+    z-index: 1040;
+  }
+  .footer-logo {
+    height: 48px;
+    width: auto;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.08));
+    transition: transform 0.2s;
+    margin-right: 8px;
+  }
+  .footer-logo:hover {
+    transform: scale(1.05) rotate(-2deg);
+    filter: drop-shadow(0 4px 12px rgba(0,0,0,0.12));
+  }
+  @media (max-width: 576px) {
+    .footer-logo {
+      height: 36px;
+      margin-right: 0;
+    }
+    .footer-custom .container {
+      text-align: center !important;
+    }
+  }
+</style>
