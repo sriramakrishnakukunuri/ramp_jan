@@ -67,11 +67,11 @@
 
                     <h5 class="text-center mb-3">Login to your account</h5>
                        <div class="user-type-selector">
-                    <div class="user-type" [ngClass]="{'active':loginType=='team-member'}" id="team-member" [(ngModel)]="loginType" (click)="switchLoginType('team-member')">
+                    <div class="user-type" [ngClass]="{'active':loginType=='team-member'}" id="team-member" [ngClass]="{'active': loginType === 'team-member'}" (click)="switchLoginType('team-member')">
                         <i class="fas fa-users"></i>
                         <span>Team Member</span>
                     </div>
-                    <div class="user-type" [ngClass]="{'active':loginType=='entrepreneur'}" id="entrepreneur" [(ngModel)]="loginType" (click)="switchLoginType('entrepreneur')">
+                    <div class="user-type" [ngClass]="{'active':loginType=='entrepreneur'}" id="entrepreneur" [ngClass]="{'active': loginType === 'entrepreneur'}"  (click)="switchLoginType('entrepreneur')">
                         <i class="fas fa-user-tie"></i>
                         <span>Entrepreneur</span>
                     </div>
@@ -104,55 +104,88 @@
                             <a href="#" class="fs-md text-dark">Forgot Password?</a>
                         </div>
                     </div>  
-                    <ng-container *ngIf="defaultOTPScreen == false && loginType == 'entrepreneur'" >
-                        <div class="form-floating mb-3">
-                            <input type="number" class="form-control" id="phone" placeholder="Phone No."  [(ngModel)]="phoneNumber" >
-                            <label for="phone">Mobile No.</label>
-                        </div>
-
-                        <div class="d-grid mb-3">
-                            <a (click)="OTPVerify()" class="btn btn-primary">Get OTP</a>
-                        </div>
-                        <div *ngIf="Mobileerror" class="alert alert-danger mt-3 mb-0">{{Mobileerror}}</div>
-                        <div class="text-center mb-4">
-                            <p>Authorised Person <a>Login</a></p>
-                        </div>                        
-                    </ng-container>
+                    <ng-container *ngIf="defaultOTPScreen == false && loginType == 'entrepreneur'">
+    <form [formGroup]="loginForm">
+        <div class="form-floating mb-3">
+            <input type="number" class="form-control" id="phone" placeholder="Phone No." formControlName="phone">
+            <label for="phone">Mobile No.</label>
+            <div *ngIf="loginForm.get('phone')?.touched && loginForm.get('phone')?.invalid" class="invalid-feedback d-block">
+                <div *ngIf="loginForm.get('phone')?.errors?.required">Phone number is required</div>
+                <div *ngIf="loginForm.get('phone')?.errors?.pattern">Phone number must be 10 digits and start with 6, 7, 8, or 9</div>
+            </div>
+        </div>
+        <div class="d-grid mb-3">
+            <a (click)="OTPVerify()" class="btn btn-primary" [ngClass]="{'disabled': loginForm.get('phone')?.invalid}">Submit</a>
+        </div>
+        <div *ngIf="Mobileerror" class="alert alert-danger mt-3 mb-0">{{Mobileerror}}</div>
+        <div class="text-center mb-4">
+            <p>Authorised Person <a>Login</a></p>
+        </div>
+    </form>
+</ng-container>
                 </div>
             </div>
             <div class="col-12 col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-4 offset-lg-4" *ngIf="defaultOTPScreen == true && loginType == 'entrepreneur'">
                 <div class="gradient-bg shadow-theme p-3">
                     <div class="text-center mb-4">
-                        <img src="../../assets/img/otp.png"alt="Logo" class="img-fluid" width="150">
+                        <img src="../../assets/img/otp.png" alt="Logo" class="img-fluid" width="120">
                     </div>
-                    <h5 class="text-center mb-3">Verify Phone</h5>
-                    <p class="text-center text-muted">We sent OTP Verification to your mobile number</p>
-                    <form [formGroup]="otpForm" >
-                        <div class="form-floating mb-3">
-                            <input type="text" class="form-control" formControlName="otp"  id="otp" placeholder="OTP">
-                            <label for="otp">Enter OTP</label>
+                    <h5 class="text-center mb-3">Captcha Verification</h5>
+                    <p class="text-center text-muted">Please Enter the captcha below to continue</p>
+                    <div class="form-group mb-3 text-center">
+                        <div class="captcha-box" style="display:inline-block; background:#f5f5f5; border-radius:6px; padding:12px 20px; box-shadow:0 2px 8px #e3e3e3;">
+                            <img [src]="captchaSvg" alt="captcha" style="vertical-align:middle;"/>
+                            <button type="button" class="btn btn-link btn-sm" (click)="generateCaptcha()" title="Refresh captcha">
+                                <span class="bi bi-arrow-clockwise"></span>
+                            </button>
                         </div>
-
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="d-grid mb-4">
-                                    <a (click)="OTPVerify('BACK')" class="btn btn-secondary">Back</a>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="d-grid mb-4">
-                                    <a (click)="OTPVerify('SUBMIT')" [ngClass]="{'disabled': this.fOtp.otp.invalid}" class="btn btn-primary">Submit</a>
-                                </div>
+                        <input type="text" name="captchaInput" class="form-control mt-3" placeholder="Enter answer" [(ngModel)]="captchaInput" name="captchaInput" id="captchaInput" style="max-width:180px; margin:auto;">
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="d-grid mb-4">
+                                <a (click)="OTPVerify('BACK')" class="btn btn-secondary">Back</a>
                             </div>
                         </div>
-                          <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>
-
-                        <div class="text-center">
-                            <p class="mb-0">I don't recieve a code! <a (click)="OTPVerify('BACK')">Resend Code</a></p>
+                        <div class="col-6">
+                            <div class="d-grid mb-4">
+                                <a (click)="OTPVerify('SUBMIT')" [ngClass]="{'disabled': !captchaInput}" class="btn btn-primary">Submit</a>
+                            </div>
                         </div>
-                    </form>
+                    </div>
+                    <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>
                 </div>
             </div>
         </div>
     </div>
 </section>
+
+
+
+
+<!-- otp code commented -->
+<!-- <form [formGroup]="otpForm">
+    <div class="form-floating mb-3">
+        <input type="text" class="form-control" formControlName="otp" id="otp" placeholder="OTP">
+        <label for="otp">Enter OTP</label>
+    </div>
+
+    <div class="row">
+        <div class="col-6">
+            <div class="d-grid mb-4">
+                <a (click)="OTPVerify('BACK')" class="btn btn-secondary">Back</a>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="d-grid mb-4">
+                <a (click)="OTPVerify('SUBMIT')" [ngClass]="{'disabled': this.fOtp.otp.invalid}"
+                    class="btn btn-primary">Submit</a>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>
+
+    <div class="text-center">
+        <p class="mb-0">I don't recieve a code! <a (click)="OTPVerify('BACK')">Resend Code</a></p>
+    </div>
+</form> -->
