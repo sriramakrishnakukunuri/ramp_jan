@@ -16,6 +16,7 @@ export class DisbursementDetailsComponent implements OnInit {
   disbursements: any[] = [];
   bankdetails: any[] = [];
   isEditMode: boolean = false;
+  isEditModeVisit: boolean = false;
   currentEditIndex: number = -1;
   @Input() freeze:any
   applicationData:any
@@ -266,7 +267,7 @@ export class DisbursementDetailsComponent implements OnInit {
       return;
     }
 
-    if (this.isEditMode) {
+    if (this.isEditModeVisit) {
       // Update existing bank details
       this.bankdetails[this.currentEditIndex] = {
         ...this.bankdetails[this.currentEditIndex],
@@ -278,7 +279,7 @@ export class DisbursementDetailsComponent implements OnInit {
           acountNumber: this.addBankDetailsForm.value.acountNumber
         }
       };
-      this.isEditMode = false;
+      this.isEditModeVisit = false;
       this.currentEditIndex = -1;
     } else {
       // Add new bank details
@@ -299,9 +300,9 @@ export class DisbursementDetailsComponent implements OnInit {
   }
 
   editBankDetails(item: any, index: number): void {
-    this.isEditMode = true;
+    this.isEditModeVisit = true;
     this.currentEditIndex = index;
-
+    this.addBankDetailsForm.reset();
     // Set form values with the item to be edited
     this.addBankDetailsForm.patchValue({
       id: item?.id ?? null,

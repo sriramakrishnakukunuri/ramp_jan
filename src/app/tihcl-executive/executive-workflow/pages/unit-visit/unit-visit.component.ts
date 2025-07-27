@@ -15,7 +15,7 @@ export class UnitVisitComponent implements OnInit {
 @ViewChild('addmachinary') addmachinary!: ElementRef;
 @ViewChild('addvisit') addvisit!: ElementRef;
   unitVisitForm!: FormGroup;
-  factoryDetails: any[] = [];
+  machineryDetailsRequest: any[] = [];
   @Input() freeze:any
   isSameAddress: boolean = true;
   machineForm!: FormGroup;
@@ -39,7 +39,7 @@ export class UnitVisitComponent implements OnInit {
  today:any= this._commonService.getDate();
  initForm(): void {
     this.unitVisitForm = this.fb.group({
-      visitedBy: ['', Validators.required],
+      // visitedBy: ['', Validators.required],
       dateOfVisit: ['', Validators.required],
       timeOfVisit: ['00:00', Validators.required],
       // nameOfThePerson: ['', Validators.required],
@@ -58,9 +58,9 @@ export class UnitVisitComponent implements OnInit {
       isMachineryProperlyAligned: [false,],
       isCompanyNameBoard: [false,[Validators.required]],
       isFinancedBankNameBoard: [false,[Validators.required]],
-      officeStaff: ['', [Validators.required, Validators.min(0)]],
-      factoryWorkers: ['', [Validators.required, Validators.min(0)]],
-      temporaryWorkers: ['', [Validators.required, Validators.min(0)]],
+      skilled: ['', [Validators.required, Validators.min(0)]],
+      unSkilled: ['', [Validators.required, Validators.min(0)]],
+      total: ['', [Validators.min(0)]],
       isEmpAttendanceRegister: [false,[Validators.required]],
       inconsistenciesWithPeopleWorking: ['',[Validators.required]],
       productsMfgAndSold: ['', Validators.required],
@@ -68,15 +68,15 @@ export class UnitVisitComponent implements OnInit {
       noOfShifts: ['', [Validators.required, Validators.min(1)]],
       isStocksStoredProperty: [false,[Validators.required]],
       isAdequateStorageCapacity: [false,[Validators.required]],
-      stocksMaintaned: ['',[Validators.required]],
+      stocksMaintained: ['',[Validators.required]],
       isUptoDate: [false,[Validators.required]],
       valueOfTheStock: ['', [Validators.required, Validators.min(0)]],
       rawMaterials: ['',[Validators.required,Validators.min(0)]],
       workInProgress: ['',[Validators.required,Validators.min(0)]],
       finishedGoods: ['',[Validators.required,Validators.min(0)]],
       periodicity: [, Validators.required],
-      maxProductionInUnit: ['', [Validators.required]],
-      minProductionInUnit: ['', [Validators.required]],
+      installedCapacity: ['', [Validators.required]],
+      currentCapacityUtilisation: ['', [Validators.required]],
       currentProductionInUnit: ['', [Validators.required, Validators.min(0)]],
       costPerUnit: ['', ],
       sellingPricePerUnit: ['', ],
@@ -84,7 +84,7 @@ export class UnitVisitComponent implements OnInit {
       recentConsumption: ['', [Validators.required, Validators.min(0)]],
       // maxConsumption: ['', [Validators.required, Validators.min(0)]],
       powerBillPaidDate: ['', Validators.required],
-      factoryDetails: this.fb.array([]),
+      machineryDetailsRequest: this.fb.array([]),
       visitorsDetailsRequests: this.fb.array([])
     });
   }
@@ -166,7 +166,7 @@ createForm(): void {
     return this.unitVisitForm.get('visitorsDetailsRequests') as FormArray;
   }
   get factoryDetailsArray(): FormArray {
-    return this.unitVisitForm.get('factoryDetails') as FormArray;
+    return this.unitVisitForm.get('machineryDetailsRequest') as FormArray;
   }
 
   ExistingunitVisit:any={}
@@ -206,9 +206,9 @@ createForm(): void {
       isMachineryProperlyAligned: data?.isMachineryProperlyAligned,
       isCompanyNameBoard: data?.isCompanyNameBoard,
       isFinancedBankNameBoard: data?.isFinancedBankNameBoard,
-      officeStaff: data?.officeStaff,
-      factoryWorkers: data?.factoryWorkers,
-      temporaryWorkers: data?.temporaryWorkers,
+      skilled: data?.skilled,
+      unSkilled: data?.unSkilled,
+      total: data?.total,
       isEmpAttendanceRegister: data?.isEmpAttendanceRegister,
       inconsistenciesWithPeopleWorking: data?.inconsistenciesWithPeopleWorking,
       productsMfgAndSold: data?.productsMfgAndSold,
@@ -216,15 +216,15 @@ createForm(): void {
       noOfShifts: data?.noOfShifts,
       isStocksStoredProperty: data?.isStocksStoredProperty,
       isAdequateStorageCapacity: data?.isAdequateStorageCapacity,
-      stocksMaintaned: data?.stocksMaintaned,
+      stocksMaintained: data?.stocksMaintained,
       isUptoDate: data?.isUptoDate,
       valueOfTheStock: data?.valueOfTheStock,
       rawMaterials: data?.rawMaterials,
       workInProgress: data?.workInProgress,
       finishedGoods: data?.finishedGoods,
       periodicity: data?.periodicity,
-      maxProductionInUnit: data?.maxProductionInUnit,
-      minProductionInUnit: data?.minProductionInUnit,
+      installedCapacity: data?.installedCapacity,
+      currentCapacityUtilisation: data?.currentCapacityUtilisation,
       currentProductionInUnit: data?.currentProductionInUnit,
       costPerUnit: data?.costPerUnit,
       sellingPricePerUnit: data?.sellingPricePerUnit,
@@ -234,7 +234,7 @@ createForm(): void {
        powerBillPaidDate: data?.powerBillPaidDate
       });
       this.factoryDetailsArray.clear();
-       data?.factoryDetails.forEach((machine:any) => {
+       data?.machineryDetailsRequest.forEach((machine:any) => {
       this.addMachineDetail(machine);
     });
       this.createVisitForm();
@@ -266,7 +266,7 @@ createForm(): void {
     this.factoryDetailsArray.push(machineGroup);
   }
   onSubmit(): void {
-    if(this.unitVisitForm.valid && this.unitVisitForm.value?.factoryDetails?.length && Object.keys( this.ExistingunitVisit).length && this.ExistingunitVisit?.id){
+    if(this.unitVisitForm.valid && this.unitVisitForm.value?.machineryDetailsRequest?.length && Object.keys( this.ExistingunitVisit).length && this.ExistingunitVisit?.id){
          let payload:any={...this.unitVisitForm.value, "applicationNo": this.applicationData?.applicationNo,"applicationStatus": "UNIT_VISIT"}
          this._commonService.update(APIS.tihclExecutive.updateUnitVisit,payload,this.ExistingunitVisit?.id).subscribe({
           next: (response) => {
@@ -282,7 +282,7 @@ createForm(): void {
           }
         });
       }
-      else if(this.unitVisitForm.valid && this.unitVisitForm.value?.factoryDetails?.length && !Object.keys( this.ExistingunitVisit).length){
+      else if(this.unitVisitForm.valid && this.unitVisitForm.value?.machineryDetailsRequest?.length && !Object.keys( this.ExistingunitVisit).length){
       console.log(this.applicationData,this.unitVisitForm.value)
         let payload:any={...this.unitVisitForm.value, "applicationNo": this.applicationData?.applicationNo,"applicationStatus": "MANAGER_APPROVAL_1"}
        this._commonService.add(APIS.tihclExecutive.saveUnitVisit,payload).subscribe({
@@ -310,7 +310,7 @@ createForm(): void {
   }
   saveExistingData(){
     console.log(this.ExistingunitVisit)
-     if(this.unitVisitForm.valid && this.unitVisitForm.value?.factoryDetails?.length && Object.keys( this.ExistingunitVisit).length && this.ExistingunitVisit?.id){
+     if(this.unitVisitForm.valid && this.unitVisitForm.value?.machineryDetailsRequest?.length && Object.keys( this.ExistingunitVisit).length && this.ExistingunitVisit?.id){
          let payload:any={...this.unitVisitForm.value, "applicationNo": this.applicationData?.applicationNo,"applicationStatus": "UNIT_VISIT"}
          this._commonService.update(APIS.tihclExecutive.updateUnitVisit,payload,this.ExistingunitVisit?.id).subscribe({
           next: (response) => {
@@ -325,7 +325,7 @@ createForm(): void {
             console.error('Error submitting form:', error);
           }
         });
-      }else  if(this.unitVisitForm.valid && this.unitVisitForm.value?.factoryDetails?.length && this.ExistingunitVisit?.id){
+      }else  if(this.unitVisitForm.valid && this.unitVisitForm.value?.machineryDetailsRequest?.length && this.ExistingunitVisit?.id){
          let payload:any={...this.unitVisitForm.value, "applicationNo": this.applicationData?.applicationNo,"applicationStatus": "UNIT_VISIT"}
          this._commonService.update(APIS.tihclExecutive.updateUnitVisit,payload,this.ExistingunitVisit?.id).subscribe({
           next: (response) => {
@@ -380,13 +380,14 @@ createForm(): void {
   onSubmitModel(): void {
     if (this.machineForm.valid ) {
       console.log(this.machineForm?.value)
-       const factoryDetailsArray = this.unitVisitForm.get('factoryDetails') as FormArray;
+       const factoryDetailsArray = this.unitVisitForm.get('machineryDetailsRequest') as FormArray;
     // Push the new form group
         factoryDetailsArray.push(this.fb.group(this.machineForm.value));
       this.onClose()
     } else {
       this.markFormGroupTouched(this.unitVisitForm);
     }
+
   }
     markFormGroupTouched(formGroup: FormGroup) {
     Object.values(formGroup.controls).forEach(control => {
@@ -412,7 +413,7 @@ createForm(): void {
       currentCondition: [item?.currentCondition, Validators.required],
       valueOfMachinery: [item?.valueOfMachinery, [Validators.required, Validators.min(0)]]
     });
-        const deliveryDetailsArray = this.unitVisitForm.get('factoryDetails') as FormArray;
+        const deliveryDetailsArray = this.unitVisitForm.get('machineryDetailsRequest') as FormArray;
         const index = deliveryDetailsArray.controls.findIndex(control => control.value === item);
         if (index !== -1) {
           deliveryDetailsArray.removeAt(index);
@@ -420,7 +421,7 @@ createForm(): void {
          const modal = new bootstrap.Modal(this.addmachinary.nativeElement);
          modal.show(); 
     }
-  
+  // machineryDetailsRequest
     deleteCreditDetail(item:any,index: number) {
       console.log(item)
       if(item?.id){
@@ -433,7 +434,7 @@ createForm(): void {
              }
            });
       }
-      const deliveryDetailsArray = this.unitVisitForm.get('factoryDetails') as FormArray;
+      const deliveryDetailsArray = this.unitVisitForm.get('machineryDetailsRequest') as FormArray;
       deliveryDetailsArray.removeAt(index);
     }
     onClose(): void {
@@ -453,6 +454,7 @@ createForm(): void {
     } else {
       this.markFormGroupTouchedVisit(this.visitForm);
     }
+    this.visitForm.reset();
   }
 
   markFormGroupTouchedVisit(formGroup: FormGroup) {
@@ -465,7 +467,6 @@ createForm(): void {
   }
 
   openModelVisit() {
-    this.createVisitForm();
     this.visitForm.reset();
     const modal = new bootstrap.Modal(this.addvisit.nativeElement);
     modal.show();

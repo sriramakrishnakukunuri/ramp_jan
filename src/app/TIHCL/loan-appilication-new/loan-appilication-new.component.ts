@@ -66,6 +66,7 @@ StatusofApplication:any=''
       altContactNumber: ['', [Validators.pattern(/^[6789]\d{9}$/)]],
       state: ['', Validators.required],
       industrialPark: ['', Validators.required],
+       isIndustrialParkExist: [false, Validators.required],
       district: ['', Validators.required],
       mandal: ['', Validators.required],
       email: ['', [Validators.email]],
@@ -118,6 +119,7 @@ StatusofApplication:any=''
           altContactNumber: enterpreneur.altContactNumber || '', 
           state: enterpreneur.state || '',
           industrialPark: enterpreneur.industrialPark || '',
+          isIndustrialParkExist: enterpreneur.isIndustrialParkExist || false,
           district: enterpreneur.district || '',
           mandal: enterpreneur.mandal || '',
           email: enterpreneur.email || '',
@@ -465,6 +467,7 @@ this.applicationForm.get('udyamRegNumber')?.setValidators(null);
 this.applicationForm.get('altContactNumber')?.setValidators(null);
 this.applicationForm.get('state')?.setValidators(null);
 this.applicationForm.get('industrialPark')?.setValidators(null);
+this.applicationForm.get('isIndustrialParkExist')?.setValidators(null);
 this.applicationForm.get('district')?.setValidators(null);
 this.applicationForm.get('mandal')?.setValidators(null);
 this.applicationForm.get('email')?.setValidators(null);
@@ -496,6 +499,7 @@ this.applicationForm.get('udyamRegNumber')?.updateValueAndValidity()
 this.applicationForm.get('altContactNumber')?.updateValueAndValidity()
 this.applicationForm.get('state')?.updateValueAndValidity()
 this.applicationForm.get('industrialPark')?.updateValueAndValidity()
+this.applicationForm.get('isIndustrialParkExist')?.updateValueAndValidity()
 this.applicationForm.get('district')?.updateValueAndValidity()
 this.applicationForm.get('mandal')?.updateValueAndValidity()
 this.applicationForm.get('email')?.updateValueAndValidity()
@@ -521,6 +525,7 @@ console.log(this.applicationForm.value);
       this.applicationForm.get('altContactNumber')?.setValidators([Validators.pattern(/^[6789]\d{9}$/)]);
       this.applicationForm.get('state')?.setValidators([Validators.required]);
       this.applicationForm.get('industrialPark')?.setValidators([Validators.required]);
+      this.applicationForm.get('isIndustrialParkExist')?.setValidators([Validators.required]);
       this.applicationForm.get('district')?.setValidators([Validators.required]);
       this.applicationForm.get('mandal')?.setValidators([Validators.required]);
       this.applicationForm.get('email')?.setValidators([Validators.email]);
@@ -570,6 +575,7 @@ this.applicationForm.get('udyamRegNumber')?.updateValueAndValidity()
 this.applicationForm.get('altContactNumber')?.updateValueAndValidity()
 this.applicationForm.get('state')?.updateValueAndValidity()
 this.applicationForm.get('industrialPark')?.updateValueAndValidity()
+this.applicationForm.get('isIndustrialParkExist')?.updateValueAndValidity()
 this.applicationForm.get('district')?.updateValueAndValidity()
 this.applicationForm.get('mandal')?.updateValueAndValidity()
 this.applicationForm.get('email')?.updateValueAndValidity()
@@ -585,6 +591,7 @@ this.applicationForm.get('operatingDifficulties')?.updateValueAndValidity()
     this._commonService.add(APIS.tihclEnterprenuer.submitLoanApplication, {...this.applicationForm.value,creditFacilityDetails:creditFacilityDetails,operatingDifficulties:operatingDifficulties, status: "Assessment Completed"}).subscribe({
       next: (response) => {
         if(response.status === 200) {
+          this.StatusofApplication = 'Application Is Under Consideration';
            this.enterPrenuerResponseData = response.data;
            sessionStorage.setItem('enterpreneur', JSON.stringify(this.enterPrenuerResponseData));
           this.applicationForm.reset();

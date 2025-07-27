@@ -13,10 +13,11 @@ export class ViewApplicationsComponent implements OnInit {
   constructor(private _commonService: CommonServiceService,  private toastrService: ToastrService,) { }
   //  APPLICATIONS_RECEIVED, APPLICATIONS_UNDER_PROCESS, APPLICATIONS_WITH_DIC, APPLICATIONS_SANCTIONED, APPLICATIONS_NOT_CONSIDERED
 activeTab:any='APPLICATIONS_RECEIVED';
-districtName:any='All'
+districtName:any='district'
   ngOnInit(): void {
     this.getAllDistricts()
      this.onTabChange('APPLICATIONS_RECEIVED')
+     this.getData()
   }
  currentPage = 1;
   pageSize = 10;
@@ -63,16 +64,16 @@ districtName:any='All'
      this.districtName = event.target.value
      console.log(this.districtName)
      this.onTabChange(this.activeTab);
-    //  this.getData()
+     this.getData()
   }
    PrigramSummaryData:any={}
   getData() {
     this.PrigramSummaryData ={}
-    this._commonService.getById(APIS.tihclCOI.getNumericData, this.districtName).subscribe({
+    this._commonService.getById(APIS.tihclCOI.getNumericData, (this.districtName?this.districtName:'district')).subscribe({
       next: (res: any) => {          
         // this.PrigramSummaryData = res?.data   
       // console.log( this.PrigramSummaryData)
-      this.PrigramSummaryData = res?.data
+      this.PrigramSummaryData = res
       },
       error: (err) => {
         this.toastrService.error('Data Not Available', "Summary Data Error!");
