@@ -2,7 +2,6 @@ import { HttpClient,HttpErrorResponse, HttpHeaders } from '@angular/common/http'
 import { Injectable } from '@angular/core';
 import { APIS } from '@app/constants/constants';
 import { catchError, forkJoin, Observable, throwError } from 'rxjs';
-import { saveAs } from 'file-saver';
 
 @Injectable({
   providedIn: 'root'
@@ -50,18 +49,7 @@ export class CommonServiceService {
      private extractFileNameFromPath(path: string): string {
     return path.split('/').pop() || 'download';
   }
-    private readonly s3BaseUrl = 'https://tihcl.s3.us-east-1.amazonaws.com';
-     downloadFromS3(filePath: string, customFileName?: string): void {
-    const url = `${filePath}`;
-    const fileName = customFileName || this.extractFileNameFromPath(filePath);
-    
-    this.http.get(url, { responseType: 'blob' }).subscribe((blob:any) => {
-      saveAs(blob, fileName);
-    }, (error:any) => {
-      console.error('Download failed:', error);
-      // Handle error (show toast/message)
-    });
-  }
+ 
   // Method to download file from S3 URL
   downloadFile(s3Url: string, fileName: string): void {
     // For direct S3 download (if bucket is public)
