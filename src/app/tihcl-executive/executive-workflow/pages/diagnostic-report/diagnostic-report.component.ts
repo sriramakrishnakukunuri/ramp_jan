@@ -42,6 +42,7 @@ export class DiagnosticReportComponent implements OnInit {
     // BALANCE_SHEET,
     // STATUS_UPDATE;
   };
+  today: any=this._commonService.getDate()
 loginsessionDetails:any
 applicationData:any
   constructor(

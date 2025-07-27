@@ -106,7 +106,7 @@ export class LoginComponent implements OnInit {
         if(value == 'SUBMIT') {
 
           if(this.fOtp.otp.valid && this.fOtp.otp.value == '123456'){ 
-              this.authenticationService.login('executive1@gmail.com', 'password123')
+              this.authenticationService.login('executive1@gmail.com', 'Password@123')
             .pipe(first())
             .subscribe({
                 next: (res) => {

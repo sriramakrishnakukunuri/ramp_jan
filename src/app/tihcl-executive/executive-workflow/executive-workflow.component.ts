@@ -14,6 +14,7 @@ export class ExecutiveWorkflowComponent implements OnInit {
  constructor(private toastrService: ToastrService,
       private _commonService: CommonServiceService,
       private router: Router,) { 
+         
       }
 statusList: any = [
         'APPLICATION_SUBMITTED', 'PRELIMINARY_ASSESSMENT', 'MANAGER_APPROVAL_1', 'UNIT_VISIT', 'DIAGNOSTIC_REPORT', 'MANAGER_APPROVAL_2', 'DIC_NOC', 'CREDIT_APPRAISAL', 'PRIMARY_LENDER_NOC', 'SANCTION_LETTER_UPLOAD', 'MANAGER_APPROVAL_3', 'SANCTION_LETTER_UPLOAD', 'DISBURSEMENT_PARTIAL', 'DISBURSEMENT_COMPLETED', 'LOAN_REPAYMENT_REGULAR', 'LOAN_REPAYMENT_DUE', 'LOAN_REPAYMENT_COMPLETED', 'REJECTED_MANAGER_APPROVAL_1', 'REJECTED_MANAGER_APPROVAL_2', 'REJECTED_MANAGER_APPROVAL_3'
@@ -21,10 +22,13 @@ statusList: any = [
 
 currentStep:any = 1;
   ngOnInit(): void {
-     
+    
     this.stepperChanges()
      
   }
+  // ngOnChanges() {
+  //   this.getAplicationData()
+  // }
   apllictaionDataGlobal:any
   UserDetails:any
   freezeValue:any=0
@@ -45,6 +49,11 @@ currentStep:any = 1;
      this._commonService.setCurrentStep(2)
       this.currentStep=2
        this.freezeValue=2
+     }
+      else if(applicationData.status === 'MANAGER_REVERIFY_1' || applicationData.applicationStatus === 'MANAGER_REVERIFY_1'){
+     this._commonService.setCurrentStep(1)
+      this.currentStep=1
+       this.freezeValue=1
      }
      else if(applicationData.status === 'REJECTED_MANAGER_APPROVAL_1' || applicationData.applicationStatus === 'REJECTED_MANAGER_APPROVAL_1'){
      this._commonService.setCurrentStep(2)
@@ -116,10 +125,32 @@ currentStep:any = 1;
       this.currentStep=11
       this.freezeValue=11
      }
+       else if(applicationData.status === 'DISBURSEMENT_COMPLETED' || applicationData.applicationStatus === 'DISBURSEMENT_COMPLETED'){
+      this._commonService.setCurrentStep(11)
+        this.currentStep=11
+        this.freezeValue=11
+     }
      this.currentStep = this._commonService.getCurrentStep();
      this.freezeValue=this._commonService.getCurrentStep();
     console.log(this.freezeValue)
   }
+   apllicationDataByGet:any={}
+  getAplicationData(){
+    const applicationData = JSON.parse(sessionStorage.getItem('ApplicationData') || '{}');
+      this._commonService.getDataByUrl(APIS.tihclExecutive.registerData + applicationData?.registrationUsageId?applicationData?.registrationUsageId:applicationData?.registrationId).subscribe({
+      next: (dataList: any) => {
+        this.apllicationDataByGet= dataList?.data;
+        console.log('Application Data:', this.apllicationDataByGet);
+       
+         
+        // Handle the dataList as needed
+      },
+      error: (error: any) => {
+        // this.toastrService.error(error?.error?.message);
+      }
+    });
+  }
+ 
   getDtataByUrl(url: string) {
     this._commonService.getDataByUrl(url).subscribe({
       next: (dataList: any) => {

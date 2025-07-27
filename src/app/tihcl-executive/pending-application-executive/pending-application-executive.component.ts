@@ -24,7 +24,7 @@ tableList:any=[]
      private _commonService: CommonServiceService,
      private router: Router,
    ) { 
-    //  this.loginsessionDetails = JSON.parse(sessionStorage.getItem('user') || '{}');    
+     this.loginsessionDetails = JSON.parse(sessionStorage.getItem('user') || '{}');    
    }
   ngOnInit(): void {
     this.getNewApplications(1, 10);
@@ -36,7 +36,13 @@ tableList:any=[]
   }
  getNewApplications(pageNo:any,PageSize:any): any {
     this.tableList = '';
-    this._commonService.getDataByUrl(APIS.tihclExecutive.getPendingApplications+'?pageNo=' + (pageNo-1) + '&pageSize=' + PageSize).subscribe({
+//     // firstName
+// : 
+// "Mr."
+// lastName
+// : 
+// "Executive"
+    this._commonService.getDataByUrl(APIS.tihclExecutive.getPendingApplications+'?executiveName='+this.loginsessionDetails?.firstName+' '+this.loginsessionDetails?.lastName+'&pageNo=' + (pageNo-1) + '&pageSize=' + PageSize).subscribe({
       next: (dataList: any) => {
         this.tableList = dataList.data;
          this.totalItems=dataList?.totalElements

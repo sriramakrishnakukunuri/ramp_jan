@@ -83,6 +83,7 @@ export const APIS = {
         getDiagnostic:API_BASE_URL+'/diagnostic-reports/getBy/usage/',
         saveDiagnostic:API_BASE_URL+'/diagnostic-reports/save',
         getSanctionRid:API_BASE_URL+'/sanction/details/registration/id/',
+        getDisbursementRid:API_BASE_URL+'/disbursement/details/registration/id/',
         deleteDiagnostics:{
         deleteShareholding:API_BASE_URL+'/diagnostic-reports/Shareholding/delete/',
         deleteBalanceSheet:API_BASE_URL+'/diagnostic-reports/balance-sheet/',
@@ -115,6 +116,7 @@ export const APIS = {
     },
       tihclCOI:{
         getApplicaionData: API_BASE_URL + '/registrations/application/status?',
+        getNumericData: API_BASE_URL + '/application/counts?district=',
     },
     tihcl_uploads:{
         

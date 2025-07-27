@@ -8,24 +8,31 @@
         <div class="row">
           <div class="col-12 col-sm-6 col-md-4 col-lg-3">
             <div class="form-floating mb-3">
-              <input type="number" class="form-control" id="sanctionedAmt" formControlName="sanctionedAmt" placeholder="">
-              <label for="sanctionedAmt">Total Sanctioned Amount</label>
-              <div *ngIf="f['sanctionedAmt']?.invalid && (f['sanctionedAmt']?.dirty || f['sanctionedAmt']?.touched)"
+              <input type="number" class="form-control" id="totalSanctionedAmount" formControlName="totalSanctionedAmount"
+                placeholder="">
+              <label for="totalSanctionedAmount">Total Sanctioned Amount</label>
+              <div *ngIf="f['totalSanctionedAmount']?.invalid && (f['totalSanctionedAmount']?.dirty || f['totalSanctionedAmount']?.touched)"
                 class="text-danger">
-                <small *ngIf="f['sanctionedAmt']?.errors?.required">Total Sanctioned Amount is required</small>
-                <small *ngIf="f['sanctionedAmt']?.errors?.pattern">Please enter a valid amount</small>
+                <small *ngIf="f['totalSanctionedAmount']?.errors?.required">Total Sanctioned Amount is required</small>
+                <small *ngIf="f['totalSanctionedAmount']?.errors?.pattern">Please enter a valid amount</small>
               </div>
             </div>
           </div>
           <div class="col-12 col-sm-6 col-md-4 col-lg-3">
             <div class="form-floating mb-3">
-              <input type="number" class="form-control" id="disbursmentAmt" formControlName="disbursmentAmt"
+              <input type="number" class="form-control" id="totalDisbursedAmount" formControlName="totalDisbursedAmount"
                 placeholder="">
-              <label for="disbursmentAmt">Total Disbursed Amount</label>
-              <div *ngIf="f['disbursmentAmt']?.invalid && (f['disbursmentAmt']?.dirty || f['disbursmentAmt']?.touched)"
+              <label for="totalDisbursedAmount">Total Disbursed Amount</label>
+              <div *ngIf="f['totalDisbursedAmount']?.invalid && (f['totalDisbursedAmount']?.dirty || f['totalDisbursedAmount']?.touched) && !f['totalDisbursedAmount']?.value > f['totalSanctionedAmount']?.value"
                 class="text-danger">
-                <small *ngIf="f['disbursmentAmt']?.errors?.required">Total Disbursed Amount is required</small>
-                <small *ngIf="f['disbursmentAmt']?.errors?.pattern">Please enter a valid amount</small>
+                <small *ngIf="f['totalDisbursedAmount']?.errors?.required">Total Disbursed Amount is required</small>
+                <small *ngIf="f['totalDisbursedAmount']?.errors?.pattern">Please enter a valid amount</small>
+               
+              </div>
+              <div>
+                 <small *ngIf="f['totalDisbursedAmount']?.value > f['totalSanctionedAmount']?.value"  class="text-danger">
+                  Disbursed amount cannot be greater than sanctioned amount. Please check the values entered.
+                </small>
               </div>
             </div>
           </div>
@@ -40,11 +47,12 @@
               </div>
             </div>
           </div> -->
-          <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+          <!-- <div class="col-12 col-sm-6 col-md-4 col-lg-3">
             <div class="form-floating mb-3">
               <input type="text" class="form-control" id="bankName" formControlName="bankName" placeholder="">
               <label for="bankName">Bank Name</label>
-              <div *ngIf="f['bankName']?.invalid && (f['bankName']?.dirty || f['bankName']?.touched)" class="text-danger">
+              <div *ngIf="f['bankName']?.invalid && (f['bankName']?.dirty || f['bankName']?.touched)"
+                class="text-danger">
                 <small *ngIf="f['bankName']?.errors?.required">Bank Name is required</small>
               </div>
             </div>
@@ -53,9 +61,11 @@
             <div class="form-floating mb-3">
               <input type="text" class="form-control" id="ifscCode" formControlName="ifscCode" placeholder="">
               <label for="ifscCode">IFSC Code</label>
-              <div *ngIf="f['ifscCode']?.invalid && (f['ifscCode']?.dirty || f['ifscCode']?.touched)" class="text-danger">
+              <div *ngIf="f['ifscCode']?.invalid && (f['ifscCode']?.dirty || f['ifscCode']?.touched)"
+                class="text-danger">
                 <small *ngIf="f['ifscCode']?.errors?.required">IFSC Code is required</small>
-                <small *ngIf="f['ifscCode']?.errors?.pattern">Invalid IFSC format. Correct format: AAAA0BBBBBB (4 Captial letters, then 0, then 6 letters/numbers)</small>
+                <small *ngIf="f['ifscCode']?.errors?.pattern">Invalid IFSC format. Correct format: AAAA0BBBBBB (4
+                  Captial letters, then 0, then 6 letters/numbers)</small>
               </div>
             </div>
           </div>
@@ -63,7 +73,8 @@
             <div class="form-floating mb-3">
               <input type="text" class="form-control" id="acountName" formControlName="acountName" placeholder="">
               <label for="acountName">Account Name</label>
-              <div *ngIf="f['acountName']?.invalid && (f['acountName']?.dirty || f['acountName']?.touched)" class="text-danger">
+              <div *ngIf="f['acountName']?.invalid && (f['acountName']?.dirty || f['acountName']?.touched)"
+                class="text-danger">
                 <small *ngIf="f['acountName']?.errors?.required">Account Name is required</small>
               </div>
             </div>
@@ -78,11 +89,11 @@
                 <small *ngIf="f['acountNumber']?.errors?.pattern">Please enter a valid account number</small>
               </div>
             </div>
-          </div>
+          </div> -->
           <div class="col-12 col-sm-6 col-md-4 col-lg-3">
             <div class="form-floating mb-3">
               <input type="date" class="form-control" id="collectionDate" formControlName="collectionDate"
-                placeholder="">
+                max="{{ today | date:'yyyy-MM-dd' }}" placeholder="">
               <label for="collectionDate">Collection Date</label>
               <div *ngIf="f['collectionDate']?.invalid && (f['collectionDate']?.dirty || f['collectionDate']?.touched)"
                 class="text-danger">
@@ -92,11 +103,37 @@
           </div>
           <div class="col-12 col-sm-6 col-md-4 col-lg-3">
             <div class="form-floating mb-3">
-              <input type="number" class="form-control" id="feeAmount" formControlName="feeAmount" placeholder="">
-              <label for="feeAmount">Processing Fee Collected Amount</label>
-              <div *ngIf="f['feeAmount']?.invalid && (f['feeAmount']?.dirty || f['feeAmount']?.touched)" class="text-danger">
-                <small *ngIf="f['feeAmount']?.errors?.required">Processing Fee Collected Amount is required</small>
-                <small *ngIf="f['feeAmount']?.errors?.pattern">Please enter a valid amount</small>
+              <input type="number" class="form-control" id="processingFeeCollectedAmount" formControlName="processingFeeCollectedAmount" placeholder="">
+              <label for="processingFeeCollectedAmount">Processing Fee Collected Amount</label>
+              <div *ngIf="f['processingFeeCollectedAmount']?.invalid && (f['processingFeeCollectedAmount']?.dirty || f['processingFeeCollectedAmount']?.touched)"
+                class="text-danger">
+                <small *ngIf="f['processingFeeCollectedAmount']?.errors?.required">Processing Fee Collected Amount is required</small>
+                <small *ngIf="f['processingFeeCollectedAmount']?.errors?.pattern">Please enter a valid amount</small>
+              </div>
+            </div>
+          </div>
+           <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+            <div class="form-floating mb-3">
+              <input type="number" class="form-control" id="processingFeeGSTPercent" formControlName="processingFeeGSTPercent" placeholder="" min="0" max="100">
+              <label for="processingFeeGSTPercent">Processing Fee GST Percentage</label>
+                <div *ngIf="f['processingFeeGSTPercent']?.invalid && (f['processingFeeGSTPercent']?.dirty || f['processingFeeGSTPercent']?.touched)"
+                class="text-danger">
+                <small *ngIf="f['processingFeeGSTPercent']?.errors?.required">Processing Fee GST Percentage is required</small>
+                <small *ngIf="f['processingFeeGSTPercent']?.errors?.pattern">Please enter a valid percentage (numbers only)</small>
+                <small *ngIf="f['processingFeeGSTPercent']?.value < 0 || f['processingFeeGSTPercent']?.value > 100">
+                  GST Percentage must be between 0 and 100.
+                </small>
+                </div>
+            </div>
+          </div>
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+            <div class="form-floating mb-3">
+              <input type="date" class="form-control" id="processingFeeReceivedDate" formControlName="processingFeeReceivedDate"  max="{{ today | date:'yyyy-MM-dd' }}"
+                placeholder="">
+              <label for="processingFeeReceivedDate">Processing Fee Received Date</label>
+              <div *ngIf="f['processingFeeReceivedDate']?.invalid && (f['processingFeeReceivedDate']?.dirty || f['processingFeeReceivedDate']?.touched)"
+                class="text-danger">
+                <small *ngIf="f['processingFeeReceivedDate']?.errors?.required">Processing Fee Received Date is required</small>
               </div>
             </div>
           </div>
@@ -104,40 +141,103 @@
             <div class="mb-3">
               <h6 class="fw-600 fs-md">TG-ipass upload</h6>
               <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" formControlName="tsiPass" id="applicableTsi"
-                  value="yesSecurity">
+                <input class="form-check-input" type="radio" formControlName="tgipassUpload" id="applicableTsi"
+                  value="Yes">
                 <label class="form-check-label fs-md" for="applicableTsi">Applicable</label>
               </div>
               <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" formControlName="tsiPass" id="notapplicableTsi"
-                  value="notApplicable">
+                <input class="form-check-input" type="radio" formControlName="tgipassUpload" id="notapplicableTsi"
+                  value="No">
                 <label class="form-check-label fs-md" for="notapplicableTsi">Not Applicable</label>
               </div>
-              <div *ngIf="f['tsiPass']?.invalid && (f['tsiPass']?.dirty || f['tsiPass']?.touched)" class="text-danger">
+              <div *ngIf="f['tgipassUpload']?.invalid && (f['tgipassUpload']?.dirty || f['tgipassUpload']?.touched)"
+                class="text-danger">
                 <small>TG-ipass upload is required</small>
               </div>
+            </div>
+          </div>
+          <div class="col-12 col-sm-12 col-md-6  col-lg-4 " *ngIf="f['tgipassUpload']?.value === 'Yes'">
+            <div>
+              <label for="uploadNoc" class="form-label text-center fw-600">TG-ipass upload</label>
+              <!-- <input class="form-control" id="uploadNoc" type="file"> -->
+              <input class="form-control" id="uploadNoc" type="file" (change)="onFileSelectedtgipassUpload($event)">
+              <small *ngIf="this.selectedfiles?.name " class="text-muted">
+                Uploaded file: {{ this.selectedfiles?.name }}
+              </small>
             </div>
           </div>
           <div class="col-12 col-sm-6 col-md-4 col-lg-3">
             <div class="mb-3">
               <h6 class="fw-600 fs-md">ROC Filling</h6>
               <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" formControlName="rocFilling" id="applicableRoc"
-                  value="yesSecurity">
+                <input class="form-check-input" type="radio" formControlName="rocFiling" id="applicableRoc"
+                  value="Yes">
                 <label class="form-check-label fs-md" for="applicableRoc">Applicable</label>
               </div>
               <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" formControlName="rocFilling" id="notapplicableRoc"
-                  value="notApplicable">
+                <input class="form-check-input" type="radio" formControlName="rocFiling" id="notapplicableRoc"
+                  value="No">
                 <label class="form-check-label fs-md" for="notapplicableRoc">Not Applicable</label>
               </div>
-              <div *ngIf="f['rocFilling']?.invalid && (f['rocFilling']?.dirty || f['rocFilling']?.touched)" class="text-danger">
+              <div *ngIf="f['rocFiling']?.invalid && (f['rocFiling']?.dirty || f['rocFiling']?.touched)"
+                class="text-danger">
                 <small>ROC Filling is required</small>
               </div>
             </div>
           </div>
+          <div class="col-12 col-sm-12 col-md-6  col-lg-4 " *ngIf="f['rocFiling']?.value === 'Yes'">
+            <div>
+              <label for="uploadNoc" class="form-label text-center fw-600">TG-ipass upload</label>
+              <!-- <input class="form-control" id="uploadNoc" type="file"> -->
+              <input class="form-control" id="uploadNoc" type="file" (change)="onFileSelectedrocFilling($event)">
+              <small *ngIf="this.selectedfilesrocFilling?.name " class="text-muted">
+                Uploaded file: {{ this.selectedfilesrocFilling?.name }}
+              </small>
+            </div>
+          </div>
         </div>
-
+         <div class="border rounded-3 p-2">
+          <div class="row align-items-center mb-3">
+            <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+              <label class="fs-md fw-bold mb-1" >Add Bank Details</label>
+            </div>
+            <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+              <div class="text-start text-sm-end text-xl-end">
+                <button type="button" data-bs-toggle="modal" data-bs-target="#addBankDetails" [ngClass]="{'isDisabled':bankdetails.length>=3}"
+                  class="btn btn-outline-primary btn-sm border-0 ms-3"><span class="bi bi-plus-lg"></span> Add</button>
+              </div>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <table class="table table-borderless table-striped fs-md">
+              <thead class="bg-theme text-white">
+                <tr>
+                  <th>S.No</th>
+                  <th>Actions</th>
+                  <th>Bank Name</th>
+                  <th>IFSC Code</th>
+                  <th>Account Name</th>
+                  <th>Account Number</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of bankdetails; let i = index">
+                  <td>{{ i + 1 }}</td>
+                  <td>
+                    <button type="button" class="btn btn-default text-danger btn-sm"
+                      (click)="editBankDetails(item, i)"><span class="bi bi-pencil"></span></button>
+                    <button type="button" class="btn btn-default text-danger btn-sm"
+                      (click)="deleteBankDetails(item, i)"><span class="bi bi-trash"></span></button>
+                  </td>
+                  <td>{{ item.bankName }}</td>
+                  <td>{{ item.ifscCode }}</td>
+                  <td>{{ item.acountName }}</td>
+                  <td>{{ item.acountNumber }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
         <div class="border rounded-3 p-2">
           <div class="row align-items-center mb-3">
             <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
@@ -145,7 +245,8 @@
             </div>
             <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
               <div class="text-start text-sm-end text-xl-end">
-                <button type="button" data-bs-toggle="modal" data-bs-target="#addDisbursement" class="btn btn-outline-primary btn-sm border-0 ms-3"><span class="bi bi-plus-lg"></span> Add</button>
+                <button type="button" data-bs-toggle="modal" data-bs-target="#addDisbursement"
+                  class="btn btn-outline-primary btn-sm border-0 ms-3"><span class="bi bi-plus-lg"></span> Add</button>
               </div>
             </div>
           </div>
@@ -162,8 +263,8 @@
               </thead>
               <tbody>
                 <tr *ngFor="let item of disbursements let i=index">
-                   <td>{{i + 1}}</td>
-                    <td >
+                  <td>{{i + 1}}</td>
+                  <td>
                     <button type="button" class="btn btn-default text-danger btn-sm"
                       (click)="editCreditDetails(item,i)"><span class="bi bi-pencil"></span></button>
                     <button type="button" class="btn btn-default text-danger btn-sm"
@@ -181,7 +282,9 @@
     </div>
 
     <!-- <button type="button" (click)="onPrevious()" class="btn btn-secondary float-start">Previous</button> -->
-    <button type="submit" class="btn btn-primary float-end " [ngClass]="{'isDisabled':applicationData?.applicationStatus?applicationData?.applicationStatus=='DISBURSEMENT_COMPLETED' :applicationData?.status=='DISBURSEMENT_COMPLETED'}" *ngIf="freeze<=11">Submit</button>
+    <button type="submit" class="btn btn-primary float-end "
+      [ngClass]="{'isDisabled':(applicationData?.applicationStatus?applicationData?.applicationStatus=='DISBURSEMENT_COMPLETED' :applicationData?.status=='DISBURSEMENT_COMPLETED') }"
+      *ngIf="freeze<=11">Submit</button>
     <!-- <button type="button" class="btn btn-primary float-end me-3" (click)='finalSave()'>Final Submisiion</button> -->
   </form>
 </fieldset>
@@ -192,7 +295,7 @@
 <div class="modal fade" id="addDisbursement" tabindex="-1" aria-labelledby="addisbursementLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
     <div class="modal-content">
-      <div class="modal-header py-2">
+      <div class="modal-header py-2 bg-theme">
         <h6 class="modal-title text-white">Add Disbursement</h6>
         <button type="button" class="btn-close text-white fs-4 p-0" data-bs-dismiss="modal" aria-label="Close"><span
             class="bi bi-x"></span></button>
@@ -202,9 +305,12 @@
           <div class="row">
             <div class="col-12 col-sm-6 col-md-6 col-lg-6">
               <div class="form-floating mb-3">
-                <input type="date" class="form-control" id="date1" formControlName="disbursementDate" placeholder="">
+                <input type="date" class="form-control" id="date1" formControlName="disbursementDate" placeholder=""
+                  max="{{ today | date:'yyyy-MM-dd' }}">
                 <label for="date1">Date</label>
-                <div *ngIf="af['disbursementDate']?.invalid && (af['disbursementDate']?.dirty || af['disbursementDate']?.touched)" class="text-danger">
+                <div
+                  *ngIf="af['disbursementDate']?.invalid && (af['disbursementDate']?.dirty || af['disbursementDate']?.touched)"
+                  class="text-danger">
                   <small>Disbursement Date is required</small>
                 </div>
               </div>
@@ -223,7 +329,8 @@
               <div class="form-floating mb-3">
                 <input type="text" class="form-control" id="details" formControlName="details" placeholder="">
                 <label for="details">Details</label>
-                <div *ngIf="af['details']?.invalid && (af['details']?.dirty || af['details']?.touched)" class="text-danger">
+                <div *ngIf="af['details']?.invalid && (af['details']?.dirty || af['details']?.touched)"
+                  class="text-danger">
                   <small>Details are required</small>
                 </div>
               </div>
@@ -232,7 +339,73 @@
         </form>
 
         <div class="text-end">
-          <button type="button" class="btn btn-primary"  data-bs-dismiss="modal" aria-label="Close" (click)="addDisbursement()">Add</button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" aria-label="Close"
+            (click)="addDisbursement()">Add</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- add banck details -->
+<!-- Add Bank Details Modal -->
+<div class="modal fade" id="addBankDetails" tabindex="-1" aria-labelledby="addBankDetailsLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header py-2 bg-theme">
+        <h6 class="modal-title text-white">Add Bank Details</h6>
+        <button type="button" class="btn-close text-white fs-4 p-0" data-bs-dismiss="modal" aria-label="Close">
+          <span class="bi bi-x"></span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="addBankDetailsForm">
+          <div class="row">
+            <div class="col-12 col-sm-6">
+              <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="bankName" formControlName="bankName" placeholder="">
+                <label for="bankName">Bank Name</label>
+                <div *ngIf="abf['bankName']?.invalid && (abf['bankName']?.dirty || abf['bankName']?.touched)" class="text-danger">
+                  <small>Bank Name is required</small>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-sm-6">
+              <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="ifscCode" formControlName="ifscCode" placeholder="">
+                <label for="ifscCode">IFSC Code</label>
+                <div *ngIf="abf['ifscCode']?.invalid && (abf['ifscCode']?.dirty || abf['ifscCode']?.touched)" class="text-danger">
+                  <small *ngIf="abf['ifscCode']?.errors?.required">IFSC Code is required</small>
+                  <small *ngIf="abf['ifscCode']?.errors?.pattern">
+                    Invalid IFSC format. Correct format: AAAA0BBBBBB (4 capital letters, then 0, then 6 letters/numbers)
+                  </small>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-sm-6">
+              <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="acountName" formControlName="acountName" placeholder="">
+                <label for="acountName">Account Name</label>
+                <div *ngIf="abf['acountName']?.invalid && (abf['acountName']?.dirty || abf['acountName']?.touched)" class="text-danger">
+                  <small>Account Name is required</small>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-sm-6">
+              <div class="form-floating mb-3">
+                <input type="number" class="form-control" id="acountNumber" formControlName="acountNumber" placeholder="">
+                <label for="acountNumber">Account Number</label>
+                <div *ngIf="abf['acountNumber']?.invalid && (abf['acountNumber']?.dirty || abf['acountNumber']?.touched)" class="text-danger">
+                  <small *ngIf="abf['acountNumber']?.errors?.required">Account Number is required</small>
+                  <small *ngIf="abf['acountNumber']?.errors?.pattern">Please enter a valid account number</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+        <div class="text-end">
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" aria-label="Close"
+            (click)="addBankDetails()">Add</button>
         </div>
       </div>
     </div>

@@ -239,6 +239,7 @@ loginsessionDetails:any
       next: (dataList: any) => {
          this.assessmentForm.patchValue(dataList.data);
          console.log(dataList?.data)
+
           const deliveryDetailsArray = this.assessmentForm.get('creditFacilityDetails') as FormArray;
           // Push the new form group
           if( dataList?.data?.creditFacilityDetails?.length){
@@ -333,6 +334,7 @@ loginsessionDetails:any
   }
   initializeForm() {
     this.updateFormFields = this.fb.group({
+
         enterpriseName: ['', [Validators.required,  Validators.pattern(/^(?=.*[a-zA-Z])[a-zA-Z0-9 .]+$/),Validators.minLength(3)]],
        udyamRegNumber: ['', [Validators.required, this.udyamRegNumberValidator]],
       enterpriseCategory: ['', Validators.required],
@@ -360,7 +362,9 @@ loginsessionDetails:any
       existingCredit: ['', Validators.required],
       
       // Additional details
+      isGSTNumberExist: [false],
       gstNumber: ['',this.gstValidator()],
+      sourceOfApplication: ['', Validators.required],
       typeOfProduct: ['', [Validators.required, Validators.pattern(/^[a-zA-Z .]+$/)]],
       productUsage: ['', [Validators.required, Validators.pattern(/^[a-zA-Z .]+$/)]],
       
@@ -446,22 +450,30 @@ loginsessionDetails:any
   }
    calculateScore1() {
     this.totalScore = 0;
+    let count=0
     this.stressScoreOptions.forEach((question:any) => {
       const control = this.assessmentForm.get(`stressScore_${question.id}`);
       if (control?.value ) { // Skip "Not Applicable" options
         const selectedOption = question.options.find((opt:any) => opt.label === control.value);
         if (selectedOption) {
+         
           // Extract score from label (e.g., "Mild delay(2)" -> 2)
           const scoreMatch = selectedOption.label.match(/\((\d+)\)/);
+
           console.log(scoreMatch)
           if (scoreMatch) {
+             count++
             this.totalScore += parseInt(scoreMatch[1], 10);
           }
         }
       }
+
     });
-    
-    console.log(this.totalScore)
+    // this.totalScore= this.totalScore/count
+    console.log(count,Math.round((this.totalScore / count) * 10),'sk')
+    // Calculate percentage (max possible score is 100 if all questions scored 10)
+    // this.totalScore = Math.min(Math.round((this.totalScore / count) * 100), 100);
+    this.totalScore=Math.round((this.totalScore / count) * 10)
     return this.totalScore
     // Calculate percentage (max possible score is 100 if all questions scored 10)
     // this.totalScore = Math.min(Math.round((this.totalScore / 100) * 100), 100);

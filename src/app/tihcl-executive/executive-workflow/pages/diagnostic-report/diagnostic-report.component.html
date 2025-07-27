@@ -41,7 +41,8 @@
                <!-- begin:: basic details -->
                <div class="tab-pane fade show active" role="tabpanel" aria-labelledby="basic-tab"
                  [ngClass]="{ 'active':currentTab === 'BASIC_DETAILS'}"
-                 [class.show.active]="currentTab === 'BASIC_DETAILS'">
+                 [class.show.active]="currentTab === 'BASIC_DETAILS'" >
+
                  <div class="p-2">
                    <form [formGroup]="basicDetails">
                      <div class="row">
@@ -666,7 +667,7 @@
                            </div>
                            <div class="col-12">
                              <div class="form-floating mb-3">
-                               <input type="date" class="form-control" id="receivableDate" placeholder=""
+                               <input type="date" class="form-control" id="receivableDate" placeholder=""  max="{{ today | date:'yyyy-MM-dd' }}"
                                  formControlName="receivableDate">
                                <label for="receivableDate">Receivable Date</label>
                                <div
@@ -733,7 +734,7 @@
                            </div>
                            <div class="col-12">
                              <div class="form-floating mb-3">
-                               <input type="date" class="form-control" id="payablesDate" placeholder=""
+                               <input type="date" class="form-control" id="payablesDate" placeholder="" max="{{ today | date:'yyyy-MM-dd' }}"
                                  formControlName="payableDate">
                                <label for="payablesDate">Payable Date</label>
                                <div
@@ -923,7 +924,7 @@
                              </tbody>
                              <tfoot *ngIf="orderBookPositions.length > 0">
                                <tr>
-                                 <td colspan="3" class="text-end fw-bold">Total:</td>
+                                 <td colspan="3" class="text-end fw-bold">Total Order Value:</td>
                                  <td class="fw-bold">{{getTotalOrderValue() | number}}</td>
                                  <td colspan="2"></td>
                                </tr>
@@ -1134,7 +1135,7 @@
                          <div class="row mb-3">
                            <div class="col-md-12">
                              <div class="form-floating">
-                               <input type="date" class="form-control" id="modalDateOfOrder"
+                               <input type="date" class="form-control" id="modalDateOfOrder"  max="{{ today | date:'yyyy-MM-dd' }}"
                                  formControlName="dateOfOrder">
                                <label for="modalDateOfOrder">Date of Order</label>
                              </div>
@@ -1164,7 +1165,7 @@
                          <div class="row mb-3">
                            <div class="col-md-12">
                              <div class="form-floating">
-                               <input type="date" class="form-control" id="modalOrderDeliveryDate"
+                               <input type="date" class="form-control" id="modalOrderDeliveryDate"  max="{{ today | date:'yyyy-MM-dd' }}"
                                  formControlName="orderDeliveryDate">
                                <label for="modalOrderDeliveryDate">Order Delivery Date</label>
                              </div>
@@ -1221,7 +1222,7 @@
                          <div class="row mb-3">
                            <div class="col-md-12">
                              <div class="form-floating">
-                               <input type="date" class="form-control" id="modalSinceWhen" formControlName="sinceWhen">
+                               <input type="date" class="form-control" id="modalSinceWhen" formControlName="sinceWhen"  max="{{ today | date:'yyyy-MM-dd' }}">
                                <label for="modalSinceWhen">Since When</label>
                              </div>
                            </div>
@@ -1406,7 +1407,7 @@
                            <!-- Report Date -->
                            <div class="col-12 col-md-6 mb-3">
                              <div class="form-floating">
-                               <input type="date" class="form-control" id="reportDate" formControlName="reportDate">
+                               <input type="date" class="form-control" id="reportDate" formControlName="reportDate" max="{{ today | date:'yyyy-MM-dd' }}">
                                <label for="reportDate">Report Date</label>
                                <div
                                  *ngIf="balanceSheetsForm.get('reportDate')?.invalid && balanceSheetsForm.get('reportDate')?.touched"
@@ -1839,7 +1840,7 @@
            <div class="row">
              <div class="col-12 ">
                <div class="form-floating mb-3">
-                 <input type="date" class="form-control" id="dateOrder" placeholder="">
+                 <input type="date" class="form-control" id="dateOrder" placeholder=""  max="{{ today | date:'yyyy-MM-dd' }}">
                  <label for="dateOrder">Date of Order</label>
                </div>
              </div>
@@ -1857,7 +1858,7 @@
              </div>
              <div class="col-12">
                <div class="form-floating mb-3">
-                 <input type="date" class="form-control" id="orderDelivery" placeholder="">
+                 <input type="date" class="form-control" id="orderDelivery" placeholder=""  max="{{ today | date:'yyyy-MM-dd' }}">
                  <label for="orderDelivery">Order Delivery Date</label>
                </div>
              </div>
@@ -1892,7 +1893,7 @@
              </div>
              <div class="col-12">
                <div class="form-floating mb-3">
-                 <input type="date" class="form-control" id="receivableDate" placeholder="">
+                 <input type="date" class="form-control" id="receivableDate" placeholder="" max="{{ today | date:'yyyy-MM-dd' }}">
                  <label for="receivableDate">Receivable Date</label>
                </div>
              </div>
@@ -1933,7 +1934,7 @@
              </div>
              <div class="col-12">
                <div class="form-floating mb-3">
-                 <input type="date" class="form-control" id="payablesDate" placeholder="">
+                 <input type="date" class="form-control" id="payablesDate" placeholder="" max="{{ today | date:'yyyy-MM-dd' }}">
                  <label for="payablesDate">Payable Date</label>
                </div>
              </div>

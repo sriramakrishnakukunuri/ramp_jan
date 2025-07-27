@@ -81,7 +81,11 @@ export class CommonServiceService {
     a.click();
     URL.revokeObjectURL(objectUrl);
   }
-
+  getDate(){
+    const today = new Date();
+  today.setDate(today.getDate() - 1);
+  return today.toISOString().split('T')[0];
+  }
   requestDataFromMultipleSources( url1:any, url2:any, fileData:any,sessionData:any): Observable<any[]> {    
     let response1 = this.http.post(url1, fileData).pipe(catchError(this.formatErrors));
     let response2=this.http.post(url2, sessionData).pipe(catchError(this.formatErrors));

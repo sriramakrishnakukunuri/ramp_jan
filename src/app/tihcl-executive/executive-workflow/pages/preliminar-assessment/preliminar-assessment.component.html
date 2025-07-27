@@ -14,7 +14,7 @@
             <div class="col-12 col-sm-5 col-md-4 col-lg-4 col-xl-4">
               <label class="fs-md">{{ assessmentForm.get('enterpriseName')?.value }}</label>
             </div>
-            <div class="col-12 col-sm-4 col-md-5 col-lg-5 col-xl-6" *ngIf="!this.confirmationdata?.includes('1')">
+            <div class="col-12 col-sm-4 col-md-5 col-lg-5 col-xl-6" *ngIf="!this.confirmationdata?.includes('1') && freeze<=1">
               <div class="text-start text-sm-end text-xl-end">
                 <button type="button" class="btn btn-outline-success border-0 btn-sm" (click)="confirmation('1')">Confirm</button>
                 <button type="button" data-bs-toggle="modal" data-bs-target="#nameFirm"
@@ -23,7 +23,7 @@
               </div>
 
             </div>
-              <div class="col-12 col-sm-4 col-md-5 col-lg-5 col-xl-6" *ngIf="this.confirmationdata?.includes('1')">
+              <div class="col-12 col-sm-4 col-md-5 col-lg-5 col-xl-6" *ngIf="this.confirmationdata?.includes('1') || freeze>1">
               <div class="text-start text-sm-end text-xl-end">
                 <button type="button" class="btn btn-outline-success isDisabled btn-sm">Confirmed</button>
                
@@ -42,7 +42,7 @@
             <div class="col-12 col-sm-5 col-md-4 col-lg-4 col-xl-4">
               <label class="fs-md">{{ assessmentForm.get('udyamRegNumber')?.value }}</label>
             </div>
-            <div class="col-12 col-sm-4 col-md-5 col-lg-5 col-xl-6" *ngIf="!this.confirmationdata?.includes('2')">
+            <div class="col-12 col-sm-4 col-md-5 col-lg-5 col-xl-6" *ngIf="!this.confirmationdata?.includes('2') && freeze<=1">
               <div class="text-start text-sm-end text-xl-end">
                 <button type="button" class="btn btn-outline-success border-0 btn-sm" (click)="confirmation('2')">Confirm</button>
                 <button type="button" data-bs-toggle="modal" data-bs-target="#udyamRegNumber"
@@ -50,7 +50,7 @@
                   class="btn btn-outline-primary btn-sm border-0 ms-3">Update</button>
               </div>
             </div>
-             <div class="col-12 col-sm-4 col-md-5 col-lg-5 col-xl-6" *ngIf="this.confirmationdata?.includes('2')">
+             <div class="col-12 col-sm-4 col-md-5 col-lg-5 col-xl-6" *ngIf="this.confirmationdata?.includes('2') || freeze>1">
               <div class="text-start text-sm-end text-xl-end">
                 <button type="button" class="btn btn-outline-success isDisabled btn-sm">Confirmed</button>
                
@@ -69,7 +69,7 @@
             <div class="col-12 col-sm-5 col-md-4 col-lg-4 col-xl-4">
               <label class="fs-md">{{ assessmentForm.get('enterpriseCategory')?.value }}</label>
             </div>
-            <div class="col-12 col-sm-4 col-md-5 col-lg-5 col-xl-6" *ngIf="!this.confirmationdata?.includes('3')">
+            <div class="col-12 col-sm-4 col-md-5 col-lg-5 col-xl-6" *ngIf="!this.confirmationdata?.includes('3') && freeze<=1">
               <div class="text-start text-sm-end text-xl-end">
                 <button type="button" class="btn btn-outline-success border-0 btn-sm" (click)="confirmation('3')">Confirm</button>
                 <button type="button" data-bs-toggle="modal" data-bs-target="#addSize"
@@ -77,7 +77,7 @@
                   class="btn btn-outline-primary btn-sm border-0 ms-3">Update</button>
               </div>
             </div>
-             <div class="col-12 col-sm-4 col-md-5 col-lg-5 col-xl-6" *ngIf="this.confirmationdata?.includes('3')">
+             <div class="col-12 col-sm-4 col-md-5 col-lg-5 col-xl-6" *ngIf="this.confirmationdata?.includes('3') ">
               <div class="text-start text-sm-end text-xl-end">
                 <button type="button" class="btn btn-outline-success isDisabled btn-sm">Confirmed</button>
                
@@ -96,7 +96,7 @@
             <div class="col-12 col-sm-5 col-md-4 col-lg-4 col-xl-4">
               <label class="fs-md">{{ assessmentForm.get('natureOfActivity')?.value }}</label>
             </div>
-            <div class="col-12 col-sm-4 col-md-5 col-lg-5 col-xl-6" *ngIf="!this.confirmationdata?.includes('4')">
+            <div class="col-12 col-sm-4 col-md-5 col-lg-5 col-xl-6" *ngIf="!this.confirmationdata?.includes('4') && freeze<=1">
               <div class="text-start text-sm-end text-xl-end">
                 <button type="button" class="btn btn-outline-success border-0 btn-sm" (click)="confirmation('4')">Confirm</button>
                 <button type="button" data-bs-toggle="modal" data-bs-target="#addnature"
@@ -104,7 +104,7 @@
                   class="btn btn-outline-primary btn-sm border-0 ms-3">Update</button>
               </div>
             </div>
-               <div class="col-12 col-sm-4 col-md-5 col-lg-5 col-xl-6" *ngIf="this.confirmationdata?.includes('4')">
+               <div class="col-12 col-sm-4 col-md-5 col-lg-5 col-xl-6" *ngIf="this.confirmationdata?.includes('4') || freeze>1">
               <div class="text-start text-sm-end text-xl-end">
                 <button type="button" class="btn btn-outline-success isDisabled btn-sm">Confirmed</button>
                
@@ -130,7 +130,7 @@
               <label class="d-block fs-md fw-600">Address</label>
               <label class="fs-md">{{ assessmentForm.get('address')?.value }}</label>
             </div>
-            <div class="col-12 col-sm-6 col-md-3 col-lg-3 col-xl-3" *ngIf="!this.confirmationdata?.includes('5')">
+            <div class="col-12 col-sm-6 col-md-3 col-lg-3 col-xl-3" *ngIf="!this.confirmationdata?.includes('5') && freeze<=1">
               <div class="text-start text-sm-end text-xl-end">
                 <button type="button" class="btn btn-outline-success border-0 btn-sm" (click)="confirmation('5')">Confirm</button>
                 <button type="button" data-bs-toggle="modal" data-bs-target="#factoryLocation"
@@ -138,7 +138,7 @@
                   class="btn btn-outline-primary btn-sm border-0 ms-3">Update</button>
               </div>
             </div>
-             <div class="col-12 col-sm-4 col-md-5 col-lg-5 col-xl-3" *ngIf="this.confirmationdata?.includes('5')">
+             <div class="col-12 col-sm-4 col-md-5 col-lg-5 col-xl-3" *ngIf="this.confirmationdata?.includes('5') || freeze>1">
               <div class="text-start text-sm-end text-xl-end">
                 <button type="button" class="btn btn-outline-success isDisabled btn-sm">Confirmed</button>
                
@@ -157,7 +157,7 @@
             <div class="col-12 col-sm-5 col-md-4 col-lg-4 col-xl-4">
               <label class="fs-md">{{ assessmentForm.get('existingCredit')?.value?'Yes':'No' }}</label>
             </div>
-            <div class="col-12 col-sm-4 col-md-5 col-lg-5 col-xl-6" *ngIf="!this.confirmationdata?.includes('6')">
+            <div class="col-12 col-sm-4 col-md-5 col-lg-5 col-xl-6" *ngIf="!this.confirmationdata?.includes('6') && freeze<=1">
               <div class="text-start text-sm-end text-xl-end">
                 <button type="button" class="btn btn-outline-success border-0 btn-sm" (click)="confirmation('6')">Confirm</button>
                 <button type="button" data-bs-toggle="modal" data-bs-target="#addCredit"
@@ -165,7 +165,7 @@
                   class="btn btn-outline-primary btn-sm border-0 ms-3">Update</button>
               </div>
             </div>
-             <div class="col-12 col-sm-4 col-md-5 col-lg-5 col-xl-6" *ngIf="this.confirmationdata?.includes('6')">
+             <div class="col-12 col-sm-4 col-md-5 col-lg-5 col-xl-6" *ngIf="this.confirmationdata?.includes('6') || freeze>1">
               <div class="text-start text-sm-end text-xl-end">
                 <button type="button" class="btn btn-outline-success isDisabled btn-sm">Confirmed</button>
                
@@ -183,7 +183,7 @@
             </div>
             <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
               <div class="text-start text-sm-end text-xl-end" >
-                <button type="button" data-bs-toggle="modal" data-bs-target="#addLoan"  [ngClass]="{'isDisabled': assessmentForm.get('existingCredit')?.value!=true}"
+                <button type="button" data-bs-toggle="modal" data-bs-target="#addLoan"  [ngClass]="{'isDisabled': assessmentForm.get('existingCredit')?.value!=true || freeze>1} "
                   class="btn btn-outline-primary btn-sm border-0 ms-3" (click)="addCreditDetail()"><span
                     class="bi bi-plus-lg"></span> Add</button>
               </div>
@@ -227,11 +227,31 @@
       </ul>
 
       <!-- GST and Product Information -->
+       
       <div class="row">
-        <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4">
+         <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4">
+          <div class="mb-3">
+            <!-- Radio buttons for GST Number Exist -->
+            <div class="mb-2" [ngClass]="{'isDisabled':freeze>1}">
+              <label class="form-label fs-md fw-600 mb-1">Is GST Number Exist?</label>
+              <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" id="gstExistYes" formControlName="isGSTNumberExist" [value]="true" >
+          <label class="form-check-label" for="gstExistYes">Yes</label>
+              </div>
+              <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" id="gstExistNo" formControlName="isGSTNumberExist" [value]="false" >
+          <label class="form-check-label" for="gstExistNo">No</label>
+              </div>
+              <div *ngIf="assessmentForm.get('isGSTNumberExist')?.invalid && assessmentForm.get('isGSTNumberExist')?.touched" class="text-danger small">
+          Please select if GST Number exists
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4" *ngIf="assessmentForm.get('isGSTNumberExist')?.value">
           <div class="mb-3">
             <div class="form-floating mb-3">
-              <input type="text" class="form-control" id="gst" placeholder="GST" formControlName="gstNumber">
+              <input type="text" class="form-control" id="gst" placeholder="GST" formControlName="gstNumber" [readOnly]="freeze>1">
               <label for="gst">GST Number</label>
               <div *ngIf="assessmentForm.get('gstNumber')?.invalid && assessmentForm.get('gstNumber')?.touched && !assessmentForm.get('gstNumber')?.errors?.invalidFormat"
                 class="text-danger small">
@@ -245,10 +265,26 @@
         </div>
       </div>
       <div class="row">
+          <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4">
+          <div class="mb-3">
+            <div class="form-floating mb-3">
+              <select class="form-select" id="landDetails" formControlName="sourceOfApplication" [ngClass]="{'isDisabled':freeze>1}">
+                <option value="" disabled selected>Select Option</option>
+                <option value="Option1">Option1</option>
+                <option value="Option2">Option2</option>
+              </select>
+              <label for="product">Source Of Application<span class="text-danger">*</span></label>
+              <div *ngIf="assessmentForm.get('sourceOfApplication')?.invalid && assessmentForm.get('sourceOfApplication')?.touched && !assessmentForm.get('sourceOfApplication')?.hasError('pattern')" 
+                class="text-danger small">
+                Source Of Application is required
+              </div>
+            </div>
+          </div>
+        </div>
         <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4">
           <div class="mb-3">
             <div class="form-floating mb-3">
-              <input type="text" class="form-control" id="product" placeholder="Type Of Product"
+              <input type="text" class="form-control" id="product" placeholder="Type Of Product" [readOnly]="freeze>1"
                 formControlName="typeOfProduct">
               <label for="product">Type Of Product<span class="text-danger">*</span></label>
               <div *ngIf="assessmentForm.get('typeOfProduct')?.invalid && assessmentForm.get('typeOfProduct')?.touched && !assessmentForm.get('typeOfProduct')?.hasError('pattern')" 
@@ -262,7 +298,7 @@
         <div class="col-12 col-sm-6 col-md-8 col-lg-8 col-xl-8">
           <div class="mb-3">
             <div class="form-floating mb-3">
-              <input type="text" class="form-control" id="whereProduct" placeholder="Where is the Product Used"
+              <input type="text" class="form-control" id="whereProduct" placeholder="Where is the Product Used" [readOnly]="freeze>1"
                 formControlName="productUsage">
               <label for="whereProduct">Where is the Product Used?<span class="text-danger">*</span></label>
               <div *ngIf="assessmentForm.get('productUsage')?.invalid && assessmentForm.get('productUsage')?.touched && !assessmentForm.get('productUsage')?.hasError('pattern')" 
@@ -281,7 +317,7 @@
         <div class="mb-3">
           <label class="fs-md fw-600 mb-1">What are the problems being faced by the unit?<span class="text-danger">*</span></label>
           <div>
-            <textarea class="form-control" rows="3" placeholder="Write here" formControlName="problemsFaced"></textarea>
+            <textarea class="form-control" rows="3" placeholder="Write here" formControlName="problemsFaced" [readOnly]="freeze>1"></textarea>
           </div>
            <div *ngIf="assessmentForm.get('problemsFaced')?.invalid && assessmentForm.get('problemsFaced')?.touched && !assessmentForm.get('problemsFaced')?.hasError('pattern')"
                 class="text-danger small">
@@ -292,7 +328,7 @@
         <div class="mb-3">
           <label class="fs-md fw-600 mb-1">What are the recommended solutions?<span class="text-danger">*</span></label>
           <div>
-            <textarea class="form-control" rows="3" placeholder="Write here"
+            <textarea class="form-control" rows="3" placeholder="Write here" [readOnly]="freeze>1"
               formControlName="expectedSolution"></textarea>
           </div>
            <div *ngIf="assessmentForm.get('expectedSolution')?.invalid && assessmentForm.get('expectedSolution')?.touched && !assessmentForm.get('expectedSolution')?.hasError('pattern')" 
@@ -363,7 +399,7 @@
         <div class="mb-3">
           <label class="fs-md fw-600 mb-1">Executive Views<span class="text-danger">*</span></label>
           <div>
-            <textarea class="form-control" rows="3" placeholder="Write here" name="observations" formControlName="observations"></textarea>
+            <textarea class="form-control" rows="3" placeholder="Write here" name="observations" formControlName="observations" [readOnly]="freeze>1"></textarea>
           </div>
           <div *ngIf="assessmentForm.get('observations')?.invalid && assessmentForm.get('observations')?.touched && !assessmentForm.get('observations')?.hasError('pattern')"
               class="text-danger small">
@@ -395,7 +431,7 @@
       </div>
 
       <!-- Submit Button -->
-      <input *ngIf="freeze<=1" type="submit" name="next" class="btn btn-primary float-end"  value="Submit for Manager Approval" />
+      <input *ngIf="freeze<=10" type="submit" name="next" class="btn btn-primary float-end"  value="Submit for Manager Approval" />
     </form>
   </div>
 </div>

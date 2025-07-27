@@ -63,6 +63,23 @@ districtName:any='All'
      this.districtName = event.target.value
      console.log(this.districtName)
      this.onTabChange(this.activeTab);
+    //  this.getData()
+  }
+   PrigramSummaryData:any={}
+  getData() {
+    this.PrigramSummaryData ={}
+    this._commonService.getById(APIS.tihclCOI.getNumericData, this.districtName).subscribe({
+      next: (res: any) => {          
+        // this.PrigramSummaryData = res?.data   
+      // console.log( this.PrigramSummaryData)
+      this.PrigramSummaryData = res?.data
+      },
+      error: (err) => {
+        this.toastrService.error('Data Not Available', "Summary Data Error!");
+        new Error(err);
+      },
+    });
+    // console.log(this.ParticipantAttentance)
   }
    onPageChange(event: {page: number, pageSize: number}): void {
     this.currentPage = event.page;
