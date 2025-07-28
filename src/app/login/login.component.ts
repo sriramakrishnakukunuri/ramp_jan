@@ -140,7 +140,7 @@ export class LoginComponent implements OnInit {
             return;
         }
         if (value == 'SUBMIT') {
-            if (this.captchaInput && this.captchaInput.trim().toLowerCase() === this.captchaValue.toLowerCase()) {
+            if (this.captchaInput && this.captchaInput.trim() === this.captchaValue) {
                 this.authenticationService.login('executive1@gmail.com', 'Password@123')
                     .pipe(first())
                     .subscribe({

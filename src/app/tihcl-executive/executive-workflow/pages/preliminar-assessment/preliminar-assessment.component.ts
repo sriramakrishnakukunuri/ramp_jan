@@ -28,7 +28,7 @@ export class PreliminarAssessmentComponent implements OnInit {
       limitSanctioned: 200000,
       outstandingAmount: 100000,
       overdueAmount: 50000,
-      overdueSince: '2025-05-09'
+      overdueDate: '2025-05-09'
     }
   ];
 
@@ -171,7 +171,7 @@ export class PreliminarAssessmentComponent implements OnInit {
       limitSanctioned: ['', Validators.required],
       outstandingAmount: [false],
       overdueAmount: ['', ],
-      overdueSince: [, Validators.required]
+      overdueDate: [, Validators.required]
     });
   }
  
@@ -197,7 +197,7 @@ export class PreliminarAssessmentComponent implements OnInit {
       limitSanctioned: [item.limitSanctioned, Validators.required],
       outstandingAmount: [item.outstandingAmount],
       overdueAmount: [item.overdueAmount],
-      overdueSince: [item.overdueSince, Validators.required]
+      overdueDate: [item.overdueDate, Validators.required]
     });
       const deliveryDetailsArray = this.assessmentForm.get('creditFacilityDetails') as FormArray;
       const index = deliveryDetailsArray.controls.findIndex(control => control.value === item);

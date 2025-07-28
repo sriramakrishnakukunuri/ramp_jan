@@ -218,7 +218,7 @@
                   <td>{{item?.limitSanctioned}}</td>
                   <td>{{item?.outstandingAmount}}</td>
                   <td>{{item?.overdueAmount}}</td>
-                  <td>{{item?.overdueSince}}</td>
+                  <td>{{item?.overdueDate}}</td>
                 </tr>
               </tbody>
             </table>
@@ -536,12 +536,12 @@
           </div>
           <div class="col-12">
             <div class="form-floating mb-3">
-              <input type="date" class="form-control" id="overdueSince" placeholder="Overdue Since"
-                formControlName="overdueSince" max="{{ today | date:'yyyy-MM-dd' }}">
-              <label for="overdueSince">Overdue Since (Date)</label>
-              <div *ngIf="creditDetailsForm.get('overdueSince')?.invalid && 
-                                           (creditDetailsForm.get('overdueSince')?.dirty || 
-                                           creditDetailsForm.get('overdueSince')?.touched)" class="text-danger">
+              <input type="date" class="form-control" id="overdueDate" placeholder="Overdue Since"
+                formControlName="overdueDate" max="{{ today | date:'yyyy-MM-dd' }}">
+              <label for="overdueDate">Overdue Since (Date)</label>
+              <div *ngIf="creditDetailsForm.get('overdueDate')?.invalid && 
+                                           (creditDetailsForm.get('overdueDate')?.dirty || 
+                                           creditDetailsForm.get('overdueDate')?.touched)" class="text-danger">
                 Please enter a valid date
               </div>
 
