@@ -42,7 +42,7 @@ tableList:any=[]
 // lastName
 // : 
 // "Executive"
-    this._commonService.getDataByUrl(APIS.tihclExecutive.getPendingApplications+'?executiveName='+this.loginsessionDetails?.firstName+' '+this.loginsessionDetails?.lastName+'&pageNo=' + (pageNo-1) + '&pageSize=' + PageSize).subscribe({
+    this._commonService.getDataByUrl(APIS.tihclExecutive.getPendingApplications+'?executiveName='+this.loginsessionDetails?.firstName+this.loginsessionDetails?.lastName+'&pageNo=' + (pageNo-1) + '&pageSize=' + PageSize).subscribe({
       next: (dataList: any) => {
         this.tableList = dataList.data;
          this.totalItems=dataList?.totalElements
