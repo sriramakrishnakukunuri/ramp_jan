@@ -528,7 +528,7 @@ loginsessionDetails:any
         riskCategoryScore:totalScore,
         riskCategories:riskAssessment,
         applicationStatus: "PRELIMINARY_ASSESSMENT",
-        executiveName:this.loginsessionDetails?.firstName+this.loginsessionDetails?.lastName
+        executiveName:this.loginsessionDetails?.firstName+" "+this.loginsessionDetails?.lastName
         
 
       };
