@@ -36,12 +36,6 @@ tableList:any=[]
   }
  getNewApplications(pageNo:any,PageSize:any): any {
     this.tableList = '';
-//     // firstName
-// : 
-// "Mr."
-// lastName
-// : 
-// "Executive"
     this._commonService.getDataByUrl(APIS.tihclExecutive.getPendingApplications+'?executiveName='+this.loginsessionDetails?.firstName+this.loginsessionDetails?.lastName+'&pageNo=' + (pageNo-1) + '&pageSize=' + PageSize).subscribe({
       next: (dataList: any) => {
         this.tableList = dataList.data;
