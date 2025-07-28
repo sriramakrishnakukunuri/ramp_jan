@@ -17,15 +17,15 @@
         <div class="d-flex align-items-center">
           <ng-container *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]">
              <a class="navbar-brand me-2" href="#"  *ngIf="this.user?.agencyName=='ALEAP'">
-            <img src="../assets/img/aleapLogo.jpeg" alt="Aleap Logo" class="img-fluid" style="height: 56px; width: 89px;">
+            <img src="../RAMP/assets/img/aleapLogo.jpeg" alt="Aleap Logo" class="img-fluid" style="height: 56px; width: 89px;">
           </a>
           </ng-container>
          <ng-container *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR,Role.CALL_CENTER,Role.Admin]">
            <a class="navbar-brand me-2" href="#"   *ngIf="this.user?.agencyName!='ALEAP'">
-            <img src="../assets/img/Ramp final_logo.png" alt="Ramp Final Logo" class="img-fluid" style="height: 50px; width: 50px;">
+            <img src="../RAMP/assets/img/Ramp final_logo.png" alt="Ramp Final Logo" class="img-fluid" style="height: 50px; width: 50px;">
           </a>
           <a class="navbar-brand" href="#"   *ngIf="this.user?.agencyName!='ALEAP'">
-            <img src="../assets/img/logo.png" alt="Logo" class="img-fluid" style="height: 50px; width: 50px;">
+            <img src="../RAMP/assets/img/logo.png" alt="Logo" class="img-fluid" style="height: 50px; width: 50px;">
           </a>
          </ng-container>
          
@@ -313,7 +313,7 @@
 <!-- credits / footer -->
 <footer class="footer-custom fixed-bottom w-100">
   <div class="container text-end">
-    <img src="../assets/img/GT Logo.png" alt="GT Logo" class="footer-logo" />
+    <img src="../RAMP/assets/img/GT Logo.png" alt="GT Logo" class="footer-logo" />
   </div>
 </footer>
 <style>
