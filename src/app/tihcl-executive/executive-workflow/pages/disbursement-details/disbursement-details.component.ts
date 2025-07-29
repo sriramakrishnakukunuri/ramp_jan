@@ -368,6 +368,8 @@ deleteBankDetails(item: any, index: number): void {
     this._commonService.add(APIS.tihclExecutive.saveDisbursement,payload).subscribe({
              next: (response) => {
                 this.progressBarStatusUpdate.emit({"update":true})
+                const applicationData = JSON.parse(sessionStorage.getItem('ApplicationData') || '{}');
+                this.applicationData=applicationData
                 this.getExistingData(APIS.tihclExecutive.getDisbursementRid + (this.applicationData.registrationUsageId? this.applicationData?.registrationUsageId:this.applicationData?.registrationId))
               this.getSantionedData(APIS.tihclExecutive.getSanctionRid + (this.applicationData.registrationUsageId? this.applicationData?.registrationUsageId:this.applicationData?.registrationId))
               
@@ -399,7 +401,8 @@ deleteBankDetails(item: any, index: number): void {
     this._commonService.add(APIS.tihclExecutive.saveDisbursement,payload).subscribe({
              next: (response) => {
                 this.progressBarStatusUpdate.emit({"update":true})
-
+              const applicationData = JSON.parse(sessionStorage.getItem('ApplicationData') || '{}');
+              this.applicationData=applicationData
               this.getExistingData(APIS.tihclExecutive.getDisbursementRid + (this.applicationData.registrationUsageId? this.applicationData?.registrationUsageId:this.applicationData?.registrationId))
               this.getSantionedData(APIS.tihclExecutive.getSanctionRid + (this.applicationData.registrationUsageId? this.applicationData?.registrationUsageId:this.applicationData?.registrationId))
                 this.toastrService.success('Disbursment Details Completed Successfully','Disbursment Details');
