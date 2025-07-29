@@ -286,9 +286,9 @@
 
     <!-- <button type="button" (click)="onPrevious()" class="btn btn-secondary float-start">Previous</button> -->
     
-    <button type="button" class="btn btn-primary float-end " (click)='finalSave()' [ngClass]="{'isDisabled':(applicationData?.applicationStatus?applicationData?.applicationStatus=='DISBURSEMENT_COMPLETED' :applicationData?.status=='DISBURSEMENT_COMPLETED') || disbursementForm?.invalid || f['totalDisbursedAmount']?.value > f['totalSanctionedAmount']?.value }">Final Submisiion</button>
+    <button type="button" class="btn btn-primary float-end " (click)='finalSave()' [ngClass]="{'isDisabled':(applicationData?.applicationStatus?applicationData?.applicationStatus=='DISBURSEMENT_COMPLETED' :applicationData?.status=='DISBURSEMENT_COMPLETED') || disbursementForm.invalid || f['totalDisbursedAmount'].value > f['totalSanctionedAmount'].value }">Final Submisiion</button>
   <button type="submit" class="btn btn-primary float-end me-3"
-      [ngClass]="{'isDisabled':(applicationData?.applicationStatus?applicationData?.applicationStatus=='DISBURSEMENT_COMPLETED' :applicationData?.status=='DISBURSEMENT_COMPLETED') || disbursementForm?.invalid  || f['totalDisbursedAmount']?.value > f['totalSanctionedAmount']?.value}"
+      [ngClass]="{'isDisabled':(applicationData?.applicationStatus?applicationData?.applicationStatus=='DISBURSEMENT_COMPLETED' :applicationData?.status=='DISBURSEMENT_COMPLETED') || disbursementForm.invalid  || f['totalDisbursedAmount'].value > f['totalSanctionedAmount'].value}"
       *ngIf="freeze<=11">Save</button>
   </form>
 </fieldset>
