@@ -5,6 +5,9 @@
         <h6 class="mb-0">Disbursement Details</h6>
       </div>
       <div class="card-body">
+          <div *ngIf="(applicationData?.applicationStatus?applicationData?.applicationStatus=='DISBURSEMENT_COMPLETED' :applicationData?.status=='DISBURSEMENT_COMPLETED')" class="text-success small mt-2 mb-3">
+                     Disbursment Details Completed
+                   </div>
         <div class="row">
           <div class="col-12 col-sm-6 col-md-4 col-lg-3">
             <div class="form-floating mb-3">
@@ -282,22 +285,23 @@
     </div>
 
     <!-- <button type="button" (click)="onPrevious()" class="btn btn-secondary float-start">Previous</button> -->
-    <button type="submit" class="btn btn-primary float-end "
+    
+    <button type="button" class="btn btn-primary float-end " (click)='finalSave()' [ngClass]="{'isDisabled':(applicationData?.applicationStatus?applicationData?.applicationStatus=='DISBURSEMENT_COMPLETED' :applicationData?.status=='DISBURSEMENT_COMPLETED') }">Final Submisiion</button>
+  <button type="submit" class="btn btn-primary float-end me-3"
       [ngClass]="{'isDisabled':(applicationData?.applicationStatus?applicationData?.applicationStatus=='DISBURSEMENT_COMPLETED' :applicationData?.status=='DISBURSEMENT_COMPLETED') }"
-      *ngIf="freeze<=11">Submit</button>
-    <!-- <button type="button" class="btn btn-primary float-end me-3" (click)='finalSave()'>Final Submisiion</button> -->
+      *ngIf="freeze<=11">Save</button>
   </form>
 </fieldset>
 
 
 
 <!-- begin:: add disubursement modal -->
-<div class="modal fade" id="addDisbursement" tabindex="-1" aria-labelledby="addisbursementLabel" aria-hidden="true">
+<div class="modal fade" id="addDisbursement" #addDisbursement tabindex="-1" aria-labelledby="addisbursementLabel" >
   <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header py-2 bg-theme">
         <h6 class="modal-title text-white">Add Disbursement</h6>
-        <button type="button" class="btn-close text-white fs-4 p-0" data-bs-dismiss="modal" aria-label="Close"><span
+        <button type="button" class="btn-close text-white fs-4 p-0" data-bs-dismiss="modal" aria-label="Close" (click)="closemodel()"><span
             class="bi bi-x"></span></button>
       </div>
       <div class="modal-body">
@@ -339,8 +343,8 @@
         </form>
 
         <div class="text-end">
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" aria-label="Close"
-            (click)="addDisbursement()">Add</button>
+          <button type="button" class="btn btn-primary"  aria-label="Close"
+            (click)="saveDisbursement()">Add</button>
         </div>
       </div>
     </div>
@@ -349,12 +353,12 @@
 
 <!-- add banck details -->
 <!-- Add Bank Details Modal -->
-<div class="modal fade" id="addBankDetails" tabindex="-1" aria-labelledby="addBankDetailsLabel" aria-hidden="true">
+<div class="modal fade" id="addBankDetails" #addBankDetails tabindex="-1" aria-labelledby="addBankDetailsLabel">
   <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header py-2 bg-theme">
         <h6 class="modal-title text-white">Add Bank Details</h6>
-        <button type="button" class="btn-close text-white fs-4 p-0" data-bs-dismiss="modal" aria-label="Close">
+        <button type="button" class="btn-close text-white fs-4 p-0" data-bs-dismiss="modal" aria-label="Close" (click)="closemodel()">
           <span class="bi bi-x"></span>
         </button>
       </div>
@@ -404,8 +408,8 @@
           </div>
         </form>
         <div class="text-end">
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" aria-label="Close"
-            (click)="addBankDetails()">Add</button>
+          <button type="button" class="btn btn-primary" aria-label="Close"
+            (click)="saveBankDetailsForm()">Add</button>
         </div>
       </div>
     </div>

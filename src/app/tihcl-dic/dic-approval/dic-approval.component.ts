@@ -61,7 +61,7 @@ export class DicApprovalComponent implements OnInit {
    }
   getLevelOneData(pageNo:any,PageSize:any): any {
      this.tableList = '';
-     this._commonService.getDataByUrl(APIS.tihclDIC.getLevelDICData+'&pageNo=' + (pageNo-1) + '&pageSize=' + PageSize).subscribe({
+     this._commonService.getDataByUrl(APIS.tihclDIC.getLevelDICData+'&district='+this.loginsessionDetails?.district+'&pageNo=' + (pageNo-1) + '&pageSize=' + PageSize).subscribe({
        next: (dataList: any) => {
          this.tableList = dataList.data;
          this.totalItems=dataList?.totalElements

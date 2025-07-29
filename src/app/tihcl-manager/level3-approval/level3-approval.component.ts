@@ -71,8 +71,8 @@ export class Level3ApprovalComponent implements OnInit {
        this._commonService.getById(APIS.tihclExecutive.getSentiondataById,data?.registrationId).subscribe({
                next: (response) => {
                  console.log(response)
-                 if(Object.keys(response?.data).length){
-                   this.ExistingunitVisit=response?.data
+                 if(Object.keys(response).length){
+                   this.ExistingunitVisit=response
                  }        
                },
                error: (error) => {

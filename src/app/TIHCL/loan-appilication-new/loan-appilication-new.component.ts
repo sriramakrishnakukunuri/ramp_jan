@@ -65,7 +65,7 @@ StatusofApplication:any=''
        udyamRegNumber: ['', [Validators.required, this.udyamRegNumberValidator]],
       altContactNumber: ['', [Validators.pattern(/^[6789]\d{9}$/)]],
       state: ['', Validators.required],
-      industrialPark: ['', Validators.required],
+      industrialPark: ['',],
        isIndustrialParkExist: [false, Validators.required],
       district: ['', Validators.required],
       mandal: ['', Validators.required],
@@ -524,7 +524,7 @@ console.log(this.applicationForm.value);
       this.applicationForm.get('udyamRegNumber')?.setValidators([Validators.required, this.udyamRegNumberValidator]);
       this.applicationForm.get('altContactNumber')?.setValidators([Validators.pattern(/^[6789]\d{9}$/)]);
       this.applicationForm.get('state')?.setValidators([Validators.required]);
-      this.applicationForm.get('industrialPark')?.setValidators([Validators.required]);
+      this.applicationForm.get('industrialPark')?.setValidators(null);
       this.applicationForm.get('isIndustrialParkExist')?.setValidators([Validators.required]);
       this.applicationForm.get('district')?.setValidators([Validators.required]);
       this.applicationForm.get('mandal')?.setValidators([Validators.required]);
@@ -630,13 +630,22 @@ this.applicationForm.get('operatingDifficulties')?.updateValueAndValidity()
 
    checkValidate(value: string): void {
     if (value === 'yes') {
+       this.logout()
       const modal = bootstrap.Modal.getInstance(this.exampleModal.nativeElement);
       modal.hide();      
-      this.router.navigate(['/login']);
+     
     } else {
       const modal = bootstrap.Modal.getInstance(this.exampleModal.nativeElement);
       modal.hide();
     }
+  }
+  onGstExistChange(event: any): void {
+    if (event.target.checked) {
+      this.applicationForm.get('industrialPark')?.setValidators([Validators.required]);
+    } else {
+      this.applicationForm.get('industrialPark')?.clearValidators();
+    }
+    this.applicationForm.get('industrialPark')?.updateValueAndValidity();
   }
   ChangeAmount(amountRelease:any,total:any){
     if(amountRelease && total){

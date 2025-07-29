@@ -12,6 +12,7 @@
                                     <th class="text-start">S.No</th>
                                     <th>View</th>
                                     <th>Date Application</th>
+                                    <th>Application Number</th>
                                     <th>Executive Name</th>
                                     <th>Executive Feedback Date</th>
                                     <th>Company Name</th>
@@ -26,6 +27,7 @@
                                     <td class="text-start">{{ i + 1 }}</td>
                                     <td><a href="#" data-bs-toggle="modal" data-bs-target="#viewModal" (click)="ShowDataForApproval(item)"><span class="bi bi-eye"></span></a></td>
                                     <td>{{ item.dateOfSubmission }}</td>
+                                    <td>{{item?.applicationNo}}</td>
                                     <td>{{ item.executive }}</td>
                                     <!-- <td>{{ item.executiveFeedbackDate }}</td> -->
                                      <td>13-05-2025</td>

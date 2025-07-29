@@ -212,12 +212,12 @@
                               <label class="form-label fs-md fw-600 mb-1">Is Industrial Park Exist?</label>
                               <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" id="gstExistYes"
-                                  formControlName="isIndustrialParkExist" [value]="true">
+                                  formControlName="isIndustrialParkExist" [value]="true" (change)="onGstExistChange('yes')">
                                 <label class="form-check-label" for="gstExistYes">Yes</label>
                               </div>
                               <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" id="gstExistNo"
-                                  formControlName="isIndustrialParkExist" [value]="false">
+                                  formControlName="isIndustrialParkExist" [value]="false" (change)="onGstExistChange('no')">
                                 <label class="form-check-label" for="gstExistNo">No</label>
                               </div>
                               <div

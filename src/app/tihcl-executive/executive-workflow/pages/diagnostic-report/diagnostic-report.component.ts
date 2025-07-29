@@ -68,7 +68,19 @@ applicationData:any
     this.initializebalanceSheetsForm()
     this.operationtableformsInit()
   }
-
+getDtataByUrl(url: string) {
+    this._commonService.getDataByUrl(url).subscribe({
+      next: (dataList: any) => {
+        //  this.assessmentForm.patchValue(dataList.data);
+        
+         
+        // Handle the dataList as needed
+      },
+      error: (error: any) => {
+        
+      }
+    });
+  }
   initializeForm(): void {
     this.diagnosticForm = this.fb.group({
       basicDetails: this.fb.group({

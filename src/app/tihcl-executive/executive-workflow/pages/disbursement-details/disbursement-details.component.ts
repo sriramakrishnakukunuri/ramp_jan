@@ -1,9 +1,10 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CommonServiceService } from '@app/_services/common-service.service';
 import { APIS } from '@app/constants/constants';
 import { ToastrService } from 'ngx-toastr';
-
+declare var bootstrap: any;
+declare var $: any;
 @Component({
   selector: 'app-disbursement-details',
   templateUrl: './disbursement-details.component.html',
@@ -18,6 +19,8 @@ export class DisbursementDetailsComponent implements OnInit {
   isEditMode: boolean = false;
   isEditModeVisit: boolean = false;
   currentEditIndex: number = -1;
+  @ViewChild('addBankDetails') addBankDetails!: ElementRef;
+  @ViewChild('addDisbursement') addDisbursement!: ElementRef;
   @Input() freeze:any
   applicationData:any
    @Output() progressBarStatusUpdate:any = new EventEmitter();
@@ -25,8 +28,9 @@ export class DisbursementDetailsComponent implements OnInit {
           private _commonService: CommonServiceService,) {
              const applicationData = JSON.parse(sessionStorage.getItem('ApplicationData') || '{}');
              this.applicationData=applicationData
+              this.getExistingData(APIS.tihclExecutive.getDisbursementRid + (applicationData.registrationUsageId? applicationData?.registrationUsageId:applicationData?.registrationId))
              this.getSantionedData(APIS.tihclExecutive.getSanctionRid + (applicationData.registrationUsageId? applicationData?.registrationUsageId:applicationData?.registrationId))
-             this.getExistingData(APIS.tihclExecutive.getDisbursementRid + (applicationData.registrationUsageId? applicationData?.registrationUsageId:applicationData?.registrationId))
+            
     }
 
   ngOnInit(): void {
@@ -55,7 +59,7 @@ export class DisbursementDetailsComponent implements OnInit {
              // Patch disbursement form fields if data exists
              this.disbursementForm.patchValue({
               id: dataList?.id || null,
-             totalSanctionedAmount: dataList?.totalSanctionedAmount || 0,
+            //  totalSanctionedAmount: dataList?.totalSanctionedAmount || 0,
              totalDisbursedAmount: dataList?.totalDisbursedAmount || 0,
              dateDisbursement: dataList?.dateDisbursement || null,
              collectionDate: dataList?.collectionDate || null,
@@ -180,7 +184,7 @@ export class DisbursementDetailsComponent implements OnInit {
       // Here you would typically upload the file to your server
     }
   }
-  addDisbursement(): void {
+  saveDisbursement(): void {
     if (this.addDisbursementForm.invalid) {
       this.addDisbursementForm.markAllAsTouched();
       return;
@@ -209,6 +213,7 @@ export class DisbursementDetailsComponent implements OnInit {
 
     // Reset form and update total disbursed amount
     this.addDisbursementForm.reset();
+    this.closemodel()
     this.updateTotalDisbursedAmount();
   }
 
@@ -223,14 +228,10 @@ export class DisbursementDetailsComponent implements OnInit {
       amount: item.amount,
       details: item.details
     });
-    
+     const modal = new bootstrap.Modal(this.addDisbursement.nativeElement);
+     modal.show();
     // Open modal (assuming you're using Bootstrap modal)
-    const modal = document.getElementById('addDisbursement');
-    if (modal) {
-      modal.classList.add('show');
-      modal.style.display = 'block';
-      document.body.classList.add('modal-open');
-    }
+    
   }
 
   deleteCreditDetail(item:any,index: number): void {
@@ -261,7 +262,7 @@ export class DisbursementDetailsComponent implements OnInit {
   }
 
 
-   addBankDetails(): void {
+   saveBankDetailsForm(): void {
     if (this.addBankDetailsForm.invalid) {
       this.addBankDetailsForm.markAllAsTouched();
       return;
@@ -293,7 +294,7 @@ export class DisbursementDetailsComponent implements OnInit {
       // You can push to a separate array or attach to bankdetails as needed
        this.bankdetails.push(newBankDetails);
     }
-
+    this.closemodel()
     // Reset form
     this.addBankDetailsForm.reset();
     
@@ -311,14 +312,10 @@ export class DisbursementDetailsComponent implements OnInit {
       acountName: item.acountName,
       acountNumber: item.acountNumber
     });
-
+      const modal = new bootstrap.Modal(this.addBankDetails.nativeElement);
+      modal.show();
     // Open modal (assuming you're using Bootstrap modal)
-    const modal = document.getElementById('addBankDetails');
-    if (modal) {
-      modal.classList.add('show');
-      modal.style.display = 'block';
-      document.body.classList.add('modal-open');
-    }
+  
   }
 
 
@@ -366,16 +363,21 @@ deleteBankDetails(item: any, index: number): void {
         "applicationNo": this.applicationData?.applicationNo,
          disbursements: this.disbursements?this.disbursements:[],
          disbursementBankDetails: this.bankdetails?this.bankdetails:[],
-        "applicationStatus": "DISBURSEMENT_COMPLETED"
+        "applicationStatus": "DISBURSEMENT_PARTIAL"
       };
     this._commonService.add(APIS.tihclExecutive.saveDisbursement,payload).subscribe({
              next: (response) => {
                 this.progressBarStatusUpdate.emit({"update":true})
+                this.getExistingData(APIS.tihclExecutive.getDisbursementRid + (this.applicationData.registrationUsageId? this.applicationData?.registrationUsageId:this.applicationData?.registrationId))
+              this.getSantionedData(APIS.tihclExecutive.getSanctionRid + (this.applicationData.registrationUsageId? this.applicationData?.registrationUsageId:this.applicationData?.registrationId))
+              
+                 this.toastrService.success('Disbursment Details Saved Successfully','Disbursment Details');
              },
              error: (error) => {
                console.error('Error submitting form:', error);
              }
       });
+      
 
   }
   finalSave(){
@@ -397,11 +399,31 @@ deleteBankDetails(item: any, index: number): void {
     this._commonService.add(APIS.tihclExecutive.saveDisbursement,payload).subscribe({
              next: (response) => {
                 this.progressBarStatusUpdate.emit({"update":true})
+
+              this.getExistingData(APIS.tihclExecutive.getDisbursementRid + (this.applicationData.registrationUsageId? this.applicationData?.registrationUsageId:this.applicationData?.registrationId))
+              this.getSantionedData(APIS.tihclExecutive.getSanctionRid + (this.applicationData.registrationUsageId? this.applicationData?.registrationUsageId:this.applicationData?.registrationId))
+                this.toastrService.success('Disbursment Details Completed Successfully','Disbursment Details');
              },
              error: (error) => {
                console.error('Error submitting form:', error);
              }
       });
+      
+  }
+  closemodel(){
+    // Close both modals if open
+    if (this.addDisbursement && this.addDisbursement.nativeElement) {
+      const modal = bootstrap.Modal.getInstance(this.addDisbursement.nativeElement) || new bootstrap.Modal(this.addDisbursement.nativeElement);
+      modal.hide();
+    }
+    if (this.addBankDetails && this.addBankDetails.nativeElement) {
+      const modal = bootstrap.Modal.getInstance(this.addBankDetails.nativeElement) || new bootstrap.Modal(this.addBankDetails.nativeElement);
+      modal.hide();
+    }
+     const modal1 = new bootstrap.Modal(this.addDisbursement.nativeElement);
+        modal1.hide(); 
+    const modal = new bootstrap.Modal(this.addBankDetails.nativeElement);
+        modal.hide(); 
   }
   onPrevious(): void {
     // Navigation logic for previous step
