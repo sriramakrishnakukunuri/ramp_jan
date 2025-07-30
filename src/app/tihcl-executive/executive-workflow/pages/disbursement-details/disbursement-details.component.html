@@ -74,22 +74,22 @@
           </div>
           <div class="col-12 col-sm-6 col-md-4 col-lg-3">
             <div class="form-floating mb-3">
-              <input type="text" class="form-control" id="acountName" formControlName="acountName" placeholder="">
-              <label for="acountName">Account Name</label>
-              <div *ngIf="f['acountName']?.invalid && (f['acountName']?.dirty || f['acountName']?.touched)"
+              <input type="text" class="form-control" id="accountName" formControlName="accountName" placeholder="">
+              <label for="accountName">Account Name</label>
+              <div *ngIf="f['accountName']?.invalid && (f['accountName']?.dirty || f['accountName']?.touched)"
                 class="text-danger">
-                <small *ngIf="f['acountName']?.errors?.required">Account Name is required</small>
+                <small *ngIf="f['accountName']?.errors?.required">Account Name is required</small>
               </div>
             </div>
           </div>
           <div class="col-12 col-sm-6 col-md-4 col-lg-3">
             <div class="form-floating mb-3">
-              <input type="number" class="form-control" id="acountNumber" formControlName="acountNumber" placeholder="">
-              <label for="acountNumber">Account Number</label>
-              <div *ngIf="f['acountNumber']?.invalid && (f['acountNumber']?.dirty || f['acountNumber']?.touched)"
+              <input type="number" class="form-control" id="accountNumber" formControlName="accountNumber" placeholder="">
+              <label for="accountNumber">Account Number</label>
+              <div *ngIf="f['accountNumber']?.invalid && (f['accountNumber']?.dirty || f['accountNumber']?.touched)"
                 class="text-danger">
-                <small *ngIf="f['acountNumber']?.errors?.required">Account Number is required</small>
-                <small *ngIf="f['acountNumber']?.errors?.pattern">Please enter a valid account number</small>
+                <small *ngIf="f['accountNumber']?.errors?.required">Account Number is required</small>
+                <small *ngIf="f['accountNumber']?.errors?.pattern">Please enter a valid account number</small>
               </div>
             </div>
           </div> -->
@@ -234,8 +234,8 @@
                   </td>
                   <td>{{ item.bankName }}</td>
                   <td>{{ item.ifscCode }}</td>
-                  <td>{{ item.acountName }}</td>
-                  <td>{{ item.acountNumber }}</td>
+                  <td>{{ item.accountName }}</td>
+                  <td>{{ item.accountNumber }}</td>
                 </tr>
               </tbody>
             </table>
@@ -388,20 +388,20 @@
             </div>
             <div class="col-12 col-sm-6">
               <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="acountName" formControlName="acountName" placeholder="">
-                <label for="acountName">Account Name</label>
-                <div *ngIf="abf['acountName']?.invalid && (abf['acountName']?.dirty || abf['acountName']?.touched)" class="text-danger">
+                <input type="text" class="form-control" id="accountName" formControlName="accountName" placeholder="">
+                <label for="accountName">Account Name</label>
+                <div *ngIf="abf['accountName']?.invalid && (abf['accountName']?.dirty || abf['accountName']?.touched)" class="text-danger">
                   <small>Account Name is required</small>
                 </div>
               </div>
             </div>
             <div class="col-12 col-sm-6">
               <div class="form-floating mb-3">
-                <input type="number" class="form-control" id="acountNumber" formControlName="acountNumber" placeholder="">
-                <label for="acountNumber">Account Number</label>
-                <div *ngIf="abf['acountNumber']?.invalid && (abf['acountNumber']?.dirty || abf['acountNumber']?.touched)" class="text-danger">
-                  <small *ngIf="abf['acountNumber']?.errors?.required">Account Number is required</small>
-                  <small *ngIf="abf['acountNumber']?.errors?.pattern">Please enter a valid account number</small>
+                <input type="number" class="form-control" id="accountNumber" formControlName="accountNumber" placeholder="">
+                <label for="accountNumber">Account Number</label>
+                <div *ngIf="abf['accountNumber']?.invalid && (abf['accountNumber']?.dirty || abf['accountNumber']?.touched)" class="text-danger">
+                  <small *ngIf="abf['accountNumber']?.errors?.required">Account Number is required</small>
+                  <small *ngIf="abf['accountNumber']?.errors?.pattern">Please enter a valid account number</small>
                 </div>
               </div>
             </div>
