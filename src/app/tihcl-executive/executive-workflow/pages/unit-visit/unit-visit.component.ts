@@ -244,6 +244,7 @@ createForm(): void {
       });
 
     }
+    
   addVisitDetail(visit?: any): void {
     const visitGroup = this.fb.group({
       visitedBy: [visit ? visit.visitedBy : '', Validators.required],
@@ -308,6 +309,13 @@ createForm(): void {
       console.log('Form is invalid');
     }
   }
+  OnchangeValueTotal(){
+    const unSkilled = this.unitVisitForm.get('unSkilled')?.value || 0;
+    const skilled = this.unitVisitForm.get('skilled')?.value || 0;
+     const total = unSkilled + skilled 
+    this.unitVisitForm.patchValue({ total: total });
+
+    }
   saveExistingData(){
     console.log(this.ExistingunitVisit)
      if(this.unitVisitForm.valid && this.unitVisitForm.value?.machineryDetailsRequest?.length && Object.keys( this.ExistingunitVisit).length && this.ExistingunitVisit?.id){

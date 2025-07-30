@@ -122,8 +122,8 @@ export class DisbursementDetailsComponent implements OnInit {
       id:[null],
         bankName: ['', Validators.required],
         ifscCode: ['', [Validators.required, Validators.pattern(/^[A-Z]{4}0[A-Z0-9]{6}$/)]],
-      acountName: ['', Validators.required],
-      acountNumber: ['', [Validators.required, Validators.pattern(/^\d{9,18}$/)]],
+      accountName: ['', Validators.required],
+      accountNumber: ['', [Validators.required, Validators.pattern(/^\d{9,18}$/)]],
     });
   }
 
@@ -276,8 +276,8 @@ export class DisbursementDetailsComponent implements OnInit {
           id: null,
           bankName: this.addBankDetailsForm.value.bankName,
           ifscCode: this.addBankDetailsForm.value.ifscCode,
-          acountName: this.addBankDetailsForm.value.acountName,
-          acountNumber: this.addBankDetailsForm.value.acountNumber
+          accountName: this.addBankDetailsForm.value.accountName,
+          accountNumber: this.addBankDetailsForm.value.accountNumber
         }
       };
       this.isEditModeVisit = false;
@@ -288,8 +288,8 @@ export class DisbursementDetailsComponent implements OnInit {
         id: null,
         bankName: this.addBankDetailsForm.value.bankName,
         ifscCode: this.addBankDetailsForm.value.ifscCode,
-        acountName: this.addBankDetailsForm.value.acountName,
-        acountNumber: this.addBankDetailsForm.value.acountNumber
+        accountName: this.addBankDetailsForm.value.accountName,
+        accountNumber: this.addBankDetailsForm.value.accountNumber
       };
       // You can push to a separate array or attach to bankdetails as needed
        this.bankdetails.push(newBankDetails);
@@ -309,8 +309,8 @@ export class DisbursementDetailsComponent implements OnInit {
       id: item?.id ?? null,
       bankName: item.bankName,
       ifscCode: item.ifscCode,
-      acountName: item.acountName,
-      acountNumber: item.acountNumber
+      accountName: item.accountName,
+      accountNumber: item.accountNumber
     });
       const modal = new bootstrap.Modal(this.addBankDetails.nativeElement);
       modal.show();
@@ -396,6 +396,7 @@ deleteBankDetails(item: any, index: number): void {
         ...this.disbursementForm.value,
         "applicationNo": this.applicationData?.applicationNo,
          disbursements: this.disbursements?this.disbursements:[],
+          disbursementBankDetails: this.bankdetails?this.bankdetails:[],
         "applicationStatus": "DISBURSEMENT_COMPLETED"
       };
     this._commonService.add(APIS.tihclExecutive.saveDisbursement,payload).subscribe({

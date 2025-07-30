@@ -400,7 +400,7 @@
             <!-- Office Staff -->
             <div class="col-12 col-sm-6 col-md-4 col-lg-4">
               <div class="form-floating mb-3">
-                <input type="number" class="form-control" id="skilled" name="skilled" placeholder=""
+                <input type="number" class="form-control" id="skilled" name="skilled" placeholder="" (input)="OnchangeValueTotal()"
                   formControlName="skilled" min="0">
                 <label for="skilled">Skilled</label>
                 <div
@@ -417,7 +417,7 @@
             <!-- Factory Workers -->
             <div class="col-12 col-sm-6 col-md-4 col-lg-4">
               <div class="form-floating mb-3">
-                <input type="number" class="form-control" id="unSkilled" name="unSkilled" placeholder=""
+                <input type="number" class="form-control" id="unSkilled" name="unSkilled" placeholder="" (input)="OnchangeValueTotal()"
                   formControlName="unSkilled" min="0">
                 <label for="unSkilled">Unskilled</label>
                 <div
