@@ -241,12 +241,12 @@
                                 <tbody>
                                     <tr *ngFor="let item of ExistingunitVisit?.machineryDetailsRequest; let i = index">
                                         <td>{{i + 1}}</td>
-                                        <td>{{item?.nameOfMachine || 'N/A'}}</td>
+                                        <td>{{item?.typesOfMachine || 'N/A'}}</td>
                                         <td>{{item?.purpose || 'N/A'}}</td>
                                         <td>{{item?.noOfMachines || 'N/A'}}</td>
                                         <td>{{item?.costOfMachinePurchased || 'N/A'}}</td>
                                         <td>{{item?.currentCondition || 'N/A'}}</td>
-                                        <td>{{item?.currentValueOfMachinery || 'N/A'}}</td>
+                                        <td>{{item?.valueOfMachinery || 'N/A'}}</td>
                                     </tr>
                                     <tr *ngIf="!ExistingunitVisit?.machineryDetailsRequest?.length">
                                         <td colspan="7" class="text-center">No machinery details available</td>

@@ -63,7 +63,7 @@ export class PrimaryNocComponent implements OnInit {
 
   }
     updateRegistration(data?:any){
-      this._commonService.updatedata(APIS.tihclDIC.updateRgistrationwithprimaryLenderNoc+this.applicationData?.applicationNo+'?primaryLenderNocFilePath='+(UploadPath+data?.filePath)+'&appStatus=PRIMARY_LENDER_NOC',{}).subscribe({
+      this._commonService.updatedata(APIS.tihclDIC.updateRgistrationwithprimaryLenderNoc+this.applicationData?.applicationNo+'?primaryLenderNocFilePath='+(data?.filePath)+'&appStatus=PRIMARY_LENDER_NOC',{}).subscribe({
          next: (response) => {
             this.progressBarStatusUpdate.emit({"update":true})
          },

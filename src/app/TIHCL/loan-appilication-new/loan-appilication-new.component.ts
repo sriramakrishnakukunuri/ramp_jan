@@ -297,21 +297,21 @@ onItemSelected(itemName: any) {
    createCreditDetail(item?: any): void {
     this.creditDetailsForm=this.fb.group({
       bankName: ['', Validators.required],
-      natureOfLoan: ['', Validators.required, Validators.pattern(/^(?=.*[a-zA-Z])[a-zA-Z0-9 .]+$/)],
+      natureOfLoan: ['', Validators.required,],
       limitSanctioned: ['', Validators.required],
       outstandingAmount: [false],
       overdueAmount: ['', ],
       overdueDate: [, Validators.required]
     });
   }
- submitCreditDetails(){   
+ submitCreditDetails(){  
+  const modal = new bootstrap.Modal(this.addDelivery.nativeElement);
+      modal.hide();  
     const deliveryDetailsArray = this.applicationForm.get('creditFacilityDetails') as FormArray;
     // Push the new form group
     deliveryDetailsArray.push(this.fb.group(this.creditDetailsForm.value));
-
     this.creditDetailsForm.reset();
-      const modal = new bootstrap.Modal(this.addDelivery.nativeElement);
-      modal.hide(); 
+      
   }
   editCreditDetails(item: any) {
     this.creditDetailsForm = this.fb.group({

@@ -233,11 +233,12 @@ loginsessionDetails:any
           this.getDtataByUrl(APIS.tihclExecutive.registerData + (applicationData.registrationUsageId?applicationData.registrationUsageId:applicationData.registrationId));
    
   }
-
+  getApplicationData:any
   getDtataByUrl(url: string) {
     this._commonService.getDataByUrl(url).subscribe({
       next: (dataList: any) => {
          this.assessmentForm.patchValue(dataList.data);
+         this.getApplicationData=dataList.data
          console.log(dataList?.data)
 
           const deliveryDetailsArray = this.assessmentForm.get('creditFacilityDetails') as FormArray;
@@ -528,7 +529,7 @@ loginsessionDetails:any
         ...this.assessmentForm.value,
         riskCategoryScore:totalScore,
         riskCategories:riskAssessment,
-        applicationStatus: "PRELIMINARY_ASSESSMENT",
+        applicationStatus: Object.keys(this.getApplicationData).length ?this.getApplicationData?.applicationStatus:"PRELIMINARY_ASSESSMENT",
         executive:this.loginsessionDetails?.firstName+this.loginsessionDetails?.lastName
         
 

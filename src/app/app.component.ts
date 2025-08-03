@@ -31,8 +31,8 @@ export class AppComponent {
                 console.error('Error fetching notifications:', error);
             }
         });
-        
     }
+    
     get isAdmin() {
         return this.user?.userRole === Role.Admin;
     }

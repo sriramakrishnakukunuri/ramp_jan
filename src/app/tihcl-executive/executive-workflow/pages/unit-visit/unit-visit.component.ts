@@ -188,6 +188,7 @@ createForm(): void {
             });
     }
     patchValueBydata(data:any){
+      this.GetMandalByDistrict(data?.district);
        this.unitVisitForm.patchValue({
       // visitedBy: data?.visitedBy,
       dateOfVisit: data?.dateOfVisit,

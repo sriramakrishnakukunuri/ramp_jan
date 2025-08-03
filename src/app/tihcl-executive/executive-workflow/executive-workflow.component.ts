@@ -14,6 +14,7 @@ export class ExecutiveWorkflowComponent implements OnInit {
  constructor(private toastrService: ToastrService,
       private _commonService: CommonServiceService,
       private router: Router,) { 
+        this.getAplicationData()
          
       }
 statusList: any = [
@@ -29,6 +30,24 @@ currentStep:any = 1;
   // ngOnChanges() {
   //   this.getAplicationData()
   // }
+  apllicationDataByGet:any={}
+  getAplicationData(){
+    console.log('getAplicationData called');
+    const applicationData = JSON.parse(sessionStorage.getItem('ApplicationData') || '{}');
+      this._commonService.getDataByUrl(APIS.tihclExecutive.registerData + (applicationData.registrationUsageId? applicationData?.registrationUsageId:applicationData?.registrationId)).subscribe({
+      next: (dataList: any) => {
+
+        this.apllicationDataByGet= dataList?.data;
+        console.log('Application Data:', this.apllicationDataByGet);
+       
+         
+        // Handle the dataList as needed
+      },
+      error: (error: any) => {
+        // this.toastrService.error(error?.error?.message);
+      }
+    });
+  }
   apllictaionDataGlobal:any
   UserDetails:any
   freezeValue:any=0
@@ -36,7 +55,8 @@ currentStep:any = 1;
     this.UserDetails = JSON.parse(sessionStorage.getItem('user') || '{}');
      const applicationData = JSON.parse(sessionStorage.getItem('ApplicationData') || '{}');
      this.apllictaionDataGlobal=applicationData
-     console.log('Application Data:', applicationData);
+     
+     console.log('Application Data:', applicationData,  this.apllicationDataByGet);
      if(!applicationData || Object.keys(applicationData).length === 0) {
 
      }
@@ -134,26 +154,13 @@ currentStep:any = 1;
      this.freezeValue=this._commonService.getCurrentStep();
     console.log(this.freezeValue)
   }
-   apllicationDataByGet:any={}
-  getAplicationData(){
-    const applicationData = JSON.parse(sessionStorage.getItem('ApplicationData') || '{}');
-      this._commonService.getDataByUrl(APIS.tihclExecutive.registerData + applicationData?.registrationUsageId?applicationData?.registrationUsageId:applicationData?.registrationId).subscribe({
-      next: (dataList: any) => {
-        this.apllicationDataByGet= dataList?.data;
-        console.log('Application Data:', this.apllicationDataByGet);
-       
-         
-        // Handle the dataList as needed
-      },
-      error: (error: any) => {
-        // this.toastrService.error(error?.error?.message);
-      }
-    });
-  }
+   
  
   getDtataByUrl(url: string) {
     this._commonService.getDataByUrl(url).subscribe({
       next: (dataList: any) => {
+        this.apllicationDataByGet= dataList?.data;
+        console.log('Application Data143:', this.apllicationDataByGet,dataList);
         sessionStorage.setItem('ApplicationData', JSON.stringify(dataList?.data));
         console.log(dataList?.data,dataList?.data.applicationStatus,dataList?.data.applicationStatus === 'PRELIMINARY_ASSESSMENT')
         if(dataList?.data.applicationStatus === 'PRELIMINARY_ASSESSMENT' || dataList?.data.status === 'PRELIMINARY_ASSESSMENT'){

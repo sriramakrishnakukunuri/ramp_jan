@@ -121,6 +121,7 @@ getDtataByUrl(url: string) {
       balanceSheets: this.fb.array([]),
       observations: [''],
       approvalStatus: [''],
+      urlForDiagnosticFile:['']
       
     });
   }
@@ -301,7 +302,8 @@ getDtataByUrl(url: string) {
     // Status Update
     this.diagnosticForm.patchValue({
       observations: data.observations,
-      approvalStatus: data.approvalStatus
+      approvalStatus: data.approvalStatus,
+      urlForDiagnosticFile: data.urlForDiagnosticFile || null
     });
   }
   BalnceShetData:any=[]
@@ -498,7 +500,7 @@ savePartnership(): void {
     //   (error:any)=>{
 
     // })
-    this.shareholdersNewDto.removeAt(index);
+    this.partnershipDto.removeAt(index);
   }
 
   saveBasicDetails(): void {
@@ -686,7 +688,7 @@ savePartnership(): void {
       id:[''],
       toBeReceivedFrom: ['', Validators.required],
       // receivableDate: ['', Validators.required],
-      amount: ['', [Validators.required, Validators.min(0)]]
+      receivableAmount: ['', [Validators.required, Validators.min(0)]]
     });
   }
 
@@ -709,7 +711,7 @@ savePartnership(): void {
         id: receivable.get('id')?.value,
         toBeReceivedFrom: receivable.get('toBeReceivedFrom')?.value,
         // receivableDate: receivable.get('receivableDate')?.value,
-        amount: receivable.get('amount')?.value
+        receivableAmount: receivable.get('receivableAmount')?.value
       });
     } else {
       this.receivableForm.reset();
@@ -801,7 +803,7 @@ savePartnership(): void {
 
   getTotalReceivables(): number {
     return this.receivables.controls.reduce((total, receivable) => {
-      const amount = parseFloat(receivable.get('amount')?.value) || 0;
+      const amount = parseFloat(receivable.get('receivableAmount')?.value) || 0;
       return total + amount;
     }, 0);
   }
@@ -963,7 +965,7 @@ orderBookPositionsModal = false;
     this.currentOrderBookIndex = index;
     const position = this.orderBookPositions.at(index);
     this.orderBookForm.patchValue(position.value);
-   this.unsecuredLoansModal=true
+   this.orderBookPositionsModal=true
   }
 
   saveOrderBookPosition() {
@@ -1143,7 +1145,28 @@ saveStressReason(): void {
       this.balanceSheetsForm.get('currentRatio')?.patchValue((currentAssets / currentLiabilities).toFixed(2), { emitEvent: false });
     }
   }
-
+filePath:any
+  onFileSelected(event: any): void {
+    const file: File = event.target.files[0];
+    if (file) {
+      // this.rampChecklistForm.get('creditApprasialPath')?.setValue(file.name);
+  
+            let formData =new FormData()
+            formData.set("file",event.target.files[0]);
+            formData.set("directory",'/diagnosticReport/'+this.applicationData?.applicationNo);
+            console.log(formData)
+           this._commonService.add(APIS.tihcl_uploads.globalUpload,formData).subscribe({
+             next: (response) => {
+                 this.filePath=response?.filePath
+                 this.diagnosticForm.get('urlForDiagnosticFile')?.setValue(this.filePath);
+             },
+             error: (error) => {
+               console.error('Error submitting form:', error);
+             }
+           });
+      // Here you would typically upload the file to your server
+    }
+  }
   onSubmit(): void {
     console.log(this.balanceSheets.value,this.balanceSheetsForm.value)
 
@@ -1193,7 +1216,7 @@ saveStatusUpdate(): void {
     if (this.basicDetails.valid) {
       // Save logic here
       let payload:any={observations:this.diagnosticForm.value?.observations,approvalStatus:this.diagnosticForm.value?.approvalStatus,"currentScreenStatus": "STATUS_UPDATE",
-        "applicationNo": this.applicationData.applicationNo, id:this.getDataOfDiagnostic?.id,
+        "applicationNo": this.applicationData.applicationNo, id:this.getDataOfDiagnostic?.id,urlForDiagnosticFile:this.diagnosticForm.get('urlForDiagnosticFile')?.value || null,
         "applicationStatus": "UNIT_VISIT"}
 
       this._commonService.add(APIS.tihclExecutive.saveDiagnostic,payload).subscribe(
@@ -1246,7 +1269,7 @@ saveStatusUpdate(): void {
       id: [data?.id || 0],
       toBeReceivedFrom: [data?.toBeReceivedFrom || '', Validators.required],
       // receivableDate: [data?.receivableDate || '', Validators.required],
-      amount: [data?.amount || 0, [Validators.required, Validators.min(0)]]
+      receivableAmount: [data?.receivableAmount || 0, [Validators.required, Validators.min(0)]]
     });
 
     this.receivables.push(receivableGroup);

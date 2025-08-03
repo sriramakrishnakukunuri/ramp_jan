@@ -215,7 +215,7 @@
                   <th>S.No</th>
                   <th>Actions</th>
                   <th>Bank/Fis Name</th>
-                  <th>Nature of Loan </th>
+                  <th>Nature of Loan(Term loans, CC/OD etc.) </th>
                   <th>Limit sanctioned (In Rs)</th>
                   <th>Outstanding Amount (In Rs)</th>
                   <th>Overdue Amount (In Rs)</th>
@@ -524,13 +524,15 @@
             </div>
             <div class="col-12">
               <div class="form-floating mb-3">
-                <select class="form-select" id="natureOfLoan" formControlName="natureOfLoan">
+                  <input type="text" class="form-control" id="natureOfLoan" placeholder="Nature of Loan"
+                  formControlName="natureOfLoan">
+                <!-- <select class="form-select" id="natureOfLoan" formControlName="natureOfLoan">
                   <option value="" disabled selected>Select Nature of Loan</option>
                   <option value="Short-term Loans">Short-term Loans</option>
                   <option value="Medium-term Loans">Medium-term Loans</option>
                   <option value="Long-term Loans">Long-term Loans</option>
-                </select>
-                <label for="natureOfLoan">Nature of Loan</label>
+                </select> -->
+                <label for="natureOfLoan">Nature of Loan(Term loans, CC/OD etc.)</label>
                 <div *ngIf="creditDetailsForm.get('natureOfLoan')?.invalid && 
                                            (creditDetailsForm.get('natureOfLoan')?.dirty || 
                                            creditDetailsForm.get('natureOfLoan')?.touched)" class="text-danger">
