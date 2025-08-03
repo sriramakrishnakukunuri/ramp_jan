@@ -365,6 +365,7 @@ loginsessionDetails:any
       isGSTNumberExist: [false],
       gstNumber: ['',this.gstValidator()],
       sourceOfApplication: ['', Validators.required],
+      sector: ['', Validators.required],
       typeOfProduct: ['', [Validators.required, Validators.pattern(/^[a-zA-Z .]+$/)]],
       productUsage: ['', [Validators.required, Validators.pattern(/^[a-zA-Z .]+$/)]],
       

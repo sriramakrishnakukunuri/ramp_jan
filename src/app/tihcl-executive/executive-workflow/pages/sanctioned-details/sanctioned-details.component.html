@@ -73,7 +73,28 @@
               </div>
             </div>
           </div>
-
+             <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4">
+          <div class="mb-3">
+            <div class="form-floating mb-3">
+              <select class="form-select" id="productType" formControlName="productType" >
+                <option value="" disabled selected>Select Option</option>
+                <option value="Bridge Finance">Bridge Finance</option>
+                <option value="Margin Loan">Margin Loan</option>
+                <option value="CAF">CAF</option>
+                <option value="GPWCTL">GPWCTL</option>
+                <option value="WE Loan">WE Loan</option>
+                <option value="Swaskathi">Swaskathi</option>
+                <option value="NARI">NARI</option>
+                <option value="NSE">NSE</option>
+              </select>
+              <label for="product">Product Type<span class="text-danger">*</span></label>
+              <div *ngIf="sanctionForm.get('productType')?.invalid && sanctionForm.get('productType')?.touched && !sanctionForm.get('productType')?.hasError('pattern')" 
+                class="text-danger small">
+                Product Type is required
+              </div>
+            </div>
+          </div>
+        </div>
           <!-- Moratorium Period -->
           <div class="col-12 col-sm-6 col-md-4 col-lg-3">
             <div class="form-floating mb-3">
@@ -124,7 +145,19 @@
             </div>
           </div>
 
-          <!-- Security Description (conditional) -->
+         
+        </div>
+      </div>
+    </div>
+
+      <!-- Sanction Letter Upload -->
+    <div class="card border rounded-2 shadow-none mb-3">
+      <div class="card-header bg-theme text-white">
+        <h6 class="mb-0">Security Details</h6>
+      </div>
+      <div class="card-body">
+        <div class="row">
+           <!-- Security Description (conditional) -->
           <div class="col-12 col-sm-6 col-md-4 col-lg-3" *ngIf="showSecurityFields">
             <div class="form-floating mb-3">
               <input type="text" class="form-control" id="commentsInput" 
@@ -145,15 +178,42 @@
               </div>
             </div>
           </div>
-
+           <!-- Security Type -->
+          <!-- <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="securityType" 
+                     formControlName="securityType">
+              <label for="securityType">Security Type</label>
+            </div>
+          </div> -->
+             <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4" *ngIf="showSecurityFields">
+          <div class="mb-3">
+            <div class="form-floating mb-3">
+              <select class="form-select" id="securityType" formControlName="securityType" >
+                <option value="" disabled selected>Select Option</option>
+                <option value="Lien on the Pending Subsidies/Incentives sanctioned from the TG Govt">Lien on the Pending Subsidies/Incentives sanctioned from the TG Govt</option>
+                <option value="Residential Property">Residential Property</option>
+                <option value="Commercial Property">Commercial Property</option>
+                <option value="No Security">No Security</option>
+                <option value="Paripassu">Paripassu</option>
+                <option value="Others">Others</option>
+              </select>
+              <label for="product">Security Type<span class="text-danger">*</span></label>
+              <div *ngIf="sanctionForm.get('securityType')?.invalid && sanctionForm.get('securityType')?.touched && !sanctionForm.get('securityType')?.hasError('pattern')" 
+                class="text-danger small">
+                Security Type is required
+              </div>
+            </div>
+          </div>
+        </div>
           <!-- Terms of Sanction -->
-          <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+          <!-- <div class="col-12 col-sm-6 col-md-4 col-lg-3">
             <div class="form-floating mb-3">
               <input type="text" class="form-control" id="termsInput" 
                      formControlName="termsOfSanction">
               <label for="termsInput">Terms of Sanction</label>
             </div>
-          </div>
+          </div> -->
 
           <!-- Remarks -->
           <div class="col-12 col-sm-6 col-md-4 col-lg-3">
@@ -162,11 +222,10 @@
                      formControlName="remarks">
               <label for="remarksInput">Remarks</label>
             </div>
-          </div>
+          </div>                        
         </div>
       </div>
     </div>
-
     <!-- Sanction Letter Upload -->
     <div class="card border rounded-2 shadow-none mb-3">
       <div class="card-header bg-theme text-white">

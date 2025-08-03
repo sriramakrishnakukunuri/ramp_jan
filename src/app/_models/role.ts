@@ -1,9 +1,9 @@
 ﻿export enum Role {
     User = 'User',
     Admin = 'ADMIN',
-    TIHCL_EXECUTOR = 'EXECUTIVE-MANAGER',
+    TIHCL_EXECUTOR = 'EXECUTIVE_MANAGER',
     Enterpreneur = 'ENTREPRENEUR',
-    TIHCL_MANAGER = 'MANEGER',
+    TIHCL_MANAGER = 'MANAGER',
     TIHCL_DIC = 'DIC',
     TIHCL_COI = 'COI',
     AGENCY_MANAGER = 'AGENCY_MANAGER',

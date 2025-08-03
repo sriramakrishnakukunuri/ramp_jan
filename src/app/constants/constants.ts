@@ -61,6 +61,8 @@ export const APIS = {
       tihclMasterList: {
         getDistricts: API_BASE_URL + '/getAllDistricts',
         getMandal: API_BASE_URL + '/getAllmandalsOfDistrictsById/',
+        getIndustrialByDistrict: API_BASE_URL + '/industrial-parks/',
+        getNotifications: API_BASE_URL + '/notifications/userType?userRole=',
     },
     tihclEnterprenuer:{
         submitLoanApplication: API_BASE_URL + '/registrations/save',

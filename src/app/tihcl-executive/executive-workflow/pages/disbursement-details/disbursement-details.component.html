@@ -97,10 +97,10 @@
             <div class="form-floating mb-3">
               <input type="date" class="form-control" id="collectionDate" formControlName="collectionDate"
                 max="{{ today | date:'yyyy-MM-dd' }}" placeholder="">
-              <label for="collectionDate">Collection Date</label>
+              <label for="collectionDate">Disbursement Date</label>
               <div *ngIf="f['collectionDate']?.invalid && (f['collectionDate']?.dirty || f['collectionDate']?.touched)"
                 class="text-danger">
-                <small *ngIf="f['collectionDate']?.errors?.required">Collection Date is required</small>
+                <small *ngIf="f['collectionDate']?.errors?.required">Disbursement Date is required</small>
               </div>
             </div>
           </div>
@@ -171,7 +171,7 @@
           </div>
           <div class="col-12 col-sm-6 col-md-4 col-lg-3">
             <div class="mb-3">
-              <h6 class="fw-600 fs-md">ROC Filling</h6>
+              <h6 class="fw-600 fs-md">ROC Filing</h6>
               <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" formControlName="rocFiling" id="applicableRoc"
                   value="Yes">
@@ -184,7 +184,7 @@
               </div>
               <div *ngIf="f['rocFiling']?.invalid && (f['rocFiling']?.dirty || f['rocFiling']?.touched)"
                 class="text-danger">
-                <small>ROC Filling is required</small>
+                <small>ROC Filing is required</small>
               </div>
             </div>
           </div>
@@ -199,6 +199,24 @@
             </div>
           </div>
         </div>
+         <!-- <div class="card border rounded-2 shadow-none mb-3">
+      <div class="card-header bg-theme text-white">
+        <h6 class="mb-0">Security Details</h6>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          
+
+          <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="remarksInput" 
+                     formControlName="remarks">
+              <label for="remarksInput">Remarks</label>
+            </div>
+          </div>                        
+        </div>
+      </div>
+    </div> -->
          <div class="border rounded-3 p-2">
           <div class="row align-items-center mb-3">
             <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">

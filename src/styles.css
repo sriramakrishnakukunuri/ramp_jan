@@ -33,6 +33,16 @@ a {
   color: #0082f1;
 }
 
+.notification-count {
+    position: absolute;
+    top: -4px;
+    background: #e9ecef;
+    border-radius: 30px;
+    left: 37px;
+    color: #ff0000;
+    padding: 1px 2px 0px;
+    font-size: 13px;
+}
 .bg-theme {
   background-color: #0082f1;
 }

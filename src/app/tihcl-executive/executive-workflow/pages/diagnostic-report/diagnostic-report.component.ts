@@ -61,6 +61,7 @@ applicationData:any
     this.generateFinancialYears() 
     this.initializeForm();
     this.initShareholderForm()
+     this.intiPartanurshipForm()
     this.initBuyerForm();
     this.initSupplierForm();
     this.initReceivableForm()
@@ -84,12 +85,14 @@ getDtataByUrl(url: string) {
   initializeForm(): void {
     this.diagnosticForm = this.fb.group({
       basicDetails: this.fb.group({
-        name: ['', Validators.required],
+        nameOfUnit: ['', Validators.required],
+        constitution: ['', Validators.required],
         contactNo: ['', [Validators.required, Validators.pattern(/^[6789]\d{9}$/)]],
         gstNumber: ['', this.gstValidator()],
         productManufactured: ['', Validators.required],
         demandForTheProduct: ['', Validators.required],
-        shareholders: this.fb.array([])
+        shareholdersNewDto: this.fb.array([]),
+        partnershipDto: this.fb.array([]),
       }),
       topBuyers: this.fb.array([]),
       topSellers: this.fb.array([]),
@@ -147,10 +150,10 @@ getDtataByUrl(url: string) {
     selectedFinancialYear: any = '';
     generateFinancialYears() {
       const currentYear = new Date().getFullYear();
-      const fixedYear = 2024; // Fixed year for the first two entries 
+      const fixedYear = 2016; // Fixed year for the first two entries 
       const range = 2; // Show 5 years before and after current year
     
-      for (let i = 2024; i < currentYear; i++) {
+      for (let i = 2016; i < currentYear; i++) {
         const year = i;
         this.financialYears.push(`${year}-${(year + 1)}`);
       }
@@ -174,10 +177,19 @@ getDtataByUrl(url: string) {
   initShareholderForm(): void {
     this.shareholderForm = this.fb.group({
       id:[''],
-      name: ['', Validators.required],
-      mobileNo: ['', [Validators.required, Validators.pattern(/^[6789]\d{9}$/)]],
-      numOfShares: ['', [Validators.required, Validators.min(1)]]
+      nameOfTheShareholder: ['', Validators.required],
+      position: ['', [Validators.required]],
+      shareholdingPercentage: ['', [Validators.required, Validators.min(0), Validators.max(100)]],
     });
+  }
+  intiPartanurshipForm(): void {
+     this.partnershipForm = this.fb.group({
+      id:[''],
+      nameOfThePartner: ['', Validators.required],
+      position: ['', [Validators.required]],
+      profitSharingPercentage: ['', [Validators.required, Validators.min(0), Validators.max(100)]],
+    });
+   
   }
   // Tab navigation
   switchTab(tab: string): void {
@@ -209,16 +221,21 @@ getDtataByUrl(url: string) {
   patchFormValues(data: any): void {
     // Basic Details
     this.basicDetails.patchValue({
-      name: data?.name,
+      nameOfUnit: data?.nameOfUnit,
+      constitution: data?.constitution,
       contactNo: data?.contactNo,
       gstNumber: data?.gstNumber,
       productManufactured: data?.productManufactured,
       demandForTheProduct: data?.demandForTheProduct
     });
 
-    // Shareholders
-    data?.shareholders.forEach((shareholder:any) => {
+    // shareholdersNewDto
+    data?.shareholdersNewDto.forEach((shareholder:any) => {
       this.addShareholder(shareholder);
+    });
+     // shareholdersNewDto
+    data?.partnershipDto.forEach((partnership:any) => {
+      this.addPartnership(partnership);
     });
 
     // Top Buyers
@@ -250,7 +267,7 @@ getDtataByUrl(url: string) {
         installedCapacity: data.operationalStatus.installedCapacity,
         utilizedCapacity: data.operationalStatus.utilizedCapacity,
         observation: data.operationalStatus.observation,
-        isWorking: data.operationalStatus.isWorking,
+        isWorking: data.operationalStatus.isWorking? data.operationalStatus.isWorking : true,
         hasUnsecuredLoans: data.operationalStatus.hasUnsecuredLoans,
         requiredLoanAmount: data.operationalStatus.requiredLoanAmount,
         loanSecurityType: data.operationalStatus.loanSecurityType,
@@ -298,8 +315,11 @@ formateBalnceSheet(data:any){
     return this.diagnosticForm.get('basicDetails') as FormGroup;
   }
 
-  get shareholders(): FormArray {
-    return this.basicDetails.get('shareholders') as FormArray;
+  get shareholdersNewDto(): FormArray {
+    return this.basicDetails.get('shareholdersNewDto') as FormArray;
+  }
+  get partnershipDto(): FormArray {
+    return this.basicDetails.get('partnershipDto') as FormArray;
   }
   get buyers(): FormArray {
     return this.diagnosticForm.get('topBuyers') as FormArray;
@@ -337,28 +357,39 @@ formateBalnceSheet(data:any){
    isEditMode = false;
   editIndex: number | null = null;
   showShareholderModal = false;
-
+onConstitutionChange(event:any) {
+    console.log(event)
+    if (event === 'Partnership') {
+      (this.basicDetails.get('shareholdersNewDto') as FormArray).clear();
+      (this.basicDetails.get('partnershipDto') as FormArray).clear();
+      
+    } else if( event === 'Limited company') {
+     (this.basicDetails.get('shareholdersNewDto') as FormArray).clear();
+     (this.basicDetails.get('partnershipDto') as FormArray).clear();
+    }
+}
   addShareholder(data?: any): void {
     const shareholderGroup = this.fb.group({
       id: [data?.id || 0],
-      name: [data?.name || '', Validators.required],
-      mobileNo: [data?.mobileNo || '', [Validators.required, Validators.pattern(/^[6789]\d{9}$/)]],
-      numOfShares: [data?.numOfShares || 0, [Validators.required, Validators.min(0)]]
+      nameOfTheShareholder: [data?.nameOfTheShareholder || '', Validators.required],
+      // mobileNo: [data?.mobileNo || '', [Validators.required, Validators.pattern(/^[6789]\d{9}$/)]],
+      shareholdingPercentage: [data?.shareholdingPercentage || 0, [Validators.required, Validators.min(0), Validators.max(100)]],
+      position: [data?.position || '', Validators.required],
     });
 
-    this.shareholders.push(shareholderGroup);
+    this.shareholdersNewDto.push(shareholderGroup);
   }
    openShareholderModal(editIndex: number | null = null): void {
     this.isEditMode = editIndex !== null;
     this.editIndex = editIndex;
     
     if (this.isEditMode && editIndex !== null) {
-      const shareholder = this.shareholders.at(editIndex);
+      const shareholder = this.shareholdersNewDto.at(editIndex);
       this.shareholderForm.patchValue({
         id:shareholder.get('id')?.value,
-        name: shareholder.get('name')?.value,
-        mobileNo: shareholder.get('mobileNo')?.value,
-        numOfShares: shareholder.get('numOfShares')?.value
+        nameOfTheShareholder: shareholder.get('nameOfTheShareholder')?.value,
+        shareholdingPercentage: shareholder.get('shareholdingPercentage')?.value,
+        position: shareholder.get('position')?.value
       });
     } else {
       this.shareholderForm.reset();
@@ -374,9 +405,9 @@ saveShareholder(): void {
     }
 
     if (this.isEditMode && this.editIndex !== null) {
-      this.shareholders.at(this.editIndex).patchValue(this.shareholderForm.value);
+      this.shareholdersNewDto.at(this.editIndex).patchValue(this.shareholderForm.value);
     } else {
-      this.shareholders.push(this.fb.group(this.shareholderForm.value));
+      this.shareholdersNewDto.push(this.fb.group(this.shareholderForm.value));
     }
 
     this.closeModal();
@@ -390,19 +421,84 @@ saveShareholder(): void {
       (error:any)=>{
 
     })
-    this.shareholders.removeAt(index);
+    this.shareholdersNewDto.removeAt(index);
   }
 
-  getTotalShares(): number {
-    return this.shareholders.controls.reduce((total, shareholder) => {
-      const shares = parseFloat(shareholder.get('numOfShares')?.value) || 0;
-      return total + shares;
-    }, 0);
-  }
+
+  // getTotalShares(): number {
+  //   return this.shareholdersNewDto.controls.reduce((total, shareholder) => {
+  //     const shares = parseFloat(shareholder.get('numOfShares')?.value) || 0;
+  //     return total + shares;
+  //   }, 0);
+  // }
 closeModal(): void {
     this.showShareholderModal = false;
     this.isEditMode = false;
     this.editIndex = null;
+  }
+// Partnership Form
+  partnershipForm!: FormGroup;
+  addPartnership(data?: any): void {
+    const partnershipGroup = this.fb.group({
+      id: [data?.id || 0],
+      nameOfThePartner: [data?.nameOfThePartner || '', Validators.required],
+      position: [data?.position || '', Validators.required],
+      profitSharingPercentage: [data?.profitSharingPercentage || 0, [Validators.required, Validators.min(0), Validators.max(100)]],
+    }); 
+    this.partnershipDto.push(partnershipGroup);
+  }
+  showPartnershipModal = false;
+  isEditModePartnership = false;
+  editIndexPartnership: number | null = null;
+   openPartnershipModal(editIndexPartnership: number | null = null): void {
+    this.isEditModePartnership = editIndexPartnership !== null;
+    this.editIndexPartnership = editIndexPartnership;
+    
+    if (this.isEditModePartnership && editIndexPartnership !== null) {
+      const shareholder = this.partnershipDto.at(editIndexPartnership);
+      this.partnershipForm.patchValue({
+        id: shareholder.get('id')?.value,
+        nameOfThePartner: shareholder.get('nameOfThePartner')?.value,
+        position: shareholder.get('position')?.value,
+        profitSharingPercentage: shareholder.get('profitSharingPercentage')?.value
+      
+      });
+    } else {
+      this.partnershipForm.reset();
+    }
+    
+    this.showPartnershipModal = true;
+  }
+
+savePartnership(): void {
+  console.log(this.partnershipForm.value,this.basicDetails.value)
+    if (this.partnershipForm.invalid) {
+      return;
+    }
+
+    if (this.isEditModePartnership && this.editIndexPartnership !== null) {
+      this.partnershipDto.at(this.editIndexPartnership).patchValue(this.partnershipForm.value);
+    } else {
+      this.partnershipDto.push(this.fb.group(this.partnershipForm.value));
+    }
+
+    this.closePartnershipModal();
+  }
+  closePartnershipModal(): void {
+    this.showPartnershipModal = false;
+    this.isEditModePartnership = false;
+    this.editIndexPartnership = null;
+  }
+
+  removePartnerShip(index: number,id:any): void {
+    // this._commonService.deleteById(APIS.tihclExecutive.deleteDiagnostics.deleteShareholding,id).subscribe(
+    //     (res:any)=>{
+          
+    //   },
+    //   (error:any)=>{
+
+    // })
+    this.shareholdersNewDto.removeAt(index);
   }
 
   saveBasicDetails(): void {
@@ -435,7 +531,7 @@ closeModal(): void {
     this.buyerForm = this.fb.group({
       id:[''],
       buyerName: ['', Validators.required],
-      purchasedQty: ['', [Validators.required, Validators.min(1)]],
+      // purchasedQty: ['', [Validators.required, Validators.min(1)]],
       amount: ['', [Validators.required, Validators.min(0)]],
       remarks: ['']
     });
@@ -445,7 +541,7 @@ closeModal(): void {
     this.supplierForm = this.fb.group({
       id:[''],
       sellerName: ['', Validators.required],
-      suppliedQty: ['', [Validators.required, Validators.min(1)]],
+      // suppliedQty: ['', [Validators.required, Validators.min(1)]],
       amount: ['', [Validators.required, Validators.min(0)]],
       remarks: ['']
     });
@@ -461,7 +557,7 @@ closeModal(): void {
       this.buyerForm.patchValue({
         id:buyer.get('id')?.value,
         buyerName: buyer.get('buyerName')?.value,
-        purchasedQty: buyer.get('purchasedQty')?.value,
+        // purchasedQty: buyer.get('purchasedQty')?.value,
         amount: buyer.get('amount')?.value,
         remarks: buyer.get('remarks')?.value
       });
@@ -482,7 +578,7 @@ closeModal(): void {
       this.supplierForm.patchValue({
         id: supplier.get('id')?.value,
         sellerName: supplier.get('sellerName')?.value,
-        suppliedQty: supplier.get('suppliedQty')?.value,
+        // suppliedQty: supplier.get('suppliedQty')?.value,
         amount: supplier.get('amount')?.value,
         remarks: supplier.get('remarks')?.value
       });
@@ -589,7 +685,7 @@ closeModal(): void {
     this.receivableForm = this.fb.group({
       id:[''],
       toBeReceivedFrom: ['', Validators.required],
-      receivableDate: ['', Validators.required],
+      // receivableDate: ['', Validators.required],
       amount: ['', [Validators.required, Validators.min(0)]]
     });
   }
@@ -598,7 +694,7 @@ closeModal(): void {
     this.payableForm = this.fb.group({
       id:[''],
       toBePaidTo: ['', Validators.required],
-      payableDate: ['', Validators.required],
+      // payableDate: ['', Validators.required],
       payableAmount: ['', [Validators.required, Validators.min(0)]]
     });
   }
@@ -612,7 +708,7 @@ closeModal(): void {
       this.receivableForm.patchValue({
         id: receivable.get('id')?.value,
         toBeReceivedFrom: receivable.get('toBeReceivedFrom')?.value,
-        receivableDate: receivable.get('receivableDate')?.value,
+        // receivableDate: receivable.get('receivableDate')?.value,
         amount: receivable.get('amount')?.value
       });
     } else {
@@ -631,7 +727,7 @@ closeModal(): void {
       this.payableForm.patchValue({
          id: payable.get('id')?.value,
         toBePaidTo: payable.get('toBePaidTo')?.value,
-        payableDate: payable.get('payableDate')?.value,
+        // payableDate: payable.get('payableDate')?.value,
         payableAmount: payable.get('payableAmount')?.value
       });
     } else {
@@ -814,10 +910,12 @@ if(this.operationalStatus.get('loanSecurityType')?.value!='Pending Subsidy' && t
 
 operationtableformsInit(){
    this.orderBookForm = this.fb.group({
-      dateOfOrder: ['', Validators.required],
-      customerName: ['', Validators.required],
+    //  "nameOfTheBuyer": "string",
+    //     "remarks": "string"
+      // dateOfOrder: ['', Validators.required],
+      nameOfTheBuyer: ['', Validators.required],
       orderValue: ['', [Validators.required, Validators.min(0)]],
-      orderDeliveryDate: ['', Validators.required]
+      remarks: ['', Validators.required]
     });
 
     // Unsecured Loans modal form
@@ -825,7 +923,7 @@ operationtableformsInit(){
       "source": ['',Validators.required],
       "loanAmount": [0, [Validators.min(0)]],
       "sinceWhen": ['',Validators.required],
-      "remarks":[''],
+      "tenor":[''],
     });
 }
 
@@ -853,7 +951,7 @@ orderBookPositionsModal = false;
       source: this.unsecuredLoansForm.get('source')?.value,
       loanAmount: this.unsecuredLoansForm.get('loanAmount')?.value,
       sinceWhen: this.unsecuredLoansForm.get('sinceWhen')?.value,
-      remarks: this.unsecuredLoansForm.get('remarks')?.value,
+      tenor: this.unsecuredLoansForm.get('tenor')?.value,
     });
     this.closeOperationalModals()
     this.unsecuredLoansModal=false
@@ -1006,6 +1104,7 @@ saveStressReason(): void {
       reportDate: ['', Validators.required],
       financialYear: ['', Validators.required],
       totalReceipts: [0, [Validators.required, Validators.min(0)]],
+       balanceSheetType: [0, [Validators.required]],
       turnoverAsPerBankStatement: [0, [Validators.required, Validators.min(0)]],
       netProfitOrLoss: [0],
       cashProfitOrLoss: [0],
@@ -1112,14 +1211,14 @@ saveStatusUpdate(): void {
   }
   // end status Update
   // removeShareholder(index: number): void {
-  //   this.shareholders.removeAt(index);
+  //   this.shareholdersNewDto.removeAt(index);
   // }
 
   addBuyer(data?: any): void {
     const buyerGroup = this.fb.group({
       id: [data?.id || 0],
       buyerName: [data?.buyerName || '', Validators.required],
-      purchasedQty: [data?.purchasedQty || 0, [Validators.required, Validators.min(0)]],
+      // purchasedQty: [data?.purchasedQty || 0, [Validators.required, Validators.min(0)]],
       amount: [data?.amount || 0, [Validators.required, Validators.min(0)]],
       remarks: [data?.remarks || '']
     });
@@ -1132,7 +1231,7 @@ saveStatusUpdate(): void {
     const supplierGroup = this.fb.group({
       id: [data?.id || 0],
       sellerName: [data?.sellerName || '', Validators.required],
-      suppliedQty: [data?.suppliedQty || 0, [Validators.required, Validators.min(0)]],
+      // suppliedQty: [data?.suppliedQty || 0, [Validators.required, Validators.min(0)]],
       amount: [data?.amount || 0, [Validators.required, Validators.min(0)]],
       remarks: [data?.remarks || '']
     });
@@ -1146,7 +1245,7 @@ saveStatusUpdate(): void {
     const receivableGroup = this.fb.group({
       id: [data?.id || 0],
       toBeReceivedFrom: [data?.toBeReceivedFrom || '', Validators.required],
-      receivableDate: [data?.receivableDate || '', Validators.required],
+      // receivableDate: [data?.receivableDate || '', Validators.required],
       amount: [data?.amount || 0, [Validators.required, Validators.min(0)]]
     });
 
@@ -1158,7 +1257,7 @@ saveStatusUpdate(): void {
     const payableGroup = this.fb.group({
       id: [data?.id || 0],
       toBePaidTo: [data?.toBePaidTo || '', Validators.required],
-      payableDate: [data?.payableDate || '', Validators.required],
+      // payableDate: [data?.payableDate || '', Validators.required],
       payableAmount: [data?.payableAmount || 0, [Validators.required, Validators.min(0)]]
     });
 
@@ -1170,10 +1269,10 @@ saveStatusUpdate(): void {
   addOrderBookPosition(data?: any): void {
     const positionGroup = this.fb.group({
       id: [data?.id || 0],
-      dateOfOrder: [data?.dateOfOrder || '', Validators.required],
-      customerName: [data?.customerName || '', Validators.required],
+      // dateOfOrder: [data?.dateOfOrder || '', Validators.required],
+      nameOfTheBuyer: [data?.nameOfTheBuyer || '', Validators.required],
       orderValue: [data?.orderValue || 0, [Validators.required, Validators.min(0)]],
-      orderDeliveryDate: [data?.orderDeliveryDate || '', Validators.required]
+      remarks: [data?.remarks || '', Validators.required]
     });
 
     this.orderBookPositions.push(positionGroup);
@@ -1184,7 +1283,7 @@ saveStatusUpdate(): void {
       source: [data?.source || '', Validators.required],
       sinceWhen: [data?.sinceWhen || '', Validators.required],
       loanAmount: [data?.loanAmount || 0, [Validators.required, Validators.min(0)]],
-      remarks: [data?.remarks || '', ]
+      tenor: [data?.tenor || '', ]
     });
     this.unsecuredLoans.push(positionGroup);
   }
@@ -1196,6 +1295,7 @@ saveStatusUpdate(): void {
       // id: [data?.id || 0],
       reportDate: [data?.reportDate || '', Validators.required],
       financialYear: [data?.financialYear || '', Validators.required],
+      balanceSheetType: [data?.balanceSheetType || '', Validators.required],
       totalReceipts: [data?.totalReceipts || 0, Validators.min(0)],
       turnoverAsPerBankStatement: [data?.turnoverAsPerBankStatement || 0, Validators.min(0)],
       netProfitOrLoss: [data?.netProfitOrLoss || 0],

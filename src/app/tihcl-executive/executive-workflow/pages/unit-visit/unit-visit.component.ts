@@ -33,6 +33,7 @@ export class UnitVisitComponent implements OnInit {
     this.getAllDistricts()
     this.getDataById()
     this.initForm();
+    this.initworkShiftsDtoForm();
     this.createForm();
     this.createVisitForm();
   }
@@ -46,8 +47,8 @@ export class UnitVisitComponent implements OnInit {
       // designation: ['', Validators.required],
       selectLandDetails: ['', Validators.required],
       // factoryAddress: ['', Validators.required],
-      "latitude":["", [Validators.pattern(/^[0-9.]{1,50}$/)]],
-      "longitude":["", [Validators.pattern(/^[0-9.]{1,50}$/)]],
+      "latitude":["", [Validators.pattern(/^-?([0-8]?[0-9]|90)(\.[0-9]{1,15})?$/)]],
+      "longitude":["", [Validators.pattern(/^-?((1[0-7][0-9]|0?[0-9]?[0-9])(\.[0-9]{1,15})?|180(\.0{1,15})?)$/)]],
       "district": ['', Validators.required],
       "mandal": ['', Validators.required],
       "village": ['', Validators.required],
@@ -77,7 +78,7 @@ export class UnitVisitComponent implements OnInit {
       periodicity: [, Validators.required],
       installedCapacity: ['', [Validators.required]],
       currentCapacityUtilisation: ['', [Validators.required]],
-      currentProductionInUnit: ['', [Validators.required, Validators.min(0)]],
+      currentProductionInUnit: ['', [Validators.required,]],
       costPerUnit: ['', ],
       sellingPricePerUnit: ['', ],
       profitMargin: ['', ],
@@ -85,7 +86,8 @@ export class UnitVisitComponent implements OnInit {
       // maxConsumption: ['', [Validators.required, Validators.min(0)]],
       powerBillPaidDate: ['', Validators.required],
       machineryDetailsRequest: this.fb.array([]),
-      visitorsDetailsRequests: this.fb.array([])
+      visitorsDetailsRequests: this.fb.array([]),
+      workShiftsDto: this.fb.array([]),
     });
   }
   toggleRegisterAddress(val:any){
@@ -242,6 +244,10 @@ createForm(): void {
       data?.visitorsDetailsRequests.forEach((visit:any) => {
         this.addVisitDetail(visit);
       });
+      this.workShiftsDto.clear();
+        data?.workShiftsDto.forEach((partnership:any) => {
+      this.addShift(partnership);
+    });
 
     }
     
@@ -265,6 +271,85 @@ createForm(): void {
       id:[machine?machine.id:null]
     });
     this.factoryDetailsArray.push(machineGroup);
+  }
+  // shift timings
+  // / Partnership Form
+  initworkShiftsDtoForm(): void {
+    this.workShiftsDtoForm = this.fb.group({
+      id:[''],
+      // shiftName: ['', Validators.required],
+      startTime: ['', Validators.required],
+      endTime: ['', Validators.required],
+      
+    });
+  }
+    get workShiftsDto(): FormArray {
+    return this.unitVisitForm.get('workShiftsDto') as FormArray;
+  }
+  workShiftsDtoForm!: FormGroup;
+  addShift(data?: any): void {
+    const partnershipGroup = this.fb.group({
+      id: [data?.id || 0],
+      // shiftName: [data?.shiftName || '', Validators.required],
+      startTime: [data?.startTime || '', Validators.required],
+      endTime: [data?.endTime || '', Validators.required],
+    });
+    this.workShiftsDto.push(partnershipGroup);
+  }
+  showworkshiftModal = false;
+  isEditModeworkshift = false;
+  editIndexworkshift: number | null = null;
+   openworkshiftModal(editIndexworkshift: number | null = null): void {
+    this.isEditModeworkshift = editIndexworkshift !== null;
+    this.editIndexworkshift = editIndexworkshift;
+    
+    if (this.isEditModeworkshift && editIndexworkshift !== null) {
+      const shareholder = this.workShiftsDto.at(editIndexworkshift);
+      this.workShiftsDtoForm.patchValue({
+        id: shareholder.get('id')?.value,
+        // shiftName: shareholder.get('shiftName')?.value,
+        startTime: shareholder.get('startTime')?.value,
+        endTime: shareholder.get('endTime')?.value,
+       
+      
+      });
+    } else {
+      this.workShiftsDtoForm.reset();
+    }
+    
+    this.showworkshiftModal = true;
+  }
+
+saveworkshift(): void {
+  console.log(this.workShiftsDtoForm.value,this.unitVisitForm.value)
+    if (this.workShiftsDtoForm.invalid) {
+      return;
+    }
+
+    if (this.isEditModeworkshift && this.editIndexworkshift !== null) {
+      this.workShiftsDto.at(this.editIndexworkshift).patchValue(this.workShiftsDtoForm.value);
+    } else {
+      this.workShiftsDto.push(this.fb.group(this.workShiftsDtoForm.value));
+    }
+
+    this.closePartnershipModal();
+  }
+  
+  closePartnershipModal(): void {
+    this.showworkshiftModal = false;
+    this.isEditModeworkshift = false;
+    this.editIndexworkshift = null;
+  }
+
+  removePartnerShip(index: number,id:any): void {
+    // this._commonService.deleteById(APIS.tihclExecutive.deleteDiagnostics.deleteShareholding,id).subscribe(
+    //     (res:any)=>{
+          
+    //   },
+    //   (error:any)=>{
+
+    // })
+    this.workShiftsDto.removeAt(index);
   }
   onSubmit(): void {
     if(this.unitVisitForm.valid && this.unitVisitForm.value?.machineryDetailsRequest?.length && Object.keys( this.ExistingunitVisit).length && this.ExistingunitVisit?.id){

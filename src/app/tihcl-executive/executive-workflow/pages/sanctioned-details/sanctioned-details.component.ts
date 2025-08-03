@@ -53,8 +53,10 @@ managrData:any
       dsraAmount: [0, Validators.min(0)],
       isSecurityProvided: [false],
       securityDescription: [''],
+      productType: [''],
+      securityType: [''],
       securityValue: [0],
-      termsOfSanction: [''],
+      // termsOfSanction: [''],
       remarks: [''],
       sanctionLetterPath: ['',[Validators?.required]],
     });
@@ -72,8 +74,10 @@ managrData:any
         dsraAmount: dataList?.dsraAmount || 0,
         isSecurityProvided: dataList?.isSecurityProvided || false,
         securityDescription: dataList?.securityDescription || '',
+        securityType: dataList?.securityType || '',
+        productType: dataList?.productType || '',
         securityValue: dataList?.securityValue || 0,
-        termsOfSanction: dataList?.termsOfSanction || '',
+        // termsOfSanction: dataList?.termsOfSanction || '',
         remarks: dataList?.remarks || '',
         sanctionLetterPath: dataList?.sanctionLetterPath || ''
            });
@@ -91,6 +95,7 @@ managrData:any
         // Reset security fields when security is not provided
         if (!this.showSecurityFields) {
           this.sanctionForm.get('securityDescription')?.reset();
+          this.sanctionForm.get('securityType')?.reset();
           this.sanctionForm.get('securityValue')?.reset();
         }
   }
@@ -103,6 +108,7 @@ managrData:any
       const payload = {
         ...formValue,
         securityDescription: formValue.isSecurityProvided ? formValue.securityDescription : null,
+        securityType: formValue.isSecurityProvided ? formValue.securityType : null,
         securityValue: formValue.isSecurityProvided ? formValue.securityValue : null,
         "applicationNo": this.applicationData?.applicationNo,
         "applicationStatus": "SANCTION_LETTER_UPLOAD"

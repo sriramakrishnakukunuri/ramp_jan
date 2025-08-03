@@ -121,8 +121,8 @@
                               class="text-danger">
                               Promoter Name must be at least 3 characters
                             </div>
-                            <div *ngIf="applicationForm.get('promoterName')?.hasError('pattern')" class="error">Promoter
-                              Name Should be Characters and Allow dot(.)</div>
+                            <div *ngIf="applicationForm.get('promoterName')?.hasError('pattern')"  class="text-danger">Promoter
+                              Name Should be Characters and Allow Spaces and dot(.)</div>
                           </div>
                         </div>
                         <div class="col-12 col-sm-6 col-md-4 col-lg-3">
@@ -130,7 +130,7 @@
                             [ngClass]="applicationForm.get('promoterName')?.valid ? '' :'isDisabled'">
                             <select class="form-select" id="constitution" formControlName="constitution" aria-label="">
                               <option value="">Select Constitution</option>
-                              <option value="sole property">sole property</option>
+                              <option value="Sole proprietorship">Sole proprietorship</option>
                               <option value="Partnership">Partnership</option>
                               <option value="LLP">LLP</option>
                               <option value="Limited Company">Limited Company</option>
@@ -205,53 +205,10 @@
                             </div>
                           </div>
                         </div>
-                        <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4">
-                          <div class="mb-3">
-                            <!-- Radio buttons for GST Number Exist -->
-                            <div class="mb-2"  [ngClass]="applicationForm.get('udyamRegNumber')?.valid ? '' :'isDisabled'">
-                              <label class="form-label fs-md fw-600 mb-1">Is Industrial Park Exist?</label>
-                              <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" id="gstExistYes"
-                                  formControlName="isIndustrialParkExist" [value]="true" (change)="onGstExistChange('yes')">
-                                <label class="form-check-label" for="gstExistYes">Yes</label>
-                              </div>
-                              <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" id="gstExistNo"
-                                  formControlName="isIndustrialParkExist" [value]="false" (change)="onGstExistChange('no')">
-                                <label class="form-check-label" for="gstExistNo">No</label>
-                              </div>
-                              <div
-                                *ngIf="applicationForm.get('isIndustrialParkExist')?.invalid && applicationForm.get('isIndustrialParkExist')?.touched"
-                                class="text-danger small">
-                                Please select if Industrial Park exists
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-12 col-sm-6 col-md-4 col-lg-3" *ngIf="applicationForm.get('isIndustrialParkExist')?.value">
-                          <div class="form-floating mb-3"
-                            [ngClass]="applicationForm.get('udyamRegNumber')?.valid ? '' :'isDisabled'">
-                            <app-multi-level-dropdown [items]="multiLevelItems" formControlName="industrialPark"
-                              [placeholder]="'Select a industrial Park*'" (itemSelected)="onItemSelected($event)">
-                            </app-multi-level-dropdown>
-                          </div>
-                          <div
-                            *ngIf="applicationForm.get('industrialPark')?.invalid && applicationForm.get('industrialPark')?.touched"
-                            class="text-danger">
-                            Industrial Park is required
-                          </div>
-                          <!-- <div class="form-floating mb-3" [ngClass]="applicationForm.get('udyamRegNumber')?.valid ? '' :'isDisabled'">
-                                <select class="form-select" id="industrialPark" 
-                                  formControlName="industrialPark" aria-label="">
-                                  <option value="">Select Industrial Park</option>
-                                  <option value="Industrial Park 1">Industrial Park 1</option>
-                                </select>
-                                <label for="industrialPark">Industrial Park<span class="text-danger">*</span></label>
-                              </div> -->
-                        </div>
+                       
                         <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                           <div class="form-floating mb-3"
-                            [ngClass]="applicationForm.get('isIndustrialParkExist')?.valid ? '' :'isDisabled'">
+                            [ngClass]="applicationForm.get('udyamRegNumber')?.valid ? '' :'isDisabled'">
                             <select class="form-select" id="state" (change)="ChangeDistrict($any($event.target).value)"
                               formControlName="state" aria-label="">
                               <option value="">Select State</option>
@@ -284,6 +241,60 @@
                             </div>
                           </div>
                         </div>
+                         <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4">
+                          <div class="mb-3">
+                            <!-- Radio buttons for GST Number Exist -->
+                            <div class="mb-2"
+                              [ngClass]="applicationForm.get('district')?.valid ? '' :'isDisabled'">
+                              <label class="form-label fs-md fw-600 mb-1">Is Industrial Park Exist?</label>
+                              <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" id="gstExistYes"
+                                  formControlName="isIndustrialParkExist" [value]="true"
+                                  (change)="onGstExistChange('yes')">
+                                <label class="form-check-label" for="gstExistYes">Yes</label>
+                              </div>
+                              <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" id="gstExistNo"
+                                  formControlName="isIndustrialParkExist" [value]="false"
+                                  (change)="onGstExistChange('no')">
+                                <label class="form-check-label" for="gstExistNo">No</label>
+                              </div>
+                              <div
+                                *ngIf="applicationForm.get('isIndustrialParkExist')?.invalid && applicationForm.get('isIndustrialParkExist')?.touched"
+                                class="text-danger small">
+                                Please select if Industrial Park exists
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3"
+                          *ngIf="applicationForm.get('isIndustrialParkExist')?.value">
+                          <div class="form-floating mb-3"
+                            [ngClass]="applicationForm.get('udyamRegNumber')?.valid ? '' :'isDisabled'">
+                            <!-- <app-multi-level-dropdown [items]="multiLevelItems" formControlName="industrialPark"
+                              [placeholder]="'Select a industrial Park*'" (itemSelected)="onItemSelected($event)">
+                            </app-multi-level-dropdown> -->
+                            <select class="form-select" id="industrialPark" formControlName="industrialPark"
+                              aria-label="">
+                              <option value="">Select Industrial Park</option>
+                              <option *ngFor="let list of industrialParks" value="{{list}}">
+                                {{list}}</option>
+                                </select>
+                          </div>
+                          <div
+                            *ngIf="applicationForm.get('industrialPark')?.invalid && applicationForm.get('industrialPark')?.touched"
+                            class="text-danger">
+                            Industrial Area is required
+                          </div>
+                          <!-- <div class="form-floating mb-3" [ngClass]="applicationForm.get('udyamRegNumber')?.valid ? '' :'isDisabled'">
+                                <select class="form-select" id="industrialPark" 
+                                  formControlName="industrialPark" aria-label="">
+                                  <option value="">Select Industrial Park</option>
+                                  <option value="Industrial Park 1">Industrial Park 1</option>
+                                </select>
+                                <label for="industrialPark">Industrial Park<span class="text-danger">*</span></label>
+                              </div> -->
+                        </div>
                         <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                           <div class="form-floating mb-3"
                             [ngClass]="applicationForm.get('district')?.valid ? '' :'isDisabled'">
@@ -300,9 +311,59 @@
                             </div>
                           </div>
                         </div>
-                        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                          <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                           <div class="form-floating mb-3"
                             [ngClass]="applicationForm.get('mandal')?.valid ? '' :'isDisabled'">
+                            <input type="text" class="form-control" id="village" formControlName="village"
+                              placeholder="village">
+                            <label for="village">Village<span class="text-danger">*</span></label>
+                            <div
+                              *ngIf="applicationForm.get('village')?.invalid && applicationForm.get('village')?.touched && !applicationForm.get('village')?.hasError('minlength')"
+                              class="text-danger">
+                              Village is required
+                            </div>
+                            <div *ngIf="applicationForm.get('address')?.hasError('minlength')" class="text-danger">
+                              Address must be at least 3 characters
+                            </div>
+                          </div>
+                        </div>
+                         
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                           <div class="form-floating mb-3"
+                            [ngClass]="applicationForm.get('village')?.valid ? '' :'isDisabled'">
+                            <input type="text" class="form-control" id="street" formControlName="street"
+                              placeholder="street">
+                            <label for="street">H.no/Street<span class="text-danger">*</span></label>
+                            <div
+                              *ngIf="applicationForm.get('street')?.invalid && applicationForm.get('street')?.touched && !applicationForm.get('street')?.hasError('minlength')"
+                              class="text-danger">
+                              H.no/Street is required
+                            </div>
+                            <div *ngIf="applicationForm.get('street')?.hasError('minlength')" class="text-danger">
+                              H.no/Street must be at least 3 characters
+                            </div>
+                          </div>
+                        </div>
+                         <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                         
+                          <div class="form-floating mb-3"
+                            [ngClass]="applicationForm.get('street')?.valid ? '' :'isDisabled'">
+                            <input type="number" class="form-control" id="pincode" formControlName="pincode"
+                              placeholder="pincode" min="1">
+                            <label for="pincode">pincode<span class="text-danger">*</span></label>
+                            <div
+                              *ngIf="applicationForm.get('pincode')?.invalid && applicationForm.get('pincode')?.touched"
+                              class="text-danger">
+                              pincode is required
+                            </div>
+                            <div *ngIf="applicationForm.get('pincode')?.hasError('pattern')" class="text-danger">
+                              pincode must be a 6 digit number starting with 1-9
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                          <div class="form-floating mb-3"
+                            [ngClass]="applicationForm.get('pincode')?.valid ? '' :'isDisabled'">
                             <input type="text" class="form-control" id="Address" formControlName="address"
                               placeholder="Address">
                             <label for="Address">Address<span class="text-danger">*</span></label>
@@ -395,7 +456,7 @@
                             </div>
                           </div>
                         </div>
-                        <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+                        <!-- <div class="col-12 col-sm-12 col-md-6 col-lg-4">
                           <div class="form-floating mb-3">
                             <select class="form-select" id="sector" formControlName="sector" aria-label="">
                               <option value="">Select Sector</option>
@@ -409,7 +470,7 @@
                               Sector is required
                             </div>
                           </div>
-                        </div>
+                        </div> -->
                       </div>
                       <div class="row">
                         <div class="col-12 col-sm-12 col-md-12 col-lg-12">
@@ -606,9 +667,9 @@
                                 <label class="form-check-label fs-md" for="sma">SMA</label>
                               </div>
                               <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" formControlName="unitStatus" id="npa"
-                                  value="npa">
-                                <label class="form-check-label fs-md" for="npa">NPAL</label>
+                                <input class="form-check-input" type="radio" formControlName="unitStatus" id="NPA"
+                                  value="NPA">
+                                <label class="form-check-label fs-md" for="NPA">NPA</label>
                               </div>
                             </div>
                           </div>
@@ -756,7 +817,7 @@
                                 <p class="fw-600 fs-md mb-0">Application No.</p>
                               </div>
                               <div>
-                                <p class="fs-md fw-600 mb-0">{{enterPrenuerResponseData?.applicationNo}}</p>
+                                <p class="fs-md fw-600 mb-0">{{enterPrenuerResponseData?.applicationNo?enterPrenuerResponseData?.applicationNo:enterPrenuerResponseData?.applicationNumber}}</p>
                               </div>
                             </div>
                             <div class="d-flex align-items-center justify-content-between mb-3">
@@ -844,6 +905,19 @@
             </div>
             <div class="col-12">
               <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="natureOfLoan" placeholder="Nature of Loan"
+                  formControlName="natureOfLoan">
+                <label for="natureOfLoan">Nature of Loan(Term loans, CC/OD etc.)<span
+                    class="text-danger">*</span></label>
+                <div
+                  *ngIf="creditDetailsForm.get('natureOfLoan')?.invalid && creditDetailsForm.get('natureOfLoan')?.touched  && !creditDetailsForm.get('natureOfLoan')?.hasError('pattern')"
+                  class="text-danger">
+                   Nature of Loan is required
+                </div>
+                <div *ngIf="creditDetailsForm.get('natureOfLoan')?.hasError('pattern')" class="text-danger">
+                   Nature of Loan Should be Characters and Numbers</div>
+              </div>
+              <!-- <div class="form-floating mb-3">
                 <select class="form-select" id="natureOfLoan" formControlName="natureOfLoan">
                   <option value="" disabled selected>Select Nature of Loan</option>
                   <option value="Short-term Loans">Short-term Loans</option>
@@ -856,7 +930,7 @@
                                            creditDetailsForm.get('natureOfLoan')?.touched)" class="text-danger">
                   Nature of loan is required
                 </div>
-              </div>
+              </div> -->
             </div>
             <div class="col-12">
               <div class="form-floating mb-3">

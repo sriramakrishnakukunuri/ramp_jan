@@ -48,6 +48,7 @@ approveForm!: FormGroup;
     arooveDetail(): void {
       this.approveForm=this.fb.group({
         processType: ['', Validators.required],
+        product:['',Validators.required]
       });
     }
    onPageChange(event: {page: number, pageSize: number}): void {
@@ -76,7 +77,7 @@ approveForm!: FormGroup;
   Remarks:any=''
   Approved(){
     // https://tihcl.com/tihcl/api/registrations/status/updation/TH647249?appStatus=MANAGER_APPROVAL_1&reasonForRejection=null
-    this._commonService.updatedataByUrl(APIS.tihclManager.approveLevelOne+this.approvalData?.applicationNo+'?appStatus=MANAGER_APPROVAL_1&processType='+this.approveForm.value?.processType).subscribe({
+    this._commonService.updatedataByUrl(APIS.tihclManager.approveLevelOne+this.approvalData?.applicationNo+'?appStatus=MANAGER_APPROVAL_1&processType='+this.approveForm.value?.processType+'&product='+this.approveForm.value?.product).subscribe({
       next: (response) => {
            const modal = new bootstrap.Modal(this.successModal.nativeElement);
            modal.show(); 

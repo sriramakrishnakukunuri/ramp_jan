@@ -57,7 +57,7 @@ currentStep:any
   
     Approved(){
         // https://tihcl.com/tihcl/api/registrations/status/updation/TH647249?appStatus=MANAGER_APPROVAL_1&reasonForRejection=null
-        this._commonService.updatedataByUrl(APIS.tihclManager.approveLevelOne+this.applicationData?.applicationNo+'?appStatus=DIC_NOC&reasonForRejection=null').subscribe({
+        this._commonService.updatedataByUrl(APIS.tihclManager.approveLevelOne+this.applicationData?.applicationNo+'?appStatus=DIC_CONSENT_APPROVAL&reasonForRejection=null').subscribe({
           next: (response) => {
             this.progressBarStatusUpdate.emit({"update":true})
           },

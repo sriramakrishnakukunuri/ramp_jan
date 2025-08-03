@@ -31,7 +31,7 @@ export class LoanAppilicationNewComponent implements OnInit {
   "UNIT_VISIT",
   "DIAGNOSTIC_REPORT",
   "MANAGER_APPROVAL_2",
-  "DIC_NOC",
+  "DIC_CONSENT_APPROVAL",
   "CREDIT_APPRAISAL",
   "PRIMARY_LENDER_NOC",
   "SANCTION_LETTER_UPLOAD",
@@ -58,23 +58,26 @@ StatusofApplication:any=''
 
     this.applicationForm = this.fb.group({
       // Step 1 - Registration
-      enterpriseName: ['', [Validators.required, Validators.pattern(/^(?=.*[a-zA-Z])[a-zA-Z0-9]+$/),Validators.minLength(3)]],
-      promoterName: ['', [Validators.required, Validators.pattern(/^[a-zA-Z]+(\s[a-zA-Z]+(.))*$/),Validators.minLength(3)]],
+      enterpriseName: ['', [Validators.required, Validators.pattern(/^(?=.*[a-zA-Z])[a-zA-Z0-9 .]+$/), Validators.minLength(3)]],
+      promoterName: ['', [Validators.required, Validators.pattern(/^(?=.*[a-zA-Z])[a-zA-Z .]+$/), Validators.minLength(3)]],
       constitution: ['', Validators.required],
       productionDate: ['', Validators.required],
-       udyamRegNumber: ['', [Validators.required, this.udyamRegNumberValidator]],
+      udyamRegNumber: ['', [Validators.required, this.udyamRegNumberValidator]],
       altContactNumber: ['', [Validators.pattern(/^[6789]\d{9}$/)]],
       state: ['', Validators.required],
       industrialPark: ['',],
-       isIndustrialParkExist: [false, Validators.required],
+      isIndustrialParkExist: [false, Validators.required],
       district: ['', Validators.required],
       mandal: ['', Validators.required],
       email: ['', [Validators.email]],
+      village: ['', [Validators.required,Validators.minLength(3)]],
+      street: ['', [Validators.required,Validators.minLength(3)]],
+      pincode: ['', [Validators.required, Validators.pattern(/^[1-9][0-9]{5}$/)]],
       address: ['', [Validators.required, Validators.minLength(3)]],
       // Step 2 - Application
       enterpriseCategory: ['', ],
       natureOfActivity: ['', ],
-      sector: ['', ],
+      // sector: ['', ],
       operationStatus: [false],
       operatingSatisfactorily: [''],
       operatingDifficulties: [''],
@@ -124,9 +127,12 @@ StatusofApplication:any=''
           mandal: enterpreneur.mandal || '',
           email: enterpreneur.email || '',
           address: enterpreneur.address || '',
+          village: enterpreneur.village || '',
+          street: enterpreneur.street || '',
+          pincode: enterpreneur.pincode || '',
           enterpriseCategory: enterpreneur.enterpriseCategory || '',
           natureOfActivity: enterpreneur.natureOfActivity || '',
-          sector: enterpreneur.sector || '',
+          // sector: enterpreneur.sector || '',
           operationStatus: enterpreneur.operationStatus || false,
           operatingSatisfactorily: enterpreneur.operatingSatisfactorily || '',
           operatingDifficulties: enterpreneur.operatingDifficulties || '',  
@@ -150,7 +156,7 @@ StatusofApplication:any=''
           this.StatusofApplication = 'Application Is Under Consideration';
         }
         else if (
-          ["DIC_NOC", "DIC_APPROVAL", "CREDIT_APPRAISAL", "PRIMARY_LENDER_NOC", "SANCTION_LETTER_UPLOAD", "MANAGER_APPROVAL_3"].includes(enterpreneur?.applicationStatus)
+          ["DIC_CONSENT_APPROVAL", "DIC_APPROVAL", "CREDIT_APPRAISAL", "PRIMARY_LENDER_NOC", "SANCTION_LETTER_UPLOAD", "MANAGER_APPROVAL_3"].includes(enterpreneur?.applicationStatus)
         ) {
           this.StatusofApplication = 'Application Is In Process';
         }
@@ -226,6 +232,7 @@ onItemSelected(itemName: any) {
     })
   }
   MandalList:any
+  industrialParks:any
    GetMandalByDistrict(event: any) {
     this.applicationForm.get('mandal')?.reset();
 
@@ -237,6 +244,7 @@ onItemSelected(itemName: any) {
       })
       console.log(districId)
     this.MandalList=[]
+     this.industrialParks=[]
     if(districId.length){
         this._commonService.getDataByUrl(APIS.tihclMasterList.getMandal + districId[0]?.districtId).subscribe({
       next: (data: any) => {
@@ -244,6 +252,14 @@ onItemSelected(itemName: any) {
       },
       error: (err: any) => {
         this.MandalList = [];
+      }
+    })
+        this._commonService.getDataByUrl(APIS.tihclMasterList.getIndustrialByDistrict + event).subscribe({
+      next: (data: any) => {
+        this.industrialParks = data?.industrialPark || [];
+      },
+      error: (err: any) => {
+        this.industrialParks = [];
       }
     })
     }
@@ -281,7 +297,7 @@ onItemSelected(itemName: any) {
    createCreditDetail(item?: any): void {
     this.creditDetailsForm=this.fb.group({
       bankName: ['', Validators.required],
-      natureOfLoan: ['', Validators.required],
+      natureOfLoan: ['', Validators.required, Validators.pattern(/^(?=.*[a-zA-Z])[a-zA-Z0-9 .]+$/)],
       limitSanctioned: ['', Validators.required],
       outstandingAmount: [false],
       overdueAmount: ['', ],
@@ -446,7 +462,7 @@ this.applicationForm.get('amountToBeReleased')?.updateValueAndValidity()
     if(this.currentStep==2){
   this.applicationForm.get('enterpriseCategory')?.setValidators([Validators.required]);
 this.applicationForm.get('natureOfActivity')?.setValidators([Validators.required]);
-this.applicationForm.get('sector')?.setValidators([Validators.required]);
+// this.applicationForm.get('sector')?.setValidators([Validators.required]);
 this.applicationForm.get('operationStatus')?.setValidators([Validators.required]);
 this.applicationForm.get('issueDate')?.setValidators([Validators.required]);
 this.applicationForm.get('reasonForNotOperating')?.setValidators([Validators.required]);
@@ -472,13 +488,17 @@ this.applicationForm.get('district')?.setValidators(null);
 this.applicationForm.get('mandal')?.setValidators(null);
 this.applicationForm.get('email')?.setValidators(null);
 this.applicationForm.get('address')?.setValidators(null);
+this.applicationForm.get('village')?.setValidators([Validators.required,Validators.minLength(3)]);
+this.applicationForm.get('street')?.setValidators([Validators.required,Validators.minLength(3)]);
+this.applicationForm.get('pincode')?.setValidators([Validators.required, Validators.pattern(/^[1-9][0-9]{5}$/)]);
+
 this.applicationForm.get('operatingDifficulties')?.setValidators(null);
       this.operationalChange('NO');
       this.existingChange('NO');
       this.investmentChange('NO');
 this.applicationForm.get('enterpriseCategory')?.updateValueAndValidity()
 this.applicationForm.get('natureOfActivity')?.updateValueAndValidity()
-this.applicationForm.get('sector')?.updateValueAndValidity()
+// this.applicationForm.get('sector')?.updateValueAndValidity()
 this.applicationForm.get('operationStatus')?.updateValueAndValidity()
 this.applicationForm.get('issueDate')?.updateValueAndValidity()
 this.applicationForm.get('reasonForNotOperating')?.updateValueAndValidity()
@@ -504,6 +524,9 @@ this.applicationForm.get('district')?.updateValueAndValidity()
 this.applicationForm.get('mandal')?.updateValueAndValidity()
 this.applicationForm.get('email')?.updateValueAndValidity()
 this.applicationForm.get('address')?.updateValueAndValidity()
+this.applicationForm.get('village')?.updateValueAndValidity()
+this.applicationForm.get('street')?.updateValueAndValidity()
+this.applicationForm.get('pincode')?.updateValueAndValidity()
 this.applicationForm.get('operatingDifficulties')?.updateValueAndValidity()
 // Update validity for all controls
 this.applicationForm.updateValueAndValidity();
@@ -530,11 +553,14 @@ console.log(this.applicationForm.value);
       this.applicationForm.get('mandal')?.setValidators([Validators.required]);
       this.applicationForm.get('email')?.setValidators([Validators.email]);
       this.applicationForm.get('address')?.setValidators([Validators.required, Validators.minLength(3)]);
+      this.applicationForm.get('village')?.setValidators([Validators.required,Validators.minLength(3)]);
+      this.applicationForm.get('street')?.setValidators([Validators.required,Validators.minLength(3)]);
+      this.applicationForm.get('pincode')?.setValidators([Validators.required, Validators.pattern(/^[1-9][0-9]{5}$/)]);
       this.applicationForm.get('operatingDifficulties')?.setValidators([Validators.required]);
       
   this.applicationForm.get('enterpriseCategory')?.setValidators(null)
 this.applicationForm.get('natureOfActivity')?.setValidators(null)
-this.applicationForm.get('sector')?.setValidators(null)
+// this.applicationForm.get('sector')?.setValidators(null)
 this.applicationForm.get('operationStatus')?.setValidators(null)
 this.applicationForm.get('operatingSatisfactorily')?.setValidators(null)
 this.applicationForm.get('operatingDifficulties')?.setValidators(null)
@@ -554,7 +580,7 @@ this.applicationForm.get('helpMsg')?.setValidators(null)
 this.applicationForm.updateValueAndValidity();
 this.applicationForm.get('enterpriseCategory')?.updateValueAndValidity()
 this.applicationForm.get('natureOfActivity')?.updateValueAndValidity()
-this.applicationForm.get('sector')?.updateValueAndValidity()
+// this.applicationForm.get('sector')?.updateValueAndValidity()
 this.applicationForm.get('operationStatus')?.updateValueAndValidity()
 this.applicationForm.get('issueDate')?.updateValueAndValidity()
 this.applicationForm.get('reasonForNotOperating')?.updateValueAndValidity()
@@ -580,6 +606,9 @@ this.applicationForm.get('district')?.updateValueAndValidity()
 this.applicationForm.get('mandal')?.updateValueAndValidity()
 this.applicationForm.get('email')?.updateValueAndValidity()
 this.applicationForm.get('address')?.updateValueAndValidity()
+this.applicationForm.get('village')?.updateValueAndValidity()
+this.applicationForm.get('street')?.updateValueAndValidity()
+this.applicationForm.get('pincode')?.updateValueAndValidity()
 this.applicationForm.get('operatingDifficulties')?.updateValueAndValidity()
       
       }

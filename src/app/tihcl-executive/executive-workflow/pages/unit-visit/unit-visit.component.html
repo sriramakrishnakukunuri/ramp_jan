@@ -531,6 +531,10 @@
               </div>
             </div> -->
           </div>
+         
+
+        </div>
+         <hr>
 
           <!-- Number of Shifts -->
           <div class="col-12 col-sm-6 col-md-4 col-lg-4">
@@ -548,15 +552,63 @@
               </div>
             </div>
           </div>
+           <div class="border p-2 rounded-3 mb-3" >
+                       <div class="row align-items-center">
+                         <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                           <label class="fs-md fw-bold mb-1">Shift Timings</label>
+                         </div>
+                         <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6" *ngIf="unitVisitForm.get('noOfShifts')?.value>workShiftsDto.controls.length">
+                           <div class="text-start text-sm-end text-xl-end">
+                             <button type="button" (click)="openworkshiftModal()" *ngIf="freeze<=3"
+                               class="btn btn-outline-primary btn-sm border-0 ms-3">
+                               <span class="bi bi-plus-lg"></span> Add
+                             </button>
+                           </div>
+                         </div>
+                       </div>
 
+                       <div class="table-responsive mt-3" *ngIf="workShiftsDto.controls.length > 0">
+                         <table class="table table-striped table-borderless fs-md">
+                           <thead class="bg-theme text-white">
+                             <tr>
+                               <th>S.No</th>
+                               <!-- <th>Shift Name</th> -->
+                               <th>Start Time</th>
+                               <th>End Time</th>
+                               <th class="text-center">Edit / Delete</th>
+                             </tr>
+                           </thead>
+                           <tbody formArrayName="workShiftsDto">
+                             <tr *ngFor="let shareholder of workShiftsDto.controls; let i = index" [formGroupName]="i">
+                               <td>{{i + 1}}</td>
+                               <!-- <td>{{ shareholder.get('shiftName')?.value }}</td> -->
+                               <td>{{ shareholder.get('startTime')?.value }}</td>
+                               <td>{{ shareholder.get('endTime')?.value }}</td>
+                               <td class="text-center">
+                                 <button type="button" (click)="openworkshiftModal(i)"
+                                   class="btn btn-default text-primary btn-sm">
+                                   <span class="bi bi-pencil"></span>
+                                 </button>
+                                 <button type="button" (click)="removePartnerShip(i,shareholder.get('id')?.value)"
+                                   class="btn btn-default text-danger btn-sm">
+                                   <span class="bi bi-trash"></span>
+                                 </button>
+                               </td>
+                             </tr>
+                           </tbody>
+                          
+                         </table>
+                       </div>
 
-        </div>
-
+                       <div *ngIf="workShiftsDto.controls.length === 0" class="text-center py-3 text-muted">
+                         No Shift Timings added yet
+                       </div>
+            </div>
         <hr>
 
         <!-- Stocks Record -->
         <div>
-          <label class="fs-md fw-600">Stocks Record</label>
+          <label class="fs-md fw-600 mb-2">Stocks Record</label>
           <div class="row">
             <!-- Stocks stored properly -->
             <div class="col-12 col-sm-6 col-md-4 col-lg-4">
@@ -740,9 +792,9 @@
           </div>
           <div class="col-12 col-sm-6 col-md-4 col-lg-4">
             <div class="form-floating mb-3">
-              <!-- <input type="text" class="form-control" id="max" name="installedCapacity" placeholder="" formControlName="installedCapacity"> -->
-              <input type="number" class="form-control" id="max" name="installedCapacity" placeholder=""
-                formControlName="installedCapacity" min="0">
+              <input type="text" class="form-control" id="max" name="installedCapacity" placeholder="" formControlName="installedCapacity">
+              <!-- <input type="number" class="form-control" id="max" name="installedCapacity" placeholder=""
+                formControlName="installedCapacity" min="0"> -->
               <label for="max">Installed Capacity (In Units)</label>
               <div
                 *ngIf="unitVisitForm.get('installedCapacity')?.errors?.['required'] && (unitVisitForm.get('installedCapacity')?.dirty || unitVisitForm.get('installedCapacity')?.touched)"
@@ -758,9 +810,9 @@
           <!-- Minimum production -->
           <div class="col-12 col-sm-6 col-md-4 col-lg-4">
             <div class="form-floating mb-3">
-              <!-- <input type="text" class="form-control" id="min" name="currentCapacityUtilisation" placeholder="" formControlName="currentCapacityUtilisation" > -->
-              <input type="number" class="form-control" id="min" name="currentCapacityUtilisation" placeholder=""
-                formControlName="currentCapacityUtilisation" min="0">
+              <input type="text" class="form-control" id="min" name="currentCapacityUtilisation" placeholder="" formControlName="currentCapacityUtilisation" >
+              <!-- <input type="number" class="form-control" id="min" name="currentCapacityUtilisation" placeholder=""
+                formControlName="currentCapacityUtilisation" min="0"> -->
               <label for="min">Current Capacity Utilization (In Units)</label>
               <div
                 *ngIf="unitVisitForm.get('currentCapacityUtilisation')?.errors?.['required'] && (unitVisitForm.get('currentCapacityUtilisation')?.dirty || unitVisitForm.get('currentCapacityUtilisation')?.touched)"
@@ -776,8 +828,8 @@
           <!-- Current production -->
           <div class="col-12 col-sm-6 col-md-4 col-lg-4">
             <div class="form-floating mb-3">
-              <input type="number" class="form-control" id="current" name="currentProductionInUnit" placeholder=""
-                formControlName="currentProductionInUnit" min="0">
+              <input type="text" class="form-control" id="current" name="currentProductionInUnit" placeholder=""
+                formControlName="currentProductionInUnit" >
               <label for="current">Current production (In Percentage)</label>
               <div
                 *ngIf="unitVisitForm.get('currentProductionInUnit')?.errors?.['required'] && (unitVisitForm.get('currentProductionInUnit')?.dirty || unitVisitForm.get('currentProductionInUnit')?.touched)"
@@ -1072,3 +1124,66 @@
     </div>
   </div>
 </div>
+
+<div class="modal fade" [class.show]="showworkshiftModal" [style.display]="showworkshiftModal ? 'block' : 'none'"
+   id="shareholdingPattern" tabindex="-1" aria-labelledby="shareholdingPatternLabel" aria-hidden="true">
+   <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+     <div class="modal-content">
+       <div class="modal-header py-1 bg-theme">
+         <h6 class="modal-title text-white"> {{ isEditModeworkshift ? 'Edit' : 'Add' }} Work Shift Timings</h6>
+
+         <button type="button" class="btn-close text-white fs-4 p-0" data-bs-dismiss="modal" (click)="closePartnershipModal()"
+           aria-label="Close"><span class="bi bi-x"></span> </button>
+       </div>
+       <div class="modal-body">
+         <form [formGroup]="workShiftsDtoForm">
+             <div class="row">
+             <!-- <div class="col-12">
+               <div class="form-floating mb-3">
+               <input type="text" class="form-control" id="shiftName" formControlName="shiftName" placeholder="">
+               <label for="shiftName">Shift Name</label>
+               </div>
+               <div
+               *ngIf="workShiftsDtoForm.get('shiftName')?.invalid && (workShiftsDtoForm.get('shiftName')?.dirty || workShiftsDtoForm.get('shiftName')?.touched)"
+               class="text-danger small">
+               Shift Name is required
+               </div>
+             </div> -->
+             <div class="col-12">
+               <div class="form-floating mb-3">
+               <input type="time" class="form-control" id="startTime" formControlName="startTime" placeholder="">
+               <label for="startTime">Start Time</label>
+               </div>
+               <div
+               *ngIf="workShiftsDtoForm.get('startTime')?.invalid && (workShiftsDtoForm.get('startTime')?.dirty || workShiftsDtoForm.get('startTime')?.touched)"
+               class="text-danger small">
+               Start Time is required
+               </div>
+             </div>
+             <div class="col-12">
+               <div class="form-floating mb-3">
+               <input type="time" class="form-control" id="endTime" formControlName="endTime" placeholder="">
+               <label for="endTime">End Time</label>
+               </div>
+               <div
+               *ngIf="workShiftsDtoForm.get('endTime')?.invalid && (workShiftsDtoForm.get('endTime')?.dirty || workShiftsDtoForm.get('endTime')?.touched)"
+               class="text-danger small">
+               End Time is required
+               </div>
+             </div>
+             </div>
+         </form>
+
+         <div class="text-end">
+           <button type="button" class="btn btn-secondary me-2" (click)="closePartnershipModal()">Cancel</button>
+           <button type="button" class="btn btn-primary" (click)="saveworkshift()"
+             [disabled]="workShiftsDtoForm.invalid">
+             {{ isEditModeworkshift ? 'Update' : 'Save' }}
+           </button>
+         </div>
+       </div>
+     </div>
+   </div>
+ </div>
+ <div class="modal-backdrop fade" [class.show]="showworkshiftModal"
+   [style.display]="showworkshiftModal ? 'block' : 'none'"></div>

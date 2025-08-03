@@ -3,25 +3,45 @@
 import { AuthenticationService } from './_services';
 import { User, Role } from './_models';
 import { IdleTimeoutService } from './_services/idle-timeout.service';
+import { CommonServiceService } from './_services/common-service.service';
+import { APIS } from './constants/constants';
 
 @Component({ selector: 'app-root', templateUrl: 'app.component.html' })
 export class AppComponent {
     user?: User | null;
     Role = Role
-
+     notifications:any = [];
     constructor(private authenticationService: AuthenticationService,
-        private idleService: IdleTimeoutService
-    ) {
-        this.authenticationService.user.subscribe(x => this.user = x);
+        private idleService: IdleTimeoutService, private _commonService: CommonServiceService,) {
+        this.authenticationService.user.subscribe(x => {
+            this.user = x
+             this.getNotifications()
+        });
+        
+        
     }
-
+    getNotifications() {
+        if(!this.user) return;
+        this.notifications = [];
+        this._commonService.getDataByUrl(APIS.tihclMasterList.getNotifications+this.user?.userRole).subscribe({
+            next: (data: any) => {
+                this.notifications = data || {};
+            },
+            error: (error: any) => {
+                console.error('Error fetching notifications:', error);
+            }
+        });
+        
+    }
     get isAdmin() {
         return this.user?.userRole === Role.Admin;
     }
+    
 
     logout() {
         this.authenticationService.logout();
     }
+
 }
 
 @Directive({
@@ -53,4 +73,5 @@ export class HasRoleDirective {
             this.viewContainer.clear();
         }
     }
+   
 }

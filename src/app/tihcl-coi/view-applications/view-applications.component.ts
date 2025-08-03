@@ -91,7 +91,7 @@ districtName:any='district'
  getDataReceived(pageNo:any,PageSize:any): any {
 
     this.tableListReceived = [];
-    if(this.districtName=='All'){
+    if(this.districtName=='district'){
       this._commonService.getDataByUrl(APIS.tihclCOI.getApplicaionData+'&status='+this.activeTab+'&pageNo=' + (pageNo-1) + '&pageSize=' + PageSize).subscribe({
       next: (dataList: any) => {
         this.tableListReceived = dataList.data;
