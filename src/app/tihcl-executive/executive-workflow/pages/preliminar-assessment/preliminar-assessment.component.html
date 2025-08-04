@@ -492,8 +492,9 @@
       </div>
 
       <!-- Submit Button -->
-      <input *ngIf="freeze<=10" type="submit" name="next" class="btn btn-primary float-end"
+      <input *ngIf="freeze==1" type="submit" name="next" class="btn btn-primary float-end"
         value="Submit for Manager Approval" />
+        <button *ngIf="freeze<=10 && freeze>1" type="button" class="btn btn-primary float-end" (click)="onUpdate()">Save</button>
     </form>
   </div>
 </div>
