@@ -27,15 +27,20 @@
 
                         <div class="row" styles="margin-right='20px';margin-left='20px'">
                             <div class="col-12 col-sm-6 col-md-4 col-lg-4">
-                                <div class="form-floating mb-3">
-                                    <select class="form-select" formControlName="activityId">
-                                        <option selected value="">Select Type Of Activity</option>
-                                        <option value="{{list.activityId}}" *ngFor="let list of activityList">{{list.activityName}}</option>
-                                    </select>
-                                    <label>Type Of Activity <span class="c-red"> *</span></label>
+                                <div class="     mb-3">
+                                    <mat-form-field appearance="outline" class="w-100">
+                                        <mat-label>Type Of Activity <span class="c-red"> *</span></mat-label>
+                                        <mat-select formControlName="activityId">
+                                            <mat-option value="">Select Type Of Activity</mat-option>
+                                            <mat-option *ngFor="let list of activityList" [value]="list.activityId">
+                                                {{list.activityName}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                    <div *ngIf="f2['activityId'].touched && !f2['activityId'].valid" class="error" style="color: red;">
+                                        Type Of Activity is required
+                                    </div>
                                 </div>
-                                <div *ngIf="f2['activityId'].touched && !f2['activityId'].valid" class="error"
-                                    style="color: red;">Type Of Activity is required</div>
                             </div>
                             <div class="col-12 col-sm-6 col-md-4 col-lg-4">
                                 <div class="form-floating mb-3">
