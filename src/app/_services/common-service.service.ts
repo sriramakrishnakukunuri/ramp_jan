@@ -28,6 +28,9 @@ export class CommonServiceService {
   public updatedata(URL: any, payload: any,): Observable<any> {
     return this.http.put(URL, payload).pipe(catchError(this.formatErrors));
   }
+   public updatedataPatch(URL: any, payload: any,): Observable<any> {
+    return this.http.patch(URL, payload).pipe(catchError(this.formatErrors));
+  }
   public updatedataByUrl(URL: any): Observable<any> {
     return this.http.put(URL,{}).pipe(catchError(this.formatErrors));
   }

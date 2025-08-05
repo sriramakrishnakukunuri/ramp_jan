@@ -41,6 +41,18 @@ export class AppComponent {
     logout() {
         this.authenticationService.logout();
     }
+    readNotification(notification: any) {
+        if (notification && notification.id) {
+            this._commonService.updatedataPatch(APIS.tihclMasterList.readNotification,[{"id": notification.id}] ).subscribe({
+                next: () => {
+                    this.getNotifications();
+                },
+                error: (error: any) => {
+                    console.error('Error reading notification:', error);
+                }
+            });
+        }
+    }   
 
 }
 

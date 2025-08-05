@@ -70,6 +70,9 @@ export class DisbursementDetailsComponent implements OnInit {
              rocFiling: dataList?.rocFiling || '',
              tgipassUploadPath: dataList?.tgipassUploadPath || null,
              rocFilingPath: dataList?.rocFilingPath || null,
+             processingFeeGSTAmount: dataList?.processingFeeGSTAmount || null,
+             processingFeeAmount: dataList?.processingFeeAmount || null,
+            remarks: dataList?.remarks || null,
              });
 
              // Patch disbursements array if present
@@ -91,24 +94,38 @@ export class DisbursementDetailsComponent implements OnInit {
       totalSanctionedAmount: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
       totalDisbursedAmount: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
       processingFeeReceivedDate: ['', Validators.required],
-      processingFeeGSTPercent: [
-      '',
-      [
-        Validators.required,
-        Validators.pattern(/^\d+(\.\d{1,2})?$/), // allows decimals up to 2 places
-        Validators.min(0),
-        Validators.max(100)
-      ]
-      ],
+      // processingFeeGSTPercent: [
+      // '',
+      // [
+      //   Validators.required,
+      //   Validators.pattern(/^\d+(\.\d{1,2})?$/), // allows decimals up to 2 places
+      //   Validators.min(0),
+      //   Validators.max(100)
+      // ]
+      // ],
       collectionDate: ['', Validators.required],
+      processingFeeGSTAmount: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
       processingFeeCollectedAmount: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
+      processingFeeAmount: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
       tgipassUpload: ['', Validators.required],
       rocFiling: ['', Validators.required],
       tgipassUploadPath: [null],
       rocFilingPath: [null],
+      remarks:['']
     });
   }
+   ChangeAmount(feeAmount:any,gst:any){
+    if(feeAmount && gst){
 
+      this.disbursementForm.get('processingFeeCollectedAmount')?.patchValue(Number(gst)+Number(feeAmount))
+    }
+    else if(gst){
+         this.disbursementForm.get('processingFeeCollectedAmount')?.patchValue(gst)
+    }
+    else{
+      this.disbursementForm.get('processingFeeCollectedAmount')?.patchValue(feeAmount)
+    }
+  }
   initializeAddDisbursementForm(): void {
     this.addDisbursementForm = this.fb.group({
       id:[null],

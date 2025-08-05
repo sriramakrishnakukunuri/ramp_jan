@@ -6,15 +6,38 @@
                         <h6 class="mb-0 ">Loan Sanctioned</h6>
                     </div>
                     <div class="card-body">
+                        <div class="row mb-3">
+                            <div class="col-md-12 d-flex justify-content-end align-items-center">
+                                <div class="me-2" style="width: 180px;">
+                                    <select class="form-select" [(ngModel)]="searchType" (change)="filterTable()">
+                                        <option value="">Select Parameter</option>
+                                        <option value="applicationNo">Application No</option>
+                                         <option value="unitName">Name Of Unit</option>
+                                           <option value="contactNo">Mobile No</option>
+                                        <!-- Add more options here if needed -->
+                                    </select>
+                                </div>
+                                <div style="width: 260px;">
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        placeholder="Search"
+                                        [(ngModel)]="searchText"
+                                        (input)="filterTable()"
+                                    />
+                                </div>
+                            </div>
+                        </div>
                         <table id="pending_table" class="table nowrap display w-100 fs-md mt-0">
                             <thead>
                                 <tr>
                                     <th class="text-start">S.No</th>
                                     <th>View</th>
                                     <th>Date Application</th>
+                                    <th>Application No</th>
                                     <th>Executive Name</th>
                                     <th>Executive Feedback Date</th>
-                                    <th>Company Name</th>
+                                    <th>Name Of Unit</th>
                                     <th>Promoter Name</th>
                                     <th>Mobile No.</th>
                                     <th>Industry</th>
@@ -26,6 +49,7 @@
                                     <td class="text-start">{{ i + 1 }}</td>
                                     <td><a href="#" data-bs-toggle="modal" data-bs-target="#viewModal" (click)="getDataById(item)"><span class="bi bi-eye"></span></a></td>
                                     <td>{{ item.dateOfSubmission }}</td>
+                                    <td>{{ item.applicationNo }}</td>
                                     <td>{{ item.executive }}</td>
                                     <!-- <td>{{ item.executiveFeedbackDate }}</td> -->
                                      <td>13-05-2025</td>
@@ -44,6 +68,7 @@
                                  [currentPage]="currentPage"
                                  [totalItems]="totalItems"
                                 [pageSize]="pageSize"
+                                [key]="activeTab"
                                 (pageChange)="onPageChange($event)">
                          </app-pagination>
                     </div>

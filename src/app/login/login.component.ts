@@ -1,11 +1,12 @@
-﻿import { Component, OnInit } from '@angular/core';
+﻿import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import {  FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 
 import { AuthenticationService } from '@app/_services';
 import { Role } from '@app/_models/role';
-
+ declare var bootstrap: any;
+declare var $: any;
 @Component({ templateUrl: 'login.component.html', })
 export class LoginComponent implements OnInit {
     loginForm!: FormGroup;
@@ -13,12 +14,14 @@ export class LoginComponent implements OnInit {
     loading = false;
     submitted = false;
     error = '';
+   
     loginType: string = 'team-member'; 
     phoneNumber: string = '';
     passwordshowConfirm: Boolean=false;
     captchaValue: string = '';
     captchaInput: string = '';
     captchaSvg: string = '';
+     @ViewChild('approvedModal') approvedModal!: ElementRef;
     constructor(
         private formBuilder: FormBuilder,
         private route: ActivatedRoute,
@@ -246,6 +249,7 @@ export class LoginComponent implements OnInit {
             .pipe(first())
             .subscribe({
                 next: (res) => {
+                    console.log(res);
                     if(res.status === 200) {
                     sessionStorage.setItem('enterpreneur', JSON.stringify(res.data));
                      this.router.navigate(['/loan-application-process']);
@@ -257,11 +261,29 @@ export class LoginComponent implements OnInit {
                     }
                 },
                 error: error => {
+                     
+                    if(error=='An unexpected error occurred: Application is rejected within the last 90 days' || error=='An unexpected error occurred: Application is rejected within the last 90 days. Status: REJECTED_MANAGER_APPROVAL_1'){
+                        this.error = 'Application is rejected within the last 90 days';
+                         const modal = new bootstrap.Modal(this.approvedModal.nativeElement, {
+                                backdrop: false // Disable default backdrop
+                            });
+                         modal.show();
+                         this.authenticationService.logout();
+                          this.defaultOTPScreen = false;
+                            this.loginType = 'entrepreneur';
+                            this.switchLoginType('entrepreneur');
+                    }
+                    else{
                     sessionStorage.setItem('enterpreneur', JSON.stringify({contactNumber: mobile}));
                     this.router.navigate(['/loan-application-process']);
-                    this.error = 'Server Error. Please try again later.';
-                    this.loading = false;
+                    }
+                    
+                   
                 }
             });
+    }
+    Approved(){
+        
+             this.defaultOTPScreen = false;
     }
 }

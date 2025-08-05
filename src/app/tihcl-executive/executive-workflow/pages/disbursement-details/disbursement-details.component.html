@@ -8,7 +8,7 @@
           <div *ngIf="(applicationData?.applicationStatus?applicationData?.applicationStatus=='DISBURSEMENT_COMPLETED' :applicationData?.status=='DISBURSEMENT_COMPLETED')" class="text-success small mt-2 mb-3">
                      Disbursment Details Completed
                    </div>
-        <div class="row">
+        <div class="row mb-3">
           <div class="col-12 col-sm-6 col-md-4 col-lg-3">
             <div class="form-floating mb-3">
               <input type="number" class="form-control" id="totalSanctionedAmount" formControlName="totalSanctionedAmount"
@@ -104,7 +104,7 @@
               </div>
             </div>
           </div>
-          <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+          <!-- <div class="col-12 col-sm-6 col-md-4 col-lg-3">
             <div class="form-floating mb-3">
               <input type="number" class="form-control" id="processingFeeCollectedAmount" formControlName="processingFeeCollectedAmount" placeholder="">
               <label for="processingFeeCollectedAmount">Processing Fee Collected Amount</label>
@@ -139,10 +139,10 @@
                 <small *ngIf="f['processingFeeReceivedDate']?.errors?.required">Processing Fee Received Date is required</small>
               </div>
             </div>
-          </div>
+          </div> -->
           <div class="col-12 col-sm-6 col-md-4 col-lg-3">
             <div class="mb-3">
-              <h6 class="fw-600 fs-md">TG-ipass upload</h6>
+              <h6 class="fw-600 fs-md">TG-Ipass</h6>
               <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" formControlName="tgipassUpload" id="applicableTsi"
                   value="Yes">
@@ -155,7 +155,7 @@
               </div>
               <div *ngIf="f['tgipassUpload']?.invalid && (f['tgipassUpload']?.dirty || f['tgipassUpload']?.touched)"
                 class="text-danger">
-                <small>TG-ipass upload is required</small>
+                <small>TG-Ipass  is required</small>
               </div>
             </div>
           </div>
@@ -190,7 +190,7 @@
           </div>
           <div class="col-12 col-sm-12 col-md-6  col-lg-4 " *ngIf="f['rocFiling']?.value === 'Yes'">
             <div>
-              <label for="uploadNoc" class="form-label text-center fw-600">TG-ipass upload</label>
+              <label for="uploadNoc" class="form-label text-center fw-600">ROC upload</label>
               <!-- <input class="form-control" id="uploadNoc" type="file"> -->
               <input class="form-control" id="uploadNoc" type="file" (change)="onFileSelectedrocFilling($event)">
               <small *ngIf="this.selectedfilesrocFilling?.name " class="text-muted">
@@ -199,14 +199,57 @@
             </div>
           </div>
         </div>
-         <!-- <div class="card border rounded-2 shadow-none mb-3">
+         <div class="card border rounded-2 shadow-none mb-3">
       <div class="card-header bg-theme text-white">
-        <h6 class="mb-0">Security Details</h6>
+        <h6 class="mb-0">Processing Fee Details</h6>
       </div>
       <div class="card-body">
         <div class="row">
           
-
+          <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+            <div class="form-floating mb-3">
+              <input type="number" class="form-control" id="processingFeeAmount" formControlName="processingFeeAmount" placeholder="" (input)="ChangeAmount($any($event.target).value,f['processingFeeGSTAmount'].value)">
+              <label for="processingFeeAmount">Processing Fee  Amount</label>
+              <div *ngIf="f['processingFeeAmount']?.invalid && (f['processingFeeAmount']?.dirty || f['processingFeeAmount']?.touched)"
+                class="text-danger">
+                <small *ngIf="f['processingFeeAmount']?.errors?.required">Processing Fee Amount is required</small>
+                <small *ngIf="f['processingFeeAmount']?.errors?.pattern">Please enter a valid amount</small>
+              </div>
+            </div>
+          </div>
+           <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+            <div class="form-floating mb-3">
+              <input type="number" class="form-control" id="processingFeeGSTAmount" formControlName="processingFeeGSTAmount" placeholder="" (input)="ChangeAmount(f['processingFeeAmount'].value,$any($event.target).value)">
+              <label for="processingFeeGSTAmount">Processing GST Amount</label>
+              <div *ngIf="f['processingFeeGSTAmount']?.invalid && (f['processingFeeGSTAmount']?.dirty || f['processingFeeGSTAmount']?.touched)"
+                class="text-danger">
+                <small *ngIf="f['processingFeeGSTAmount']?.errors?.required">Processing GST Amount is required</small>
+                <small *ngIf="f['processingFeeGSTAmount']?.errors?.pattern">Please enter a valid amount</small>
+              </div>
+            </div>
+          </div>
+           <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+            <div class="form-floating mb-3">
+              <input type="number" class="form-control" id="processingFeeCollectedAmount" readonly formControlName="processingFeeCollectedAmount" placeholder="">
+              <label for="processingFeeCollectedAmount">Processing Fee Collected</label>
+              <div *ngIf="f['processingFeeCollectedAmount']?.invalid && (f['processingFeeCollectedAmount']?.dirty || f['processingFeeCollectedAmount']?.touched)"
+                class="text-danger">
+                <small *ngIf="f['processingFeeCollectedAmount']?.errors?.required">Processing Fee Collected is required</small>
+                <small *ngIf="f['processingFeeCollectedAmount']?.errors?.pattern">Please enter a valid amount</small>
+              </div>
+            </div>
+          </div>
+           <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+            <div class="form-floating mb-3">
+              <input type="date" class="form-control" id="processingFeeReceivedDate" formControlName="processingFeeReceivedDate"  max="{{ today | date:'yyyy-MM-dd' }}"
+                placeholder="">
+              <label for="processingFeeReceivedDate">Processing Fee Collected Date</label>
+              <div *ngIf="f['processingFeeReceivedDate']?.invalid && (f['processingFeeReceivedDate']?.dirty || f['processingFeeReceivedDate']?.touched)"
+                class="text-danger">
+                <small *ngIf="f['processingFeeReceivedDate']?.errors?.required">Processing Fee Collected Date is required</small>
+              </div>
+            </div>
+          </div>
           <div class="col-12 col-sm-6 col-md-4 col-lg-3">
             <div class="form-floating mb-3">
               <input type="text" class="form-control" id="remarksInput" 
@@ -216,7 +259,7 @@
           </div>                        
         </div>
       </div>
-    </div> -->
+    </div>
          <div class="border rounded-3 p-2">
           <div class="row align-items-center mb-3">
             <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">

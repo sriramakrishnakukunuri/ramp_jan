@@ -111,7 +111,7 @@
                                  <div class="notification-count">{{notifications?.count || 0}}</div>
                                 <span class="bi bi-bell fs-4"></span>
                             </a>
-                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationDropdown">
+                            <ul class="dropdown-menu dropdown-menu-end" style="overflow: auto;max-height: 300px;" aria-labelledby="notificationDropdown">
                                 <ng-container *ngIf="notifications?.notificationResponseList?.length === 0">
                                     <li>
                                         <a class="dropdown-item" >No Notifications</a></li>
@@ -120,7 +120,7 @@
                                 <li *ngFor="let notification of notifications?.notificationResponseList">
                                     <!-- <span class="bi bi-info-circle me-2"></span>
                                     <i class='bxr  bx-arrow-in-up-right-stroke-square'  ></i>  -->
-                                    <a class="dropdown-item">{{notification.message}}</a>
+                                    <a class="dropdown-item" (click)="readNotification(notification)">{{notification.message}}</a>
                                 </li>
                                 </ng-container>
                             </ul>

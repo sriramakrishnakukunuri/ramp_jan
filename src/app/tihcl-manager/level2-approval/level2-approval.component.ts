@@ -47,9 +47,29 @@ RejectForm!: FormGroup;
     this.pageSize = event.pageSize;
      this.getLevelOneData(this.currentPage,  this.pageSize);
   }
+   searchType:any=''
+  searchText:any=''
+  filterTable(){
+  this.getLevelOneData(1, 10);
+  }
+   activeTab = 'pendingApplications';
  getLevelOneData(pageNo:any,PageSize:any): any {
     this.tableList = '';
-    this._commonService.getDataByUrl(APIS.tihclManager.getLevelTwoData+'&pageNo=' + (pageNo-1) + '&pageSize=' + PageSize).subscribe({
+    if(this.searchType && this.searchText){
+      this.activeTab='pendingNew'
+      this._commonService.getDataByUrl(APIS.tihclManager.getLevelTwoData+'&pageNo=' + (pageNo-1) + '&pageSize=' + PageSize+'&'+this.searchType+'='+this.searchText).subscribe({
+        next: (dataList: any) => {
+          this.tableList = dataList.data;
+          this.totalItems=dataList?.totalElements
+        },
+        error: (error: any) => {
+          this.toastrService.error(error.error.message);
+        }
+      });
+    } 
+    else{
+      this.activeTab='pendingApplications'
+       this._commonService.getDataByUrl(APIS.tihclManager.getLevelTwoData+'&pageNo=' + (pageNo-1) + '&pageSize=' + PageSize).subscribe({
       next: (dataList: any) => {
         this.tableList = dataList.data;
         this.totalItems=dataList?.totalElements
@@ -60,6 +80,8 @@ RejectForm!: FormGroup;
         this.toastrService.error(error.error.message);
       }
     });
+    }
+   
   }
   approvalData:any={}
   ShowDataForApproval(item:any){

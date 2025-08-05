@@ -103,7 +103,12 @@ StatusofApplication:any=''
     const enterpreneur = JSON.parse(sessionStorage.getItem('enterpreneur') || '{}');
     console.log(enterpreneur)
       if(enterpreneur && Object.keys(enterpreneur).length > 0){
-        this.enterPrenuerResponseData = enterpreneur;
+        if(enterpreneur?.valid){
+          
+          this.currentStep=1;
+        }
+        else{
+           this.enterPrenuerResponseData = enterpreneur;
          if(enterpreneur?.status=='Assessment Completed' || enterpreneur?.applicationStatus=='APPLICATION_SUBMITTED'){
           this.currentStep = 3; // Set to step 3 if status is 'Assessment Completed'
         }
@@ -170,6 +175,8 @@ StatusofApplication:any=''
         ) {
           this.StatusofApplication = 'Application is not considered due to ' + enterpreneur?.reasonForRejection;
         }
+        }
+       
          // Set to step 2 if enterpreneur data is  
       }
       else{

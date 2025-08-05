@@ -29,12 +29,32 @@ tableList:any=[]
   ngOnInit(): void {
     this.getNewApplications(1, 10);
   }
+  searchType:any=''
+  searchText:any=''
+   filterTable(){
+      this.getNewApplications(1, 10);
+  }
+   activeTab = 'pendingApplications'; // Default active tab
  getNewApplications(pageNo:any,PageSize:any): any {
     this.tableList = '';
-    this._commonService.getDataByUrl(APIS.tihclExecutive.getNewApplications+'?pageNo=' + (pageNo-1) + '&pageSize=' + PageSize).subscribe({
+     if(this.searchType && this.searchText){
+      this.activeTab='pendingNew'
+      this._commonService.getDataByUrl(APIS.tihclExecutive.getNewApplications+'?userId='+this.loginsessionDetails?.userId+'&pageNo=' + (pageNo-1) + '&pageSize=' + PageSize+'&'+this.searchType+'='+this.searchText).subscribe({
+        next: (dataList: any) => {
+          this.tableList = dataList.data;
+          this.totalItems=dataList?.totalElements
+        },
+        error: (error: any) => {
+          this.toastrService.error(error.error.message);
+        }
+      });
+    }
+    else{
+      this.activeTab='pendingApplications'
+       this._commonService.getDataByUrl(APIS.tihclExecutive.getNewApplications+'?userId='+this.loginsessionDetails?.userId+'&pageNo=' + (pageNo-1) + '&pageSize=' + PageSize).subscribe({
       next: (dataList: any) => {
         this.tableList = dataList.data;
-        this.totalItems=dataList?.totalElements
+         this.totalItems=dataList?.totalElements
         // this.reinitializeDataTable();
       },
       error: (error: any) => {
@@ -42,6 +62,7 @@ tableList:any=[]
         this.toastrService.error(error.error.message);
       }
     });
+    }
   }
    onPageChange(event: {page: number, pageSize: number}): void {
     this.currentPage = event.page;

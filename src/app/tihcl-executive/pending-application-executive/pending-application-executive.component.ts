@@ -19,6 +19,8 @@ export class PendingApplicationExecutiveComponent implements OnInit {
   pagedData: any[] = [];
 loginsessionDetails:any
 tableList:any=[]
+searchType:any=''
+searchText:any=''
  constructor(
      private toastrService: ToastrService,
      private _commonService: CommonServiceService,
@@ -26,7 +28,11 @@ tableList:any=[]
    ) { 
      this.loginsessionDetails = JSON.parse(sessionStorage.getItem('user') || '{}');    
    }
+   activeTab = 'pendingApplications'; // Default active tab
   ngOnInit(): void {
+    this.currentPage=1
+    this.pageSize=10
+    
     this.getNewApplications(1, 10);
   }
   onPageChange(event: {page: number, pageSize: number}): void {
@@ -36,7 +42,21 @@ tableList:any=[]
   }
  getNewApplications(pageNo:any,PageSize:any): any {
     this.tableList = '';
-    this._commonService.getDataByUrl(APIS.tihclExecutive.getPendingApplications+'?userId='+this.loginsessionDetails?.userId+'&pageNo=' + (pageNo-1) + '&pageSize=' + PageSize).subscribe({
+    if(this.searchType && this.searchText){
+      this.activeTab='pendingNew'
+      this._commonService.getDataByUrl(APIS.tihclExecutive.getPendingApplications+'?userId='+this.loginsessionDetails?.userId+'&pageNo=' + (pageNo-1) + '&pageSize=' + PageSize+'&'+this.searchType+'='+this.searchText).subscribe({
+        next: (dataList: any) => {
+          this.tableList = dataList.data;
+          this.totalItems=dataList?.totalElements
+        },
+        error: (error: any) => {
+          this.toastrService.error(error.error.message);
+        }
+      });
+    }
+    else{
+      this.activeTab='pendingApplications'
+       this._commonService.getDataByUrl(APIS.tihclExecutive.getPendingApplications+'?userId='+this.loginsessionDetails?.userId+'&pageNo=' + (pageNo-1) + '&pageSize=' + PageSize).subscribe({
       next: (dataList: any) => {
         this.tableList = dataList.data;
          this.totalItems=dataList?.totalElements
@@ -47,6 +67,11 @@ tableList:any=[]
         this.toastrService.error(error.error.message);
       }
     });
+    }
+   
+  }
+  filterTable(){
+      this.getNewApplications(1, 10);
   }
    selectApplication(item: any) { // Set the current step to 1
     sessionStorage.setItem('ApplicationData', JSON.stringify(item));

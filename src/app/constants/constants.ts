@@ -63,6 +63,7 @@ export const APIS = {
         getMandal: API_BASE_URL + '/getAllmandalsOfDistrictsById/',
         getIndustrialByDistrict: API_BASE_URL + '/industrial-parks/',
         getNotifications: API_BASE_URL + '/notifications/userType?userRole=',
+        readNotification: API_BASE_URL + '/notifications/mark-read',
     },
     tihclEnterprenuer:{
         submitLoanApplication: API_BASE_URL + '/registrations/save',

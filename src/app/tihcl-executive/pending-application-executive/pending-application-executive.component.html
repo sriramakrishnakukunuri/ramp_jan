@@ -6,12 +6,34 @@
                         <h6 class="mb-0">Pending Application</h6>
                     </div>
                     <div class="card-body">
+                          <div class="row mb-3">
+                            <div class="col-md-12 d-flex justify-content-end align-items-center">
+                                <div class="me-2" style="width: 180px;">
+                                    <select class="form-select" [(ngModel)]="searchType" (change)="filterTable()">
+                                        <option value="">Select Parameter</option>
+                                        <option value="applicationNo">Application No</option>
+                                         <option value="unitName">Name Of Unit</option>
+                                           <option value="contactNo">Mobile No</option>
+                                        <!-- Add more options here if needed -->
+                                    </select>
+                                </div>
+                                <div style="width: 260px;">
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        placeholder="Search"
+                                        [(ngModel)]="searchText"
+                                        (input)="filterTable()"
+                                    />
+                                </div>
+                            </div>
+                        </div>
                         <table id="pending_table" class="table nowrap display w-100 fs-md mt-0">
                             <thead>
                                 <tr>
                                    <th class="text-start">S.No</th>
                                     <th>Application No</th>
-                                    <th>Enterprise</th>
+                                    <th>Name Of Unit</th>
                                     <th class="text-start">Promoter</th>
                                     <th>Contact</th>
                                     <th>Date Of Application</th>
@@ -42,6 +64,7 @@
                                  [currentPage]="currentPage"
                                  [totalItems]="totalItems"
                                 [pageSize]="pageSize"
+                                [key]="activeTab"
                                 (pageChange)="onPageChange($event)">
                          </app-pagination>
                     </div>

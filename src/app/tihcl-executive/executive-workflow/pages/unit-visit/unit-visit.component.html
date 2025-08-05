@@ -514,12 +514,12 @@
                 <option value="Seasonal">Seasonal</option>
                 <option value="Throughout the Year">Throughout the Year</option>
               </select>
-              <label for="seasonal">Whether production is seasonal or throughout the year?</label>
+              <label for="seasonal">Select the production cycle</label>
               <div *ngIf="unitVisitForm.get('seasonalOrThroughtoutYear')?.invalid && 
                                            (unitVisitForm.get('seasonalOrThroughtoutYear')?.dirty || 
                                            unitVisitForm.get('seasonalOrThroughtoutYear')?.touched)"
                 class="text-danger">
-                Seasonal or throughout the year is required
+                production cycle is required
               </div>
             </div>
             <!-- <div class="form-floating mb-3">

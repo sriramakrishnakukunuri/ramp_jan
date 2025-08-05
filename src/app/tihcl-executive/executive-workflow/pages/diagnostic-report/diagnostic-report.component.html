@@ -1042,7 +1042,7 @@
                                        <th class="text-start">S.No</th>
                                        <th>Source</th>
                                        <th class="text-start">Loan Amount</th>
-                                       <th class="text-start">Since When</th>
+                                       <th class="text-start">Since when/Sanctioned date</th>
                                        <th>Tenor</th>
                                        <th class="text-center">Actions</th>
                                      </tr>
@@ -1117,6 +1117,11 @@
                              <input class="form-check-input" type="radio" formControlName="loanSecurityType"
                                (change)="changesdata()" id="othersLoan" value="Others">
                              <label class="form-check-label" for="othersLoan">Others</label>
+                           </div>
+                           <div class="form-check form-check-inline">
+                             <input class="form-check-input" type="radio" formControlName="loanSecurityType"
+                               (change)="changesdata()" id="commercialPropertyLoan" value="Commercial Property">
+                             <label class="form-check-label" for="commercialPropertyLoan">Commercial Property</label>
                            </div>
                          </div>
 
@@ -1295,7 +1300,7 @@
                              <div class="form-floating">
                                <input type="date" class="form-control" id="modalSinceWhen" formControlName="sinceWhen"
                                  max="{{ today | date:'yyyy-MM-dd' }}">
-                               <label for="modalSinceWhen">Since When</label>
+                               <label for="modalSinceWhen">Since when/Sanctioned date</label>
                              </div>
                            </div>
                          </div>

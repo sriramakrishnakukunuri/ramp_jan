@@ -20,6 +20,7 @@ export class PreliminarAssessmentComponent implements OnInit {
   @Output() progressBarStatusUpdate:any = new EventEmitter();
    @ViewChild('addDelivery') addDelivery!: ElementRef;
    @ViewChild('UpdateLoanModal') UpdateLoanModal!: ElementRef;
+   @ViewChild('approvedModal') approvedModal!: ElementRef;
    @Input() freeze:any
   // Loans table data
   loansData: any[] = [
@@ -237,6 +238,7 @@ loginsessionDetails:any
   getDtataByUrl(url: string) {
     this._commonService.getDataByUrl(url).subscribe({
       next: (dataList: any) => {
+       
          this.assessmentForm.patchValue(dataList.data);
          this.getApplicationData=dataList.data
          console.log(dataList?.data)
@@ -501,9 +503,19 @@ loginsessionDetails:any
 
   return riskResponse;
 }
+onSubmit() {
+   if (this.assessmentForm.valid) {
+       const modal = new bootstrap.Modal(this.approvedModal.nativeElement, {
+        backdrop: false // Disable default backdrop
+      });
+      modal.show();
+   }
+   else{
+       this.markFormGroupTouched(this.assessmentForm);
+   }
+}
   // Submit the form
-  onSubmit() {
-  
+  Approved() {
   
     console.log(this.assessmentForm?.value,this.applicationData)
      if (this.assessmentForm.valid) {

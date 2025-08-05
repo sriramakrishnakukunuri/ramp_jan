@@ -47,20 +47,42 @@ export class Level3ApprovalComponent implements OnInit {
      this.pageSize = event.pageSize;
       this.getLevelOneData(this.currentPage,  this.pageSize);
    }
-  getLevelOneData(pageNo:any,PageSize:any): any {
-     this.tableList = '';
-     this._commonService.getDataByUrl(APIS.tihclManager.getLevelThreeData+'&pageNo=' + (pageNo-1) + '&pageSize=' + PageSize).subscribe({
-       next: (dataList: any) => {
-         this.tableList = dataList.data;
-         this.totalItems=dataList?.totalElements
-         // this.reinitializeDataTable();
-       },
-       error: (error: any) => {
-         this.totalItems=0
-         this.toastrService.error(error.error.message);
-       }
-     });
-   }
+    searchType:any=''
+  searchText:any=''
+  filterTable(){
+   this.getLevelOneData(1, 10);
+  }
+  activeTab = 'pendingApplications';
+   getLevelOneData(pageNo:any,PageSize:any): any {
+    this.tableList = '';
+    if(this.searchType && this.searchText){
+      this.activeTab='pendingNew'
+      this._commonService.getDataByUrl(APIS.tihclManager.getLevelThreeData+'&pageNo=' + (pageNo-1) + '&pageSize=' + PageSize+'&'+this.searchType+'='+this.searchText).subscribe({
+        next: (dataList: any) => {
+          this.tableList = dataList.data;
+          this.totalItems=dataList?.totalElements
+        },
+        error: (error: any) => {
+          this.toastrService.error(error.error.message);
+        }
+      });
+    } 
+    else{
+      this.activeTab='pendingApplications'
+       this._commonService.getDataByUrl(APIS.tihclManager.getLevelThreeData+'&pageNo=' + (pageNo-1) + '&pageSize=' + PageSize).subscribe({
+      next: (dataList: any) => {
+        this.tableList = dataList.data;
+        this.totalItems=dataList?.totalElements
+        // this.reinitializeDataTable();
+      },
+      error: (error: any) => {
+        this.totalItems=0
+        this.toastrService.error(error.error.message);
+      }
+    });
+    }
+   
+  }
    approvalData:any={}
    ShowDataForApproval(item:any){
      this.approvalData=item

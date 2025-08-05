@@ -246,7 +246,7 @@
                             <!-- Radio buttons for GST Number Exist -->
                             <div class="mb-2"
                               [ngClass]="applicationForm.get('district')?.valid ? '' :'isDisabled'">
-                              <label class="form-label fs-md fw-600 mb-1">Is Industrial Park Exist?</label>
+                              <label class="form-label fs-md fw-600 mb-1">Is Industrial Area Exist?</label>
                               <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" id="gstExistYes"
                                   formControlName="isIndustrialParkExist" [value]="true"
@@ -262,7 +262,7 @@
                               <div
                                 *ngIf="applicationForm.get('isIndustrialParkExist')?.invalid && applicationForm.get('isIndustrialParkExist')?.touched"
                                 class="text-danger small">
-                                Please select if Industrial Park exists
+                                Please select if Industrial Area exists
                               </div>
                             </div>
                           </div>
@@ -276,7 +276,7 @@
                             </app-multi-level-dropdown> -->
                             <select class="form-select" id="industrialPark" formControlName="industrialPark"
                               aria-label="">
-                              <option value="">Select Industrial Park</option>
+                              <option value="">Select Industrial Area</option>
                               <option *ngFor="let list of industrialParks" value="{{list}}">
                                 {{list}}</option>
                                 </select>
