@@ -92,27 +92,27 @@
                                                <a (click)="showImagePreview(imageUrlDownloadPath,item?.uploadBillUrl?.split('public_html/')?.[1],'pdf')"> <i class="fas fa-file-pdf"></i></a>
                                             </ng-container>
                                          </td>
-                                           <td *ngIf="item.spiuComments.length>1">
+                                           <td *ngIf="item?.spiuComments?.length>1">
                                                 <i class="bx docu-hv-text" style="position: relative;">
-                                                    {{item.spiuComments[0]}}..
+                                                    {{item?.spiuComments[0]}}..
                                                     <div class="statusmes-data" style="width: auto !important;background-color: #ffc107;"> 
                                                             <p> {{item?.spiuComments}}
                                                     </div>
                                                         </i>
                                            </td>
-                                            <td *ngIf="item.spiuComments.length<=1 ">
-                                                {{item.spiuComments?.[0]}}                        
+                                            <td *ngIf="item?.spiuComments?.length<=1 ">
+                                                {{item?.spiuComments?.[0]}}                        
                                             </td>
-                                              <td *ngIf="item.agencyComments.length>1">
+                                              <td *ngIf="item?.agencyComments?.length>1">
                                                 <i class="bx docu-hv-text" style="position: relative;">
-                                                    {{item.agencyComments[0]}}..
+                                                    {{item?.agencyComments[0]}}..
                                                     <div class="statusmes-data" style="width: auto !important;background-color: #ffc107;"> 
                                                             <p> {{item?.agencyComments}}
                                                     </div>
                                                         </i>
                                            </td>
-                                            <td *ngIf="item.agencyComments.length<=1 ">
-                                                {{item.agencyComments?.[0]}}                        
+                                            <td *ngIf="item?.agencyComments?.length<=1 ">
+                                                {{item?.agencyComments?.[0]}}                        
                                             </td>
                                               <td class="text-center">
                                         <button type="button"  class="btn btn-default text-lime-green btn-sm"  (click)="openRemarks(item)"><span class="bi bi-pencil"></span></button>
