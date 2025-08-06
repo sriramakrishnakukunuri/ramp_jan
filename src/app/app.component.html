@@ -14,6 +14,11 @@
   <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-white">
     <div class="container-fluid">
       <div class="d-flex align-items-center justify-content-between w-100">
+        <!-- <div>
+          <a class="navbar-brand" href="#">
+            <img src="assets/img/logo.png" alt="Logo" class="img-fluid">
+          </a>
+        </div> -->
         <div class="d-flex align-items-center">
           <ng-container *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]">
              <a class="navbar-brand me-2" href="#"  *ngIf="this.user?.agencyName=='ALEAP'">
