@@ -53,12 +53,7 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         data: { roles: [Role.Admin,Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
     },
-    {
-        path: 'password-settings',
-        component: PasswordSettingsComponent,
-        canActivate: [AuthGuard],
-        data: { roles: [Role.Admin,Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
-    },
+   
     {
         path: 'user-registration',
         component: UserRegistrationComponent,
@@ -174,6 +169,10 @@ const routes: Routes = [
     {
         path: 'loan-application-process',
         component: LoanAppilicationNewComponent
+    },
+     {
+        path: 'password-settings',
+        component: PasswordSettingsComponent,
     },
     {
         path: 'Manager-approval-1',

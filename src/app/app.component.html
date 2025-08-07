@@ -130,8 +130,9 @@
                                 <span class="bi bi-person-circle fs-3"></span>
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="homeDropdown" style="left: auto !important;">
+                            <li><a class="dropdown-item" ><span class="bi bi-person fs-5 me-2"></span> {{this.user.firstName}} {{this.user.lastName}}</a></li>
                             <!-- <li><a class="dropdown-item" routerLink="/profile" routerLinkActive="active"><span class="bi bi-person fs-5 me-2"></span> My Profile</a></li> -->
-                            <!-- <li><a class="dropdown-item" routerLink="/password-settings" routerLinkActive="active"><span class="bi bi-key fs-5 me-2"></span> Change Password</a></li> -->
+                            <li><a class="dropdown-item" routerLink="/password-settings" routerLinkActive="active"><span class="bi bi-key fs-5 me-2"></span> Change Password</a></li>
                             <!-- <li *appHasRole="[Role.Admin]"><a class="dropdown-item" routerLink="/user-registration" routerLinkActive="active"><span class="bi bi-person-circle fs-5 me-2"></span> Register User</a></li> -->
                             <li><a class="dropdown-item" (click)="logout()"><span class="bi bi-box-arrow-right fs-5 me-2"></span> Logout</a></li>
                             </ul>

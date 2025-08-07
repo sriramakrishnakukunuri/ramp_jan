@@ -64,6 +64,7 @@ export const APIS = {
         getIndustrialByDistrict: API_BASE_URL + '/industrial-parks/',
         getNotifications: API_BASE_URL + '/notifications/userType?userRole=',
         readNotification: API_BASE_URL + '/notifications/mark-read',
+        changePassword: API_BASE_URL + '/auth/update/password',
     },
     tihclEnterprenuer:{
         submitLoanApplication: API_BASE_URL + '/registrations/save',
