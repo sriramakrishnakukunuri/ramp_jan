@@ -547,12 +547,12 @@ export class AddParticipantDataComponent implements OnInit {
       this.fOrg['organizationType'].patchValue('Start Up')
       this.fOrg['organizationName'].addValidators(Validators.required)
       this.fOrg['organizationName'].addValidators(Validators.pattern(/^[^\s].*/))
-      this.fOrg['startupCertificateNo'].addValidators(Validators.required)
+      // this.fOrg['startupCertificateNo'].addValidators(Validators.required)
       this.fOrg['natureOfStartup'].addValidators(Validators.required)
       this.fOrg['natureOfStartup'].addValidators(Validators.pattern(/^[^\s].*/))
-      this.fOrg['incorporationDate'].addValidators(Validators.required)
-      this.fOrg['dateOfIssue'].addValidators(Validators.required)
-      this.fOrg['validupto'].addValidators(Validators.required)
+      // this.fOrg['incorporationDate'].addValidators(Validators.required)
+      // this.fOrg['dateOfIssue'].addValidators(Validators.required)
+      // this.fOrg['validupto'].addValidators(null)
      
      
       this.fOrg['organizationName'].updateValueAndValidity()
