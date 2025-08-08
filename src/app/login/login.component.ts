@@ -251,8 +251,15 @@ export class LoginComponent implements OnInit {
                 next: (res) => {
                     console.log(res);
                     if(res.status === 200) {
-                    sessionStorage.setItem('enterpreneur', JSON.stringify(res.data));
-                     this.router.navigate(['/loan-application-process']);
+                        if(res.data){
+                             sessionStorage.setItem('enterpreneur', JSON.stringify({...res.data,contactNumber: mobile}));
+                            this.router.navigate(['/loan-application-process']);
+                        }
+                        else{
+                               sessionStorage.setItem('enterpreneur', JSON.stringify({...res.data,contactNumber: mobile}));
+                                this.router.navigate(['/loan-application-process']);  
+                        }
+                   
                     }
                     else{
                         sessionStorage.setItem('enterpreneur', JSON.stringify({contactNumber: mobile}));
