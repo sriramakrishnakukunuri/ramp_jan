@@ -421,7 +421,7 @@ export class ViewParticipantComponent implements OnInit {
     uploadManualFiles() {
 
       let formData = new FormData();
-      formData.append("programId", this.programIds);
+      // formData.append("programId", this.programIds);
       if (this.selectedfiles.length == 1) {
         formData.append("file", this.selectUploadedFiles);
       }
@@ -432,7 +432,7 @@ export class ViewParticipantComponent implements OnInit {
         })
       }
   
-      this._commonService.add(APIS.participantdata.uploadParticipant, formData).pipe().subscribe(
+      this._commonService.add(APIS.participantdata.uploadParticipantData+'?programId='+this.programIds, formData).pipe().subscribe(
         {
           next: (res: any) => {
             console.log(res, "res")
