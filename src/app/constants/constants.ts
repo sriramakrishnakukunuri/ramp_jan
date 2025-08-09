@@ -64,6 +64,7 @@ export const APIS = {
         getParticipantListByAgency: API_BASE_URL + '/agency/participants/',
         getParticipantDetailsById: API_BASE_URL + '/getParticipantById/',
         uploadParticipant: API_BASE_URL + '/upload',
+        uploadParticipantData: API_BASE_URL + '/participants/import',
         downloadParticipantData: API_BASE_URL + '/program/participant/pdf/',
     },
     counsellerData:{
