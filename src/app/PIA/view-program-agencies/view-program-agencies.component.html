@@ -25,37 +25,37 @@
               
                     <div class="row mb-3">
                         <div class="col-12 col-sm-12 col-md-2 col-lg-2">
-                            <div class="card bg-primary text-white text-center shadow-none  p-2">
+                            <div class="card bg-primary text-white text-center shadow-none  p-2" (click)="getProgramsByStatus('programsScheduled')">
                                 <label class="mb-2">Total Programs Scheduled</label>
                                 <p class="fw-bold fs-6 mb-0">{{PrigramSummaryData?.programScheduled || 0}}</p>
                             </div>
                         </div>
                         <div class="col-12 col-sm-12 col-md-2 col-lg-2">
-                            <div class="card bg-warning text-white text-center shadow-none  p-2">
+                            <div class="card bg-warning text-white text-center shadow-none  p-2" (click)="getProgramsByStatus('programsInProcess')">
                                 <label class="mb-2" >Programs In-Progress</label>
                                 <p class="fw-bold fs-6 mb-0 fw-600">{{PrigramSummaryData?.programInProcess || 0}}</p>
                             </div>
                         </div>
                         <div class="col-12 col-sm-12 col-md-2 col-lg-2">
-                            <div class="card bg-success text-white text-center shadow-none pt-2 pb-2">
+                            <div class="card bg-success text-white text-center shadow-none pt-2 pb-2" (click)="getProgramsByStatus('programsCompleted')">
                                 <label class="mb-2">Programs Completed & Data Uploaded</label>
                                 <p class="fw-bold fs-6 mb-0">{{PrigramSummaryData?.programsCompleted || 0}}</p>
                             </div>
                         </div>
                         <div class="col-12 col-sm-12 col-md-2 col-lg-2 ">
-                            <div class="card  text-white text-center shadow-none pt-2 pb-2" style="background-color: chocolate;">
+                            <div class="card  text-white text-center shadow-none pt-2 pb-2" style="background-color: chocolate;" (click)="getProgramsByStatus('programsCompletedDataPending')">
                                 <label class="mb-2">Programs Completed - Data Pending</label>
                                 <p class="fw-bold fs-6 mb-0">{{PrigramSummaryData?.programsCompletedDataPending || 0}}</p>
                             </div>
                         </div>
                         <div class="col-12 col-sm-12 col-md-2 col-lg-2 ">
-                            <div class="card bg-danger text-white text-center shadow-none  p-2">
+                            <div class="card bg-danger text-white text-center shadow-none  p-2" (click)="getProgramsByStatus('programsOverdue')">
                                 <label class="mb-2">Programs Over Due</label>
                                 <p class="fw-bold fs-6 mb-0">{{PrigramSummaryData?.programOverDue || 0}}</p>
                             </div>
                         </div>
                         <div class="col-12 col-sm-12 col-md-2 col-lg-2">
-                            <div class="card bg-info text-white text-center shadow-none  p-2">
+                            <div class="card bg-info text-white text-center shadow-none  p-2" (click)="getProgramsByStatus('programsYetToBegin')">
                                 <label class="mb-2">Programs Yet To Begin</label>
                                 <p class="fw-bold fs-6 mb-0">{{PrigramSummaryData?.programYetBegin || 0}}</p>
                             </div>

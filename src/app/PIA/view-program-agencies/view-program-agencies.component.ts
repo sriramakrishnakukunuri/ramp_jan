@@ -39,6 +39,7 @@ export class ViewProgramAgenciesComponent implements OnInit ,AfterViewInit{
     }
     GetProgramsByAgency(event:any){
       this.agencyByAdmin=event;
+      this.StatusData=''
       this.selectedAgencyId = event;
       this.getData()
       this._commonService.getDataByUrl(APIS.programCreation.getProgramsListByAgencyDetails+event).subscribe({
@@ -51,7 +52,19 @@ export class ViewProgramAgenciesComponent implements OnInit ,AfterViewInit{
         }
       });
     }
-  
+    StatusData:any=''
+  getProgramsByStatus(status: string) {
+    this.StatusData= status;
+      this._commonService.getDataByUrl(APIS.programCreation.getProgramsListByAgencyDetails + this.selectedAgencyId).subscribe({
+        next: (dataList: any) => {
+          this.tableList = dataList.data;
+          this.reinitializeDataTable();
+        },
+        error: (error: any) => {
+          this.toastrService.error(error.error.message);
+        }
+      });
+  }
     sessionDetails(dataList: any): any {
       // console.log(dataList)
       this.sessionDetailsList = dataList.programSessionList;
@@ -206,9 +219,12 @@ export class ViewProgramAgenciesComponent implements OnInit ,AfterViewInit{
       const sortField = data.columns[sortColumn]?.data;
       
       // Prepare parameters for API call
+      let statusDataurl=`&status=${this.StatusData}`
       let params = `?page=${page}&size=${size}`;
+      params=this.StatusData?`&page=${page}&size=${size}`:`?page=${page}&size=${size}`
       if(sortField=='programLocationName' || sortField=='subActivityName' || sortField=='activityName'){
-        params = `?page=${page}&size=${size}`
+        params=this.StatusData?`&page=${page}&size=${size}`:`?page=${page}&size=${size}`
+        // params = `?page=${page}&size=${size}`
         
       }
       else{
@@ -222,8 +238,13 @@ export class ViewProgramAgenciesComponent implements OnInit ,AfterViewInit{
       if (data.search.value) {
         params += `&search=${encodeURIComponent(data.search.value)}`;
       }
-      
-      this._commonService.getDataByUrl(`${APIS.programCreation.getProgramsListByAgencyDetails}${agency}${params}`)
+      if(this.StatusData){
+        
+        statusDataurl = `?status=${this.StatusData}`;
+
+      }
+      if(this.StatusData){
+        this._commonService.getDataByUrl(`${APIS.programCreation.getProgramsListByAgencyByStatusDetails}${agency}${statusDataurl}${params}`)
         .pipe()
         .subscribe({
           next: (res: any) => {
@@ -247,6 +268,34 @@ export class ViewProgramAgenciesComponent implements OnInit ,AfterViewInit{
             });
           }
         });
+      }
+      else{
+        this._commonService.getDataByUrl(`${APIS.programCreation.getProgramsListByAgencyDetails}${agency}${params}`)
+        .pipe()
+        .subscribe({
+          next: (res: any) => {
+            callback({
+              draw: data.draw,
+              recordsTotal: res.totalElements,
+              recordsFiltered: res.totalElements,
+              data: res.data
+             
+            });
+            // console.log(data)
+          },
+          error: (err) => {
+            this.toastrService.error(err.message, "Programs Data Error!");
+            console.error(err);
+            callback({
+              draw: data.draw,
+              recordsTotal: 0,
+              recordsFiltered: 0,
+              data: []
+            });
+          }
+        });
+      }
+      
     },
    
     initComplete: function() {
