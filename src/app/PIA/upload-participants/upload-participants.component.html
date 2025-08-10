@@ -68,12 +68,12 @@
             </div>
             <div class="card-body">
                 <div class="row">
-                    <div class="col-12 col-sm-6 col-md-6 col-lg-6">
-                        <button type="button" [ngClass]="{'disabled': !programIds}" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModalDeleteConfirm">Final Submission</button>
-                    </div>
+                   <div class="col-12 col-12 col-sm-6 col-md-6 col-lg-6">
+                    <button type="button" [ngClass]="{'disabled': !programIds}" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModalDeleteConfirm">Confirm To DB</button>
+                   </div>
                     <div class="col-12 col-12 col-sm-6 col-md-6 col-lg-6 text-end">
                         <button type="button" [ngClass]="{'disabled': !programIds}" (click)="downloadParticipant()" class="btn btn-secondary">Download Participants</button> &nbsp;&nbsp;
-                        <!-- <button type="button" [ngClass]="{'disabled': !programIds}" (click)="openFileUploadModal()" class="btn btn-lime-green" >Upload Participants</button> -->
+                        <button type="button" [ngClass]="{'disabled': !programIds}" (click)="openFileUploadModal()" class="btn btn-lime-green" >Upload Participants</button>
                     </div>
                 </div>
                 <br>
@@ -81,7 +81,8 @@
                     <thead class="bg-lime-green text-white">
                         <tr>
                             <th>S.No</th>
-                            <th class="text-center">Edit / Delete</th>
+                            <!-- <th class="text-center">Edit / Delete</th> -->
+                            <th>Error Message</th>
                             <th>IsAspirant</th>
                             <th>Oragnization Name</th>
                             <th>Name of the Participant</th>
@@ -104,10 +105,11 @@
                     <tbody *ngIf="submitedData">
                         <tr  *ngFor="let item of submitedData; let i=index">
                             <td class="text-start">{{i+1}}</td>
-                            <td class="text-center">
+                            <!-- <td class="text-center">
                                 <button type="button" class="btn btn-default text-lime-green btn-sm" (click)="editRow(item)"><span class="bi bi-pencil"></span></button>
-                                <!-- <button type="button" class="btn btn-default text-danger btn-sm" (click)="deleteRow(item)"><span class="bi bi-trash"></span></button> -->
-                            </td>
+                                <button type="button" class="btn btn-default text-danger btn-sm" (click)="deleteRow(item)"><span class="bi bi-trash"></span></button>
+                            </td> -->
+                            <td>{{item?.errorMessage}}</td>
                             <td>{{item?.organizationName?'No':'Yes'}}</td>
                             <td >{{item?.isAspirant=='Aspirant'?'':item?.organizationName}}</td>
                             <td>{{item?.participantName}}</td>
@@ -187,11 +189,12 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalDeleteConfirmLabel">Final Participant Submission</h5>
+                <h5 class="modal-title" id="exampleModalDeleteConfirmLabel">Confirm Participant Data</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                Are you sure you want to submit these participants for the current program? You cannot add any more Participatants once submitted!”
+                Are you sure you want to confirm these participants for the current program?<br>
+                <span class="text-success">Once confirmed, the uploaded data will be moved to the participant list.</span>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

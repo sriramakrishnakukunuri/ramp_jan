@@ -162,9 +162,12 @@ export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
       const sortField = data.columns[sortColumn]?.data;
       
       // Prepare parameters for API call
+      let statusDataurl=`&status=${this.StatusData}`
       let params = `?page=${page}&size=${size}`;
+      params=this.StatusData?`&page=${page}&size=${size}`:`?page=${page}&size=${size}`
       if(sortField=='programLocationName' || sortField=='subActivityName' || sortField=='activityName'){
-        params = `?page=${page}&size=${size}`
+        params=this.StatusData?`&page=${page}&size=${size}`:`?page=${page}&size=${size}`
+        // params = `?page=${page}&size=${size}`
         
       }
       else{
@@ -178,8 +181,39 @@ export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
       if (data.search.value) {
         params += `&search=${encodeURIComponent(data.search.value)}`;
       }
-      
-      this._commonService.getDataByUrl(`${APIS.programCreation.getProgramsListByAgencyDetails}${agency}${params}`)
+       if(this.StatusData){
+        
+        statusDataurl = `?status=${this.StatusData}`;
+
+      }
+      if(this.StatusData){
+        this._commonService.getDataByUrl(`${APIS.programCreation.getProgramsListByAgencyByStatusDetails}${agency}${statusDataurl}${params}`)
+        .pipe()
+        .subscribe({
+          next: (res: any) => {
+            callback({
+              draw: data.draw,
+              recordsTotal: res.totalElements,
+              recordsFiltered: res.totalElements,
+              data: res.data
+             
+            });
+            // console.log(data)
+          },
+          error: (err) => {
+            this.toastrService.error(err.message, "Programs Data Error!");
+            console.error(err);
+            callback({
+              draw: data.draw,
+              recordsTotal: 0,
+              recordsFiltered: 0,
+              data: []
+            });
+          }
+        });
+      }
+      else{
+         this._commonService.getDataByUrl(`${APIS.programCreation.getProgramsListByAgencyDetails}${agency}${params}`)
         .pipe()
         .subscribe({
           next: (res: any) => {
@@ -201,6 +235,8 @@ export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
             });
           }
         });
+      }
+     
     },
     columns: [
       { 

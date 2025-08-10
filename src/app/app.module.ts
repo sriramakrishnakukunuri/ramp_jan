@@ -71,6 +71,7 @@ import { RegistrationNewComponent } from './PIA/registration-new/registration-ne
 import { StartupAssesmentComponent } from './PIA/startup-assesment/startup-assesment.component';
 import { MatSelectFilterModule } from 'mat-select-filter';
 import { MatFormFieldModule } from '@angular/material/form-field';import { StarRatingComponent } from './manual-components/star-rating/star-rating.component';
+import { UploadParticipantsComponent } from './PIA/upload-participants/upload-participants.component';
 
 @NgModule({
     imports: [
@@ -148,6 +149,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';import { StarR
         RegistrationNewComponent,
         StartupAssesmentComponent,
         StarRatingComponent,
+        UploadParticipantsComponent,
 
     ],
     exports:[MaterialModule],

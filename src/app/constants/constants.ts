@@ -59,6 +59,7 @@ export const APIS = {
         update: API_BASE_URL + '/updateParticipant',
         getDataByProgramId: API_BASE_URL + '/program/participants/dropdown/',
         getDataByProgramBYDeatisl: API_BASE_URL + '/program/participants/',
+        getDataUploadedByProgramBYDeatisl: API_BASE_URL + '/participants/temp/',
         saveOrgnization: API_BASE_URL + '/organization/save',
         getOrgnizationData: API_BASE_URL + '/organization/list',
         getParticipantList: API_BASE_URL + '/participants',
@@ -67,6 +68,8 @@ export const APIS = {
         uploadParticipant: API_BASE_URL + '/upload',
         uploadParticipantData: API_BASE_URL + '/participants/import',
         downloadParticipantData: API_BASE_URL + '/program/participant/pdf/',
+        downloadParticipantTempData: API_BASE_URL + '/ParticipantTemp/excel/sheets/',
+        migrateApi: API_BASE_URL + '/participants/temp/migrate',
     },
     counsellerData:{
         add: API_BASE_URL + '/saveCounsellor',

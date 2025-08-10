@@ -289,11 +289,10 @@
 
               <!-- new tab code starts here This is to handle the submenu toggle functionality  || 27th july 2025 -->
               <li class="nav-item dropdown" style="position: relative;">
-                <!-- (click)="menuOpen = !menuOpen; $event.preventDefault(); $event.stopPropagation();" -->
                 <a class="nav-link" href="#"  style="cursor:pointer;" data-bs-toggle="dropdown">
                   <img src="../assets/img/9-dots.png" style="width: 30px;" alt="menu" />
                 </a>
-                <ul class="dropdown-menu shadow"  (click)="onMenuClick($event)"
+                <ul class="dropdown-menu shadow" 
                   style="min-width:220px; max-width:260px; box-shadow:0 4px 16px rgba(0,0,0,0.13); padding: 8px 0; border-radius: 8px; right:-100%; top:100%;">
                   <!-- Dashboard -->
                   <li *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR,Role.CALL_CENTER,Role.Admin]">
@@ -408,6 +407,7 @@
                       <li><a class="dropdown-item" routerLink="/add-participant-data" routerLinkActive="active">Add Participant</a>
                       </li>
                       <li><a class="dropdown-item" routerLink="/view-participant-data" routerLinkActive="active">View Participant</a>
+                        <li><a class="dropdown-item" routerLink="/upload-program-participate" routerLinkActive="active">Upload Participant</a>
                       </li>
                     </ul>
                   </li>
@@ -567,7 +567,6 @@
 </div>
 
 <!-- credits / footer -->
-
 <style>
   .footer-custom {
     background: #f8f9fa;
