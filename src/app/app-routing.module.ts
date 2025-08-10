@@ -49,6 +49,7 @@ import { ViewApplicationComponent } from './PIA/view-application/view-applicatio
 import { AssignCounsellorComponent } from './PIA/assign-counsellor/assign-counsellor.component';
 import { RegistrationNewComponent } from './PIA/registration-new/registration-new.component';
 import { StartupAssesmentComponent } from './PIA/startup-assesment/startup-assesment.component';
+import { UploadParticipantsComponent } from './PIA/upload-participants/upload-participants.component';
 
 const routes: Routes = [
     {
@@ -143,6 +144,12 @@ const routes: Routes = [
     {
         path: 'view-program-participate',
         component: ViewParticipateCreationComponent,
+        canActivate: [AuthGuard],
+        data: { roles: [Role.Admin,Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
+    },
+     {
+        path: 'upload-program-participate',
+        component: UploadParticipantsComponent,
         canActivate: [AuthGuard],
         data: { roles: [Role.Admin,Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
     },

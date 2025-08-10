@@ -17,18 +17,21 @@
         <div class="d-flex align-items-center">
           <ng-container *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]">
              <a class="navbar-brand me-2" href="#"  *ngIf="this.user?.agencyName=='ALEAP'">
-            <img src="../RAMP/assets/img/aleapLogo.jpeg" alt="Aleap Logo" class="img-fluid" style="height: 56px; width: 89px;">
+            <img src="../RAMP/assets/img/aleapLogo.jpeg" alt="Aleap Logo" class="img-fluid" style="height: 47px; width: 100px;">
           </a>
           </ng-container>
          <ng-container *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR,Role.CALL_CENTER,Role.Admin]">
-           <a class="navbar-brand me-2" href="#"   *ngIf="this.user?.agencyName!='ALEAP'">
-            <img src="../RAMP/assets/img/Ramp final_logo.png" alt="Ramp Final Logo" class="img-fluid" style="height: 50px; width: 50px;">
-          </a>
+          
           <a class="navbar-brand" href="#"   *ngIf="this.user?.agencyName!='ALEAP'">
-            <img src="../RAMP/assets/img/logo.png" alt="Logo" class="img-fluid" style="height: 50px; width: 50px;">
+            <img src="../RAMP/assets/img/logo.png" alt="Logo" class="img-fluid" style="height: 45px; width: 45px;">
           </a>
-         </ng-container>
+           <a class="navbar-brand me-2" href="#"   *ngIf="this.user?.agencyName!='ALEAP'">
+            <img src="../RAMP/assets/img/Ramp final_logo.png" alt="Ramp Final Logo" class="img-fluid" style="height: 45px; width: 36px;">
+          </a>
          
+         </ng-container>
+          <img src="../RAMP/assets/img/GT Logo.png" alt="GT Logo" class="footer-logo" />
+
         </div>
         <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasNavbar2"
           aria-labelledby="offcanvasNavbar2Label">
@@ -286,10 +289,10 @@
 
               <!-- new tab code starts here This is to handle the submenu toggle functionality  || 27th july 2025 -->
               <li class="nav-item dropdown" style="position: relative;">
-                <a class="nav-link" href="#" (click)="menuOpen = !menuOpen; $event.preventDefault();" style="cursor:pointer;">
+                <a class="nav-link" href="#"  style="cursor:pointer;" data-bs-toggle="dropdown">
                   <img src="../RAMP/assets/img/9-dots.png" style="width: 30px;" alt="menu" />
                 </a>
-                <ul class="dropdown-menu show shadow" *ngIf="menuOpen"
+                <ul class="dropdown-menu shadow" 
                   style="min-width:220px; max-width:260px; box-shadow:0 4px 16px rgba(0,0,0,0.13); padding: 8px 0; border-radius: 8px; right:-100%; top:100%;">
                   <!-- Dashboard -->
                   <li *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR,Role.CALL_CENTER,Role.Admin]">
@@ -404,6 +407,7 @@
                       <li><a class="dropdown-item" routerLink="/add-participant-data" routerLinkActive="active">Add Participant</a>
                       </li>
                       <li><a class="dropdown-item" routerLink="/view-participant-data" routerLinkActive="active">View Participant</a>
+                        <li><a class="dropdown-item" routerLink="/upload-program-participate" routerLinkActive="active">Upload Participant</a>
                       </li>
                     </ul>
                   </li>
@@ -563,11 +567,6 @@
 </div>
 
 <!-- credits / footer -->
-<footer class="footer-custom fixed-bottom w-100">
-  <div class="container text-end">
-    <img src="../RAMP/assets/img/GT Logo.png" alt="GT Logo" class="footer-logo" />
-  </div>
-</footer>
 <style>
   .footer-custom {
     background: #f8f9fa;
@@ -578,7 +577,7 @@
     z-index: 1040;
   }
   .footer-logo {
-    height: 48px;
+    height: 45px;
     width: auto;
     filter: drop-shadow(0 2px 4px rgba(0,0,0,0.08));
     transition: transform 0.2s;

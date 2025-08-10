@@ -58,7 +58,7 @@
                             <h6 class="fw-600 mb-2 mb-sm-3 mb-md-0">Session Details</h6>
                         </div>
                         <div class="col-4 col-sm-4 col-md-3 col-lg-3">
-                            <div class="form-floating mb-3 mb-sm-3 mb-md-0">
+                            <!-- <div class="form-floating mb-3 mb-sm-3 mb-md-0">
                                 <select class="form-select events-expenditure" [(ngModel)]="programId"
                                     [ngModelOptions]="{standalone: true}"
                                     (change)="dropdownProgramsList($event,'table')">
@@ -67,7 +67,18 @@
                                         {{list.programTitle}}</option>
                                 </select>
                                 <label for="coverage">Program</label>
-                            </div>
+                            </div> -->
+                            <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>Program</mat-label>
+                                <mat-select [(ngModel)]="programId" (selectionChange)="dropdownProgramsList($event,'table')">
+                                <mat-select-filter [array]="agencyProgramList" [displayMember]="'programTitle'" (filteredReturn)="agencyProgramListFiltered = $event">
+                                </mat-select-filter>
+                                <mat-option value="" disabled>Select Program</mat-option>
+                                <mat-option *ngFor="let list of agencyProgramListFiltered" [value]="list.programId">
+                                {{ list.programTitle }}
+                                </mat-option>
+                            </mat-select>
+                            </mat-form-field>
                         </div>
                         <div class="col-4 col-sm-4 col-md-3 col-lg-2">
                             <div class="text-end">

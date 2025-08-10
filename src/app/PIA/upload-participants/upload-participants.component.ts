@@ -1,3 +1,4 @@
+
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -10,11 +11,11 @@ import 'datatables.net-responsive-dt';
 declare var bootstrap: any;
 
 @Component({
-  selector: 'app-view-participant',
-  templateUrl: './view-participant.component.html',
-  styleUrls: ['./view-participant.component.css']
+  selector: 'app-upload-participants',
+  templateUrl: './upload-participants.component.html',
+  styleUrls: ['./upload-participants.component.css']
 })
-export class ViewParticipantComponent implements OnInit {
+export class UploadParticipantsComponent implements OnInit {
 
   loginsessionDetails: any;
     agencyId: any;
@@ -98,11 +99,12 @@ export class ViewParticipantComponent implements OnInit {
       // if(resList){
       //   this.submitedData=JSON.parse(resList)
       // }
-      this._commonService.getDataByUrl(APIS.participantdata.getDataByProgramBYDeatisl+this.programIds+`?page=0&size=200`).subscribe({
+      this._commonService.getDataByUrl(APIS.participantdata.getDataUploadedByProgramBYDeatisl+this.programIds).subscribe({
         next: (res: any) => {
           this.submitedData = res?.data
           this.submitedData.map((data:any)=>{
             data['organizationName'] = data['organizationName'] ?data['organizationName']:''
+             data['errorMessage'] = data['errorMessage'] ?data['errorMessage']:''
           })
           this.reinitializeDataTable();
           // this.advanceSearch(this.getSelDataRange);
@@ -126,6 +128,24 @@ export class ViewParticipantComponent implements OnInit {
       }, 0);
     }
     initializeDataTable() {
+            this.dataTable = new DataTable('#view-table-participant1', {
+              // scrollX: true,
+              // scrollCollapse: true,    
+              // responsive: true,    
+              // paging: true,
+              // searching: true,
+              // ordering: true,
+              scrollY: "415px",
+              scrollX: true,
+              scrollCollapse: true,
+              autoWidth: true,
+              paging: true,
+              info: false,
+              searching: false,
+              destroy: true, // Ensure reinitialization doesn't cause issues
+            });
+          }
+    initializeDataTableb() {
       const self = this;
       
       this.dataTable = $('#view-table-participant1').DataTable({
@@ -160,7 +180,7 @@ export class ViewParticipantComponent implements OnInit {
             params += `&search=${encodeURIComponent(data.search.value)}`;
           }
           
-          this._commonService.getDataByUrl(`${APIS.participantdata.getDataByProgramBYDeatisl}${this.programIds}${params}`)
+          this._commonService.getDataByUrl(`${APIS.participantdata.getDataUploadedByProgramBYDeatisl}${this.programIds}`)
             .pipe()
             .subscribe({
               next: (res: any) => {
@@ -197,32 +217,39 @@ export class ViewParticipantComponent implements OnInit {
                 },
                 className: 'text-start'
               },
-              { 
-                data: null,
-                title: 'Actions',
-                render: (data: any, type: any, row: any, meta: any) => {
-                  // Use meta.row for the current displayed row index
-                  // <button type="button" class="btn btn-default text-lime-green btn-sm edit-btn" data-index="${meta.row}">
-                  //     <span class="bi bi-pencil"></span>
-                  //   </button>
-                //   <button type="button" class="btn btn-default text-danger btn-sm delete-btn" data-index="${meta.row}">
-                //   <span class="bi bi-trash"></span>
-                // </button>
-                if (this.loginsessionDetails?.userRole == 'AGENCY_MANAGER' || this.loginsessionDetails?.userRole == 'AGENCY_EXECUTOR') {
-                  return `   
-                  <button type="button" class="btn btn-default text-lime-green btn-sm edit-btn" data-index="${meta.row}">
-                     <span class="bi bi-pencil"></span>
-                 </button>                 
+              // { 
+              //   data: null,
+              //   title: 'Actions',
+              //   render: (data: any, type: any, row: any, meta: any) => {
+              //     // Use meta.row for the current displayed row index
+              //     // <button type="button" class="btn btn-default text-lime-green btn-sm edit-btn" data-index="${meta.row}">
+              //     //     <span class="bi bi-pencil"></span>
+              //     //   </button>
+              //   //   <button type="button" class="btn btn-default text-danger btn-sm delete-btn" data-index="${meta.row}">
+              //   //   <span class="bi bi-trash"></span>
+              //   // </button>
+              //   if (this.loginsessionDetails?.userRole == 'AGENCY_MANAGER' || this.loginsessionDetails?.userRole == 'AGENCY_EXECUTOR') {
+              //     return `   
+              //     <button type="button" class="btn btn-default text-lime-green btn-sm edit-btn" data-index="${meta.row}">
+              //        <span class="bi bi-pencil"></span>
+              //    </button>                 
                   
-                 `;
-                }
-                else{
-                  return '';
-                }
+              //    `;
+              //   }
+              //   else{
+              //     return '';
+              //   }
                  
-                },
-                className: 'text-center',
-                orderable: false
+              //   },
+              //   className: 'text-center',
+              //   orderable: false
+              // },
+               { 
+                data: 'errorMessage',
+                title: 'Error Message',
+                 render: function(data, type, row) {
+                  return data ? data : '';
+                }
               },
               { 
                 data: 'organizationName',
@@ -345,18 +372,18 @@ export class ViewParticipantComponent implements OnInit {
               //   orderable: false
               // }
             ],
-        initComplete: function() {
-          // Add event listeners for edit/delete buttons
-          $('#view-table-participant1').on('click', '.edit-btn', function() {
-            const rowData = self.dataTable.row($(this).parents('tr')).data();
-            self.editRow(rowData);
-          });
+        // initComplete: function() {
+        //   // Add event listeners for edit/delete buttons
+        //   $('#view-table-participant1').on('click', '.edit-btn', function() {
+        //     const rowData = self.dataTable.row($(this).parents('tr')).data();
+        //     self.editRow(rowData);
+        //   });
           
-          $('#view-table-participant1').on('click', '.delete-btn', function() {
-            const rowData = self.dataTable.row($(this).parents('tr')).data();
-            self.deleteRow(rowData);
-          });
-        }
+        //   $('#view-table-participant1').on('click', '.delete-btn', function() {
+        //     const rowData = self.dataTable.row($(this).parents('tr')).data();
+        //     self.deleteRow(rowData);
+        //   });
+        // }
       });
     }
   
@@ -441,7 +468,7 @@ export class ViewParticipantComponent implements OnInit {
         {
           next: (res: any) => {
             console.log(res, "res")
-            this.toastrService.success(res, "Participant Data!");
+            this.toastrService.success('Participant Data Uploaded successfully', "Participant Data!");
             this.getData()
             this.selectedfiles=[]
             // console.log(data)
@@ -456,14 +483,14 @@ export class ViewParticipantComponent implements OnInit {
     }
 
     sessionSubmissionFinal() {
-    let data = {}
-    this._commonService.add(`${APIS.programCreation.updateSessionByStatus}${this.programIds}?status=Participants Added`, data).subscribe({
+    let data = [this.programIds]
+    this._commonService.add(`${APIS.participantdata.migrateApi}`, data).subscribe({
       next: (data: any) => {
         console.log('Response from API:', data);
-        this.toastrService.success('Participants Details Submitted Successfully', "");
+        this.toastrService.success('Data Moved participant table successfully', "");
         this.closeConfirmSession();
         this.submitedData = ''
-        this.getProgramsByAgency()
+        this.getData()
       },
       error: (err: any) => {
         this.closeConfirmSession();        
@@ -481,11 +508,11 @@ export class ViewParticipantComponent implements OnInit {
     }
   }
   downloadParticipant(){
-    let linkUrl = APIS.participantdata.downloadParticipantData+this.programIds
+    let linkUrl = APIS.participantdata.downloadParticipantTempData+this.programIds
     const link = document.createElement("a");
     link.setAttribute("download", linkUrl);
     link.setAttribute("target", "_blank");
-    link.setAttribute("href", APIS.participantdata.downloadParticipantData+this.programIds);
+    link.setAttribute("href", APIS.participantdata.downloadParticipantTempData+this.programIds);
     document.body.appendChild(link);
     link.click();
     link.remove();

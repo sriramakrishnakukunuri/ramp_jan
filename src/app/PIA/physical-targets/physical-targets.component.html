@@ -8,13 +8,24 @@
               <h6 class="fw-600 mb-2 mb-sm-2 mb-md-0">Output Targets</h6>
             </div>
             <div class="col-12 col-sm-5 col-md-4 col-lg-3">
-              <label for="Agencies" style="font-weight: 600;">List Of Agencies</label>
-              <select class="form-select" id="Agencies" [(ngModel)]="selectedAgencyId"
+              <!-- <label for="Agencies" style="font-weight: 600;">List Of Agencies</label> -->
+              <!-- <select class="form-select" id="Agencies" [(ngModel)]="selectedAgencyId"
                 (change)="GetProgramsByAgency($any($event.target).value)">
                 <option value="-1"> All Agencies</option>
                 <option *ngFor="let list of agencyList" value="{{list.agencyId}}">
                   {{list.agencyName}}</option>
-              </select>
+              </select> -->
+              <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>List Of Agencies</mat-label>
+                                <mat-select [(ngModel)]="selectedAgencyId" (selectionChange)="GetProgramsByAgency($any($event).value)">
+                                <mat-select-filter [array]="agencyList" [displayMember]="'agencyName'" (filteredReturn)="agencyListFiltered = $event">
+                                </mat-select-filter>
+                                <mat-option value="-1">All Agencies</mat-option>
+                                <mat-option *ngFor="let list of agencyListFiltered" [value]="list.agencyId">
+                                {{ list.agencyName }}
+                                </mat-option>
+                            </mat-select>
+                            </mat-form-field>
             </div>
             <div class="col-12 col-sm-6 col-md-3 col-lg-2 mt-3">
               <div class="d-grid text-end">

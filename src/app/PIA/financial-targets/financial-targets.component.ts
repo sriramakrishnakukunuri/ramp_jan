@@ -43,10 +43,12 @@ export class FinancialTargetsComponent implements OnInit {
 
   selectedAgencyId: any;
   FinanCialYear: any;
+  agencyListFiltered:any;
   getAgenciesList() {
       this.agencyList = [];
       this._commonService.getDataByUrl(APIS.masterList.agencyList).subscribe((res: any) => {
         this.agencyList = res.data;
+        this.agencyListFiltered = this.agencyList;
         this.selectedAgencyId = res.data[0].agencyId;
         this.GetProgramsByAgency(this.selectedAgencyId);
       }, (error) => {
@@ -65,6 +67,7 @@ export class FinancialTargetsComponent implements OnInit {
       })
     }
     financialYears:any=[]
+    financialYRFiltered:any;
     selectedFinancialYear: any = '';
     generateFinancialYears() {
       const currentYear = new Date().getFullYear();
@@ -79,10 +82,10 @@ export class FinancialTargetsComponent implements OnInit {
         const year = currentYear + i;
         this.financialYears.push(`${year}-${(year + 1)}`);
       }
-      
+      this.financialYRFiltered=this.financialYears
       // Set default selection to current financial year
       this.selectedFinancialYear = this.getCurrentFinancialYear();
-      // console.log(this.financialYears, 'financialYears',this.selectedFinancialYear );
+      // console.log(this.inancialYears, 'financialYears',this.selectedFinancialYear );
     }
   
     getCurrentFinancialYear(): string {
