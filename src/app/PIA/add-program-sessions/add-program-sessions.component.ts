@@ -334,11 +334,15 @@ export class AddProgramSessionsComponent implements OnInit {
   }
 
   agencyProgramList: any;
+  agencyProgramListFiltered: any ;
   programId: any = ''
   getProgramsByAgency() {
     this._commonService.getDataByUrl(`${APIS.programCreation.getProgramsListBySession + this.agencyId}?status=Program Scheduled`).subscribe({
       next: (res: any) => {
         this.agencyProgramList = res?.data
+        this.programId=res.data[0]?.programId
+        this.agencyProgramListFiltered= this.agencyProgramList
+        this.dropdownProgramsList({ value: res.data[0]?.programId }, 'table');
       },
       error: (err) => {
         new Error(err);
@@ -356,8 +360,8 @@ export class AddProgramSessionsComponent implements OnInit {
   }
 
   dropdownProgramsList(event: any, type: any) {
-    if (event.target.value) {
-      this.programId = event.target.value
+    if (event.value) {
+      this.programId = event.value
       this.getProgramDetailsById(this.programId);
     }else {
       this.programId = ''

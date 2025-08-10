@@ -286,10 +286,10 @@
 
               <!-- new tab code starts here This is to handle the submenu toggle functionality  || 27th july 2025 -->
               <li class="nav-item dropdown" style="position: relative;">
-                <a class="nav-link" href="#" (click)="menuOpen = !menuOpen; $event.preventDefault();" style="cursor:pointer;">
+                <a class="nav-link" href="#" (click)="menuOpen = !menuOpen; $event.preventDefault(); $event.stopPropagation();" style="cursor:pointer;">
                   <img src="../RAMP1/assets/img/9-dots.png" style="width: 30px;" alt="menu" />
                 </a>
-                <ul class="dropdown-menu show shadow" *ngIf="menuOpen"
+                <ul class="dropdown-menu show shadow" *ngIf="menuOpen" (click)="onMenuClick($event)"
                   style="min-width:220px; max-width:260px; box-shadow:0 4px 16px rgba(0,0,0,0.13); padding: 8px 0; border-radius: 8px; right:-100%; top:100%;">
                   <!-- Dashboard -->
                   <li *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR,Role.CALL_CENTER,Role.Admin]">

@@ -69,11 +69,14 @@ import { AssignCounsellorComponent } from './PIA/assign-counsellor/assign-counse
 import { ViewApplicationComponent } from './PIA/view-application/view-application.component';
 import { RegistrationNewComponent } from './PIA/registration-new/registration-new.component';
 import { StartupAssesmentComponent } from './PIA/startup-assesment/startup-assesment.component';
-
+import { MatSelectFilterModule } from 'mat-select-filter';
+import { MatFormFieldModule } from '@angular/material/form-field';
 @NgModule({
     imports: [
         MaterialModule,
         BrowserModule,
+        MatSelectFilterModule,
+        MatFormFieldModule,
         ReactiveFormsModule,
         HttpClientModule,
         AppRoutingModule,

@@ -41,10 +41,12 @@ export class PhysicalTargetsComponent implements OnInit {
   }
 
   selectedAgencyId: any;
+  agencyListFiltered: any;
   getAgenciesList() {
       this.agencyList = [];
       this._commonService.getDataByUrl(APIS.masterList.agencyList).subscribe((res: any) => {
         this.agencyList = res.data;
+        this.agencyListFiltered=this.agencyList;
         this.selectedAgencyId = res.data[0].agencyId;
         this.GetProgramsByAgency(this.selectedAgencyId);
       }, (error) => {

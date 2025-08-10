@@ -51,16 +51,19 @@ export class ProgramSummaryComponent implements OnInit {
       this.loadCollageImages();
     }
     agencyList: any;  
+    agencyListFiltered:any;
     getAgenciesList() {
       this.agencyList = [];
       this._commonService.getDataByUrl(APIS.masterList.agencyList).subscribe((res: any) => {
         this.agencyList = res.data;
+        this.agencyListFiltered=this.agencyList
         this.getProgramsByAgency(res.data[0].agencyId);
       }, (error) => {
         this.toastrService.error(error.error.message);
       });
     }
     agencyProgramList: any;
+    agencyProgramListFiltered:any;
       getProgramsByAgency(agency:any) {
         this.agencyId=agency
         this.imageService.getPrograms(this.loginsessionDetails.agencyId?this.loginsessionDetails.agencyId:this.agencyId).subscribe(
@@ -71,6 +74,7 @@ export class ProgramSummaryComponent implements OnInit {
                 program.status === 'Program Execution Updated' ||
                 program.status === 'Program Expenditure Updated'
             );
+            this.agencyProgramListFiltered=this.agencyProgramList
 
             this.programIds = this.agencyProgramList[0].programId;
               this.getParticipantsByProgramID(this.programIds)
@@ -102,11 +106,11 @@ export class ProgramSummaryComponent implements OnInit {
       PrigramSummaryData:any
       dropdownProgramsList(event: any, type: any) {
         this.PrigramSummaryData = {}
-        this.programIds = event.target.value;
+        this.programIds = event.value;
         this.getParticipantsByProgramID(this.programIds);
         this.setProgramCollageImage(this.programIds);
         console.log("program id:",this.programIds);
-        if (type == 'table' && event.target.value) {
+        if (type == 'table' && event.value) {
           this.getData()
         }
       }

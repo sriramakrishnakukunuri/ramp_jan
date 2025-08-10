@@ -48,11 +48,13 @@ export class FinanceExpenditureComponent implements OnInit {
 
 
   agencyList:any;
+  agencyListFiltered:any;
   // All Agency data  for admin login
 getAgenciesList() {
   this.agencyList = [];
   this._commonService.getDataByUrl(APIS.masterList.agencyList).subscribe((res: any) => {
     this.agencyList = res.data;
+    this.agencyListFiltered= this.agencyList;
     this.agencyId = res.data[0].agencyId
     this.getProgramsByAgencyAdmin(this.agencyId)
      this.getAllActivityList()
@@ -62,16 +64,19 @@ getAgenciesList() {
 } 
   // All Programs data for admin login
   agencyProgramList: any;
+  agencyProgramListFiltered:any;
   getProgramsByAgencyAdmin(agency:any) {
     if(agency == 'All Agencies') {
       this.programIds = 'All Programs'
       this.agencyProgramList=[]
+      this.agencyProgramListFiltered=[]
      this.getExpenditure()
     }
     else{
       this._commonService.getDataByUrl(`${APIS.programCreation.getProgramsListByAgencyStatus}/${agency}?status=Program Expenditure Updated`).subscribe({
         next: (data: any) => {
           this.agencyProgramList = data?.data
+          this.agencyProgramListFiltered = this.agencyProgramList
           this.programIds = this.agencyProgramList?.[0]?.programId
           console.log(this.agencyProgramList,this.agencyProgramList.length)
           if(!this.agencyProgramList.length) {
@@ -98,6 +103,7 @@ getAgenciesList() {
     this._commonService.getDataByUrl(`${APIS.programCreation.getProgramsListByAgencyStatus}/${this.agencyId}?status=Program Expenditure Updated`).subscribe({
       next: (data: any) => {
         this.agencyProgramList = data?.data
+        this.agencyProgramListFiltered=this.agencyProgramList
         this.programIds = this.agencyProgramList[0].programId
         this.getExpenditure()
       },
@@ -108,13 +114,13 @@ getAgenciesList() {
     
   }
   dropdownProgramsList(event: any, type: any) {
-    this.programIds = event.target.value
-    if(event.target.value == 'All Programs') {
+    this.programIds = event.value
+    if(event.value == 'All Programs') {
       this.getExpenditure()
 
     }
     else{
-      if (type == 'table' && event.target.value) {
+      if (type == 'table' && event.value) {
         this.getExpenditure()
       }
     }

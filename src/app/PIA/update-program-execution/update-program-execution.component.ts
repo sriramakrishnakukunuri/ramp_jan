@@ -70,10 +70,12 @@ export class UpdateProgramExecutionComponent implements OnInit {
 
   agencyProgramList: any;
   programId: any = ''
+  agencyProgramListFiltered: any;
   getProgramsByAgency() {
     this._commonService.getDataByUrl(`${APIS.programCreation.getProgramsListByAgencyStatus + '/' + this.agencyId + '?status=Program Execution'}`).subscribe({
       next: (res: any) => {
         this.agencyProgramList = res?.data
+        this.agencyProgramListFiltered= this.agencyProgramList
       },
       error: (err) => {
         new Error(err);
@@ -82,8 +84,8 @@ export class UpdateProgramExecutionComponent implements OnInit {
   }
 
   dropdownProgramsList(event: any, type: any) {
-    if (event.target.value) {
-      this.programId = event.target.value
+    if (event.value) {
+      this.programId = event.value
       this.getProgramDetailsById(this.programId);
     } else {
       this.programId = ''

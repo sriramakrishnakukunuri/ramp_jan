@@ -270,10 +270,12 @@ export class ViewProgramAgenciesComponent implements OnInit ,AfterViewInit{
     }
     agencyByAdmin:any=-1
     selectedAgencyId:any=-1
+    agencyListFiltered:any;
     getAgenciesList() {
       this.agencyList = [];
       this._commonService.getDataByUrl(APIS.masterList.agencyList).subscribe((res: any) => {
         this.agencyList = res.data;
+        this.agencyListFiltered=this.agencyList;
         this.selectedAgencyId =-1
         this.GetProgramsByAgency(-1);
       }, (error) => {

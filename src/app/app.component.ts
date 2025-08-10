@@ -1,4 +1,4 @@
-﻿import { Component, Directive, Input, TemplateRef, ViewContainerRef } from '@angular/core';
+﻿import { Component, Directive, HostListener, Input, TemplateRef, ViewContainerRef } from '@angular/core';
 
 import { AuthenticationService } from './_services';
 import { User, Role } from './_models';
@@ -24,6 +24,25 @@ export class AppComponent {
     menuOpen = false;
 openSubMenus: {[key: string]: boolean} = {};
 
+    // Listen for clicks anywhere on the document
+    @HostListener('document:click', ['$event'])
+    onDocumentClick(event: MouseEvent) {
+        const target = event.target as HTMLElement;
+        const menuContainer = target.closest('.nav-item.dropdown');
+        
+        // If click is outside the menu container, close the menu
+        if (!menuContainer && this.menuOpen) {
+            this.menuOpen = false;
+            // Also close all submenus
+            Object.keys(this.openSubMenus).forEach(key => {
+                this.openSubMenus[key] = false;
+            });
+        }
+    }
+ // Prevent menu from closing when clicking inside
+    onMenuClick(event: Event) {
+        event.stopPropagation();
+    }
 toggleSubMenu(menu: string, event: Event) {
   event.preventDefault();
   event.stopPropagation();

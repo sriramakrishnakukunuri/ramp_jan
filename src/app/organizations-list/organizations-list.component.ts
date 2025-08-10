@@ -22,6 +22,7 @@ export class OrganizationsListComponent implements OnInit {
   resources:any = '';
   displayedColumns: string[] = ['action', 'organizationName'];
   agencyList: any = [];
+  agencyListFiltered:any;
   loginsessionDetails: any;
   SelectedCategory: any='Location';
   dataTableResources:any
@@ -236,6 +237,7 @@ export class OrganizationsListComponent implements OnInit {
     this.agencyList = [];
     this.http.get<any[]>(APIS.masterList.agencyList).subscribe((res: any) => {
       this.agencyList = res.data;
+      this.agencyListFiltered=this.agencyList
       //this.getResourcesByAgency(this.agencyList[0].agencyId);
     }, (error) => {
       

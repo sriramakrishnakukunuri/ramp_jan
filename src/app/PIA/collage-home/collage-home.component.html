@@ -9,7 +9,7 @@
     <!-- Filter Section -->
     <div class="d-flex flex-column" >
       <ng-container *ngIf = "user.userRole === 'ADMIN'">
-        <label 
+        <!-- <label 
         for="agencyFilter" 
         class="form-label fw-semibold mb-1"
         style="color: #2c3e50; font-size: 14px;"
@@ -29,7 +29,18 @@
         >
           {{ agency.agencyName }}
         </option>
-      </select>
+      </select> -->
+      <mat-form-field appearance="outline" class="w-100" style="max-width: 220px;">
+        <mat-label>Filter by Agency</mat-label>
+        <mat-select [(ngModel)]="selectedAgencyId" (selectionChange)="onAgencyChange($event.value)">
+          <mat-select-filter [array]="agencies" [displayMember]="'agencyName'" (filteredReturn)="filteredAgencies = $event"></mat-select-filter>
+          <mat-option value="">All Agencies</mat-option>
+          <mat-option *ngFor="let agency of filteredAgencies" [value]="agency.agencyId">
+            {{ agency.agencyName }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
       </ng-container>
      
     </div>
