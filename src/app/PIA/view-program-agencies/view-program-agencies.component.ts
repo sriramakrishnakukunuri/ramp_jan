@@ -54,7 +54,13 @@ export class ViewProgramAgenciesComponent implements OnInit ,AfterViewInit{
     }
     StatusData:any=''
   getProgramsByStatus(status: string) {
-    this.StatusData= status;
+    if(status==this.StatusData){
+      this.StatusData=''
+    }
+    else{
+       this.StatusData= status;
+    }
+   
       this._commonService.getDataByUrl(APIS.programCreation.getProgramsListByAgencyDetails + this.selectedAgencyId).subscribe({
         next: (dataList: any) => {
           this.tableList = dataList.data;
