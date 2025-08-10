@@ -76,10 +76,22 @@
                                     </div>
                                 </div>
                                 <div class="row">
+                                     <div class="col-12 col-sm-12 col-md-6 col-lg-7">
+                                        <div class="row">
+                                            <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                                                <label class="fw-bold fs-md mb-1 mb-sm-1 mb-md-0">Program Monitoring Rating</label>
+                                                 
+                                            </div>
+                                            <div class="col-12 col-sm-12 col-md-9 col-lg-8">
+                                                <app-star-rating [(rating)]="currentRating" (ratingChange)="onRatingChange($event)"></app-star-rating>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="col-12 col-sm-12 col-md-6 col-lg-7">
                                         <div class="row">
                                             <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                                                 <label class="fw-bold fs-md mb-1 mb-sm-1 mb-md-0">Start Date</label>
+                                                
                                             </div>
                                             <div class="col-12 col-sm-12 col-md-9 col-lg-8">
                                                 <label class="fs-md mb-1 mb-sm-1 mb-md-0">{{PrigramSummaryData?.startDate}}</label>

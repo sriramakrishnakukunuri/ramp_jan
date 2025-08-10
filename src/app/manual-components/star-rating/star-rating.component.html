@@ -1,0 +1,14 @@
+  <div class="star-rating" (mouseleave)="onMouseLeave()">
+      <span *ngFor="let star of stars; let i = index" class="star">
+        <!-- Left half of star for half rating -->
+        <span class="star-half-left" 
+              (click)="rate(i + 0.5, $event)"
+              (mouseover)="hoverRating = i + 0.5"
+              [class.active]="(hoverRating > i && hoverRating < i + 1) || (rating > i && rating < i + 1) || (hoverRating >= i + 1) || (rating >= i + 1)">★</span>
+        <!-- Right half of star for full rating -->
+        <span class="star-half-right" 
+              (click)="rate(i + 1, $event)"
+              (mouseover)="hoverRating = i + 1"
+              [class.active]="(hoverRating >= i + 1) || (rating >= i + 1)">★</span>
+      </span>
+    </div>

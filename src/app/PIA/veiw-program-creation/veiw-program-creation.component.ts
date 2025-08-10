@@ -48,6 +48,21 @@ export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     this.initializeDataTable(this.loginsessionDetails.agencyId);
   }
+
+
+     StatusData:any=''
+  getProgramsByStatus(status: string) {
+    this.StatusData= status;
+      this._commonService.getDataByUrl(APIS.programCreation.getProgramsListByAgencyDetails + this.selectedAgencyId).subscribe({
+        next: (dataList: any) => {
+          this.tableList = dataList.data;
+          this.reinitializeDataTable();
+        },
+        error: (error: any) => {
+          this.toastrService.error(error.error.message);
+        }
+      });
+  }
   GetProgramsByAgency(event:any){
     this.agencyByAdmin=event;
     this.selectedAgencyId = event;

@@ -70,7 +70,8 @@ import { ViewApplicationComponent } from './PIA/view-application/view-applicatio
 import { RegistrationNewComponent } from './PIA/registration-new/registration-new.component';
 import { StartupAssesmentComponent } from './PIA/startup-assesment/startup-assesment.component';
 import { MatSelectFilterModule } from 'mat-select-filter';
-import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatFormFieldModule } from '@angular/material/form-field';import { StarRatingComponent } from './manual-components/star-rating/star-rating.component';
+
 @NgModule({
     imports: [
         MaterialModule,
@@ -146,6 +147,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
         ViewApplicationComponent,
         RegistrationNewComponent,
         StartupAssesmentComponent,
+        StarRatingComponent,
 
     ],
     exports:[MaterialModule],

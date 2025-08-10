@@ -20,7 +20,7 @@ export class ProgramSummaryComponent implements OnInit {
   loginsessionDetails: any;
   agencyId: any;
   programIds:any
-
+  currentRating: number = 3.5;
   posts: any[] = []; 
   paginatedPosts: any[] = [];
   currentPage: number = 1;
@@ -241,7 +241,11 @@ export class ProgramSummaryComponent implements OnInit {
         }, 100);
       };
 
-
+// star rating 
+onRatingChange(rating: number) {
+  console.log('Rating changed:', rating);
+  this.currentRating = rating;
+}
 
 
       
