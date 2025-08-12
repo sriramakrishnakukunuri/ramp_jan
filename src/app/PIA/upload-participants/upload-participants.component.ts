@@ -8,6 +8,8 @@ import { ToastrService } from 'ngx-toastr';
 import DataTable from 'datatables.net-dt';
 import 'datatables.net-buttons-dt';
 import 'datatables.net-responsive-dt';
+import moment from 'moment';
+import { IDropdownSettings } from 'ng-multiselect-dropdown';
 declare var bootstrap: any;
 
 @Component({
@@ -16,7 +18,7 @@ declare var bootstrap: any;
   styleUrls: ['./upload-participants.component.css']
 })
 export class UploadParticipantsComponent implements OnInit {
-
+ ParticipantDataForm!: FormGroup;
   loginsessionDetails: any;
     agencyId: any;
     programIds:any
@@ -28,6 +30,11 @@ export class UploadParticipantsComponent implements OnInit {
   
     ngOnInit(): void {
       this.loginsessionDetails = JSON.parse(sessionStorage.getItem('user') || '{}');  
+       this.getOrganizationData()
+    this.formDetails();
+    //this.getData()
+    
+    //this.getAllPrograms()
       if(this.loginsessionDetails.userRole == 'ADMIN') {
         this.getAgenciesList()
       }
@@ -397,12 +404,28 @@ export class UploadParticipantsComponent implements OnInit {
       sessionStorage.setItem('ParticipantData', JSON.stringify(this.submitedData));
       this.getData()
     }
-
+EditProgramId:any=false
   editRow(item: any) {
     console.log(item, "item")
-    // this.router.navigate(['add-participant-data-edit', {partId:item.participantId,program:this.programIds}]);
-      this.router.navigateByUrl('/add-participant-data-edit/' + item.participantId+'-'+this.programIds);
+    this.getDataByMobileNumber(item.mobileNo)
+    this.EditProgramId= item?.programIds?.[0]
+      this.isedit=true
+    this.participantId=item.participantId
+   console.log(this.OrganizationData)
+    this.ParticipantDataForm.patchValue({ ...item,programIds :item.programIds?.[0],certificateIssueDate: item.certificateIssueDate?this.convertToISOFormat(item.certificateIssueDate):'',isAspirant:item.organizationId?'Existing Oragnization':'Aspirant',organizationId:this.OrganizationData.filter((data:any)=>{
+      if(data.organizationId==item?.organizationId){
+            return data
+          }
+    })})
+    document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+      const myModal = new bootstrap.Modal(document.getElementById('editParticiapant'));
+       myModal.show();
     }
+    OragnizationList(event: any) {
+    if (event.target.value === 'Existing Oragnization') {
+      this.getOrganizationData();
+    }
+  }
     // Upload documnet
 
     @ViewChild('fileInput') fileInput!: ElementRef;
@@ -517,6 +540,275 @@ export class UploadParticipantsComponent implements OnInit {
     link.click();
     link.remove();
   }
+  // delete
+     deleteProgramId:any ={}
+       deleteTemp(item: any) {
+        
+         this.deleteProgramId = item?.participantId
+           document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+          const myModal = new bootstrap.Modal(document.getElementById('exampleModalDeleteProgram'));
+           myModal.show();
+       
+     }
+  
+       ConfirmdeleteExpenditure(item:any){
+         this._commonService
+         .deleteId(APIS.participantdata.deleteTempParticipant,item).subscribe({
+           next: (data: any) => {
+             this.getData()
+              this.reinitializeDataTable();
+               this.closeModalDelete();
+               this.deleteProgramId =''
+             this.toastrService.success( data, "Participant Data Success!");
+             
+           },
+           error: (err) => {
+             this.closeModalDelete();
+              this.getData()
+              this.reinitializeDataTable();
+             this.deleteProgramId ={}
+             this.toastrService.success(err, "Participant Data Error!");
+             new Error(err);
+           },
+         });
+   
+       }
+       
+       closeModalDelete(): void {
+  
+        const editSessionModal = document.getElementById('exampleModalDeleteProgram');
+      if (editSessionModal) {
+        const modalInstance = bootstrap.Modal.getInstance(editSessionModal);
+        modalInstance.hide();
+      }
+  
+        // const myModal = bootstrap.Modal.getInstance(document.getElementById('exampleModalDelete'));
+        // myModal.hide();
+       } 
+
+
+      //  edit participant
+        programData:any={}
+  getProgramDetailsById(ProgrmId:any){
+    this.programData={}
+    this._commonService.getById(APIS.programCreation.getSingleProgramsList, ProgrmId).subscribe({
+      next: (data: any) => {
+        this.programData = data.data;
+        
+      },
+      error: (err: any) => {
+        this.toastrService.error(err.message, "Error fetching program details!");
+      }
+    });
+  }
+       selectedItems: any[] = [];
+          dropdownList1=[];
+          dropdownListOrg=[];
+          dropdownSettingsOrg: IDropdownSettings = {};
+          assignFluidData1Org() {
+            this.dropdownSettingsOrg = {
+                singleSelection: true,
+                idField: 'organizationId',
+                textField: 'organizationName',
+                itemsShowLimit: 1,
+                allowSearchFilter: true,
+                clearSearchFilter: true,
+                maxHeight: 197,
+                searchPlaceholderText: "Search Organization",
+                noDataAvailablePlaceholderText: "Data Not Available",
+                closeDropDownOnSelection: false,
+                showSelectedItemsAtTop: false,
+                defaultOpen: false,
+            };
+            this.dropdownListOrg = this.OrganizationData;
+           
+          //   this.contractListObj.area= this.selectMapList1;
+        }
+        onItemSelectOrg(item: any) {
+      console.log('Item selected:', item);
+    }
+  
+  
+    onItemDeSelectOrg(item: any) {
+      console.log('Item deselected:', item);
+    }
+  
+      get f2() {
+    return this.ParticipantDataForm.controls;
+  }
+       formDetails() {
+    this.ParticipantDataForm = new FormGroup({
+      // date: new FormControl("", [Validators.required]),
+      isAspirant: new FormControl("Aspirant", [Validators.required]),
+      organizationId: new FormControl("",),
+      participantName: new FormControl("", [Validators.required,Validators.pattern(/^[A-Za-z][A-Za-z .]*$/)]), //Validators.required
+      gender: new FormControl("", [Validators.required,]),
+      disability: new FormControl("N", [Validators.required]),
+      // noOfDays: new FormControl("", [Validators.required,]),
+      category: new FormControl("",[Validators.required,]),
+      aadharNo: new FormControl("", [Validators.pattern(/^[0-9]{12}$/)]),
+      mobileNo: new FormControl("", [Validators.required, Validators.pattern(/^[6789]\d{9}$/)]),
+      email: new FormControl("", [Validators.email]),
+      designation: new FormControl("", ),
+      isParticipatedBefore: new FormControl("",),
+      previousParticipationDetails: new FormControl("",),
+      preTrainingAssessmentConducted: new FormControl("",),
+      postTrainingAssessmentConducted: new FormControl("",),
+      isCertificateIssued: new FormControl("N",),
+      certificateIssueDate: new FormControl("",),
+      needAssessmentMethodology: new FormControl("",),
+      programIds: new FormControl("", [Validators.required,]),
+    
+      // TargetSector: new FormControl("",[Validators.required,]),
+      // targetAudience: new FormControl("",[Validators.required,]),
+      // targetNoOfParticipants: new FormControl("",[Validators.required,]),
+    });
+  }
+   isedit:any=false
+  participantId:any=''
+  convertToISOFormat(date: string): string {
+    const [day, month, year] = date.split('-');
+    return `${year}-${month}-${day}`; // Convert to yyyy-MM-dd format
+  }
+ programList: any;
+  getAllPrograms() {
+    this.programList = []
+    this._commonService.getDataByUrl(APIS.programCreation.getProgramsList).subscribe({
+      next: (res: any) => {
+        this.programList = res?.data
+        this.programIds = this.programList[0]?.programId
+        this.getData()
+      },
+      error: (err) => {
+        new Error(err);
+      }
+    })
+  }
+   OrganizationData: any = []
+  getOrganizationData() {
+    this._commonService.getDataByUrl(APIS.participantdata.getOrgnizationData).subscribe({
+      next: (res: any) => {
+        this.OrganizationData = res?.data
+        this.assignFluidData1Org()
+        // this.submitedData=res?.data?.data
+        // this.advanceSearch(this.getSelDataRange);
+        // modal.close()
+
+      },
+      error: (err) => {
+        this.toastrService.error(err.message, "Organization Data Error!");
+        new Error(err);
+      },
+    });
+  }
+   DefaultDisabled: boolean = false;
+  previousParticipationDetails: any = {};
+  getDataByMobileNumber(MobileNumber:any){
+    this.previousParticipationDetails={}
+    if(MobileNumber.length==10){
+      this.DefaultDisabled=false
+      this._commonService.getById(APIS.captureOutcome.getParticipantData,MobileNumber).subscribe({
+        next: (res: any) => {
+          console.log(res)
+          if(res.status==400){
+            this.previousParticipationDetails={}
+            this.ParticipantDataForm.reset()
+            this.ParticipantDataForm.patchValue({mobileNo:MobileNumber})
+          }
+          else{
+            let item = res?.data;
+            this.previousParticipationDetails = item;
+            if(!this.isedit){
+              this.ParticipantDataForm.patchValue({ ...item, certificateIssueDate: item.certificateIssueDate?this.convertToISOFormat(item.certificateIssueDate):'',isAspirant:item.organizationId?'Existing Oragnization':'Aspirant',organizationId:this.OrganizationData.filter((data:any)=>{
+                if(data.organizationId==item?.organizationId){
+                      return data
+                    }
+              })})
+            }
+            
+          }
+         
+        },
+        error: (err) => {
+          this.previousParticipationDetails={}
+          this.ParticipantDataForm.reset()
+            this.ParticipantDataForm.patchValue({mobileNo:MobileNumber})
+          new Error(err);
+        }
+      })
+    }
+    else{
+      
+    }
+ 
+}
+  Submitform() {
+      
+      let payload:any={...this.ParticipantDataForm.value, "programIds": [this.ParticipantDataForm.value.programIds], "organizationId": this.ParticipantDataForm.value.organizationId?.[0]?.organizationId }
+     console.log(typeof payload['programIds'])
+      if(this.f2['isAspirant'].value!='Existing Oragnization'){
+      delete payload['organizationId']
+    }
+    if(payload['isCertificateIssued']=='N'){
+      delete payload['certificateIssueDate'];
+    }
+    else{
+      payload['certificateIssueDate']=payload['certificateIssueDate']?moment(payload['certificateIssueDate']).format('DD-MM-YYYY'):null
+    }
+     
+      this.submitedData.push(this.ParticipantDataForm.value)
+      // sessionStorage.setItem('ParticipantData', this.submitedData)
+  
+      sessionStorage.setItem('ParticipantData', JSON.stringify(this.submitedData));
+    
+     if(Object?.keys(this.previousParticipationDetails)?.length){
+        payload['programIds']=[...payload.programIds,...this.previousParticipationDetails?.programIds]
+      }
+      // payload['programIds']=[this.ParticipantDataForm.value.programIds]
+      this._commonService
+          .update(APIS.participantdata.updateTempParticipant, payload,this.participantId).subscribe({
+        next: (data: any) => {
+          if(data?.status==400){
+            this.toastrService.error(data?.message, "Participant Data Error!");
+          }
+          else{
+            // this.advanceSearch(this.getSelDataRange);
+           this.programIds = this.ParticipantDataForm.value.programIds?this.ParticipantDataForm.value.programIds:this.programList[0]?.programId
+          //  this.getData()
+           this.isedit=false
+           this.participantId=''
+           this.ParticipantDataForm.reset()
+           this.formDetails()
+         
+           // modal.close()
+           this.toastrService.success('Participant Data updated Successfully', "Participant Data Success!");
+          }
+            this.getData()
+          this.closeModalEdit()
+        },
+        error: (err) => {
+          this.ParticipantDataForm.reset()
+          this.isedit=false
+          this.closeModalEdit()
+          this.getData()
+          this.formDetails()
+          this.toastrService.error(err.message, "Participant Data Error!");
+          new Error(err);
+        },
+      });
+      //this.getData()  
+    }
+      closeModalEdit(): void {
+  
+        const editSessionModal = document.getElementById('editParticiapant');
+      if (editSessionModal) {
+        const modalInstance = bootstrap.Modal.getInstance(editSessionModal);
+        modalInstance.hide();
+      }
+  
+        // const myModal = bootstrap.Modal.getInstance(document.getElementById('exampleModalDelete'));
+        // myModal.hide();
+       } 
   }
 
 

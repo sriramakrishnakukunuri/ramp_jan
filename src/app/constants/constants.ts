@@ -70,6 +70,8 @@ export const APIS = {
         downloadParticipantData: API_BASE_URL + '/program/participant/pdf/',
         downloadParticipantTempData: API_BASE_URL + '/ParticipantTemp/excel/sheets/',
         migrateApi: API_BASE_URL + '/participants/temp/migrate',
+        deleteTempParticipant: API_BASE_URL + '/participants/temp/',
+        updateTempParticipant: API_BASE_URL + '/participants/temp/',
     },
     counsellerData:{
         add: API_BASE_URL + '/saveCounsellor',
