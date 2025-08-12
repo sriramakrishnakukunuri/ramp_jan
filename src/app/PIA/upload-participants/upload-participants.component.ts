@@ -564,6 +564,8 @@ EditProgramId:any=false
            },
            error: (err) => {
              this.closeModalDelete();
+              this.getData()
+              this.reinitializeDataTable();
              this.deleteProgramId ={}
              this.toastrService.success(err, "Participant Data Error!");
              new Error(err);
