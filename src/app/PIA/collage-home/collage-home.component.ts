@@ -18,6 +18,7 @@ export class CollageHomeComponent implements OnInit {
   images: any[] = [];  
   selectedImages: Image[] = [];
   agencies: Agency[] = [];
+  filteredAgencies:any;
   programs: Program[] = [];
   filteredImages: any[] = [];
   selectedAgencyId: number | null | string= null;
@@ -135,6 +136,7 @@ export class CollageHomeComponent implements OnInit {
   this.imageService.getAgencies().subscribe(
     (res) => {
       this.agencies = res.data;
+      this.filteredAgencies= this.agencies
     },
     (err) => {
       console.error('Error fetching agencies:', err);

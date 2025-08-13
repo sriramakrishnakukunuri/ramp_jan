@@ -33,10 +33,12 @@ export class AttentanceParticipantComponent implements OnInit,AfterViewInit {
     }
 
     agencyProgramList: any;
+    agencyProgramListFiltered: any;
     getProgramsByAgency() {
       this._commonService.getDataByUrl(`${APIS.programCreation.getProgramsListByAgencyStatus+'/'+(this.loginsessionDetails.agencyId?this.loginsessionDetails.agencyId:this.agencyId)+'?status=Participants Added'}`).subscribe({
         next: (res: any) => {
           this.agencyProgramList = res?.data
+          this.agencyProgramListFiltered = res?.data;
           if(res?.data?.length){
             this.programIds = this.agencyProgramList[0].programId
             this.getData()
@@ -53,8 +55,8 @@ export class AttentanceParticipantComponent implements OnInit,AfterViewInit {
     }
     dropdownProgramsList(event: any, type: any) {
       this.ParticipantAttendanceData = ''
-      this.programIds = event.target.value
-      if (type == 'table' && event.target.value) {
+      this.programIds = event.value
+      if (type == 'table' && event.value) {
         this.getData()
       }
     }

@@ -37,10 +37,12 @@ export class ViewCompletedComponent implements OnInit {
       }
       selectedAgencyId:any;
       agencyList:any;
+      agencyListFiltered:any;
     getAgenciesList() {
       this.agencyList = [];
       this._commonService.getDataByUrl(APIS.masterList.agencyList).subscribe((res: any) => {
         this.agencyList = res.data;
+        this.agencyListFiltered = this.agencyList;
         this.selectedAgencyId = res.data[0].agencyId
         this.getProgramsByAgencyAdmin(this.selectedAgencyId)
       }, (error) => {
@@ -48,10 +50,12 @@ export class ViewCompletedComponent implements OnInit {
       });
     }
       agencyProgramList: any;
+      agencyProgramListFiltered:any;
       getProgramsByAgencyAdmin(agency:any) {
         if(agency == 'All Agencies') {
           this.programIds = 'All Programs'
           this.agencyProgramList=[]
+          this.agencyProgramListFiltered=[]
           this.getData()
 
         }
@@ -60,6 +64,7 @@ export class ViewCompletedComponent implements OnInit {
         this._commonService.getDataByUrl(`${APIS.programCreation.getProgramsListByAgency+'/'+agency}`).subscribe({
           next: (res: any) => {
             this.agencyProgramList = res?.data
+          this.agencyProgramListFiltered=this.agencyProgramList
             this.programIds = this.agencyProgramList[0].programId
             this.submitedData = ''
             this.getData()
@@ -75,6 +80,7 @@ export class ViewCompletedComponent implements OnInit {
         this._commonService.getDataByUrl(`${APIS.programCreation.getProgramsListByAgency+'/'+ this.agencyId}`).subscribe({
           next: (res: any) => {
             this.agencyProgramList = res?.data
+            this.agencyProgramListFiltered=this.agencyProgramList
             this.programIds = this.agencyProgramList[0].programId
             this.submitedData = ''
             this.getData()
@@ -86,13 +92,13 @@ export class ViewCompletedComponent implements OnInit {
       }
       dropdownProgramsList(event: any, type: any) {
         this.submitedData = ''
-        this.programIds = event.target.value
-        if(event.target.value == 'All Programs') {
+        this.programIds = event.value
+        if(event.value == 'All Programs') {
           this.getData()
 
         }
         else{
-          if (type == 'table' && event.target.value) {
+          if (type == 'table' && event.value) {
             this.getData()
           }
         }

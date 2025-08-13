@@ -1,0 +1,51 @@
+<!-- Example usage of the updated star-rating component -->
+
+<!-- Using percentage input (0-100) -->
+<div class="example-container">
+  <h3>Star Rating Based on Percentage</h3>
+  
+  <!-- Example 1: 75% rating -->
+  <div class="rating-example">
+    <label>75% Performance:</label>
+    <app-star-rating 
+      [percentage]="75" 
+      (percentageChange)="onPercentageChange($event)"
+      (ratingChange)="onRatingChange($event)">
+    </app-star-rating>
+    <span class="rating-display">{{ getDisplayText(75) }}</span>
+  </div>
+
+  <!-- Example 2: 90% rating -->
+  <div class="rating-example">
+    <label>90% Performance:</label>
+    <app-star-rating 
+      [percentage]="90" 
+      (percentageChange)="onPercentageChange($event)"
+      (ratingChange)="onRatingChange($event)">
+    </app-star-rating>
+    <span class="rating-display">{{ getDisplayText(90) }}</span>
+  </div>
+
+  <!-- Example 3: Interactive rating -->
+  <div class="rating-example">
+    <label>Interactive Rating:</label>
+    <app-star-rating 
+      [percentage]="currentPercentage" 
+      (percentageChange)="currentPercentage = $event"
+      (ratingChange)="currentRating = $event">
+    </app-star-rating>
+    <span class="rating-display">
+      {{ currentPercentage }}% ({{ (currentRating || 0).toFixed(1) }} stars)
+    </span>
+  </div>
+
+  <!-- Percentage input for testing -->
+  <div class="rating-example">
+    <label>Set Percentage:</label>
+    <input type="number" 
+           min="0" 
+           max="100" 
+           [(ngModel)]="currentPercentage" 
+           placeholder="Enter percentage (0-100)">
+  </div>
+</div>

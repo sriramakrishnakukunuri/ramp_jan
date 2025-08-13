@@ -9,10 +9,21 @@
                         <h6 class="fw-600 mb-2 mb-sm-0">Raw Material Using in SHG Training </h6>
                     </div>
                     <div class="col-12 col-sm-5 col-md-4 col-lg-3">
-                        <select class="form-select" [(ngModel)]="programIds" (change)="dropdownProgramsList($event,'table')">
+                        <!-- <select class="form-select" [(ngModel)]="programIds" (change)="dropdownProgramsList($event,'table')">
                             <option value="">Select Program</option>
                         <option *ngFor="let list of agencyProgramList" value="{{list.programId}}">{{list.programTitle}}</option>
-                        </select>
+                        </select> -->
+                         <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>Program</mat-label>
+                                <mat-select [(ngModel)]="programIds" (selectionChange)="dropdownProgramsList($event,'table')">
+                                <mat-select-filter [array]="agencyProgramList" [displayMember]="'programTitle'" (filteredReturn)="agencyProgramListFiltered = $event">
+                                </mat-select-filter>
+                                <mat-option value="" disabled>Select Program</mat-option>
+                                <mat-option *ngFor="let list of agencyProgramListFiltered" [value]="list.programId">
+                                {{ list.programTitle }}
+                                </mat-option>
+                            </mat-select>
+                            </mat-form-field>
                     </div>
                 </div>
             </div>

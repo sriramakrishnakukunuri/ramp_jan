@@ -48,10 +48,12 @@ export class ProgramMonitoringNewComponent implements OnInit {
       this.getAgenciesList(  )
   }
   agencyList:any
+  agencyListFiltered:any;
   getAgenciesList() {
     this.agencyList = [];
     this._commonService.getDataByUrl(APIS.masterList.agencyList).subscribe((res: any) => {
       this.agencyList = res.data;
+      this.agencyListFiltered=this.agencyList 
       this.agencyId=res.data[0].agencyId
       this.getProgramsByAgency(res.data[0].agencyId);
     }, (error) => {
@@ -59,11 +61,13 @@ export class ProgramMonitoringNewComponent implements OnInit {
     });
   }
   agencyProgramList: any;
+  agencyProgramListFiltered:any;
   getProgramsByAgency(agency:any) {
     this.agencyProgramList =[]
     this._commonService.getDataByUrl(`${APIS.programCreation.getProgramsListByAgency+agency}`).subscribe({
       next: (res: any) => {
         this.agencyProgramList = res?.data
+        this.agencyProgramListFiltered=this.agencyProgramList
         if(res.data?.length){
           this.programIds = this.agencyProgramList[0].programId
           this.getByProgramId(this.programIds);

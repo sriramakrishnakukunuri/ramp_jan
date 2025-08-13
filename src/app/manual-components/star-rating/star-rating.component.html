@@ -1,0 +1,12 @@
+  <div class="star-rating" [ngClass]="getColorClass()" [title]="getPercentageDisplay()">
+    <span *ngFor="let star of stars; let i = index" class="star">
+      <!-- Left half of star for half rating -->
+      <span class="star-half-left"
+            [class.active]="(displayRating > i && displayRating < i + 1) || (displayRating >= i + 1)">★</span>
+      <!-- Right half of star for full rating -->
+      <span class="star-half-right"
+            [class.active]="(displayRating >= i + 1)">★</span>
+    </span>
+    <!-- Custom tooltip for better styling -->
+    <div class="percentage-tooltip">{{getPercentageDisplay()}}</div>
+  </div>

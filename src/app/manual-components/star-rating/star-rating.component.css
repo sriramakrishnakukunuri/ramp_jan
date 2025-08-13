@@ -1,0 +1,122 @@
+.star-rating {
+      display: inline-block;
+      font-size: 24px;
+      line-height: 1;
+      position: relative;
+    }
+    .star {
+      position: relative;
+      display: inline-block;
+      cursor: pointer;
+      color: #ddd;
+      margin-right: 4px;
+      width: 1em;
+      height: 1em;
+    }
+    .star-half-left, .star-half-right {
+      position: absolute;
+      display: inline-block;
+      color: #ddd;
+      cursor: pointer;
+      transition: color 0.2s ease;
+      top: 0;
+    }
+    .star-half-left {
+      width: 50%;
+      overflow: hidden;
+      left: 0;
+      z-index: 2;
+    }
+    .star-half-right {
+      width: 100%;
+      left: 0;
+      z-index: 1;
+    }
+    .star-half-left.active {
+      color: orange;
+    }
+    .star-half-right.active {
+      color: orange;
+    }
+    .star-half-left:hover {
+      color: #ff8c00;
+    }
+    .star-half-right:hover {
+      color: #ff8c00;
+    }
+
+    /* Color classes based on percentage ranges */
+    .red-rating .star-half-left.active {
+      color: #e74c3c; /* Red for below 25% */
+    }
+    .red-rating .star-half-right.active {
+      color: #e74c3c;
+    }
+    .red-rating .star-half-left:hover {
+      color: #c0392b;
+    }
+    .red-rating .star-half-right:hover {
+      color: #c0392b;
+    }
+
+    .orange-rating .star-half-left.active {
+      color: #f39c12; /* Orange for 25-75% */
+    }
+    .orange-rating .star-half-right.active {
+      color: #f39c12;
+    }
+    .orange-rating .star-half-left:hover {
+      color: #e67e22;
+    }
+    .orange-rating .star-half-right:hover {
+      color: #e67e22;
+    }
+
+    .green-rating .star-half-left.active {
+      color: #27ae60; /* Green for above 75% */
+    }
+    .green-rating .star-half-right.active {
+      color: #27ae60;
+    }
+    .green-rating .star-half-left:hover {
+      color: #229954;
+    }
+    .green-rating .star-half-right:hover {
+      color: #229954;
+    }
+
+    /* Custom tooltip for percentage display */
+    
+    .percentage-tooltip {
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: rgba(0, 0, 0, 0.8);
+      color: white;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: bold;
+      white-space: nowrap;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+      z-index: 1000;
+      pointer-events: none;
+    }
+    
+    .percentage-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: rgba(0, 0, 0, 0.8);
+    }
+    
+    .star-rating:hover .percentage-tooltip {
+      opacity: 1;
+      visibility: visible;
+    }
