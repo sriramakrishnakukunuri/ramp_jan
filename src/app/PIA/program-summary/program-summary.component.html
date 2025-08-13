@@ -16,10 +16,10 @@
                                   <mat-form-field appearance="outline" class="w-100">
                             <mat-label>List Of Agencies</mat-label>
                                 <mat-select  (selectionChange)="getProgramsByAgency($event.value)">
-                                <mat-select-filter [array]="agencyList" [displayMember]="'agencyName'" (filteredReturn)="agencyProgramListFiltered = $event">
+                                <mat-select-filter [array]="agencyList" [displayMember]="'agencyName'" (filteredReturn)="agencyListFiltered = $event">
                                 </mat-select-filter>
                                 <!-- <mat-option value="" disabled>Select Program</mat-option> -->
-                                <mat-option *ngFor="let list of agencyProgramListFiltered" [value]="list.agencyId">
+                                <mat-option *ngFor="let list of agencyListFiltered" [value]="list.agencyId">
                                 {{ list.agencyName }}
                                 </mat-option>
                             </mat-select>
