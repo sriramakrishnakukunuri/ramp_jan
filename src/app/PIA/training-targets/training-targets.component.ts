@@ -116,8 +116,25 @@ export class TrainingTargetsComponent implements OnInit {
       this.tableheaderList =[]
       // Destroy existing DataTable if it exists
       
+      function rewriteNode(apiResponse: any) {
+        const groupedTargets = apiResponse.groupedFinancialTargets;
+
+        Object.keys(groupedTargets).forEach(activityName => {
+          const activity = groupedTargets[activityName];
+
+          if (activity.financialYears) {
+            // Rename financialYears -> financialYear
+            activity.financialYear = activity.financialYears;
+            delete activity.financialYears;
+          }
+        });
+
+        return apiResponse;
+      }
+
       this._commonService.getDataByUrl(APIS.trainingtargets.getTrainingtargets+"?agencyId="+value).subscribe({
-        next: (dataList: any) => {
+        next: (dataListResponse: any) => {
+          let dataList = rewriteNode(dataListResponse);
           if(Object.keys(dataList.groupedFinancialTargets ).length) {
             console.log(dataList.groupedFinancialTargets, 'dataList');
             const allYears = new Set<string>();
@@ -126,9 +143,26 @@ export class TrainingTargetsComponent implements OnInit {
               return item;
             });
             this.tableheaderList = Array.from(allYears).sort();
-            Object.keys(dataList.groupedFinancialTargets || {}).map((key: any) => {
-              this.tableList.push(dataList.groupedFinancialTargets[key]) 
-            })
+            // Object.keys(dataList.groupedFinancialTargets || {}).map((key: any) => {
+            //   this.tableList.push(dataList.groupedFinancialTargets[key]) 
+            // })
+
+            Object.keys(dataList.groupedFinancialTargets).forEach((activityName: string) => {
+            const activity = dataList.groupedFinancialTargets[activityName];
+
+            // collect headers from this activity
+            const headers = activity.financialYear.map((fy: any) => fy.financialYear);
+
+            // push row in required format
+            this.tableList.push({
+              agencyName: activity.financialYear[0]?.agencyName || "-",
+              activityName: activityName,
+              overallTarget: dataList.overallTarget,
+              financialYearHeaders: headers,
+              financialYear: activity.financialYear
+            });
+          });
+
             // if ($.fn.DataTable.isDataTable('#view-physical-table')) {
             //     $('#view-physical-table').DataTable().destroy();
             //   }
