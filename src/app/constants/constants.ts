@@ -94,6 +94,9 @@ export const APIS = {
         getMandal: API_BASE_URL + '/getAllmandalsOfDistrictsById/',
         getMandalName: API_BASE_URL + '/getAllmandalsOfDistrictsByName/',
     },
+    trainingtargets:{
+        getTrainingtargets: API_BASE_URL + '/targets/financial/year/summary',
+    },
     captureOutcome:{
         getParticipantData: API_BASE_URL + '/getParticipantsByMobileNo/',
         getOutcomelistData: API_BASE_URL + '/program/outcome/tables',

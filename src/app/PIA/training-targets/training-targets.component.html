@@ -67,12 +67,12 @@
               <tbody *ngIf="tableList?.length">
                 <tr *ngFor="let item of tableList; let i = index">
                      <td>{{item?.agencyName}}</td>
-                  <td>{{item?.activityName}}</td>
-                  <td>{{item?.overallTarget}}</td>
+                    <td>{{item?.activityName}}</td>
+                    <td>{{item?.overallTarget}}</td>
                  
                   <ng-container *ngFor="let list of this.tableheaderList; let i = index;">
                     <ng-container *ngIf="getYearData(item, list) as yearData">
-                      <td>{{yearData.total || 0}}</td>
+                      <td>{{yearData.yearlyTarget || 0}}</td>
                       <td>{{yearData.q1 || 0}}</td>
                       <td>{{yearData.q2 || 0}}</td>
                       <td>{{yearData.q3 || 0}}</td>
