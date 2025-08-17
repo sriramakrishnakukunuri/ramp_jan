@@ -149,11 +149,7 @@ export class TrainingTargetsComponent implements OnInit {
 
             Object.keys(dataList.groupedFinancialTargets).forEach((activityName: string) => {
             const activity = dataList.groupedFinancialTargets[activityName];
-
-            // collect headers from this activity
             const headers = activity.financialYear.map((fy: any) => fy.financialYear);
-
-            // push row in required format
             this.tableList.push({
               agencyName: activity.financialYear[0]?.agencyName || "-",
               activityName: activityName,
