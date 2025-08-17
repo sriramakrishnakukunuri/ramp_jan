@@ -50,6 +50,7 @@ import { AssignCounsellorComponent } from './PIA/assign-counsellor/assign-counse
 import { RegistrationNewComponent } from './PIA/registration-new/registration-new.component';
 import { StartupAssesmentComponent } from './PIA/startup-assesment/startup-assesment.component';
 import { UploadParticipantsComponent } from './PIA/upload-participants/upload-participants.component';
+import { TrainingTargetsComponent } from './PIA/training-targets/training-targets.component';
 
 const routes: Routes = [
     {
@@ -324,6 +325,12 @@ const routes: Routes = [
     {
         path: 'physical-targets',
         component: PhysicalTargetsComponent,
+        canActivate: [AuthGuard],
+        data: { roles: [Role.Admin,Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
+    },
+     {
+        path: 'training-targets',
+        component: TrainingTargetsComponent,
         canActivate: [AuthGuard],
         data: { roles: [Role.Admin,Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
     },
