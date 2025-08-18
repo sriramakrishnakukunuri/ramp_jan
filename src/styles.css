@@ -15248,13 +15248,21 @@ outline: none; */
   font-size: 14px;
 }
 .mat-select { display: inline-block;   width: 100%;  outline: none; border: solid 1px #CCC; padding: 2px;  border-radius: 4px; overflow: auto;}
-.mat-select { border: transparent !important;} 
+.mat-select { border: transparent !important; max-width: 400px !important;} 
 .mat-select  { border: transparent !important;} 
 .mat-form-field-appearance-outline .mat-select-arrow-wrapper {
   transform: translateY(22%);
 }
 
-
+.mat-select-panel {
+    min-width: 112px;
+    max-width: 400px !important;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-top: 0;
+    padding-bottom: 0;
+    max-height: 256px;
+}
 
 .mat-option-text {
     width: auto;
