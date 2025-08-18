@@ -15247,11 +15247,35 @@ outline: none; */
 .mat-paginator-page-size mat-select span.mat-select-min-line {
   font-size: 14px;
 }
-.mat-select { display: inline-block;   width: 100%;  outline: none; border: solid 1px #CCC; padding: 2px;  border-radius: 4px;}
+.mat-select { display: inline-block;   width: 100%;  outline: none; border: solid 1px #CCC; padding: 2px;  border-radius: 4px; overflow: auto;}
 .mat-select { border: transparent !important;} 
+.mat-select  { border: transparent !important;} 
 .mat-form-field-appearance-outline .mat-select-arrow-wrapper {
   transform: translateY(22%);
 }
+
+
+
+.mat-option-text {
+    width: auto;
+    /* height: fit-content; */
+    /* display: inline-block; */
+    /* flex-grow: 1; */
+    /* overflow: auto; */
+    max-height: 300px !important;
+    text-overflow: clip;
+}
+
+.mat-option-text {
+    display: block;
+    flex-grow: 1;
+    white-space: normal;
+    word-break: break-word;
+    height: auto;
+    line-height: normal;
+    /* overflow: auto; */
+}
+
 /* Password toggle icon styles */
 .password-key-login{
   position: absolute;
