@@ -11,7 +11,7 @@
                                     <!-- <input class="form-control" id="uploadNoc" type="file"> -->
                                      <input class="form-control" id="uploadNoc" type="file" (change)="onFileSelected($event)">
                                       <small *ngIf="this.selectedfiles?.name " class="text-muted">
-                                        Uploaded file: {{ this.selectedfiles?.name }}
+                                        Uploaded file: {{ this.selectedfiles?.name?.split('/').pop() }}
                                       </small>
                                   </div>
                                 </div>

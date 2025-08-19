@@ -25,6 +25,7 @@ RejectForm!: FormGroup;
   pagedData: any[] = [];
   @ViewChild('successModal') successModal!: ElementRef;
    @ViewChild('ModalReject') ModalReject!: ElementRef;
+    @ViewChild('ModalReview') ModalReview!: ElementRef;
  constructor(
   private fb: FormBuilder,
      private toastrService: ToastrService,
@@ -124,12 +125,30 @@ RejectForm!: FormGroup;
         this.RejectForm.reset()
         const modal = new bootstrap.Modal(this.ModalReject.nativeElement);
           modal.show(); 
-     this.getLevelOneData(this.currentPage,  this.pageSize);
+        this.getLevelOneData(this.currentPage,  this.pageSize);
       },
       error: (error) => {
         this.RejectForm.reset()
         console.error('Error submitting form:', error);
       }
     });
+    this.getLevelOneData(this.currentPage,  this.pageSize);
   }
+  review(){
+      console.log(this.Remarks,this.RejectForm.value)
+      // https://tihcl.com/tihcl/api/registrations/status/updation/TH647249?appStatus=REJECTED_MANAGER_APPROVAL_1&reasonForRejection=by%20some%20reason
+       
+      this._commonService.updatedataByUrl(APIS.tihclManager.approveLevelOne+this.approvalData?.applicationNo+'?appStatus=MANAGER_REVERIFY_2&reasonForRejection='+this.RejectForm.value?.remarks).subscribe({
+        next: (response) => {
+          this.RejectForm.reset()
+          const modal = new bootstrap.Modal(this.ModalReview.nativeElement);
+            modal.show(); 
+          this.getLevelOneData(this.currentPage,  this.pageSize);
+        },
+        error: (error) => {
+          this.RejectForm.reset()
+          console.error('Error submitting form:', error);
+        }
+      });
+    }
 }

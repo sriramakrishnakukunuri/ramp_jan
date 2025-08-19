@@ -436,6 +436,7 @@
                 </div>
             </div>
             <div class="modal-footer">
+                <button type="button" data-bs-toggle="modal" data-bs-target="#reviewModal" class="btn btn-warning" data-bs-dismiss="modal">Review</button>
                 <button type="button" data-bs-toggle="modal" data-bs-target="#approvedModal" class="btn btn-primary" data-bs-dismiss="modal">Approve</button>
                 <button type="button" data-bs-toggle="modal" data-bs-target="#rejectModal" class="btn btn-danger" data-bs-dismiss="modal">Reject</button>
             </div>
@@ -518,6 +519,30 @@
 
                   <div class="text-end">
                       <button type="button" class="btn btn-primary" (click)="Reject()" [ngClass]="{'isDisabled':RejectForm.invalid}"  data-bs-dismiss="modal">Submit</button>
+                  </div>
+              </div>
+          </div>
+      </div>
+    </div>
+     <div class="modal fade" id="reviewModal" #reviewModal tabindex="-1" aria-labelledby="rejectModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+          <div class="modal-content">
+              <div class="modal-header py-2 bg-theme ">
+                <h6 class="modal-title text-white">Review</h6>
+                <button type="button" class="btn-close text-white fs-4 p-0" data-bs-dismiss="modal" aria-label="Close"><span class="bi bi-x"></span></button>
+              </div>
+              <div class="modal-body">
+                  <form [formGroup]="RejectForm">
+                    <div class="row">
+                        <div class="col-12 mb-3">
+                            <label class="fs-md fw-600 mb-1">Remarks</label>
+                            <textarea class="form-control" rows="5" formControlName="remarks"   name ="remarks" placeholder="Write here"></textarea>
+                        </div>
+                    </div>
+                  </form>
+
+                  <div class="text-end">
+                      <button type="button" class="btn btn-primary" (click)="review()" [ngClass]="{'isDisabled':RejectForm.invalid}"  data-bs-dismiss="modal">Submit</button>
                   </div>
               </div>
           </div>

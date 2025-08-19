@@ -26,7 +26,7 @@
                         
                       <ul class="navbar-nav justify-content-end flex-grow-1 pe-3" *appHasRole="[Role.TIHCL_EXECUTOR]">
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page">Dashboard</a>
+                        <a class="nav-link" aria-current="page" routerLink="global-dashboard" routerLinkActive="active">Dashboard</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle active"id="executorAppsDropdown" role="button"
@@ -47,7 +47,7 @@
                         </ul>
                         <ul class="navbar-nav justify-content-end flex-grow-1 pe-3" *appHasRole="[Role.TIHCL_MANAGER]">
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page"  routerLinkActive="active">Dashboard</a>
+                        <a class="nav-link" aria-current="page"  routerLink="global-dashboard" routerLinkActive="active">Dashboard</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle active" id="managerApprovalsDropdown" role="button"
@@ -66,7 +66,7 @@
                         </ul>
                          <ul class="navbar-nav justify-content-end flex-grow-1 pe-3" *appHasRole="[Role.TIHCL_DIC]">
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page"  routerLinkActive="active">Dashboard</a>
+                        <a class="nav-link" aria-current="page"  routerLink="global-dashboard" routerLinkActive="active" >Dashboard</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle active" id="managerApprovalsDropdown" role="button"
@@ -84,7 +84,7 @@
                         <!-- view-application -->
                           <ul class="navbar-nav justify-content-end flex-grow-1 pe-3" *appHasRole="[Role.TIHCL_COI]">
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page"  routerLinkActive="active">Dashboard</a>
+                        <a class="nav-link" aria-current="page"  routerLink="global-dashboard" routerLinkActive="active">Dashboard</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle active" id="managerApprovalsDropdown" role="button"

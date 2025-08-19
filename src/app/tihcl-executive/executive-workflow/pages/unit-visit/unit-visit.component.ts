@@ -404,38 +404,39 @@ saveworkshift(): void {
     }
   saveExistingData(){
     console.log(this.ExistingunitVisit)
-     if(this.unitVisitForm.valid && this.unitVisitForm.value?.machineryDetailsRequest?.length && Object.keys( this.ExistingunitVisit).length && this.ExistingunitVisit?.id){
-         let payload:any={...this.unitVisitForm.value, "applicationNo": this.applicationData?.applicationNo,"applicationStatus": "UNIT_VISIT"}
-         this._commonService.update(APIS.tihclExecutive.updateUnitVisit,payload,this.ExistingunitVisit?.id).subscribe({
-          next: (response) => {
-           this.getDataById(response?.data?.id)
-           this.progressBarStatusUpdate.emit({"update":true})
-            this.toastrService.success('Unit Visit Data Updated Successfully','Unit Visit');
+    //  if(this.unitVisitForm.valid && this.unitVisitForm.value?.machineryDetailsRequest?.length && Object.keys( this.ExistingunitVisit).length && this.ExistingunitVisit?.id){
+    //      let payload:any={...this.unitVisitForm.value, "applicationNo": this.applicationData?.applicationNo,"applicationStatus": "UNIT_VISIT"}
+    //      this._commonService.update(APIS.tihclExecutive.updateUnitVisit,payload,this.ExistingunitVisit?.id).subscribe({
+    //       next: (response) => {
+    //        this.getDataById(response?.data?.id)
+    //        this.progressBarStatusUpdate.emit({"update":true})
+    //         this.toastrService.success('Unit Visit Data Updated Successfully','Unit Visit');
 
-            //  this.progressBarStatusUpdate.emit({"update":true})
+    //         //  this.progressBarStatusUpdate.emit({"update":true})
     
-          },
-          error: (error) => {
-            console.error('Error submitting form:', error);
-          }
-        });
-      }else  if(this.unitVisitForm.valid && this.unitVisitForm.value?.machineryDetailsRequest?.length && this.ExistingunitVisit?.id){
-         let payload:any={...this.unitVisitForm.value, "applicationNo": this.applicationData?.applicationNo,"applicationStatus": "UNIT_VISIT"}
-         this._commonService.update(APIS.tihclExecutive.updateUnitVisit,payload,this.ExistingunitVisit?.id).subscribe({
-          next: (response) => {
-           this.getDataById(response?.data?.id)
-           this.progressBarStatusUpdate.emit({"update":true})
-            this.toastrService.success('Unit Visit Data Updated Successfully','Unit Visit');
+    //       },
+    //       error: (error) => {
+    //         console.error('Error submitting form:', error);
+    //       }
+    //     });
+    //   }else  if(this.unitVisitForm.valid && this.unitVisitForm.value?.machineryDetailsRequest?.length && this.ExistingunitVisit?.id){
+    //      let payload:any={...this.unitVisitForm.value, "applicationNo": this.applicationData?.applicationNo,"applicationStatus": "UNIT_VISIT"}
+    //      this._commonService.update(APIS.tihclExecutive.updateUnitVisit,payload,this.ExistingunitVisit?.id).subscribe({
+    //       next: (response) => {
+    //        this.getDataById(response?.data?.id)
+    //        this.progressBarStatusUpdate.emit({"update":true})
+    //         this.toastrService.success('Unit Visit Data Updated Successfully','Unit Visit');
 
-            //  this.progressBarStatusUpdate.emit({"update":true})
+    //         //  this.progressBarStatusUpdate.emit({"update":true})
     
-          },
-          error: (error) => {
-            console.error('Error submitting form:', error);
-          }
-        });
-      }
-      else  if(Object.keys(this.ExistingunitVisit).length && this.ExistingunitVisit?.id){
+    //       },
+    //       error: (error) => {
+    //         console.error('Error submitting form:', error);
+    //       }
+    //     });
+    //   }
+    //   else 
+       if(Object.keys(this.ExistingunitVisit).length && this.ExistingunitVisit?.id){
 
          let payload:any={...this.unitVisitForm.value, "applicationNo": this.applicationData?.applicationNo,"applicationStatus": "MANAGER_APPROVAL_1"}
          this._commonService.update(APIS.tihclExecutive.updateUnitVisit,payload,this.ExistingunitVisit?.id).subscribe({
@@ -532,6 +533,7 @@ saveworkshift(): void {
       deliveryDetailsArray.removeAt(index);
     }
     onClose(): void {
+      this.machineForm.reset();
       const editSessionModal = document.getElementById('addmachinary');
     if (editSessionModal) {
       const modalInstance = bootstrap.Modal.getInstance(editSessionModal);
@@ -595,5 +597,6 @@ saveworkshift(): void {
       modalInstance.hide();
       document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
     }
+    this.visitForm.reset();
   }
 }

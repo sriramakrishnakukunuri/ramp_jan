@@ -240,7 +240,7 @@
               <label for="letterUpload">Sanctioned Letter Upload</label>
             </div>
             <small *ngIf="sanctionForm.get('sanctionLetterPath')?.value" class="text-muted">
-              Selected file: {{ sanctionForm.get('sanctionLetterPath')?.value }}
+              Selected file: {{ sanctionForm.get('sanctionLetterPath')?.value?.split('/').pop() }}
             </small>
           </div>                                
         </div>

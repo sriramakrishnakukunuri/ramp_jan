@@ -165,7 +165,7 @@
               <!-- <input class="form-control" id="uploadNoc" type="file"> -->
               <input class="form-control" id="uploadNoc" type="file" (change)="onFileSelectedtgipassUpload($event)">
               <small *ngIf="this.selectedfiles?.name " class="text-muted">
-                Uploaded file: {{ this.selectedfiles?.name }}
+                Uploaded file: {{ this.selectedfiles?.name?.split('/').pop() }}
               </small>
             </div>
           </div>
@@ -194,7 +194,7 @@
               <!-- <input class="form-control" id="uploadNoc" type="file"> -->
               <input class="form-control" id="uploadNoc" type="file" (change)="onFileSelectedrocFilling($event)">
               <small *ngIf="this.selectedfilesrocFilling?.name " class="text-muted">
-                Uploaded file: {{ this.selectedfilesrocFilling?.name }}
+                Uploaded file: {{ this.selectedfilesrocFilling?.name?.split('/').pop() }}
               </small>
             </div>
           </div>

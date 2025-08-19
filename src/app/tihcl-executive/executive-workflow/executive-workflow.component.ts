@@ -85,6 +85,11 @@ currentStep:any = 1;
       this.currentStep=3
        this.freezeValue=3
      }
+      else if(applicationData.status === 'MANAGER_REVERIFY_2' || applicationData.applicationStatus === 'MANAGER_REVERIFY_2'){
+     this._commonService.setCurrentStep(3)
+      this.currentStep=3
+       this.freezeValue=3
+     }
       else if(applicationData.status === 'UNIT_VISIT' || applicationData.applicationStatus === 'UNIT_VISIT'){
      this._commonService.setCurrentStep(4)
       this.currentStep=4

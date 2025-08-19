@@ -917,7 +917,7 @@ operationtableformsInit(){
       // dateOfOrder: ['', Validators.required],
       nameOfTheBuyer: ['', Validators.required],
       orderValue: ['', [Validators.required, Validators.min(0)]],
-      remarks: ['', Validators.required]
+      remarks: ['']
     });
 
     // Unsecured Loans modal form
@@ -1107,7 +1107,7 @@ saveStressReason(): void {
       financialYear: ['', Validators.required],
       totalReceipts: [0, [Validators.required, Validators.min(0)]],
        balanceSheetType: [0, [Validators.required]],
-      turnoverAsPerBankStatement: [0, [Validators.required, Validators.min(0)]],
+      turnoverAsPerBankStatement: [0, [Validators.min(0)]],
       netProfitOrLoss: [0],
       cashProfitOrLoss: [0],
       sundryCreditors: [0, [Validators.required, Validators.min(0)]],
