@@ -109,6 +109,7 @@ export class UserRegistrationComponent implements OnInit,AfterViewInit {
           "firstName": this.RegisterForm.value.firstName,
           "lastName": this.RegisterForm.value.lastName,
           "userRole": this.RegisterForm.value.userRole,
+          "password": "Password@123",
           "gender": this.RegisterForm.value.gender
         }
       }else {
@@ -120,6 +121,7 @@ export class UserRegistrationComponent implements OnInit,AfterViewInit {
           "lastName": this.RegisterForm.value.lastName,
           "userRole": this.RegisterForm.value.userRole,
           "gender": this.RegisterForm.value.gender,
+          "password": "Password@123",
           "agencyId": this.RegisterForm.value.department
         }
       }

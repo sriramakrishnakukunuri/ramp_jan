@@ -78,8 +78,8 @@ export const APIS = {
         getData: API_BASE_URL + '/getAllCounsellors',
     },
     userRegistration:{
-        add: API_BASE_URL + '/login/user/create',
-        addAgent: API_BASE_URL + '/login/user/create',
+        add: API_BASE_URL + '/auth/register',
+        addAgent: API_BASE_URL + '/auth/register',
         editProfile: API_BASE_URL + '/login/user/update',
         getUserById: API_BASE_URL + '/login/user',        
     },
@@ -96,6 +96,9 @@ export const APIS = {
     },
     trainingtargets:{
         getTrainingtargets: API_BASE_URL + '/targets/financial/year/summary',
+    },
+    progressMonitoring:{
+        getTrainigAndNonTraining: API_BASE_URL + '/progress/monitoring',
     },
     captureOutcome:{
         getParticipantData: API_BASE_URL + '/getParticipantsByMobileNo/',

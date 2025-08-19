@@ -50,13 +50,13 @@ export class LoginComponent implements OnInit {
                 next: (res) => {
                     //this.router.navigateByUrl('/program-creation');
                     this.loading = false;
-                        if(res.userRole === Role.Admin){
+                        if(res?.data.userRole === Role.Admin){
                             this.router.navigateByUrl('/veiw-program');
-                        }else if(res.userRole === Role.AGENCY_MANAGER
-                            || res.userRole === Role.AGENCY_EXECUTOR
+                        }else if(res?.data.userRole === Role.AGENCY_MANAGER
+                            || res?.data.userRole === Role.AGENCY_EXECUTOR
                         ){
                             this.router.navigateByUrl('/program-creation');
-                        }else if(res.userRole === Role.CALL_CENTER
+                        }else if(res?.data.userRole === Role.CALL_CENTER
                         ) {
                             this.router.navigateByUrl('/global-dashboard');
                         }
