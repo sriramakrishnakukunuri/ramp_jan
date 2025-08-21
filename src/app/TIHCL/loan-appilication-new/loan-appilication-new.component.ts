@@ -547,8 +547,8 @@ console.log(this.applicationForm.value);
       this.currentStep--;
     }
       if(this.currentStep==1){
-      this.applicationForm.get('enterpriseName')?.setValidators([Validators.required,Validators.minLength(2)]);
-      this.applicationForm.get('promoterName')?.setValidators([Validators.required, Validators.minLength(2)]);
+      this.applicationForm.get('enterpriseName')?.setValidators([Validators.required,Validators.minLength(3)]);
+      this.applicationForm.get('promoterName')?.setValidators([Validators.required, Validators.minLength(3)]);
       this.applicationForm.get('constitution')?.setValidators([Validators.required]);
       this.applicationForm.get('productionDate')?.setValidators([Validators.required]);
       this.applicationForm.get('udyamRegNumber')?.setValidators([Validators.required, this.udyamRegNumberValidator]);
