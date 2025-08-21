@@ -73,7 +73,7 @@ StatusofApplication:any=''
       village: ['', [Validators.required,Validators.minLength(3)]],
       street: ['', [Validators.required,Validators.minLength(3)]],
       pincode: ['', [Validators.required, Validators.pattern(/^[1-9][0-9]{5}$/)]],
-      address: ['', [Validators.required, Validators.minLength(3)]],
+      address: ['',],
       // Step 2 - Application
       enterpriseCategory: ['', ],
       natureOfActivity: ['', ],
@@ -308,7 +308,7 @@ onItemSelected(itemName: any) {
       limitSanctioned: ['', Validators.required],
       outstandingAmount: [false],
       overdueAmount: ['', ],
-      overdueDate: [, Validators.required]
+      overdueDate: [null, ]
     });
   }
  submitCreditDetails(){  
@@ -327,7 +327,7 @@ onItemSelected(itemName: any) {
       limitSanctioned: [item.limitSanctioned, Validators.required],
       outstandingAmount: [item.outstandingAmount],
       overdueAmount: [item.overdueAmount],
-      overdueDate: [item.overdueDate, Validators.required]
+      overdueDate: [item.overdueDate]
     });
       const deliveryDetailsArray = this.applicationForm.get('creditFacilityDetails') as FormArray;
       const index = deliveryDetailsArray.controls.findIndex(control => control.value === item);
@@ -559,7 +559,7 @@ console.log(this.applicationForm.value);
       this.applicationForm.get('district')?.setValidators([Validators.required]);
       this.applicationForm.get('mandal')?.setValidators([Validators.required]);
       this.applicationForm.get('email')?.setValidators([Validators.email]);
-      this.applicationForm.get('address')?.setValidators([Validators.required, Validators.minLength(3)]);
+      this.applicationForm.get('address')?.setValidators(null);
       this.applicationForm.get('village')?.setValidators([Validators.required,Validators.minLength(3)]);
       this.applicationForm.get('street')?.setValidators([Validators.required,Validators.minLength(3)]);
       this.applicationForm.get('pincode')?.setValidators([Validators.required, Validators.pattern(/^[1-9][0-9]{5}$/)]);

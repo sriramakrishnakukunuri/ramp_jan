@@ -172,7 +172,7 @@ export class PreliminarAssessmentComponent implements OnInit {
       limitSanctioned: ['', Validators.required],
       outstandingAmount: [false],
       overdueAmount: ['', ],
-      overdueDate: [, Validators.required]
+      overdueDate: [null]
     });
   }
  
@@ -198,7 +198,7 @@ export class PreliminarAssessmentComponent implements OnInit {
       limitSanctioned: [item.limitSanctioned, Validators.required],
       outstandingAmount: [item.outstandingAmount],
       overdueAmount: [item.overdueAmount],
-      overdueDate: [item.overdueDate, Validators.required]
+      overdueDate: [item.overdueDate]
     });
       const deliveryDetailsArray = this.assessmentForm.get('creditFacilityDetails') as FormArray;
       const index = deliveryDetailsArray.controls.findIndex(control => control.value === item);
@@ -368,7 +368,7 @@ loginsessionDetails:any
       isGSTNumberExist: [false],
       gstNumber: ['',this.gstValidator()],
       sourceOfApplication: ['', Validators.required],
-      sector: ['', Validators.required],
+      // sector: ['', Validators.required],
       typeOfProduct: ['', [Validators.required, ]],
       productUsage: ['', [Validators.required, ]],
       

@@ -237,7 +237,7 @@
             <div class="form-floating">
               <input type="file" class="form-control" id="letterUpload" 
                      (change)="onFileChange($event)">
-              <label for="letterUpload">Sanctioned Letter Upload</label>
+              <label for="letterUpload">Sanctioned Letter Upload<span class="text-danger">*</span></label>
             </div>
             <small *ngIf="sanctionForm.get('sanctionLetterPath')?.value" class="text-muted">
               Selected file: {{ sanctionForm.get('sanctionLetterPath')?.value?.split('/').pop() }}

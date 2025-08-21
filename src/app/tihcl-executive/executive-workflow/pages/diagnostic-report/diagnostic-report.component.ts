@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup, FormArray, Validators, ValidatorFn, AbstractCon
 import { ActivatedRoute } from '@angular/router';
 import { CommonServiceService } from '@app/_services/common-service.service';
 import { APIS } from '@app/constants/constants';
+import { ToastrService } from 'ngx-toastr';
 import { observable } from 'rxjs';
 
 @Component({
@@ -48,6 +49,7 @@ applicationData:any
   constructor(
     private fb: FormBuilder,
     private _commonService: CommonServiceService,
+    private toastrService: ToastrService,
     private route: ActivatedRoute
   ) { 
     this.loginsessionDetails = JSON.parse(sessionStorage.getItem('user') || '{}');    
@@ -1191,6 +1193,10 @@ filePath:any
     }
     
   }
+  nextsteptoBalancesheeet(){
+    this.currentTab='STATUS_UPDATE'
+    this.loadDiagnosticData()
+  }
     openBalancesheetModal(editIndex: number | null = null): void {
     this.isEditMode = editIndex !== null;
     this.editIndex = editIndex;
@@ -1209,7 +1215,8 @@ filePath:any
 // save status update starts
 
 saveStatusUpdate(): void {
-    console.log(this.diagnosticForm.value,this.basicDetails.valid)
+  if(this.diagnosticForm.get('urlForDiagnosticFile')?.value){
+     console.log(this.diagnosticForm.value,this.basicDetails.valid)
       // Save logic here
       let payload:any={observations:this.diagnosticForm.value?.observations,approvalStatus:this.diagnosticForm.value?.approvalStatus,"currentScreenStatus": "STATUS_UPDATE",
         "applicationNo": this.applicationData.applicationNo, id:this.getDataOfDiagnostic?.id,urlForDiagnosticFile:this.diagnosticForm.get('urlForDiagnosticFile')?.value || null,
@@ -1226,6 +1233,11 @@ saveStatusUpdate(): void {
     })
       this.saveSuccess.basic = true;
       setTimeout(() => this.saveSuccess.basic = false, 3000);
+  }
+  else{
+    this.toastrService.error("Please upload the diagnostic report file")
+  }
+   
   
   }
   // end status Update

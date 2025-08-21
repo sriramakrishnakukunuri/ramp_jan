@@ -611,7 +611,7 @@
         <div class="row">
           <div class="col-12 col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-4 offset-lg-4">
             <div>
-              <label for="uploadCredit" class="form-label text-center fw-600">Upload Credit Appraisal Report</label>
+              <label for="uploadCredit" class="form-label text-center fw-600">Upload Credit Appraisal Report <span class="text-danger">*</span></label>
               <input class="form-control" id="uploadCredit" type="file" (change)="onFileSelected($event)">
               <small *ngIf="rampChecklistForm.get('creditApprasialPath')?.value" class="text-muted">
                 Uploaded file: {{ rampChecklistForm.get('creditApprasialPath')?.value?.split('/').pop() }}

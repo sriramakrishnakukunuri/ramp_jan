@@ -161,12 +161,13 @@
           </div>
           <div class="col-12 col-sm-12 col-md-6  col-lg-4 " *ngIf="f['tgipassUpload']?.value === 'Yes'">
             <div>
-              <label for="uploadNoc" class="form-label text-center fw-600">TG-ipass upload</label>
+              <label for="uploadNoc" class="form-label text-center fw-600">TG-ipass upload </label>
               <!-- <input class="form-control" id="uploadNoc" type="file"> -->
               <input class="form-control" id="uploadNoc" type="file" (change)="onFileSelectedtgipassUpload($event)">
               <small *ngIf="this.selectedfiles?.name " class="text-muted">
                 Uploaded file: {{ this.selectedfiles?.name?.split('/').pop() }}
               </small>
+              <small class="text-muted" *ngIf="disbursementForm.get('tgipassUploadPath')?.value">Uploaded file: {{ disbursementForm.get('tgipassUploadPath')?.value?.split('/').pop() }}</small>
             </div>
           </div>
           <div class="col-12 col-sm-6 col-md-4 col-lg-3">
@@ -196,6 +197,7 @@
               <small *ngIf="this.selectedfilesrocFilling?.name " class="text-muted">
                 Uploaded file: {{ this.selectedfilesrocFilling?.name?.split('/').pop() }}
               </small>
+              <small class="text-muted" *ngIf="disbursementForm.get('rocFilingPath')?.value">Uploaded file: {{ disbursementForm.get('rocFilingPath')?.value?.split('/').pop() }}</small>
             </div>
           </div>
         </div>

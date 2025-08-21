@@ -7,7 +7,7 @@
                               <div class="row">
                                 <div class="col-12 col-sm-12 col-md-6 offset-md-3 col-lg-4 offset-lg-4">
                                   <div>
-                                    <label for="uploadNoc" class="form-label text-center fw-600">Upload Primary Lender NOC</label>
+                                    <label for="uploadNoc" class="form-label text-center fw-600">Upload Primary Lender NOC<span class="text-danger">*</span></label>
                                     <!-- <input class="form-control" id="uploadNoc" type="file"> -->
                                      <input class="form-control" id="uploadNoc" type="file" (change)="onFileSelected($event)">
                                       <small *ngIf="this.selectedfiles?.name " class="text-muted">

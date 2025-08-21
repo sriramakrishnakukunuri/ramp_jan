@@ -322,9 +322,9 @@
                               class="text-danger">
                               Village is required
                             </div>
-                            <div *ngIf="applicationForm.get('address')?.hasError('minlength')" class="text-danger">
+                            <!-- <div *ngIf="applicationForm.get('address')?.hasError('minlength')" class="text-danger">
                               Address must be at least 3 characters
-                            </div>
+                            </div> -->
                           </div>
                         </div>
                          
@@ -366,15 +366,15 @@
                             [ngClass]="applicationForm.get('pincode')?.valid ? '' :'isDisabled'">
                             <input type="text" class="form-control" id="Address" formControlName="address"
                               placeholder="Address">
-                            <label for="Address">Address<span class="text-danger">*</span></label>
-                            <div
+                            <label for="Address">Address</label>
+                            <!-- <div
                               *ngIf="applicationForm.get('address')?.invalid && applicationForm.get('address')?.touched && !applicationForm.get('address')?.hasError('minlength')"
                               class="text-danger">
                               Address is required
                             </div>
                             <div *ngIf="applicationForm.get('address')?.hasError('minlength')" class="text-danger">
                               Address must be at least 3 characters
-                            </div>
+                            </div> -->
                           </div>
                         </div>
                       </div>
@@ -616,6 +616,9 @@
 
                           <div class="border rounded-3 p-3 mb-3 show-hide1" id="creditYes"
                             *ngIf="existingStatus === true">
+                              <div class="text-end">
+                               <button type="button" class="btn btn-sm btn-primary mb-3" (click)="addCreditDetail()">Add</button>
+                            </div>
                             <div class="table-responsive">
                               <table class="table table-bordered">
                                 <thead class="bg-theme text-white">
@@ -649,8 +652,7 @@
                                 </tbody>
                               </table>
                             </div>
-                            <button type="button" class="btn btn-sm btn-primary mb-3" (click)="addCreditDetail()">Add
-                              More</button>
+                          
                             <div class="">
                               <div>
                                 <label class="form-label fs-md fw-600 mb-1">Status of the unit<span
@@ -970,7 +972,7 @@
               <div class="form-floating mb-3">
                 <input type="number" class="form-control" id="overdueAmount" placeholder="Overdue Amount"
                   formControlName="overdueAmount" min="0">
-                <label for="overdueAmount">Overdue Amount (In Rs)<span class="text-danger">*</span></label>
+                <label for="overdueAmount">Overdue Amount (In Rs)</label>
                 <div *ngIf="creditDetailsForm.get('overdueAmount')?.invalid && 
                                            (creditDetailsForm.get('overdueAmount')?.dirty || 
                                            creditDetailsForm.get('overdueAmount')?.touched)" class="text-danger">
@@ -991,7 +993,7 @@
               <div class="form-floating mb-3">
                 <input type="date" class="form-control" id="overdueDate" placeholder="Overdue Since"
                   formControlName="overdueDate" max="{{ today | date:'yyyy-MM-dd' }}">
-                <label for="overdueDate">Overdue Since (Date)<span class="text-danger">*</span></label>
+                <label for="overdueDate">Overdue Since (Date)</label>
                 <div *ngIf="creditDetailsForm.get('overdueDate')?.invalid && 
                                            (creditDetailsForm.get('overdueDate')?.dirty || 
                                            creditDetailsForm.get('overdueDate')?.touched)" class="text-danger">
