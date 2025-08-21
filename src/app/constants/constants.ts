@@ -81,6 +81,7 @@ export const APIS = {
         getUnitVisitById:API_BASE_URL+`/unitvisit/fetch/registration/`,
         getSentiondataById:API_BASE_URL+`/sanction/details/registration/id/`,
         saveRampCheckList:  API_BASE_URL+`/rampchecklist/save`,
+        getRampCheckList:API_BASE_URL+'/rampchecklist/fetch/registration/id/',
         saveSanction:  API_BASE_URL+`/sanction/details/save`,
         saveDisbursement:  API_BASE_URL+`/disbursement/details/save`,
         getdisbursementDelete:API_BASE_URL+`/disbursement/details/disbursement/id/`,
@@ -97,6 +98,7 @@ export const APIS = {
         deleteseller:API_BASE_URL+'/diagnostic-reports/seller/delete/',
         deleteunsecured:API_BASE_URL+'/diagnostic-reports/unsecured-loans/',
         deleteorderBookPosition:API_BASE_URL+'/diagnostic-reports/orderBookPosition/delete/',
+
         }
 
 

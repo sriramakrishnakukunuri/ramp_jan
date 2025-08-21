@@ -20,24 +20,42 @@ export class RampChecklistComponent implements OnInit {
            const applicationData = JSON.parse(sessionStorage.getItem('ApplicationData') || '{}');
           this.applicationData=applicationData
           this.getDtataByUrl(APIS.tihclExecutive.registerData + (applicationData.registrationUsageId? applicationData?.registrationUsageId:applicationData?.registrationId))
-  
+          this.getRampCheckListData()
         }
     @Output() progressBarStatusUpdate:any = new EventEmitter();
   ngOnInit(): void {
     this.initializeForm();
     // If you're getting data from API, call it here and patch the values
-    this.getRampChecklistData();
+    
   }
  managrData:any
    getDtataByUrl(url: string) {
       this._commonService.getDataByUrl(url).subscribe({
         next: (dataList: any) => {
          this.managrData=dataList?.data
+          
         },
         error: (error: any) => {
           this.toastrService.error(error.error.message);
         }
       });
+    }
+    RampChecklistData:any
+    getRampCheckListData(){
+      this._commonService.getDataByUrl(APIS.tihclExecutive.getRampCheckList+(this.applicationData.registrationUsageId? this.applicationData?.registrationUsageId:this.applicationData?.registrationId)).subscribe({
+              next: (dataList: any) => {
+                if(!dataList && Object.keys(dataList).length === 0){
+                  this.getRampChecklistData();
+                  return
+                }
+              this.RampChecklistData=dataList
+              this.rampChecklistForm.patchValue(dataList);
+              },
+              error: (error: any) => {
+                 this.getRampChecklistData();
+                this.toastrService.error(error.error.message);
+              }
+            });
     }
   initializeForm(): void {
     this.rampChecklistForm = this.fb.group({

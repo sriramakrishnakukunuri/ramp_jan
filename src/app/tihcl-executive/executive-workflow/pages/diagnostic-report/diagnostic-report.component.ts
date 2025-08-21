@@ -654,7 +654,7 @@ savePartnership(): void {
   }
   saveBuyersDetails(): void {
     console.log(this.diagnosticForm.value)
-    if (this.basicDetails.valid) {
+   
       // Save logic here
       let payload:any={topBuyers:this.diagnosticForm.value?.topBuyers,topSellers:this.diagnosticForm.value?.topSellers,"currentScreenStatus": "TOP_5_BUYERS",
         "applicationNo": this.applicationData.applicationNo, id:this.getDataOfDiagnostic?.id,
@@ -672,7 +672,6 @@ savePartnership(): void {
       this.saveSuccess.basic = true;
       setTimeout(() => this.saveSuccess.basic = false, 3000);
     }
-  }
   // end of buyers and suppliers
 
   // starts with receivable and payables
@@ -822,7 +821,7 @@ savePartnership(): void {
   }
    saveReceivaablesDetails(): void {
     console.log(this.diagnosticForm.value)
-    if (this.basicDetails.valid) {
+    
       // Save logic here
       let payload:any={receivables:this.diagnosticForm.value?.receivables,payables:this.diagnosticForm.value?.payables,"currentScreenStatus": "RECEIVABLES_PAYABLES",
         "applicationNo": this.applicationData.applicationNo, id:this.getDataOfDiagnostic?.id,
@@ -840,7 +839,6 @@ savePartnership(): void {
       this.saveSuccess.basic = true;
       setTimeout(() => this.saveSuccess.basic = false, 3000);
     }
-  }
   //end of receiuvables
   // Methods to add form array items
 
@@ -1074,7 +1072,7 @@ closeOperationalModals(){
 
 saveStressReason(): void {
     console.log(this.diagnosticForm.value)
-    if (this.basicDetails.valid) {
+  
       // Save logic here
       let payload:any={reasonForStress:this.diagnosticForm.value?.reasonForStress,"currentScreenStatus": "REASONS_FOR_STRESS",
         "applicationNo": this.applicationData.applicationNo, id:this.getDataOfDiagnostic?.id,
@@ -1091,7 +1089,6 @@ saveStressReason(): void {
     })
       this.saveSuccess.basic = true;
       setTimeout(() => this.saveSuccess.basic = false, 3000);
-    }
   }
   // end saveStressReason
 
@@ -1181,7 +1178,7 @@ filePath:any
       this._commonService.add(APIS.tihclExecutive.saveDiagnostic,payload).subscribe(
         (res:any)=>{
           console.log(res)
-          this.currentTab='STATUS_UPDATE'
+          this.currentTab='BALANCE_SHEET'
           
           this.loadDiagnosticData()
       },
@@ -1212,8 +1209,7 @@ filePath:any
 // save status update starts
 
 saveStatusUpdate(): void {
-    console.log(this.diagnosticForm.value)
-    if (this.basicDetails.valid) {
+    console.log(this.diagnosticForm.value,this.basicDetails.valid)
       // Save logic here
       let payload:any={observations:this.diagnosticForm.value?.observations,approvalStatus:this.diagnosticForm.value?.approvalStatus,"currentScreenStatus": "STATUS_UPDATE",
         "applicationNo": this.applicationData.applicationNo, id:this.getDataOfDiagnostic?.id,urlForDiagnosticFile:this.diagnosticForm.get('urlForDiagnosticFile')?.value || null,
@@ -1230,7 +1226,7 @@ saveStatusUpdate(): void {
     })
       this.saveSuccess.basic = true;
       setTimeout(() => this.saveSuccess.basic = false, 3000);
-    }
+  
   }
   // end status Update
   // removeShareholder(index: number): void {

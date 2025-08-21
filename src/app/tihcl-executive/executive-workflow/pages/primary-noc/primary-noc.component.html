@@ -13,6 +13,7 @@
                                       <small *ngIf="this.selectedfiles?.name " class="text-muted">
                                         Uploaded file: {{ this.selectedfiles?.name?.split('/').pop() }}
                                       </small>
+                                      <small class="text-muted" *ngIf="this.managrData.primaryLenderNocFilePath">Uploaded file: {{ this.managrData.primaryLenderNocFilePath?.split('/').pop() }}</small>
                                   </div>
                                 </div>
                               </div> 
