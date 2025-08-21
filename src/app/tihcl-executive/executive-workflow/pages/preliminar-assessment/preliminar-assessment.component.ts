@@ -338,7 +338,7 @@ loginsessionDetails:any
   initializeForm() {
     this.updateFormFields = this.fb.group({
 
-        enterpriseName: ['', [Validators.required,  Validators.pattern(/^(?=.*[a-zA-Z])[a-zA-Z0-9 .]+$/),Validators.minLength(3)]],
+        enterpriseName: ['', [Validators.required,Validators.minLength(3)]],
        udyamRegNumber: ['', [Validators.required, this.udyamRegNumberValidator]],
       enterpriseCategory: ['', Validators.required],
       natureOfActivity: ['', Validators.required],
@@ -369,17 +369,17 @@ loginsessionDetails:any
       gstNumber: ['',this.gstValidator()],
       sourceOfApplication: ['', Validators.required],
       sector: ['', Validators.required],
-      typeOfProduct: ['', [Validators.required, Validators.pattern(/^[a-zA-Z .]+$/)]],
-      productUsage: ['', [Validators.required, Validators.pattern(/^[a-zA-Z .]+$/)]],
+      typeOfProduct: ['', [Validators.required, ]],
+      productUsage: ['', [Validators.required, ]],
       
       // Problems and solutions
-      problemsFaced: ['',[Validators.required, Validators.pattern(/^(?=.*[a-zA-Z])[a-zA-Z0-9 .]+$/)]],
-      expectedSolution: ['',[Validators.required, Validators.pattern(/^(?=.*[a-zA-Z])[a-zA-Z0-9 .]+$/)]],
+      problemsFaced: ['',[Validators.required, ]],
+      expectedSolution: ['',[Validators.required, ]],
       
       // Stress scores (dynamically added)
       
       // Observations and status
-      observations: ['',[Validators.required, Validators.pattern(/^(?=.*[a-zA-Z])[a-zA-Z0-9 .]+$/)]],
+      observations: ['',[Validators.required, ]],
       statusUpdate: [''],
     });
     for (let i = 1; i <= 10; i++) {
@@ -668,7 +668,7 @@ openEachModal(item:any){
        this.updateFormFields.get('udyamRegNumber')?.setValidators([Validators.required, this.udyamRegNumberValidator])
     }
     else if(item=='enterpriseName'){
-       this.updateFormFields.get(item)?.setValidators([Validators.required, Validators.pattern(/^(?=.*[a-zA-Z])[a-zA-Z0-9 .]+$/),Validators.minLength(3)])
+       this.updateFormFields.get(item)?.setValidators([Validators.required,Validators.minLength(3)])
     }
     else{
        this.updateFormFields.get(item)?.setValidators([Validators.required])
