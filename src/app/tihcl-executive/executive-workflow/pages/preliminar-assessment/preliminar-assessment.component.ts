@@ -347,7 +347,7 @@ loginsessionDetails:any
       district: ['', Validators.required],
       mandal: ['', Validators.required],
       existingCredit:[''],
-      address: ['Sr.No. 528, Elikatta Industrial Area, Shadnagar, Telangana 509410', Validators.required],
+      address: ['Sr.No. 528, Elikatta Industrial Area, Shadnagar, Telangana 509410',],
     } );
     this.assessmentForm = this.fb.group({
       // Basic information
@@ -359,7 +359,7 @@ loginsessionDetails:any
       // Factory location
       district: ['', Validators.required],
       mandal: ['', Validators.required],
-      address: ['', Validators.required],
+      address: [''],
       creditFacilityDetails: this.fb.array([]),
       // Credit facilities
       existingCredit: ['', Validators.required],

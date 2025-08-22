@@ -226,9 +226,9 @@
                 <tr *ngFor="let item of this.assessmentForm.value.creditFacilityDetails;let i=index">
                   <td class="text-start">{{i+1}}</td>
                   <td class="text-center">
-                    <button type="button" class="btn btn-default text-danger btn-sm"
+                    <button type="button" class="btn btn-default text-danger btn-sm" [ngClass]="{'isDisabled':freeze>1}"
                       (click)="editCreditDetails(item)"><span class="bi bi-pencil"></span></button>
-                    <button type="button" class="btn btn-default text-danger btn-sm"
+                    <button type="button" class="btn btn-default text-danger btn-sm" [ngClass]="{'isDisabled':freeze>1}"
                       (click)="deleteCreditDetail(i)"><span class="bi bi-trash"></span></button>
                   </td>
                   <td>{{item?.bankName}}</td>

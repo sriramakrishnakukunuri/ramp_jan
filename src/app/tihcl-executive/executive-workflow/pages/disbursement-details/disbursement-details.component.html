@@ -269,7 +269,7 @@
             </div>
             <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
               <div class="text-start text-sm-end text-xl-end">
-                <button type="button" data-bs-toggle="modal" data-bs-target="#addBankDetails" [ngClass]="{'isDisabled':bankdetails.length>=3}"
+                <button type="button" data-bs-toggle="modal" data-bs-target="#addBankDetails" [ngClass]="{'isDisabled':bankdetails.length>=3 || (applicationData?.applicationStatus?applicationData?.applicationStatus=='DISBURSEMENT_COMPLETED' :applicationData?.status=='DISBURSEMENT_COMPLETED') }" 
                   class="btn btn-outline-primary btn-sm border-0 ms-3"><span class="bi bi-plus-lg"></span> Add</button>
               </div>
             </div>
@@ -290,9 +290,9 @@
                 <tr *ngFor="let item of bankdetails; let i = index">
                   <td>{{ i + 1 }}</td>
                   <td>
-                    <button type="button" class="btn btn-default text-danger btn-sm"
+                    <button type="button" class="btn btn-default text-danger btn-sm" [ngClass]="{'isDisabled':(applicationData?.applicationStatus?applicationData?.applicationStatus=='DISBURSEMENT_COMPLETED' :applicationData?.status=='DISBURSEMENT_COMPLETED') }"
                       (click)="editBankDetails(item, i)"><span class="bi bi-pencil"></span></button>
-                    <button type="button" class="btn btn-default text-danger btn-sm"
+                    <button type="button" class="btn btn-default text-danger btn-sm" [ngClass]="{'isDisabled':(applicationData?.applicationStatus?applicationData?.applicationStatus=='DISBURSEMENT_COMPLETED' :applicationData?.status=='DISBURSEMENT_COMPLETED') }"
                       (click)="deleteBankDetails(item, i)"><span class="bi bi-trash"></span></button>
                   </td>
                   <td>{{ item.bankName }}</td>
@@ -311,7 +311,7 @@
             </div>
             <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
               <div class="text-start text-sm-end text-xl-end">
-                <button type="button" data-bs-toggle="modal" data-bs-target="#addDisbursement"
+                <button type="button" data-bs-toggle="modal" data-bs-target="#addDisbursement" [ngClass]="{'isDisabled':(applicationData?.applicationStatus?applicationData?.applicationStatus=='DISBURSEMENT_COMPLETED' :applicationData?.status=='DISBURSEMENT_COMPLETED') }"
                   class="btn btn-outline-primary btn-sm border-0 ms-3"><span class="bi bi-plus-lg"></span> Add</button>
               </div>
             </div>
@@ -331,9 +331,9 @@
                 <tr *ngFor="let item of disbursements let i=index">
                   <td>{{i + 1}}</td>
                   <td>
-                    <button type="button" class="btn btn-default text-danger btn-sm"
+                    <button type="button" class="btn btn-default text-danger btn-sm" [ngClass]="{'isDisabled':(applicationData?.applicationStatus?applicationData?.applicationStatus=='DISBURSEMENT_COMPLETED' :applicationData?.status=='DISBURSEMENT_COMPLETED') }"
                       (click)="editCreditDetails(item,i)"><span class="bi bi-pencil"></span></button>
-                    <button type="button" class="btn btn-default text-danger btn-sm"
+                    <button type="button" class="btn btn-default text-danger btn-sm" [ngClass]="{'isDisabled':(applicationData?.applicationStatus?applicationData?.applicationStatus=='DISBURSEMENT_COMPLETED' :applicationData?.status=='DISBURSEMENT_COMPLETED') }"
                       (click)="deleteCreditDetail(item,i)"><span class="bi bi-trash"></span></button>
                   </td>
                   <td>{{ item.disbursementDate }}</td>

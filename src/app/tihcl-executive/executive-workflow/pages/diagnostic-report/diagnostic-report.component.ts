@@ -122,7 +122,7 @@ getDtataByUrl(url: string) {
       reasonForStress: [''],
       balanceSheets: this.fb.array([]),
       observations: [''],
-      approvalStatus: [''],
+      approvalStatus: ['Reject'],
       urlForDiagnosticFile:['']
       
     });

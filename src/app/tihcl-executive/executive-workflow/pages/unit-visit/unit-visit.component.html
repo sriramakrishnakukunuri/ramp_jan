@@ -32,11 +32,11 @@
                   <tr *ngFor="let item of unitVisitForm.value?.visitorsDetailsRequests; let i = index">
                     <td>{{ i + 1 }}</td>
                     <td>
-                      <button type="button" [ngClass]="{'disabled':!(freeze<=3)}" class="btn btn-default text-danger btn-sm"
+                      <button type="button" [ngClass]="{'isDisabled':!(freeze<=3)}" class="btn btn-default text-danger btn-sm"
                         (click)="editCreditDetailsVisit(item)">
                         <span class="bi bi-pencil"></span>
                       </button>
-                      <button type="button" [ngClass]="{'disabled':!(freeze<=3)}" class="btn btn-default text-danger btn-sm"
+                      <button type="button" [ngClass]="{'isDisabled':!(freeze<=3)}" class="btn btn-default text-danger btn-sm"
                         (click)="deleteCreditDetailVisit(item, i)">
                         <span class="bi bi-trash"></span>
                       </button>
@@ -288,9 +288,9 @@
                 <tr *ngFor="let item of this.unitVisitForm.value?.machineryDetailsRequest;let i=index">
                   <td>{{i + 1}}</td>
                   <td class="text-center">
-                    <button [ngClass]="{'disabled':!(freeze<=3)}" type="button" class="btn btn-default text-danger btn-sm"
+                    <button [ngClass]="{'isDisabled':!(freeze<=3)}" type="button" class="btn btn-default text-danger btn-sm"
                       (click)="editCreditDetails(item)"><span class="bi bi-pencil"></span></button>
-                    <button [ngClass]="{'disabled':!(freeze<=3)}" type="button" class="btn btn-default text-danger btn-sm"
+                    <button [ngClass]="{'isDisabled':!(freeze<=3)}" type="button" class="btn btn-default text-danger btn-sm"
                       (click)="deleteCreditDetail(item,i)"><span class="bi bi-trash"></span></button>
                   </td>
                   <td>
@@ -585,11 +585,11 @@
                                <td>{{ shareholder.get('startTime')?.value }}</td>
                                <td>{{ shareholder.get('endTime')?.value }}</td>
                                <td class="text-center">
-                                 <button type="button" [ngClass]="{'disabled':!(freeze<=3)}" (click)="openworkshiftModal(i)"
+                                 <button type="button" [ngClass]="{'isDisabled':!(freeze<=3)}" (click)="openworkshiftModal(i)"
                                    class="btn btn-default text-primary btn-sm">
                                    <span class="bi bi-pencil"></span>
                                  </button>
-                                 <button type="button" [ngClass]="{'disabled':!(freeze<=3)}" (click)="removePartnerShip(i,shareholder.get('id')?.value)"
+                                 <button type="button" [ngClass]="{'isDisabled':!(freeze<=3)}" (click)="removePartnerShip(i,shareholder.get('id')?.value)"
                                    class="btn btn-default text-danger btn-sm">
                                    <span class="bi bi-trash"></span>
                                  </button>
@@ -1061,7 +1061,7 @@
 
           <div class="text-end">
             <button type="button" class="btn btn-secondary me-2" (click)="onClose()">Cancel</button>
-            <button type="submit" class="btn btn-primary" [ngClass]="{'disabled':(machineForm.get('costOfMachinePurchased')?.value < machineForm.get('valueOfMachinery')?.value)}">Add Machine</button>
+            <button type="submit" class="btn btn-primary" [ngClass]="{'isDisabled':(machineForm.get('costOfMachinePurchased')?.value < machineForm.get('valueOfMachinery')?.value)}">Add Machine</button>
           </div>
         </form>
 

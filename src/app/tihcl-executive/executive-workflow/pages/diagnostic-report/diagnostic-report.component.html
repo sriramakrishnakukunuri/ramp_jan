@@ -163,11 +163,11 @@
                                <td>{{ shareholder.get('position')?.value }}</td>
                                <td>{{ shareholder.get('shareholdingPercentage')?.value }}</td>
                                <td class="text-center">
-                                 <button type="button" [ngClass]="{'disabled':!(freeze<=4)}" (click)="openShareholderModal(i)"
+                                 <button type="button" [ngClass]="{'isDisabled':!(freeze<=4)}" (click)="openShareholderModal(i)"
                                    class="btn btn-default text-primary btn-sm">
                                    <span class="bi bi-pencil"></span>
                                  </button>
-                                 <button type="button" [ngClass]="{'disabled':!(freeze<=4)}" (click)="removeShareholder(i,shareholder.get('id')?.value)"
+                                 <button type="button" [ngClass]="{'isDisabled':!(freeze<=4)}" (click)="removeShareholder(i,shareholder.get('id')?.value)"
                                    class="btn btn-default text-danger btn-sm">
                                    <span class="bi bi-trash"></span>
                                  </button>
@@ -223,11 +223,11 @@
                                <td>{{ shareholder.get('position')?.value }}</td>
                                <td>{{ shareholder.get('profitSharingPercentage')?.value }}</td>
                                <td class="text-center">
-                                 <button type="button" [ngClass]="{'disabled':!(freeze<=4)}" (click)="openPartnershipModal(i)"
+                                 <button type="button" [ngClass]="{'isDisabled':!(freeze<=4)}" (click)="openPartnershipModal(i)"
                                    class="btn btn-default text-primary btn-sm">
                                    <span class="bi bi-pencil"></span>
                                  </button>
-                                 <button type="button" [ngClass]="{'disabled':!(freeze<=4)}" (click)="removePartnerShip(i,shareholder.get('id')?.value)"
+                                 <button type="button" [ngClass]="{'isDisabled':!(freeze<=4)}" (click)="removePartnerShip(i,shareholder.get('id')?.value)"
                                    class="btn btn-default text-danger btn-sm">
                                    <span class="bi bi-trash"></span>
                                  </button>
@@ -300,11 +300,11 @@
                                <td class="text-start">{{ buyer.get('amount')?.value }}</td>
                                <td>{{ buyer.get('remarks')?.value || '-' }}</td>
                                <td class="text-center">
-                                 <button type="button" [ngClass]="{'disabled':!(freeze<=4)}" (click)="openBuyerModal(i)"
+                                 <button type="button" [ngClass]="{'isDisabled':!(freeze<=4)}" (click)="openBuyerModal(i)"
                                    class="btn btn-default text-primary btn-sm">
                                    <span class="bi bi-pencil"></span>
                                  </button>
-                                 <button type="button" [ngClass]="{'disabled':!(freeze<=4)}" (click)="removeBuyer(i,buyer.get('id')?.value)"
+                                 <button type="button" [ngClass]="{'isDisabled':!(freeze<=4)}" (click)="removeBuyer(i,buyer.get('id')?.value)"
                                    class="btn btn-default text-danger btn-sm">
                                    <span class="bi bi-trash"></span>
                                  </button>
@@ -358,11 +358,11 @@
                                <td class="text-start">{{ supplier.get('amount')?.value }}</td>
                                <td>{{ supplier.get('remarks')?.value || '-' }}</td>
                                <td class="text-center">
-                                 <button type="button" [ngClass]="{'disabled':!(freeze<=4)}" (click)="openSupplierModal(i)"
+                                 <button type="button" [ngClass]="{'isDisabled':!(freeze<=4)}" (click)="openSupplierModal(i)"
                                    class="btn btn-default text-primary btn-sm">
                                    <span class="bi bi-pencil"></span>
                                  </button>
-                                 <button type="button" [ngClass]="{'disabled':!(freeze<=4)}" (click)="removeSupplier(i,supplier.get('id')?.value)"
+                                 <button type="button" [ngClass]="{'isDisabled':!(freeze<=4)}" (click)="removeSupplier(i,supplier.get('id')?.value)"
                                    class="btn btn-default text-danger btn-sm">
                                    <span class="bi bi-trash"></span>
                                  </button>
@@ -591,11 +591,11 @@
                                  <!-- <td>{{ formatDate(receivable.get('receivableDate')?.value) }}</td> -->
                                  <td>{{ receivable.get('receivableAmount')?.value }}</td>
                                  <td class="text-center">
-                                   <button type="button" [ngClass]="{'disabled':!(freeze<=4)}" (click)="openReceivableModal(i)"
+                                   <button type="button" [ngClass]="{'isDisabled':!(freeze<=4)}" (click)="openReceivableModal(i)"
                                      class="btn btn-default text-primary btn-sm">
                                      <span class="bi bi-pencil"></span>
                                    </button>
-                                   <button type="button" [ngClass]="{'disabled':!(freeze<=4)}" (click)="removeReceivable(i,receivable.get('id')?.value)"
+                                   <button type="button" [ngClass]="{'isDisabled':!(freeze<=4)}" (click)="removeReceivable(i,receivable.get('id')?.value)"
                                      class="btn btn-default text-danger btn-sm">
                                      <span class="bi bi-trash"></span>
                                    </button>
@@ -658,11 +658,11 @@
                                  <!-- <td>{{ formatDate(payable.get('payableDate')?.value) }}</td> -->
                                  <td>{{ payable.get('payableAmount')?.value }}</td>
                                  <td class="text-center">
-                                   <button type="button" [ngClass]="{'disabled':!(freeze<=4)}" (click)="openPayableModal(i)"
+                                   <button type="button" [ngClass]="{'isDisabled':!(freeze<=4)}" (click)="openPayableModal(i)"
                                      class="btn btn-default text-primary btn-sm">
                                      <span class="bi bi-pencil"></span>
                                    </button>
-                                   <button type="button" [ngClass]="{'disabled':!(freeze<=4)}" (click)="removePayable(i,payable.get('id')?.value)"
+                                   <button type="button" [ngClass]="{'isDisabled':!(freeze<=4)}" (click)="removePayable(i,payable.get('id')?.value)"
                                      class="btn btn-default text-danger btn-sm">
                                      <span class="bi bi-trash"></span>
                                    </button>
@@ -979,11 +979,11 @@
                                  <td>{{position.get('orderValue')?.value | number}}</td>
                                  <td>{{position.get('remarks')?.value}}</td>
                                  <td class="text-center">
-                                   <button type="button" [ngClass]="{'disabled':!(freeze<=4)}" (click)="editOrderBookPosition(i)"
+                                   <button type="button" [ngClass]="{'isDisabled':!(freeze<=4)}" (click)="editOrderBookPosition(i)"
                                      class="btn btn-sm btn-outline-primary me-2">
                                      <i class="bi bi-pencil"></i>
                                    </button>
-                                   <button type="button" [ngClass]="{'disabled':!(freeze<=4)}" (click)="removeOrderBookPosition(i,position.get('id')?.value)"
+                                   <button type="button" [ngClass]="{'isDisabled':!(freeze<=4)}" (click)="removeOrderBookPosition(i,position.get('id')?.value)"
                                      class="btn btn-sm btn-outline-danger">
                                      <i class="bi bi-trash"></i>
                                    </button>
@@ -1054,11 +1054,11 @@
                                        <td class="text-start">{{loan.get('sinceWhen')?.value | date:'dd-MM-yyyy'}}</td>
                                        <td>{{loan.get('tenor')?.value || '-'}}</td>
                                        <td class="text-center">
-                                         <button type="button" [ngClass]="{'disabled':!(freeze<=4)}" (click)="editUnsecuredLoan(i)"
+                                         <button type="button" [ngClass]="{'isDisabled':!(freeze<=4)}" (click)="editUnsecuredLoan(i)"
                                            class="btn btn-sm btn-outline-primary me-2">
                                            <i class="bi bi-pencil"></i>
                                          </button>
-                                         <button type="button" [ngClass]="{'disabled':!(freeze<=4)}" (click)="removeUnsecuredLoan(i,loan.get('id')?.value)"
+                                         <button type="button" [ngClass]="{'isDisabled':!(freeze<=4)}" (click)="removeUnsecuredLoan(i,loan.get('id')?.value)"
                                            class="btn btn-sm btn-outline-danger">
                                            <i class="bi bi-trash"></i>
                                          </button>
