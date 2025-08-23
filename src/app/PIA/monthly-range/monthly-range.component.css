@@ -1,0 +1,50 @@
+.example-month-picker .mat-calendar-period-button {
+    pointer-events: none;
+  }
+  
+  .example-month-picker .mat-calendar-arrow {
+    display: none;
+  }
+  .mat-input-element {
+    border: solid 0px transparent !important;
+    height: auto !important; 
+    border-radius: 4px !important;
+}
+
+mat-form-field{
+    z-index: 9999 !important;
+    position: relative;
+}
+
+/* Ensure the entire monthly range component appears above modal */
+:host {
+    z-index: 10000 !important;
+    position: relative;
+}
+
+/* Ensure Angular Material datepicker overlay appears above modal */
+::ng-deep .cdk-overlay-container {
+    z-index: 10001 !important;
+}
+
+/* Specific styles for mat-datepicker popup
+::ng-deep .mat-datepicker-popup {
+    z-index: 10001 !important;
+}
+
+::ng-deep .cdk-overlay-backdrop {
+    z-index: 10000 !important;
+}
+
+::ng-deep .cdk-overlay-pane {
+    z-index: 10001 !important;
+}
+
+/* Additional fallback for month picker */
+/* ::ng-deep .mat-datepicker-content {
+    z-index: 10001 !important;
+}
+
+::ng-deep .mat-calendar {
+    z-index: 10001 !important;
+}  */
