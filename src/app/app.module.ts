@@ -74,6 +74,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';import { StarR
 import { UploadParticipantsComponent } from './PIA/upload-participants/upload-participants.component';
 import { TrainingTargetsComponent } from './PIA/training-targets/training-targets.component';
 import { ProgressMonitoringComponent } from './PIA/progress-monitoring/progress-monitoring.component';
+import { NonTrainingTargetsComponent } from './PIA/non-training-targets/non-training-targets.component';
+import { TargetsAndAchievementsComponent } from './PIA/targets-and-achievements/targets-and-achievements.component';
+import { MonthlyRangeComponent } from './PIA/monthly-range/monthly-range.component';
 
 @NgModule({
     imports: [
@@ -154,6 +157,9 @@ import { ProgressMonitoringComponent } from './PIA/progress-monitoring/progress-
         UploadParticipantsComponent,
         TrainingTargetsComponent,
         ProgressMonitoringComponent,
+        NonTrainingTargetsComponent,
+        TargetsAndAchievementsComponent,
+        MonthlyRangeComponent
 
     ],
     exports:[MaterialModule],

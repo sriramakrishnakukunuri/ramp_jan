@@ -141,4 +141,7 @@ localStorageData: any;
             }
           });
         }
+        redirectAchievements(){
+          this.router.navigate(['/Training-Non-trainingAchievements'])
+        }
 }
