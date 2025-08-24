@@ -75,4 +75,7 @@ localStorageData: any;
         redirectAchievements(){
           this.router.navigate(['/Training-Non-trainingAchievements'])
         }
+         redirectPrograms(){
+          this.router.navigate(['/veiw-program'])
+        }
 }
