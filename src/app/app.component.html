@@ -471,9 +471,12 @@
                       <li><a class="dropdown-item" routerLink="/shg-training" routerLinkActive="active">SHG Training Status</a></li>
                     </ul>
                   </li>
-                   <li *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]">
+                  <ng-container *ngIf="this.user?.agencyName=='ALEAP' || this.user.agencyId==1">
+                     <li *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]" >
                     <a class="dropdown-item" routerLink="/non-training-targets" routerLinkActive="active">Non Training Targets</a>
                   </li>
+                  </ng-container>
+                  
                   <!-- Masters List (Agency) -->
                   <li *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]">
                     <a class="dropdown-item" routerLink="/view-table-organization" routerLinkActive="active">Masters List</a>

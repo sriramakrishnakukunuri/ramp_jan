@@ -1,4 +1,4 @@
-import { Component,Output,EventEmitter, Input, OnInit } from '@angular/core';
+import { Component,Output,EventEmitter, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { DateAdapter } from '@angular/material/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import {
@@ -41,23 +41,78 @@ export const MY_FORMATS1 = {
         { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS1 },
     ],
 })
-export class MonthlyRangeComponent implements OnInit {
-  ngOnInit(): void {
-    if(this.paymentForMonth){
-      this.date1.setValue(moment(this.paymentForMonth, 'MM-YYYY'));
-    }
-  } 
-  @Input() paymentForMonth: any;
-  
+export class MonthlyRangeComponent implements OnInit, OnChanges {
     date1 = new FormControl(moment());
     dateRange!: any;
-    @Output() monthChangeValue = new EventEmitter();
+    @Output() monthChangeValue = new EventEmitter<any>();
+    @Input() paymentForMonth: any;
+
+    ngOnInit(): void {
+      console.log(this.paymentForMonth)
+        this.initializeValue();
+        this.setupValueChangeSubscription();
+    }
+
+    ngOnChanges(changes: SimpleChanges): void {
+        if (changes['paymentForMonth'] && !changes['paymentForMonth'].firstChange) {
+            this.initializeValue();
+        }
+    }
+
+    private initializeValue(): void {
+        if (this.paymentForMonth) {
+            this.date1.setValue(moment(this.paymentForMonth, 'MM-YYYY'));
+        }
+    }
+
+    private setupValueChangeSubscription(): void {
+        // Subscribe to value changes to emit data whenever FormControl value changes
+        this.date1.valueChanges.subscribe(value => {
+            if (value) {
+                const formattedDate = value.format('MM-YYYY');
+                this.monthChangeValue.emit({
+                    formControl: this.date1,
+                    value: value,
+                    formattedValue: formattedDate,
+                    month: value.month() + 1, // month() returns 0-based index
+                    year: value.year()
+                });
+            }
+        });
+    }
+    
+
     setMonthAndYear(normalizedMonthAndYear: Moment, datepicker: MatDatepicker<Moment>) {
         const ctrlValue = this.date1.value!;
         ctrlValue.month(normalizedMonthAndYear.month());
         ctrlValue.year(normalizedMonthAndYear.year());
         this.date1.setValue(ctrlValue);
         datepicker.close();
-        this.monthChangeValue.emit(this.date1)
+        // The valueChanges subscription will automatically emit the new value
+    }
+
+    onYearSelected(normalizedYear: Moment) {
+        const ctrlValue = this.date1.value!;
+        ctrlValue.year(normalizedYear.year());
+        this.date1.setValue(ctrlValue);
+    }
+
+    // Method to get current FormControl value
+    getCurrentValue() {
+        return this.date1.value;
+    }
+
+    // Method to get formatted value
+    getFormattedValue() {
+        return this.date1.value ? this.date1.value.format('MM-YYYY') : null;
+    }
+
+    // Method to set value programmatically
+    setValue(date: any) {
+        if (typeof date === 'string') {
+            this.date1.setValue(moment(date, 'MM-YYYY'));
+        } else {
+            this.date1.setValue(moment(date));
+        }
     }
 }

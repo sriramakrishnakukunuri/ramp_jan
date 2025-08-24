@@ -52,78 +52,9 @@ localStorageData: any;
           // Initialize with sample data structure
           this.tableList = {
               "trainingPrograms": [
-                {
-                  "trainingActivity": "Leadership Development Training",
-                  "trainingSubActivity": "Self Help Group Leadership",
-                  "physicalTarget": 500,
-                  "physicalAchievement": 375,
-                  "applicable": "75.00%",
-                  "financialTarget": 2.5,
-                  "financialExpenditure": 187500,
-                  "percentage": 75
-                },
-                {
-                  "trainingActivity": "Entrepreneurship Development Program",
-                  "trainingSubActivity": "Business Skills Training",
-                  "physicalTarget": 300,
-                  "physicalAchievement": 225,
-                  "applicable": "75.00%",
-                  "financialTarget": 1.8,
-                  "financialExpenditure": 135000,
-                  "percentage": 75
-                }
+                
               ],
               "nonTrainingPrograms": [
-                {
-                  "nonTrainingActivity": "Preliminary survey for selection of potential SHGs",
-                  "nonTrainingSubActivity": null,
-                  "physicalTarget": 1,
-                  "physicalAchievement": "Not Initiated",
-                  "applicable": "Not Applicable",
-                  "financialTarget": 0.04,
-                  "financialExpenditure": 50000,
-                  "percentage": 12.5
-                },
-                {
-                  "nonTrainingActivity": "Dashboard/ Central Management System",
-                  "nonTrainingSubActivity": null,
-                  "physicalTarget": 1,
-                  "physicalAchievement": "Not Initiated",
-                  "applicable": "Not Applicable",
-                  "financialTarget": 0.12,
-                  "financialExpenditure": null,
-                  "percentage": null
-                },
-                {
-                  "nonTrainingActivity": "Handholding support for enterprise creation of 2000 members",
-                  "nonTrainingSubActivity": null,
-                  "physicalTarget": 2000,
-                  "physicalAchievement": null,
-                  "applicable": "100.00%",
-                  "financialTarget": 1.5,
-                  "financialExpenditure": null,
-                  "percentage": null
-                },
-                {
-                  "nonTrainingActivity": "Raw material support ",
-                  "nonTrainingSubActivity": null,
-                  "physicalTarget": 1,
-                  "physicalAchievement": "Not Initiated",
-                  "applicable": "Not Applicable",
-                  "financialTarget": 0.04,
-                  "financialExpenditure": 360000,
-                  "percentage": 90
-                },
-                {
-                  "nonTrainingActivity": "Contingency fund ",
-                  "nonTrainingSubActivity": null,
-                  "physicalTarget": 1,
-                  "physicalAchievement": "Not Initiated",
-                  "applicable": "Not Applicable",
-                  "financialTarget": 0.31,
-                  "financialExpenditure": null,
-                  "percentage": null
-                }
               ]
           }
           
@@ -143,5 +74,8 @@ localStorageData: any;
         }
         redirectAchievements(){
           this.router.navigate(['/Training-Non-trainingAchievements'])
+        }
+         redirectPrograms(){
+          this.router.navigate(['/veiw-program'])
         }
 }

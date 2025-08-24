@@ -115,11 +115,13 @@ export class TargetsAndAchievementsComponent implements OnInit {
   tableheaderList:any
   getBasedOnYearSelection(val:any){
     this.getDataByAgencyAndYear(this.selectedAgencyId,val)
+     this.getDataByAgencyAndYearNonTraing(this.selectedAgencyId,val)
   }
     GetProgramsByAgency(value: any) {
       this.tableList=[]
       this.tableheaderList =[]
       this.getDataByAgencyAndYear(value,this.selectedFinancialYear)
+      this.getDataByAgencyAndYearNonTraing(value,this.selectedFinancialYear)
       // Destroy existing DataTable if it exists
       
      
@@ -161,6 +163,49 @@ export class TargetsAndAchievementsComponent implements OnInit {
         error: (error: any) => {
           this.tableheaderList=[this.selectedFinancialYear]
           this.tableList=[]
+          this.toastrService.error(error?.error?.message || 'Error fetching data', 'Error');
+        }
+      });
+    }
+    tableListNonTraining:any=[]
+     getDataByAgencyAndYearNonTraing(agency: any,year:any) {
+      this._commonService.getDataByUrl(APIS.progressMonitoring.getNonTrainigTargetsAchievements+agency+'?year='+year).subscribe({
+        next: (dataList: any) => {
+          if(dataList?.length) {
+            console.log(dataList, 'dataList');
+            const allYears = new Set<string>();
+            // this.tableheaderList = Object.values(dataList.data).map((item:any) => {
+            //   item.financialYear.forEach((fy: any) => allYears.add(fy.financialYear));
+            //   return item;
+            // });
+            // this.tableheaderList = Array.from(allYears).sort();
+            this.tableheaderList=[this.selectedFinancialYear]
+            this.tableListNonTraining = dataList
+            // Object.keys(dataList.data || {}).map((key: any) => {
+            //   this.tableListNonTraining.push(dataList.data[key]) 
+            // })
+            // if ($.fn.DataTable.isDataTable('#view-physical-table')) {
+            //     $('#view-physical-table').DataTable().destroy();
+            //   }
+            this.reinitializeDataTable();
+          }
+          else{
+            // this.tableheaderList=[this.getCurrentFinancialYear()]
+            this.tableheaderList=[this.selectedFinancialYear]
+
+            this.tableListNonTraining=[]
+          }
+          // if ($.fn.DataTable.isDataTable('#view-physical-table')) {
+          //   $('#view-physical-table').DataTable().destroy();
+          // }
+        
+          console.log(this.tableheaderList,  this.tableListNonTraining,'tableheaderList');
+          // this.reinitializeDataTable(value)
+          console.log(this.tableListNonTraining, 'tableListNonTraining');
+        },
+        error: (error: any) => {
+          this.tableheaderList=[this.selectedFinancialYear]
+          this.tableListNonTraining=[]
           this.toastrService.error(error?.error?.message || 'Error fetching data', 'Error');
         }
       });
