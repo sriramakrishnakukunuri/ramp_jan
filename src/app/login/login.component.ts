@@ -51,13 +51,13 @@ export class LoginComponent implements OnInit {
                     //this.router.navigateByUrl('/program-creation');
                     this.loading = false;
                        
-                        if(res?.data.userRole === Role.Admin){
-                             if(res?.data?.userId=='districts@gmail.com'){
-                            this.router.navigateByUrl('/ViewPrograms-district-wise'); 
-                            }else{
-                                this.router.navigateByUrl('/veiw-program');
-                            }
-                                
+                            if(res?.data.userRole === Role.Admin){
+                                if(res?.data?.userId=='districts@gmail.com'){
+                                this.router.navigateByUrl('/ViewPrograms-district-wise'); 
+                                }
+                                else{
+                                    this.router.navigateByUrl('/veiw-program');
+                                }     
                         }
                         else if(res?.data.userRole === Role.AGENCY_MANAGER
                             || res?.data.userRole === Role.AGENCY_EXECUTOR

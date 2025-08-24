@@ -568,7 +568,7 @@
                 <li><a class="dropdown-item" (click)="logout()"><span class="bi bi-box-arrow-right fs-5 me-2"></span>
                     Logout</a></li>
               </ul>
-               <ul class="dropdown-menu" aria-labelledby="homeDropdown" *ngIf="user?.email=='districts@gmail.com'">
+               <ul class="dropdown-menu" aria-labelledby="homeDropdown" *ngIf="user?.email=='districts@gmail.com' && this.user?.userRole=='ADMIN'">
                 <!-- <li><a class="dropdown-item" routerLink="/profile" routerLinkActive="active"><span
                       class="bi bi-person fs-5 me-2"></span> My Profile</a></li>
                 <li><a class="dropdown-item" routerLink="/password-settings" routerLinkActive="active"><span
