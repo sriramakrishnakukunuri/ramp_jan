@@ -115,13 +115,13 @@ export class TargetsAndAchievementsComponent implements OnInit {
   tableheaderList:any
   getBasedOnYearSelection(val:any){
     this.getDataByAgencyAndYear(this.selectedAgencyId,val)
-    //  this.getDataByAgencyAndYearNonTraing(this.selectedAgencyId,val)
+     this.getDataByAgencyAndYearNonTraing(this.selectedAgencyId,val)
   }
     GetProgramsByAgency(value: any) {
       this.tableList=[]
       this.tableheaderList =[]
       this.getDataByAgencyAndYear(value,this.selectedFinancialYear)
-      // this.getDataByAgencyAndYearNonTraing(value,this.selectedFinancialYear)
+      this.getDataByAgencyAndYearNonTraing(value,this.selectedFinancialYear)
       // Destroy existing DataTable if it exists
       
      

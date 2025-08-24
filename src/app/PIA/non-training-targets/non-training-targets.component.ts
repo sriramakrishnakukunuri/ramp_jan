@@ -505,6 +505,7 @@ export class NonTrainingTargetsComponent implements OnInit {
       }, 0);
     }
     if (mode === 'edit') {
+
       this.paymentID=item?.nonTrainingResourceExpenditureId
       this.iseditModePayment = true;
       // Set the paymentForMonth value from response - this will trigger the monthly-range component update
@@ -528,6 +529,7 @@ export class NonTrainingTargetsComponent implements OnInit {
        
       });
     }
+    this.onResourceChange(item?.resourceId,this.resourceList)
     const modal1 = new bootstrap.Modal(document.getElementById('addPayment'));
     modal1.show();
   }

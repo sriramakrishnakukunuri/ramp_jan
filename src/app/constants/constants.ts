@@ -119,7 +119,7 @@ export const APIS = {
     },
     progressMonitoring:{
         getTrainigAndNonTraining: API_BASE_URL + '/progress/monitoring',
-        getTrainigTargetsAchievements: API_BASE_URL + '/targets-and-achievements/agency/',
+        getTrainigTargetsAchievements: API_BASE_URL + '/training/targets-and-achievements/agency/',
         getNonTrainigTargetsAchievements: API_BASE_URL + '/non-training/targets-and-achievements/agency/',
     },
     captureOutcome:{
