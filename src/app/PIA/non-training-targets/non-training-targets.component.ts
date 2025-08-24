@@ -70,6 +70,7 @@ export class NonTrainingTargetsComponent implements OnInit {
           console.log('TargetDetails:', this.TargetDetails);
           if(this.selectedBudgetHead=='1' || this.selectedBudgetHead=='2'){
             this.getPreliminaryDataById()
+
           }
           else if(this.selectedBudgetHead=='5'){
             this.getResourceList()
@@ -86,6 +87,10 @@ export class NonTrainingTargetsComponent implements OnInit {
         https://metaverseedu.in/workflow/non-training/all/expenditures?nonTrainingActivityId=1
          this._commonService.getDataByUrl(APIS.nontrainingtargets.getNonTrainingtargetsAleapPriliminaryById+this.selectedBudgetHead).subscribe((res: any) => {
             this.getPreliminaryData=res.data;
+            this.financialTargetAchievement=0
+            this.getPreliminaryData?.map((item:any)=>{
+              this.financialTargetAchievement+=Number(item?.expenditureAmount)
+            })
         
         }, (error) => {
           // this.toastrService.error(error.message);
@@ -115,7 +120,10 @@ export class NonTrainingTargetsComponent implements OnInit {
         this.getPaymentsData=[]
          this._commonService.getDataByUrl(APIS.nontrainingtargets.getNonTrainingtargetsAleapPaymentsId+this.selectedBudgetHead).subscribe((res: any) => {
             this.getPaymentsData=res.data;
-        
+            this.financialTargetAchievement=0
+              this.getPaymentsData?.map((item:any)=>{
+              this.financialTargetAchievement+=Number(item?.amount)
+            })
         }, (error) => {
           // this.toastrService.error(error.message);
         });
