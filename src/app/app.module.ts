@@ -77,6 +77,7 @@ import { ProgressMonitoringComponent } from './PIA/progress-monitoring/progress-
 import { NonTrainingTargetsComponent } from './PIA/non-training-targets/non-training-targets.component';
 import { TargetsAndAchievementsComponent } from './PIA/targets-and-achievements/targets-and-achievements.component';
 import { MonthlyRangeComponent } from './PIA/monthly-range/monthly-range.component';
+import { ViewProgramsSeperateComponent } from './PIA/view-programs-seperate/view-programs-seperate.component';
 
 @NgModule({
     imports: [
@@ -159,7 +160,8 @@ import { MonthlyRangeComponent } from './PIA/monthly-range/monthly-range.compone
         ProgressMonitoringComponent,
         NonTrainingTargetsComponent,
         TargetsAndAchievementsComponent,
-        MonthlyRangeComponent
+        MonthlyRangeComponent,
+        ViewProgramsSeperateComponent
 
     ],
     exports:[MaterialModule],
