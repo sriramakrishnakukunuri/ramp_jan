@@ -36,6 +36,7 @@ export const APIS = {
         downloadResourceData: API_BASE_URL + '/resource/excel/',
         downloadSessionsData: API_BASE_URL + '/program/session/pdf/',
         updateOverDue: API_BASE_URL + '/',
+        getProgramsListByDistrictDetails: API_BASE_URL + '/agency/programs/district/',
         // get: API_BASE_URL + '/program/get',
         // update: API_BASE_URL + '/program/update',
         // delete: API_BASE_URL + '/program/delete',

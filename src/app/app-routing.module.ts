@@ -54,6 +54,7 @@ import { TrainingTargetsComponent } from './PIA/training-targets/training-target
 import { ProgressMonitoringComponent } from './PIA/progress-monitoring/progress-monitoring.component';
 import { NonTrainingTargetsComponent } from './PIA/non-training-targets/non-training-targets.component';
 import { TargetsAndAchievementsComponent } from './PIA/targets-and-achievements/targets-and-achievements.component';
+import { ViewProgramsSeperateComponent } from './PIA/view-programs-seperate/view-programs-seperate.component';
 
 const routes: Routes = [
     {
@@ -226,6 +227,12 @@ const routes: Routes = [
     {
         path: 'view-participant-data',
         component: ViewParticipantComponent,
+        canActivate: [AuthGuard],
+        data: { roles:  [Role.Admin,Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
+    },
+     {
+        path: 'ViewPrograms-district-wise',
+        component: ViewProgramsSeperateComponent,
         canActivate: [AuthGuard],
         data: { roles:  [Role.Admin,Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
     },
