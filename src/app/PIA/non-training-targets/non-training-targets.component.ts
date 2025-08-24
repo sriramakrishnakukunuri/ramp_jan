@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CommonServiceService } from '@app/_services/common-service.service';
@@ -6,6 +6,10 @@ import { APIS } from '@app/constants/constants';
 import { ToastrService } from 'ngx-toastr';
 import moment from 'moment';
 declare var bootstrap: any;
+import DataTable from 'datatables.net-dt';
+import 'datatables.net-buttons-dt';
+import 'datatables.net-responsive-dt';
+import { MonthlyRangeComponent } from '../monthly-range/monthly-range.component';
 
 @Component({
   selector: 'app-non-training-targets',
@@ -18,6 +22,7 @@ export class NonTrainingTargetsComponent implements OnInit {
    isSubmitted = false;
   loginsessionDetails: any;
   selectedAgencyId: any;
+  @ViewChild(MonthlyRangeComponent) monthlyRange!: MonthlyRangeComponent;
  constructor(private fb: FormBuilder, private toastrService: ToastrService,
       private _commonService: CommonServiceService,
       private router: Router,) {
@@ -60,8 +65,8 @@ export class NonTrainingTargetsComponent implements OnInit {
           this.TargetDetails = res.data;
           this.physicalTarget = this.TargetDetails?.physicalTarget || 0;
           this.financialTarget = this.TargetDetails?.financialTarget || 0;
-          this.physicalTargetAchievement = this.TargetDetails?.physicalAchievement || 0;
-          this.financialTargetAchievement = this.TargetDetails?.financialAchievement || 0;
+          this.physicalTargetAchievement = this.TargetDetails?.physicalTargetAchievement || 0;
+          this.financialTargetAchievement = this.TargetDetails?.financialTargetAchievement || 0;
           console.log('TargetDetails:', this.TargetDetails);
           if(this.selectedBudgetHead=='1' || this.selectedBudgetHead=='2'){
             this.getPreliminaryDataById()
@@ -89,8 +94,9 @@ export class NonTrainingTargetsComponent implements OnInit {
       resourceList:any=[]
       getResourceList(){
         this.resourceList=[]
-          this._commonService.getDataByUrl(APIS.nontrainingtargets.getResourceList+this.selectedAgencyId).subscribe((res: any) => {
+          this._commonService.getDataByUrl(APIS.nontrainingtargets.getResourceList+this.selectedBudgetHead).subscribe((res: any) => {
               this.resourceList=res.data;
+             
           
           }, (error) => {
             // this.toastrService.error(error.message);
@@ -115,14 +121,15 @@ export class NonTrainingTargetsComponent implements OnInit {
         });
       }
       viewPaymentData:any=[]
-      getViewData(id:any){
-        this.viewPaymentData=[]
-         this._commonService.getDataByUrl(APIS.nontrainingtargets.getNonTrainingtargetsAleapPaymentsId+id).subscribe((res: any) => {
-            this.viewPaymentData=res.data;
+      getViewData(data:any){
         
-        }, (error) => {
-          // this.toastrService.error(error.message);
-        });
+        this.viewPaymentData=data
+        //  this._commonService.getDataByUrl(APIS.nontrainingtargets.getNonTrainingtargetsAleapPaymentsId+id).subscribe((res: any) => {
+        //     this.viewPaymentData=res.data;
+        
+        // }, (error) => {
+        //   // this.toastrService.error(error.message);
+        // });
       }
       // final submission
       onFinalSubmit(){
@@ -420,7 +427,6 @@ export class NonTrainingTargetsComponent implements OnInit {
       console.log('Form Submitted:', this.contingencyForm.value);
         this._commonService.add(APIS.nontrainingtargets.saveNonTrainingtargetsAleapContingency,{...this.contingencyForm.value,"expenditures":[],nonTrainingActivityId:Number(this.selectedBudgetHead),dateOfJoining:this.contingencyForm?.value?.dateOfJoining?moment(this.contingencyForm?.value?.dateOfJoining).format('DD-MM-YYYY'):null}).subscribe((res: any) => {
           this.toastrService.success('Data saved successfully','Non Training Targets Data Success!');
-          this.getContingencyData.push(res.data)
           this.resetFormContingency();
           this.isSubmitted = false;
           const modal1 = bootstrap.Modal.getInstance(document.getElementById('addContingency'));
@@ -442,11 +448,10 @@ export class NonTrainingTargetsComponent implements OnInit {
   deleteContingencyID:any
   deleteContingency(id:any):void{
     this.deleteContingencyID=id
+    document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
      const previewModal = document.getElementById('exampleModalDeleteContinuty');
-    if (previewModal) {
-      const modalInstance = new bootstrap.Modal(previewModal);
+     const modalInstance = new bootstrap.Modal(previewModal);
       modalInstance.show();
-    }
   }
   ConfirmdeleteContingency(item:any){
       this._commonService
@@ -455,26 +460,29 @@ export class NonTrainingTargetsComponent implements OnInit {
           if(data?.status==400){
             this.toastrService.error(data?.message, "Non Training Targets Data Error!");
             this.closeModalDeleteContinuty();
-            this.deletePreliminaryID =''
+            this.deleteContingencyID =''
           }
           else{
             // this.getBulkExpenditure()
-            this.closeModalDeleteContinuty();
-            this.deletePreliminaryID =''
+            
           this.toastrService.success( 'Record Deleted Successfully', "Non Training Targets Data Success!");
+          this.closeModalDeleteContinuty();
+            this.deleteContingencyID =''
           }
           
         },
         error: (err) => {
-          this.closeModalDeleteContinuty();
-          this.deletePreliminaryID =''
           this.toastrService.error(err.message, "Non Training Targets Error!");
+          this.closeModalDeleteContinuty();
+          this.deleteContingencyID =''
+          
           new Error(err);
         },
       });
+      this.getDeatilOfTargets()
 
     }
-       closeModalDeleteContinuty(): void {
+  closeModalDeleteContinuty(): void {
       const editSessionModal = document.getElementById('exampleModalDeleteContinuty');
       if (editSessionModal) {
         const modalInstance = bootstrap.Modal.getInstance(editSessionModal);
@@ -491,13 +499,27 @@ export class NonTrainingTargetsComponent implements OnInit {
       this.iseditModePayment = false;
       this.paymentForm.reset();
       this.isSubmitted = false;
+      this.paymentForMonth = ''; // Clear the payment month for add mode
+       setTimeout(() => {
+       this.monthlyRange.setValue('08-2025');
+      }, 0);
     }
     if (mode === 'edit') {
       this.paymentID=item?.nonTrainingResourceExpenditureId
       this.iseditModePayment = true;
+      // Set the paymentForMonth value from response - this will trigger the monthly-range component update
+      this.paymentForMonth = item?.paymentForMonth || '';
+      
+      // Use setTimeout to ensure the monthly-range component is available
+      setTimeout(() => {
+        if (this.monthlyRange && item?.paymentForMonth) {
+          this.monthlyRange.setValue(item.paymentForMonth);
+        }
+      }, 0);
+      
       this.paymentForm.patchValue({
         amount: item?.amount || 0,
-        paymentForMonth: item?.paymentForMonth ? moment(item.paymentForMonth).format('YYYY-MM') : '',
+        paymentForMonth: item?.paymentForMonth || '',
         dateOfPayment: item?.dateOfPayment ? this.convertToISOFormat(item?.dateOfPayment) : '',
         resourceId: item?.resourceId || 0,
         bankName: item?.bankName || '',
@@ -510,6 +532,7 @@ export class NonTrainingTargetsComponent implements OnInit {
     modal1.show();
   }
   onResourceChange(event:any,list:any){
+    console.log('Selected Resource ID:', list);
     const selectedResource = list.find((item: any) => item.resourceId == event);
     console.log('Selected Resource:', selectedResource);
     if(selectedResource){
@@ -535,7 +558,7 @@ export class NonTrainingTargetsComponent implements OnInit {
   get fPayment() {
     return this.paymentForm.controls;
   }
-  paymentForMonth: any =""
+  paymentForMonth: any = "08-2025";
   onChangeDate(event:any){
     console.log(event,event.value,moment(event.value).format('MM-YYYY'));
     this.paymentForm.patchValue({paymentForMonth: moment(event.value).format('MM-YYYY')
@@ -563,12 +586,14 @@ export class NonTrainingTargetsComponent implements OnInit {
           this.isSubmitted = false;
           const modal1 = bootstrap.Modal.getInstance(document.getElementById('addPayment'));
           modal1.hide();
+           document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
         
         }, (error) => {
            this.resetForm();
           this.isSubmitted = false;
           const modal1 = bootstrap.Modal.getInstance(document.getElementById('addPayment'));
           modal1.hide();
+           document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
           this.toastrService.error(error.message,"Non Training Targets Data Error!");
         });
     }
@@ -579,6 +604,7 @@ export class NonTrainingTargetsComponent implements OnInit {
           this.isSubmitted = false;
           const modal1 = bootstrap.Modal.getInstance(document.getElementById('addPayment'));
           modal1.hide();
+           document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
          
         
         }, (error) => {
@@ -586,11 +612,12 @@ export class NonTrainingTargetsComponent implements OnInit {
           this.isSubmitted = false;
           const modal1 = bootstrap.Modal.getInstance(document.getElementById('addPayment'));
           modal1.hide();
+           document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
           this.toastrService.error(error.message);
         });
     }
    
-      
+      this.getDeatilOfTargets()
       console.log('Form Data:', formData);
       // Call your API service here
       // this.paymentService.createPayment(formData).subscribe(...);
@@ -600,10 +627,12 @@ export class NonTrainingTargetsComponent implements OnInit {
   }
   deletePayment(id:any):void{
     this.deleteContingencyID=id
+     document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
      const previewModal = document.getElementById('exampleModalDeletePayment');
     if (previewModal) {
       const modalInstance = new bootstrap.Modal(previewModal);
       modalInstance.show();
+
     }
   }
   ConfirmdeletePayment(item:any){
@@ -613,19 +642,19 @@ export class NonTrainingTargetsComponent implements OnInit {
           if(data?.status==400){
             this.toastrService.error(data?.message, "Non Training Targets Data Error!");
             this.closeModalDeletePayment();
-            this.deletePreliminaryID =''
+            this.deleteContingencyID =''
           }
           else{
             // this.getBulkExpenditure()
             this.closeModalDeletePayment();
-            this.deletePreliminaryID =''
+            this.deleteContingencyID =''
           this.toastrService.success( 'Record Deleted Successfully', "Non Training Targets Data Success!");
           }
           
         },
         error: (err) => {
           this.closeModalDeletePayment();
-          this.deletePreliminaryID =''
+          this.deleteContingencyID =''
           this.toastrService.error(err.message, "Non Training Targets Error!");
           new Error(err);
         },
@@ -640,4 +669,34 @@ export class NonTrainingTargetsComponent implements OnInit {
         modalInstance.hide();   
        }
       }
+       dataTable: any;
+        reinitializeDataTableBulk() {
+        if (this.dataTable) {
+          this.dataTable.destroy();
+        }
+        setTimeout(() => {
+          this.initializeDataTableBulk();
+        }, 0);
+      }
+    
+      initializeDataTableBulk() {
+        this.dataTable = new DataTable('#view-Priliminary', {
+          // scrollX: true,
+          // scrollCollapse: true,    
+          // responsive: true,    
+          // paging: true,
+          // searching: true,
+          // ordering: true,
+          scrollY: "415px",
+          scrollX: true,
+          scrollCollapse: true,
+          autoWidth: true,
+          paging: true,
+          info: false,
+          searching: false,
+          destroy: true, // Ensure reinitialization doesn't cause issues
+        });
+      }
+
+    
 }

@@ -27,7 +27,7 @@
         </div>
         <div class="card-body">
           <div class="text-end mb-3">
-            <button (click)="redirectAchievements()" class="btn btn-lime-green">Acheivements</button>
+            <button (click)="redirectAchievements()" class="btn btn-lime-green">Quaterly Progress Monintoring</button>
           </div>
           
           <!-- Training Programs Table -->
@@ -55,11 +55,11 @@
                       <td>{{ training?.activity || 'N/A' }}</td>
                       <!-- <td>{{ training?.subActivityId || 'N/A' }}</td> -->
                       <td class="text-center">{{ training?.trainingTarget || 0 }}</td>
-                      <td class="text-center">{{ training?.trainingAchievement || 'Not Initiated' }}</td>
-                      <td class="text-center">{{ training?.trainingPercentage || 'Not Applicable' }}</td>
+                      <td class="text-center">{{ training?.trainingAchievement || 0  }}</td>
+                      <td class="text-center">{{ training?.trainingPercentage || 0 }}</td>
                       <td class="text-center">{{ training?.budgetAllocated || 0 }}</td>
                       <td class="text-center">{{ training?.expenditure | currency:'INR':'symbol':'1.0-0' || 'N/A' }}</td>
-                      <td class="text-center">  {{ training?.expenditurePercentage || 0 }}%</td>
+                      <td class="text-center">  {{ training?.expenditurePercentage || 0 }}</td>
                       <!-- <td class="text-center">
                         <span class="badge" 
                               [ngClass]="training.percentage >= 75 ? 'bg-success' : training.percentage >= 50 ? 'bg-warning' : 'bg-danger'">
@@ -98,11 +98,11 @@
                       <td>{{ nonTraining?.nonTrainingActivity || 'N/A' }}</td>
                       <!-- <td>{{ nonTraining?.nonTrainingSubActivity || 'N/A' }}</td> -->
                       <td class="text-center">{{ nonTraining?.physicalTarget || 0 }}</td>
-                      <td class="text-center">{{ nonTraining?.physicalAchievement || 'Not Initiated' }}</td>
-                      <td class="text-center">{{ nonTraining?.applicable || 'Not Applicable' }}</td>
+                      <td class="text-center">{{ nonTraining?.physicalAchievement || 0 }}</td>
+                      <td class="text-center">{{ nonTraining?.applicable || 0 }}</td>
                       <td class="text-center">{{ nonTraining?.financialTarget || 0 }}</td>
                       <td class="text-center">{{ nonTraining?.financialExpenditure | currency:'INR':'symbol':'1.0-2' || 'N/A' }}</td>
-                       <td class="text-center"> {{ nonTraining?.percentage || 0 }}%</td>
+                       <td class="text-center"> {{ nonTraining?.percentage || 0 }}</td>
                       <!-- <td class="text-center">
                         <span class="badge" 
                               [ngClass]="nonTraining.percentage >= 75 ? 'bg-success' : nonTraining.percentage >= 50 ? 'bg-warning' : 'bg-danger'">

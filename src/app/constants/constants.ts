@@ -113,13 +113,14 @@ export const APIS = {
         deleteNonTrainingtargetsAleapContingency: API_BASE_URL + '/non-training/resource/delete/',
         getNonTrainingtargetsAleapPaymentsId: API_BASE_URL + '/non-training/all/resource/expenditures?nonTrainingActivityId=',
         saveNonTrainingtargetsAleapContingencyPayment: API_BASE_URL + '/non-training/non-training/expenditure/resource',
-        updateNonTrainingtargetsAleapContingencyPayment: API_BASE_URL + '/non-training/resource/update/{expenditureId}',
+        updateNonTrainingtargetsAleapContingencyPayment: API_BASE_URL + '/non-training/resource-expenditure/update/',
         deleteNonTrainingtargetsAleapContingencyPayment: API_BASE_URL + '/non-training/resource/expenditure/delete/',
        
     },
     progressMonitoring:{
         getTrainigAndNonTraining: API_BASE_URL + '/progress/monitoring',
         getTrainigTargetsAchievements: API_BASE_URL + '/targets-and-achievements/agency/',
+        getNonTrainigTargetsAchievements: API_BASE_URL + '/non-training/targets-and-achievements/agency/',
     },
     captureOutcome:{
         getParticipantData: API_BASE_URL + '/getParticipantsByMobileNo/',

@@ -9,5 +9,6 @@ export interface User {
     userRole: Role;
     mobileNo: string;
     token?: string;
-    agencyName?:string
+    agencyName?:string;
+    agencyId?:number;
 }

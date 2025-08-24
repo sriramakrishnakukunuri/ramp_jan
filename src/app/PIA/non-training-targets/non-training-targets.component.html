@@ -5,7 +5,7 @@
                     <div class="card-header bg-transparent">
                         <div class="row align-items-center">
                             <div class="col-12">
-                                <h6 class="fw-600 mb-2 mb-sm-3 mb-md-0">ALEAP</h6>
+                                <h6 class="fw-600 mb-2 mb-sm-3 mb-md-0">Non Training Targets</h6>
                             </div>
                         </div>
                     </div>
@@ -106,7 +106,7 @@
                                 </div>
                             </div>
                             <div class="card-body">                                
-                                <table class="table table-bordered nowrap w-100 trainingTable">
+                                <table id="view-Priliminary" class="table table-bordered nowrap w-100 trainingTable">
                                     <thead class="bg-lime-green text-white">
                                         <tr>
                                             <th>S.No</th>
@@ -126,19 +126,22 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                         <tr *ngIf="!getPreliminaryData || getPreliminaryData.length === 0">
+                                                <td colspan="10" class="text-center text-muted">Data Not available.</td>
+                                        </tr>
                                         <tr *ngFor="let preliminary of getPreliminaryData; let i = index">
                                             <td>{{ i + 1 }}</td>
-                                            <td>{{ preliminary.paymentDate  }}</td>
+                                            <td>{{ preliminary?.paymentDate  }}</td>
                                             <!-- <td>{{ preliminary.billDate | date: 'dd-MM-yyyy' }}</td> -->
-                                            <td>{{ preliminary.expenditureAmount }}</td>
-                                            <td>{{ preliminary.billNo }}</td>
-                                            <td>{{ preliminary.billDate  }}</td>
-                                            <td>{{ preliminary.modeOfPayment }}</td>
-                                            <td>{{ preliminary.payeeName }}</td>
-                                            <td>{{ preliminary.transactionId }}</td>
-                                            <td>{{ preliminary.bankName }}</td>
-                                            <td>{{ preliminary.ifscCode }}</td>
-                                            <td>{{ preliminary.purpose }}</td>
+                                            <td>{{ preliminary?.expenditureAmount }}</td>
+                                            <td>{{ preliminary?.billNo }}</td>
+                                            <td>{{ preliminary?.billDate  }}</td>
+                                            <td>{{ preliminary?.modeOfPayment }}</td>
+                                            <td>{{ preliminary?.payeeName }}</td>
+                                            <td>{{ preliminary?.transactionId }}</td>
+                                            <td>{{ preliminary?.bankName }}</td>
+                                            <td>{{ preliminary?.ifscCode }}</td>
+                                            <td>{{ preliminary?.purpose }}</td>
                                             <!-- <td class="text-center">
                                                 <a href="#" class="btn btn-default text-primary btn-sm"><span class="bi bi-eye"></span></a>
                                             </td> -->
@@ -167,7 +170,7 @@
                             </div>
                             <div class="card-body mb-3">
                                 <h6 class="fw-600 mb-2 mb-sm-3 mb-md-0">View Resource Details</h6>
-                                <table class="table table-bordered nowrap w-100 trainingTable">
+                                <table id="view-Resource" class="table table-bordered nowrap w-100 trainingTable">
                                     <thead class="bg-lime-green text-white">
                                         <tr>
                                             <th>S.No</th>
@@ -185,55 +188,59 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                          <tr *ngFor="let preliminary of getContingencyData; let i = index">
-                                            <td>{{ i + 1 }}</td>
-                                            <td>{{ preliminary.name  }}</td>
-                                            <td>{{ preliminary.designation }}</td>
-                                            <td>{{ preliminary.dateOfJoining  }}</td>
-                                            <td>{{ preliminary.relevantExperience }}</td>
-                                            <td>{{ preliminary.educationalQualification }}</td>
-                                            <td>{{ preliminary.monthlySal }}</td>
-                                            <td>{{ preliminary.bankName }}</td>
-                                            <td>{{ preliminary.ifscCode }}</td>
-                                            <!-- <td class="text-center">
-                                                <span class="badge" 
-                                                      [ngClass]="preliminary.status === 'Completed' ? 'bg-success' : preliminary.status === 'In Progress' ? 'bg-warning' : 'bg-danger'">
-                                                  {{ preliminary.status || 'N/A' }}
-                                                </span>
-                                            </td> -->
-                                             <td class="text-center">
-                                                <a href="#" class="btn btn-default text-primary btn-sm" data-bs-toggle="modal" data-bs-target="#viewPayment" (click)="getViewData(preliminary?.resourceId)"><span class="bi bi-eye"></span></a>
-                                            </td>
-                                            <td class="text-center">
-                                                <button type="button" class="btn btn-default text-lime-green btn-sm" (click)="openModelContingency('edit',preliminary)"><span class="bi bi-pencil"></span></button>
-                                                <button type="button" class="btn btn-default text-danger btn-sm" (click)="deleteContingency(preliminary?.resourceId)"><span class="bi bi-trash"></span></button>
-                                            </td>
-
-                                           
-                                        </tr>
+                                    <tr *ngIf="!getContingencyData || getContingencyData.length === 0">
+                                        <td colspan="10" class="text-center text-muted">No resource data available.</td>
+                                    </tr>
+                                    <tr *ngFor="let preliminary of getContingencyData; let i = index">
+                                        <td>{{ i + 1 }}</td>
+                                        <td>{{ preliminary?.name  }}</td>
+                                        <td>{{ preliminary?.designation }}</td>
+                                        <td>{{ preliminary?.dateOfJoining  }}</td>
+                                        <td>{{ preliminary?.relevantExperience }}</td>
+                                        <td>{{ preliminary?.educationalQualification }}</td>
+                                        <td>{{ preliminary?.monthlySal }}</td>
+                                        <td>{{ preliminary?.bankName }}</td>
+                                        <td>{{ preliminary?.ifscCode }}</td>
+                                        <!-- <td class="text-center">
+                                            <span class="badge" 
+                                                  [ngClass]="preliminary.status === 'Completed' ? 'bg-success' : preliminary.status === 'In Progress' ? 'bg-warning' : 'bg-danger'">
+                                              {{ preliminary.status || 'N/A' }}
+                                            </span>
+                                        </td> -->
+                                         <td class="text-center">
+                                            <a href="#" class="btn btn-default text-primary btn-sm" data-bs-toggle="modal" data-bs-target="#viewPayment" (click)="getViewData(preliminary?.expenditures)"><span class="bi bi-eye"></span></a>
+                                        </td>
+                                        <td class="text-center">
+                                            <button type="button" class="btn btn-default text-lime-green btn-sm" (click)="openModelContingency('edit',preliminary)"><span class="bi bi-pencil"></span></button>
+                                            <button type="button" class="btn btn-default text-danger btn-sm" (click)="deleteContingency(preliminary?.resourceId)"><span class="bi bi-trash"></span></button>
+                                        </td>
+                                    </tr>
                                     </tbody>
                                 </table>
                             </div>
                              <div class="card-body mb-3">
                                 <h6 class="fw-600 mb-2 mb-sm-3 mb-md-0">View Payment Details</h6>
-                                <table class="table table-bordered nowrap w-100 trainingTable">
+                                <table id="view-Payments" class="table table-bordered nowrap w-100 trainingTable">
                                     <thead class="bg-lime-green text-white">
                                         <tr>
                                             <th>S.No</th>
                                             <th>Amount (in Rs.)</th>
                                             <th>Payment For Month</th>
                                             <th>Date of Payment</th>
-                                            <th>Resource ID</th>
+                                            <th>Resource Name</th>
                                             <th class="text-center">Edit / Delete</th>
                                         </tr>
                                     </thead>
                                     <tbody>
+                                         <tr *ngIf="!getPaymentsData || getPaymentsData.length === 0">
+                                        <td colspan="10" class="text-center text-muted">No Payment data available.</td>
+                                    </tr>
                                         <tr *ngFor="let payment of getPaymentsData; let i = index">
                                             <td>{{ i + 1 }}</td>
-                                            <td>{{ payment.amount }}</td>
-                                            <td>{{ payment.paymentForMonth }}</td>
-                                            <td>{{ payment.dateOfPayment }}</td>
-                                            <td>{{ payment.resourceId }}</td>
+                                            <td>{{ payment?.amount }}</td>
+                                            <td>{{ payment?.paymentForMonth }}</td>
+                                            <td>{{ payment?.dateOfPayment }}</td>
+                                            <td>{{ payment?.name }}</td>
                                             <td class="text-center">
                                                 <button type="button" class="btn btn-default text-lime-green btn-sm" (click)="openModelPayment('edit', payment)">
                                                     <span class="bi bi-pencil"></span>
@@ -252,7 +259,7 @@
                         </div>
                     </div>
                     
-                </div>
+             </div>
                 <!-- end:: Preliminary survey for selection of potential SHGs -->
 
                 <!-- begin:: Dashboard / Central Management System -->
@@ -737,7 +744,7 @@
   <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-xl">
     <div class="modal-content">
       <div class="modal-header py-2">
-        <h6 class="modal-title text-white" id="addSurveyLabel">Add Financial Target</h6>
+        <h6 class="modal-title text-white" id="addSurveyLabel">{{iseditMode?'Update' :'Add'}} Financial Target</h6>
         <button type="button" class="btn-close me-1" data-bs-dismiss="modal" aria-label="Close" (click)="resetForm()" ></button>
       </div>
       <div class="modal-body">
@@ -903,7 +910,7 @@
 
           <div class="text-end mt-3">
             <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal" aria-label="Close" (click)="resetForm()">Close</button>
-            <button type="submit" class="btn btn-lime-green">Add</button>
+            <button type="submit" class="btn btn-lime-green">{{iseditMode?'Update' :'Add'}}</button>
           </div>
         </form>
       </div>
@@ -1287,7 +1294,7 @@ aria-hidden="true">
   <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-xl">
     <div class="modal-content">
       <div class="modal-header py-2">
-        <h6 class="modal-title text-white" id="addContingencyLabel">Add Resource</h6>
+        <h6 class="modal-title text-white" id="addContingencyLabel">{{iseditModeContingency?'Update' :'Add'}} Resource</h6>
         <button type="button" class="btn-close me-1" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -1442,7 +1449,7 @@ aria-hidden="true">
 
           <div class="text-end mt-3">
             <button type="button" class="btn btn-secondary me-2"  data-bs-dismiss="modal" aria-label="Close" (click)="resetFormContingency()">Close</button>
-            <button type="submit" class="btn btn-lime-green">Add</button>
+            <button type="submit" class="btn btn-lime-green">{{iseditModeContingency?'Update' :'Add'}}</button>
           </div>
         </form>
       </div>
@@ -1551,16 +1558,19 @@ aria-hidden="true">
                                             <th>Amount (in Rs.)</th>
                                             <th>Payment For Month</th>
                                             <th>Date of Payment</th>
-                                            <th>Resource ID</th>
+                                            <th>Resource Name</th>
                                         </tr>
                                     </thead>
                                     <tbody>
+                                         <tr *ngIf="!viewPaymentData || viewPaymentData.length === 0">
+                                        <td colspan="10" class="text-center text-muted">No Payment data available.</td>
+                                    </tr>
                                         <tr *ngFor="let payment of viewPaymentData; let i = index">
                                             <td>{{ i + 1 }}</td>
-                                            <td>{{ payment.amount }}</td>
-                                            <td>{{ payment.paymentForMonth }}</td>
-                                            <td>{{ payment.dateOfPayment }}</td>
-                                            <td>{{ payment.resourceId }}</td>
+                                            <td>{{ payment?.amount }}</td>
+                                            <td>{{ payment?.paymentForMonth }}</td>
+                                            <td>{{ payment?.dateOfPayment }}</td>
+                                            <td>{{ payment?.name }}</td>
                                           
                                         </tr>
                                     </tbody>
@@ -1577,7 +1587,7 @@ aria-hidden="true">
   <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-xl">
     <div class="modal-content">
       <div class="modal-header py-2">
-        <h6 class="modal-title text-white" id="addPaymentLabel">Add Payment</h6>
+        <h6 class="modal-title text-white" id="addPaymentLabel">{{iseditModePayment?'Update' :'Add'}} Payment</h6>
         <button type="button" class="btn-close me-1" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -1649,7 +1659,8 @@ aria-hidden="true">
             <!-- Payment For Month -->
             <div class="col-12 col-sm-6 col-md-4 col-lg-4">
               <div class="form-floating mb-3">
-                <app-monthly-range (monthChangeValue)="onChangeDate($event)" [paymentForMonth]="paymentForMonth" ></app-monthly-range>
+                <!-- <app-monthly-range (monthChangeValue)="onChangeDate($event)" [paymentForMonth]="paymentForMonth" ></app-monthly-range> -->
+                <app-monthly-range [paymentForMonth]="paymentForMonth" (monthChangeValue)="onChangeDate($event)"></app-monthly-range>
                                 <!-- <mat-form-field appearance="outline">
                     <mat-label>Payment For Month</mat-label>
                     <input matInput [matDatepicker]="dp1" [formControl]="date1"
@@ -1680,20 +1691,24 @@ aria-hidden="true">
 
           <div class="text-end mt-3">
             <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal" aria-label="Close" (click)="resetForm()">Close</button>
-            <button type="submit" class="btn btn-lime-green">Add Payment</button>
+            <button type="submit" class="btn btn-lime-green">{{iseditModePayment?'Update' :'Add'}}  Payment</button>
           </div>
         </form>
       </div>
     </div>
   </div>
 <!-- delete continuity -->
+
    <!-- begin --Delete preliminary -->
-      <div class="modal fade" id="exampleModalDeleteContinuty" tabindex="-1" role="dialog" aria-labelledby="exampleModalDeleteLabel"
+   
+<!-- end--Delete preliminary -->
+</div>
+   <div class="modal fade" id="exampleModalDeleteContinuty" tabindex="-1" role="dialog" aria-labelledby="exampleModalDeleteContinutyLabel"
 aria-hidden="true">
 <div class="modal-dialog" role="document">
     <div class="modal-content">
         <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalDeleteLabel">Delete Session</h5>
+            <h5 class="modal-title" id="exampleModalDeleteContinutyLabel">Delete Record</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
@@ -1701,17 +1716,17 @@ aria-hidden="true">
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-lime-green" (click)="ConfirmdeleteExpenditure(deletePreliminaryID)">Confirm</button>
+            <button type="button" class="btn btn-lime-green" (click)="ConfirmdeleteContingency(deleteContingencyID)">Confirm</button>
         </div>
     </div>
 </div>
 </div>
-   <div class="modal fade" id="exampleModalDeletePayment" tabindex="-1" role="dialog" aria-labelledby="exampleModalDeleteLabel"
+   <div class="modal fade" id="exampleModalDeletePayment" tabindex="-1" role="dialog" aria-labelledby="exampleModalDeletePaymentLabel"
 aria-hidden="true">
 <div class="modal-dialog" role="document">
     <div class="modal-content">
         <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalDeleteLabel">Delete Session</h5>
+            <h5 class="modal-title" id="exampleModalDeletePaymentLabel">Delete Session</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
@@ -1723,8 +1738,6 @@ aria-hidden="true">
         </div>
     </div>
 </div>
-</div>
-<!-- end--Delete preliminary -->
 </div>
 
   
