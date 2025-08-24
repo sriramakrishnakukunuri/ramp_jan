@@ -72,6 +72,12 @@ import { StartupAssesmentComponent } from './PIA/startup-assesment/startup-asses
 import { MatSelectFilterModule } from 'mat-select-filter';
 import { MatFormFieldModule } from '@angular/material/form-field';import { StarRatingComponent } from './manual-components/star-rating/star-rating.component';
 import { UploadParticipantsComponent } from './PIA/upload-participants/upload-participants.component';
+import { TrainingTargetsComponent } from './PIA/training-targets/training-targets.component';
+import { ProgressMonitoringComponent } from './PIA/progress-monitoring/progress-monitoring.component';
+import { NonTrainingTargetsComponent } from './PIA/non-training-targets/non-training-targets.component';
+import { TargetsAndAchievementsComponent } from './PIA/targets-and-achievements/targets-and-achievements.component';
+import { MonthlyRangeComponent } from './PIA/monthly-range/monthly-range.component';
+import { ViewProgramsSeperateComponent } from './PIA/view-programs-seperate/view-programs-seperate.component';
 
 @NgModule({
     imports: [
@@ -150,6 +156,12 @@ import { UploadParticipantsComponent } from './PIA/upload-participants/upload-pa
         StartupAssesmentComponent,
         StarRatingComponent,
         UploadParticipantsComponent,
+        TrainingTargetsComponent,
+        ProgressMonitoringComponent,
+        NonTrainingTargetsComponent,
+        TargetsAndAchievementsComponent,
+        MonthlyRangeComponent,
+        ViewProgramsSeperateComponent
 
     ],
     exports:[MaterialModule],

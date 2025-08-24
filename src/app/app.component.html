@@ -31,7 +31,7 @@
          
          </ng-container>
           <img src="../RAMP1/assets/img/GT Logo.png" alt="GT Logo" class="footer-logo" />
-         
+
         </div>
         <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasNavbar2"
           aria-labelledby="offcanvasNavbar2Label">
@@ -283,9 +283,9 @@
             </ul>
           </div>
         </div>
-        <div class="d-flex align-items-center justify-content-between">
+        <div class="d-flex align-items-center justify-content-between" >
           <div>
-            <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+            <ul class="navbar-nav justify-content-end flex-grow-1 pe-3" *ngIf="user?.email!='districts@gmail.com'">
 
               <!-- new tab code starts here This is to handle the submenu toggle functionality  || 27th july 2025 -->
               <li class="nav-item dropdown" style="position: relative;">
@@ -322,6 +322,15 @@
                       <li><a class="dropdown-item" routerLink="/financial-targets" routerLinkActive="active">Output Achievements</a>
                       </li>
                     </ul>
+                  </li>
+                  <!-- training targets -->
+                    <li *appHasRole="[Role.Admin]">
+                    <a class="dropdown-item" routerLink="/training-targets" routerLinkActive="active">Training Targets</a>
+                  </li>
+                  <!-- non training targets -->
+                  
+                   <li *appHasRole="[Role.Admin]">
+                    <a class="dropdown-item" routerLink="/progress-monitoring" routerLinkActive="active">Progress Monitoring</a>
                   </li>
                   <!-- Programs Per Agencies (submenu) -->
                   <li *appHasRole="[Role.Admin]" class="dropdown-submenu" style="position:relative;">
@@ -462,6 +471,12 @@
                       <li><a class="dropdown-item isDisabled" routerLink="/shg-training" routerLinkActive="active">SHG Training Status</a></li>
                     </ul>
                   </li>
+                  <ng-container *ngIf="this.user?.agencyName=='ALEAP' || this.user.agencyId==1">
+                     <li *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]" >
+                    <a class="dropdown-item" routerLink="/non-training-targets" routerLinkActive="active">Non Training Targets</a>
+                  </li>
+                  </ng-container>
+                  
                   <!-- Masters List (Agency) -->
                   <li *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]">
                     <a class="dropdown-item" routerLink="/view-table-organization" routerLinkActive="active">Masters List</a>
@@ -543,15 +558,26 @@
                 aria-expanded="false">
                 <span class="bi bi-person-circle fs-3"></span>
               </a>
-              <ul class="dropdown-menu" aria-labelledby="homeDropdown">
+              <ul class="dropdown-menu" aria-labelledby="homeDropdown" *ngIf="user?.email!='districts@gmail.com'">
                 <li><a class="dropdown-item" routerLink="/profile" routerLinkActive="active"><span
                       class="bi bi-person fs-5 me-2"></span> My Profile</a></li>
                 <li><a class="dropdown-item" routerLink="/password-settings" routerLinkActive="active"><span
                       class="bi bi-key fs-5 me-2"></span> Change Password</a></li>
-                <li *appHasRole="[Role.Admin]"><a class="dropdown-item" routerLink="/user-registration"
+                <li *appHasRole="[Role.Admin]"><a class="dropdown-item" routerLink="/user-registration" 
                     routerLinkActive="active"><span class="bi bi-person-circle fs-5 me-2"></span> Register User</a></li>
                 <li><a class="dropdown-item" (click)="logout()"><span class="bi bi-box-arrow-right fs-5 me-2"></span>
                     Logout</a></li>
+              </ul>
+               <ul class="dropdown-menu" aria-labelledby="homeDropdown" *ngIf="user?.email=='districts@gmail.com'">
+                <!-- <li><a class="dropdown-item" routerLink="/profile" routerLinkActive="active"><span
+                      class="bi bi-person fs-5 me-2"></span> My Profile</a></li>
+                <li><a class="dropdown-item" routerLink="/password-settings" routerLinkActive="active"><span
+                      class="bi bi-key fs-5 me-2"></span> Change Password</a></li>
+                <li *appHasRole="[Role.Admin]"><a class="dropdown-item" routerLink="/user-registration" 
+                    routerLinkActive="active"><span class="bi bi-person-circle fs-5 me-2"></span> Register User</a></li> -->
+                <li><a class="dropdown-item" (click)="logout()"><span class="bi bi-box-arrow-right fs-5 me-2"></span>
+                    Logout</a>
+                  </li>
               </ul>
             </li>
           </ul>
