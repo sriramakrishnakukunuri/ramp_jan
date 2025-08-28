@@ -176,7 +176,7 @@ export class TargetsAndAchievementsComponent implements OnInit {
         error: (error: any) => {
           this.tableheaderList=[this.selectedFinancialYear]
           this.tableList=[]
-          this.toastrService.error(error?.error?.message || 'Error fetching data', 'Error');
+          // this.toastrService.error(error?.error?.message || 'Error fetching data', 'Error');
         }
       });
     }
@@ -219,7 +219,7 @@ export class TargetsAndAchievementsComponent implements OnInit {
         error: (error: any) => {
           this.tableheaderList=[this.selectedFinancialYear]
           this.tableListNonTraining=[]
-          this.toastrService.error(error?.error?.message || 'Error fetching data', 'Error');
+          // this.toastrService.error(error?.error?.message || 'Error fetching data', 'Error');
         }
       });
     }
