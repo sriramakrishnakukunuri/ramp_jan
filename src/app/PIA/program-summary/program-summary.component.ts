@@ -65,6 +65,7 @@ export class ProgramSummaryComponent implements OnInit {
     agencyProgramList: any;
     agencyProgramListFiltered:any;
       getProgramsByAgency(agency:any) {
+        console.log("Agency ID:", agency);
         this.agencyId=agency
         this.imageService.getPrograms(this.loginsessionDetails.agencyId?this.loginsessionDetails.agencyId:this.agencyId).subscribe(
           (res) => {
