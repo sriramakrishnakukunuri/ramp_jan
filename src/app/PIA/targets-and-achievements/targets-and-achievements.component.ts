@@ -29,13 +29,14 @@ export class TargetsAndAchievementsComponent implements OnInit {
     private _commonService: CommonServiceService,
     private router: Router,
   ) { 
-    this.loginsessionDetails = JSON.parse(sessionStorage.getItem('user') || '{}');    
-    this.selectedAgencyId = this.loginsessionDetails.agencyId;
+    // this.loginsessionDetails = JSON.parse(sessionStorage.getItem('user') || '{}');    
+    // this.selectedAgencyId = this.loginsessionDetails.agencyId;
   }
 
   ngOnInit(): void {
-    this.generateFinancialYears() 
     this.getAgenciesList() 
+    this.generateFinancialYears() 
+    
     this.GetOutComes()
     
     this.formDetails()
@@ -49,11 +50,23 @@ export class TargetsAndAchievementsComponent implements OnInit {
       this._commonService.getDataByUrl(APIS.masterList.agencyList).subscribe((res: any) => {
         this.agencyList = res.data;
         this.agencyListFiltered = this.agencyList;
-        this.selectedAgencyId = res.data[0].agencyId;
+        let id=Number(sessionStorage.getItem('selectedAgencyIdByProgressMonitoring')) || null
+        console.log(id, typeof(id),'selectedAgencyIdByProgressMonitoring');
+        if(id){
+          this.selectedAgencyId=id
+        }
+        else{
+           this.selectedAgencyId = res.data[0].agencyId;
+        }
+       
         this.GetProgramsByAgency(this.selectedAgencyId);
       }, (error) => {
         // this.toastrService.error(error.message);
       });
+    }
+    goBack(){
+       this.router.navigate(['/progress-monitoring'])
+
     }
     ListOfOutCome:any
     GetOutComes(){
