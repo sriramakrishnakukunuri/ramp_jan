@@ -36,6 +36,7 @@ export const APIS = {
         downloadResourceData: API_BASE_URL + '/resource/excel/',
         downloadSessionsData: API_BASE_URL + '/program/session/pdf/',
         updateOverDue: API_BASE_URL + '/',
+        getProgramsListByDistrictDetails: API_BASE_URL + '/agency/programs/district/',
         // get: API_BASE_URL + '/program/get',
         // update: API_BASE_URL + '/program/update',
         // delete: API_BASE_URL + '/program/delete',
@@ -78,8 +79,8 @@ export const APIS = {
         getData: API_BASE_URL + '/getAllCounsellors',
     },
     userRegistration:{
-        add: API_BASE_URL + '/login/user/create',
-        addAgent: API_BASE_URL + '/login/user/create',
+        add: API_BASE_URL + '/auth/register',
+        addAgent: API_BASE_URL + '/auth/register',
         editProfile: API_BASE_URL + '/login/user/update',
         getUserById: API_BASE_URL + '/login/user',        
     },
@@ -93,6 +94,34 @@ export const APIS = {
         getSectors: API_BASE_URL + '/getallsectors',
         getMandal: API_BASE_URL + '/getAllmandalsOfDistrictsById/',
         getMandalName: API_BASE_URL + '/getAllmandalsOfDistrictsByName/',
+    },
+    trainingtargets:{
+        getTrainingtargets: API_BASE_URL + '/targets/financial/year/summary',
+
+    },
+    nontrainingtargets:{
+        getBudgetHeadList: API_BASE_URL + '/progress/monitoring/get/activities/',
+        getResourceList: API_BASE_URL + '/non-training/resources/non-training-activity?nonTrainingActivityId=',
+        updateTarets: API_BASE_URL + '/progress/monitoring/non-training-achievement/',
+        getNonTrainingtargets: API_BASE_URL + '/progress/monitoring/non-training/physical/financial/{activityId}?activityId=',
+        saveNonTrainingtargetsAleapPriliminary: API_BASE_URL + '/non-training',
+        updateNonTrainingtargetsAleapPriliminary: API_BASE_URL + '/non-training/update/',
+        deleteNonTrainingtargetsAleapPriliminary: API_BASE_URL + '/non-training/delete/',
+        getNonTrainingtargetsAleapPriliminaryById: API_BASE_URL + '/non-training/all/expenditures?nonTrainingActivityId=',
+        getNonTrainingtargetsAleapContingencyId: API_BASE_URL + '/non-training/all/resources?nonTrainingActivityId=',
+        saveNonTrainingtargetsAleapContingency: API_BASE_URL + '/non-training/resource',
+        updateNonTrainingtargetsAleapContingency: API_BASE_URL + '/non-training/resource/update/',
+        deleteNonTrainingtargetsAleapContingency: API_BASE_URL + '/non-training/resource/delete/',
+        getNonTrainingtargetsAleapPaymentsId: API_BASE_URL + '/non-training/all/resource/expenditures?nonTrainingActivityId=',
+        saveNonTrainingtargetsAleapContingencyPayment: API_BASE_URL + '/non-training/non-training/expenditure/resource',
+        updateNonTrainingtargetsAleapContingencyPayment: API_BASE_URL + '/non-training/resource-expenditure/update/',
+        deleteNonTrainingtargetsAleapContingencyPayment: API_BASE_URL + '/non-training/resource/expenditure/delete/',
+       
+    },
+    progressMonitoring:{
+        getTrainigAndNonTraining: API_BASE_URL + '/progress/monitoring',
+        getTrainigTargetsAchievements: API_BASE_URL + '/training/targets-and-achievements/agency/',
+        getNonTrainigTargetsAchievements: API_BASE_URL + '/non-training/targets-and-achievements/agency/',
     },
     captureOutcome:{
         getParticipantData: API_BASE_URL + '/getParticipantsByMobileNo/',

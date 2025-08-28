@@ -50,6 +50,11 @@ import { AssignCounsellorComponent } from './PIA/assign-counsellor/assign-counse
 import { RegistrationNewComponent } from './PIA/registration-new/registration-new.component';
 import { StartupAssesmentComponent } from './PIA/startup-assesment/startup-assesment.component';
 import { UploadParticipantsComponent } from './PIA/upload-participants/upload-participants.component';
+import { TrainingTargetsComponent } from './PIA/training-targets/training-targets.component';
+import { ProgressMonitoringComponent } from './PIA/progress-monitoring/progress-monitoring.component';
+import { NonTrainingTargetsComponent } from './PIA/non-training-targets/non-training-targets.component';
+import { TargetsAndAchievementsComponent } from './PIA/targets-and-achievements/targets-and-achievements.component';
+import { ViewProgramsSeperateComponent } from './PIA/view-programs-seperate/view-programs-seperate.component';
 
 const routes: Routes = [
     {
@@ -225,6 +230,12 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         data: { roles:  [Role.Admin,Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
     },
+     {
+        path: 'ViewPrograms-district-wise',
+        component: ViewProgramsSeperateComponent,
+        canActivate: [AuthGuard],
+        data: { roles:  [Role.Admin,Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
+    },
     {
         path: 'view-Completed-data',
         component: ViewCompletedComponent,
@@ -324,6 +335,30 @@ const routes: Routes = [
     {
         path: 'physical-targets',
         component: PhysicalTargetsComponent,
+        canActivate: [AuthGuard],
+        data: { roles: [Role.Admin,Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
+    },
+     {
+        path: 'training-targets',
+        component: TrainingTargetsComponent,
+        canActivate: [AuthGuard],
+        data: { roles: [Role.Admin,Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
+    },
+     {
+        path: 'non-training-targets',
+        component: NonTrainingTargetsComponent,
+        canActivate: [AuthGuard],
+        data: { roles: [Role.Admin,Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
+    },
+    {
+        path: 'progress-monitoring',
+        component: ProgressMonitoringComponent,
+        canActivate: [AuthGuard],
+        data: { roles: [Role.Admin,Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
+    },
+     {
+        path: 'Training-Non-trainingAchievements',
+        component: TargetsAndAchievementsComponent,
         canActivate: [AuthGuard],
         data: { roles: [Role.Admin,Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
     },

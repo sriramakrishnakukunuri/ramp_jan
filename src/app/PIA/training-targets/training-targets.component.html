@@ -1,0 +1,212 @@
+<main class="mt-4">
+  <section>
+    <div class="container-fluid">
+      <div class="card mb-3">
+        <div class="card-header bg-transparent">
+          <div class="row align-items-center">
+            <div class="col-12 col-sm-12 col-md-6 col-lg-7">
+              <h6 class="fw-600 mb-2 mb-sm-2 mb-md-0">Training Targets</h6>
+            </div>
+            <div class="col-12 col-sm-5 col-md-4 col-lg-3">
+              <!-- <label for="Agencies" style="font-weight: 600;">List Of Agencies</label> -->
+              <!-- <select class="form-select" id="Agencies" [(ngModel)]="selectedAgencyId"
+                (change)="GetProgramsByAgency($any($event.target).value)">
+                <option value="-1"> All Agencies</option>
+                <option *ngFor="let list of agencyList" value="{{list.agencyId}}">
+                  {{list.agencyName}}</option>
+              </select> -->
+              <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>List Of Agencies</mat-label>
+                                <mat-select [(ngModel)]="selectedAgencyId" (selectionChange)="GetProgramsByAgency($any($event).value)">
+                                <mat-select-filter [array]="agencyList" [displayMember]="'agencyName'" (filteredReturn)="agencyListFiltered = $event">
+                                </mat-select-filter>
+                                <mat-option value="-1">All Agencies</mat-option>
+                                <mat-option *ngFor="let list of agencyListFiltered" [value]="list.agencyId">
+                                {{ list.agencyName }}
+                                </mat-option>
+                            </mat-select>
+                            </mat-form-field>
+            </div>
+            <div class="col-12 col-sm-6 col-md-3 col-lg-2 mt-3">
+              <!-- <div class="d-grid text-end">
+                <button type="button" data-bs-toggle="modal" data-bs-target="#addTarget" class="btn btn-lime-green" [ngClass]="{'disabled': selectedAgencyId==-1}"
+                  (click)="openTargetsModal('add')">Add Target</button>
+              </div> -->
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <!-- <div class="text-end">
+            <p class="fw-600">PT - Physical Target, FT - Financial Target</p>
+          </div> -->
+          <div class="table-container">
+            <table class="table table-bordered table-striped nowrap w-100">
+              <thead class="bg-lime-green text-white">
+                <tr>
+                  <th class="text-center"  rowspan="2">Agency Name</th>
+                   <th class="text-center"  rowspan="2">Activity </th>
+                  <th class="text-center"  rowspan="2">Overall Target</th>
+                  <ng-container *ngFor="let item of this.tableheaderList">
+                    <th  class="text-center"  colspan="5">FY{{item}}</th>
+                  </ng-container>
+                 
+              </tr>
+              <tr>
+                <ng-container *ngFor="let item of this.tableheaderList">
+                  <th class="text-center"  >Total</th>
+                  <th class="text-center" >Q1(Apr-Jun)</th>
+                  <th class="text-center" >Q2(Jul-Sep)</th>
+                  <th class="text-center" >Q3(Oct-Dec)</th>
+                  <th class="text-center" >Q4(Jan-Mar)</th>
+                </ng-container>
+                 
+  
+              </tr>
+  
+              </thead>
+              <tbody *ngIf="tableList?.length">
+                <tr *ngFor="let item of tableList; let i = index">
+                    <td>{{item?.agencyName}}</td>
+                    <td>{{item?.activityName}}</td>
+                    <td>{{item?.overallTarget}}</td>
+                 
+                  <ng-container *ngFor="let list of this.tableheaderList; let i = index;">
+                    <ng-container *ngIf="getYearData(item, list) as yearData">
+                      <td>{{yearData.total || 0}}</td>
+                      <td>{{yearData.q1 || 0}}</td>
+                      <td>{{yearData.q2 || 0}}</td>
+                      <td>{{yearData.q3 || 0}}</td>
+                      <td>{{yearData.q4 || 0}}</td>
+                    </ng-container>
+                  </ng-container>
+                  <!-- <td class="text-center">
+                    <button type="button" class="btn btn-default btn-sm text-lime-green"
+                      (click)="openTargetsModal('edit',item)">
+                      <span class="bi bi-pencil"></span>
+                    </button>
+                    <button type="button" class="btn btn-default btn-sm text-danger ms-2"
+                      (click)="deleteExpenditure(item)">
+                      <span class="bi bi-trash"></span>
+                    </button>
+                  </td> -->
+                </tr>
+  
+              </tbody>
+              <tbody *ngIf="!tableList?.length">
+                <tr>
+                  <td class="text-center" colspan="7">Data Not Available</td>
+                </tr>
+              </tbody>
+              </table>
+          </div>
+          
+          
+      
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+<div class="modal fade" id="addTarget" tabindex="-1" aria-labelledby="addTargetLabel" aria-hidden="true"
+  data-keyboard="false" data-bs-backdrop="static">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header py-2">
+        <h6 class="modal-title" id="addLocationLabel">{{this.editRow?'Edit':'Add'}} Target</h6>
+        <button type="button" class="btn-close me-1" data-bs-dismiss="modal" (click)="closeModalTargets()"
+          aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="targetsScreenForm">
+          <div class="form-floating mb-3">
+            <div class="form-floating mb-3">
+              <select class="form-select" formControlName="outcomeId">
+                <option selected value="">Select Outcome </option>
+                <option *ngFor="let val of ListOfOutCome" value="{{val?.outcomeTableId}}">
+                  {{val?.outcomeTableDisplayName}}</option>
+              </select>
+              <label>Outcome <span class="c-red"> *</span></label>
+            </div>
+            <div *ngIf="f2['outcomeId'].touched && !f2['outcomeId'].valid" class="error" style="color: red;">Outcome
+              is required</div>
+          </div>
+          <div class="form-floating mb-3">
+            <div class="form-floating mb-3">
+              <select class="form-select" formControlName="financialYear">
+                <option selected value="">Select FY </option>
+                <option *ngFor="let val of this.financialYears" value="{{val}}">{{val}}</option>
+              </select>
+              <label>Select Fy <span class="c-red"> *</span></label>
+            </div>
+            <!-- <label for="fySelect">Seelct Fy</label> -->
+          </div>
+          <div class="form-floating mb-3">
+            <div class="form-floating mb-3">
+              <input type="number" class="form-control" id="qone" formControlName="q1" placeholder="">
+              <label for="qone">Apr-Jun(Q1)</label>
+            </div>
+            <div *ngIf="f2['q1'].touched && !f2['q1'].valid && !f2['q1']?.errors?.['pattern']" class="error">Apr-Jun(Q1)
+              is required</div>
+            <div *ngIf="f2['q1'].touched && !f2['q1'].valid && f2['q1']?.errors?.['pattern']" class="error">Apr-Jun(Q1)
+              Should be Greater than Zero</div>
+          </div>
+          <div class="form-floating mb-3">
+            <div class="form-floating mb-3">
+              <input type="number" class="form-control" id="qone" formControlName="q2" placeholder="">
+              <label for="qone">Jul-Sep(Q2)</label>
+            </div>
+            <div *ngIf="f2['q2'].touched && !f2['q2'].valid && !f2['q2']?.errors?.['pattern']" class="error">Jul-Sep(Q2)
+              is required</div>
+            <div *ngIf="f2['q2'].touched && !f2['q2'].valid && f2['q2']?.errors?.['pattern']" class="error">Jul-Sep(Q2)
+              Should be Greater than Zero</div>
+          </div>
+          <div class="form-floating mb-3">
+            <div class="form-floating mb-3">
+              <input type="number" class="form-control" id="qone" formControlName="q3" placeholder="">
+              <label for="qone">Oct-Dec(Q3)</label>
+            </div>
+            <div *ngIf="f2['q3'].touched && !f2['q3'].valid && !f2['q3']?.errors?.['pattern']" class="error">Oct-Dec(Q3)
+              is required</div>
+            <div *ngIf="f2['q3'].touched && !f2['q3'].valid && f2['q3']?.errors?.['pattern']" class="error">Oct-Dec(Q3)
+              Should be Greater than Zero</div>
+          </div>
+          <div class="form-floating mb-3">
+            <div class="form-floating mb-3">
+              <input type="number" class="form-control" id="qone" formControlName="q4" placeholder="">
+              <label for="qone">Jan-Mar(Q4)</label>
+            </div>
+            <div *ngIf="f2['q4'].touched && !f2['q4'].valid && !f2['q4']?.errors?.['pattern']" class="error">Jan-Mar(Q4)
+              is required</div>
+            <div *ngIf="f2['q4'].touched && !f2['q4'].valid && f2['q4']?.errors?.['pattern']" class="error">Jan-Mar(Q4)
+              Should be Greater than Zero</div>
+          </div>
+          <div class="text-end">
+            <button type="button" class="btn btn-lime-green" data-bs-dismiss="modal" aria-label="Close"
+              [ngClass]="{'disabled': targetsScreenForm.invalid}"
+              (click)="submitTarget()">{{this.editRow?'Update':'Save'}}</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="exampleModalDeleteProgram" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalDeleteLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalDeleteLabel">Delete Physical Targets</h5>
+        <button type="button" class="btn-close" (click)="closeModalDelete()" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete Physical Targets?.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeModalDelete()">Close</button>
+        <button type="button" class="btn btn-lime-green"
+          (click)="ConfirmdeleteTargets(deletePhysicalId)">Confirm</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -16,10 +16,10 @@
                                   <mat-form-field appearance="outline" class="w-100">
                             <mat-label>List Of Agencies</mat-label>
                                 <mat-select  (selectionChange)="getProgramsByAgency($event.value)">
-                                <mat-select-filter [array]="agencyList" [displayMember]="'agencyName'" (filteredReturn)="agencyProgramListFiltered = $event">
+                                <mat-select-filter [array]="agencyList" [displayMember]="'agencyName'" (filteredReturn)="agencyListFiltered = $event">
                                 </mat-select-filter>
                                 <!-- <mat-option value="" disabled>Select Program</mat-option> -->
-                                <mat-option *ngFor="let list of agencyProgramListFiltered" [value]="list.agencyId">
+                                <mat-option *ngFor="let list of agencyListFiltered" [value]="list.agencyId">
                                 {{ list.agencyName }}
                                 </mat-option>
                             </mat-select>
@@ -75,19 +75,43 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
-                                     <!-- <div class="col-12 col-sm-12 col-md-6 col-lg-7">
+                                <div class="row mt-2">
+                                    <div class="col-12 col-sm-12 col-md-2 col-lg-2">
+                                         <label class="fw-bold fs-md mb-1 mb-sm-1 mb-md-0">Program Monitoring Rating</label>
+
+                                    </div>
+                                     <div class="col-12 col-sm-12 col-md-2 col-lg-2">
+                                       
+                                         <app-star-rating [percentage]="PrigramSummaryData?.monitoringRating"></app-star-rating>
+                                    </div>
+                                     <div class="col-12 col-sm-12 col-md-2 col-lg-2">
+                                         <label class="fw-bold fs-md mb-1 mb-sm-1 mb-md-0">Start Date</label>
+
+                                    </div>
+                                     <div class="col-12 col-sm-12 col-md-2 col-lg-2">
+                                        <label class="fs-md mb-1 mb-sm-1 mb-md-0">{{PrigramSummaryData?.startDate}}</label>
+
+                                    </div>
+                                     <div class="col-12 col-sm-12 col-md-2 col-lg-2">
+                                        <label class="fw-bold fs-md mb-1 mb-sm-1 mb-md-0">End Date</label>
+
+                                    </div>
+                                     <div class="col-12 col-sm-12 col-md-2 col-lg-2">
+                                         <label class="fs-md mb-0">{{PrigramSummaryData?.endDate}}</label>
+
+                                    </div>
+                                    <!-- <div class="col-12 col-sm-12 col-md-4 col-lg-7">
                                         <div class="row">
                                             <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                                                 <label class="fw-bold fs-md mb-1 mb-sm-1 mb-md-0">Program Monitoring Rating</label>
-                                                 
+                                                
                                             </div>
                                             <div class="col-12 col-sm-12 col-md-9 col-lg-8">
-                                                <app-star-rating [(rating)]="currentRating" (ratingChange)="onRatingChange($event)"></app-star-rating>
+                                               <app-star-rating [percentage]="PrigramSummaryData?.monitoringRating"></app-star-rating>
                                             </div>
                                         </div>
-                                    </div> -->
-                                    <div class="col-12 col-sm-12 col-md-6 col-lg-7">
+                                    </div>
+                                    <div class="col-12 col-sm-12 col-md-4 col-lg-7">
                                         <div class="row">
                                             <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                                                 <label class="fw-bold fs-md mb-1 mb-sm-1 mb-md-0">Start Date</label>
@@ -98,7 +122,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-12 col-sm-12 col-md-6 col-lg-5">
+                                    <div class="col-12 col-sm-12 col-md-4 col-lg-5">
                                         <div class="row">
                                             <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                                                 <label class="fw-bold fs-md mb-1 mb-sm-1 mb-md-0">End Date</label>
@@ -107,7 +131,7 @@
                                                 <label class="fs-md mb-0">{{PrigramSummaryData?.endDate}}</label>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                             <div class="col-12 col-sm-12 col-md-4 col-lg-2">

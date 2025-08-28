@@ -49,24 +49,24 @@ export class LoginComponent implements OnInit {
             .subscribe({
                 next: (res) => {
                     //this.router.navigateByUrl('/program-creation');
-                    if (res.status === 200) {
-                        // get return url from query parameters or default to home page
-                        this.loading = false;
-                        if(res.data.userRole === Role.Admin){
-                            this.router.navigateByUrl('/veiw-program');
-                        }else if(res.data.userRole === Role.AGENCY_MANAGER
-                            || res.data.userRole === Role.AGENCY_EXECUTOR
+                    this.loading = false;
+                       
+                            if(res?.data.userRole === Role.Admin){
+                                if(res?.data?.userId=='districts@gmail.com'){
+                                this.router.navigateByUrl('/ViewPrograms-district-wise'); 
+                                }
+                                else{
+                                    this.router.navigateByUrl('/veiw-program');
+                                }     
+                        }
+                        else if(res?.data.userRole === Role.AGENCY_MANAGER
+                            || res?.data.userRole === Role.AGENCY_EXECUTOR
                         ){
                             this.router.navigateByUrl('/program-creation');
-                        }else if(res.data.userRole === Role.CALL_CENTER
+                        }else if(res?.data.userRole === Role.CALL_CENTER
                         ) {
                             this.router.navigateByUrl('/global-dashboard');
                         }
-                        
-                    } else if (res.status === 400) {
-                        this.error = res.message ? res.message : 'Invalid credentials. Please try again.';
-                        this.loading = false;
-                    }
                 },
                 error: error => {
                     this.error = 'Server Error. Please try again later.';
