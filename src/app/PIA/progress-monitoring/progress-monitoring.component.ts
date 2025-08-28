@@ -38,8 +38,15 @@ localStorageData: any;
       this._commonService.getDataByUrl(APIS.masterList.agencyList).subscribe((res: any) => {
         this.agencyList = res.data;
         this.agencyListFiltered=this.agencyList;
-        this.selectedAgencyId = res.data[0].agencyId;
+        if(Number(sessionStorage.getItem('selectedAgencyIdByProgressMonitoring'))){
+          this.selectedAgencyId=Number(sessionStorage.getItem('selectedAgencyIdByProgressMonitoring'))
+          this.GetProgramsByAgency(this.selectedAgencyId);
+        }
+        else{
+           this.selectedAgencyId = res.data[0].agencyId;
         this.GetProgramsByAgency(this.selectedAgencyId);
+        }
+       
       }, (error) => {
         // this.toastrService.error(error.message);
       });
@@ -73,6 +80,7 @@ localStorageData: any;
           });
         }
         redirectAchievements(){
+          sessionStorage.setItem('selectedAgencyIdByProgressMonitoring',this.selectedAgencyId)
           this.router.navigate(['/Training-Non-trainingAchievements'])
         }
          redirectPrograms(){

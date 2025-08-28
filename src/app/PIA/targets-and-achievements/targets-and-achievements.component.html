@@ -18,7 +18,7 @@
                 <mat-form-field appearance="outline" class="w-100">
                             <mat-label>List Of Agencies</mat-label>
                                 <mat-select [(ngModel)]="selectedAgencyId" (selectionChange)="GetProgramsByAgency($any($event).value)">
-                                <mat-select-filter [array]="agencyList" [displayMember]="'agencyName'" (filteredReturn)="agencyListFiltered = $event">
+                                <mat-select-filter [array]="agencyList"  (filteredReturn)="agencyListFiltered = $event">
                                 </mat-select-filter>
                                 <!-- <mat-option value="-1" >All Agencies</mat-option> -->
                                 <mat-option *ngFor="let list of agencyListFiltered" [value]="list.agencyId">
@@ -54,90 +54,75 @@
             </div>
           </div>
           <div class="card-body mb-3">
+            <button class="btn btn-secondary mb-3" type="button" (click)="goBack()">
+              <i class="bi bi-arrow-left"></i> Back
+            </button>
             <h6 class="fw-bold mb-3">Training Targets</h6>
             <!--  id=view-physical-table  -->
             <div class="table-container">
-              <table  class="table table-bordered table-striped nowrap w-100 fsize-10">
-                <thead class="bg-lime-green text-white">
-                  <tr>
-                    <th class="text-center"  rowspan="4">Activity Name</th>
-                    <ng-container *ngFor="let item of this.tableheaderList">
-                      <th  class="text-center"  colspan="20">FY{{item}}</th>
-                    </ng-container>
-                   
-                </tr>
-                <tr>
-                  <ng-container *ngFor="let item of this.tableheaderList">
-                    <th class="text-center" rowspan="1" colspan="4" >Grand Total</th>
-                    <th class="text-center"rowspan="1"  colspan="4" >Q1(Apr-Jun)</th>
-                    <th class="text-center" rowspan="1" colspan="4" >Q2(Jul-Sep)</th>
-                    <th class="text-center" rowspan="1" colspan="4" >Q3(Oct-Dec)</th>
-                    <th class="text-center" rowspan="1"  colspan="4" >Q4(Jan-Mar)</th>
-                  </ng-container>
-                 
-                   
-    
-                </tr>
-                <tr> <ng-container *ngFor="let item of [1,2,3,4,5]">
-                  <th class="text-center"  rowspan="1" colspan="2">Physical</th>
-                  <th class="text-center" rowspan="1" colspan="2" >Financial</th>
-                </ng-container></tr>
-                <tr> <ng-container *ngFor="let item of [1,2,3,4,5,6,7,8,9,10]">
-                  <th class="text-center" >Target</th>
-                  <th class="text-center" >Achieved</th>
-                </ng-container></tr>
-                </thead>
-                <tbody >
-                  <tr *ngFor="let item of tableList; let i = index">
-                    <td>{{item?.activityName}}</td>
-                    <td>{{item?.totalTarget}}</td>
-                    <td>{{item?.totalAchieved}}</td>
-                    <td>{{item?.totalFinancialTarget}}</td>
-                    <td>{{item?.totalFinancialAchieved}}</td>
-                    <td>{{item?.trainingTargetQ1}}</td>
-                    <td>{{item?.achievedQ1}}</td>
-                    <td>{{item?.financialTargetQ1}}</td>
-                    <td>{{item?.financialAchievedQ1}}</td>
-                    <td>{{item?.trainingTargetQ2}}</td>
-                    <td>{{item?.achievedQ2}}</td>
-                    <td>{{item?.financialTargetQ2}}</td>
-                    <td>{{item?.financialAchievedQ2}}</td>
-                    <td>{{item?.trainingTargetQ3}}</td>
-                    <td>{{item?.achievedQ3}}</td>
-                    <td>{{item?.financialTargetQ3}}</td>
-                    <td>{{item?.financialAchievedQ3}}</td>
-                    <td>{{item?.trainingTargetQ4}}</td>
-                    <td>{{item?.achievedQ4}}</td>
-                    <td>{{item?.financialTargetQ4}}</td>
-                    <td>{{item?.financialAchievedQ4}}</td>
-                    <!-- <ng-container *ngFor="let list of this.tableheaderList; let i = index;">
-                      <ng-container *ngIf="getYearData(item, list) as yearData">
-                        <td>{{yearData.total || 0}}</td>
-                        <td>{{yearData.q1 || 0}}</td>
-                        <td>{{yearData.q2 || 0}}</td>
-                        <td>{{yearData.q3 || 0}}</td>
-                        <td>{{yearData.q4 || 0}}</td>
+              <div style="overflow-x: auto;">
+                <table  class="table table-bordered table-striped nowrap w-100 fsize-10">
+                  <thead class="bg-lime-green text-white">
+                    <tr>
+                      <th class="text-center"  rowspan="4">Activity Name</th>
+                      <ng-container *ngFor="let item of this.tableheaderList">
+                        <th  class="text-center"  colspan="20">FY{{item}}</th>
                       </ng-container>
-                    </ng-container> -->
-                    <!-- <td class="text-center">
-                      <button type="button" class="btn btn-default btn-sm text-lime-green"
-                        (click)="openTargetsModal('edit',item)">
-                        <span class="bi bi-pencil"></span>
-                      </button>
-                      <button type="button" class="btn btn-default btn-sm text-danger ms-2"
-                        (click)="deleteExpenditure(item)">
-                        <span class="bi bi-trash"></span>
-                      </button>
-                    </td> -->
-                  </tr>
-                </tbody>
-                <tbody *ngIf="!tableList?.length">
-                  <tr>
-                    <td class="text-center" colspan="10">Data Not Available</td>
-                  </tr>
-                  
-                </tbody>
+                    </tr>
+                    <tr>
+                      <ng-container *ngFor="let item of this.tableheaderList">
+                        <th class="text-center" rowspan="1" colspan="4" >Grand Total</th>
+                        <th class="text-center"rowspan="1"  colspan="4" >Q1(Apr-Jun)</th>
+                        <th class="text-center" rowspan="1" colspan="4" >Q2(Jul-Sep)</th>
+                        <th class="text-center" rowspan="1" colspan="4" >Q3(Oct-Dec)</th>
+                        <th class="text-center" rowspan="1"  colspan="4" >Q4(Jan-Mar)</th>
+                      </ng-container>
+                    </tr>
+                    <tr>
+                      <ng-container *ngFor="let item of [1,2,3,4,5]">
+                        <th class="text-center"  rowspan="1" colspan="2">Physical</th>
+                        <th class="text-center" rowspan="1" colspan="2" >Financial</th>
+                      </ng-container>
+                    </tr>
+                    <tr>
+                      <ng-container *ngFor="let item of [1,2,3,4,5,6,7,8,9,10]">
+                        <th class="text-center" >Target</th>
+                        <th class="text-center" >Achieved</th>
+                      </ng-container>
+                    </tr>
+                  </thead>
+                  <tbody >
+                    <tr *ngFor="let item of tableList; let i = index">
+                      <td>{{item?.activityName}}</td>
+                      <td>{{item?.totalTarget}}</td>
+                      <td>{{item?.totalAchieved}}</td>
+                      <td>{{item?.totalFinancialTarget}}</td>
+                      <td>{{item?.totalFinancialAchieved}}</td>
+                      <td>{{item?.trainingTargetQ1}}</td>
+                      <td>{{item?.achievedQ1}}</td>
+                      <td>{{item?.financialTargetQ1}}</td>
+                      <td>{{item?.financialAchievedQ1}}</td>
+                      <td>{{item?.trainingTargetQ2}}</td>
+                      <td>{{item?.achievedQ2}}</td>
+                      <td>{{item?.financialTargetQ2}}</td>
+                      <td>{{item?.financialAchievedQ2}}</td>
+                      <td>{{item?.trainingTargetQ3}}</td>
+                      <td>{{item?.achievedQ3}}</td>
+                      <td>{{item?.financialTargetQ3}}</td>
+                      <td>{{item?.financialAchievedQ3}}</td>
+                      <td>{{item?.trainingTargetQ4}}</td>
+                      <td>{{item?.achievedQ4}}</td>
+                      <td>{{item?.financialTargetQ4}}</td>
+                      <td>{{item?.financialAchievedQ4}}</td>
+                    </tr>
+                  </tbody>
+                  <tbody *ngIf="!tableList?.length">
+                    <tr>
+                      <td class="text-center" colspan="10">Data Not Available</td>
+                    </tr>
+                  </tbody>
                 </table>
+              </div>
             </div>
           
             
@@ -147,6 +132,7 @@
             <h6 class="fw-bold mb-3">Non Training Targets</h6>
             <!--  id=view-physical-table  -->
             <div class="table-container">
+                <div style="overflow-x: auto;">
               <table  class="table table-bordered table-striped nowrap w-100 fsize-10">
                 <thead class="bg-lime-green text-white">
                   <tr>
@@ -228,6 +214,7 @@
                   
                 </tbody>
                 </table>
+                </div>
             </div>
           
             
