@@ -1,4 +1,4 @@
-﻿<!-- <div class="col-md-6 offset-md-3 mt-5">    
+﻿<!-- <div class="col-md-6 offset-md-3 mt-5">
     <div class="card">
         <h4 class="card-header">Skill Development</h4>
         <div class="card-body">
@@ -34,7 +34,7 @@
                 <div class="login-card card p-3">
                     <div class="d-flex align-items-center justify-content-center mb-4">
                         <div class="logo-icon bg-white rounded-pill shadow d-flex align-items-center justify-content-center">
-                            <img src="../../RAMP1/assets/img/logo.png" alt="" class="img-fluid">
+                            <img src="../../assets/img/logo.png" alt="" class="img-fluid">
                         </div>
                     </div>
 
@@ -43,7 +43,7 @@
                         <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
                             <div class="row">
                                 <div class="col-12">
-                                    <div class="mb-3">                                        
+                                    <div class="mb-3">
                                         <input type="text" formControlName="username" placeholder="User Name" autofocus class="form-control form-control-lg" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
                                         <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
                                             <div *ngIf="f.username.errors.required">Username is required</div>
@@ -51,9 +51,9 @@
                                     </div>
                                 </div>
                                 <div class="col-12">
-                                    <div class="mb-3 login-password">          
+                                    <div class="mb-3 login-password">
                                     <i *ngIf="passwordshowConfirm" class="bi bi-eye password-key-login"   (click)="passwordshowConfirm = !passwordshowConfirm"></i>
-                                        <i *ngIf="!passwordshowConfirm" class="bi bi-eye-slash password-key-login"  (click)="passwordshowConfirm = !passwordshowConfirm"></i>                              
+                                        <i *ngIf="!passwordshowConfirm" class="bi bi-eye-slash password-key-login"  (click)="passwordshowConfirm = !passwordshowConfirm"></i>
                                         <input [type]="passwordshowConfirm ? 'text' : 'password'"  formControlName="password" placeholder="Password" class="form-control form-control-lg" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
                                         <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
                                             <div *ngIf="f.password.errors.required">Password is required</div>

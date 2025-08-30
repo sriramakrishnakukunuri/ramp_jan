@@ -4,7 +4,7 @@
             <img src="https://avatars.githubusercontent.com/u/57286889?s=280&v=4" style="height: 79px;">
         </div>
         <div style="float: right;">
-            
+
             <button type="button" class="btn btn-orange" (click)="logout()">Logout</button>
         </div>
     </nav>
@@ -17,21 +17,21 @@
         <div class="d-flex align-items-center">
           <ng-container *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]">
              <a class="navbar-brand me-2" href="#"  *ngIf="this.user?.agencyName=='ALEAP'">
-            <img src="../RAMP1/assets/img/aleapLogo.jpeg" alt="Aleap Logo" class="img-fluid" style="height: 47px; width: 100px;">
+            <img src="../assets/img/aleapLogo.jpeg" alt="Aleap Logo" class="img-fluid" style="height: 47px; width: 100px;">
           </a>
           </ng-container>
          <ng-container *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR,Role.CALL_CENTER,Role.Admin]">
-          
+
           <a class="navbar-brand" href="#"   *ngIf="this.user?.agencyName!='ALEAP'">
-            <img src="../RAMP1/assets/img/logo.png" alt="Logo" class="img-fluid" style="height: 45px; width: 45px;">
+            <img src="../assets/img/logo.png" alt="Logo" class="img-fluid" style="height: 45px; width: 45px;">
           </a>
            <a class="navbar-brand me-2" href="#"   *ngIf="this.user?.agencyName!='ALEAP'">
-            <img src="../RAMP1/assets/img/Ramp final_logo.png" alt="Ramp Final Logo" class="img-fluid" style="height: 45px; width: 36px;">
+            <img src="../assets/img/Ramp final_logo.png" alt="Ramp Final Logo" class="img-fluid" style="height: 45px; width: 36px;">
           </a>
-         
+
          </ng-container>
-          <img src="../RAMP1/assets/img/GT Logo.png" alt="GT Logo" class="footer-logo" />
-         
+          <img src="../assets/img/GT Logo.png" alt="GT Logo" class="footer-logo" />
+
         </div>
         <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasNavbar2"
           aria-labelledby="offcanvasNavbar2Label">
@@ -43,8 +43,8 @@
           <div class="offcanvas-body">
             <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
 
-          
-<!-- 
+
+<!--
               <li class="nav-item"
                 *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR,Role.CALL_CENTER,Role.Admin]">
                 <a class="nav-link" routerLink="/global-dashboard" routerLinkActive="active" id="dropdown3"
@@ -101,10 +101,10 @@
                   <span>Finance</span> <span class="bi bi-chevron-down"></span>
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="homeDropdown">
-                
+
                       <li><a class="dropdown-item" routerLink="/expenditure-verification" routerLinkActive="active">Expenditure Verification
                          </a></li>
-              
+
                 </ul>
               </li>
               <li class="nav-item" *appHasRole="[Role.Admin]">
@@ -195,10 +195,10 @@
                   <span>Finance</span> <span class="bi bi-chevron-down"></span>
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="homeDropdown">
-                
+
                       <li><a class="dropdown-item" routerLink="/expenditure-verification" routerLinkActive="active">Expenditure Verification
                          </a></li>
-              
+
                 </ul>
               </li>
 
@@ -221,7 +221,7 @@
                   routerLinkActive="active" aria-expanded="false">
                   <span>Masters List</span>
                 </a>
-              </li> --> 
+              </li> -->
 
 
               <!-- <li class="nav-item dropdown" *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]">
@@ -290,9 +290,9 @@
               <!-- new tab code starts here This is to handle the submenu toggle functionality  || 27th july 2025 -->
               <li class="nav-item dropdown" style="position: relative;">
                 <a class="nav-link" href="#"  style="cursor:pointer;" data-bs-toggle="dropdown">
-                  <img src="../RAMP1/assets/img/9-dots.png" style="width: 30px;" alt="menu" />
+                  <img src="../assets/img/9-dots.png" style="width: 30px;" alt="menu" />
                 </a>
-                <ul class="dropdown-menu shadow" 
+                <ul class="dropdown-menu shadow"
                   style="min-width:220px; max-width:260px; box-shadow:0 4px 16px rgba(0,0,0,0.13); padding: 8px 0; border-radius: 8px; right:-100%; top:100%;">
                   <!-- Dashboard -->
                   <li *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR,Role.CALL_CENTER,Role.Admin]">
@@ -328,7 +328,7 @@
                     <a class="dropdown-item" routerLink="/training-targets" routerLinkActive="active">Training Targets</a>
                   </li>
                   <!-- non training targets -->
-                  
+
                    <li *appHasRole="[Role.Admin]">
                     <a class="dropdown-item" routerLink="/progress-monitoring" routerLinkActive="active">Progress Monitoring</a>
                   </li>
@@ -476,7 +476,7 @@
                     <a class="dropdown-item" routerLink="/non-training-targets" routerLinkActive="active">Non Training Targets</a>
                   </li>
                   </ng-container>
-                  
+
                   <!-- Masters List (Agency) -->
                   <li *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]">
                     <a class="dropdown-item" routerLink="/view-table-organization" routerLinkActive="active">Masters List</a>
@@ -563,7 +563,7 @@
                       class="bi bi-person fs-5 me-2"></span> My Profile</a></li>
                 <li><a class="dropdown-item" routerLink="/password-settings" routerLinkActive="active"><span
                       class="bi bi-key fs-5 me-2"></span> Change Password</a></li>
-                <li *appHasRole="[Role.Admin]"><a class="dropdown-item" routerLink="/user-registration" 
+                <li *appHasRole="[Role.Admin]"><a class="dropdown-item" routerLink="/user-registration"
                     routerLinkActive="active"><span class="bi bi-person-circle fs-5 me-2"></span> Register User</a></li>
                 <li><a class="dropdown-item" (click)="logout()"><span class="bi bi-box-arrow-right fs-5 me-2"></span>
                     Logout</a></li>
@@ -573,7 +573,7 @@
                       class="bi bi-person fs-5 me-2"></span> My Profile</a></li>
                 <li><a class="dropdown-item" routerLink="/password-settings" routerLinkActive="active"><span
                       class="bi bi-key fs-5 me-2"></span> Change Password</a></li>
-                <li *appHasRole="[Role.Admin]"><a class="dropdown-item" routerLink="/user-registration" 
+                <li *appHasRole="[Role.Admin]"><a class="dropdown-item" routerLink="/user-registration"
                     routerLinkActive="active"><span class="bi bi-person-circle fs-5 me-2"></span> Register User</a></li> -->
                 <li><a class="dropdown-item" (click)="logout()"><span class="bi bi-box-arrow-right fs-5 me-2"></span>
                     Logout</a>
