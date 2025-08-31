@@ -61,6 +61,7 @@ import { PaginationComponent } from './seperate-components/multiselect-dropdown/
 import { MultiLevelDropdownComponent } from './seperate-components/multiselect-dropdown/multi-level-dropdown/multi-level-dropdown.component';
 import { DicApprovalComponent } from './tihcl-dic/dic-approval/dic-approval.component';
 import { ViewApplicationsComponent } from './tihcl-coi/view-applications/view-applications.component';
+import { LoaderComponent } from './common_components/loader/loader.component';
 
 @NgModule({
     imports: [
@@ -103,7 +104,17 @@ import { ViewApplicationsComponent } from './tihcl-coi/view-applications/view-ap
         MsmeCouncellorRegisterationComponent,
         ViewParticipantComponent,
         GetOutcomeComponent,
-        ViewMsmeCouncellorDataComponent, ProgramSessionsComponent, LoanApplicationFormComponent, Level1ApprovalComponent, Level2ApprovalComponent, Level3ApprovalComponent, LoanAppilicationNewComponent, MultiselectDropdownComponent, NewApplicationExecutiveComponent, PendingApplicationExecutiveComponent, ExecutiveWorkflowComponent, PreliminarAssessmentComponent, ManagerApprovalComponent, UnitVisitComponent, DiagnosticReportComponent, DiConcernLetterComponent, RampChecklistComponent, PrimaryNocComponent, SanctionedDetailsComponent, DisbursementDetailsComponent, PaginationComponent, MultiLevelDropdownComponent, DicApprovalComponent, ViewApplicationsComponent,
+        ViewMsmeCouncellorDataComponent, ProgramSessionsComponent, LoanApplicationFormComponent, 
+        Level1ApprovalComponent, Level2ApprovalComponent, Level3ApprovalComponent, LoanAppilicationNewComponent,
+        MultiselectDropdownComponent, NewApplicationExecutiveComponent, PendingApplicationExecutiveComponent,
+        ExecutiveWorkflowComponent, PreliminarAssessmentComponent,
+        ManagerApprovalComponent, UnitVisitComponent, DiagnosticReportComponent,
+        DiConcernLetterComponent, RampChecklistComponent, PrimaryNocComponent, SanctionedDetailsComponent,
+        DisbursementDetailsComponent, PaginationComponent, MultiLevelDropdownComponent, DicApprovalComponent, ViewApplicationsComponent,
+        LoaderComponent,
+    ],
+    exports:[
+        LoaderComponent
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

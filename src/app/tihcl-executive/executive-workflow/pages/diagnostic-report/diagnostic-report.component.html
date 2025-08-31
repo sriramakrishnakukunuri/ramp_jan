@@ -49,7 +49,7 @@
                        <div class="col-12 col-sm-12 col-md-6 col-lg-4">
                          <div class="form-floating mb-3">
                            <input type="text" class="form-control" id="nameInput" placeholder="" formControlName="nameOfUnit">
-                           <label for="nameInput">Name of the Unit</label>
+                           <label for="nameInput">Name of the Unit <span class="text-danger">*</span></label>
                            <div
                              *ngIf="basicDetails.get('nameOfUnit')?.invalid && (basicDetails.get('nameOfUnit')?.dirty || basicDetails.get('nameOfUnit')?.touched)"
                              class="text-danger small">
@@ -61,7 +61,7 @@
                          <div class="form-floating mb-3">
                            <input type="text" class="form-control" id="contactInput" placeholder=""
                              formControlName="contactNo">
-                           <label for="contactInput">Contact No.</label>
+                           <label for="contactInput">Contact No. <span class="text-danger">*</span></label>
                            <div
                              *ngIf="basicDetails.get('contactNo')?.invalid && (basicDetails.get('contactNo')?.dirty || basicDetails.get('contactNo')?.touched)"
                              class="text-danger small">
@@ -88,7 +88,7 @@
                          <div class="form-floating mb-3">
                            <input type="text" class="form-control" id="productInput" placeholder=""
                              formControlName="productManufactured">
-                           <label for="productInput">Product Manufactured</label>
+                           <label for="productInput">Product Manufactured <span class="text-danger">*</span></label>
                            <div
                              *ngIf="basicDetails.get('productManufactured')?.invalid && (basicDetails.get('productManufactured')?.dirty || basicDetails.get('productManufactured')?.touched)"
                              class="text-danger small">
@@ -100,7 +100,7 @@
                          <div class="form-floating mb-3">
                            <input type="text" class="form-control" id="demandInput" placeholder=""
                              formControlName="demandForTheProduct">
-                           <label for="demandInput">Demand For The Product</label>
+                           <label for="demandInput">Demand For The Product <span class="text-danger">*</span></label>
                            <div
                              *ngIf="basicDetails.get('demandForTheProduct')?.invalid && (basicDetails.get('demandForTheProduct')?.dirty || basicDetails.get('demandForTheProduct')?.touched)"
                              class="text-danger small">
@@ -417,7 +417,7 @@
                              <div class="form-floating mb-3">
                                <input type="text" class="form-control" id="buyername" placeholder=""
                                  formControlName="buyerName">
-                               <label for="buyername">Buyer Name</label>
+                               <label for="buyername">Buyer Name <span class="text-danger">*</span></label>
                                <div
                                  *ngIf="buyerForm.get('buyerName')?.invalid && (buyerForm.get('buyerName')?.dirty || buyerForm.get('buyerName')?.touched)"
                                  class="text-danger small">
@@ -441,7 +441,7 @@
                              <div class="form-floating mb-3">
                                <input type="number" class="form-control" id="amt" placeholder=""
                                  formControlName="amount" min="0">
-                               <label for="amt">Amount</label>
+                               <label for="amt">Amount <span class="text-danger">*</span></label>
                                <div
                                  *ngIf="buyerForm.get('amount')?.invalid && (buyerForm.get('amount')?.dirty || buyerForm.get('amount')?.touched)"
                                  class="text-danger small">
@@ -490,7 +490,7 @@
                              <div class="form-floating mb-3">
                                <input type="text" class="form-control" id="sellername" placeholder=""
                                  formControlName="sellerName">
-                               <label for="sellername">Seller Name</label>
+                               <label for="sellername">Seller Name <span class="text-danger">*</span></label>
                                <div
                                  *ngIf="supplierForm.get('sellerName')?.invalid && (supplierForm.get('sellerName')?.dirty || supplierForm.get('sellerName')?.touched)"
                                  class="text-danger small">
@@ -514,7 +514,7 @@
                              <div class="form-floating mb-3">
                                <input type="number" class="form-control" id="amtSeller" placeholder=""
                                  formControlName="amount" min="0">
-                               <label for="amtSeller">Amount</label>
+                               <label for="amtSeller">Amount <span class="text-danger">*</span></label>
                                <div
                                  *ngIf="supplierForm.get('amount')?.invalid && (supplierForm.get('amount')?.dirty || supplierForm.get('amount')?.touched)"
                                  class="text-danger small">
@@ -728,7 +728,7 @@
                              <div class="form-floating mb-3">
                                <input type="text" class="form-control" id="toReceived" placeholder=""
                                  formControlName="toBeReceivedFrom">
-                               <label for="toReceived">To be received from</label>
+                               <label for="toReceived">To be received from <span class="text-danger">*</span></label>
                                <div
                                  *ngIf="receivableForm.get('toBeReceivedFrom')?.invalid && (receivableForm.get('toBeReceivedFrom')?.dirty || receivableForm.get('toBeReceivedFrom')?.touched)"
                                  class="text-danger small">
@@ -752,7 +752,7 @@
                              <div class="form-floating mb-3">
                                <input type="number" class="form-control" id="receivableAmount" placeholder=""
                                  formControlName="receivableAmount" min="0">
-                               <label for="receivableAmount">Receivable Amount</label>
+                               <label for="receivableAmount">Receivable Amount <span class="text-danger">*</span></label>
                                <div
                                  *ngIf="receivableForm.get('receivableAmount')?.invalid && (receivableForm.get('receivableAmount')?.dirty || receivableForm.get('receivableAmount')?.touched)"
                                  class="text-danger small">
@@ -795,7 +795,7 @@
                              <div class="form-floating mb-3">
                                <input type="text" class="form-control" id="toPaid" placeholder=""
                                  formControlName="toBePaidTo">
-                               <label for="toPaid">To be Paid to</label>
+                               <label for="toPaid">To be Paid to <span class="text-danger">*</span></label>
                                <div
                                  *ngIf="payableForm.get('toBePaidTo')?.invalid && (payableForm.get('toBePaidTo')?.dirty || payableForm.get('toBePaidTo')?.touched)"
                                  class="text-danger small">
@@ -819,7 +819,7 @@
                              <div class="form-floating mb-3">
                                <input type="number" class="form-control" id="payablesAmount" placeholder=""
                                  formControlName="payableAmount" min="0">
-                               <label for="payablesAmount">Payable Amount</label>
+                               <label for="payablesAmount">Payable Amount <span class="text-danger">*</span></label>
                                <div
                                  *ngIf="payableForm.get('payableAmount')?.invalid && (payableForm.get('payableAmount')?.dirty || payableForm.get('payableAmount')?.touched)"
                                  class="text-danger small">
@@ -1223,7 +1223,7 @@
                              <div class="form-floating">
                                <input type="text" class="form-control" id="modalCustomerName"
                                  formControlName="nameOfTheBuyer">
-                               <label for="modalCustomerName"> Name Of The Buyer</label>
+                               <label for="modalCustomerName">Name Of The Buyer <span class="text-danger">*</span></label>
                              </div>
                            </div>
                          </div>
@@ -1233,7 +1233,7 @@
                              <div class="form-floating">
                                <input type="number" class="form-control" id="modalOrderValue"
                                  formControlName="orderValue" min="0">
-                               <label for="modalOrderValue">Order Value</label>
+                               <label for="modalOrderValue">Order Value <span class="text-danger">*</span></label>
                              </div>
                            </div>
                          </div>
@@ -1279,7 +1279,7 @@
                            <div class="col-md-12">
                              <div class="form-floating">
                                <input type="text" class="form-control" id="modalLoanSource" formControlName="source">
-                               <label for="modalLoanSource">Source</label>
+                               <label for="modalLoanSource">Source <span class="text-danger">*</span></label>
                              </div>
                            </div>
                          </div>
@@ -1289,7 +1289,7 @@
                              <div class="form-floating">
                                <input type="number" class="form-control" id="modalLoanAmount"
                                  formControlName="loanAmount" min="0">
-                               <label for="modalLoanAmount">Loan Amount</label>
+                               <label for="modalLoanAmount">Loan Amount <span class="text-danger">*</span></label>
                              </div>
                            </div>
                          </div>
@@ -1299,7 +1299,7 @@
                              <div class="form-floating">
                                <input type="date" class="form-control" id="modalSinceWhen" formControlName="sinceWhen"
                                  max="{{ today | date:'yyyy-MM-dd' }}">
-                               <label for="modalSinceWhen">Since when/Sanctioned date</label>
+                               <label for="modalSinceWhen">Since when/Sanctioned date <span class="text-danger">*</span></label>
                              </div>
                            </div>
                          </div>
@@ -1491,7 +1491,7 @@
                              <div class="form-floating">
                                <input type="date" class="form-control" id="reportDate" formControlName="reportDate"
                                  max="{{ today | date:'yyyy-MM-dd' }}">
-                               <label for="reportDate">Report Date</label>
+                               <label for="reportDate">Report Date <span class="text-danger">*</span></label>
                                <div
                                  *ngIf="balanceSheetsForm.get('reportDate')?.invalid && balanceSheetsForm.get('reportDate')?.touched"
                                  class="text-danger small">
@@ -1507,7 +1507,7 @@
                                <select class="form-select" id="financialYear" formControlName="financialYear">
                                  <option *ngFor="let val of this.financialYears" value="{{val}}">{{val}}</option>
                                </select>
-                               <label for="financialYear" style="font-weight: 600;">Financial Year</label>
+                               <label for="financialYear" style="font-weight: 600;">Financial Year <span class="text-danger">*</span></label>
                                <div
                                  *ngIf="balanceSheetsForm.get('financialYear')?.invalid && balanceSheetsForm.get('financialYear')?.touched"
                                  class="text-danger small">
@@ -1795,7 +1795,7 @@
              <div class="col-12 ">
                <div class="form-floating mb-3">
                  <input type="text" class="form-control" id="shareholderName" formControlName="nameOfTheShareholder">
-                 <label for="holderName">Share Holder Name</label>
+                 <label for="holderName">Share Holder Name <span class="text-danger">*</span></label>
                </div>
                <div
                  *ngIf="shareholderForm.get('nameOfTheShareholder')?.invalid && (shareholderForm.get('nameOfTheShareholder')?.dirty || shareholderForm.get('nameOfTheShareholder')?.touched)"
@@ -1806,7 +1806,7 @@
              <div class="col-12">
                <div class="form-floating mb-3">
                  <input type="text" class="form-control" id="shareholderMobile" formControlName="position">
-                 <label for="holderMobile">position.</label>
+                 <label for="holderMobile">Position <span class="text-danger">*</span></label>
                </div>
                <div
                  *ngIf="shareholderForm.get('position')?.invalid && (shareholderForm.get('position')?.dirty || shareholderForm.get('position')?.touched)"
@@ -1817,7 +1817,7 @@
              <div class="col-12">
                <div class="form-floating mb-3">
                  <input type="number" class="form-control" id="shareholderShares" formControlName="shareholdingPercentage">
-                 <label for="holderShares">Percentage of Shares</label>
+                 <label for="holderShares">Percentage of Shares <span class="text-danger">*</span></label>
                </div>
                <div
                  *ngIf="shareholderForm.get('shareholdingPercentage')?.invalid && (shareholderForm.get('shareholdingPercentage')?.dirty || shareholderForm.get('shareholdingPercentage')?.touched)"
@@ -1858,7 +1858,7 @@
              <div class="col-12 ">
                <div class="form-floating mb-3">
                  <input type="text" class="form-control" id="shareholderName" formControlName="nameOfThePartner">
-                 <label for="holderName">Name Of The Partner</label>
+                 <label for="holderName">Name Of The Partner <span class="text-danger">*</span></label>
                </div>
                <div
                  *ngIf="partnershipForm.get('nameOfThePartner')?.invalid && (partnershipForm.get('nameOfThePartner')?.dirty || partnershipForm.get('nameOfThePartner')?.touched)"
@@ -1869,7 +1869,7 @@
              <div class="col-12">
                <div class="form-floating mb-3">
                  <input type="text" class="form-control" id="shareholderMobile" formControlName="position">
-                 <label for="holderMobile">position.</label>
+                 <label for="holderMobile">Position <span class="text-danger">*</span></label>
                </div>
                <div
                  *ngIf="partnershipForm.get('position')?.invalid && (partnershipForm.get('position')?.dirty || partnershipForm.get('position')?.touched)"
@@ -1880,7 +1880,7 @@
              <div class="col-12">
                <div class="form-floating mb-3">
                  <input type="number" class="form-control" id="shareholderShares" formControlName="profitSharingPercentage">
-                 <label for="holderShares">Profit Sharing Percentage</label>
+                 <label for="holderShares">Profit Sharing Percentage <span class="text-danger">*</span></label>
                </div>
                <div
                  *ngIf="partnershipForm.get('profitSharingPercentage')?.invalid && (partnershipForm.get('profitSharingPercentage')?.dirty || partnershipForm.get('profitSharingPercentage')?.touched)"

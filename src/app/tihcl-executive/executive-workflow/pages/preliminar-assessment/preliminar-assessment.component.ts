@@ -6,6 +6,7 @@ import { data } from 'jquery';
 import { ToastrService } from 'ngx-toastr';
 declare var bootstrap: any;
 declare var $: any;
+import { LoaderService } from '@app/common_components/loader-service.service';
 
 @Component({
   selector: 'app-preliminar-assessment',
@@ -222,6 +223,7 @@ export class PreliminarAssessmentComponent implements OnInit {
 applicationData:any
 loginsessionDetails:any
   constructor(private fb: FormBuilder,private toastrService: ToastrService,
+    private LoaderService: LoaderService,
         private _commonService: CommonServiceService,) {
            this.loginsessionDetails = JSON.parse(sessionStorage.getItem('user') || '{}');    
           console.log(this.loginsessionDetails)
@@ -516,7 +518,7 @@ onSubmit() {
 }
   // Submit the form
   Approved() {
-  
+  this.LoaderService.show();
     console.log(this.assessmentForm?.value,this.applicationData)
      if (this.assessmentForm.valid) {
         const riskAssessment = this.generateRiskResponse();
@@ -549,11 +551,16 @@ onSubmit() {
       this.assessmentForm.removeControl('stressScore');
      this._commonService.add(APIS.tihclExecutive.submitPrimilinary+ this.applicationData?.applicationNo, formData).subscribe({
       next: (response) => {
+        this.toastrService.success("Preliminary Assessment Submitted Successfully")
+        this.LoaderService.hide();
         console.log()
          this.progressBarStatusUpdate.emit({"update":true})
 
       },
       error: (error) => {
+        this.toastrService.error(error.error.message || "Something went wrong")
+        this.LoaderService.hide();
+
         console.error('Error submitting form:', error);
       }
     });

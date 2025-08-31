@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { CommonServiceService } from '@app/_services/common-service.service';
 import { APIS } from '@app/constants/constants';
 import { ToastrService } from 'ngx-toastr';
+import { LoaderService } from '@app/common_components/loader-service.service';
 
 @Component({
   selector: 'app-sanctioned-details',
@@ -19,6 +20,7 @@ export class SanctionedDetailsComponent implements OnInit {
     applicationData:any
       constructor(private fb: FormBuilder, private toastrService: ToastrService,
             private _commonService: CommonServiceService,
+            private loader: LoaderService,
             private router: Router,) {
                 const applicationData = JSON.parse(sessionStorage.getItem('ApplicationData') || '{}');
               this.applicationData=applicationData
@@ -103,6 +105,7 @@ managrData:any
   onSubmit(): void {
     console.log(this.sanctionForm.value)
     if (this.sanctionForm.valid) {
+      this.loader.show()
       const formValue = this.sanctionForm.value;
       // Convert empty strings to null for optional fields
       const payload = {
@@ -115,15 +118,20 @@ managrData:any
       };
        this._commonService.add(APIS.tihclExecutive.saveSanction,payload).subscribe({
              next: (response) => {
+              this.loader.hide()
+              this.toastrService.success("Sanction Details Saved Successfully")
                 this.progressBarStatusUpdate.emit({"update":true})
              },
              error: (error) => {
+              this.loader.hide()
+              this.toastrService.error(error?.error?.message || "Something went wrong while submitting the form")
                console.error('Error submitting form:', error);
              }
            });
       console.log('Form submitted:', payload);
       // Handle form submission
     } else {
+      this.toastrService.error("Please fill all the required fields in the form")
       this.sanctionForm.markAllAsTouched();
     }
   }

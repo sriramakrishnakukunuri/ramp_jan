@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { CommonServiceService } from '@app/_services/common-service.service';
 import { APIS, UploadPath } from '@app/constants/constants';
 import { ToastrService } from 'ngx-toastr';
-
+import { LoaderService } from '@app/common_components/loader-service.service';
 @Component({
   selector: 'app-primary-noc',
   templateUrl: './primary-noc.component.html',
@@ -14,6 +14,7 @@ export class PrimaryNocComponent implements OnInit {
 @Input() freeze:any
   applicationData:any
   constructor(private fb: FormBuilder, private toastrService: ToastrService,
+    private loader: LoaderService,
         private _commonService: CommonServiceService,
         private router: Router,) {
            const applicationData = JSON.parse(sessionStorage.getItem('ApplicationData') || '{}');
@@ -46,16 +47,21 @@ export class PrimaryNocComponent implements OnInit {
   }
   FinalSubmit(){
    if(this.selectedfiles){
+    this.loader.show()
      let formData =new FormData()
       formData.set("file",this.selectedfiles);
       formData.set("directory",'/primaryLender/'+this.applicationData?.applicationNo);
       console.log(formData)
      this._commonService.add(APIS.tihcl_uploads.globalUpload,formData).subscribe({
        next: (response) => {
+        this.loader.hide()
+         this.toastrService.success("File Uploaded Successfully")
             console.log(response)
            this.updateRegistration(response)
        },
        error: (error) => {
+        this.loader.hide()
+         this.toastrService.error("File Upload Failed, Please try again")
          console.error('Error submitting form:', error);
        }
      });
