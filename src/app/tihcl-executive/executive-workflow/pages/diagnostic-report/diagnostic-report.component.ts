@@ -7,7 +7,7 @@ import { CommonServiceService } from '@app/_services/common-service.service';
 import { APIS } from '@app/constants/constants';
 import { ToastrService } from 'ngx-toastr';
 import { observable } from 'rxjs';
-
+import { LoaderService } from '@app/common_components/loader-service.service';
 @Component({
   selector: 'app-diagnostic-report',
   templateUrl: './diagnostic-report.component.html',
@@ -47,6 +47,7 @@ export class DiagnosticReportComponent implements OnInit {
 loginsessionDetails:any
 applicationData:any
   constructor(
+    private loader:LoaderService,
     private fb: FormBuilder,
     private _commonService: CommonServiceService,
     private toastrService: ToastrService,
@@ -508,6 +509,8 @@ savePartnership(): void {
   saveBasicDetails(): void {
     console.log(this.basicDetails.value)
     if (this.basicDetails.valid) {
+    this.loader.show()
+
       // Save logic here
       let payload:any={...this.basicDetails.value,"currentScreenStatus": "BASIC_DETAILS",
           id:this.getDataOfDiagnostic?.id,
@@ -516,15 +519,21 @@ savePartnership(): void {
 
       this._commonService.add(APIS.tihclExecutive.saveDiagnostic,payload).subscribe(
         (res:any)=>{
+          this.toastrService.success('Basic details saved successfully');
+          this.loader.hide();
           console.log(res)
           this.currentTab='TOP_5_BUYERS'
           this.loadDiagnosticData()
       },
       (error:any)=>{
+        this.loader.hide()
+        this.toastrService.error('Error saving basic details');
 
     })
       this.saveSuccess.basic = true;
       setTimeout(() => this.saveSuccess.basic = false, 3000);
+    }else{
+      this.toastrService.error('Please fill all required fields','Basic Details');
     }
   }
 // basic details completed
@@ -655,6 +664,7 @@ savePartnership(): void {
     this.editType = null;
   }
   saveBuyersDetails(): void {
+    this.loader.show()
     console.log(this.diagnosticForm.value)
    
       // Save logic here
@@ -664,11 +674,15 @@ savePartnership(): void {
 
       this._commonService.add(APIS.tihclExecutive.saveDiagnostic,payload).subscribe(
         (res:any)=>{
+          this.loader.hide()
+          this.toastrService.success('Buyers and Suppliers details saved successfully');
           console.log(res)
           this.currentTab='RECEIVABLES_PAYABLES'
           this.loadDiagnosticData()
       },
       (error:any)=>{
+        this.loader.hide()
+        this.toastrService.error('Error saving Buyers and Suppliers details');
 
     })
       this.saveSuccess.basic = true;
@@ -822,6 +836,7 @@ savePartnership(): void {
     return date.toLocaleDateString('en-GB'); // Formats as dd/mm/yyyy
   }
    saveReceivaablesDetails(): void {
+    this.loader.show()
     console.log(this.diagnosticForm.value)
     
       // Save logic here
@@ -831,11 +846,15 @@ savePartnership(): void {
 
       this._commonService.add(APIS.tihclExecutive.saveDiagnostic,payload).subscribe(
         (res:any)=>{
+          this.loader.hide()
+          this.toastrService.success('Receivables and Payables details saved successfully');
           console.log(res)
           this.currentTab='OPERATIONAL_STATUS'
           this.loadDiagnosticData()
       },
       (error:any)=>{
+        this.loader.hide()
+        this.toastrService.error('Error saving Receivables and Payables details');
 
     })
       this.saveSuccess.basic = true;
@@ -1051,6 +1070,7 @@ closeOperationalModals(){
     if (this.operationalStatus.invalid) return;
     
     // Save logic here
+    this.loader.show()
     console.log('Form data:', this.operationalStatus.value);
      let payload:any={operationalStatus:this.diagnosticForm.value?.operationalStatus,"currentScreenStatus": "OPERATIONAL_STATUS",
         "applicationNo": this.applicationData.applicationNo, id:this.getDataOfDiagnostic?.id,
@@ -1058,11 +1078,15 @@ closeOperationalModals(){
 
       this._commonService.add(APIS.tihclExecutive.saveDiagnostic,payload).subscribe(
         (res:any)=>{
+          this.loader.hide()
+          this.toastrService.success('Operational status saved successfully');
           console.log(res)
           this.currentTab='REASONS_FOR_STRESS'
           this.loadDiagnosticData()
       },
       (error:any)=>{
+        this.loader.hide()
+        this.toastrService.error('Error saving operational status', "Operational Status");
 
     })
     this.saveSuccess.operational = true;
@@ -1074,7 +1098,7 @@ closeOperationalModals(){
 
 saveStressReason(): void {
     console.log(this.diagnosticForm.value)
-  
+    this.loader.show()
       // Save logic here
       let payload:any={reasonForStress:this.diagnosticForm.value?.reasonForStress,"currentScreenStatus": "REASONS_FOR_STRESS",
         "applicationNo": this.applicationData.applicationNo, id:this.getDataOfDiagnostic?.id,
@@ -1082,11 +1106,15 @@ saveStressReason(): void {
 
       this._commonService.add(APIS.tihclExecutive.saveDiagnostic,payload).subscribe(
         (res:any)=>{
+          this.loader.hide()
+          this.toastrService.success('Reason for Stress saved successfully', "Reason for Stress");
           console.log(res)
           this.currentTab='BALANCE_SHEET'
           this.loadDiagnosticData()
       },
       (error:any)=>{
+        this.loader.hide()
+        this.toastrService.error('Error saving Reason for Stress', "Reason for Stress");
 
     })
       this.saveSuccess.basic = true;
@@ -1170,6 +1198,8 @@ filePath:any
     console.log(this.balanceSheets.value,this.balanceSheetsForm.value)
 
     if (this.balanceSheetsForm.valid) {
+        this.loader.show()
+
       this.addBalanceSheet(this.balanceSheetsForm.value)
       console.log(this.balanceSheets.value,this.balanceSheetsForm.value)
       // this.activeModal.close(this.balanceSheets.value);
@@ -1179,16 +1209,21 @@ filePath:any
 
       this._commonService.add(APIS.tihclExecutive.saveDiagnostic,payload).subscribe(
         (res:any)=>{
+          this.loader.hide()
+          this.toastrService.success('Balance Sheet details saved successfully');
           console.log(res)
           this.currentTab='BALANCE_SHEET'
           
           this.loadDiagnosticData()
       },
       (error:any)=>{
+        this.loader.hide()
+        this.toastrService.error('Error saving Balance Sheet details');
 
     })
     this.closeModalBalancesheet()
     } else {
+      this.toastrService.error('Please fill all required fields', 'Balance Sheet');
       this.balanceSheetsForm.markAllAsTouched();
     }
     
@@ -1218,17 +1253,22 @@ saveStatusUpdate(): void {
   if(this.diagnosticForm.get('urlForDiagnosticFile')?.value){
      console.log(this.diagnosticForm.value,this.basicDetails.valid)
       // Save logic here
+      this.loader.show()
       let payload:any={observations:this.diagnosticForm.value?.observations,approvalStatus:this.diagnosticForm.value?.approvalStatus,"currentScreenStatus": "STATUS_UPDATE",
         "applicationNo": this.applicationData.applicationNo, id:this.getDataOfDiagnostic?.id,urlForDiagnosticFile:this.diagnosticForm.get('urlForDiagnosticFile')?.value || null,
         "applicationStatus": "UNIT_VISIT"}
 
       this._commonService.add(APIS.tihclExecutive.saveDiagnostic,payload).subscribe(
         (res:any)=>{
+          this.loader.hide()
+          this.toastrService.success('Status Update saved successfully', "Status Update");
           console.log(res)
           this.currentTab='STATUS_UPDATE'
           this.loadDiagnosticData()
       },
       (error:any)=>{
+        this.loader.hide()
+        this.toastrService.error('Error saving Status Update', "Status Update");
 
     })
       this.saveSuccess.basic = true;
@@ -1350,6 +1390,7 @@ saveStatusUpdate(): void {
     this.balanceSheets.removeAt(index);
   }
 Approved(){
+  this.loader.show()
 
   let payload:any={...this.diagnosticForm.value,"currentScreenStatus": "STATUS_UPDATE",
         "applicationNo": this.applicationData.applicationNo, id:this.getDataOfDiagnostic?.id,
@@ -1357,12 +1398,16 @@ Approved(){
 
       this._commonService.add(APIS.tihclExecutive.saveDiagnostic,payload).subscribe(
         (res:any)=>{
+          this.loader.hide();
+          this.toastrService.success('Application sent for manager approval successfully');
           console.log(res)
           this.currentTab='STATUS_UPDATE'
           this.loadDiagnosticData()
            this.progressBarStatusUpdate.emit({"update":true})
       },
       (error:any)=>{
+        this.toastrService.error('Error in sending application for manager approval', "Status Update");
+        this.loader.hide()
 
     })
 }

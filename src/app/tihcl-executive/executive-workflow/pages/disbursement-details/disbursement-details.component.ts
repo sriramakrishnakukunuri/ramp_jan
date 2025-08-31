@@ -5,6 +5,7 @@ import { APIS } from '@app/constants/constants';
 import { ToastrService } from 'ngx-toastr';
 declare var bootstrap: any;
 declare var $: any;
+import { LoaderService } from '@app/common_components/loader-service.service';
 @Component({
   selector: 'app-disbursement-details',
   templateUrl: './disbursement-details.component.html',
@@ -25,6 +26,7 @@ export class DisbursementDetailsComponent implements OnInit {
   applicationData:any
    @Output() progressBarStatusUpdate:any = new EventEmitter();
    constructor(private fb: FormBuilder,private toastrService: ToastrService,
+    private loader: LoaderService,
           private _commonService: CommonServiceService,) {
              const applicationData = JSON.parse(sessionStorage.getItem('ApplicationData') || '{}');
              this.applicationData=applicationData
@@ -366,6 +368,7 @@ deleteBankDetails(item: any, index: number): void {
 
   onSubmit(): void {
     if (this.disbursementForm.invalid) {
+      this.toastrService.error('Please fill all required fields in the form.','Disbursment Details');
       this.disbursementForm.markAllAsTouched();
       return;
     }
@@ -375,6 +378,7 @@ deleteBankDetails(item: any, index: number): void {
       ...this.disbursementForm.value,
       disbursements: this.disbursements
     });
+    this.loader.show()
      const payload = {
         ...this.disbursementForm.value,
         "applicationNo": this.applicationData?.applicationNo,
@@ -384,6 +388,7 @@ deleteBankDetails(item: any, index: number): void {
       };
     this._commonService.add(APIS.tihclExecutive.saveDisbursement,payload).subscribe({
              next: (response) => {
+              this.loader.hide()
                 this.progressBarStatusUpdate.emit({"update":true})
                 const applicationData = JSON.parse(sessionStorage.getItem('ApplicationData') || '{}');
                 this.applicationData=applicationData
@@ -393,6 +398,9 @@ deleteBankDetails(item: any, index: number): void {
                  this.toastrService.success('Disbursment Details Saved Successfully','Disbursment Details');
              },
              error: (error) => {
+              this.loader.hide()
+               
+                this.toastrService.error('An error occurred while saving disbursement details.');
                console.error('Error submitting form:', error);
              }
       });
@@ -409,6 +417,7 @@ deleteBankDetails(item: any, index: number): void {
       ...this.disbursementForm.value,
       disbursements: this.disbursements
     });
+    this.loader.show()
      const payload = {
         ...this.disbursementForm.value,
         "applicationNo": this.applicationData?.applicationNo,
@@ -418,6 +427,7 @@ deleteBankDetails(item: any, index: number): void {
       };
     this._commonService.add(APIS.tihclExecutive.saveDisbursement,payload).subscribe({
              next: (response) => {
+              this.loader.hide()
                 this.progressBarStatusUpdate.emit({"update":true})
               const applicationData = JSON.parse(sessionStorage.getItem('ApplicationData') || '{}');
               this.applicationData=applicationData
@@ -426,6 +436,10 @@ deleteBankDetails(item: any, index: number): void {
                 this.toastrService.success('Disbursment Details Completed Successfully','Disbursment Details');
              },
              error: (error) => {
+              this.loader.hide()
+               
+                this.toastrService.error('An error occurred while Submitting disbursement details.');
+                
                console.error('Error submitting form:', error);
              }
       });

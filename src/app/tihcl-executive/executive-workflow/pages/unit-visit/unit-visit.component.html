@@ -94,7 +94,7 @@
             <div class="form-floating mb-3">
               <input type="date" class="form-control" id="dateInput" name="dateOfVisit" placeholder=""  max="{{ today | date:'yyyy-MM-dd' }}"
                 formControlName="dateOfVisit">
-              <label for="dateInput">Date of Visit</label>
+              <label for="dateInput">Date of Visit <span class="text-danger"> *</span></label>
               <div
                 *ngIf="unitVisitForm.get('dateOfVisit')?.invalid && (unitVisitForm.get('dateOfVisit')?.dirty || unitVisitForm.get('dateOfVisit')?.touched)"
                 class="text-danger">
@@ -108,7 +108,7 @@
             <div class="form-floating mb-3">
               <input type="time" class="form-control" id="timeInput" name="timeOfVisit" placeholder=""
                 formControlName="timeOfVisit">
-              <label for="timeInput">Time of Visit</label>
+              <label for="timeInput">Time of Visit <span class="text-danger"> *</span></label>
               <div
                 *ngIf="unitVisitForm.get('timeOfVisit')?.invalid && (unitVisitForm.get('timeOfVisit')?.dirty || unitVisitForm.get('timeOfVisit')?.touched)"
                 class="text-danger">
@@ -129,7 +129,7 @@
                 <option value="Rent">Rent</option>
                 <option value="Sub Leased">Sub Leased</option>
               </select>
-              <label for="landDetails">Land Details</label>
+              <label for="landDetails">Land Details <span class="text-danger"> *</span></label>
               <div *ngIf="unitVisitForm.get('selectLandDetails')?.invalid && 
                                            (unitVisitForm.get('selectLandDetails')?.dirty || 
                                            unitVisitForm.get('selectLandDetails')?.touched)" class="text-danger">
@@ -192,7 +192,7 @@
             <div class="form-floating mb-3 mb-lg-0">
               <input type="text" class="form-control" id="village" name="village" placeholder=""
                 formControlName="village">
-              <label for="village">Village</label>
+              <label for="village">Village <span class="text-danger"> *</span></label>
               <div
                 *ngIf="unitVisitForm.get('village')?.invalid && (unitVisitForm.get('village')?.dirty || unitVisitForm.get('village')?.touched)"
                 class="text-danger">
@@ -203,7 +203,7 @@
           <div class="col-12 col-sm-12 col-md-4 col-lg-3">
             <div class="form-floating mb-3 mb-lg-0">
               <input type="text" class="form-control" id="street" name="street" placeholder="" formControlName="street">
-              <label for="street">Street</label>
+              <label for="street">Street <span class="text-danger"> *</span></label>
               <div
                 *ngIf="unitVisitForm.get('street')?.invalid && (unitVisitForm.get('street')?.dirty || unitVisitForm.get('street')?.touched)"
                 class="text-danger">
@@ -245,7 +245,7 @@
             <div class="form-floating mb-3 mb-lg-0">
               <input type="text" class="form-control" id="registerAddress" name="registerAddress" placeholder=""
                 formControlName="registerAddress">
-              <label for="registerAddress">Register Address</label>
+              <label for="registerAddress">Register Address <span class="text-danger"> *</span></label>
               <div
                 *ngIf="unitVisitForm.get('registerAddress')?.invalid && (unitVisitForm.get('registerAddress')?.dirty || unitVisitForm.get('registerAddress')?.touched)"
                 class="text-danger">
@@ -352,7 +352,7 @@
         <!-- Company Name Board -->
         <div class="row mb-3">
           <div class="col-12 col-sm-6 col-md-4 col-lg-4">
-            <h6 class="fw-600 fs-md">Company Name Board</h6>
+            <h6 class="fw-600 fs-md">Company Name Board <span class="text-danger"> *</span></h6>
             <div class="form-check form-check-inline">
               <input class="form-check-input" type="radio" name="isCompanyNameBoard" id="boardYes" [value]="true"
                 formControlName="isCompanyNameBoard">
@@ -372,7 +372,7 @@
 
           <!-- Financed Bank Name Board -->
           <div class="col-12 col-sm-6 col-md-4 col-lg-4">
-            <h6 class="fw-600 fs-md">Financed Bank Name Board</h6>
+            <h6 class="fw-600 fs-md">Financed Bank Name Board <span class="text-danger"> *</span></h6>
             <div class="form-check form-check-inline">
               <input class="form-check-input" type="radio" name="isFinancedBankNameBoard" id="boardYes1" [value]="true"
                 formControlName="isFinancedBankNameBoard">
@@ -402,7 +402,7 @@
               <div class="form-floating mb-3">
                 <input type="number" class="form-control" id="skilled" name="skilled" placeholder="" (input)="OnchangeValueTotal()"
                   formControlName="skilled" min="0">
-                <label for="skilled">Skilled</label>
+                <label for="skilled">Skilled <span class="text-danger"> *</span></label>
                 <div
                   *ngIf="unitVisitForm.get('skilled')?.errors?.['required'] && (unitVisitForm.get('skilled')?.dirty || unitVisitForm.get('skilled')?.touched)"
                   class="text-danger">
@@ -419,7 +419,7 @@
               <div class="form-floating mb-3">
                 <input type="number" class="form-control" id="unSkilled" name="unSkilled" placeholder="" (input)="OnchangeValueTotal()"
                   formControlName="unSkilled" min="0">
-                <label for="unSkilled">Unskilled</label>
+                <label for="unSkilled">Unskilled <span class="text-danger"> *</span></label>
                 <div
                   *ngIf="unitVisitForm.get('unSkilled')?.errors?.['required'] && (unitVisitForm.get('unSkilled')?.dirty || unitVisitForm.get('unSkilled')?.touched)"
                   class="text-danger">
@@ -437,7 +437,7 @@
                 <input type="number" class="form-control" id="total" name="total" placeholder=""
                   formControlName="total" min="0"
                   [value]="(unitVisitForm.value?.unSkilled || 0) + (unitVisitForm.value?.skilled || 0)" readonly>
-                <label for="total">Total</label>
+                <label for="total">Total <span class="text-danger"> *</span></label>
                 <div
                   *ngIf="unitVisitForm.get('total')?.errors?.['required'] && (unitVisitForm.get('total')?.dirty || unitVisitForm.get('total')?.touched)"
                   class="text-danger">
@@ -457,7 +457,7 @@
           <!-- Employees Attendance Register -->
           <div class="col-12 col-sm-6 col-md-4 col-lg-4">
             <div class="mb-3">
-              <label class="d-block fw-600 fs-md">Employees Attendance Register</label>
+              <label class="d-block fw-600 fs-md">Employees Attendance Register <span class="text-danger"> *</span></label>
               <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" name="isEmpAttendanceRegister" id="registerYes"
                   [value]="true" formControlName="isEmpAttendanceRegister">
@@ -483,7 +483,7 @@
             <div class="form-floating mb-3">
               <input type="text" class="form-control" id="inconsistencies" name="inconsistenciesWithPeopleWorking"
                 placeholder="" formControlName="inconsistenciesWithPeopleWorking">
-              <label for="inconsistencies">Are there any inconsistencies with no. of people working?</label>
+              <label for="inconsistencies">Are there any inconsistencies with no. of people working? <span class="text-danger"> *</span></label>
             </div>
             <div
               *ngIf="unitVisitForm.get('inconsistenciesWithPeopleWorking')?.invalid && unitVisitForm.get('inconsistenciesWithPeopleWorking')?.touched"
@@ -497,7 +497,7 @@
             <div class="form-floating mb-3">
               <input type="text" class="form-control" id="sold" name="productsMfgAndSold" placeholder=""
                 formControlName="productsMfgAndSold">
-              <label for="sold">What are the products manufactured and sold</label>
+              <label for="sold">What are the products manufactured and sold <span class="text-danger"> *</span></label>
               <div
                 *ngIf="unitVisitForm.get('productsMfgAndSold')?.invalid && (unitVisitForm.get('productsMfgAndSold')?.dirty || unitVisitForm.get('productsMfgAndSold')?.touched)"
                 class="text-danger">
@@ -514,7 +514,7 @@
                 <option value="Seasonal">Seasonal</option>
                 <option value="Throughout the Year">Throughout the Year</option>
               </select>
-              <label for="seasonal">Select the production cycle</label>
+              <label for="seasonal">Select the production cycle <span class="text-danger"> *</span></label>
               <div *ngIf="unitVisitForm.get('seasonalOrThroughtoutYear')?.invalid && 
                                            (unitVisitForm.get('seasonalOrThroughtoutYear')?.dirty || 
                                            unitVisitForm.get('seasonalOrThroughtoutYear')?.touched)"
@@ -541,7 +541,7 @@
             <div class="form-floating mb-3">
               <input type="number" class="form-control" id="shifts" name="noOfShifts" placeholder=""
                 formControlName="noOfShifts" min="1">
-              <label for="shifts">No. of Shifts</label>
+              <label for="shifts">No. of Shifts <span class="text-danger"> *</span></label>
               <div
                 *ngIf="unitVisitForm.get('noOfShifts')?.errors?.['required'] && (unitVisitForm.get('noOfShifts')?.dirty || unitVisitForm.get('noOfShifts')?.touched)"
                 class="text-danger">
@@ -612,7 +612,7 @@
           <div class="row">
             <!-- Stocks stored properly -->
             <div class="col-12 col-sm-6 col-md-4 col-lg-4">
-              <h6 class="fw-600 fs-md">Are stocks stored property</h6>
+              <h6 class="fw-600 fs-md">Are stocks stored property <span class="text-danger"> *</span></h6>
               <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" name="isStocksStoredProperty" id="stocksYes" [value]="true"
                   formControlName="isStocksStoredProperty">
@@ -632,7 +632,7 @@
 
             <!-- Adequate storage capacity -->
             <div class="col-12 col-sm-6 col-md-4 col-lg-4">
-              <h6 class="fw-600 fs-md">Does unit have adequate storage capacity?</h6>
+              <h6 class="fw-600 fs-md">Does unit have adequate storage capacity? <span class="text-danger"> *</span></h6>
               <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" name="isAdequateStorageCapacity" id="capacityYes"
                   [value]="true" formControlName="isAdequateStorageCapacity">
@@ -654,7 +654,7 @@
               <div class="form-floating mb-3">
                 <input type="text" class="form-control" id="stocks1" name="stocksMaintained" placeholder=""
                   formControlName="stocksMaintained">
-                <label for="stocks1">Whether Stocks register is maintained?</label>
+                <label for="stocks1">Whether Stocks register is maintained? <span class="text-danger"> *</span></label>
               </div>
               <div
                 *ngIf="unitVisitForm.get('stocksMaintained')?.invalid && (unitVisitForm.get('stocksMaintained')?.dirty || unitVisitForm.get('stocksMaintained')?.touched)"
@@ -665,7 +665,7 @@
 
             <!-- Is it up to date -->
             <div class="col-12 col-sm-6 col-md-4 col-lg-4">
-              <h6 class="fw-600 fs-md">Is it up to date</h6>
+              <h6 class="fw-600 fs-md">Is it up to date <span class="text-danger"> *</span></h6>
               <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" name="isUptoDate" id="isUptoDateyes" [value]="true"
                   formControlName="isUptoDate">
@@ -700,7 +700,7 @@
                 <input type="number" class="form-control" id="stocks4" name="rawMaterials" placeholder="" formControlName="rawMaterials" min="0" (input)="OnchangeValue()">
                 <!-- <input type="text" class="form-control" id="stocks4" name="rawMaterials" placeholder="" -->
                   <!-- formControlName="rawMaterials"> -->
-                <label for="stocks4">Raw material(In Rs)</label>
+                <label for="stocks4">Raw material(In Rs) <span class="text-danger"> *</span></label>
               </div>
               <div
                 *ngIf="unitVisitForm.get('rawMaterials')?.errors?.['required'] && (unitVisitForm.get('rawMaterials')?.dirty || unitVisitForm.get('rawMaterials')?.touched)"
@@ -718,7 +718,7 @@
                 <input type="number" class="form-control" id="stocks5" name="workInProgress" placeholder="" formControlName="workInProgress" min="0" (input)="OnchangeValue()">
                 <!-- <input type="text" class="form-control" id="stocks5" name="workInProgress" placeholder="" -->
                   <!-- formControlName="workInProgress"> -->
-                <label for="stocks5">Work in Progress(In Rs)</label>
+                <label for="stocks5">Work in Progress(In Rs) <span class="text-danger"> *</span></label>
               </div>
               <div
                 *ngIf="unitVisitForm.get('workInProgress')?.errors?.['required'] && (unitVisitForm.get('workInProgress')?.dirty || unitVisitForm.get('workInProgress')?.touched)"
@@ -736,7 +736,7 @@
                 <input type="number" class="form-control" id="stocks6" name="finishedGoods" placeholder="" formControlName="finishedGoods" min="0" (input)="OnchangeValue()">
                 <!-- <input type="text" class="form-control" id="stocks6" name="finishedGoods" placeholder="" -->
                   <!-- formControlName="finishedGoods"> -->
-                <label for="stocks6">Finished Goods(In Rs)</label>
+                <label for="stocks6">Finished Goods(In Rs) <span class="text-danger"> *</span></label>
               </div>
               <div
                 *ngIf="unitVisitForm.get('finishedGoods')?.errors?.['required'] && (unitVisitForm.get('finishedGoods')?.dirty || unitVisitForm.get('finishedGoods')?.touched)"
@@ -752,7 +752,7 @@
               <div class="form-floating mb-3">
                 <input type="number" class="form-control" id="stocks3" name="valueOfTheStock" placeholder=""
                   formControlName="valueOfTheStock" min="0">
-                <label for="stocks3">Value of the stock as(In Rs)</label>
+                <label for="stocks3">Value of the stock as(In Rs) <span class="text-danger"> *</span></label>
                 <div
                   *ngIf="unitVisitForm.get('valueOfTheStock')?.errors?.['required'] && (unitVisitForm.get('valueOfTheStock')?.dirty || unitVisitForm.get('valueOfTheStock')?.touched)"
                   class="text-danger">
@@ -779,7 +779,7 @@
                 <option value="Weekly">Weekly</option>
                 <option value="Quarterly">Quarterly</option>
                 </select>
-              <label for="seasonal">Periodicity</label>
+              <label for="seasonal">Periodicity <span class="text-danger"> *</span></label>
 
               <div *ngIf="unitVisitForm.get('periodicity')?.invalid && 
                                            (unitVisitForm.get('periodicity')?.dirty || 
@@ -795,7 +795,7 @@
               <input type="text" class="form-control" id="max" name="installedCapacity" placeholder="" formControlName="installedCapacity">
               <!-- <input type="number" class="form-control" id="max" name="installedCapacity" placeholder=""
                 formControlName="installedCapacity" min="0"> -->
-              <label for="max">Installed Capacity (In Units)</label>
+              <label for="max">Installed Capacity (In Units) <span class="text-danger"> *</span></label>
               <div
                 *ngIf="unitVisitForm.get('installedCapacity')?.errors?.['required'] && (unitVisitForm.get('installedCapacity')?.dirty || unitVisitForm.get('installedCapacity')?.touched)"
                 class="text-danger">
@@ -813,7 +813,7 @@
               <input type="text" class="form-control" id="min" name="currentCapacityUtilisation" placeholder="" formControlName="currentCapacityUtilisation" >
               <!-- <input type="number" class="form-control" id="min" name="currentCapacityUtilisation" placeholder=""
                 formControlName="currentCapacityUtilisation" min="0"> -->
-              <label for="min">Current Capacity Utilization (In Units)</label>
+              <label for="min">Current Capacity Utilization (In Units) <span class="text-danger"> *</span></label>
               <div
                 *ngIf="unitVisitForm.get('currentCapacityUtilisation')?.errors?.['required'] && (unitVisitForm.get('currentCapacityUtilisation')?.dirty || unitVisitForm.get('currentCapacityUtilisation')?.touched)"
                 class="text-danger">
@@ -830,7 +830,7 @@
             <div class="form-floating mb-3">
               <input type="text" class="form-control" id="current" name="currentProductionInUnit" placeholder=""
                 formControlName="currentProductionInUnit" >
-              <label for="current">Current production (In Percentage)</label>
+              <label for="current">Current production (In Percentage) <span class="text-danger"> *</span></label>
               <div
                 *ngIf="unitVisitForm.get('currentProductionInUnit')?.errors?.['required'] && (unitVisitForm.get('currentProductionInUnit')?.dirty || unitVisitForm.get('currentProductionInUnit')?.touched)"
                 class="text-danger">
@@ -903,7 +903,7 @@
             <div class="form-floating mb-3">
               <input type="number" class="form-control" id="recent" name="recentConsumption" placeholder=""
                 formControlName="recentConsumption" min="0">
-              <label for="recent">Recent Consumption (In Units)</label>
+              <label for="recent">Recent Consumption (In Units) <span class="text-danger"> *</span></label>
               <div
                 *ngIf="unitVisitForm.get('recentConsumption')?.errors?.['required'] && (unitVisitForm.get('recentConsumption')?.dirty || unitVisitForm.get('recentConsumption')?.touched)"
                 class="text-danger">
@@ -935,7 +935,7 @@
             <div class="form-floating mb-3">
               <input type="date" class="form-control" id="maximum" name="powerBillPaidDate" placeholder=""
                 formControlName="powerBillPaidDate" max="{{ today | date:'yyyy-MM-dd' }}" >
-              <label for="maximum">Power Bill Paid Date</label>
+              <label for="maximum">Power Bill Paid Date <span class="text-danger"> *</span></label>
               <div
                 *ngIf="unitVisitForm.get('powerBillPaidDate')?.errors?.['required'] && (unitVisitForm.get('powerBillPaidDate')?.dirty || unitVisitForm.get('powerBillPaidDate')?.touched)"
                 class="text-danger">
@@ -976,7 +976,7 @@
               <div class="form-floating mb-3">
                 <input type="text" class="form-control" name="typesOfMachine" id="typesMachine"
                   formControlName="typesOfMachine" placeholder="">
-                <label for="typesMachine">Name of machine</label>
+                <label for="typesMachine">Name of machine <span class="text-danger"> *</span></label>
                 <div *ngIf="machineForm.get('typesOfMachine')?.invalid && 
                         (machineForm.get('typesOfMachine')?.dirty || machineForm.get('typesOfMachine')?.touched)"
                   class="text-danger">
@@ -988,7 +988,7 @@
               <div class="form-floating mb-3">
                 <input type="text" class="form-control" id="purpose" name="purpose" formControlName="purpose"
                   placeholder="">
-                <label for="purpose">Purpose</label>
+                <label for="purpose">Purpose <span class="text-danger"> *</span></label>
                 <div *ngIf="machineForm.get('purpose')?.invalid && 
                         (machineForm.get('purpose')?.dirty || machineForm.get('purpose')?.touched)"
                   class="text-danger">
@@ -1000,7 +1000,7 @@
               <div class="form-floating mb-3">
                 <input type="number" class="form-control" id="machines" name="noOfMachines"
                   formControlName="noOfMachines" placeholder="" min="1">
-                <label for="machines">No. of machines</label>
+                <label for="machines">No. of Machines <span class="text-danger"> *</span></label>
                 <div *ngIf="machineForm.get('noOfMachines')?.errors?.['required'] && 
                         (machineForm.get('noOfMachines')?.dirty || machineForm.get('noOfMachines')?.touched)"
                   class="text-danger">
@@ -1015,7 +1015,7 @@
               <div class="form-floating mb-3">
                 <input type="number" class="form-control" id="machineCost" name="costOfMachinePurchased"
                   formControlName="costOfMachinePurchased" placeholder="" min="0">
-                <label for="machineCost">Cost of machine purchased</label>
+                <label for="machineCost">Cost of machine purchased <span class="text-danger"> *</span></label>
                 <div
                   *ngIf="machineForm.get('costOfMachinePurchased')?.errors?.['required'] && 
                         (machineForm.get('costOfMachinePurchased')?.dirty || machineForm.get('costOfMachinePurchased')?.touched)"
@@ -1031,7 +1031,7 @@
               <div class="form-floating mb-3">
                 <input type="text" class="form-control" id="currentCondition" name="currentCondition"
                   formControlName="currentCondition" placeholder="">
-                <label for="currentCondition">Current condition</label>
+                <label for="currentCondition">Current condition <span class="text-danger"> *</span></label>
                 <div *ngIf="machineForm.get('currentCondition')?.invalid && 
                         (machineForm.get('currentCondition')?.dirty || machineForm.get('currentCondition')?.touched)"
                   class="text-danger">
@@ -1043,7 +1043,7 @@
               <div class="form-floating mb-3">
                 <input type="number" class="form-control" id="valueMachinary" name="valueOfMachinery"
                   formControlName="valueOfMachinery" placeholder="" min="0">
-                <label for="valueMachinary">Current value of machinery</label>
+                <label for="valueMachinary">Current value of machinery <span class="text-danger"> *</span></label>
                 <div *ngIf="machineForm.get('valueOfMachinery')?.errors?.['required'] && 
                         (machineForm.get('valueOfMachinery')?.dirty || machineForm.get('valueOfMachinery')?.touched)"
                   class="text-danger">
@@ -1089,7 +1089,7 @@
             <div class="col-12 col-sm-12 col-md-4 col-lg-4">
               <div class="form-floating mb-3">
                 <input type="text" class="form-control" id="visitedByModal" formControlName="visitedBy" placeholder="">
-                <label for="visitedByModal">Visited By</label>
+                <label for="visitedByModal">Visited By <span class="text-danger"> *</span></label>
                 <div *ngIf="visitForm.get('visitedBy')?.invalid && (visitForm.get('visitedBy')?.dirty || visitForm.get('visitedBy')?.touched)" class="text-danger">
                   Visited By is required
                 </div>
@@ -1099,7 +1099,7 @@
             <div class="col-12 col-sm-12 col-md-4 col-lg-4">
               <div class="form-floating mb-3">
                 <input type="text" class="form-control" id="personMetModal" formControlName="nameOfThePersonMet" placeholder="">
-                <label for="personMetModal">Name of the person met</label>
+                <label for="personMetModal">Name of the person met <span class="text-danger"> *</span></label>
                 <div *ngIf="visitForm.get('nameOfThePersonMet')?.invalid && (visitForm.get('nameOfThePersonMet')?.dirty || visitForm.get('nameOfThePersonMet')?.touched)" class="text-danger">
                   Name of the person met is required
                 </div>
@@ -1109,7 +1109,7 @@
             <div class="col-12 col-sm-12 col-md-4 col-lg-4">
               <div class="form-floating mb-3">
                 <input type="text" class="form-control" id="designationModal" formControlName="designation" placeholder="">
-                <label for="designationModal">Designation</label>
+                <label for="designationModal">Designation <span class="text-danger"> *</span></label>
                 <div *ngIf="visitForm.get('designation')?.invalid && (visitForm.get('designation')?.dirty || visitForm.get('designation')?.touched)" class="text-danger">
                   Designation is required
                 </div>

@@ -5,6 +5,7 @@ import { APIS } from '@app/constants/constants';
 import { ToastrService } from 'ngx-toastr';
 declare var bootstrap: any;
 declare var $: any;
+import { LoaderService } from '@app/common_components/loader-service.service';
 
 @Component({
   selector: 'app-unit-visit',
@@ -23,6 +24,7 @@ export class UnitVisitComponent implements OnInit {
   applicationData:any
    @Output() progressBarStatusUpdate:any = new EventEmitter();
    constructor(private fb: FormBuilder,private toastrService: ToastrService,
+    private loaderService: LoaderService,
           private _commonService: CommonServiceService,) {
              const applicationData = JSON.parse(sessionStorage.getItem('ApplicationData') || '{}');
              this.applicationData=applicationData
@@ -353,10 +355,13 @@ saveworkshift(): void {
     this.workShiftsDto.removeAt(index);
   }
   onSubmit(): void {
+    
     if(this.unitVisitForm.valid && this.unitVisitForm.value?.machineryDetailsRequest?.length && Object.keys( this.ExistingunitVisit).length && this.ExistingunitVisit?.id){
-         let payload:any={...this.unitVisitForm.value, "applicationNo": this.applicationData?.applicationNo,"applicationStatus": "UNIT_VISIT"}
+      this.loaderService.show()  
+      let payload:any={...this.unitVisitForm.value, "applicationNo": this.applicationData?.applicationNo,"applicationStatus": "UNIT_VISIT"}
          this._commonService.update(APIS.tihclExecutive.updateUnitVisit,payload,this.ExistingunitVisit?.id).subscribe({
           next: (response) => {
+            this.loaderService.hide()
            this.getDataById(response?.data?.id)
            this.progressBarStatusUpdate.emit({"update":true})
             this.toastrService.success('Unit Visit Data Updated Successfully','Unit Visit');
@@ -365,15 +370,20 @@ saveworkshift(): void {
     
           },
           error: (error) => {
+            this.loaderService.hide()
+
+            this.toastrService.error('Error while updating the data','Unit Visit');
             console.error('Error submitting form:', error);
           }
         });
       }
       else if(this.unitVisitForm.valid && this.unitVisitForm.value?.machineryDetailsRequest?.length && !Object.keys( this.ExistingunitVisit).length){
       console.log(this.applicationData,this.unitVisitForm.value)
-        let payload:any={...this.unitVisitForm.value, "applicationNo": this.applicationData?.applicationNo,"applicationStatus": "MANAGER_APPROVAL_1"}
+      this.loaderService.show()  
+      let payload:any={...this.unitVisitForm.value, "applicationNo": this.applicationData?.applicationNo,"applicationStatus": "MANAGER_APPROVAL_1"}
        this._commonService.add(APIS.tihclExecutive.saveUnitVisit,payload).subscribe({
           next: (response) => {
+            this.loaderService.hide()
            this.getDataById(response?.data?.id)
            this.progressBarStatusUpdate.emit({"update":true})
             this.toastrService.success('Unit Visit Data Saved Successfully','Unit Visit');
@@ -382,6 +392,8 @@ saveworkshift(): void {
     
           },
           error: (error) => {
+            this.loaderService.hide()
+            this.toastrService.error('Error while saving the data','Unit Visit');
             console.error('Error submitting form:', error);
           }
         });
@@ -393,6 +405,7 @@ saveworkshift(): void {
         control?.markAsTouched({ onlySelf: true });
       });
       console.log('Form is invalid');
+      this.toastrService.error('Please fill all the required Fields','Unit Visit');
     }
   }
   OnchangeValueTotal(){
@@ -403,6 +416,7 @@ saveworkshift(): void {
 
     }
   saveExistingData(){
+    this.loaderService.show()
     console.log(this.ExistingunitVisit)
     //  if(this.unitVisitForm.valid && this.unitVisitForm.value?.machineryDetailsRequest?.length && Object.keys( this.ExistingunitVisit).length && this.ExistingunitVisit?.id){
     //      let payload:any={...this.unitVisitForm.value, "applicationNo": this.applicationData?.applicationNo,"applicationStatus": "UNIT_VISIT"}
@@ -441,6 +455,7 @@ saveworkshift(): void {
          let payload:any={...this.unitVisitForm.value, "applicationNo": this.applicationData?.applicationNo,"applicationStatus": "MANAGER_APPROVAL_1"}
          this._commonService.update(APIS.tihclExecutive.updateUnitVisit,payload,this.ExistingunitVisit?.id).subscribe({
           next: (response) => {
+            this.loaderService.hide()
 
            this.getDataById(response?.data?.id)
            this.progressBarStatusUpdate.emit({"update":true})
@@ -450,6 +465,8 @@ saveworkshift(): void {
     
           },
           error: (error) => {
+            this.loaderService.hide()
+            this.toastrService.error('Error while updating the data','Unit Visit');
             console.error('Error submitting form:', error);
           }
         });
@@ -478,6 +495,7 @@ saveworkshift(): void {
        const factoryDetailsArray = this.unitVisitForm.get('machineryDetailsRequest') as FormArray;
     // Push the new form group
         factoryDetailsArray.push(this.fb.group(this.machineForm.value));
+        this.toastrService.success('Machinery Details Added Successfully');
       this.onClose()
     } else {
       this.markFormGroupTouched(this.unitVisitForm);
@@ -546,6 +564,7 @@ saveworkshift(): void {
     if (this.visitForm.valid) {
       const visitDetailsArray = this.unitVisitForm.get('visitorsDetailsRequests') as FormArray;
       visitDetailsArray.push(this.fb.group(this.visitForm.value));
+      this.toastrService.success('Visitor Details Added Successfully');
       this.onCloseVisit();
     } else {
       this.markFormGroupTouchedVisit(this.visitForm);

@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { CommonServiceService } from '@app/_services/common-service.service';
 import { APIS } from '@app/constants/constants';
 import { ToastrService } from 'ngx-toastr';
+import { LoaderService } from '@app/common_components/loader-service.service';
 
 @Component({
   selector: 'app-ramp-checklist',
@@ -15,6 +16,7 @@ export class RampChecklistComponent implements OnInit {
   rampChecklistForm!: FormGroup;
   applicationData:any
   constructor(private fb: FormBuilder, private toastrService: ToastrService,
+    private loader: LoaderService,
         private _commonService: CommonServiceService,
         private router: Router,) {
            const applicationData = JSON.parse(sessionStorage.getItem('ApplicationData') || '{}');
@@ -172,17 +174,24 @@ filePath:any
   onSubmit(): void {
     console.log(this.filePath)
     if (this.rampChecklistForm.valid) {
+      this.loader.show()
       const formData = {...this.rampChecklistForm.value,"applicationNo": this.applicationData?.applicationNo,"applicationStatus": "CREDIT_APPRAISAL"}
       // Call your API service to submit the form data
       console.log('Form submitted:', formData);
        this._commonService.add(APIS.tihclExecutive.saveRampCheckList,formData).subscribe({
              next: (response) => {
+              this.loader.hide()
+              this.toastrService.success("Ramp Checklist Data Saved Successfully")
                 this.progressBarStatusUpdate.emit({"update":true})
              },
              error: (error) => {
+              this.toastrService.error(error?.error?.message || "Something went wrong while submitting the form") 
+              this.loader.hide()
                console.error('Error submitting form:', error);
              }
            });
+    }else{
+      this.toastrService.error("Please fill all the required fields in the form")
     }
   }
 }

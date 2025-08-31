@@ -13,7 +13,7 @@
             <div class="form-floating mb-3">
               <input type="number" class="form-control" id="totalSanctionedAmount" formControlName="totalSanctionedAmount"
                 placeholder="">
-              <label for="totalSanctionedAmount">Total Sanctioned Amount</label>
+              <label for="totalSanctionedAmount">Total Sanctioned Amount <span class="text-danger">*</span></label>
               <div *ngIf="f['totalSanctionedAmount']?.invalid && (f['totalSanctionedAmount']?.dirty || f['totalSanctionedAmount']?.touched)"
                 class="text-danger">
                 <small *ngIf="f['totalSanctionedAmount']?.errors?.required">Total Sanctioned Amount is required</small>
@@ -25,7 +25,7 @@
             <div class="form-floating mb-3">
               <input type="number" class="form-control" id="totalDisbursedAmount" formControlName="totalDisbursedAmount"
                 placeholder="">
-              <label for="totalDisbursedAmount">Total Disbursed Amount</label>
+              <label for="totalDisbursedAmount">Total Disbursed Amount <span class="text-danger">*</span></label>
               <div *ngIf="f['totalDisbursedAmount']?.invalid && (f['totalDisbursedAmount']?.dirty || f['totalDisbursedAmount']?.touched) && !f['totalDisbursedAmount']?.value > f['totalSanctionedAmount']?.value"
                 class="text-danger">
                 <small *ngIf="f['totalDisbursedAmount']?.errors?.required">Total Disbursed Amount is required</small>
@@ -97,7 +97,7 @@
             <div class="form-floating mb-3">
               <input type="date" class="form-control" id="collectionDate" formControlName="collectionDate"
                 max="{{ today | date:'yyyy-MM-dd' }}" placeholder="">
-              <label for="collectionDate">Disbursement Date</label>
+              <label for="collectionDate">Disbursement Date <span class="text-danger">*</span></label>
               <div *ngIf="f['collectionDate']?.invalid && (f['collectionDate']?.dirty || f['collectionDate']?.touched)"
                 class="text-danger">
                 <small *ngIf="f['collectionDate']?.errors?.required">Disbursement Date is required</small>
@@ -142,7 +142,7 @@
           </div> -->
           <div class="col-12 col-sm-6 col-md-4 col-lg-3">
             <div class="mb-3">
-              <h6 class="fw-600 fs-md">TG-Ipass</h6>
+              <h6 class="fw-600 fs-md">TG-Ipass <span class="text-danger">*</span></h6>
               <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" formControlName="tgipassUpload" id="applicableTsi"
                   value="Yes">
@@ -172,7 +172,7 @@
           </div>
           <div class="col-12 col-sm-6 col-md-4 col-lg-3">
             <div class="mb-3">
-              <h6 class="fw-600 fs-md">ROC Filing</h6>
+              <h6 class="fw-600 fs-md">ROC Filing <span class="text-danger">*</span></h6>
               <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" formControlName="rocFiling" id="applicableRoc"
                   value="Yes">
@@ -211,7 +211,7 @@
           <div class="col-12 col-sm-6 col-md-4 col-lg-3">
             <div class="form-floating mb-3">
               <input type="number" class="form-control" id="processingFeeAmount" formControlName="processingFeeAmount" placeholder="" (input)="ChangeAmount($any($event.target).value,f['processingFeeGSTAmount'].value)">
-              <label for="processingFeeAmount">Processing Fee  Amount</label>
+              <label for="processingFeeAmount">Processing Fee  Amount <span class="text-danger">*</span></label>
               <div *ngIf="f['processingFeeAmount']?.invalid && (f['processingFeeAmount']?.dirty || f['processingFeeAmount']?.touched)"
                 class="text-danger">
                 <small *ngIf="f['processingFeeAmount']?.errors?.required">Processing Fee Amount is required</small>
@@ -222,7 +222,7 @@
            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
             <div class="form-floating mb-3">
               <input type="number" class="form-control" id="processingFeeGSTAmount" formControlName="processingFeeGSTAmount" placeholder="" (input)="ChangeAmount(f['processingFeeAmount'].value,$any($event.target).value)">
-              <label for="processingFeeGSTAmount">Processing GST Amount</label>
+              <label for="processingFeeGSTAmount">Processing GST Amount <span class="text-danger">*</span></label>
               <div *ngIf="f['processingFeeGSTAmount']?.invalid && (f['processingFeeGSTAmount']?.dirty || f['processingFeeGSTAmount']?.touched)"
                 class="text-danger">
                 <small *ngIf="f['processingFeeGSTAmount']?.errors?.required">Processing GST Amount is required</small>
@@ -233,7 +233,7 @@
            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
             <div class="form-floating mb-3">
               <input type="number" class="form-control" id="processingFeeCollectedAmount" readonly formControlName="processingFeeCollectedAmount" placeholder="">
-              <label for="processingFeeCollectedAmount">Processing Fee Collected</label>
+              <label for="processingFeeCollectedAmount">Processing Fee Collected <span class="text-danger">*</span></label>
               <div *ngIf="f['processingFeeCollectedAmount']?.invalid && (f['processingFeeCollectedAmount']?.dirty || f['processingFeeCollectedAmount']?.touched)"
                 class="text-danger">
                 <small *ngIf="f['processingFeeCollectedAmount']?.errors?.required">Processing Fee Collected is required</small>
@@ -245,7 +245,7 @@
             <div class="form-floating mb-3">
               <input type="date" class="form-control" id="processingFeeReceivedDate" formControlName="processingFeeReceivedDate"  max="{{ today | date:'yyyy-MM-dd' }}"
                 placeholder="">
-              <label for="processingFeeReceivedDate">Processing Fee Collected Date</label>
+              <label for="processingFeeReceivedDate">Processing Fee Collected Date <span class="text-danger">*</span></label>
               <div *ngIf="f['processingFeeReceivedDate']?.invalid && (f['processingFeeReceivedDate']?.dirty || f['processingFeeReceivedDate']?.touched)"
                 class="text-danger">
                 <small *ngIf="f['processingFeeReceivedDate']?.errors?.required">Processing Fee Collected Date is required</small>
@@ -374,7 +374,7 @@
               <div class="form-floating mb-3">
                 <input type="date" class="form-control" id="date1" formControlName="disbursementDate" placeholder=""
                   max="{{ today | date:'yyyy-MM-dd' }}">
-                <label for="date1">Date</label>
+                <label for="date1">Date <span class="text-danger">*</span></label>
                 <div
                   *ngIf="af['disbursementDate']?.invalid && (af['disbursementDate']?.dirty || af['disbursementDate']?.touched)"
                   class="text-danger">
@@ -385,7 +385,7 @@
             <div class="col-12 col-sm-6 col-md-6 col-lg-6">
               <div class="form-floating mb-3">
                 <input type="text" class="form-control" id="amt1" formControlName="amount" placeholder="">
-                <label for="amt1">Amount</label>
+                <label for="amt1">Amount <span class="text-danger">*</span></label>
                 <div *ngIf="af.amount.invalid && (af['amount']?.dirty || af['amount']?.touched)" class="text-danger">
                   <small *ngIf="af['amount']?.errors?.required">Amount is required</small>
                   <small *ngIf="af['amount']?.errors?.pattern">Please enter a valid amount</small>
@@ -395,7 +395,7 @@
             <div class="col-12">
               <div class="form-floating mb-3">
                 <input type="text" class="form-control" id="details" formControlName="details" placeholder="">
-                <label for="details">Details</label>
+                <label for="details">Details <span class="text-danger">*</span></label>
                 <div *ngIf="af['details']?.invalid && (af['details']?.dirty || af['details']?.touched)"
                   class="text-danger">
                   <small>Details are required</small>
@@ -431,7 +431,7 @@
             <div class="col-12 col-sm-6">
               <div class="form-floating mb-3">
                 <input type="text" class="form-control" id="bankName" formControlName="bankName" placeholder="">
-                <label for="bankName">Bank Name</label>
+                <label for="bankName">Bank Name <span class="text-danger">*</span></label>
                 <div *ngIf="abf['bankName']?.invalid && (abf['bankName']?.dirty || abf['bankName']?.touched)" class="text-danger">
                   <small>Bank Name is required</small>
                 </div>
@@ -440,7 +440,7 @@
             <div class="col-12 col-sm-6">
               <div class="form-floating mb-3">
                 <input type="text" class="form-control" id="ifscCode" formControlName="ifscCode" placeholder="">
-                <label for="ifscCode">IFSC Code</label>
+                <label for="ifscCode">IFSC Code <span class="text-danger">*</span></label>
                 <div *ngIf="abf['ifscCode']?.invalid && (abf['ifscCode']?.dirty || abf['ifscCode']?.touched)" class="text-danger">
                   <small *ngIf="abf['ifscCode']?.errors?.required">IFSC Code is required</small>
                   <small *ngIf="abf['ifscCode']?.errors?.pattern">
@@ -452,7 +452,7 @@
             <div class="col-12 col-sm-6">
               <div class="form-floating mb-3">
                 <input type="text" class="form-control" id="accountName" formControlName="accountName" placeholder="">
-                <label for="accountName">Account Name</label>
+                <label for="accountName">Account Name <span class="text-danger">*</span></label>
                 <div *ngIf="abf['accountName']?.invalid && (abf['accountName']?.dirty || abf['accountName']?.touched)" class="text-danger">
                   <small>Account Name is required</small>
                 </div>
@@ -461,7 +461,7 @@
             <div class="col-12 col-sm-6">
               <div class="form-floating mb-3">
                 <input type="number" class="form-control" id="accountNumber" formControlName="accountNumber" placeholder="">
-                <label for="accountNumber">Account Number</label>
+                <label for="accountNumber">Account Number <span class="text-danger">*</span></label>
                 <div *ngIf="abf['accountNumber']?.invalid && (abf['accountNumber']?.dirty || abf['accountNumber']?.touched)" class="text-danger">
                   <small *ngIf="abf['accountNumber']?.errors?.required">Account Number is required</small>
                   <small *ngIf="abf['accountNumber']?.errors?.pattern">Please enter a valid account number</small>
