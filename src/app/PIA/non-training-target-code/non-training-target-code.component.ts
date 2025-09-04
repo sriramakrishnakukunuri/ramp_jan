@@ -91,7 +91,7 @@ export class NonTrainingTargetCodeComponent implements OnInit {
           else if(this.selectedBudgetHead=='19'){
             this.getTravelDataBySubActive()
           }
-          else if(this.selectedBudgetHead=='11' || this.selectedBudgetHead=='12' || this.selectedBudgetHead=='13' || this.selectedBudgetHead=='14' || this.selectedBudgetHead=='15' || this.selectedBudgetHead=='16' || this.selectedBudgetHead=='17'){
+          else if(this.selectedBudgetHead=='12' || this.selectedBudgetHead=='13' || this.selectedBudgetHead=='14' || this.selectedBudgetHead=='15' || this.selectedBudgetHead=='16' || this.selectedBudgetHead=='17'){
             this.getResourceList()
             this.getContingencyDataById()
             this.getPaymentsDataById()
@@ -1051,6 +1051,18 @@ createFormTravel(): FormGroup {
       // You might want to upload the file and then set the URL
       this.travelForm.patchValue({
         billInvoicePath: file.name // This would be the uploaded file URL
+      });
+    }
+  }
+  onFileSelectedPayment(event: any): void {
+    this.uploadedFiles = null;
+    const file = event.target.files[0];
+    if (file) {
+       this.uploadedFiles = file;
+      // Handle file upload logic here
+      // You might want to upload the file and then set the URL
+      this.paymentForm.patchValue({
+        uploadBillUrl: file.name // This would be the uploaded file URL
       });
     }
   }

@@ -475,7 +475,7 @@
                 <!-- end:: Handholding support for enterprise creation of 2000 members -->
 
                 <!-- begin:: Raw material support -->
-                <div class="card budgets mb-3 " *ngIf="selectedBudgetHead=='4'">
+                <div class="card budgets mb-3 " *ngIf="selectedBudgetHead=='10'">
                     <div class="card-header bg-transparent">
                         <h6 class="fw-600 mb-2 mb-sm-3 mb-md-0">Raw material support</h6>
                     </div>
@@ -1597,7 +1597,7 @@ aria-hidden="true">
             </div>
         </div>
     </div>
-    <div class="modal fade" id="addPayment" tabindex="-1" aria-labelledby="addPaymentLabel" aria-hidden="true">
+     <div class="modal fade" id="addPayment" tabindex="-1" aria-labelledby="addPaymentLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-xl">
     <div class="modal-content">
       <div class="modal-header py-2">
@@ -1700,6 +1700,13 @@ aria-hidden="true">
                 </div>
               </div>
             </div>
+             <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+              <div class="form-floating mb-3">
+                <input type="file" class="form-control" (change)="onFileSelectedPayment($event)">
+                <label for="uploadBill">Upload Bill Invoice</label>
+              </div>
+            </div>
+          
            
           </div>
 
