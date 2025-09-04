@@ -41,7 +41,7 @@
                     <tr>
                       <th scope="col" class="text-center">S.No</th>
                       <th scope="col">Training Activity</th>
-                      <!-- <th scope="col">Training Sub Activity</th> -->
+                      <th scope="col">Training Sub Activity</th>
                       <th scope="col" class="text-center">Training Target</th>
                       <th scope="col" class="text-center">Achievement</th>
                       <th scope="col" class="text-center">Percentage(%)</th>
@@ -54,7 +54,7 @@
                     <tr *ngFor="let training of tableList.trainingPrograms; let i = index">
                       <td class="text-center">{{ i + 1 }}</td>
                       <td>{{ training?.activity || 'N/A' }}</td>
-                      <!-- <td>{{ training?.subActivityId || 'N/A' }}</td> -->
+                      <td>{{ training?.subActivityId || 'N/A' }}</td>
                       <td class="text-center">{{ training?.trainingTarget || 0 }}</td>
                       <td class="text-center">{{ training?.trainingAchievement || 0  }}</td>
                       <td class="text-center">{{ training?.trainingPercentage || 0 }}</td>
@@ -84,7 +84,7 @@
                     <tr>
                       <th scope="col" class="text-center">S.No</th>
                       <th scope="col">Non-Training Activity</th>
-                      <!-- <th scope="col">Non-Training Sub Activity</th> -->
+                      <th scope="col">Non-Training Sub Activity</th>
                       <th scope="col" class="text-center">Physical Target</th>
                       <th scope="col" class="text-center">Physical Achievement</th>
                       <th scope="col" class="text-center">Percentage(%)</th>
@@ -97,7 +97,7 @@
                     <tr *ngFor="let nonTraining of tableList.nonTrainingPrograms; let i = index">
                       <td class="text-center">{{ i + 1 }}</td>
                       <td>{{ nonTraining?.nonTrainingActivity || 'N/A' }}</td>
-                      <!-- <td>{{ nonTraining?.nonTrainingSubActivity || 'N/A' }}</td> -->
+                      <td>{{ nonTraining?.nonTrainingSubActivity || 'N/A' }}</td>
                       <td class="text-center">{{ nonTraining?.physicalTarget || 0 }}</td>
                       <td class="text-center">{{ nonTraining?.physicalAchievement || 0 }}</td>
                       <td class="text-center">{{ nonTraining?.applicable || 0 }}</td>
