@@ -101,10 +101,13 @@ export const APIS = {
     },
     nontrainingtargets:{
         getBudgetHeadList: API_BASE_URL + '/progress/monitoring/get/activities/',
+        getSubActivityList: API_BASE_URL + '/non-training/getAll/subActivities/',
         getResourceList: API_BASE_URL + '/non-training/resources/non-training-activity?nonTrainingActivityId=',
+        getTravelList: API_BASE_URL + '/api/travel/',
         updateTarets: API_BASE_URL + '/progress/monitoring/non-training-achievement/',
         getNonTrainingtargets: API_BASE_URL + '/progress/monitoring/non-training/physical/financial/{activityId}?activityId=',
         saveNonTrainingtargetsAleapPriliminary: API_BASE_URL + '/non-training',
+        saveNonTrainingtargetsCodeIT: API_BASE_URL + '/non-training/save',
         updateNonTrainingtargetsAleapPriliminary: API_BASE_URL + '/non-training/update/',
         deleteNonTrainingtargetsAleapPriliminary: API_BASE_URL + '/non-training/delete/',
         getNonTrainingtargetsAleapPriliminaryById: API_BASE_URL + '/non-training/all/expenditures?nonTrainingActivityId=',
@@ -116,10 +119,14 @@ export const APIS = {
         saveNonTrainingtargetsAleapContingencyPayment: API_BASE_URL + '/non-training/non-training/expenditure/resource',
         updateNonTrainingtargetsAleapContingencyPayment: API_BASE_URL + '/non-training/resource-expenditure/update/',
         deleteNonTrainingtargetsAleapContingencyPayment: API_BASE_URL + '/non-training/resource/expenditure/delete/',
+         updateNonTrainingtargetsTravel: API_BASE_URL + '/api/travel/',
+        deleteNonTrainingtargetsTravel: API_BASE_URL + '/api/travel/',
+        saveNonTrainingtargetsTravel: API_BASE_URL + '/api/travel/save',
+
        
     },
     progressMonitoring:{
-        getTrainigAndNonTraining: API_BASE_URL + '/progress/monitoring',
+        getTrainigAndNonTraining: API_BASE_URL + '/progress/monitoring/aleap',
         getTrainigTargetsAchievements: API_BASE_URL + '/training/targets-and-achievements/agency/',
         getNonTrainigTargetsAchievements: API_BASE_URL + '/non-training/targets-and-achievements/agency/',
     },

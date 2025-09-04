@@ -42,7 +42,20 @@ export class NonTrainingTargetsComponent implements OnInit {
     getBudgetHeadList() {
         this._commonService.getDataByUrl(APIS.nontrainingtargets.getBudgetHeadList+this.selectedAgencyId).subscribe((res: any) => {
           this.budgetHeadList = res;
-          this.onBudgetHeadChange(this.budgetHeadList[0]?.activityId)
+          this.onActivityChange(this.budgetHeadList[0]?.activityId)
+        
+        }, (error) => {
+          // this.toastrService.error(error.message);
+        });
+      }
+      selectedActivity:any
+      SubActivityList:any=[]
+      onActivityChange(event: any) {
+        this.selectedActivity=event
+         this._commonService.getDataByUrl(APIS.nontrainingtargets.getSubActivityList+event).subscribe((res: any) => {
+          this.SubActivityList = res;
+          this.selectedBudgetHead= this.SubActivityList[0]?.subActivityId
+          this.onBudgetHeadChange(this.SubActivityList[0]?.subActivityId)
         
         }, (error) => {
           // this.toastrService.error(error.message);
@@ -68,7 +81,7 @@ export class NonTrainingTargetsComponent implements OnInit {
           this.physicalTargetAchievement = this.TargetDetails?.physicalTargetAchievement || 0;
           this.financialTargetAchievement = this.TargetDetails?.financialTargetAchievement || 0;
           console.log('TargetDetails:', this.TargetDetails);
-          if(this.selectedBudgetHead=='1' || this.selectedBudgetHead=='2'){
+          if(this.selectedBudgetHead=='4' || this.selectedBudgetHead=='2'){
             this.getPreliminaryDataById()
 
           }
@@ -150,17 +163,17 @@ export class NonTrainingTargetsComponent implements OnInit {
           "financialTargetAchievement": Number(this.financialTargetAchievement)
           }
         this._commonService.update(APIS.nontrainingtargets.updateTarets,payload,this.TargetDetails?.nonTrainingAchievementId).subscribe((res: any) => {
-            this.toastrService.success('Final Submission Done Successfully','Non Training Targets Data Success!');
+            this.toastrService.success('Final Submission Done Successfully','Non Training Progress Data Success!');
             this.getDeatilOfTargets()
         
         }, (error) => {
-          this.toastrService.error(error.message,"Non Training Targets Data Error!");
+          this.toastrService.error(error.message,"Non Training Progress Data Error!");
         });
       }
-  createForm(): FormGroup {
+       createForm(): FormGroup {
     return this.fb.group({
       agencyId: [0, ],
-      nonTrainingActivityId: [0, ],
+      nonTrainingSubActivityId: [0, ],
       paymentDate: ['', Validators.required],
       expenditureAmount: [0, [Validators.required, Validators.min(0)]],
       billNo: ['', Validators.required],
@@ -202,7 +215,7 @@ export class NonTrainingTargetsComponent implements OnInit {
       this.iseditMode = true;
       this.financialForm.patchValue({
         agencyId: item?.agencyId || 0,
-        nonTrainingActivityId: item?.nonTrainingActivityId || 0,
+        nonTrainingSubActivityId: item?.nonTrainingSubActivityId || 0,
         paymentDate: item?.paymentDate ? this.convertToISOFormat(item?.paymentDate) : '',
         expenditureAmount: item?.expenditureAmount || 0,
         billNo: item?.billNo || '',
@@ -222,58 +235,64 @@ export class NonTrainingTargetsComponent implements OnInit {
   }
   getPreliminaryData:any=[]
   onSubmit(): void {
-    this.isSubmitted = true;
-     if (this.financialForm.valid) {
-    if(this.iseditMode){
-       this.f['agencyId'].setValue(Number(this.selectedAgencyId));
-        this.f['nonTrainingActivityId'].setValue(Number(this.selectedBudgetHead));
-        this._commonService.update(APIS.nontrainingtargets.updateNonTrainingtargetsAleapPriliminary,{...this.financialForm.value,nonTrainingActivityId:Number(this.selectedBudgetHead),id:this.preliminaryID},this.preliminaryID).subscribe((res: any) => {
-          this.toastrService.success('Data Updated successfully','Non Training Targets Data Success!');
-          
-          console.log('Preliminary Data:', this.getPreliminaryData);
-          this.resetForm();
-          this.isSubmitted = false;
-          const modalElement = document.getElementById('addSurvey');
-          const modal1 = modalElement ? bootstrap.Modal.getInstance(modalElement) : null;
-          if (modal1) {
-            modal1.hide();
-          }
-        
-        }, (error) => {
+     this.isSubmitted = true;
+      if (this.financialForm.valid) {
+     if(this.iseditMode){
+        this.f['agencyId'].setValue(Number(this.selectedAgencyId));
+         this.f['nonTrainingSubActivityId'].setValue(Number(this.selectedBudgetHead));
+         this._commonService.update(APIS.nontrainingtargets.updateNonTrainingtargetsAleapPriliminary,{...this.financialForm.value,nonTrainingSubActivityId:Number(this.selectedBudgetHead),id:this.preliminaryID},this.preliminaryID).subscribe((res: any) => {
+           this.toastrService.success('Data Updated successfully','Non Training Progress Data Success!');
+           
+           console.log('Preliminary Data:', this.getPreliminaryData);
            this.resetForm();
-          this.isSubmitted = false;
-          const modal1 = bootstrap.Modal.getInstance(document.getElementById('addSurvey'));
-          modal1.hide();
-          this.toastrService.error(error.message,"Non Training Targets Data Error!");
-        });
-        this.getDeatilOfTargets()
-    }
-    else{
-      console.log('Form Submitted:', this.financialForm.value);
-      this.f['agencyId'].setValue(Number(this.selectedAgencyId));
-        this.f['nonTrainingActivityId'].setValue(Number(this.selectedBudgetHead));
-        this._commonService.add(APIS.nontrainingtargets.saveNonTrainingtargetsAleapPriliminary,this.financialForm.value).subscribe((res: any) => {
-          this.toastrService.success('Data saved successfully','Non Training Targets Data Success!');
-          this.getPreliminaryData.push(res.data)
-          this.resetForm();
-          this.isSubmitted = false;
-          const modal1 = bootstrap.Modal.getInstance(document.getElementById('addSurvey'));
-          modal1.hide();
+           this.isSubmitted = false;
+           const modalElement = document.getElementById('addSurvey');
+           const modal1 = modalElement ? bootstrap.Modal.getInstance(modalElement) : null;
+           if (modal1) {
+             modal1.hide();
+           }
          
-        
-        }, (error) => {
-          this.resetForm();
-          this.isSubmitted = false;
-          const modal1 = bootstrap.Modal.getInstance(document.getElementById('addSurvey'));
-          modal1.hide();
-          this.toastrService.error(error.message);
-        });
-        this.getDeatilOfTargets()
-    }
-   
-    }
-
-  }
+         }, (error) => {
+            this.resetForm();
+           this.isSubmitted = false;
+           const modal1 = bootstrap.Modal.getInstance(document.getElementById('addSurvey'));
+           modal1.hide();
+           this.toastrService.error(error.message,"Non Training Progress Data Error!");
+         });
+         this.getDeatilOfTargets()
+     }
+     else{
+       console.log('Form Submitted:', this.financialForm.value);
+       this.f['agencyId'].setValue(Number(this.selectedAgencyId));
+         this.f['nonTrainingSubActivityId'].setValue(Number(this.selectedBudgetHead));
+          const formData = new FormData();
+           formData.append("dto", JSON.stringify({...this.financialForm.value}));
+ 
+           if (this.financialForm.value.uploadBillUrl) {
+             formData.append("file", this.uploadedFiles);
+             }
+         this._commonService.add(APIS.nontrainingtargets.saveNonTrainingtargetsCodeIT,formData).subscribe((res: any) => {
+           this.toastrService.success('Data saved successfully','Non Training Progress Data Success!');
+           this.getPreliminaryData.push(res.data)
+           this.resetForm();
+           this.isSubmitted = false;
+           const modal1 = bootstrap.Modal.getInstance(document.getElementById('addSurvey'));
+           modal1.hide();
+          
+         
+         }, (error) => {
+           this.resetForm();
+           this.isSubmitted = false;
+           const modal1 = bootstrap.Modal.getInstance(document.getElementById('addSurvey'));
+           modal1.hide();
+           this.toastrService.error(error.message);
+         });
+         this.getDeatilOfTargets()
+     }
+    
+     }
+ 
+   }
   deletePreliminaryID:any
   deletePreliminary(id:any):void{
     this.deletePreliminaryID=id
@@ -288,7 +307,7 @@ export class NonTrainingTargetsComponent implements OnInit {
       .deleteId(APIS.nontrainingtargets.deleteNonTrainingtargetsAleapPriliminary,item).subscribe({
         next: (data: any) => {
           if(data?.status==400){
-            this.toastrService.error(data?.message, "Non Training Targets Data Error!");
+            this.toastrService.error(data?.message, "Non Training Progress Data Error!");
             this.closeModalDelete();
 
             this.deletePreliminaryID =''
@@ -297,14 +316,14 @@ export class NonTrainingTargetsComponent implements OnInit {
             // this.getBulkExpenditure()
             this.closeModalDelete();
             this.deletePreliminaryID =''
-          this.toastrService.success( 'Record Deleted Successfully', "Non Training Targets Data Success!");
+          this.toastrService.success( 'Record Deleted Successfully', "Non Training Progress Data Success!");
           }
           
         },
         error: (err) => {
           this.closeModalDelete();
           this.deletePreliminaryID =''
-          this.toastrService.error(err.message, "Non Training Targets Error!");
+          this.toastrService.error(err.message, "Non Training Progress Error!");
           new Error(err);
         },
       });
@@ -318,9 +337,11 @@ export class NonTrainingTargetsComponent implements OnInit {
       }
       this.getDeatilOfTargets()
     } 
+    uploadedFiles:any
   onFileSelected(event: any): void {
     const file = event.target.files[0];
-    if (file) {
+if (file) {
+      this.uploadedFiles = file;
       // Handle file upload logic here
       // You might want to upload the file and then set the URL
       this.financialForm.patchValue({
@@ -328,7 +349,18 @@ export class NonTrainingTargetsComponent implements OnInit {
       });
     }
   }
-
+ onFileSelectedPayment(event: any): void {
+    this.uploadedFiles = null;
+    const file = event.target.files[0];
+    if (file) {
+       this.uploadedFiles = file;
+      // Handle file upload logic here
+      // You might want to upload the file and then set the URL
+      this.paymentForm.patchValue({
+        uploadBillUrl: file.name // This would be the uploaded file URL
+      });
+    }
+  }
   resetForm(): void {
      const modalElement = document.getElementById('addSurvey');
           const modal1 = modalElement ? bootstrap.Modal.getInstance(modalElement) : null;
@@ -409,50 +441,50 @@ export class NonTrainingTargetsComponent implements OnInit {
     modal1.show();
   }
   getContingencyData:any=[]
-  onSubmitContingency(): void {
-    this.isSubmitted = true;
-     if (this.contingencyForm.valid) {
-    if(this.iseditModeContingency){
-       
-        this._commonService.update(APIS.nontrainingtargets.updateNonTrainingtargetsAleapContingency,{...this.contingencyForm.value,"expenditures":[],nonTrainingActivityId:Number(this.selectedBudgetHead),dateOfJoining:this.contingencyForm?.value?.dateOfJoining?moment(this.contingencyForm?.value?.dateOfJoining).format('DD-MM-YYYY'):null},this.ContingencyID).subscribe((res: any) => {
-          this.toastrService.success('Data Updated successfully','Non Training Targets Data Success!');
-          
-          console.log('Preliminary Data:', this.getContingencyData);
-          this.resetFormContingency();
-          this.isSubmitted = false;
-          const modal1 = bootstrap.Modal.getInstance(document.getElementById('addContingency'));
-          modal1.hide();
-        
-        }, (error) => {
-           this.resetFormContingency();
-          this.isSubmitted = false;
-          const modal1 = bootstrap.Modal.getInstance(document.getElementById('addContingency'));
-          modal1.hide();
-          this.toastrService.error(error.message,"Non Training Targets Data Error!");
-        });
-    }
-    else{
-      console.log('Form Submitted:', this.contingencyForm.value);
-        this._commonService.add(APIS.nontrainingtargets.saveNonTrainingtargetsAleapContingency,{...this.contingencyForm.value,"expenditures":[],nonTrainingActivityId:Number(this.selectedBudgetHead),dateOfJoining:this.contingencyForm?.value?.dateOfJoining?moment(this.contingencyForm?.value?.dateOfJoining).format('DD-MM-YYYY'):null}).subscribe((res: any) => {
-          this.toastrService.success('Data saved successfully','Non Training Targets Data Success!');
-          this.resetFormContingency();
-          this.isSubmitted = false;
-          const modal1 = bootstrap.Modal.getInstance(document.getElementById('addContingency'));
-          modal1.hide();
+   onSubmitContingency(): void {
+      this.isSubmitted = true;
+       if (this.contingencyForm.valid) {
+      if(this.iseditModeContingency){
          
-        
-        }, (error) => {
-          this.resetFormContingency();
-          this.isSubmitted = false;
-          const modal1 = bootstrap.Modal.getInstance(document.getElementById('addContingency'));
-          modal1.hide();
-          this.toastrService.error(error.message);
-        });
-    }
-   this.getDeatilOfTargets()
+          this._commonService.update(APIS.nontrainingtargets.updateNonTrainingtargetsAleapContingency,{...this.contingencyForm.value,"expenditures":[],nonTrainingActivityId:Number(this.selectedActivity),nonTrainingSubActivityId:Number(this.selectedBudgetHead),dateOfJoining:this.contingencyForm?.value?.dateOfJoining?moment(this.contingencyForm?.value?.dateOfJoining).format('DD-MM-YYYY'):null},this.ContingencyID).subscribe((res: any) => {
+            this.toastrService.success('Data Updated successfully','Non Training Progress Data Success!');
+            
+            console.log('Preliminary Data:', this.getContingencyData);
+            this.resetFormContingency();
+            this.isSubmitted = false;
+            const modal1 = bootstrap.Modal.getInstance(document.getElementById('addContingency'));
+            modal1.hide();
+          
+          }, (error) => {
+             this.resetFormContingency();
+            this.isSubmitted = false;
+            const modal1 = bootstrap.Modal.getInstance(document.getElementById('addContingency'));
+            modal1.hide();
+            this.toastrService.error(error.message,"Non Training Progress Data Error!");
+          });
       }
-
-  }
+      else{
+        console.log('Form Submitted:', this.contingencyForm.value);
+          this._commonService.add(APIS.nontrainingtargets.saveNonTrainingtargetsAleapContingency,{...this.contingencyForm.value,"expenditures":[],nonTrainingActivityId:Number(this.selectedActivity),nonTrainingSubActivityId:Number(this.selectedBudgetHead),dateOfJoining:this.contingencyForm?.value?.dateOfJoining?moment(this.contingencyForm?.value?.dateOfJoining).format('DD-MM-YYYY'):null}).subscribe((res: any) => {
+            this.toastrService.success('Data saved successfully','Non Training Progress Data Success!');
+            this.resetFormContingency();
+            this.isSubmitted = false;
+            const modal1 = bootstrap.Modal.getInstance(document.getElementById('addContingency'));
+            modal1.hide();
+           
+          
+          }, (error) => {
+            this.resetFormContingency();
+            this.isSubmitted = false;
+            const modal1 = bootstrap.Modal.getInstance(document.getElementById('addContingency'));
+            modal1.hide();
+            this.toastrService.error(error.message);
+          });
+      }
+     this.getDeatilOfTargets()
+        }
+  
+    }
   deleteContingencyID:any
   deleteContingency(id:any):void{
     this.deleteContingencyID=id
@@ -466,21 +498,21 @@ export class NonTrainingTargetsComponent implements OnInit {
       .deleteId(APIS.nontrainingtargets.deleteNonTrainingtargetsAleapContingency,item).subscribe({
         next: (data: any) => {
           if(data?.status==400){
-            this.toastrService.error(data?.message, "Non Training Targets Data Error!");
+            this.toastrService.error(data?.message, "Non Training Progress Data Error!");
             this.closeModalDeleteContinuty();
             this.deleteContingencyID =''
           }
           else{
             // this.getBulkExpenditure()
             
-          this.toastrService.success( 'Record Deleted Successfully', "Non Training Targets Data Success!");
+          this.toastrService.success( 'Record Deleted Successfully', "Non Training Progress Data Success!");
           this.closeModalDeleteContinuty();
             this.deleteContingencyID =''
           }
           
         },
         error: (err) => {
-          this.toastrService.error(err.message, "Non Training Targets Error!");
+          this.toastrService.error(err.message, "Non Training Progress Error!");
           this.closeModalDeleteContinuty();
           this.deleteContingencyID =''
           
@@ -575,66 +607,78 @@ export class NonTrainingTargetsComponent implements OnInit {
     });
    this.paymentForMonth= event.value ? moment(event.value).format('MM-YYYY') : '';
   }
-   onSubmitPayment(): void {
-    this.isSubmitted = true;
-    console.log(this.paymentForm.value);
-    if (this.paymentForm.valid) {
-      const formData: any = {
-        nonTrainingResourceExpenditureId: 0, // Generated by backend
-        amount: this.paymentForm.value.amount,
-        paymentForMonth: this.paymentForm.value.paymentForMonth,
-        dateOfPayment: this.paymentForm.value.dateOfPayment,
-        resourceId: Number(this.paymentForm.value.resourceId)
-      };
-       if(this.iseditModePayment){
-       
-        this._commonService.update(APIS.nontrainingtargets.updateNonTrainingtargetsAleapContingencyPayment,{...formData},this.paymentID).subscribe((res: any) => {
-          this.toastrService.success('payments Updated successfully','Non Training Targets Data Success!');
-          
-          console.log('Preliminary Data:', this.getContingencyData);
-          
-          this.isSubmitted = false;
-          const modal1 = bootstrap.Modal.getInstance(document.getElementById('addPayment'));
-          modal1.hide();
-           document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+  onSubmitPayment(): void {
+      this.isSubmitted = true;
+      console.log(this.paymentForm.value);
+      if (this.paymentForm.valid) {
         
-        }, (error) => {
-           this.resetForm();
-          this.isSubmitted = false;
-          const modal1 = bootstrap.Modal.getInstance(document.getElementById('addPayment'));
-          modal1.hide();
-           document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
-          this.toastrService.error(error.message,"Non Training Targets Data Error!");
-        });
-    }
-    else{
-      console.log('Form Submitted:', this.contingencyForm.value);
-        this._commonService.add(APIS.nontrainingtargets.saveNonTrainingtargetsAleapContingencyPayment,{...formData}).subscribe((res: any) => {
-          this.toastrService.success('Payments saved successfully','Non Training Targets Data Success!');
-          this.isSubmitted = false;
-          const modal1 = bootstrap.Modal.getInstance(document.getElementById('addPayment'));
-          modal1.hide();
-           document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+         if(this.iseditModePayment){
+          const formData: any = {
+          nonTrainingResourceExpenditureId: 0, // Generated by backend
+          amount: this.paymentForm.value.amount,
+          paymentForMonth: this.paymentForm.value.paymentForMonth,
+          dateOfPayment: this.paymentForm.value.dateOfPayment,
+          uploadBillUrl: this.paymentForm.value.uploadBillUrl,
+          resourceId: Number(this.paymentForm.value.resourceId)
+        };
+          this._commonService.update(APIS.nontrainingtargets.updateNonTrainingtargetsAleapContingencyPayment,{...formData},this.paymentID).subscribe((res: any) => {
+            this.toastrService.success('payments Updated successfully','Non Training Progress Data Success!');
+            
+            console.log('Preliminary Data:', this.getContingencyData);
+            
+            this.isSubmitted = false;
+            const modal1 = bootstrap.Modal.getInstance(document.getElementById('addPayment'));
+            modal1.hide();
+             document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+          
+          }, (error) => {
+            //  this.resetForm();
+            this.isSubmitted = false;
+            const modal1 = bootstrap.Modal.getInstance(document.getElementById('addPayment'));
+            modal1.hide();
+             document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+            this.toastrService.error(error.message,"Non Training Progress Data Error!");
+          });
+      }
+      else{
+        console.log('Form Submitted:', this.contingencyForm.value);
+        const formData = new FormData();
+            formData.append("expenditureDto", JSON.stringify({
+            nonTrainingResourceExpenditureId: 0, // Generated by backend
+          amount: this.paymentForm.value.amount,
+          paymentForMonth: this.paymentForm.value.paymentForMonth,
+          dateOfPayment: this.paymentForm.value.dateOfPayment,
+          resourceId: Number(this.paymentForm.value.resourceId)}));
+  
+            if (this.paymentForm.value.billInvoicePath) {
+              formData.append("file", this.uploadedFiles);
+              }
+          this._commonService.add(APIS.nontrainingtargets.saveNonTrainingtargetsAleapContingencyPayment,formData).subscribe((res: any) => {
+            this.toastrService.success('Payments saved successfully','Non Training Progress Data Success!');
+            this.isSubmitted = false;
+            const modal1 = bootstrap.Modal.getInstance(document.getElementById('addPayment'));
+            modal1.hide();
+             document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+           
+          
+          }, (error) => {
          
+            this.isSubmitted = false;
+            const modal1 = bootstrap.Modal.getInstance(document.getElementById('addPayment'));
+            modal1.hide();
+             document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+            this.toastrService.error(error.message);
+          });
+      }
+     
+        this.getDeatilOfTargets()
+        // console.log('Form Data:', formData);
+        // Call your API service here
+        // this.paymentService.createPayment(formData).subscribe(...);
         
-        }, (error) => {
-       
-          this.isSubmitted = false;
-          const modal1 = bootstrap.Modal.getInstance(document.getElementById('addPayment'));
-          modal1.hide();
-           document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
-          this.toastrService.error(error.message);
-        });
-    }
-   
-      this.getDeatilOfTargets()
-      console.log('Form Data:', formData);
-      // Call your API service here
-      // this.paymentService.createPayment(formData).subscribe(...);
       
-    
+      }
     }
-  }
   deletePayment(id:any):void{
     this.deleteContingencyID=id
      document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
@@ -650,7 +694,7 @@ export class NonTrainingTargetsComponent implements OnInit {
       .deleteId(APIS.nontrainingtargets.deleteNonTrainingtargetsAleapContingencyPayment,item).subscribe({
         next: (data: any) => {
           if(data?.status==400){
-            this.toastrService.error(data?.message, "Non Training Targets Data Error!");
+            this.toastrService.error(data?.message, "Non Training Progress Data Error!");
             this.closeModalDeletePayment();
             this.deleteContingencyID =''
           }
@@ -658,14 +702,14 @@ export class NonTrainingTargetsComponent implements OnInit {
             // this.getBulkExpenditure()
             this.closeModalDeletePayment();
             this.deleteContingencyID =''
-          this.toastrService.success( 'Record Deleted Successfully', "Non Training Targets Data Success!");
+          this.toastrService.success( 'Record Deleted Successfully', "Non Training Progress Data Success!");
           }
           
         },
         error: (err) => {
           this.closeModalDeletePayment();
           this.deleteContingencyID =''
-          this.toastrService.error(err.message, "Non Training Targets Error!");
+          this.toastrService.error(err.message, "Non Training Progress Error!");
           new Error(err);
         },
       });
