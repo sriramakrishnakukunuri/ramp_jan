@@ -55,6 +55,7 @@ import { ProgressMonitoringComponent } from './PIA/progress-monitoring/progress-
 import { NonTrainingTargetsComponent } from './PIA/non-training-targets/non-training-targets.component';
 import { TargetsAndAchievementsComponent } from './PIA/targets-and-achievements/targets-and-achievements.component';
 import { ViewProgramsSeperateComponent } from './PIA/view-programs-seperate/view-programs-seperate.component';
+import { NonTrainingTargetCodeComponent } from './PIA/non-training-target-code/non-training-target-code.component';
 
 const routes: Routes = [
     {
@@ -347,6 +348,12 @@ const routes: Routes = [
      {
         path: 'non-training-targets',
         component: NonTrainingTargetsComponent,
+        canActivate: [AuthGuard],
+        data: { roles: [Role.Admin,Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
+    },
+     {
+        path: 'non-training-progress',
+        component: NonTrainingTargetCodeComponent,
         canActivate: [AuthGuard],
         data: { roles: [Role.Admin,Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
     },

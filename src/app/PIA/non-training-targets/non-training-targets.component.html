@@ -5,7 +5,7 @@
                     <div class="card-header bg-transparent">
                         <div class="row align-items-center">
                             <div class="col-12">
-                                <h6 class="fw-600 mb-2 mb-sm-3 mb-md-0">Non Training Targets</h6>
+                                <h6 class="fw-600 mb-2 mb-sm-3 mb-md-0">Non Training Progress</h6>
                             </div>
                         </div>
                     </div>
@@ -13,7 +13,7 @@
                         <div class="row">
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                 <div class="form-floating mb-3 mb-sm-3 mb-md-0">
-                                    <select class="form-select events-expenditure" id="budgethead" [(ngModel)]="selectedBudgetHead" (change)="onBudgetHeadChange($any($event.target).value)">
+                                    <select class="form-select events-expenditure" id="budgethead" [(ngModel)]="selectedActivity" (change)="onActivityChange($any($event.target).value)">
                                         <!-- <option value="#">Select Budget Head</option> -->
                                         <option *ngFor="let item of budgetHeadList" value="{{item?.activityId}}">{{item?.activityName}}</option>
                                         <!-- <option value="1">Preliminary survey for selection of potential SHGs</option>
@@ -25,20 +25,34 @@
                                     <label for="budgethead">Budget Head</label>
                                 </div>
                             </div>
+                             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                <div class="form-floating mb-3 mb-sm-3 mb-md-0">
+                                    <select class="form-select events-expenditure" id="budgethead" [(ngModel)]="selectedBudgetHead" (change)="onBudgetHeadChange($any($event.target).value)">
+                                        <!-- <option value="#">Select Budget Head</option> -->
+                                        <option *ngFor="let item of SubActivityList" value="{{item?.subActivityId}}">{{item?.subActivityName}}</option>
+                                        <!-- <option value="1">Preliminary survey for selection of potential SHGs</option>
+                                        <option value="2">Dashboard / Central Management System</option> -->
+                                        <!-- <option value="3">Handholding support</option>
+                                        <option value="4">Raw material support</option> -->
+                                        <!-- <option value="5">Contingency fund</option> -->
+                                    </select>
+                                    <label for="budgethead">Sub Activity</label>
+                                </div>
+                            </div>
                         </div>          
                     </div>
                 </div>
 
                 <!-- begin:: Preliminary survey for selection of potential SHGs -->
-                <div class="card budgets mb-3 " *ngIf="selectedBudgetHead=='1' || selectedBudgetHead=='2' || selectedBudgetHead=='5'">
+                <div class="card budgets mb-3 " *ngIf="selectedBudgetHead=='2' || selectedBudgetHead=='4' || selectedBudgetHead=='5'">
 
                     <div class="card-header bg-transparent">
-                        <h6 class="fw-600 mb-2 mb-sm-3 mb-md-0" *ngIf="selectedBudgetHead=='1'" >Preliminary survey for selection of potential SHGs</h6>
-                        <h6 class="fw-600 mb-2 mb-sm-3 mb-md-0" *ngIf="selectedBudgetHead=='2'" >Dashboard / Central Management System</h6>
+                        <h6 class="fw-600 mb-2 mb-sm-3 mb-md-0" *ngIf="selectedBudgetHead=='2'" >Preliminary survey for selection of potential SHGs</h6>
+                        <h6 class="fw-600 mb-2 mb-sm-3 mb-md-0" *ngIf="selectedBudgetHead=='4'" >Dashboard / Central Management System</h6>
                          <h6 class="fw-600 mb-2 mb-sm-3 mb-md-0"  *ngIf="selectedBudgetHead=='5'" >Contingency Fund </h6>
                     </div>
                     <div class="card-body">
-                        <div class="row" *ngIf="selectedBudgetHead=='1' || selectedBudgetHead=='2' || selectedBudgetHead=='5'" >
+                        <div class="row" *ngIf="selectedBudgetHead=='2' || selectedBudgetHead=='4' || selectedBudgetHead=='5'" >
                             <div class="col-12 col-sm-12 col-md-6 col-lg-6">
                                 <fieldset class="mb-3">
                                     <legend class="text-lime-green">Physical</legend>
@@ -53,10 +67,10 @@
                                         <div class="col-12 col-sm-6 col-md-6 col-lg-6" *ngIf="physicalTarget<=1">
                                             <div class="form-floating mb-3 mb-sm-3 mb-md-0">
                                                 <select class="form-select" id="pt1" [(ngModel)]="physicalTargetAchievement">
-                                                    <option value="#">Select Physical Target</option>
-                                                    <option value="1">Not Initiated</option>
-                                                    <option value="2">In Progress</option>
-                                                    <option value="3">Completed</option>
+                                                    <option value="">Select Physical Achievement</option>
+                                                    <option value="Not Initiated">Not Initiated</option>
+                                                    <option value="In Progress">In Progress</option>
+                                                    <option value="Completed">Completed</option>
                                                 </select>
                                                 <label for="pt1">Physical Achievement</label>
                                             </div>
@@ -92,7 +106,7 @@
                                 </fieldset>
                             </div>
                         </div>
-                        <div class="card" *ngIf="selectedBudgetHead=='1' || selectedBudgetHead=='2'">
+                        <div class="card" *ngIf="selectedBudgetHead=='2' || selectedBudgetHead=='4'">
                             <div class="card-header bg-transparent">
                                 <div class="row align-items-center">
                                     <div class="col-8 col-sm-8 col-md-9 col-lg-10">
@@ -495,10 +509,10 @@
                                         <div class="col-12 col-sm-6 col-md-6 col-lg-6">
                                             <div class="form-floating mb-3 mb-sm-3 mb-md-0">
                                                 <select class="form-select" id="pa3">
-                                                    <option value="#">Select Physical Achievement</option>
-                                                    <option value="1">Not Initiated</option>
-                                                    <option value="2">In Progress</option>
-                                                    <option value="3">Completed</option>
+                                                     <option value="">Select Physical Achievement</option>
+                                                    <option value="Not Initiated">Not Initiated</option>
+                                                    <option value="In Progress">In Progress</option>
+                                                    <option value="Completed">Completed</option>
                                                 </select>
                                                 <label for="pa3">Physical Achievement</label>
                                             </div>
@@ -642,10 +656,10 @@
                                         <div class="col-12 col-sm-6 col-md-6 col-lg-6">
                                             <div class="form-floating mb-3 mb-sm-3 mb-md-0">
                                                 <select class="form-select" id="pa5">
-                                                    <option value="#">Select Physical Achievement</option>
-                                                    <option value="1">Not Initiated</option>
-                                                    <option value="2"> In Progress</option>
-                                                    <option value="3">Completed</option>
+                                                   <option value="">Select Physical Achievement</option>
+                                                    <option value="Not Initiated">Not Initiated</option>
+                                                    <option value="In Progress">In Progress</option>
+                                                    <option value="Completed">Completed</option>
                                                 </select>
                                                 <label for="pa5">Physical Achievement</label>
                                             </div>
