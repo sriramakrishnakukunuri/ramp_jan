@@ -54,7 +54,7 @@
                     <tr *ngFor="let training of tableList.trainingPrograms; let i = index">
                       <td class="text-center">{{ i + 1 }}</td>
                       <td>{{ training?.activity || 'N/A' }}</td>
-                      <td>{{ training?.subActivityId || 'N/A' }}</td>
+                      <td>{{ training?.subActivity || 'N/A' }}</td>
                       <td class="text-center">{{ training?.trainingTarget || 0 }}</td>
                       <td class="text-center">{{ training?.trainingAchievement || 0  }}</td>
                       <td class="text-center">{{ training?.trainingPercentage || 0 }}</td>
