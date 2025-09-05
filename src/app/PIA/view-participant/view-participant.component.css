@@ -8,8 +8,28 @@
     display: grid;
     place-items: center;
     position: relative;
-  }
-  .attachment .drop-zone__prompt{
+}
+.attachment .drop-zone__prompt{
     position: absolute; text-align: center;
-  }
-  .attachment input {height: 100px; border: solid;}
+}
+.attachment input {height: 100px; border: solid;}
+
+/* Radio button styles */
+.program-type-selector {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.program-type-radio {
+    display: inline-flex;
+    align-items: center;
+}
+
+.program-type-radio .mat-radio-button {
+    margin-right: 15px;
+}
+
+.fw-500 {
+    font-weight: 500;
+}

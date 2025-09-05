@@ -7,3 +7,19 @@
     margin-bottom: 10px;
     text-transform: capitalize;
 }
+
+/* Improve radio button styling */
+.form-check-input:checked {
+  background-color: #1976D2;
+  border-color: #1976D2;
+}
+
+.form-check-input:focus {
+  border-color: #1976D2;
+  box-shadow: 0 0 0 0.25rem rgba(25, 118, 210, 0.25);
+}
+
+/* Add spacing between radio buttons */
+.form-check {
+  margin-right: 1rem;
+}

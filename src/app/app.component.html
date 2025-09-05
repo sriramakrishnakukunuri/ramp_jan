@@ -17,7 +17,7 @@
         <div class="d-flex align-items-center">
           <ng-container *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]">
              <a class="navbar-brand me-2" href="#"  *ngIf="this.user?.agencyName=='ALEAP'">
-            <img src="../assets/img/aleapLogo.jpeg" alt="Aleap Logo" class="img-fluid" style="height: 47px; width: 100px;">
+            <img src="../assets/img/aleapLogo.jpeg" alt="Aleap Logo" class="img-fluid" style="height: 47px; width: 100px;scale: 2.3;padding-left: 25px;clip-path: inset(10px 0 10px 0);">
           </a>
           </ng-container>
          <ng-container *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR,Role.CALL_CENTER,Role.Admin]">
@@ -30,7 +30,7 @@
           </a>
 
          </ng-container>
-          <img src="../assets/img/GT Logo.png" alt="GT Logo" class="footer-logo" />
+          <!-- <img src="../assets/img/GT Logo.png" alt="GT Logo" class="footer-logo" /> -->
 
         </div>
         <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasNavbar2"
@@ -44,7 +44,7 @@
             <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
 
 
-<!--
+
               <li class="nav-item"
                 *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR,Role.CALL_CENTER,Role.Admin]">
                 <a class="nav-link" routerLink="/global-dashboard" routerLinkActive="active" id="dropdown3"
@@ -69,15 +69,15 @@
                   aria-expanded="false">
                   <span>Targets</span> <span class="bi bi-chevron-down"></span>
                 </a>
-                <ul class="dropdown-menu" aria-labelledby="homeDropdown"> -->
-                  <!-- <li><a class="dropdown-item" routerLink="/veiw-program" routerLinkActive="active">View Programs</a></li>                -->
-                  <!-- <li><a class="dropdown-item" routerLink="/view-agency-sessions" routerLinkActive="active">View Sessions</a></li>  -->
-                  <!-- <li><a class="dropdown-item"routerLink="/view-Completed-data" routerLinkActive="active">View Participants</a></li>     -->
-                  <!-- <li><a class="dropdown-item" routerLink="/physical-targets" routerLinkActive="active">Output
+                <ul class="dropdown-menu" aria-labelledby="homeDropdown"> 
+                  <li><a class="dropdown-item" routerLink="/veiw-program" routerLinkActive="active">View Programs</a></li>                
+                  <li><a class="dropdown-item" routerLink="/view-agency-sessions" routerLinkActive="active">View Sessions</a></li>  
+                  <li><a class="dropdown-item"routerLink="/view-Completed-data" routerLinkActive="active">View Participants</a></li>     
+                  <li><a class="dropdown-item" routerLink="/physical-targets" routerLinkActive="active">Output
                       Targets</a></li>
-                      <li><a class="dropdown-item" routerLink="/financial-targets" routerLinkActive="active">Output Acheivements</a></li> -->
-                  <!-- <li><a class="dropdown-item" routerLink="/bulk-expenditure" routerLinkActive="active">Bulk Expenditure</a></li> -->
-                <!-- </ul>
+                      <li><a class="dropdown-item" routerLink="/financial-targets" routerLinkActive="active">Output Acheivements</a></li> 
+                  <li><a class="dropdown-item" routerLink="/bulk-expenditure" routerLinkActive="active">Bulk Expenditure</a></li> 
+                </ul>
               </li>
               <li class="nav-item dropdown" *appHasRole="[Role.Admin]">
                 <a class="nav-link" href="#" id="homeDropdown" role="button" data-bs-toggle="dropdown"
@@ -86,14 +86,14 @@
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="homeDropdown">
                   <li><a class="dropdown-item" routerLink="/veiw-program" routerLinkActive="active">View Programs</a>
-                  </li> -->
-                  <!-- <li><a class="dropdown-item" routerLink="/view-agency-sessions" routerLinkActive="active">View Sessions</a></li>  -->
-                  <!-- <li><a class="dropdown-item" routerLink="/view-Completed-data" routerLinkActive="active">View
+                  </li>
+                  <li><a class="dropdown-item" routerLink="/view-agency-sessions" routerLinkActive="active">View Sessions</a></li>  
+                 <li><a class="dropdown-item" routerLink="/view-Completed-data" routerLinkActive="active">View
                       Participants</a></li>
                       <li><a class="dropdown-item" routerLink="/view-Completed-program-related" routerLinkActive="active">View Completed programs
                          </a></li>
-                  <li><a class="dropdown-item" routerLink="/bulk-expenditure" routerLinkActive="active">Bulk Expenditure</a></li> -->
-                <!-- </ul>
+                  <li><a class="dropdown-item" routerLink="/bulk-expenditure" routerLinkActive="active">Bulk Expenditure</a></li> 
+                 </ul>
               </li>
                 <li class="nav-item dropdown" *appHasRole="[Role.Admin]">
                 <a class="nav-link" href="#" id="homeDropdown" role="button" data-bs-toggle="dropdown"
@@ -130,38 +130,65 @@
                   <li><a class="dropdown-item" routerLink="/program-summary" routerLinkActive="active">Program
                       Summary</a></li>
                 </ul>
-              </li> -->
+              </li> 
 
-              <!-- <li class="nav-item dropdown" *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]">
+               <li class="nav-item dropdown" *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]">
                 <a class="nav-link" href="#" id="homeDropdown" role="button" data-bs-toggle="dropdown"
                   aria-expanded="false">
-                  <span>Program Creation</span> <span class="bi bi-chevron-down"></span>
+                  <span>Programs</span> <span class="bi bi-chevron-down"></span>
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="homeDropdown">
                   <li><a class="dropdown-item" routerLink="/program-creation" routerLinkActive="active">Add Program</a>
                   </li>
                   <li><a class="dropdown-item" routerLink="/add-sessions" routerLinkActive="active">Add Sessions</a>
                   </li>
+                  <li><a class="dropdown-item" routerLink="/attendance-Participant" routerLinkActive="active">Particpant
+                      Attendance Details</a></li>
+                <li><a class="dropdown-item" routerLink="/rawMaterials-Participant"
+                      routerLinkActive="active">Particpant Raw Material Details</a></li>
+
+                      <li><a class="dropdown-item" routerLink="/update-program-execution" routerLinkActive="active">Program
+                      Execution</a></li>
+
+
+
                   <li><a class="dropdown-item" routerLink="/veiw-program-creation" routerLinkActive="active">View My
                       Programs</a></li>
 
-                  <li><a class="dropdown-item" routerLink="/veiw-program" routerLinkActive="active">View All Agencies
-                      Programs</a></li>
+                      <li><a class="dropdown-item" routerLink="/view-Completed-program-related" routerLinkActive="active">View Completed programs
+                         </a></li>
+
+                  <!-- <li><a class="dropdown-item" routerLink="/veiw-program" routerLinkActive="active">View All Agencies
+                      Programs</a></li> -->
                 </ul>
-              </li> -->
-              <!-- <li class="nav-item dropdown" *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]">
+              </li> 
+               <li class="nav-item dropdown" *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]">
                 <a class="nav-link" href="#" id="dropdown2" role="button" data-bs-toggle="dropdown"
                   aria-expanded="false">
                   Participant Details <span class="bi bi-chevron-down"></span>
                 </a>
-                <ul class="dropdown-menu" aria-labelledby="dropdown2"> -->
-                  <!-- <li><a class="dropdown-item" routerLink="/update-program-execution" routerLinkActive="active">Program Execution</a></li> -->
-                  <!-- <li><a class="dropdown-item" routerLink="/add-participant-data" routerLinkActive="active">Add
+                <ul class="dropdown-menu" aria-labelledby="dropdown2">
+                   <!-- <li><a class="dropdown-item" routerLink="/update-program-execution" routerLinkActive="active">Program Execution</a></li> -->
+                   <li><a class="dropdown-item" routerLink="/add-participant-data" routerLinkActive="active">Add
                       Participant</a></li>
                   <li><a class="dropdown-item" routerLink="/view-participant-data" routerLinkActive="active">View
-                      Participant</a></li> -->
-                  <!-- <li><a class="dropdown-item" href="#">View Completed</a></li> -->
-                <!-- </ul>
+                      Participant</a></li> 
+                   <li><a class="dropdown-item" href="#">View Completed</a></li> 
+                 </ul>
+              </li>
+               <!-- <li class="nav-item dropdown" *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]">
+                <a class="nav-link" href="#" id="dropdown2" role="button" data-bs-toggle="dropdown"
+                  aria-expanded="false">
+                  Participant Details <span class="bi bi-chevron-down"></span>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="dropdown2">
+                   <li><a class="dropdown-item" routerLink="/update-program-execution" routerLinkActive="active">Program Execution</a></li>
+                   <li><a class="dropdown-item" routerLink="/add-participant-data" routerLinkActive="active">Add
+                      Participant</a></li>
+                  <li><a class="dropdown-item" routerLink="/view-participant-data" routerLinkActive="active">View
+                      Participant</a></li> 
+                   <li><a class="dropdown-item" href="#">View Completed</a></li> 
+                 </ul>
               </li>
               <li class="nav-item dropdown" *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]">
                 <a class="nav-link" href="#" id="dropdown2" role="button" data-bs-toggle="dropdown"
@@ -169,27 +196,23 @@
                   Program Execution <span class="bi bi-chevron-down"></span>
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="dropdown2">
-                  <li><a class="dropdown-item" routerLink="/attendance-Participant" routerLinkActive="active">Particpant
-                      Attendance Details</a></li>
-                  <li><a class="dropdown-item" routerLink="/rawMaterials-Participant"
-                      routerLinkActive="active">Particpant Raw Material Details</a></li>
-                  <li><a class="dropdown-item" routerLink="/update-program-execution" routerLinkActive="active">Program
-                      Execution</a></li>
+                 
+                 
+                  
                   <li><a class="dropdown-item" routerLink="/program-expenditure" routerLinkActive="active">Program
                       Expenditure</a></li>
                   <li><a class="dropdown-item" routerLink="/bulk-expenditure" routerLinkActive="active">Bulk
                       Expenditure</a></li>
-                   <li><a class="dropdown-item" routerLink="/program-summary" routerLinkActive="active">Program Summary</a></li> -->
-                  <!-- <li><a class="dropdown-item" routerLink="/add-participant-data" routerLinkActive="active">Add Participant</a></li>
-                                <li><a class="dropdown-item" routerLink="/view-participant-data" routerLinkActive="active">View Participant</a></li> -->
-                  <!-- <li><a class="dropdown-item" routerLink="/view-Completed-data" routerLinkActive="active">View
-                      Completed</a></li> -->
-                     <!--   <li><a class="dropdown-item" routerLink="/view-Completed-program-related" routerLinkActive="active">View Completed programs
-                         </a></li>
+                   <li><a class="dropdown-item" routerLink="/program-summary" routerLinkActive="active">Program Summary</a></li> 
+                   <li><a class="dropdown-item" routerLink="/add-participant-data" routerLinkActive="active">Add Participant</a></li>
+                                <li><a class="dropdown-item" routerLink="/view-participant-data" routerLinkActive="active">View Participant</a></li> 
+                   <li><a class="dropdown-item" routerLink="/view-Completed-data" routerLinkActive="active">View
+                      Completed</a></li>
+                      
                 </ul>
-              </li>
+              </li> -->
 
-              <li class="nav-item dropdown" *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]">
+              <!-- <li class="nav-item dropdown" *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]">
                 <a class="nav-link" href="#" id="homeDropdown" role="button" data-bs-toggle="dropdown"
                   aria-expanded="false">
                   <span>Finance</span> <span class="bi bi-chevron-down"></span>
@@ -200,9 +223,9 @@
                          </a></li>
 
                 </ul>
-              </li>
+              </li> -->
 
-              <li class="nav-item dropdown isDisabled" *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]">
+              <!-- <li class="nav-item dropdown isDisabled" *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]">
                 <a class="nav-link" href="#" id="dropdown3" role="button" data-bs-toggle="dropdown"
                   aria-expanded="false">
                   Update Outcomes <span class="bi bi-chevron-down"></span>
@@ -210,28 +233,28 @@
                 <ul class="dropdown-menu" aria-labelledby="dropdown3">
                   <li><a class="dropdown-item" routerLink="/capture-outcome" routerLinkActive="active">Capture
                       Outcome</a></li>
-                  <!-- <li><a class="dropdown-item" href="#">Capture Outcome</a></li>
-                                <li><a class="dropdown-item" href="#">Organisation Updates</a></li>                                 -->
-                  <!-- <li><a class="dropdown-item" routerLink="/shg-training" routerLinkActive="active">SHG Training
+                 <li><a class="dropdown-item" href="#">Capture Outcome</a></li>
+                                <li><a class="dropdown-item" href="#">Organisation Updates</a></li>                                 
+                  <li><a class="dropdown-item" routerLink="/shg-training" routerLinkActive="active">SHG Training
                       Status</a></li>
                 </ul>
-              </li>
+              </li> -->
               <li class="nav-item" *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]">
                 <a class="nav-link" id="homeDropdown" role="button" routerLink="/view-table-organization"
                   routerLinkActive="active" aria-expanded="false">
                   <span>Masters List</span>
                 </a>
-              </li> -->
+              </li> 
 
 
-              <!-- <li class="nav-item dropdown" *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]">
+               <li class="nav-item dropdown" *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]">
                 <a class="nav-link" href="#" id="homeDropdown" role="button" data-bs-toggle="dropdown"
                   aria-expanded="false">
-                   <span>ESPD Training</span> <span class="bi bi-chevron-down"></span>
+                   <span>ESDP Training</span> <span class="bi bi-chevron-down"></span>
                 </a>
                  <ul class="dropdown-menu" aria-labelledby="homeDropdown">
 
-                  <li><a class="dropdown-item" routerLink="/esdp-training" routerLinkActive="active">ESPD Application</a></li>
+                  <li><a class="dropdown-item" routerLink="/esdp-training" routerLinkActive="active">ESDP Application</a></li>
                   <li><a class="dropdown-item" routerLink="/view-application" routerLinkActive="active">View Application</a>
                   </li>
 
@@ -243,16 +266,16 @@
                   <span>Reports</span> <span class="bi bi-chevron-down"></span>
 
                 </a>
-                <ul class="dropdown-menu" aria-labelledby="homeDropdown">
+                <!-- <ul class="dropdown-menu" aria-labelledby="homeDropdown">
 
                   <li><a class="dropdown-item" routerLink="/program-summary" routerLinkActive="active">Program
                       Summary</a></li>
                   <li><a class="dropdown-item" routerLink="/collage-home" routerLinkActive="active">Create Collage</a>
                   </li>
 
-                </ul>
+                </ul> -->
               </li>
-              <li class="nav-item dropdown isDisabled" *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]">
+              <li class="nav-item dropdown" *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]">
                 <a class="nav-link" href="#" id="dropdown3" role="button" data-bs-toggle="dropdown"
                   aria-expanded="false">
                   Counsellor<span class="bi bi-chevron-down"></span>
@@ -279,274 +302,12 @@
                   </li>
 
                 </ul>
-              </li> -->
+              </li> 
             </ul>
           </div>
         </div>
         <div class="d-flex align-items-center justify-content-between" >
-          <div>
-            <ul class="navbar-nav justify-content-end flex-grow-1 pe-3" *ngIf="user?.email!='districts@gmail.com'">
-
-              <!-- new tab code starts here This is to handle the submenu toggle functionality  || 27th july 2025 -->
-              <li class="nav-item dropdown" style="position: relative;">
-                <a class="nav-link" href="#"  style="cursor:pointer;" data-bs-toggle="dropdown">
-                  <img src="../assets/img/9-dots.png" style="width: 30px;" alt="menu" />
-                </a>
-                <ul class="dropdown-menu shadow"
-                  style="min-width:220px; max-width:260px; box-shadow:0 4px 16px rgba(0,0,0,0.13); padding: 8px 0; border-radius: 8px; right:-100%; top:100%;">
-                  <!-- Dashboard -->
-                  <li *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR,Role.CALL_CENTER,Role.Admin]">
-                    <a class="dropdown-item" routerLink="/global-dashboard" routerLinkActive="active">Dashboard</a>
-                  </li>
-                  <!-- Program Participation Verification -->
-                  <li *appHasRole="[Role.CALL_CENTER]">
-                    <a class="dropdown-item" routerLink="/participant-details" routerLinkActive="active">Program Participation
-                      Verification</a>
-                  </li>
-                  <!-- Outcome Verification -->
-                  <li *appHasRole="[Role.CALL_CENTER]">
-                    <a class="dropdown-item" routerLink="/outcome-verification" routerLinkActive="active">Outcome Verification</a>
-                  </li>
-                  <!-- Targets (submenu) -->
-                  <li *appHasRole="[Role.Admin]" class="dropdown-submenu" style="position:relative;">
-                    <a [ngClass]="{'submenu-open': openSubMenus['targets']}"
-                      class="dropdown-item d-flex justify-content-between align-items-center" href="#"
-                      (click)="toggleSubMenu('targets', $event)">
-                      <span>Targets</span>
-                      <span class="bi"
-                        [ngClass]="{'bi-chevron-down': !openSubMenus['targets'], 'bi-chevron-up': openSubMenus['targets']}"></span>
-                    </a>
-                    <ul class="dropdown-menu show shadow submenu-static" *ngIf="openSubMenus['targets']"
-                      style="position:static;background: #dfebeb; min-width:180px;">
-                      <li><a class="dropdown-item" routerLink="/physical-targets" routerLinkActive="active">Output Targets</a></li>
-                      <li><a class="dropdown-item" routerLink="/financial-targets" routerLinkActive="active">Output Achievements</a>
-                      </li>
-                    </ul>
-                  </li>
-                  <!-- training targets -->
-                    <li *appHasRole="[Role.Admin]">
-                    <a class="dropdown-item" routerLink="/training-targets" routerLinkActive="active">Training Targets</a>
-                  </li>
-                  <!-- non training targets -->
-
-                   <li *appHasRole="[Role.Admin]">
-                    <a class="dropdown-item" routerLink="/progress-monitoring" routerLinkActive="active">Progress Monitoring</a>
-                  </li>
-                  <!-- Programs Per Agencies (submenu) -->
-                  <li *appHasRole="[Role.Admin]" class="dropdown-submenu" style="position:relative;">
-                    <a class="dropdown-item d-flex justify-content-between align-items-center" href="#"
-                      (click)="toggleSubMenu('programs', $event)">
-                      <span>Programs Per Agencies</span>
-                      <span class="bi"
-                        [ngClass]="{'bi-chevron-down': !openSubMenus['programs'], 'bi-chevron-up': openSubMenus['programs']}"></span>
-                    </a>
-                    <ul class="dropdown-menu show shadow" *ngIf="openSubMenus['programs']"
-                      style="position:static; background: #dfebeb; min-width:180px;">
-                      <li><a class="dropdown-item" routerLink="/veiw-program" routerLinkActive="active">View Programs</a></li>
-                      <li><a class="dropdown-item" routerLink="/view-Completed-data" routerLinkActive="active">View Participants</a>
-                      </li>
-                      <li><a class="dropdown-item" routerLink="/view-Completed-program-related" routerLinkActive="active">View
-                          Completed programs</a></li>
-                    </ul>
-                  </li>
-                  <!-- Finance (Admin) -->
-                  <li *appHasRole="[Role.Admin]" class="dropdown-submenu" style="position:relative;">
-                    <a class="dropdown-item d-flex justify-content-between align-items-center" href="#"
-                      (click)="toggleSubMenu('financeAdmin', $event)">
-                      <span>Finance</span>
-                      <span class="bi"
-                        [ngClass]="{'bi-chevron-down': !openSubMenus['financeAdmin'], 'bi-chevron-up': openSubMenus['financeAdmin']}"></span>
-                    </a>
-                    <ul class="dropdown-menu show shadow" *ngIf="openSubMenus['financeAdmin']"
-                      style="position:static; background: #dfebeb; min-width:180px;">
-                      <li><a class="dropdown-item" routerLink="/expenditure-verification" routerLinkActive="active">Expenditure
-                          Verification</a></li>
-                    </ul>
-                  </li>
-                  <!-- Masters List (Admin) -->
-                  <li *appHasRole="[Role.Admin]">
-                    <a class="dropdown-item" routerLink="/view-table-organization" routerLinkActive="active">Masters List</a>
-                  </li>
-                  <!-- Program Monitoring (Admin) -->
-                  <!-- <li *appHasRole="[Role.Admin]">
-                    <a class="dropdown-item" routerLink="/program-monitoring" routerLinkActive="active">Program Monitoring</a>
-                  </li> -->
-                  <!-- Reports (Admin) -->
-                  <li *appHasRole="[Role.Admin]" class="dropdown-submenu" style="position:relative;">
-                    <a class="dropdown-item d-flex justify-content-between align-items-center" href="#"
-                      (click)="toggleSubMenu('reportsAdmin', $event)">
-                      <span>Reports</span>
-                      <span class="bi"
-                        [ngClass]="{'bi-chevron-down': !openSubMenus['reportsAdmin'], 'bi-chevron-up': openSubMenus['reportsAdmin']}"></span>
-                    </a>
-                    <ul class="dropdown-menu show shadow" *ngIf="openSubMenus['reportsAdmin']"
-                      style="position:static; background: #dfebeb;min-width:180px;">
-                      <li><a class="dropdown-item" routerLink="/collage-home" routerLinkActive="active">Create Collage</a></li>
-                      <li><a class="dropdown-item" routerLink="/program-summary" routerLinkActive="active">Program Summary</a></li>
-                    </ul>
-                  </li>
-                  <!-- Program Creation (Agency) -->
-                  <li *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]" class="dropdown-submenu" style="position:relative;">
-                    <a class="dropdown-item d-flex justify-content-between align-items-center" href="#"
-                      (click)="toggleSubMenu('programCreation', $event)">
-                      <span>Program Creation</span>
-                      <span class="bi"
-                        [ngClass]="{'bi-chevron-down': !openSubMenus['programCreation'], 'bi-chevron-up': openSubMenus['programCreation']}"></span>
-                    </a>
-                    <ul class="dropdown-menu show shadow" *ngIf="openSubMenus['programCreation']"
-                      style="position:static;background: #dfebeb; min-width:180px;">
-                      <li><a class="dropdown-item" routerLink="/program-creation" routerLinkActive="active">Add Program</a></li>
-                      <li><a class="dropdown-item" routerLink="/add-sessions" routerLinkActive="active">Add Sessions</a></li>
-                      <li><a class="dropdown-item" routerLink="/veiw-program-creation" routerLinkActive="active">View My Programs</a>
-                      </li>
-                      <li><a class="dropdown-item" routerLink="/veiw-program" routerLinkActive="active">View All Agencies Programs</a>
-                      </li>
-                    </ul>
-                  </li>
-                  <!-- Participant Details (Agency) -->
-                  <li *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]" class="dropdown-submenu" style="position:relative;">
-                    <a class="dropdown-item d-flex justify-content-between align-items-center" href="#"
-                      (click)="toggleSubMenu('participantDetails', $event)">
-                      <span>Participant Details</span>
-                      <span class="bi"
-                        [ngClass]="{'bi-chevron-down': !openSubMenus['participantDetails'], 'bi-chevron-up': openSubMenus['participantDetails']}"></span>
-                    </a>
-                    <ul class="dropdown-menu show shadow" *ngIf="openSubMenus['participantDetails']"
-                      style="position:static; background: #dfebeb;min-width:180px;">
-                      <li><a class="dropdown-item" routerLink="/add-participant-data" routerLinkActive="active">Add Participant</a>
-                      </li>
-                      <li><a class="dropdown-item" routerLink="/view-participant-data" routerLinkActive="active">View Participant</a>
-                        <!-- <li><a class="dropdown-item" routerLink="/upload-program-participate" routerLinkActive="active">Upload Participant</a> -->
-                      </li>
-                    </ul>
-                  </li>
-                  <!-- Program Execution (Agency) -->
-                  <li *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]" class="dropdown-submenu" style="position:relative;">
-                    <a class="dropdown-item d-flex justify-content-between align-items-center" href="#"
-                      (click)="toggleSubMenu('programExecution', $event)">
-                      <span>Program Execution</span>
-                      <span class="bi"
-                        [ngClass]="{'bi-chevron-down': !openSubMenus['programExecution'], 'bi-chevron-up': openSubMenus['programExecution']}"></span>
-                    </a>
-                    <ul class="dropdown-menu show shadow" *ngIf="openSubMenus['programExecution']"
-                      style="position:static;background: #dfebeb; min-width:180px;">
-                      <li><a class="dropdown-item" routerLink="/attendance-Participant" routerLinkActive="active">Participant
-                          Attendance Details</a></li>
-                      <li><a class="dropdown-item" routerLink="/rawMaterials-Participant" routerLinkActive="active">Participant Raw
-                          Material Details</a></li>
-                      <li><a class="dropdown-item" routerLink="/update-program-execution" routerLinkActive="active">Program
-                          Execution</a></li>
-                      <li><a class="dropdown-item" routerLink="/program-expenditure" routerLinkActive="active">Program Expenditure</a>
-                      </li>
-                      <li><a class="dropdown-item" routerLink="/bulk-expenditure" routerLinkActive="active">Bulk Expenditure</a></li>
-                      <li><a class="dropdown-item" routerLink="/view-Completed-program-related" routerLinkActive="active">View
-                          Completed programs</a></li>
-                    </ul>
-                  </li>
-                  <!-- Finance (Agency) -->
-                  <li *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]" class="dropdown-submenu" style="position:relative;">
-                    <a class="dropdown-item d-flex justify-content-between align-items-center" href="#"
-                      (click)="toggleSubMenu('financeAgency', $event)">
-                      <span>Finance</span>
-                      <span class="bi"
-                        [ngClass]="{'bi-chevron-down': !openSubMenus['financeAgency'], 'bi-chevron-up': openSubMenus['financeAgency']}"></span>
-                    </a>
-                    <ul class="dropdown-menu show shadow" *ngIf="openSubMenus['financeAgency']"
-                      style="position:static; background: #dfebeb;min-width:180px;">
-                      <li><a class="dropdown-item" routerLink="/expenditure-verification" routerLinkActive="active">Expenditure
-                          Verification</a></li>
-                    </ul>
-                  </li>
-                  <!-- Update Outcomes (Agency) -->
-                  <li *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]" class="dropdown-submenu" style="position:relative;">
-                    <a class="dropdown-item d-flex justify-content-between align-items-center" href="#"
-                      (click)="toggleSubMenu('updateOutcomes', $event)">
-                      <span>Update Outcomes</span>
-                      <span class="bi"
-                        [ngClass]="{'bi-chevron-down': !openSubMenus['updateOutcomes'], 'bi-chevron-up': openSubMenus['updateOutcomes']}"></span>
-                    </a>
-                    <ul class="dropdown-menu show shadow" *ngIf="openSubMenus['updateOutcomes']"
-                      style="position:static; background: #dfebeb;min-width:180px;">
-                      <li><a class="dropdown-item" routerLink="/capture-outcome" routerLinkActive="active">Capture Outcome</a></li>
-                      <li><a class="dropdown-item isDisabled" routerLink="/shg-training" routerLinkActive="active">SHG Training Status</a></li>
-                    </ul>
-                  </li>
-                  <ng-container *ngIf="this.user?.agencyName=='ALEAP' || this.user.agencyId==1">
-                     <li *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]" >
-                    <a class="dropdown-item" routerLink="/non-training-targets" routerLinkActive="active">Non Training Targets</a>
-                  </li>
-                  </ng-container>
-
-                  <!-- Masters List (Agency) -->
-                  <li *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]">
-                    <a class="dropdown-item" routerLink="/view-table-organization" routerLinkActive="active">Masters List</a>
-                  </li>
-                  <!-- ESPD Training (Agency) -->
-                  <li *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]" class="dropdown-submenu isDisabled" style="position:relative;">
-                    <a class="dropdown-item d-flex justify-content-between align-items-center" href="#"
-                      (click)="toggleSubMenu('esdpTraining', $event)">
-                      <span>ESPD Training</span>
-                      <span class="bi"
-                        [ngClass]="{'bi-chevron-down': !openSubMenus['esdpTraining'], 'bi-chevron-up': openSubMenus['esdpTraining']}"></span>
-                    </a>
-                    <ul class="dropdown-menu show shadow " *ngIf="openSubMenus['esdpTraining']"
-                      style="position:static; background: #dfebeb;min-width:180px;">
-                      <li><a class="dropdown-item" routerLink="/esdp-training" routerLinkActive="active">ESPD Application</a></li>
-                      <li><a class="dropdown-item" routerLink="/view-application" routerLinkActive="active">View Application</a></li>
-                    </ul>
-                  </li>
-                  <!-- Reports (Agency) -->
-                  <li *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]" class="dropdown-submenu" style="position:relative;">
-                    <a class="dropdown-item d-flex justify-content-between align-items-center" href="#"
-                      (click)="toggleSubMenu('reportsAgency', $event)">
-                      <span>Reports</span>
-                      <span class="bi"
-                        [ngClass]="{'bi-chevron-down': !openSubMenus['reportsAgency'], 'bi-chevron-up': openSubMenus['reportsAgency']}"></span>
-                    </a>
-                    <ul class="dropdown-menu show shadow" *ngIf="openSubMenus['reportsAgency']"
-                      style="position:static; background: #dfebeb;min-width:180px;">
-                      <li><a class="dropdown-item" routerLink="/program-summary" routerLinkActive="active">Program Summary</a></li>
-                      <li><a class="dropdown-item" routerLink="/collage-home" routerLinkActive="active">Create Collage</a></li>
-                    </ul>
-                  </li>
-                  <!-- Counsellor (Agency) -->
-                  <li *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]" class="dropdown-submenu isDisabled" style="position:relative;">
-                    <a class="dropdown-item d-flex justify-content-between align-items-center" href="#"
-                      (click)="toggleSubMenu('counsellor', $event)">
-                      <span>Counsellor</span>
-                      <span class="bi"
-                        [ngClass]="{'bi-chevron-down': !openSubMenus['counsellor'], 'bi-chevron-up': openSubMenus['counsellor']}"></span>
-                    </a>
-                    <ul class="dropdown-menu show shadow" *ngIf="openSubMenus['counsellor']"
-                      style="position:static; background: #dfebeb;min-width:180px;">
-                      <li><a class="dropdown-item" routerLink="/MSME-councellor-registeration" routerLinkActive="active">Counsellor
-                          Registration</a></li>
-                      <li><a class="dropdown-item" routerLink="/assign-Counsellor" routerLinkActive="active">Assign Counsellor</a>
-                      </li>
-                      <li><a class="dropdown-item" routerLink="/view-MSME-councellor" routerLinkActive="active">View Counsellor
-                          Registration</a></li>
-                    </ul>
-                  </li>
-                  <!-- Others (Agency) -->
-                  <li *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]" class="dropdown-submenu isDisabled" style="position:relative;">
-                    <a class="dropdown-item d-flex justify-content-between align-items-center" href="#"
-                      (click)="toggleSubMenu('others', $event)">
-                      <span>Others</span>
-                      <span class="bi"
-                        [ngClass]="{'bi-chevron-down': !openSubMenus['others'], 'bi-chevron-up': openSubMenus['others']}"></span>
-                    </a>
-                    <ul class="dropdown-menu show shadow" *ngIf="openSubMenus['others']"
-                      style="position:static;background: #dfebeb; min-width:180px;">
-                      <li><a class="dropdown-item" routerLink="/Registration" routerLinkActive="active">SHG / Startup Registration</a>
-                      </li>
-                      <li><a class="dropdown-item" routerLink="/assessment" routerLinkActive="active">Startups Assessments</a></li>
-                    </ul>
-                  </li>
-                </ul>
-              </li>
-              <!-- new tab code ends here -->
-               </ul>
-          </div>
+        
 
           <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar2"
             aria-controls="offcanvasNavbar2" aria-label="Toggle navigation">

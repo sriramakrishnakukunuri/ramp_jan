@@ -27,6 +27,8 @@ export class ViewParticipantComponent implements OnInit {
   
     ngOnInit(): void {
       this.loginsessionDetails = JSON.parse(sessionStorage.getItem('user') || '{}');  
+      // Set default program type
+      this.programType = 'RAMP';
       if(this.loginsessionDetails.userRole == 'ADMIN') {
         this.getAgenciesList()
       }
@@ -490,7 +492,24 @@ export class ViewParticipantComponent implements OnInit {
     link.click();
     link.remove();
   }
+  // Add these properties to your component class
+
+  // Inside the class
+  programType: string = 'RAMP';
+  selectedOtherProgram: string = '';
+  otherProgramOptions = [
+    { value: 'others1', name: 'Others1' },
+    { value: 'others2', name: 'Others2' }
+  ];
+
+  // Add this method to handle selection from the Others dropdown
+  handleOtherProgramSelection(event: any) {
+    console.log('Selected other program:', event.value);
+    // Here you can implement the logic for what happens when an other program is selected
+    // For example, fetching data specific to the selected other program
+    this.submitedData = [];
+    // You may want to make API calls or set other values based on selection
+  }
   }
 
 
-  
