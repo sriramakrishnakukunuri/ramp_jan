@@ -105,7 +105,7 @@ export const APIS = {
         getResourceList: API_BASE_URL + '/non-training/resources/non-training-activity?nonTrainingActivityId=',
         getTravelList: API_BASE_URL + '/api/travel/',
         updateTarets: API_BASE_URL + '/progress/monitoring/non-training-achievement/',
-        getNonTrainingtargets: API_BASE_URL + '/progress/monitoring/non-training/physical/financial/{activityId}?activityId=',
+        getNonTrainingtargets: API_BASE_URL + '/progress/monitoring/non-training/physical/financial/',
         saveNonTrainingtargetsAleapPriliminary: API_BASE_URL + '/non-training',
         saveNonTrainingtargetsCodeIT: API_BASE_URL + '/non-training/save',
         updateNonTrainingtargetsAleapPriliminary: API_BASE_URL + '/non-training/update/',
