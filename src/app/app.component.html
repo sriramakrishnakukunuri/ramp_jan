@@ -490,13 +490,13 @@
                   <li *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]" class="dropdown-submenu" style="position:relative;">
                     <a class="dropdown-item d-flex justify-content-between align-items-center" href="#"
                       (click)="toggleSubMenu('esdpTraining', $event)">
-                      <span>ESPD Training</span>
+                      <span>ESDP Training</span>
                       <span class="bi"
                         [ngClass]="{'bi-chevron-down': !openSubMenus['esdpTraining'], 'bi-chevron-up': openSubMenus['esdpTraining']}"></span>
                     </a>
                     <ul class="dropdown-menu show shadow " *ngIf="openSubMenus['esdpTraining']"
                       style="position:static; background: #dfebeb;min-width:180px;">
-                      <li><a class="dropdown-item" routerLink="/esdp-training" routerLinkActive="active">ESPD Application</a></li>
+                      <li><a class="dropdown-item" routerLink="/esdp-training" routerLinkActive="active">ESDP Application</a></li>
                       <li><a class="dropdown-item" routerLink="/view-application" routerLinkActive="active">View Application</a></li>
                     </ul>
                   </li>
