@@ -343,7 +343,7 @@ createForm(): FormGroup {
         this.financialForm.get('bankName')?.setValidators(null);
         this.financialForm.get('accountNumber')?.setValidators(null);
         this.financialForm.get('transactionId')?.setValidators(null);
-        this.financialForm.get('ifscCode')?.setValidators(null);
+        this.financialForm.get('ifscCode')?.setValidators(Validators.pattern(/^[A-Z]{4}0[A-Z0-9]{6}$/));
         this.financialForm.get('bankName')?.enable();
         this.financialForm.get('accountNumber')?.enable();
         this.financialForm.get('transactionId')?.enable();
