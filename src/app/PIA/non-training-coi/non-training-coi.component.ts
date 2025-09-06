@@ -63,7 +63,7 @@ export class NonTrainingCoiComponent implements OnInit {
           // this.toastrService.error(error.message);
         });
       }
-  selectedBudgetHead: string = '1';
+  selectedBudgetHead: string = '26';
   physicalTargetAchievement: any = '';
   physicalTarget: any = 0;
   financialTarget: any = 0;
@@ -83,14 +83,14 @@ export class NonTrainingCoiComponent implements OnInit {
           this.physicalTargetAchievement = this.TargetDetails?.physicalTargetAchievement || 0;
           this.financialTargetAchievement = this.TargetDetails?.financialTargetAchievement || 0;
           console.log('TargetDetails:', this.TargetDetails);
-          if(this.selectedBudgetHead=='1' || this.selectedBudgetHead=='11'){
+          if( this.selectedBudgetHead=='27' || this.selectedBudgetHead=='28'){
             this.getPreliminaryDataById()
 
           }
           else if(this.selectedBudgetHead=='19'){
             this.getTravelDataBySubActive()
           }
-          else if(this.selectedBudgetHead=='12' || this.selectedBudgetHead=='13' || this.selectedBudgetHead=='14' || this.selectedBudgetHead=='15' || this.selectedBudgetHead=='16' || this.selectedBudgetHead=='17'){
+          else if(this.selectedBudgetHead=='26'){
             this.getResourceList()
             this.getContingencyDataById()
             this.getPaymentsDataById()
@@ -98,15 +98,15 @@ export class NonTrainingCoiComponent implements OnInit {
 
           
         }, (error) => {
-           if(this.selectedBudgetHead=='1' || this.selectedBudgetHead=='11'){
-            this.getPreliminaryDataById()
+                    if(this.selectedBudgetHead=='26' || this.selectedBudgetHead=='27' || this.selectedBudgetHead=='28'){
+                 this.getPreliminaryDataById()
 
           }
 
            else if(this.selectedBudgetHead=='19'){
             this.getTravelDataBySubActive()
           }
-          else if(this.selectedBudgetHead=='11' || this.selectedBudgetHead=='12' || this.selectedBudgetHead=='13' || this.selectedBudgetHead=='14' || this.selectedBudgetHead=='15' || this.selectedBudgetHead=='16' || this.selectedBudgetHead=='17'){
+          else if(this.selectedBudgetHead=='26'){
             this.getResourceList()
             this.getContingencyDataById()
             this.getPaymentsDataById()

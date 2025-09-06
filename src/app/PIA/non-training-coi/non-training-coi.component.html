@@ -44,16 +44,16 @@
                 </div>
 
                 <!-- begin:: Preliminary survey for selection of potential SHGs -->
-                <div class="card budgets mb-3 " *ngIf="selectedBudgetHead=='1' || selectedBudgetHead=='11' || selectedBudgetHead=='12' || selectedBudgetHead=='13' || selectedBudgetHead=='14' || selectedBudgetHead=='15' || selectedBudgetHead=='16' || selectedBudgetHead=='17' || selectedBudgetHead=='19'">
+                <div class="card budgets mb-3 " *ngIf="selectedBudgetHead=='26' || selectedBudgetHead=='27' || selectedBudgetHead=='28'">
 
                     <div class="card-header bg-transparent">
-                        <h6 class="fw-600 mb-2 mb-sm-3 mb-md-0" *ngIf="selectedBudgetHead=='1'" >IT Infrastructure Setup</h6>
+                        <!-- <h6 class="fw-600 mb-2 mb-sm-3 mb-md-0" *ngIf="selectedBudgetHead=='1'" >IT Infrastructure Setup</h6>
                         <h6 class="fw-600 mb-2 mb-sm-3 mb-md-0" *ngIf="selectedBudgetHead=='12' || selectedBudgetHead=='13' || selectedBudgetHead=='14' || selectedBudgetHead=='15' || selectedBudgetHead=='16' || selectedBudgetHead=='17'" >Staff</h6>
-                         <h6 class="fw-600 mb-2 mb-sm-3 mb-md-0"  *ngIf="selectedBudgetHead=='12'" >Consumables </h6>
-                          <h6 class="fw-600 mb-2 mb-sm-3 mb-md-0"  *ngIf="selectedBudgetHead=='19'" >   Travel and Transport </h6>
+                         <h6 class="fw-600 mb-2 mb-sm-3 mb-md-0"  *ngIf="selectedBudgetHead=='12'" >Consumables </h6> -->
+                          <!-- <h6 class="fw-600 mb-2 mb-sm-3 mb-md-0"  *ngIf="selectedBudgetHead=='19'" >   Travel and Transport </h6> -->
                     </div>
                     <div class="card-body">
-                        <div class="row" *ngIf="selectedBudgetHead=='1' || selectedBudgetHead=='11' || selectedBudgetHead=='12' || selectedBudgetHead=='13' || selectedBudgetHead=='14' || selectedBudgetHead=='15' || selectedBudgetHead=='16' || selectedBudgetHead=='17' || selectedBudgetHead=='19'" >
+                        <div class="row" *ngIf="selectedBudgetHead=='26' || selectedBudgetHead=='27' || selectedBudgetHead=='28' || selectedBudgetHead=='13' || selectedBudgetHead=='14' || selectedBudgetHead=='15' || selectedBudgetHead=='16' || selectedBudgetHead=='17' || selectedBudgetHead=='19'" >
                             <div class="col-12 col-sm-12 col-md-6 col-lg-6">
                                 <fieldset class="mb-3">
                                     <legend class="text-lime-green">Physical</legend>
@@ -107,7 +107,12 @@
                                 </fieldset>
                             </div>
                         </div>
-                         <div class="card" *ngIf="selectedBudgetHead=='1' || selectedBudgetHead=='11'">
+
+                        <!-- STARTS from here New roles changes -->
+                  
+
+                       
+                        <div class="card" *ngIf="selectedBudgetHead=='28'">
                             <div class="card-header bg-transparent">
                                 <div class="row align-items-center">
                                     <div class="col-8 col-sm-8 col-md-9 col-lg-10">
@@ -121,59 +126,68 @@
                                 </div>
                             </div>
                             <div class="card-body">                                
-                                <table id="view-Priliminary" class="table table-bordered nowrap w-100 trainingTable">
-                                    <thead class="bg-lime-green text-white">
-                                        <tr>
-                                            <th>S.No</th>
-                                              <th>Date of Purchase</th>
-                                            <th>Category</th>
-                                            <th>Item Details</th>
-                                            <th>Expenditure (in Rs.)</th>
-                                            <th>Bill No.</th>
-                                            <th>Bill Date</th>
-                                            <th>Mode Of Payment</th>
-                                            <th>Payee Name</th>
-                                            <th>Transcation ID</th>
-                                            <th>Bank</th>
-                                            <th>IFSC Code</th>
-                                            <!-- <th>Purpose</th> -->
-                                            <!-- <th>Bill Invoice</th> -->
-                                            <th class="text-center">Edit / Delete</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                         <tr *ngIf="!getPreliminaryData || getPreliminaryData.length === 0">
-                                                <td colspan="10" class="text-center text-muted">Data Not available.</td>
-                                        </tr>
-                                        <tr *ngFor="let preliminary of getPreliminaryData; let i = index">
-                                            <td>{{ i + 1 }}</td>
-                                            <td>{{ preliminary?.paymentDate  }}</td>
-                                            <td>{{ preliminary?.category  }}</td>
-                                              <td>{{ preliminary?.purpose  }}</td>
-                                                
-                                            <!-- <td>{{ preliminary.billDate | date: 'dd-MM-yyyy' }}</td> -->
-                                            <td>{{ preliminary?.expenditureAmount }}</td>
-                                            <td>{{ preliminary?.billNo }}</td>
-                                            <td>{{ preliminary?.billDate  }}</td>
-                                            <td>{{ preliminary?.modeOfPayment }}</td>
-                                            <td>{{ preliminary?.payeeName }}</td>
-                                            <td>{{ preliminary?.transactionId }}</td>
-                                            <td>{{ preliminary?.bankName }}</td>
-                                            <td>{{ preliminary?.ifscCode }}</td>
-                                            <!-- <td>{{ preliminary?.purpose }}</td> -->
-                                            <!-- <td class="text-center">
-                                                <a href="#" class="btn btn-default text-primary btn-sm"><span class="bi bi-eye"></span></a>
-                                            </td> -->
-                                            <td class="text-center">
-                                                <button type="button" class="btn btn-default text-lime-green btn-sm" (click)="openModel('edit',preliminary)"><span class="bi bi-pencil"></span></button>
-                                                <button type="button" class="btn btn-default text-danger btn-sm" (click)="deletePreliminary(preliminary?.id)"><span class="bi bi-trash"></span></button>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                               <table id="view-Priliminary" class="table table-bordered nowrap w-100 trainingTable">
+                                <thead class="bg-lime-green text-white">
+                                  <tr>
+                                    <th>S.No</th>
+                                    <th>Category</th>
+                                    <th>Payment Date</th>
+                                    <th>Expenditure Amount</th>
+                                    <th>Bill No.</th>
+                                    <th>Bill Date</th>
+                                    <th>Mode Of Payment</th>
+                                    <th>Payee Name</th>
+                                    <th>Account Number</th>
+                                    <th>Bank Name</th>
+                                    <th>IFSC Code</th>
+                                    <th>Transaction Id</th>
+                                    <th>Purpose</th>
+                                    <th>Bill Invoice</th>
+                                    <th class="text-center">Edit / Delete</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr *ngIf="!getPreliminaryData || getPreliminaryData.length === 0">
+                                    <td colspan="15" class="text-center text-muted">Data Not available.</td>
+                                  </tr>
+                                  <tr *ngFor="let preliminary of getPreliminaryData; let i = index">
+                                    <td>{{ i + 1 }}</td>
+                                    <td>{{ preliminary?.category }}</td>
+                                    <td>{{ preliminary?.paymentDate }}</td>
+                                    <td>{{ preliminary?.expenditureAmount }}</td>
+                                    <td>{{ preliminary?.billNo }}</td>
+                                    <td>{{ preliminary?.billDate }}</td>
+                                    <td>{{ preliminary?.modeOfPayment }}</td>
+                                    <td>{{ preliminary?.payeeName }}</td>
+                                    <td>{{ preliminary?.accountNumber }}</td>
+                                    <td>{{ preliminary?.bankName }}</td>
+                                    <td>{{ preliminary?.ifscCode }}</td>
+                                    <td>{{ preliminary?.transactionId }}</td>
+                                    <td>{{ preliminary?.purpose }}</td>
+                                    <td class="text-center">
+                                      <a href="#" class="btn btn-default text-primary btn-sm" *ngIf="preliminary?.uploadBillUrl">
+                                        <span class="bi bi-eye"></span>
+                                      </a>
+                                    </td>
+                                    <td class="text-center">
+                                      <button type="button" class="btn btn-default text-lime-green btn-sm" (click)="openModel('edit', preliminary)">
+                                        <span class="bi bi-pencil"></span>
+                                      </button>
+                                      <button type="button" class="btn btn-default text-danger btn-sm" (click)="deletePreliminary(preliminary?.id)">
+                                        <span class="bi bi-trash"></span>
+                                      </button>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
                             </div>
                         </div>
-                         <div class="card" *ngIf="selectedBudgetHead=='19'">
+
+
+
+
+
+                         <div class="card" *ngIf="selectedBudgetHead=='27'">
                             <div class="card-header bg-transparent">
                                 <div class="row align-items-center">
                                     <div class="col-8 col-sm-8 col-md-9 col-lg-10">
@@ -181,68 +195,72 @@
                                     </div>
                                     <div class="col-4 col-sm-4 col-md-3 col-lg-2">
                                         <div class="text-end">
-                                            <button type="button" class="btn btn-sm btn-lime-green" (click)="openModelTravel('add')"><span class="bi bi-plus-lg"></span> Add</button>
-                                        </div>
+                                            <button type="button" class="btn btn-sm btn-lime-green" (click)="openModel('add')"><span class="bi bi-plus-lg"></span> Add</button>
+                                        
+                                          </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="card-body">                                
-                                <table id="view-Priliminary" class="table table-bordered nowrap w-100 trainingTable">
-                                    <thead class="bg-lime-green text-white">
-                                        <tr>
-                                            <th>S.No</th>
-                                           <th>Date of Travel</th>
-                                            <th>Purpose Of Travel</th>
-                                            <th>Mode Of Travel</th>
-                                            <th>Destination</th>
-                                            <th>No. of persons travelled</th>
-                                            <th>Amount</th>
-                                            <th>Bill No.</th>
-                                            <th>Bill Date</th>
-                                            <th>Mode Of Payment</th>
-                                            <th>Payee Name</th>
-                                            <th>Transcation ID</th>
-                                            <th>Bank</th>
-                                            <th>IFSC Code</th>
-                                            <th>Purpose</th>
-                                            <!-- <th>Bill Invoice</th> -->
-                                            <th class="text-center">Edit / Delete</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                         <tr *ngIf="!travelList || travelList.length === 0">
-                                                <td colspan="10" class="text-center text-muted">Data Not available.</td>
-                                        </tr>
-                                        <tr *ngFor="let preliminary of travelList; let i = index">
-                                            <td>{{ i + 1 }}</td>
-                                            <td>{{ preliminary?.dateOfTravel  }}</td>
-                                            <td>{{ preliminary?.purposeOfTravel  }}</td>
-                                            <td>{{ preliminary?.modeOfTravel  }}</td>
-                                            <td>{{ preliminary?.destination  }}</td>
-                                            <td>{{ preliminary?.noOfPersonsTraveled  }}</td>
-                                            <td>{{ preliminary?.amount  }}</td>
-                                            <!-- <td>{{ preliminary.billDate | date: 'dd-MM-yyyy' }}</td> -->
-                                            <td>{{ preliminary?.billNo }}</td>
-                                            <td>{{ preliminary?.billDate  }}</td>
-                                            <td>{{ preliminary?.modeOfPayment }}</td>
-                                            <td>{{ preliminary?.payeeName }}</td>
-                                            <td>{{ preliminary?.transactionId }}</td>
-                                            <td>{{ preliminary?.bankName }}</td>
-                                            <td>{{ preliminary?.ifscCode }}</td>
-                                            <td>{{ preliminary?.purpose }}</td>
-                                            <!-- <td class="text-center">
-                                                <a href="#" class="btn btn-default text-primary btn-sm"><span class="bi bi-eye"></span></a>
-                                            </td> -->
-                                            <td class="text-center">
-                                                <button type="button" class="btn btn-default text-lime-green btn-sm" (click)="openModelTravel('edit',preliminary)"><span class="bi bi-pencil"></span></button>
-                                                <button type="button" class="btn btn-default text-danger btn-sm" (click)="deleteTravel(preliminary?.travelTransportId)"><span class="bi bi-trash"></span></button>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                              <table id="view-Priliminary" class="table table-bordered nowrap w-100 trainingTable">
+                                <thead class="bg-lime-green text-white">
+                                  <tr>
+                                    <th>S.No</th>
+                                    <th>Category</th>
+                                    <th>Payment Date</th>
+                                    <th>Expenditure Amount</th>
+                                    <th>Bill No.</th>
+                                    <th>Bill Date</th>
+                                    <th>Mode Of Payment</th>
+                                    <th>Payee Name</th>
+                                    <th>Account Number</th>
+                                    <th>Bank Name</th>
+                                    <th>IFSC Code</th>
+                                    <th>Transaction Id</th>
+                                    <th>Purpose</th>
+                                    <th>Bill Invoice</th>
+                                    <th class="text-center">Edit / Delete</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr *ngIf="!getPreliminaryData || getPreliminaryData.length === 0">
+                                    <td colspan="15" class="text-center text-muted">Data Not available.</td>
+                                  </tr>
+                                  <tr *ngFor="let preliminary of getPreliminaryData; let i = index">
+                                    <td>{{ i + 1 }}</td>
+                                    <td>{{ preliminary?.category }}</td>
+                                    <td>{{ preliminary?.paymentDate }}</td>
+                                    <td>{{ preliminary?.expenditureAmount }}</td>
+                                    <td>{{ preliminary?.billNo }}</td>
+                                    <td>{{ preliminary?.billDate }}</td>
+                                    <td>{{ preliminary?.modeOfPayment }}</td>
+                                    <td>{{ preliminary?.payeeName }}</td>
+                                    <td>{{ preliminary?.accountNumber }}</td>
+                                    <td>{{ preliminary?.bankName }}</td>
+                                    <td>{{ preliminary?.ifscCode }}</td>
+                                    <td>{{ preliminary?.transactionId }}</td>
+                                    <td>{{ preliminary?.purpose }}</td>
+                                    <td class="text-center">
+                                      <a href="#" class="btn btn-default text-primary btn-sm" *ngIf="preliminary?.uploadBillUrl">
+                                        <span class="bi bi-eye"></span>
+                                      </a>
+                                    </td>
+                                    <td class="text-center">
+                                      <button type="button" class="btn btn-default text-lime-green btn-sm" (click)="openModel('edit', preliminary)">
+                                        <span class="bi bi-pencil"></span>
+                                      </button>
+                                      <button type="button" class="btn btn-default text-danger btn-sm" (click)="deletePreliminary(preliminary?.id)">
+                                        <span class="bi bi-trash"></span>
+                                      </button>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
                             </div>
                         </div>
-                      <div class="card" *ngIf="selectedBudgetHead=='12' || selectedBudgetHead=='13' || selectedBudgetHead=='14' || selectedBudgetHead=='15' || selectedBudgetHead=='16' || selectedBudgetHead=='17'">
+
+
+                      <div class="card" *ngIf="selectedBudgetHead=='26'">
                             <div class="card-header bg-transparent">
                                 <div class="row align-items-center">
                                     <div class="col-8 col-sm-8 col-md-8 col-lg-8">
@@ -258,52 +276,46 @@
                             </div>
                             <div class="card-body mb-3">
                                 <h6 class="fw-600 mb-2 mb-sm-3 mb-md-0">View Resource Details</h6>
-                                <table id="view-Resource" class="table table-bordered nowrap w-100 trainingTable">
-                                    <thead class="bg-lime-green text-white">
-                                        <tr>
-                                            <th>S.No</th>
-                                            <th>Name of the Employee</th>
-                                            <th>Designation</th>
-                                            <th>Date of Joining</th>
-                                            <th>Relevant Experience (in Years)</th>
-                                            <th>Educational Qualifications</th>
-                                            <th>Remuneration (in Rs.)</th>
-                                            <th>Bank Name </th>
-                                            <th>IFSC</th>
-                                            <!-- <th class="text-center">Status</th> -->
-                                            <th>View Payment</th>
-                                            <th class="text-center">Edit / Delete</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
+                                <table id="view-Priliminary" class="table table-bordered nowrap w-100 trainingTable">
+                                  <thead class="bg-lime-green text-white">
+                                    <tr>
+                                      <th>S.No</th>
+                                      <th>Name of the Employee</th>
+                                      <th>Designation</th>
+                                      <th>Relevant Experience (Years)</th>
+                                      <th>Educational Qualifications</th>
+                                      <th>Date of Joining</th>
+                                      <th>Remuneration (in Rs.)</th>
+                                      <th>Bank Name / IFSC Code</th>
+                                      <th class="text-center">Edit / Delete</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
                                     <tr *ngIf="!getContingencyData || getContingencyData.length === 0">
-                                        <td colspan="10" class="text-center text-muted">No resource data available.</td>
+                                      <td colspan="9" class="text-center text-muted">Data Not available.</td>
                                     </tr>
                                     <tr *ngFor="let preliminary of getContingencyData; let i = index">
-                                        <td>{{ i + 1 }}</td>
-                                        <td>{{ preliminary?.name  }}</td>
-                                        <td>{{ preliminary?.designation }}</td>
-                                        <td>{{ preliminary?.dateOfJoining  }}</td>
-                                        <td>{{ preliminary?.relevantExperience }}</td>
-                                        <td>{{ preliminary?.educationalQualification }}</td>
-                                        <td>{{ preliminary?.monthlySal }}</td>
-                                        <td>{{ preliminary?.bankName }}</td>
-                                        <td>{{ preliminary?.ifscCode }}</td>
-                                        <!-- <td class="text-center">
-                                            <span class="badge" 
-                                                  [ngClass]="preliminary.status === 'Completed' ? 'bg-success' : preliminary.status === 'In Progress' ? 'bg-warning' : 'bg-danger'">
-                                              {{ preliminary.status || 'N/A' }}
-                                            </span>
-                                        </td> -->
-                                         <td class="text-center">
-                                            <a href="#" class="btn btn-default text-primary btn-sm" data-bs-toggle="modal" data-bs-target="#viewPayment" (click)="getViewData(preliminary?.expenditures)"><span class="bi bi-eye"></span></a>
-                                        </td>
-                                        <td class="text-center">
-                                            <button type="button" class="btn btn-default text-lime-green btn-sm" (click)="openModelContingency('edit',preliminary)"><span class="bi bi-pencil"></span></button>
-                                            <button type="button" class="btn btn-default text-danger btn-sm" (click)="deleteContingency(preliminary?.resourceId)"><span class="bi bi-trash"></span></button>
-                                        </td>
+                                      <td>{{ i + 1 }}</td>
+                                      <td>{{ preliminary?.name }}</td>
+                                      <td>{{ preliminary?.designation }}</td>
+                                      <td>{{ preliminary?.relevantExperience }}</td>
+                                      <td>{{ preliminary?.educationalQualification }}</td>
+                                      <td>{{ preliminary?.dateOfJoining }}</td>
+                                      <td>{{ preliminary?.monthlySal }}</td>
+                                      <td>
+                                        {{ preliminary?.bankName }}<br/>
+                                        {{ preliminary?.ifscCode }}
+                                      </td>
+                                      <td class="text-center">
+                                        <button type="button" class="btn btn-default text-lime-green btn-sm" (click)="openModel('edit',preliminary)">
+                                          <span class="bi bi-pencil"></span>
+                                        </button>
+                                        <button type="button" class="btn btn-default text-danger btn-sm" (click)="deletePreliminary(preliminary?.id)">
+                                          <span class="bi bi-trash"></span>
+                                        </button>
+                                      </td>
                                     </tr>
-                                    </tbody>
+                                  </tbody>
                                 </table>
                             </div>
                              <div class="card-body mb-3">
@@ -342,6 +354,8 @@
                                 </table>
                             </div>
                         </div>
+
+
                         <div class="text-end mt-4">
                             <button type="button" class="btn btn-sm btn-lime-green" (click)="onFinalSubmit()">Save</button>
                         </div>
