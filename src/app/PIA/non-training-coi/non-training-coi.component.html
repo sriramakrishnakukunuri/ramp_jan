@@ -130,8 +130,8 @@
                                 <thead class="bg-lime-green text-white">
                                   <tr>
                                     <th>S.No</th>
-                                    <th>Category</th>
-                                    <th>Payment Date</th>
+                                    <!-- <th>Name of the Agency</th> -->
+                                    <th>Date of hiring</th>
                                     <th>Expenditure Amount</th>
                                     <th>Bill No.</th>
                                     <th>Bill Date</th>
@@ -152,7 +152,7 @@
                                   </tr>
                                   <tr *ngFor="let preliminary of getPreliminaryData; let i = index">
                                     <td>{{ i + 1 }}</td>
-                                    <td>{{ preliminary?.category }}</td>
+                                    <!-- <td>{{ preliminary?.category }}</td> -->
                                     <td>{{ preliminary?.paymentDate }}</td>
                                     <td>{{ preliminary?.expenditureAmount }}</td>
                                     <td>{{ preliminary?.billNo }}</td>
@@ -206,8 +206,8 @@
                                 <thead class="bg-lime-green text-white">
                                   <tr>
                                     <th>S.No</th>
-                                    <th>Category</th>
-                                    <th>Payment Date</th>
+                                    <!-- <th>Name of the Agency</th> -->
+                                    <th>Date of hiring</th>
                                     <th>Expenditure Amount</th>
                                     <th>Bill No.</th>
                                     <th>Bill Date</th>
@@ -228,7 +228,7 @@
                                   </tr>
                                   <tr *ngFor="let preliminary of getPreliminaryData; let i = index">
                                     <td>{{ i + 1 }}</td>
-                                    <td>{{ preliminary?.category }}</td>
+                                    <!-- <td>{{ preliminary?.category }}</td> -->
                                     <td>{{ preliminary?.paymentDate }}</td>
                                     <td>{{ preliminary?.expenditureAmount }}</td>
                                     <td>{{ preliminary?.billNo }}</td>
@@ -280,7 +280,7 @@
                                   <thead class="bg-lime-green text-white">
                                     <tr>
                                       <th>S.No</th>
-                                      <th>Name of the Employee</th>
+                                      <th>Name of the Staff</th>
                                       <th>Designation</th>
                                       <th>Relevant Experience (Years)</th>
                                       <th>Educational Qualifications</th>
@@ -397,15 +397,15 @@
               <div class="form-floating mb-3">
                 <input type="date" class="form-control" formControlName="paymentDate" 
                        [class.is-invalid]="isSubmitted && f['paymentDate'].invalid">
-                <label for="paymentDate">Payment Date</label>
+                <label for="paymentDate">Date of hiring</label>
                 <div *ngIf="isSubmitted && f['paymentDate'].invalid" class="invalid-feedback">
-                  Payment date is required
+                  Date of hiring is required
                 </div>
               </div>
             </div>
             
              <!-- Categrory Date -->
-           <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+           <!-- <div class="col-12 col-sm-6 col-md-4 col-lg-4">
                                <div class="form-floating mb-3">
                                     <select class="form-select" id="itCategory" formControlName="category" >
                                         <option value="#">Select Category</option>
@@ -420,7 +420,7 @@
                                         Category is required
                                          </div>
                                 </div>
-                            </div>
+                            </div> -->
 <!-- item -->
                             <div class="col-12 col-sm-6 col-md-4 col-lg-4">
                                 <div class="form-floating mb-3">
