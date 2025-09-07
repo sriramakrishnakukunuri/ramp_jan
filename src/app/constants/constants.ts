@@ -126,7 +126,8 @@ export const APIS = {
        
     },
     progressMonitoring:{
-        getTrainigAndNonTraining: API_BASE_URL + '/progress/monitoring/aleap',
+        getTrainigAndNonTraining: API_BASE_URL + '/progress/monitoring/non-training-targets',
+        getNonTrainingProgress: API_BASE_URL + '/progress/monitoring/training-targets',
         getTrainigTargetsAchievements: API_BASE_URL + '/training/targets-and-achievements/agency/',
         getNonTrainigTargetsAchievements: API_BASE_URL + '/non-training/targets-and-achievements/agency/',
     },

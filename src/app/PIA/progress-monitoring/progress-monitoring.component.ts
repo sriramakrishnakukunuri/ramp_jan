@@ -13,6 +13,7 @@ export class ProgressMonitoringComponent implements OnInit {
 localStorageData: any;
   sessionDetailsList: any;
   tableList: any;
+  tableListTraining: any;
   dataTable: any;
   agencyList: any = [];
   loginsessionDetails: any;
@@ -54,6 +55,7 @@ localStorageData: any;
     tableheaderList:any
         GetProgramsByAgency(value?: any) {
           this.tableList = []
+          this.tableListTraining = []
           this.tableheaderList = []
           
           // Initialize with sample data structure
@@ -70,6 +72,18 @@ localStorageData: any;
             next: (dataListResponse: any) => {
               if(dataListResponse && dataListResponse) {
                   this.tableList = dataListResponse;
+              }
+           
+             console.log('Progress Monitoring Data:', this.tableList);
+            },
+            error: (error: any) => {
+             console.error('Error fetching progress monitoring data:', error);
+            }
+          });
+          this._commonService.getDataByUrl(APIS.progressMonitoring.getNonTrainingProgress+"?agencyId="+value).subscribe({
+            next: (dataListResponse: any) => {
+              if(dataListResponse && dataListResponse) {
+                  this.tableListTraining = dataListResponse;
               }
            
              console.log('Progress Monitoring Data:', this.tableList);

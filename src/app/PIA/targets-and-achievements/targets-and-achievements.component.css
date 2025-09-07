@@ -1,0 +1,51 @@
+/* Sticky header styles for tables with scroll */
+.table-container {
+  position: relative;
+}
+
+.table-container .sticky-top {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+/* Ensure header cells maintain background color when sticky */
+.table-container .sticky-top th {
+  background-color: #07C540 !important; /* lime-green color */
+  border-bottom: 2px solid #dee2e6;
+}
+
+/* Custom scrollbar for webkit browsers */
+.table-container::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.table-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.table-container::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+.table-container::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Improve table appearance in scrollable container */
+.table-container .table {
+  margin-bottom: 0;
+}
+
+/* Make sure the table header doesn't lose its styling when sticky */
+.table-container .table thead th {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Fix for Bootstrap table responsiveness in scrollable container */
+.table-container .table-responsive {
+  overflow-x: visible;
+}

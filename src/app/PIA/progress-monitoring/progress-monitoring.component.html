@@ -32,100 +32,103 @@
           </div>
           
           <!-- Training Programs Table -->
-          <div class="row mb-4" *ngIf="tableList?.trainingPrograms && tableList.trainingPrograms.length > 0">
+            <div class="row mb-4" *ngIf="tableListTraining && tableListTraining?.length > 0">
             <div class="col-12">
               <h6 class="fw-600 mb-3 text-primary">Training Programs</h6>
-              <div class="table-responsive">
-                <table class="table table-striped table-bordered">
-                  <thead class="bg-lime-green text-white">
-                    <tr>
-                      <th scope="col" class="text-center">S.No</th>
-                      <th scope="col">Training Activity</th>
-                      <th scope="col">Training Sub Activity</th>
-                      <th scope="col" class="text-center">Training Target</th>
-                      <th scope="col" class="text-center">Achievement</th>
-                      <th scope="col" class="text-center">Percentage(%)</th>
-                      <th scope="col" class="text-center">Budget Allocated (₹)</th>
-                      <th scope="col" class="text-center">Expenditure (₹)</th>
-                      <th scope="col" class="text-center">Percentage(%)</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr *ngFor="let training of tableList.trainingPrograms; let i = index">
-                      <td class="text-center">{{ i + 1 }}</td>
-                      <td>{{ training?.activity || 'N/A' }}</td>
-                      <td>{{ training?.subActivity || 'N/A' }}</td>
-                      <td class="text-center">{{ training?.trainingTarget || 0 }}</td>
-                      <td class="text-center">{{ training?.trainingAchievement || 0  }}</td>
-                      <td class="text-center">{{ training?.trainingPercentage || 0 }}</td>
-                      <td class="text-center">{{ training?.budgetAllocated || 0 }}</td>
-                      <td class="text-center">{{ training?.expenditure | currency:'INR':'symbol':'1.0-0' || 'N/A' }}</td>
-                      <td class="text-center">  {{ training?.expenditurePercentage || 0 }}</td>
-                      <!-- <td class="text-center">
-                        <span class="badge" 
-                              [ngClass]="training.percentage >= 75 ? 'bg-success' : training.percentage >= 50 ? 'bg-warning' : 'bg-danger'">
-                          {{ training.percentage || 0 }}%
-                        </span>
-                      </td> -->
-                    </tr>
-                  </tbody>
-                </table>
+              <div class="scrollable-table">
+              <table class="table table-striped table-bordered">
+                <thead class="bg-lime-green text-white">
+                <tr>
+                  <th scope="col" class="text-center">S.No</th>
+                  <th scope="col">Training Activity</th>
+                  <th scope="col">Training Sub Activity</th>
+                  <th scope="col" class="text-center">Training Target</th>
+                  <th scope="col" class="text-center">Achievement</th>
+                  <th scope="col" class="text-center">Percentage(%)</th>
+                  <th scope="col" class="text-center">Budget Allocated (₹)</th>
+                  <th scope="col" class="text-center">Expenditure (₹)</th>
+                  <th scope="col" class="text-center">Percentage(%)</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let training of tableListTraining; let i = index">
+                  <td class="text-center">{{ i + 1 }}</td>
+                  <td>{{ training?.activity || 'N/A' }}</td>
+                  <td>{{ training?.subActivity || 'N/A' }}</td>
+                  <td class="text-center">{{ training?.trainingTarget || 0 }}</td>
+                  <td class="text-center">{{ training?.trainingAchievement || 0  }}</td>
+                  <td class="text-center">{{ training?.trainingPercentage || 0 }}</td>
+                  <td class="text-center">{{ training?.budgetAllocated || 0 }}</td>
+                  <td class="text-center">{{ training?.expenditure | currency:'INR':'symbol':'1.0-0' || 'N/A' }}</td>
+                  <td class="text-center">  {{ training?.expenditurePercentage || 0 }}</td>
+                </tr>
+                </tbody>
+              </table>
               </div>
             </div>
-          </div>
+            </div>
+            <div class="row mb-4" *ngIf="!tableListTraining || tableListTraining?.length === 0">
+            <div class="col-12">
+              <div class="alert alert-info text-center">
+              <i class="fas fa-info-circle me-2"></i>
+              Data not available for Training Programs.
+              </div>
+            </div>
+            </div>
           
-          <!-- Non-Training Programs Table -->
-          <div class="row" *ngIf="tableList?.nonTrainingPrograms && tableList.nonTrainingPrograms.length > 0">
+            <!-- Non-Training Programs Table -->
+            <div class="row mb-4" *ngIf="tableList?.nonTrainingPrograms && tableList.nonTrainingPrograms.length > 0">
             <div class="col-12">
               <h6 class="fw-600 mb-3 text-success">Non-Training Programs</h6>
-              <div class="table-responsive">
-                <table class="table table-striped table-bordered">
-                  <thead class="bg-lime-green text-white">
-                    <tr>
-                      <th scope="col" class="text-center">S.No</th>
-                      <th scope="col">Non-Training Activity</th>
-                      <th scope="col">Non-Training Sub Activity</th>
-                      <th scope="col" class="text-center">Physical Target</th>
-                      <th scope="col" class="text-center">Physical Achievement</th>
-                      <th scope="col" class="text-center">Percentage(%)</th>
-                      <th scope="col" class="text-center">Financial Target (₹)</th>
-                      <th scope="col" class="text-center">Financial Expenditure (₹)</th>
-                      <th scope="col" class="text-center">Percentage(%)</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr *ngFor="let nonTraining of tableList.nonTrainingPrograms; let i = index">
-                      <td class="text-center">{{ i + 1 }}</td>
-                      <td>{{ nonTraining?.nonTrainingActivity || 'N/A' }}</td>
-                      <td>{{ nonTraining?.nonTrainingSubActivity || 'N/A' }}</td>
-                      <td class="text-center">{{ nonTraining?.physicalTarget || 0 }}</td>
-                      <td class="text-center">{{ nonTraining?.physicalAchievement || 0 }}</td>
-                      <td class="text-center">{{ nonTraining?.applicable || 0 }}</td>
-                      <td class="text-center">{{ nonTraining?.financialTarget || 0 }}</td>
-                      <td class="text-center">{{ nonTraining?.financialExpenditure | currency:'INR':'symbol':'1.0-2' || 'N/A' }}</td>
-                       <td class="text-center"> {{ nonTraining?.percentage || 0 }}</td>
-                      <!-- <td class="text-center">
-                        <span class="badge" 
-                              [ngClass]="nonTraining.percentage >= 75 ? 'bg-success' : nonTraining.percentage >= 50 ? 'bg-warning' : 'bg-danger'">
-                          {{ nonTraining.percentage || 0 }}%
-                        </span>
-                      </td> -->
-                    </tr>
-                  </tbody>
-                </table>
+              <div class="scrollable-table">
+              <table class="table table-striped table-bordered">
+                <thead class="bg-lime-green text-white">
+                <tr>
+                  <th scope="col" class="text-center">S.No</th>
+                  <th scope="col">Non-Training Activity</th>
+                  <th scope="col">Non-Training Sub Activity</th>
+                  <th scope="col" class="text-center">Physical Target</th>
+                  <th scope="col" class="text-center">Physical Achievement</th>
+                  <th scope="col" class="text-center">Percentage(%)</th>
+                  <th scope="col" class="text-center">Financial Target (₹)</th>
+                  <th scope="col" class="text-center">Financial Expenditure (₹)</th>
+                  <th scope="col" class="text-center">Percentage(%)</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let nonTraining of tableList.nonTrainingPrograms; let i = index">
+                  <td class="text-center">{{ i + 1 }}</td>
+                  <td>{{ nonTraining?.nonTrainingActivity || 'N/A' }}</td>
+                  <td>{{ nonTraining?.nonTrainingSubActivity || 'N/A' }}</td>
+                  <td class="text-center">{{ nonTraining?.physicalTarget || 0 }}</td>
+                  <td class="text-center">{{ nonTraining?.physicalAchievement || 0 }}</td>
+                  <td class="text-center">{{ nonTraining?.applicable || 0 }}</td>
+                  <td class="text-center">{{ nonTraining?.financialTarget || 0 }}</td>
+                  <td class="text-center">{{ nonTraining?.financialExpenditure | currency:'INR':'symbol':'1.0-2' || 'N/A' }}</td>
+                  <td class="text-center"> {{ nonTraining?.percentage || 0 }}</td>
+                </tr>
+                </tbody>
+              </table>
               </div>
             </div>
-          </div>
-          
+            </div>
+            <div class="row mb-4" *ngIf="!tableList?.nonTrainingPrograms || tableList.nonTrainingPrograms.length === 0">
+            <div class="col-12">
+              <div class="alert alert-info text-center">
+              <i class="fas fa-info-circle me-2"></i>
+              Data not available for Non-Training Programs.
+              </div>
+            </div>
+            </div>
           <!-- No Data Message -->
-          <div class="row" *ngIf="!tableList || (!tableList.trainingPrograms?.length && !tableList.nonTrainingPrograms?.length)">
+          <!-- <div class="row" *ngIf="!tableList || (!tableList.trainingPrograms?.length && !tableList.nonTrainingPrograms?.length)">
             <div class="col-12">
               <div class="alert alert-info text-center">
                 <i class="fas fa-info-circle me-2"></i>
                 No data available for the selected agency. Please select a different agency or contact administrator.
               </div>
             </div>
-          </div>
+          </div> -->
           
         </div>
       </div>
