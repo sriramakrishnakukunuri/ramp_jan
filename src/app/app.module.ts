@@ -80,6 +80,7 @@ import { MonthlyRangeComponent } from './PIA/monthly-range/monthly-range.compone
 import { ViewProgramsSeperateComponent } from './PIA/view-programs-seperate/view-programs-seperate.component';
 import { NonTrainingTargetCodeComponent } from './PIA/non-training-target-code/non-training-target-code.component';
 import { NonTrainingCoiComponent } from './PIA/non-training-coi/non-training-coi.component';
+import { NonTrainingProgressWehubComponent } from './PIA/non-training-progress-wehub/non-training-progress-wehub.component';
 
 @NgModule({
     imports: [
@@ -165,7 +166,8 @@ import { NonTrainingCoiComponent } from './PIA/non-training-coi/non-training-coi
         MonthlyRangeComponent,
         ViewProgramsSeperateComponent,
         NonTrainingTargetCodeComponent,
-        NonTrainingCoiComponent
+        NonTrainingCoiComponent,
+        NonTrainingProgressWehubComponent
 
     ],
     exports:[MaterialModule],

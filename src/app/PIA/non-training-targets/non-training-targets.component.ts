@@ -240,6 +240,7 @@ export class NonTrainingTargetsComponent implements OnInit {
      if(this.iseditMode){
         this.f['agencyId'].setValue(Number(this.selectedAgencyId));
          this.f['nonTrainingSubActivityId'].setValue(Number(this.selectedBudgetHead));
++        this.f['nonTrainingActivityId'].setValue(Number(this.selectedActivity));
          this._commonService.update(APIS.nontrainingtargets.updateNonTrainingtargetsAleapPriliminary,{...this.financialForm.value,nonTrainingSubActivityId:Number(this.selectedBudgetHead),id:this.preliminaryID},this.preliminaryID).subscribe((res: any) => {
            this.toastrService.success('Data Updated successfully','Non Training Progress Data Success!');
            
@@ -265,6 +266,7 @@ export class NonTrainingTargetsComponent implements OnInit {
        console.log('Form Submitted:', this.financialForm.value);
        this.f['agencyId'].setValue(Number(this.selectedAgencyId));
          this.f['nonTrainingSubActivityId'].setValue(Number(this.selectedBudgetHead));
++        this.f['nonTrainingActivityId'].setValue(Number(this.selectedActivity));
           const formData = new FormData();
            formData.append("dto", JSON.stringify({...this.financialForm.value}));
  

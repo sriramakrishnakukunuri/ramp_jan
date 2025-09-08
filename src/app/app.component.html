@@ -486,6 +486,11 @@
                     <a class="dropdown-item" routerLink="/non-training-progress-coi" routerLinkActive="active">Non Training Progress</a>
                   </li>
                   </ng-container>
+                   <ng-container *ngIf="this.user?.agencyName=='WeHub' || this.user.agencyId==7">
+                     <li *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]" >
+                    <a class="dropdown-item" routerLink="/non-training-progress-wehub" routerLinkActive="active">Non Training Progress</a>
+                  </li>
+                  </ng-container>
                   
                   <!-- Masters List (Agency) -->
                   <li *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]">

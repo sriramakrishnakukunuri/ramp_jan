@@ -12,11 +12,11 @@ import 'datatables.net-responsive-dt';
 import { MonthlyRangeComponent } from '../monthly-range/monthly-range.component';
 
 @Component({
-  selector: 'app-non-training-target-code',
-  templateUrl: './non-training-target-code.component.html',
-  styleUrls: ['./non-training-target-code.component.css']
+  selector: 'app-non-training-progress-wehub',
+  templateUrl: './non-training-progress-wehub.component.html',
+  styleUrls: ['./non-training-progress-wehub.component.css']
 })
-export class NonTrainingTargetCodeComponent implements OnInit {
+export class NonTrainingProgressWehubComponent implements OnInit {
 
   financialForm!: FormGroup;
   travelForm!: FormGroup;
@@ -64,6 +64,9 @@ export class NonTrainingTargetCodeComponent implements OnInit {
           // this.toastrService.error(error.message);
         });
       }
+      getSubactivities(event:any){
+        return this.SubActivityList?.find((item:any)=>item?.subActivityId==event)?.subActivityName || ''
+      }
   selectedBudgetHead: string = '1';
   physicalTargetAchievement: any = '';
   physicalTarget: any = 0;
@@ -84,18 +87,35 @@ export class NonTrainingTargetCodeComponent implements OnInit {
           this.physicalTargetAchievement = this.TargetDetails?.physicalTargetAchievement || 0;
           this.financialTargetAchievement = this.TargetDetails?.financialTargetAchievement || 0;
           console.log('TargetDetails:', this.TargetDetails);
-          if(this.selectedBudgetHead=='1' || this.selectedBudgetHead=='11'){
-            this.getPreliminaryDataById()
-
-          }
-          else if(this.selectedBudgetHead=='19'){
-            this.getTravelDataBySubActive()
-          }
-          else if(this.selectedBudgetHead=='12' || this.selectedBudgetHead=='13' || this.selectedBudgetHead=='14' || this.selectedBudgetHead=='15' || this.selectedBudgetHead=='16' || this.selectedBudgetHead=='17'){
-            this.getResourceList()
-            this.getContingencyDataById()
-            this.getPaymentsDataById()
-          }
+            if (
+            this.selectedBudgetHead == '1' ||
+            this.selectedBudgetHead == '64' ||
+             this.selectedBudgetHead == '65' ||
+            this.selectedBudgetHead == '63' ||
+            this.selectedBudgetHead == '29' ||
+            this.selectedBudgetHead == '37' ||
+            this.selectedBudgetHead == '38' ||
+            this.selectedBudgetHead == '39' ||
+            this.selectedBudgetHead == '40'
+            ) {
+            this.getPreliminaryDataById();
+            }
+            else if (this.selectedBudgetHead == '19') {
+            this.getTravelDataBySubActive();
+            }
+            else if (
+            this.selectedBudgetHead == '62' ||
+            this.selectedBudgetHead == '45' ||
+            this.selectedBudgetHead == '46' ||
+            this.selectedBudgetHead == '51' ||
+            this.selectedBudgetHead == '52' ||
+            this.selectedBudgetHead == '53' ||
+            this.selectedBudgetHead == '54'
+            ) {
+            this.getResourceList();
+            this.getContingencyDataById();
+            this.getPaymentsDataById();
+            }
 
           
         }, (error) => {
@@ -224,7 +244,7 @@ createForm(): FormGroup {
     return this.fb.group({
       agencyId: [0, ],
       nonTrainingSubActivityId: [0, ],
-       nonTrainingActivityId: [0, ],
+      nonTrainingActivityId: [0, ],
       paymentDate: ['', Validators.required],
       category: ['', Validators.required],
       expenditureAmount: [0, [Validators.required, Validators.min(0)]],
@@ -416,6 +436,7 @@ createForm(): FormGroup {
           this.isSubmitted = false;
           const modal1 = bootstrap.Modal.getInstance(document.getElementById('addSurvey'));
           modal1.hide();
+          console.log(error);
           this.toastrService.error(error.message);
         });
         this.getDeatilOfTargets()
@@ -1138,7 +1159,10 @@ createFormTravel(): FormGroup {
       }
     }
   // end infracture
+// Canditate
+openModelCanditate(type:any){
 
+}
 }
 
 
