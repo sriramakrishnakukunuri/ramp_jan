@@ -1,4 +1,6 @@
 ﻿import { Component, Directive, Input, TemplateRef, ViewContainerRef } from '@angular/core';
+import { Router, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
 
 import { AuthenticationService } from './_services';
 import { User, Role } from './_models';
@@ -11,14 +13,26 @@ export class AppComponent {
     user?: User | null;
     Role = Role
      notifications:any = [];
+     showHeader: boolean = true;
+
     constructor(private authenticationService: AuthenticationService,
-        private idleService: IdleTimeoutService, private _commonService: CommonServiceService,) {
+        private idleService: IdleTimeoutService, private _commonService: CommonServiceService,
+        private router: Router) {
         this.authenticationService.user.subscribe(x => {
             this.user = x
              this.getNotifications()
         });
         
-        
+        this.router.events.pipe(
+            filter((event): event is NavigationEnd => event instanceof NavigationEnd)
+        ).subscribe((event: NavigationEnd) => {
+          // Hide header on the login page
+          if (event.urlAfterRedirects.includes('/login')) {
+            this.showHeader = false;
+          } else {
+            this.showHeader = true;
+          }
+        });
     }
     getNotifications() {
         if(!this.user) return;
