@@ -774,7 +774,7 @@ resetForm(): void {
         dateOfPayment: this.paymentForm.value.dateOfPayment,
         resourceId: Number(this.paymentForm.value.resourceId)}));
 
-          if (this.travelForm.value.billInvoicePath) {
+          if (this.paymentForm.value.uploadBillUrl) {
             formData.append("file", this.uploadedFiles);
             }
         this._commonService.add(APIS.nontrainingtargets.saveNonTrainingtargetsAleapContingencyPayment,formData).subscribe((res: any) => {
