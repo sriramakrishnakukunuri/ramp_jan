@@ -46,8 +46,11 @@
                 <!-- begin:: Preliminary survey for selection of potential SHGs -->
                 <div class="card budgets mb-3 " >
 
-                    <div class="card-header bg-transparent">
+                    <div class="card-header bg-transparent d-flex justify-content-between">
                         <h6 class="fw-600 mb-2 mb-sm-3 mb-md-0"> {{getSubactivities(selectedBudgetHead)}} </h6>
+                          <div class="text-end">
+                            <button type="button" class="btn btn-sm btn-lime-green" (click)="onFinalSubmit()">Save</button>
+                        </div>
                     </div> 
                     <div class="card-body" *ngIf="selectedBudgetHead=='1' || selectedActivity=='12' || selectedBudgetHead=='63' || selectedBudgetHead=='65' || selectedBudgetHead=='64' || selectedBudgetHead=='65' || selectedBudgetHead=='29' || selectedBudgetHead=='38' || selectedBudgetHead=='39' || selectedBudgetHead=='40' || selectedBudgetHead=='37' || selectedBudgetHead=='62' || selectedBudgetHead=='41' || selectedBudgetHead=='42' || selectedBudgetHead=='43' || selectedBudgetHead=='44' || selectedBudgetHead=='48' || selectedBudgetHead=='49' || selectedBudgetHead=='50' || selectedBudgetHead=='45' || selectedBudgetHead=='46' || selectedBudgetHead=='51' || selectedBudgetHead=='52' || selectedBudgetHead=='53' || selectedBudgetHead=='54' || selectedBudgetHead=='41' || selectedBudgetHead=='42' || selectedBudgetHead=='43' || selectedBudgetHead=='44' || selectedBudgetHead=='47' || selectedBudgetHead=='48' || selectedBudgetHead=='49' || selectedBudgetHead=='50'">
                         <div class="row" *ngIf="selectedBudgetHead=='45' || selectedBudgetHead=='46' || selectedBudgetHead=='51' || selectedBudgetHead=='52' || selectedBudgetHead=='53' || selectedBudgetHead=='54' || selectedBudgetHead=='62' || selectedBudgetHead=='63' || selectedBudgetHead=='64' || selectedBudgetHead=='65' || selectedBudgetHead=='29' || selectedBudgetHead=='37' || selectedBudgetHead=='38' || selectedBudgetHead=='39' || selectedBudgetHead=='40' || selectedBudgetHead=='65' || selectedBudgetHead=='41' || selectedBudgetHead=='42' || selectedBudgetHead=='43' || selectedBudgetHead=='44'  || selectedBudgetHead=='47' || selectedBudgetHead=='48' || selectedBudgetHead=='49' || selectedBudgetHead=='50'" >
@@ -442,9 +445,9 @@
                             </div>
                         </div>
                        
-                        <div class="text-end mt-4">
+                        <!-- <div class="text-end mt-4">
                             <button type="button" class="btn btn-sm btn-lime-green" (click)="onFinalSubmit()">Save</button>
-                        </div>
+                        </div> -->
                     </div>
                     
              </div>

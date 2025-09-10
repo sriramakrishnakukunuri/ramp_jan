@@ -81,14 +81,20 @@ export class NonTrainingTargetsComponent implements OnInit {
           this.physicalTargetAchievement = this.TargetDetails?.physicalTargetAchievement || 0;
           this.financialTargetAchievement = this.TargetDetails?.financialTargetAchievement || 0;
           console.log('TargetDetails:', this.TargetDetails);
-          if(this.selectedBudgetHead=='4' || this.selectedBudgetHead=='2'){
+          if(this.selectedBudgetHead=='68' || this.selectedBudgetHead=='69' || this.selectedBudgetHead=='71'){
             this.getPreliminaryDataById()
 
           }
-          else if(this.selectedBudgetHead=='5'){
+          else if(this.selectedBudgetHead=='72'){
             this.getResourceList()
             this.getContingencyDataById()
             this.getPaymentsDataById()
+          }
+          else{
+            this.getResourceList()
+            this.getContingencyDataById()
+            this.getPaymentsDataById()
+            this.getPreliminaryDataById()
           }
 
           
@@ -285,6 +291,7 @@ export class NonTrainingTargetsComponent implements OnInit {
     if (mode === 'edit') {
       this.preliminaryID=item?.id
       this.iseditMode = true;
+      this.modeOfPaymentIt(item?.modeOfPayment);
       this.financialForm.patchValue({
         agencyId: item?.agencyId || 0,
         nonTrainingSubActivityId: item?.nonTrainingSubActivityId || 0,
