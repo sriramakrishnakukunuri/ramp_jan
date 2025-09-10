@@ -103,6 +103,7 @@ export const APIS = {
         getBudgetHeadList: API_BASE_URL + '/progress/monitoring/get/activities/',
         getSubActivityList: API_BASE_URL + '/non-training/getAll/subActivities/',
         getResourceList: API_BASE_URL + '/non-training/resources/non-training-activity?nonTrainingActivityId=',
+        getSelectedOrganization: API_BASE_URL + '/selected-organizations',
         getTravelList: API_BASE_URL + '/api/travel/',
         updateTarets: API_BASE_URL + '/progress/monitoring/non-training-achievement/',
         getNonTrainingtargets: API_BASE_URL + '/progress/monitoring/non-training/physical/financial/',
@@ -122,6 +123,10 @@ export const APIS = {
          updateNonTrainingtargetsTravel: API_BASE_URL + '/api/travel/',
         deleteNonTrainingtargetsTravel: API_BASE_URL + '/api/travel/',
         saveNonTrainingtargetsTravel: API_BASE_URL + '/api/travel/save',
+        updateNonTrainingtargetsCandidate: API_BASE_URL + '/',
+        deleteNonTrainingtargetsCandidate: API_BASE_URL + '/',
+        saveNonTrainingtargetsCandidate: API_BASE_URL + '/save',
+        getNonTrainingtargetsCandidate: API_BASE_URL + '/by-subactivity?subActivityId=',
 
        
     },

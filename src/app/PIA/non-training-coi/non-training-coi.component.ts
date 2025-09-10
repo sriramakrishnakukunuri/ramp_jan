@@ -255,6 +255,7 @@ createForm(): FormGroup {
     if (mode === 'edit') {
       this.preliminaryID=item?.id
       this.iseditMode = true;
+      this.modeOfPaymentIt(item?.modeOfPayment);
       this.financialForm.patchValue({
         agencyId: item?.agencyId || 0,
         nonTrainingSubActivityId: item?.nonTrainingSubActivityId || 0,
@@ -272,6 +273,7 @@ createForm(): FormGroup {
         purpose: item?.purpose || '',
         uploadBillUrl: item?.uploadBillUrl || ''
       });
+      
     }
     const modal1 = new bootstrap.Modal(document.getElementById('addSurvey'));
     modal1.show();
@@ -434,7 +436,7 @@ createForm(): FormGroup {
   }
   ConfirmdeleteExpenditure(item:any){
       this._commonService
-      .deleteId(APIS.nontrainingtargets.deleteNonTrainingtargetsAleapPriliminary,item).subscribe({
+      .deleteId(APIS.nontrainingtargets.deleteNonTrainingtargetsAleapContingency,item).subscribe({
         next: (data: any) => {
           if(data?.status==400){
             this.toastrService.error(data?.message, "Non Training Progress Data Error!");
@@ -915,6 +917,7 @@ createFormTravel(): FormGroup {
     if (mode === 'edit') {
       this.TravelID=item?.travelTransportId
       this.iseditModeTravel = true;
+      this.modeOfPayment(item?.modeOfPayment);
       this.travelForm.patchValue({
         nonTrainingSubActivityId: item?.nonTrainingSubActivityId || 0,
         dateOfTravel: item?.dateOfTravel ? this.convertToISOFormat(item?.dateOfTravel) : '',

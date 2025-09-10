@@ -59,6 +59,7 @@ export class NonTrainingTargetCodeComponent implements OnInit {
           this.SubActivityList = res;
           this.selectedBudgetHead= this.SubActivityList[0]?.subActivityId
           this.onBudgetHeadChange(this.SubActivityList[0]?.subActivityId)
+            this.getPreliminaryDataById()
         
         }, (error) => {
           // this.toastrService.error(error.message);
@@ -256,6 +257,7 @@ createForm(): FormGroup {
     if (mode === 'edit') {
       this.preliminaryID=item?.id
       this.iseditMode = true;
+      this.modeOfPaymentIt(item?.modeOfPayment);
       this.financialForm.patchValue({
         agencyId: item?.agencyId || 0,
         nonTrainingSubActivityId: item?.nonTrainingSubActivityId || 0,
@@ -273,6 +275,7 @@ createForm(): FormGroup {
         purpose: item?.purpose || '',
         uploadBillUrl: item?.uploadBillUrl || ''
       });
+      
     }
     const modal1 = new bootstrap.Modal(document.getElementById('addSurvey'));
     modal1.show();
@@ -375,6 +378,8 @@ createForm(): FormGroup {
           
           console.log('Preliminary Data:', this.getPreliminaryData);
           this.resetForm();
+            this.getPreliminaryDataById()
+
           this.isSubmitted = false;
           const modalElement = document.getElementById('addSurvey');
           const modal1 = modalElement ? bootstrap.Modal.getInstance(modalElement) : null;
@@ -405,6 +410,8 @@ createForm(): FormGroup {
         this._commonService.add(APIS.nontrainingtargets.saveNonTrainingtargetsCodeIT,formData).subscribe((res: any) => {
           this.toastrService.success('Data saved successfully','Non Training Progress Data Success!');
           this.getPreliminaryData.push(res.data)
+            this.getPreliminaryDataById()
+
           this.resetForm();
           this.isSubmitted = false;
           const modal1 = bootstrap.Modal.getInstance(document.getElementById('addSurvey'));
@@ -446,6 +453,8 @@ createForm(): FormGroup {
           else{
             // this.getBulkExpenditure()
             this.closeModalDelete();
+            this.getPreliminaryDataById()
+
             this.deletePreliminaryID =''
           this.toastrService.success( 'Record Deleted Successfully', "Non Training Progress Data Success!");
           }
@@ -774,7 +783,7 @@ resetForm(): void {
         dateOfPayment: this.paymentForm.value.dateOfPayment,
         resourceId: Number(this.paymentForm.value.resourceId)}));
 
-          if (this.travelForm.value.billInvoicePath) {
+          if (this.paymentForm.value.uploadBillUrl) {
             formData.append("file", this.uploadedFiles);
             }
         this._commonService.add(APIS.nontrainingtargets.saveNonTrainingtargetsAleapContingencyPayment,formData).subscribe((res: any) => {

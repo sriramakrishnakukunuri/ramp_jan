@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CommonServiceService } from '@app/_services/common-service.service';
 import { APIS } from '@app/constants/constants';
@@ -21,9 +21,22 @@ export class NonTrainingProgressWehubComponent implements OnInit {
   financialForm!: FormGroup;
   travelForm!: FormGroup;
   paymentForm!: FormGroup;
+  candidateForm!: FormGroup;
    isSubmitted = false;
   loginsessionDetails: any;
   selectedAgencyId: any;
+   OrganizationData: any = []
+  getOrganizationData() {
+    this._commonService.getDataByUrl(APIS.participantdata.getOrgnizationData).subscribe({
+      next: (res: any) => {
+        this.OrganizationData = res?.data || [];
+      },
+      error: (err) => {
+        this.toastrService.error(err.message, "Organization Data Error!");
+        new Error(err);
+      },
+    });
+  }
   @ViewChild(MonthlyRangeComponent) monthlyRange!: MonthlyRangeComponent;
  constructor(private fb: FormBuilder, private toastrService: ToastrService,
       private _commonService: CommonServiceService,
@@ -34,10 +47,12 @@ export class NonTrainingProgressWehubComponent implements OnInit {
      this.travelForm = this.createFormTravel();
         this.contingencyForm = this.createFormContingency();
         this.paymentForm = this.createFormPayment();
+        this.candidateForm = this.createFormCandidate();
 
   }
 
   ngOnInit(): void {
+    this.getOrganizationData()
      this.getBudgetHeadList()
     
   }
@@ -116,6 +131,12 @@ export class NonTrainingProgressWehubComponent implements OnInit {
             this.getContingencyDataById();
             this.getPaymentsDataById();
             }
+            else{
+              this.getCadidateList()
+              this.getResourceList()
+              this.getResourceListCandidate();
+            this.getPaymentsDataById();
+            }
 
           
         }, (error) => {
@@ -129,6 +150,7 @@ export class NonTrainingProgressWehubComponent implements OnInit {
           }
           else if(this.selectedBudgetHead=='11' || this.selectedBudgetHead=='12' || this.selectedBudgetHead=='13' || this.selectedBudgetHead=='14' || this.selectedBudgetHead=='15' || this.selectedBudgetHead=='16' || this.selectedBudgetHead=='17'){
             this.getResourceList()
+            this.getResourceListCandidate()
             this.getContingencyDataById()
             this.getPaymentsDataById()
           }
@@ -174,6 +196,27 @@ export class NonTrainingProgressWehubComponent implements OnInit {
             // this.toastrService.error(error.message);
           });
       }
+         resourceListCandidate:any=[]
+   getResourceListCandidate(){
+        this.resourceList=[]
+          this._commonService.getDataByUrl(APIS.nontrainingtargets.getSelectedOrganization).subscribe((res: any) => {
+              this.resourceListCandidate=res.data;
+             
+          
+          }, (error) => {
+            // this.toastrService.error(error.message);
+          });
+      }
+  candidatesData:any=[]
+   getCadidateList(){
+        this.candidatesData=[]
+          this._commonService.getDataByUrl(APIS.nontrainingtargets.getNonTrainingtargetsCandidate+this.selectedBudgetHead).subscribe((res: any) => {
+              this.candidatesData=res.data;
+             
+          }, (error) => {
+            // this.toastrService.error(error.message);
+          });
+      }
       travelList:any=[]
       getTravelDataBySubActive(){
            this.travelList=[]
@@ -189,6 +232,7 @@ export class NonTrainingProgressWehubComponent implements OnInit {
             // this.toastrService.error(error.message);
           });
       }
+      
        getContingencyDataById(){
          this._commonService.getDataByUrl(APIS.nontrainingtargets.getNonTrainingtargetsAleapContingencyId+this.selectedBudgetHead).subscribe((res: any) => {
             this.getContingencyData=res.data;
@@ -276,6 +320,7 @@ createForm(): FormGroup {
     if (mode === 'edit') {
       this.preliminaryID=item?.id
       this.iseditMode = true;
+      this.modeOfPaymentIt(item?.modeOfPayment);
       this.financialForm.patchValue({
         agencyId: item?.agencyId || 0,
         nonTrainingSubActivityId: item?.nonTrainingSubActivityId || 0,
@@ -293,6 +338,8 @@ createForm(): FormGroup {
         purpose: item?.purpose || '',
         uploadBillUrl: item?.uploadBillUrl || ''
       });
+      
+      
     }
     const modal1 = new bootstrap.Modal(document.getElementById('addSurvey'));
     modal1.show();
@@ -717,6 +764,47 @@ resetForm(): void {
     const modal1 = new bootstrap.Modal(document.getElementById('addPayment'));
     modal1.show();
   }
+  openModelPaymentCandidate(mode: string,item?: any): void {
+    this.paymentID=''
+    if (mode === 'add') {
+      this.iseditModePayment = false;
+      this.paymentForm.reset();
+      this.isSubmitted = false;
+      this.paymentForMonth = ''; // Clear the payment month for add mode
+       setTimeout(() => {
+       this.monthlyRange.setValue('08-2025');
+      }, 0);
+    }
+    if (mode === 'edit') {
+
+      this.paymentID=item?.nonTrainingResourceExpenditureId
+      this.iseditModePayment = true;
+      // Set the paymentForMonth value from response - this will trigger the monthly-range component update
+      this.paymentForMonth = item?.paymentForMonth || '';
+      
+      // Use setTimeout to ensure the monthly-range component is available
+      setTimeout(() => {
+        if (this.monthlyRange && item?.paymentForMonth) {
+          this.monthlyRange.setValue(item.paymentForMonth);
+        }
+      }, 0);
+      
+      this.paymentForm.patchValue({
+        amount: item?.amount || 0,
+        paymentForMonth: item?.paymentForMonth || '',
+        dateOfPayment: item?.dateOfPayment ? this.convertToISOFormat(item?.dateOfPayment) : '',
+        resourceId: item?.resourceId || 0,
+        bankName: item?.bankName || '',
+        ifscCode: item?.ifscCode || '',
+        accountNo: item?.accountNo || '',
+        uploadBillUrl: item?.uploadBillUrl || ''
+       
+      });
+    }
+    this.onResourceChange(item?.resourceId,this.resourceList)
+    const modal1 = new bootstrap.Modal(document.getElementById('addPaymentCandidate'));
+    modal1.show();
+  }
   onResourceChange(event:any,list:any){
     console.log('Selected Resource ID:', list);
     const selectedResource = list.find((item: any) => item.resourceId == event);
@@ -775,6 +863,9 @@ resetForm(): void {
           const modal1 = bootstrap.Modal.getInstance(document.getElementById('addPayment'));
           modal1.hide();
            document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+            const modal2 = bootstrap.Modal.getInstance(document.getElementById('addPaymentCandidate'));
+          modal2.hide();
+           document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
         
         }, (error) => {
           //  this.resetForm();
@@ -783,6 +874,9 @@ resetForm(): void {
           modal1.hide();
            document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
           this.toastrService.error(error.message,"Non Training Progress Data Error!");
+           const modal2 = bootstrap.Modal.getInstance(document.getElementById('addPaymentCandidate'));
+          modal2.hide();
+           document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
         });
     }
     else{
@@ -804,6 +898,9 @@ resetForm(): void {
           const modal1 = bootstrap.Modal.getInstance(document.getElementById('addPayment'));
           modal1.hide();
            document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+           const modal2 = bootstrap.Modal.getInstance(document.getElementById('addPaymentCandidate'));
+          modal2.hide();
+           document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
          
         
         }, (error) => {
@@ -811,6 +908,9 @@ resetForm(): void {
           this.isSubmitted = false;
           const modal1 = bootstrap.Modal.getInstance(document.getElementById('addPayment'));
           modal1.hide();
+           document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+           const modal2 = bootstrap.Modal.getInstance(document.getElementById('addPaymentCandidate'));
+          modal2.hide();
            document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
           this.toastrService.error(error.message);
         });
@@ -1160,9 +1260,263 @@ createFormTravel(): FormGroup {
     }
   // end infracture
 // Canditate
-openModelCanditate(type:any){
+// this.udyamRegNumberValidator
+createFormCandidate(): FormGroup {
+    return this.fb.group({
+      udhyamDpiitRegistrationNo: ['', Validators.required,],
+      applicationReceivedDate: ['', Validators.required],
+      applicationSource: ['', Validators.required],
+      shortlistingDate: ['', Validators.required],
+      needAssessmentDate: ['', Validators.required],
+      candidateFinalised: [false, Validators.required],
+      cohortName: ['', ],
+      baselineAssessmentDate: ['', Validators.required],
+      subActivityId: [0, ],
+      organizationId: [0, Validators.required]
+    });
+  }
+ udyamRegNumberValidator(control: AbstractControl): { [key: string]: boolean } | null {
+    const value = control.value;
+    if (!value) {
+      return null; // Let required validator handle empty case
+    }
+    
+    // Regular expression for UDYAM registration format
+    const udyamRegex = /^(UDYAM|udyam)-[a-zA-Z]{2}-\d{2}-\d{7}$/;
+    
+    if (!udyamRegex.test(value)) {
+      return { 'invalidUdyamFormat': true };
+    }
+    return null;
+  }
+  get fcandidate() {
+    return this.candidateForm.controls;
+  }
+ 
+  iseditModeCandidates = false;
+  candidateID:any
+  openModelcandidate(mode: string,item?: any): void {
+    if (mode === 'add') {
+      this.candidateForm.reset();
+      this.iseditModeCandidates = false;
+      this.resetFormCandidates();
+    }
+    if (mode === 'edit') {
+      this.candidateID=item?.candidateId
+      this.iseditModeCandidates = true;
+      this.candidateForm.patchValue({
+        udhyamDpiitRegistrationNo: item?.udhyamDpiitRegistrationNo || '',
+        applicationReceivedDate: item?.applicationReceivedDate ? this.convertToISOFormat(item?.applicationReceivedDate) : '',
+        applicationSource: item?.applicationSource || '',
+        shortlistingDate: item?.shortlistingDate ? this.convertToISOFormat(item?.shortlistingDate) : '',
+        needAssessmentDate: item?.needAssessmentDate ? this.convertToISOFormat(item?.needAssessmentDate) : '',
+        candidateFinalised: item?.candidateFinalised ?? false,
+        cohortName: item?.cohortName || '',
+        baselineAssessmentDate: item?.baselineAssessmentDate ? this.convertToISOFormat(item?.baselineAssessmentDate) : '',
+        // subActivityId: item?.subActivityId || 0, // Uncomment if needed in the form
+        organizationId: item?.organizationId || 0
+      });
+    }
+    const modal1 = new bootstrap.Modal(document.getElementById('addCandidates'));
+    modal1.show();
+  }
+  getCandidateData:any=[]
+  onSubmitCandidate(): void {
+    this.isSubmitted = true;
+     if (this.candidateForm.valid) {
+    if(this.iseditModeCandidates){
+        this.fcandidate['subActivityId'].setValue(Number(this.selectedBudgetHead));
+        this._commonService.update(APIS.nontrainingtargets.updateNonTrainingtargetsCandidate,{...this.candidateForm.value,subActivityId:Number(this.selectedBudgetHead)},this.candidateID).subscribe((res: any) => {
+          this.toastrService.success('Data Updated successfully','Non Training Progress Data Success!');
+          
+          console.log('Preliminary Data:', this.getTravelData);
+          this.resetFormCandidates();
+          this.isSubmitted = false;
+          const modalElement = document.getElementById('addCandidates');
+          const modal1 = modalElement ? bootstrap.Modal.getInstance(modalElement) : null;
+          if (modal1) {
+            modal1.hide();
+          }
+           this.getDeatilOfTargets()
+        
+        }, (error) => {
+           this.resetFormCandidates();
+          this.isSubmitted = false;
+          const modal1 = bootstrap.Modal.getInstance(document.getElementById('addCandidates'));
+          modal1.hide();
+           this.getDeatilOfTargets()
+          this.toastrService.error(error.message,"Non Training Progress Data Error!");
+        });
+       
+    }
+    else{
+      console.log('Form Submitted:', this.candidateForm.value);
+        this.fcandidate['subActivityId'].setValue(Number(this.selectedBudgetHead));
+        //  const formData = new FormData();
+        //   formData.append("dto", JSON.stringify({...this.candidateForm.value}));
 
-}
+        //   if (this.candidateForm.value.billInvoicePath) {
+        //     formData.append("file", this.uploadedFiles);
+        //     }
+        this._commonService.add(APIS.nontrainingtargets.saveNonTrainingtargetsCandidate,{...this.candidateForm.value,subActivityId:Number(this.selectedBudgetHead),organizationId:Number(this.candidateForm.value?.organizationId)}).subscribe((res: any) => {
+          this.toastrService.success('Data saved successfully','Non Training Progress Data Success!');
+          this.getTravelData.push(res.data)
+          this.resetFormCandidates();
+          this.isSubmitted = false;
+          const modal1 = bootstrap.Modal.getInstance(document.getElementById('addCandidates'));
+          modal1.hide();
+           this.getDeatilOfTargets()
+         
+        
+        }, (error) => {
+          this.resetFormCandidates();
+          this.isSubmitted = false;
+           this.getDeatilOfTargets()
+          const modal1 = bootstrap.Modal.getInstance(document.getElementById('addCandidates'));
+          modal1.hide();
+          this.toastrService.error(error.message);
+        });
+       
+    }
+   
+    }
+
+  }
+  resetFormCandidates(): void {
+      const modalElement = document.getElementById('addCandidates');
+      const modal1 = modalElement ? bootstrap.Modal.getInstance(modalElement) : null;
+      if (modal1) {
+              modal1.hide();
+                }
+      this.isSubmitted = false;
+      this.candidateForm.reset();
+
+  }
+  deleteCandidateID:any
+  deleteCandidate(id:any):void{
+    this.deleteCandidateID=id
+     const previewModal = document.getElementById('exampleModalDeleteCandidate');
+    if (previewModal) {
+      const modalInstance = new bootstrap.Modal(previewModal);
+      modalInstance.show();
+    }
+  }
+  ConfirmdeleteExpenditureCandidate(item:any){
+      this._commonService
+      .deleteId(APIS.nontrainingtargets.deleteNonTrainingtargetsCandidate,item).subscribe({
+        next: (data: any) => {
+          if(data?.status==400){
+            this.toastrService.error(data?.message, "Non Training Progress Data Error!");
+            this.closeModalDeleteCandidate();
+
+            this.deleteCandidateID =''
+          }
+          else{
+            // this.getBulkExpenditure()
+            this.closeModalDeleteCandidate();
+            this.deleteCandidateID =''
+          this.toastrService.success( 'Record Deleted Successfully', "Non Training Progress Data Success!");
+          }
+          
+        },
+        error: (err) => {
+          this.closeModalDeleteCandidate();
+          this.deleteCandidateID =''
+          this.toastrService.error(err.message, "Non Training Progress Error!");
+          new Error(err);
+        },
+      });
+
+    }
+     closeModalDeleteCandidate(): void {
+      const editSessionModal = document.getElementById('exampleModalDeleteCandidate');
+      if (editSessionModal) {
+        const modalInstance = bootstrap.Modal.getInstance(editSessionModal);
+        modalInstance.hide();
+      }
+      this.getDeatilOfTargets()
+    } 
+  onFileSelectedCandidate(event: any): void {
+    this.uploadedFiles = null;
+    const file = event.target.files[0];
+    if (file) {
+       this.uploadedFiles = file;
+      // Handle file upload logic here
+      // You might want to upload the file and then set the URL
+      this.candidateForm.patchValue({
+        billInvoicePath: file.name // This would be the uploaded file URL
+      });
+    }
+  }
+   modeOfPaymentCandidate(val:any){
+      if(val=='CASH'){
+        this.candidateForm.get('bank')?.setValidators(null);
+        this.candidateForm.get('transactionId')?.setValidators(null);
+        this.candidateForm.get('ifscCode')?.setValidators(null);
+        this.candidateForm.get('bank')?.patchValue('');
+        this.candidateForm.get('transactionId')?.patchValue('');
+        this.candidateForm.get('ifscCode')?.patchValue('');
+        this.candidateForm.get('bank')?.clearValidators();
+        this.candidateForm.get('transactionId')?.clearValidators();
+        this.candidateForm.get('ifscCode')?.clearValidators();
+        this.candidateForm.get('bank')?.disable();
+        this.candidateForm.get('transactionId')?.disable();
+        this.candidateForm.get('ifscCode')?.disable();
+      
+        this.candidateForm.get('bank')?.updateValueAndValidity();
+        this.candidateForm.get('transactionId')?.updateValueAndValidity();
+        this.candidateForm.get('ifscCode')?.updateValueAndValidity();
+        
+      }
+      else if(val=='BANK_TRANSFER'){
+        this.candidateForm.get('bank')?.setValidators([Validators.required]);
+        this.candidateForm.get('transactionId')?.setValidators(null);
+        this.candidateForm.get('ifscCode')?.setValidators([Validators.required,Validators.pattern(/^[A-Z]{4}0[A-Z0-9]{6}$/)]);
+        this.candidateForm.get('bank')?.enable();
+        this.candidateForm.get('transactionId')?.disable();
+        this.candidateForm.get('ifscCode')?.enable();
+        this.candidateForm.get('bank')?.patchValue('');
+        this.candidateForm.get('transactionId')?.patchValue('');
+        this.candidateForm.get('ifscCode')?.patchValue('');
+        this.candidateForm.get('bank')?.updateValueAndValidity();
+        this.candidateForm.get('transactionId')?.updateValueAndValidity();
+        this.candidateForm.get('ifscCode')?.updateValueAndValidity();
+       
+      }
+      else if(val=='UPI'){
+        this.candidateForm.get('bank')?.setValidators(null);
+        this.candidateForm.get('transactionId')?.setValidators([Validators.required,Validators.pattern(/^[^\s].*/)]);
+        this.candidateForm.get('ifscCode')?.setValidators(null);
+        this.candidateForm.get('bank')?.disable();
+        this.candidateForm.get('transactionId')?.enable();
+        this.candidateForm.get('ifscCode')?.disable();
+        this.candidateForm.get('bank')?.patchValue('');
+        this.candidateForm.get('transactionId')?.patchValue('');
+        this.candidateForm.get('ifscCode')?.patchValue('');
+         
+        this.candidateForm.get('bank')?.updateValueAndValidity();
+        this.candidateForm.get('transactionId')?.updateValueAndValidity();
+        this.candidateForm.get('ifscCode')?.updateValueAndValidity();
+       
+      }
+       else if(val=='CHEQUE'){
+        this.candidateForm.get('bank')?.setValidators(null);
+        this.candidateForm.get('transactionId')?.setValidators(null);
+        this.candidateForm.get('ifscCode')?.setValidators(null);
+        this.candidateForm.get('bank')?.enable();
+        this.candidateForm.get('transactionId')?.enable();
+        this.candidateForm.get('ifscCode')?.enable();
+        this.candidateForm.get('bank')?.patchValue('');
+        this.candidateForm.get('transactionId')?.patchValue('');
+        this.candidateForm.get('ifscCode')?.patchValue('');
+        
+        this.candidateForm.get('bank')?.updateValueAndValidity();
+        this.candidateForm.get('transactionId')?.updateValueAndValidity();
+      
+        this.candidateForm.get('ifscCode')?.updateValueAndValidity();
+      }
+    }
+
 }
 
 

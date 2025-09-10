@@ -46,19 +46,22 @@
                 <!-- begin:: Preliminary survey for selection of potential SHGs -->
                 <div class="card budgets mb-3 " >
 
-                    <div class="card-header bg-transparent">
+                    <div class="card-header bg-transparent d-flex justify-content-between">
                         <h6 class="fw-600 mb-2 mb-sm-3 mb-md-0"> {{getSubactivities(selectedBudgetHead)}} </h6>
+                          <div class="text-end">
+                            <button type="button" class="btn btn-sm btn-lime-green" (click)="onFinalSubmit()">Save</button>
+                        </div>
                     </div> 
-                    <div class="card-body" *ngIf="selectedBudgetHead=='1' || selectedActivity=='12' || selectedBudgetHead=='63' || selectedBudgetHead=='65' || selectedBudgetHead=='64' || selectedBudgetHead=='65' || selectedBudgetHead=='29' || selectedBudgetHead=='38' || selectedBudgetHead=='39' || selectedBudgetHead=='40' || selectedBudgetHead=='37' || selectedBudgetHead=='62' || selectedBudgetHead=='41' || selectedBudgetHead=='42' || selectedBudgetHead=='43' || selectedBudgetHead=='44' || selectedBudgetHead=='48' || selectedBudgetHead=='49' || selectedBudgetHead=='50' || selectedBudgetHead=='45' || selectedBudgetHead=='46' || selectedBudgetHead=='51' || selectedBudgetHead=='52' || selectedBudgetHead=='53' || selectedBudgetHead=='54'">
-                        <div class="row" *ngIf="selectedBudgetHead=='45' || selectedBudgetHead=='46' || selectedBudgetHead=='51' || selectedBudgetHead=='52' || selectedBudgetHead=='53' || selectedBudgetHead=='54' || selectedBudgetHead=='62' || selectedBudgetHead=='63' || selectedBudgetHead=='64' || selectedBudgetHead=='65' || selectedBudgetHead=='29' || selectedBudgetHead=='37' || selectedBudgetHead=='38' || selectedBudgetHead=='39' || selectedBudgetHead=='40' || selectedBudgetHead=='65' " >
+                    <div class="card-body" *ngIf="selectedBudgetHead=='1' || selectedActivity=='12' || selectedBudgetHead=='63' || selectedBudgetHead=='65' || selectedBudgetHead=='64' || selectedBudgetHead=='65' || selectedBudgetHead=='29' || selectedBudgetHead=='38' || selectedBudgetHead=='39' || selectedBudgetHead=='40' || selectedBudgetHead=='37' || selectedBudgetHead=='62' || selectedBudgetHead=='41' || selectedBudgetHead=='42' || selectedBudgetHead=='43' || selectedBudgetHead=='44' || selectedBudgetHead=='48' || selectedBudgetHead=='49' || selectedBudgetHead=='50' || selectedBudgetHead=='45' || selectedBudgetHead=='46' || selectedBudgetHead=='51' || selectedBudgetHead=='52' || selectedBudgetHead=='53' || selectedBudgetHead=='54' || selectedBudgetHead=='41' || selectedBudgetHead=='42' || selectedBudgetHead=='43' || selectedBudgetHead=='44' || selectedBudgetHead=='47' || selectedBudgetHead=='48' || selectedBudgetHead=='49' || selectedBudgetHead=='50'">
+                        <div class="row" *ngIf="selectedBudgetHead=='45' || selectedBudgetHead=='46' || selectedBudgetHead=='51' || selectedBudgetHead=='52' || selectedBudgetHead=='53' || selectedBudgetHead=='54' || selectedBudgetHead=='62' || selectedBudgetHead=='63' || selectedBudgetHead=='64' || selectedBudgetHead=='65' || selectedBudgetHead=='29' || selectedBudgetHead=='37' || selectedBudgetHead=='38' || selectedBudgetHead=='39' || selectedBudgetHead=='40' || selectedBudgetHead=='65' || selectedBudgetHead=='41' || selectedBudgetHead=='42' || selectedBudgetHead=='43' || selectedBudgetHead=='44'  || selectedBudgetHead=='47' || selectedBudgetHead=='48' || selectedBudgetHead=='49' || selectedBudgetHead=='50'" >
                             <div class="col-12 col-sm-12 col-md-6 col-lg-6">
                                 <fieldset class="mb-3">
                                     <legend class="text-lime-green">Physical</legend>
 
-                                    <div class="row mb-2">
+                                    <div class="row mb-2 p-2">
                                         <div class="col-12 col-sm-6 col-md-6 col-lg-6">
                                             <div class="form-floating mb-3 mb-sm-3 mb-md-0">
-                                                <input type="text" class="form-control"  placeholder="" id="physicalTarget" [(ngModel)]="physicalTarget">
+                                                <input type="text" class="form-control"  placeholder="" id="physicalTarget" [(ngModel)]="physicalTarget" readonly>
                                                 <label for="physicalTarget">Physical Target</label>
                                             </div>
                                         </div>
@@ -84,19 +87,19 @@
                                 </fieldset>
                             </div>
                             <div class="col-12 col-sm-12 col-md-6 col-lg-6">
-                                <fieldset class="mb-3">
+                                <fieldset class="mb-3 p-2">
                                     <legend class="text-lime-green">Financial</legend>
 
                                     <div class="row mb-2">
                                          <div class="col-12 col-sm-6 col-md-6 col-lg-6">
                                             <div class="form-floating mb-3 mb-sm-3 mb-md-0">
-                                                <input type="text" class="form-control" value="0.04" placeholder="" id="ft" [(ngModel)]="financialTarget">
+                                                <input type="text" class="form-control" value="0.04" placeholder="" id="ft" [(ngModel)]="financialTarget" readonly>
                                                 <label for="ft">Financial Target</label>
                                             </div>
                                         </div>
                                         <div class="col-12 col-sm-6 col-md-6 col-lg-6">
                                             <div class="form-floating mb-3 mb-sm-3 mb-md-0">
-                                                <input type="text" class="form-control" value="" placeholder="" id="financialAchivement" [(ngModel)]="financialTargetAchievement">
+                                                <input type="text" class="form-control" value="" placeholder="" id="financialAchivement" readonly [(ngModel)]="financialTargetAchievement">
                                                 <label for="financialTarget">Financial Achievement</label>
                                             </div>
                                         </div>
@@ -192,7 +195,7 @@
                                             <th>Purpose Of Travel</th>
                                             <th>Mode Of Travel</th>
                                             <th>Destination</th>
-                                            <th>No. of persons travelled</th>
+                                            <th>No. of peCandidateed</th>
                                             <th>Amount</th>
                                             <th>Bill No.</th>
                                             <th>Bill Date</th>
@@ -239,6 +242,7 @@
                                 </table>
                             </div>
                         </div>
+                        
                          <div class="card" *ngIf="selectedBudgetHead=='62' || selectedBudgetHead=='45' || selectedBudgetHead=='46' || selectedBudgetHead=='51' || selectedBudgetHead=='52' || selectedBudgetHead=='53' || selectedBudgetHead=='54' ">
                             <div class="card-header bg-transparent">
                                 <div class="row align-items-center">
@@ -343,10 +347,107 @@
                                 </table>
                             </div>
                         </div>
-                       
-                        <div class="text-end mt-4">
-                            <button type="button" class="btn btn-sm btn-lime-green" (click)="onFinalSubmit()">Save</button>
+                         <div class="card" *ngIf="selectedBudgetHead=='41' || selectedBudgetHead=='42' || selectedBudgetHead=='43' || selectedBudgetHead=='44'  || selectedBudgetHead=='47' || selectedBudgetHead=='48' || selectedBudgetHead=='49' || selectedBudgetHead=='50' ">
+                            <div class="card-header bg-transparent">
+                                <div class="row align-items-center">
+                                    <div class="col-8 col-sm-8 col-md-8 col-lg-8">
+                                        <h6 class="fw-600 mb-2 mb-sm-3 mb-md-0">Expenditure</h6>
+                                    </div>
+                                    <div class="col-4 col-sm-4 col-md-4 col-lg-4">
+                                        <div class="text-end">
+                                             <button type="button" class="btn btn-sm btn-lime-green me-2" (click)="openModelPaymentCandidate('add')">Add Payment</button>
+                                            <button type="button" class="btn btn-sm btn-lime-green" (click)="openModelcandidate('add')"><span class="bi bi-plus-lg"></span> Add Candidates</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body mb-3">
+                                <h6 class="fw-600 mb-2 mb-sm-3 mb-md-0">View Details</h6>
+                                <table id="view-Candidates" class="table table-bordered nowrap w-100 trainingTable">
+                                  <thead class="bg-lime-green text-white">
+                                    <tr>
+                                      <th>S.No</th>
+                                      <th>Udyam DPIIT Registration No</th>
+                                      <th>Application Received Date</th>
+                                      <th>Application Source</th>
+                                      <th>Shortlisting Date</th>
+                                      <th>Need Assessment Date</th>
+                                      <th>Candidate Finalised</th>
+                                      <th>Cohort Name</th>
+                                      <th>Baseline Assessment Date</th>
+                                      <!-- <th>Sub Activity ID</th> -->
+                                      <!-- <th>Name of MSME</th> -->
+                                      <th class="text-center">Edit / Delete</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr *ngIf="!candidatesData || candidatesData.length === 0">
+                                      <td colspan="12" class="text-center text-muted">No candidate data available.</td>
+                                    </tr>
+                                    <tr *ngFor="let candidate of candidatesData; let i = index">
+                                      <td>{{ i + 1 }}</td>
+                                      <td>{{ candidate?.udhyamDpiitRegistrationNo }}</td>
+                                      <td>{{ candidate?.applicationReceivedDate }}</td>
+                                      <td>{{ candidate?.applicationSource }}</td>
+                                      <td>{{ candidate?.shortlistingDate }}</td>
+                                      <td>{{ candidate?.needAssessmentDate }}</td>
+                                      <td>{{ candidate?.candidateFinalised ? 'Yes' : 'No' }}</td>
+                                      <td>{{ candidate?.cohortName }}</td>
+                                      <td>{{ candidate?.baselineAssessmentDate }}</td>
+                                      <!-- <td>{{ candidate?.subActivityId }}</td> -->
+                                      <!-- <td>{{ candidate?.organizationId }}</td> -->
+                                      <td class="text-center">
+                                        <button type="button" class="btn btn-default text-lime-green btn-sm" (click)="openModelcandidate('edit',candidate)">
+                                          <span class="bi bi-pencil"></span>
+                                        </button>
+                                        <button type="button" class="btn btn-default text-danger btn-sm" (click)="deleteCandidate(candidate?.id)">
+                                          <span class="bi bi-trash"></span>
+                                        </button>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                            </div>
+                             <div class="card-body mb-3">
+                                <h6 class="fw-600 mb-2 mb-sm-3 mb-md-0">View Payment Details</h6>
+                                <table id="view-Payments" class="table table-bordered nowrap w-100 trainingTable">
+                                    <thead class="bg-lime-green text-white">
+                                        <tr>
+                                            <th>S.No</th>
+                                            <th>Amount (in Rs.)</th>
+                                            <th>Payment For Month</th>
+                                            <th>Date of Payment</th>
+                                             <th >Name of MSME</th>
+                                            <th class="text-center">Edit / Delete</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                         <tr *ngIf="!getPaymentsData || getPaymentsData.length === 0">
+                                        <td colspan="10" class="text-center text-muted">No Payment data available.</td>
+                                    </tr>
+                                        <tr *ngFor="let payment of getPaymentsData; let i = index">
+                                            <td>{{ i + 1 }}</td>
+                                            <td>{{ payment?.amount }}</td>
+                                            <td>{{ payment?.paymentForMonth }}</td>
+                                            <td>{{ payment?.dateOfPayment }}</td>
+                                            <td>{{ payment?.resourceName }}</td>
+                                            <td class="text-center">
+                                                <button type="button" class="btn btn-default text-lime-green btn-sm" (click)="openModelPayment('edit', payment)">
+                                                    <span class="bi bi-pencil"></span>
+                                                </button>
+                                                <button type="button" class="btn btn-default text-danger btn-sm" (click)="deletePayment(payment?.nonTrainingResourceExpenditureId)">
+                                                    <span class="bi bi-trash"></span>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
+                       
+                        <!-- <div class="text-end mt-4">
+                            <button type="button" class="btn btn-sm btn-lime-green" (click)="onFinalSubmit()">Save</button>
+                        </div> -->
                     </div>
                     
              </div>
@@ -358,7 +459,7 @@
   <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-xl">
     <div class="modal-content">
       <div class="modal-header py-2">
-        <h6 class="modal-title text-white" id="addSurveyLabel">{{iseditMode?'Update' :'Add'}} Financial Target</h6>
+        <h6 class="modal-title text-white" id="addSurveyLabel">{{iseditMode?'Update' :'Add'}} Expenditure</h6>
         <button type="button" class="btn-close me-1" data-bs-dismiss="modal" aria-label="Close" (click)="resetForm()" ></button>
       </div>
       <div class="modal-body">
@@ -1261,21 +1362,355 @@ aria-hidden="true">
     <!-- end:: add travel survey for selection of potential SHGs modal -->
      <!-- begin --Delete travel -->
       <div class="modal fade" id="exampleModalDeleteTravell" tabindex="-1" role="dialog" aria-labelledby="exampleModalDeleteLabel"
-aria-hidden="true">
-<div class="modal-dialog" role="document">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalDeleteLabel">Delete Session</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            Are you sure you want to delete this record?
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-lime-green" (click)="ConfirmdeleteExpenditureTravel(deleteTravelID)">Confirm</button>
+      aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalDeleteLabel">Delete Session</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete this record?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-lime-green" (click)="ConfirmdeleteExpenditureTravel(deleteTravelID)">Confirm</button>
+            </div>
         </div>
     </div>
-</div>
-</div>
+    </div>
 <!-- end--Delete travel -->
+
+
+
+<!-- Select candidates -->
+   
+<div class="modal fade" id="addCandidates" tabindex="-1" aria-labelledby="addCandidatesLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-xl">
+    <div class="modal-content">
+      <div class="modal-header py-2">
+        <h6 class="modal-title text-white" id="addCandidatesLabel">{{iseditModeCandidates?'Update' :'Add'}} Candidate</h6>
+        <button type="button" class="btn-close me-1" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="candidateForm" (ngSubmit)="onSubmitCandidate()">
+
+          <div class="row">
+             <!-- Organization ID -->
+            <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+              <div class="form-floating mb-3">
+                <select class="form-select" id="organizationId" 
+                        formControlName="organizationId"
+                        [class.is-invalid]="isSubmitted && fcandidate['organizationId'].invalid">
+                  <option value="">Select Organization</option>
+                   <option *ngFor="let val of OrganizationData" value="{{val?.organizationId}}">{{val?.organizationName}}</option>
+                </select>
+                <label for="organizationId">Name Of MSME</label>
+                <div *ngIf="isSubmitted && fcandidate['organizationId'].invalid" class="invalid-feedback">
+                  Name Of MSME is required
+                </div>
+              </div>
+            </div>
+            <!-- Udyam DPIIT Registration Number -->
+            <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+              <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="udhyamDpiitRegistrationNo" 
+                formControlName="udhyamDpiitRegistrationNo"
+                [class.is-invalid]="isSubmitted && fcandidate['udhyamDpiitRegistrationNo'].invalid"
+                placeholder="Udyam / DPIIT Registration No"
+                pattern="^[Uu][Dd][Yy][Aa][Mm]-[A-Za-z]{2}-\d{2}-\d{7}$"
+                (input)="fcandidate['udhyamDpiitRegistrationNo'].setValue($any($event.target).value)">
+              <label for="udhyamDpiitRegistrationNo">Udhyam / DPIIT Registration No</label>
+              <div *ngIf="isSubmitted && fcandidate['udhyamDpiitRegistrationNo'].errors?.['required']" class="invalid-feedback">
+                Udyam / DPIIT Registration No is required
+              </div>
+              <div *ngIf="isSubmitted && fcandidate['udhyamDpiitRegistrationNo'].errors?.['pattern']" class="invalid-feedback">
+                Invalid format. Correct Format: UDYAM-XX-00-1234567 or udyam-xx-12-1234567
+              </div>
+              </div>
+            </div>
+
+            <!-- Application Received Date -->
+            <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+              <div class="form-floating mb-3">
+                <input type="date" class="form-control" id="applicationReceivedDate" 
+                       formControlName="applicationReceivedDate"
+                       [class.is-invalid]="isSubmitted && fcandidate['applicationReceivedDate'].invalid"
+                       placeholder="Application Received Date">
+                <label for="applicationReceivedDate">Application Received Date</label>
+                <div *ngIf="isSubmitted && fcandidate['applicationReceivedDate'].invalid" class="invalid-feedback">
+                  Application Received Date is required
+                </div>
+              </div>
+            </div>
+
+            <!-- Application Source -->
+            <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+              <div class="form-floating mb-3">
+                <!-- <select class="form-select" id="applicationSource" 
+                        formControlName="applicationSource"
+                        [class.is-invalid]="isSubmitted && fcandidate['applicationSource'].invalid">
+                  <option value="">Select Application Source</option>
+                  <option value="Online">Online</option>
+                  <option value="Referral">Referral</option>
+                  <option value="Direct">Direct</option>
+                  <option value="Agency">Agency</option>
+                </select> -->
+                 <input type="text" class="form-control" id="applicationSource" 
+                       formControlName="applicationSource"
+                       [class.is-invalid]="isSubmitted && fcandidate['applicationSource'].invalid"
+                       placeholder="Source of applicated received">
+                <label for="applicationSource">Source of applicated received</label>
+                <div *ngIf="isSubmitted && fcandidate['applicationSource'].invalid" class="invalid-feedback">
+                  Source of applicated received is required
+                </div>
+              </div>
+            </div>
+
+            <!-- Shortlisting Date -->
+            <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+              <div class="form-floating mb-3">
+                <input type="date" class="form-control" id="shortlistingDate" 
+                       formControlName="shortlistingDate"
+                       [class.is-invalid]="isSubmitted && fcandidate['shortlistingDate'].invalid"
+                       placeholder="Shortlisting Date">
+                <label for="shortlistingDate">Shortlisting Date</label>
+                <div *ngIf="isSubmitted && fcandidate['shortlistingDate'].invalid" class="invalid-feedback">
+                  Shortlisting Date is required
+                </div>
+              </div>
+            </div>
+
+            <!-- Need Assessment Date -->
+            <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+              <div class="form-floating mb-3">
+                <input type="date" class="form-control" id="needAssessmentDate" 
+                       formControlName="needAssessmentDate"
+                       [class.is-invalid]="isSubmitted && fcandidate['needAssessmentDate'].invalid"
+                       placeholder="Need Assessment Date">
+                <label for="needAssessmentDate">Need Assessment Date</label>
+                <div *ngIf="isSubmitted && fcandidate['needAssessmentDate'].invalid" class="invalid-feedback">
+                  Need Assessment Date is required
+                </div>
+              </div>
+            </div>
+
+            <!-- Candidate Finalised -->
+            <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+              <div >
+                <label class="form-label d-block mb-2">Candidate Finalised</label>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" id="candidateFinalisedYes" 
+                         formControlName="candidateFinalised" [value]="true">
+                  <label class="form-check-label" for="candidateFinalisedYes">Yes</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" id="candidateFinalisedNo" 
+                         formControlName="candidateFinalised" [value]="false">
+                  <label class="form-check-label" for="candidateFinalisedNo">No</label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Cohort Name -->
+            <div class="col-12 col-sm-6 col-md-4 col-lg-4" *ngIf="fcandidate['candidateFinalised'].value">
+              <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="cohortName" 
+                       formControlName="cohortName"
+                       [class.is-invalid]="isSubmitted && fcandidate['cohortName'].invalid"
+                       placeholder="Cohort Name">
+                <label for="cohortName">Cohort Name</label>
+                <div *ngIf="isSubmitted && fcandidate['cohortName'].invalid" class="invalid-feedback">
+                  Cohort Name is required
+                </div>
+              </div>
+            </div>
+
+            <!-- Baseline Assessment Date -->
+            <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+              <div class="form-floating mb-3">
+                <input type="date" class="form-control" id="baselineAssessmentDate" 
+                       formControlName="baselineAssessmentDate"
+                       [class.is-invalid]="isSubmitted && fcandidate['baselineAssessmentDate'].invalid"
+                       placeholder="Baseline Assessment Date">
+                <label for="baselineAssessmentDate">Date of Baseline assessment</label>
+                <div *ngIf="isSubmitted && fcandidate['baselineAssessmentDate'].invalid" class="invalid-feedback">
+                  Date of Baseline assessment is required
+                </div>
+              </div>
+            </div>
+
+            <!-- Sub Activity ID -->
+            <!-- <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+              <div class="form-floating mb-3">
+                <input type="number" class="form-control" id="subActivityId" 
+                       formControlName="subActivityId"
+                       [class.is-invalid]="isSubmitted && fcandidate['subActivityId'].invalid"
+                       min="0"
+                       placeholder="Sub Activity ID">
+                <label for="subActivityId">Sub Activity ID</label>
+                <div *ngIf="isSubmitted && fcandidate['subActivityId'].invalid" class="invalid-feedback">
+                  <span *ngIf="fcandidate['subActivityId'].errors?.['required']">Sub Activity ID is required</span>
+                  <span *ngIf="fcandidate['subActivityId'].errors?.['min']">Sub Activity ID cannot be negative</span>
+                </div>
+              </div>
+            </div> -->
+
+            <!-- Organization ID -->
+           
+          </div>
+
+          <div class="text-end mt-3">
+            <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal" aria-label="Close" (click)="resetFormCandidates()">Close</button>
+            <button type="submit" class="btn btn-lime-green">{{iseditModeCandidates?'Update' :'Add'}}</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+ <!-- begin --Delete candidate -->
+      <div class="modal fade" id="exampleModalDeleteCandidate" tabindex="-1" role="dialog" aria-labelledby="exampleModalDeleteLabel"
+      aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalDeleteLabel">Delete Session</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete this record?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-lime-green" (click)="ConfirmdeleteExpenditureCandidate(deleteCandidateID)">Confirm</button>
+            </div>
+        </div>
+    </div>
+    </div>
+<!-- end--Delete candidate -->
+ <div class="modal fade" id="addPaymentCandidate" tabindex="-1" aria-labelledby="addPaymentLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-xl">
+    <div class="modal-content">
+      <div class="modal-header py-2">
+        <h6 class="modal-title text-white" id="addPaymentLabel">{{iseditModePayment?'Update' :'Add'}} Payment</h6>
+        <button type="button" class="btn-close me-1" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="paymentForm" (ngSubmit)="onSubmitPayment()">
+          <div class="row">
+             <!-- Resource ID -->
+            <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+              <div class="form-floating mb-3">
+                 <select class="form-select events-expenditure" id="resourceId" formControlName="resourceId" >
+                        <option value="">Select Option</option>
+                    <option *ngFor="let item of resourceListCandidate" value="{{item?.organizationId}}">{{item?.organizationName}}</option>
+                       
+                </select>
+               
+                <label for="resourceId" > Name Of MSME</label>
+                <div *ngIf="isSubmitted && fPayment['resourceId'].invalid" class="invalid-feedback" id="resourceError">
+                  <span *ngIf="fPayment['resourceId'].errors?.['required']">This Field is required</span>
+                  
+                </div>
+              </div>
+            </div>
+<!--           
+            <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+              <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="bankName"  readonly
+                       formControlName="bankName"
+                       placeholder="Bank name">
+                <label for="bankName">Bank Name</label>
+              
+              </div>
+            </div>
+          
+            <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+              <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="ifscCode"  formControlName="ifscCode" placeholder="IFSC code" readonly >
+                <label for="ifscCode">IFSC Code</label>
+              </div>
+            </div>
+
+           
+            <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+              <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="accountNo" 
+                       formControlName="accountNo" readonly>
+                <label for="accountNo">Account Number</label>
+              </div>
+            </div> -->
+
+            <!-- Amount -->
+            <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+              <div class="form-floating mb-3">
+                <input type="number" class="form-control" id="amount" 
+                       formControlName="amount"
+                       [class.is-invalid]="isSubmitted && fPayment['amount'].invalid"
+                       placeholder="Amount" 
+                       min="0" 
+                       step="0.01"
+                       [attr.aria-describedby]="isSubmitted && fPayment['amount'].invalid ? 'amountError' : null">
+                <label for="amount">Amount (₹)</label>
+                <div *ngIf="isSubmitted && fPayment['amount'].invalid" class="invalid-feedback" id="amountError">
+                  <span *ngIf="fPayment['amount'].errors?.['required']">Amount is required</span>
+                  <span *ngIf="fPayment['amount'].errors?.['min']">Amount must be positive</span>
+                  <span *ngIf="fPayment['amount'].errors?.['max']">Amount is too large</span>
+                </div>
+              </div>
+            </div>
+            <!-- Payment For Month -->
+            <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+              <div class="form-floating mb-3">
+                <!-- <app-monthly-range (monthChangeValue)="onChangeDate($event)" [paymentForMonth]="paymentForMonth" ></app-monthly-range> -->
+                <app-monthly-range [paymentForMonth]="paymentForMonth" (monthChangeValue)="onChangeDate($event)"></app-monthly-range>
+                                <!-- <mat-form-field appearance="outline">
+                    <mat-label>Payment For Month</mat-label>
+                    <input matInput [matDatepicker]="dp1" [formControl]="date1"
+                    (click)="dp1.open()" (keydown)="false">    
+                    <mat-datepicker-toggle matSuffix [for]="dp1"></mat-datepicker-toggle>
+                    <mat-datepicker #dp1 startView="multi-year" (monthSelected)="setMonthAndYear($event, dp1)"
+                        panelClass="example-month-picker">
+                    </mat-datepicker>
+                </mat-form-field> -->
+              </div>
+            </div>
+            <!-- Date of Payment -->
+            <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+              <div class="form-floating mb-3">
+                <input type="date" class="form-control" id="dateOfPayment" 
+                       formControlName="dateOfPayment"
+                       [class.is-invalid]="isSubmitted && fPayment['dateOfPayment'].invalid"
+                       placeholder="Date of payment"
+                       [attr.aria-describedby]="isSubmitted && fPayment['dateOfPayment'].invalid ? 'dateError' : null">
+                <label for="dateOfPayment">Date of Payment</label>
+                <div *ngIf="isSubmitted && fPayment['dateOfPayment'].invalid" class="invalid-feedback" id="dateError">
+                  Date of payment is required
+                </div>
+              </div>
+            </div>
+             <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+              <div class="form-floating mb-3">
+                <input type="file" class="form-control" (change)="onFileSelectedPayment($event)">
+                <label for="uploadBill">Upload Bill Invoice</label>
+              </div>
+            </div>
+          
+           
+          </div>
+
+          <div class="text-end mt-3">
+            <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal" aria-label="Close" (click)="resetForm()">Close</button>
+            <button type="submit" class="btn btn-lime-green">{{iseditModePayment?'Update' :'Add'}}  Payment</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+<!-- delete continuity -->
+
+   <!-- begin --Delete preliminary -->
+   
+<!-- end--Delete preliminary -->
+</div>

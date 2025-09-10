@@ -46,12 +46,15 @@
                 <!-- begin:: Preliminary survey for selection of potential SHGs -->
                 <div class="card budgets mb-3 " *ngIf="selectedBudgetHead=='26' || selectedBudgetHead=='27' || selectedBudgetHead=='28'">
 
-                    <div class="card-header bg-transparent">
-                        <!-- <h6 class="fw-600 mb-2 mb-sm-3 mb-md-0" *ngIf="selectedBudgetHead=='1'" >IT Infrastructure Setup</h6>
-                        <h6 class="fw-600 mb-2 mb-sm-3 mb-md-0" *ngIf="selectedBudgetHead=='12' || selectedBudgetHead=='13' || selectedBudgetHead=='14' || selectedBudgetHead=='15' || selectedBudgetHead=='16' || selectedBudgetHead=='17'" >Staff</h6>
-                         <h6 class="fw-600 mb-2 mb-sm-3 mb-md-0"  *ngIf="selectedBudgetHead=='12'" >Consumables </h6> -->
-                          <!-- <h6 class="fw-600 mb-2 mb-sm-3 mb-md-0"  *ngIf="selectedBudgetHead=='19'" >   Travel and Transport </h6> -->
-                    </div>
+                    <div class="card-header bg-transparent d-flex justify-content-between">
+                      <h6 class="fw-600 mb-2 mb-sm-3 mb-md-0" *ngIf="selectedActivity == 16">Project team</h6>
+                      <h6 class="fw-600 mb-2 mb-sm-3 mb-md-0" *ngIf="selectedActivity == 17">Technology Platform</h6>
+                      <h6 class="fw-600 mb-2 mb-sm-3 mb-md-0" *ngIf="selectedActivity == 18">Call Center</h6>
+                      
+                      <div class="text-end">
+                            <button type="button" class="btn btn-sm btn-lime-green" (click)="onFinalSubmit()">Save</button>
+                        </div>
+                      </div>
                     <div class="card-body">
                         <div class="row" *ngIf="selectedBudgetHead=='26' || selectedBudgetHead=='27' || selectedBudgetHead=='28' || selectedBudgetHead=='13' || selectedBudgetHead=='14' || selectedBudgetHead=='15' || selectedBudgetHead=='16' || selectedBudgetHead=='17' || selectedBudgetHead=='19'" >
                             <div class="col-12 col-sm-12 col-md-6 col-lg-6">
@@ -60,13 +63,13 @@
 
                                     <div class="row mb-2">
                                         <div class="col-12 col-sm-6 col-md-6 col-lg-6">
-                                            <div class="form-floating mb-3 mb-sm-3 mb-md-0">
-                                                <input type="text" class="form-control"  placeholder="" id="physicalTarget" [(ngModel)]="physicalTarget">
+                                            <div class="form-floating mb-3 mb-sm-3 mb-md-0 px-2">
+                                                <input type="text" class="form-control"  placeholder="" id="physicalTarget" [(ngModel)]="physicalTarget" readonly>
                                                 <label for="physicalTarget">Physical Target</label>
                                             </div>
                                         </div>
                                         <div class="col-12 col-sm-6 col-md-6 col-lg-6" *ngIf="physicalTarget<=1">
-                                            <div class="form-floating mb-3 mb-sm-3 mb-md-0">
+                                            <div class="form-floating mb-3 mb-sm-3 mb-md-0 px-2">
                                                 <select class="form-select" id="pt1" [(ngModel)]="physicalTargetAchievement">
                                                    <option value="">Select Physical Achievement</option>
                                                     <option value="Not Initiated">Not Initiated</option>
@@ -77,8 +80,8 @@
                                             </div>
                                         </div>
                                         <div class="col-12 col-sm-6 col-md-6 col-lg-6" *ngIf="physicalTarget>1">
-                                            <div class="form-floating mb-3 mb-sm-3 mb-md-0">
-                                                <input type="text" class="form-control"  placeholder="" id="physicalTargetAchievement" [(ngModel)]="physicalTargetAchievement">
+                                            <div class="form-floating mb-3 mb-sm-3 mb-md-0 px-2">
+                                                <input type="text" class="form-control"  placeholder="" id="physicalTargetAchievement" [(ngModel)]="physicalTargetAchievement" >
                                                 <label for="physicalTargetAchievement">Physical Achievement</label>
                                             </div>
                                         </div>
@@ -92,14 +95,14 @@
 
                                     <div class="row mb-2">
                                          <div class="col-12 col-sm-6 col-md-6 col-lg-6">
-                                            <div class="form-floating mb-3 mb-sm-3 mb-md-0">
-                                                <input type="text" class="form-control" value="0.04" placeholder="" id="ft" [(ngModel)]="financialTarget">
+                                            <div class="form-floating mb-3 mb-sm-3 mb-md-0 px-2">
+                                                <input type="text" class="form-control" value="0.04" placeholder="" id="ft" [(ngModel)]="financialTarget" readonly>
                                                 <label for="ft">Financial Target</label>
                                             </div>
                                         </div>
                                         <div class="col-12 col-sm-6 col-md-6 col-lg-6">
-                                            <div class="form-floating mb-3 mb-sm-3 mb-md-0">
-                                                <input type="text" class="form-control" value="" placeholder="" id="financialAchivement" [(ngModel)]="financialTargetAchievement">
+                                            <div class="form-floating mb-3 mb-sm-3 mb-md-0 px-2">
+                                                <input type="text" class="form-control" value="" placeholder="" id="financialAchivement" [(ngModel)]="financialTargetAchievement" readonly>
                                                 <label for="financialTarget">Financial Achievement</label>
                                             </div>
                                         </div>
@@ -142,7 +145,7 @@
                                     <th>IFSC Code</th>
                                     <th>Transaction Id</th>
                                     <th>Purpose</th>
-                                    <th>Bill Invoice</th>
+                                    <!-- <th>Bill Invoice</th> -->
                                     <th class="text-center">Edit / Delete</th>
                                   </tr>
                                 </thead>
@@ -164,11 +167,11 @@
                                     <td>{{ preliminary?.ifscCode }}</td>
                                     <td>{{ preliminary?.transactionId }}</td>
                                     <td>{{ preliminary?.purpose }}</td>
-                                    <td class="text-center">
+                                    <!-- <td class="text-center">
                                       <a href="#" class="btn btn-default text-primary btn-sm" *ngIf="preliminary?.uploadBillUrl">
                                         <span class="bi bi-eye"></span>
                                       </a>
-                                    </td>
+                                    </td> -->
                                     <td class="text-center">
                                       <button type="button" class="btn btn-default text-lime-green btn-sm" (click)="openModel('edit', preliminary)">
                                         <span class="bi bi-pencil"></span>
@@ -218,7 +221,7 @@
                                     <th>IFSC Code</th>
                                     <th>Transaction Id</th>
                                     <th>Purpose</th>
-                                    <th>Bill Invoice</th>
+                                    <!-- <th>Bill Invoice</th> -->
                                     <th class="text-center">Edit / Delete</th>
                                   </tr>
                                 </thead>
@@ -240,11 +243,11 @@
                                     <td>{{ preliminary?.ifscCode }}</td>
                                     <td>{{ preliminary?.transactionId }}</td>
                                     <td>{{ preliminary?.purpose }}</td>
-                                    <td class="text-center">
+                                    <!-- <td class="text-center">
                                       <a href="#" class="btn btn-default text-primary btn-sm" *ngIf="preliminary?.uploadBillUrl">
                                         <span class="bi bi-eye"></span>
                                       </a>
-                                    </td>
+                                    </td> -->
                                     <td class="text-center">
                                       <button type="button" class="btn btn-default text-lime-green btn-sm" (click)="openModel('edit', preliminary)">
                                         <span class="bi bi-pencil"></span>
@@ -310,7 +313,7 @@
                                         <button type="button" class="btn btn-default text-lime-green btn-sm" (click)="openModelContingency('edit',preliminary)">
                                           <span class="bi bi-pencil"></span>
                                         </button>
-                                        <button type="button" class="btn btn-default text-danger btn-sm" (click)="deletePreliminary(preliminary?.id)">
+                                        <button type="button" class="btn btn-default text-danger btn-sm" (click)="deletePreliminary(preliminary?.resourceId)">
                                           <span class="bi bi-trash"></span>
                                         </button>
                                       </td>
@@ -356,9 +359,9 @@
                         </div>
 
 
-                        <div class="text-end mt-4">
+                        <!-- <div class="text-end mt-4">
                             <button type="button" class="btn btn-sm btn-lime-green" (click)="onFinalSubmit()">Save</button>
-                        </div>
+                        </div> -->
                     </div>
                     
              </div>
@@ -370,7 +373,7 @@
   <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-xl">
     <div class="modal-content">
       <div class="modal-header py-2">
-        <h6 class="modal-title text-white" id="addSurveyLabel">{{iseditMode?'Update' :'Add'}} Financial Target</h6>
+        <h6 class="modal-title text-white" id="addSurveyLabel">{{iseditMode?'Update' :'Add'}} Expenditure</h6>
         <button type="button" class="btn-close me-1" data-bs-dismiss="modal" aria-label="Close" (click)="resetForm()" ></button>
       </div>
       <div class="modal-body">
@@ -395,7 +398,7 @@
             <!-- Payment Date -->
             <div class="col-12 col-sm-6 col-md-4 col-lg-4">
               <div class="form-floating mb-3">
-                <input type="date" class="form-control" formControlName="paymentDate" 
+                <input type="date" class="form-control" formControlName="paymentDate" appDisableFutureDates
                        [class.is-invalid]="isSubmitted && f['paymentDate'].invalid">
                 <label for="paymentDate">Date of hiring</label>
                 <div *ngIf="isSubmitted && f['paymentDate'].invalid" class="invalid-feedback">
@@ -459,7 +462,7 @@
             <!-- Bill Date -->
             <div class="col-12 col-sm-6 col-md-4 col-lg-4">
               <div class="form-floating mb-3">
-                <input type="date" class="form-control" formControlName="billDate" 
+                <input type="date" class="form-control" formControlName="billDate" appDisableFutureDates
                        [class.is-invalid]="isSubmitted && f['billDate'].invalid">
                 <label for="billDate">Bill Date</label>
                 <div *ngIf="isSubmitted && f['billDate'].invalid" class="invalid-feedback">
@@ -986,7 +989,7 @@ aria-hidden="true">
             <!-- Date of Payment -->
             <div class="col-12 col-sm-6 col-md-4 col-lg-4">
               <div class="form-floating mb-3">
-                <input type="date" class="form-control" id="dateOfPayment" 
+                <input type="date" class="form-control" id="dateOfPayment" appDisableFutureDates
                        formControlName="dateOfPayment"
                        [class.is-invalid]="isSubmitted && fPayment['dateOfPayment'].invalid"
                        placeholder="Date of payment"
@@ -1153,7 +1156,7 @@ aria-hidden="true">
             <!-- Bill Date -->
             <div class="col-12 col-sm-6 col-md-4 col-lg-4">
               <div class="form-floating mb-3">
-                <input type="date" class="form-control" formControlName="billDate" 
+                <input type="date" class="form-control" formControlName="billDate" appDisableFutureDates
                        [class.is-invalid]="isSubmitted && fTravel['billDate'].invalid">
                 <label for="billDate">Bill Date</label>
                 <div *ngIf="isSubmitted && fTravel['billDate'].invalid" class="invalid-feedback">
