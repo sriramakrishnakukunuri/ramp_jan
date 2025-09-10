@@ -44,15 +44,16 @@
                 </div>
 
                 <!-- begin:: Preliminary survey for selection of potential SHGs -->
-                <div class="card budgets mb-3 " *ngIf="selectedBudgetHead=='68' || selectedBudgetHead=='69' || selectedBudgetHead=='72'">
+                <div class="card budgets mb-3 " *ngIf="selectedBudgetHead=='68' || selectedBudgetHead=='69' || selectedBudgetHead=='72' || selectedBudgetHead=='71'">
 
                     <div class="card-header bg-transparent">
                         <h6 class="fw-600 mb-2 mb-sm-3 mb-md-0" *ngIf="selectedBudgetHead=='68'" >Preliminary survey for selection of potential SHGs</h6>
                         <h6 class="fw-600 mb-2 mb-sm-3 mb-md-0" *ngIf="selectedBudgetHead=='69'" >Dashboard / Central Management System</h6>
                          <h6 class="fw-600 mb-2 mb-sm-3 mb-md-0"  *ngIf="selectedBudgetHead=='72'" >Contingency Fund </h6>
+                          <h6 class="fw-600 mb-2 mb-sm-3 mb-md-0"  *ngIf="selectedBudgetHead=='71'" >Raw material support </h6>
                     </div>
                     <div class="card-body">
-                        <div class="row" *ngIf="selectedBudgetHead=='68' || selectedBudgetHead=='69' || selectedBudgetHead=='72'" >
+                        <div class="row" *ngIf="selectedBudgetHead=='68' || selectedBudgetHead=='69' || selectedBudgetHead=='72' || selectedBudgetHead=='71'" >
                             <div class="col-12 col-sm-12 col-md-6 col-lg-6">
                                 <fieldset class="mb-3">
                                     <legend class="text-lime-green">Physical</legend>
@@ -106,7 +107,7 @@
                                 </fieldset>
                             </div>
                         </div>
-                        <div class="card" *ngIf="selectedBudgetHead=='68' || selectedBudgetHead=='69'">
+                        <div class="card" *ngIf="selectedBudgetHead=='68' || selectedBudgetHead=='69' || selectedBudgetHead=='71'">
                             <div class="card-header bg-transparent">
                                 <div class="row align-items-center">
                                     <div class="col-8 col-sm-8 col-md-9 col-lg-10">
