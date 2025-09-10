@@ -81,6 +81,7 @@ import { ViewProgramsSeperateComponent } from './PIA/view-programs-seperate/view
 import { NonTrainingTargetCodeComponent } from './PIA/non-training-target-code/non-training-target-code.component';
 import { NonTrainingCoiComponent } from './PIA/non-training-coi/non-training-coi.component';
 import { NonTrainingProgressWehubComponent } from './PIA/non-training-progress-wehub/non-training-progress-wehub.component';
+import { NonTrainingCipetComponent } from './PIA/non-training-cipet/non-training-cipet.component';
 
 @NgModule({
     imports: [
@@ -167,7 +168,8 @@ import { NonTrainingProgressWehubComponent } from './PIA/non-training-progress-w
         ViewProgramsSeperateComponent,
         NonTrainingTargetCodeComponent,
         NonTrainingCoiComponent,
-        NonTrainingProgressWehubComponent
+        NonTrainingProgressWehubComponent,
+        NonTrainingCipetComponent
 
     ],
     exports:[MaterialModule],

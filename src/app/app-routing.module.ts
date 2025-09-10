@@ -58,6 +58,7 @@ import { ViewProgramsSeperateComponent } from './PIA/view-programs-seperate/view
 import { NonTrainingTargetCodeComponent } from './PIA/non-training-target-code/non-training-target-code.component';
 import { NonTrainingCoiComponent } from './PIA/non-training-coi/non-training-coi.component';
 import { NonTrainingProgressWehubComponent } from './PIA/non-training-progress-wehub/non-training-progress-wehub.component';
+import { NonTrainingCipetComponent } from './PIA/non-training-cipet/non-training-cipet.component';
 
 const routes: Routes = [
     {
@@ -368,6 +369,12 @@ const routes: Routes = [
      {
         path: 'non-training-progress-coi',
         component: NonTrainingCoiComponent,
+        canActivate: [AuthGuard],
+        data: { roles: [Role.Admin,Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
+    },
+     {
+        path: 'non-training-progress-cipet',
+        component: NonTrainingCipetComponent,
         canActivate: [AuthGuard],
         data: { roles: [Role.Admin,Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
     },
