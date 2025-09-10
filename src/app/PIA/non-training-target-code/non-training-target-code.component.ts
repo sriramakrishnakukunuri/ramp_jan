@@ -59,6 +59,7 @@ export class NonTrainingTargetCodeComponent implements OnInit {
           this.SubActivityList = res;
           this.selectedBudgetHead= this.SubActivityList[0]?.subActivityId
           this.onBudgetHeadChange(this.SubActivityList[0]?.subActivityId)
+            this.getPreliminaryDataById()
         
         }, (error) => {
           // this.toastrService.error(error.message);
@@ -375,6 +376,8 @@ createForm(): FormGroup {
           
           console.log('Preliminary Data:', this.getPreliminaryData);
           this.resetForm();
+            this.getPreliminaryDataById()
+
           this.isSubmitted = false;
           const modalElement = document.getElementById('addSurvey');
           const modal1 = modalElement ? bootstrap.Modal.getInstance(modalElement) : null;
@@ -405,6 +408,8 @@ createForm(): FormGroup {
         this._commonService.add(APIS.nontrainingtargets.saveNonTrainingtargetsCodeIT,formData).subscribe((res: any) => {
           this.toastrService.success('Data saved successfully','Non Training Progress Data Success!');
           this.getPreliminaryData.push(res.data)
+            this.getPreliminaryDataById()
+
           this.resetForm();
           this.isSubmitted = false;
           const modal1 = bootstrap.Modal.getInstance(document.getElementById('addSurvey'));
@@ -446,6 +451,8 @@ createForm(): FormGroup {
           else{
             // this.getBulkExpenditure()
             this.closeModalDelete();
+            this.getPreliminaryDataById()
+
             this.deletePreliminaryID =''
           this.toastrService.success( 'Record Deleted Successfully', "Non Training Progress Data Success!");
           }

@@ -56,7 +56,7 @@ export class NonTrainingTargetsComponent implements OnInit {
           this.SubActivityList = res;
           this.selectedBudgetHead= this.SubActivityList[0]?.subActivityId
           this.onBudgetHeadChange(this.SubActivityList[0]?.subActivityId)
-        
+        this.getPreliminaryDataById()
         }, (error) => {
           // this.toastrService.error(error.message);
         });
@@ -174,6 +174,7 @@ export class NonTrainingTargetsComponent implements OnInit {
     return this.fb.group({
       agencyId: [0, ],
       nonTrainingSubActivityId: [0, ],
+      nonTrainingActivityId: [0, ],
       paymentDate: ['', Validators.required],
       expenditureAmount: [0, [Validators.required, Validators.min(0)]],
       billNo: ['', Validators.required],
@@ -188,6 +189,77 @@ export class NonTrainingTargetsComponent implements OnInit {
       uploadBillUrl: ['']
     });
   }
+
+   modeOfPayment(val:any){
+      if(val=='CASH'){
+        this.financialForm.get('bank')?.setValidators(null);
+        this.financialForm.get('transactionId')?.setValidators(null);
+        this.financialForm.get('ifscCode')?.setValidators(null);
+        this.financialForm.get('bank')?.patchValue('');
+        this.financialForm.get('transactionId')?.patchValue('');
+        this.financialForm.get('ifscCode')?.patchValue('');
+        this.financialForm.get('bank')?.clearValidators();
+        this.financialForm.get('transactionId')?.clearValidators();
+        this.financialForm.get('ifscCode')?.clearValidators();
+        this.financialForm.get('bank')?.disable();
+        this.financialForm.get('transactionId')?.disable();
+        this.financialForm.get('ifscCode')?.disable();
+      
+        this.financialForm.get('bank')?.updateValueAndValidity();
+        this.financialForm.get('transactionId')?.updateValueAndValidity();
+        this.financialForm.get('ifscCode')?.updateValueAndValidity();
+        
+      }
+      else if(val=='BANK_TRANSFER'){
+        this.financialForm.get('bank')?.setValidators([Validators.required]);
+        this.financialForm.get('transactionId')?.setValidators(null);
+        this.financialForm.get('ifscCode')?.setValidators([Validators.required,Validators.pattern(/^[A-Z]{4}0[A-Z0-9]{6}$/)]);
+        this.financialForm.get('bank')?.enable();
+        this.financialForm.get('transactionId')?.disable();
+        this.financialForm.get('ifscCode')?.enable();
+        this.financialForm.get('bank')?.patchValue('');
+        this.financialForm.get('transactionId')?.patchValue('');
+        this.financialForm.get('ifscCode')?.patchValue('');
+        this.financialForm.get('bank')?.updateValueAndValidity();
+        this.financialForm.get('transactionId')?.updateValueAndValidity();
+        this.financialForm.get('ifscCode')?.updateValueAndValidity();
+       
+      }
+      else if(val=='UPI'){
+        this.financialForm.get('bank')?.setValidators(null);
+        this.financialForm.get('transactionId')?.setValidators([Validators.required,Validators.pattern(/^[^\s].*/)]);
+        this.financialForm.get('ifscCode')?.setValidators(null);
+        this.financialForm.get('bank')?.disable();
+        this.financialForm.get('transactionId')?.enable();
+        this.financialForm.get('ifscCode')?.disable();
+        this.financialForm.get('bank')?.patchValue('');
+        this.financialForm.get('transactionId')?.patchValue('');
+        this.financialForm.get('ifscCode')?.patchValue('');
+         
+        this.financialForm.get('bank')?.updateValueAndValidity();
+        this.financialForm.get('transactionId')?.updateValueAndValidity();
+        this.financialForm.get('ifscCode')?.updateValueAndValidity();
+       
+      }
+       else if(val=='CHEQUE'){
+        this.financialForm.get('bank')?.setValidators(null);
+        this.financialForm.get('transactionId')?.setValidators(null);
+        this.financialForm.get('ifscCode')?.setValidators(null);
+        this.financialForm.get('bank')?.enable();
+        this.financialForm.get('transactionId')?.enable();
+        this.financialForm.get('ifscCode')?.enable();
+        this.financialForm.get('bank')?.patchValue('');
+        this.financialForm.get('transactionId')?.patchValue('');
+        this.financialForm.get('ifscCode')?.patchValue('');
+        
+        this.financialForm.get('bank')?.updateValueAndValidity();
+        this.financialForm.get('transactionId')?.updateValueAndValidity();
+      
+        this.financialForm.get('ifscCode')?.updateValueAndValidity();
+      }
+    }
+
+  
 
   get f() {
     return this.financialForm.controls;
@@ -245,6 +317,8 @@ export class NonTrainingTargetsComponent implements OnInit {
            this.toastrService.success('Data Updated successfully','Non Training Progress Data Success!');
            
            console.log('Preliminary Data:', this.getPreliminaryData);
+           this.getPreliminaryDataById()
+
            this.resetForm();
            this.isSubmitted = false;
            const modalElement = document.getElementById('addSurvey');
@@ -266,7 +340,7 @@ export class NonTrainingTargetsComponent implements OnInit {
        console.log('Form Submitted:', this.financialForm.value);
        this.f['agencyId'].setValue(Number(this.selectedAgencyId));
          this.f['nonTrainingSubActivityId'].setValue(Number(this.selectedBudgetHead));
-+        this.f['nonTrainingActivityId'].setValue(Number(this.selectedActivity));
+         this.f['nonTrainingActivityId'].setValue(Number(this.selectedActivity));
           const formData = new FormData();
            formData.append("dto", JSON.stringify({...this.financialForm.value}));
  
@@ -276,6 +350,7 @@ export class NonTrainingTargetsComponent implements OnInit {
          this._commonService.add(APIS.nontrainingtargets.saveNonTrainingtargetsCodeIT,formData).subscribe((res: any) => {
            this.toastrService.success('Data saved successfully','Non Training Progress Data Success!');
            this.getPreliminaryData.push(res.data)
+           this.getPreliminaryDataById()
            this.resetForm();
            this.isSubmitted = false;
            const modal1 = bootstrap.Modal.getInstance(document.getElementById('addSurvey'));
@@ -318,6 +393,8 @@ export class NonTrainingTargetsComponent implements OnInit {
             // this.getBulkExpenditure()
             this.closeModalDelete();
             this.deletePreliminaryID =''
+           this.getPreliminaryDataById()
+
           this.toastrService.success( 'Record Deleted Successfully', "Non Training Progress Data Success!");
           }
           
@@ -394,6 +471,92 @@ if (file) {
       accountNo: ['', [Validators.required]]
     });
   }
+
+   modeOfPaymentIt(val:any){
+        if(val=='CASH'){
+          this.financialForm.get('bankName')?.setValidators(null);
+          this.financialForm.get('accountNumber')?.setValidators(null);
+          this.financialForm.get('transactionId')?.setValidators(null);
+          this.financialForm.get('ifscCode')?.setValidators(null);
+          this.financialForm.get('bankName')?.patchValue('');
+          this.financialForm.get('accountNumber')?.patchValue('');
+          this.financialForm.get('transactionId')?.patchValue('');
+          this.financialForm.get('ifscCode')?.patchValue('');
+          this.financialForm.get('bankName')?.clearValidators();
+          this.financialForm.get('accountNumber')?.clearValidators();
+          this.financialForm.get('transactionId')?.clearValidators();
+          this.financialForm.get('ifscCode')?.clearValidators();
+          this.financialForm.get('bankName')?.disable();
+          this.financialForm.get('accountNumber')?.disable();
+          this.financialForm.get('transactionId')?.disable();
+          this.financialForm.get('ifscCode')?.disable();
+        
+          this.financialForm.get('bankName')?.updateValueAndValidity();
+          this.financialForm.get('accountNumber')?.updateValueAndValidity();
+          this.financialForm.get('transactionId')?.updateValueAndValidity();
+          this.financialForm.get('ifscCode')?.updateValueAndValidity();
+          
+        }
+        else if(val=='BANK_TRANSFER'){
+          this.financialForm.get('bankName')?.setValidators([Validators.required]);
+          this.financialForm.get('accountNumber')?.setValidators([Validators.required]);
+          this.financialForm.get('transactionId')?.setValidators(null);
+          this.financialForm.get('ifscCode')?.setValidators([Validators.required,Validators.pattern(/^[A-Z]{4}0[A-Z0-9]{6}$/)]);
+          this.financialForm.get('bankName')?.enable();
+          this.financialForm.get('accountNumber')?.enable();
+          this.financialForm.get('transactionId')?.disable();
+          this.financialForm.get('ifscCode')?.enable();
+          this.financialForm.get('bankName')?.patchValue('');
+          this.financialForm.get('accountNumber')?.patchValue('');
+          this.financialForm.get('transactionId')?.patchValue('');
+          this.financialForm.get('ifscCode')?.patchValue('');
+          this.financialForm.get('bankName')?.updateValueAndValidity();
+          this.financialForm.get('accountNumber')?.updateValueAndValidity();
+          this.financialForm.get('transactionId')?.updateValueAndValidity();
+          this.financialForm.get('ifscCode')?.updateValueAndValidity();
+         
+        }
+        else if(val=='UPI'){
+          this.financialForm.get('bankName')?.setValidators(null);
+          this.financialForm.get('accountNumber')?.setValidators(null);
+          this.financialForm.get('transactionId')?.setValidators([Validators.required,Validators.pattern(/^[^\s].*/)]);
+          this.financialForm.get('ifscCode')?.setValidators(null);
+          this.financialForm.get('bankName')?.disable();
+          this.financialForm.get('accountNumber')?.disable();
+          this.financialForm.get('transactionId')?.enable();
+          this.financialForm.get('ifscCode')?.disable();
+          this.financialForm.get('bankName')?.patchValue('');
+          this.financialForm.get('accountNumber')?.patchValue('');
+          this.financialForm.get('transactionId')?.patchValue('');
+          this.financialForm.get('ifscCode')?.patchValue('');
+           
+          this.financialForm.get('bankName')?.updateValueAndValidity();
+          this.financialForm.get('accountNumber')?.updateValueAndValidity();
+          this.financialForm.get('transactionId')?.updateValueAndValidity();
+          this.financialForm.get('ifscCode')?.updateValueAndValidity();
+         
+        }
+         else if(val=='CHEQUE'){
+          this.financialForm.get('bankName')?.setValidators(null);
+          this.financialForm.get('accountNumber')?.setValidators(null);
+          this.financialForm.get('transactionId')?.setValidators(null);
+          this.financialForm.get('ifscCode')?.setValidators(Validators.pattern(/^[A-Z]{4}0[A-Z0-9]{6}$/));
+          this.financialForm.get('bankName')?.enable();
+          this.financialForm.get('accountNumber')?.enable();
+          this.financialForm.get('transactionId')?.enable();
+          this.financialForm.get('ifscCode')?.enable();
+          this.financialForm.get('bankName')?.patchValue('');
+          this.financialForm.get('accountNumber')?.patchValue('');
+          this.financialForm.get('transactionId')?.patchValue('');
+          this.financialForm.get('ifscCode')?.patchValue('');
+          
+          this.financialForm.get('bankName')?.updateValueAndValidity();
+          this.financialForm.get('accountNumber')?.updateValueAndValidity();
+          this.financialForm.get('transactionId')?.updateValueAndValidity();
+        
+          this.financialForm.get('ifscCode')?.updateValueAndValidity();
+        }
+      }
 
   get fContingency() {
     return this.contingencyForm.controls;
@@ -698,6 +861,7 @@ if (file) {
           if(data?.status==400){
             this.toastrService.error(data?.message, "Non Training Progress Data Error!");
             this.closeModalDeletePayment();
+            
             this.deleteContingencyID =''
           }
           else{
