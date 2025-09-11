@@ -1,0 +1,314 @@
+<main class="mt-4">
+        <section>
+            <div class="container-fluid">
+                <div class="card mb-3">
+                    <div class="card-header bg-transparent">
+                        <div class="row align-items-center">
+                            <div class="col-12">
+                                <h6 class="fw-600 mb-2 mb-sm-3 mb-md-0">Non Training Progress</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                      <div class="row">
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                <div class="form-floating mb-3 mb-sm-3 mb-md-0">
+                                    <select class="form-select events-expenditure" id="budgethead" [(ngModel)]="selectedActivity" (change)="onActivityChange($any($event.target).value)">
+                                        <!-- <option value="#">Select Budget Head</option> -->
+                                        <option *ngFor="let item of budgetHeadList" value="{{item?.activityId}}">{{item?.activityName}}</option>
+                                        <!-- <option value="1">Preliminary survey for selection of potential SHGs</option>
+                                        <option value="2">Dashboard / Central Management System</option> -->
+                                        <!-- <option value="3">Handholding support</option>
+                                        <option value="4">Raw material support</option> -->
+                                        <!-- <option value="5">Contingency fund</option> -->
+                                    </select>
+                                    <label for="budgethead">Budget Head</label>
+                                </div>
+                            </div>
+                             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                <div class="form-floating mb-3 mb-sm-3 mb-md-0">
+                                    <select class="form-select events-expenditure" id="budgethead" [(ngModel)]="selectedBudgetHead" (change)="onBudgetHeadChange($any($event.target).value)">
+                                        <!-- <option value="#">Select Budget Head</option> -->
+                                        <option *ngFor="let item of SubActivityList" value="{{item?.subActivityId}}">{{item?.subActivityName}}</option>
+                                        <!-- <option value="1">Preliminary survey for selection of potential SHGs</option>
+                                        <option value="2">Dashboard / Central Management System</option> -->
+                                        <!-- <option value="3">Handholding support</option>
+                                        <option value="4">Raw material support</option> -->
+                                        <!-- <option value="5">Contingency fund</option> -->
+                                    </select>
+                                    <label for="budgethead">Sub Activity</label>
+                                </div>
+                            </div>
+                        </div>         
+                    </div>
+                </div>
+
+                <!-- begin:: Preliminary survey for selection of potential SHGs -->
+                <div class="card budgets mb-3 " *ngIf="selectedBudgetHead=='67' || selectedBudgetHead=='76'">
+
+                    <div class="card-header bg-transparent d-flex justify-content-between" >
+                         <h6 class="fw-600 mb-2 mb-sm-3 mb-md-0"> {{getSubactivities(selectedBudgetHead)}} </h6>
+                           <div class="text-end" *ngIf="selectedBudgetHead!='67'">
+                            <button type="button" class="btn btn-sm btn-lime-green" (click)="onFinalSubmit()">Save</button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row" *ngIf="selectedBudgetHead=='67' || selectedBudgetHead=='76'" >
+                            <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                                <fieldset class="mb-3" style="border: 1px solid #e0e0e0; border-radius: 8px; padding-left: 18px; ">
+                                    <legend class="text-lime-green" style="padding: 0 8px;">Physical</legend>
+                                    <div class="row mb-2">
+                                        <div class="col-12 col-sm-6 col-md-6 col-lg-6 p-2">
+                                            <div class="mb-3">
+                                                <label class="fs-md fw-600 mb-1 d-block">Physical Target</label>
+                                                <label class="fs-md fw-600">{{physicalTarget}}</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-sm-6 col-md-6 col-lg-6" *ngIf="physicalTarget<=1">
+                                            <div class="form-floating mb-3 mb-sm-3 mb-md-0 px-2">
+                                                <select class="form-select" id="pt1" [(ngModel)]="physicalTargetAchievement">
+                                                    <option value="">Select Physical Achievement</option>
+                                                    <option value="Not Initiated">Not Initiated</option>
+                                                    <option value="In Progress">In Progress</option>
+                                                    <option value="Completed">Completed</option>
+                                                </select>
+                                                <label for="pt1">Physical Achievement</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-sm-6 col-md-6 col-lg-6 px-2" *ngIf="physicalTarget>1">
+                                            <div class="form-floating mb-3 mb-sm-3 mb-md-0">
+                                                <input type="text" class="form-control" placeholder="" id="physicalTargetAchievement" [(ngModel)]="physicalTargetAchievement">
+                                                <label for="physicalTargetAchievement">Physical Achievement</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                                <fieldset class="mb-3" style="border: 1px solid #e0e0e0; border-radius: 8px; padding-left: 18px; ">
+                                    <legend class="text-lime-green" style="padding: 0 8px;">Financial</legend>
+                                    <div class="row mb-2">
+                                        <div class="col-12 col-sm-6 col-md-6 col-lg-6 p-2">
+                                            <div class="mb-3">
+                                                <label class="fs-md fw-600 mb-1 d-block">Financial Target</label>
+                                                <label class="fs-md fw-600">{{financialTarget}}</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-sm-6 col-md-6 col-lg-6 p-2">
+                                            <div class="mb-3">
+                                                <label class="fs-md fw-600 mb-1 d-block">Financial Achievement</label>
+                                                <label class="fs-md fw-600">{{financialTargetAchievement}}</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                         <div class="card" *ngIf="selectedBudgetHead=='67' ">
+                            <div class="card-header bg-transparent">
+                                <div class="row align-items-center">
+                                    <div class="col-8 col-sm-8 col-md-9 col-lg-10">
+                                        <h6 class="fw-600 mb-2 mb-sm-3 mb-md-0">{{getSubactivities(selectedBudgetHead)}}</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">                                
+                                <table id="view-Priliminary" class="table table-bordered nowrap w-100 trainingTable">
+                                    <thead class="bg-lime-green text-white">
+                                        <tr>
+                                            <th>S.No</th>
+                                            <th>Name of the MSME</th>
+                                            <th>Date of application</th>
+                                            <th>Weightage</th>
+                                            <th>Date of Sanction</th>
+                                            <th>Sanctioned Amount</th>
+                                            <th>Date of amount released</th>
+                                            <th>Amount released</th>
+                                            
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngIf="!getCorpusData || getCorpusData.length === 0">
+                                            <td colspan="8" class="text-center text-muted">Data Not available.</td>
+                                        </tr>
+                                        <tr *ngFor="let item of getCorpusData; let i = index">
+                                            <td>{{ i + 1 }}</td>
+                                            <td>{{ item?.enterpriseName }}</td>
+                                            <td>{{ item?.createdOn }}</td>
+                                            <td>{{ item?.riskCategoryScore }}</td>
+                                            <td>{{ item?.sanctionedDate }}</td>
+                                            <td>{{ item?.sanctionedAmount | number:'1.0-0' }}</td>
+                                            <td>{{ item?.collectionDate }}</td>
+                                            <td>{{ item?.totalSanctionedAmount | number:'1.0-0' }}</td>
+                                           
+                                           
+                                            
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="card" *ngIf="selectedBudgetHead=='76'">
+                            <div class="card-header bg-transparent">
+                                <div class="row align-items-center">
+                                    <div class="col-8 col-sm-8 col-md-9 col-lg-10">
+                                        <h6 class="fw-600 mb-2 mb-sm-3 mb-md-0">{{getSubactivities(selectedBudgetHead)}}</h6>
+                                    </div>
+                                    <div class="col-4 col-sm-4 col-md-3 col-lg-2">
+                                        <div class="text-end">
+                                            <button type="button" class="btn btn-sm btn-lime-green" (click)="openModel('add')"><span class="bi bi-plus-lg"></span> Add</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">                                
+                                <table id="view-Priliminary" class="table table-bordered nowrap w-100 trainingTable">
+                                    <thead class="bg-lime-green text-white">
+                                        <tr>
+                                            <th>S.No</th>
+                                            <th>Name of the MSME Identified</th>
+                                            <th>Date of Identification</th>
+                                            <th>Amount of Loan Provided</th>
+                                            <th>Purpose</th>
+                                            <th>Date of Loan</th>
+                                            <th>Date of Listing</th>
+                                            <th class="text-center">Edit / Delete</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngIf="!getListingOnNSEData || getListingOnNSEData.length === 0">
+                                            <td colspan="8" class="text-center text-muted">Data Not available.</td>
+                                        </tr>
+                                        <tr *ngFor="let item of getListingOnNSEData; let i = index">
+                                            <td>{{ i + 1 }}</td>
+                                            <td>{{ item?.nameOfTheMsmeIdentified }}</td>
+                                            <td>{{ item?.dateOfIdentification }}</td>
+                                            <td>{{ item?.amountOfLoanProvided | number:'1.0-0' }}</td>
+                                            <td>{{ item?.purpose }}</td>
+                                            <td>{{ item?.dateOfLoan }}</td>
+                                            <td>{{ item?.dateOfListing }}</td>
+                                            <td class="text-center">
+                                                <button type="button" class="btn btn-default text-lime-green btn-sm" (click)="openModel('edit', item)"><span class="bi bi-pencil"></span></button>
+                                                <button type="button" class="btn btn-default text-danger btn-sm" (click)="deletePreliminary(item?.listingOnNSEId)"><span class="bi bi-trash"></span></button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        
+                    
+                     
+                    </div>
+                    
+             </div>
+             </div>
+</section>
+</main>
+
+
+
+    <!-- begin:: Add Listing on NSE modal -->
+    <div class="modal fade" id="addListingOnNSE" tabindex="-1" aria-labelledby="addListingOnNSELabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header py-2">
+                    <h6 class="modal-title text-white" id="addListingOnNSELabel">{{iseditMode ? 'Update' : 'Add'}} Listing on NSE</h6>
+                    <button type="button" class="btn-close me-1" data-bs-dismiss="modal" aria-label="Close" (click)="resetCorpusForm()"></button>
+                </div>
+                <div class="modal-body">
+                    <form [formGroup]="corpusform" (ngSubmit)="onCorpusSubmit()">
+                        <div class="row">
+                            <!-- Name of the MSME Identified -->
+                            <div class="col-12 col-sm-6 col-md-6 col-lg-6">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" formControlName="nameOfTheMsmeIdentified" placeholder="Name of the MSME Identified">
+                                    <label for="nameOfTheMsmeIdentified">Name of the MSME Identified</label>
+                                    <div *ngIf="isCorpusSubmitted && corpusform.controls['nameOfTheMsmeIdentified'].invalid" class="invalid-feedback">
+                                        Name is required
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Date of Identification -->
+                            <div class="col-12 col-sm-6 col-md-6 col-lg-6">
+                                <div class="form-floating mb-3">
+                                    <input type="date" class="form-control" formControlName="dateOfIdentification">
+                                    <label for="dateOfIdentification">Date of Identification</label>
+                                    <div *ngIf="isCorpusSubmitted && corpusform.controls['dateOfIdentification'].invalid" class="invalid-feedback">
+                                        Date is required
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Amount of Loan Provided -->
+                            <div class="col-12 col-sm-6 col-md-6 col-lg-6">
+                                <div class="form-floating mb-3">
+                                    <input type="number" class="form-control" formControlName="amountOfLoanProvided" placeholder="Amount of Loan Provided">
+                                    <label for="amountOfLoanProvided">Amount of Loan Provided</label>
+                                    <div *ngIf="isCorpusSubmitted && corpusform.controls['amountOfLoanProvided'].invalid" class="invalid-feedback">
+                                        Amount is required
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Purpose -->
+                            <div class="col-12 col-sm-6 col-md-6 col-lg-6">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" formControlName="purpose" placeholder="Purpose">
+                                    <label for="purpose">Purpose</label>
+                                    <div *ngIf="isCorpusSubmitted && corpusform.controls['purpose'].invalid" class="invalid-feedback">
+                                        Purpose is required
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Date of Loan -->
+                            <div class="col-12 col-sm-6 col-md-6 col-lg-6">
+                                <div class="form-floating mb-3">
+                                    <input type="date" class="form-control" formControlName="dateOfLoan">
+                                    <label for="dateOfLoan">Date of Loan</label>
+                                    <div *ngIf="isCorpusSubmitted && corpusform.controls['dateOfLoan'].invalid" class="invalid-feedback">
+                                        Date is required
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Date of Listing -->
+                            <div class="col-12 col-sm-6 col-md-6 col-lg-6">
+                                <div class="form-floating mb-3">
+                                    <input type="date" class="form-control" formControlName="dateOfListing">
+                                    <label for="dateOfListing">Date of Listing</label>
+                                    <div *ngIf="isCorpusSubmitted && corpusform.controls['dateOfListing'].invalid" class="invalid-feedback">
+                                        Date is required
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Sub Activity Id (hidden) -->
+                            <input type="hidden" formControlName="subActivityId">
+                        </div>
+                        <div class="text-end mt-3">
+                            <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal" aria-label="Close" (click)="resetCorpusForm()">Close</button>
+                            <button type="submit" class="btn btn-lime-green">{{iseditMode ? 'Update' : 'Add'}}</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end:: Add Listing on NSE modal -->
+
+   <!-- begin --Delete preliminary -->
+      <div class="modal fade" id="exampleModalDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalDeleteLabel"
+aria-hidden="true">
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalDeleteLabel">Delete Session</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            Are you sure you want to delete this record?
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-lime-green" (click)="ConfirmdeleteExpenditure(deletePreliminaryID)">Confirm</button>
+        </div>
+    </div>
+</div>
+</div>
