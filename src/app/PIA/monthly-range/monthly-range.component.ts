@@ -46,7 +46,14 @@ export class MonthlyRangeComponent implements OnInit, OnChanges {
     dateRange!: any;
     @Output() monthChangeValue = new EventEmitter<any>();
     @Input() paymentForMonth: any;
+    @Input() disableFuture: boolean = false;
+    maxDate: Moment;
 
+
+    constructor() {
+        this.maxDate = moment();
+    }
+    
     ngOnInit(): void {
       console.log(this.paymentForMonth)
         this.initializeValue();

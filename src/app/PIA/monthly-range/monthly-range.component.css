@@ -1,3 +1,34 @@
+
+.example-month-picker .mat-calendar-arrow {
+    display: none;
+  }
+  .mat-input-element {
+    /* border: solid 1px rgba(27, 26, 26, 0.829) !important; */
+    height: auto !important; 
+    border-radius: 4px !important;
+}
+
+/* Remove mat-form-field specific styling */
+/* mat-form-field{
+    z-index: 9999 !important;
+    position: relative;
+} */
+
+.form-floating {
+    position: relative;
+    z-index: 9999;
+}
+
+.form-floating .mat-datepicker-toggle {
+    position: absolute;
+    top: 50%;
+    right: 1rem;
+    transform: translateY(-50%);
+}
+
+
+
+
 .example-month-picker .mat-calendar-period-button {
     pointer-events: none;
   }
@@ -6,15 +37,15 @@
     display: none;
   }
   .mat-input-element {
-    border: solid 0px transparent !important;
+    border:1px solid  #2e050540 !important;
     height: auto !important; 
     border-radius: 4px !important;
 }
 
-mat-form-field{
+/* mat-form-field{
     z-index: 9999 !important;
     position: relative;
-}
+} */
 
 /* Ensure the entire monthly range component appears above modal */
 :host {

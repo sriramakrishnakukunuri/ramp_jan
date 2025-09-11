@@ -1680,7 +1680,7 @@ aria-hidden="true">
             <div class="col-12 col-sm-6 col-md-4 col-lg-4">
               <div class="form-floating mb-3">
                 <!-- <app-monthly-range (monthChangeValue)="onChangeDate($event)" [paymentForMonth]="paymentForMonth" ></app-monthly-range> -->
-                <app-monthly-range [paymentForMonth]="paymentForMonth" (monthChangeValue)="onChangeDate($event)"></app-monthly-range>
+                <app-monthly-range [paymentForMonth]="paymentForMonth" [disableFuture]="true" (monthChangeValue)="onChangeDate($event)"></app-monthly-range>
                                 <!-- <mat-form-field appearance="outline">
                     <mat-label>Payment For Month</mat-label>
                     <input matInput [matDatepicker]="dp1" [formControl]="date1"

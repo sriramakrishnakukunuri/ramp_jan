@@ -1,8 +1,9 @@
-<mat-form-field appearance="outline">
+<!-- <mat-form-field appearance="outline">
     <mat-label>Payment For Month</mat-label>
     <input matInput 
            [matDatepicker]="dp1" 
            [formControl]="date1"
+            [max]="disableFuture ? maxDate : null"
            placeholder="Select month and year"
            readonly
            (click)="dp1.open()" 
@@ -14,4 +15,25 @@
                     (yearSelected)="onYearSelected($event)"
                     panelClass="example-month-picker">
     </mat-datepicker>
-</mat-form-field>
+</mat-form-field> -->
+
+<div class="form-floating">
+    <input matInput 
+           class="form-control"
+           id="paymentForMonthInput"
+           [matDatepicker]="dp1" 
+           [formControl]="date1"
+           [max]="disableFuture ? maxDate : null"
+           placeholder="Payment For Month"
+           readonly
+           (click)="dp1.open()" 
+           (keydown)="$event.preventDefault()">
+    <label for="paymentForMonthInput">Payment For Month</label>
+    <mat-datepicker-toggle matSuffix [for]="dp1"></mat-datepicker-toggle>
+    <mat-datepicker #dp1 
+                    startView="multi-year" 
+                    (monthSelected)="setMonthAndYear($event, dp1)"
+                    (yearSelected)="onYearSelected($event)"
+                    panelClass="example-month-picker">
+    </mat-datepicker>
+</div>
