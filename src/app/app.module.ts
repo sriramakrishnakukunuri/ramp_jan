@@ -82,7 +82,7 @@ import { NonTrainingTargetCodeComponent } from './PIA/non-training-target-code/n
 import { NonTrainingCoiComponent } from './PIA/non-training-coi/non-training-coi.component';
 import { NonTrainingProgressWehubComponent } from './PIA/non-training-progress-wehub/non-training-progress-wehub.component';
 import { NonTrainingCipetComponent } from './PIA/non-training-cipet/non-training-cipet.component';
-
+import { DisableFutureDatesDirective } from './PIA/disable-future-dates.directive';
 @NgModule({
     imports: [
         MaterialModule,
@@ -110,6 +110,7 @@ import { NonTrainingCipetComponent } from './PIA/non-training-cipet/non-training
         FontAwesomeModule
     ],
     declarations: [
+        DisableFutureDatesDirective,
         AppComponent,
         HomeComponent,
         AdminComponent,

@@ -653,7 +653,7 @@
             <!-- Upload Bill -->
             <div class="col-12 col-sm-6 col-md-4 col-lg-4">
               <div class="form-floating mb-3">
-                <input type="file" class="form-control" (change)="onFileSelected($event)">
+                <input type="file" class="form-control" formControlName="uploadBillUrl" (change)="onFileSelected($event)">
                 <label for="uploadBill">Upload Bill Invoice</label>
               </div>
             </div>
@@ -1092,7 +1092,7 @@ aria-hidden="true">
             </div>
              <div class="col-12 col-sm-6 col-md-4 col-lg-4">
               <div class="form-floating mb-3">
-                <input type="file" class="form-control" (change)="onFileSelectedPayment($event)">
+                <input type="file" class="form-control" formControlName="uploadBillUrl" (change)="onFileSelectedPayment($event)">
                 <label for="uploadBill">Upload Bill Invoice</label>
               </div>
             </div>
@@ -1344,7 +1344,7 @@ aria-hidden="true">
             <!-- Upload Bill -->
             <div class="col-12 col-sm-6 col-md-4 col-lg-4">
               <div class="form-floating mb-3">
-                <input type="file" class="form-control" (change)="onFileSelectedTravel($event)">
+                <input type="file" class="form-control" formControlName="billInvoicePath" (change)="onFileSelectedTravel($event)">
                 <label for="uploadBill">Upload Bill Invoice</label>
               </div>
             </div>
@@ -1692,7 +1692,7 @@ aria-hidden="true">
             </div>
              <div class="col-12 col-sm-6 col-md-4 col-lg-4">
               <div class="form-floating mb-3">
-                <input type="file" class="form-control" (change)="onFileSelectedPayment($event)">
+                <input type="file" class="form-control" formControlName="uploadBillUrl" (change)="onFileSelectedPayment($event)">
                 <label for="uploadBill">Upload Bill Invoice</label>
               </div>
             </div>
