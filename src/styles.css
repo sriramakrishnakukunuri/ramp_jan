@@ -13089,6 +13089,7 @@ body.swal2-toast-shown .swal2-container.swal2-bottom-right {
     position: static !important;
   }
 }
+
 /*!
  * Datepicker for Bootstrap v1.9.0 (https://github.com/uxsolutions/bootstrap-datepicker)
  *
@@ -15300,3 +15301,6 @@ outline: none; */
 .login-password {
   position: relative;
 }
+ .d-block{
+        color: #0b0d88 !important;
+      }

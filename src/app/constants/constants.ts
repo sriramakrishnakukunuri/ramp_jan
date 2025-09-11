@@ -127,7 +127,12 @@ export const APIS = {
         deleteNonTrainingtargetsCandidate: API_BASE_URL + '/',
         saveNonTrainingtargetsCandidate: API_BASE_URL + '/save',
         getNonTrainingtargetsCandidate: API_BASE_URL + '/by-subactivity?subActivityId=',
-
+        tihcl:{
+            getCorpusList: API_BASE_URL + '/corpusDebitFinancing',
+            getTihclData: API_BASE_URL + '/listing-on-nse/sub-activity/',
+            savetihclData: API_BASE_URL + '/listing-on-nse/save',
+            deletetihclData: API_BASE_URL + '/listing-on-nse/delete/',
+        }
        
     },
     progressMonitoring:{
