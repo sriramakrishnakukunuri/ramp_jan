@@ -54,21 +54,20 @@
                     </div>
                     <div class="card-body">
                         <div class="row" *ngIf="selectedBudgetHead=='6' || selectedBudgetHead=='2' || selectedBudgetHead=='4' || selectedBudgetHead=='8' || selectedBudgetHead=='10' || selectedBudgetHead=='12' || selectedBudgetHead=='13' || selectedBudgetHead=='11'" >
-                            <div class="col-12 col-sm-12 col-md-6 col-lg-6">
-                                <fieldset class="mb-3">
-                                    <legend class="text-lime-green">Physical</legend>
-
+                             <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                                <fieldset class="mb-3" style="border: 1px solid #e0e0e0; border-radius: 8px; padding-left: 18px; ">
+                                    <legend class="text-lime-green" style="padding: 0 8px;">Physical</legend>
                                     <div class="row mb-2">
-                                        <div class="col-12 col-sm-6 col-md-6 col-lg-6">
-                                            <div class="form-floating mb-3 mb-sm-3 mb-md-0">
-                                                <input type="text" class="form-control"  placeholder="" id="physicalTarget" [(ngModel)]="physicalTarget">
-                                                <label for="physicalTarget">Physical Target</label>
+                                        <div class="col-12 col-sm-6 col-md-6 col-lg-6 p-2">
+                                            <div class="mb-3">
+                                                <label class="fs-md fw-600 mb-1 d-block">Physical Target</label>
+                                                <label class="fs-md fw-600">{{physicalTarget}}</label>
                                             </div>
                                         </div>
                                         <div class="col-12 col-sm-6 col-md-6 col-lg-6" *ngIf="physicalTarget<=1">
-                                            <div class="form-floating mb-3 mb-sm-3 mb-md-0">
+                                            <div class="form-floating mb-3 mb-sm-3 mb-md-0 px-2 pe-2">
                                                 <select class="form-select" id="pt1" [(ngModel)]="physicalTargetAchievement">
-                                                   <option value="">Select Physical Achievement</option>
+                                                    <option value="">Select Physical Achievement</option>
                                                     <option value="Not Initiated">Not Initiated</option>
                                                     <option value="In Progress">In Progress</option>
                                                     <option value="Completed">Completed</option>
@@ -76,31 +75,29 @@
                                                 <label for="pt1">Physical Achievement</label>
                                             </div>
                                         </div>
-                                        <div class="col-12 col-sm-6 col-md-6 col-lg-6" *ngIf="physicalTarget>1">
-                                            <div class="form-floating mb-3 mb-sm-3 mb-md-0">
-                                                <input type="text" class="form-control"  placeholder="" id="physicalTargetAchievement" [(ngModel)]="physicalTargetAchievement">
+                                        <div class="col-12 col-sm-6 col-md-6 col-lg-6 px-2" *ngIf="physicalTarget>1">
+                                            <div class="form-floating mb-3 mb-sm-3 mb-md-0 pe-2">
+                                                <input type="text" class="form-control" placeholder="" id="physicalTargetAchievement" [(ngModel)]="physicalTargetAchievement">
                                                 <label for="physicalTargetAchievement">Physical Achievement</label>
                                             </div>
                                         </div>
-                                       
                                     </div>
                                 </fieldset>
                             </div>
                             <div class="col-12 col-sm-12 col-md-6 col-lg-6">
-                                <fieldset class="mb-3">
-                                    <legend class="text-lime-green">Financial</legend>
-
+                                <fieldset class="mb-3" style="border: 1px solid #e0e0e0; border-radius: 8px; padding-left: 18px; ">
+                                    <legend class="text-lime-green" style="padding: 0 8px;">Financial</legend>
                                     <div class="row mb-2">
-                                         <div class="col-12 col-sm-6 col-md-6 col-lg-6">
-                                            <div class="form-floating mb-3 mb-sm-3 mb-md-0">
-                                                <input type="text" class="form-control" value="0.04" placeholder="" id="ft" [(ngModel)]="financialTarget">
-                                                <label for="ft">Financial Target</label>
+                                        <div class="col-12 col-sm-6 col-md-6 col-lg-6 p-2">
+                                            <div class="mb-3">
+                                                <label class="fs-md fw-600 mb-1 d-block">Financial Target</label>
+                                                <label class="fs-md fw-600">{{financialTarget}}</label>
                                             </div>
                                         </div>
-                                        <div class="col-12 col-sm-6 col-md-6 col-lg-6">
-                                            <div class="form-floating mb-3 mb-sm-3 mb-md-0">
-                                                <input type="text" class="form-control" value="" placeholder="" id="financialAchivement" [(ngModel)]="financialTargetAchievement">
-                                                <label for="financialTarget">Financial Achievement</label>
+                                        <div class="col-12 col-sm-6 col-md-6 col-lg-6 p-2">
+                                            <div class="mb-3">
+                                                <label class="fs-md fw-600 mb-1 d-block">Financial Achievement</label>
+                                                <label class="fs-md fw-600">{{financialTargetAchievement}}</label>
                                             </div>
                                         </div>
                                     </div>
