@@ -48,3 +48,37 @@ mat-form-field{
 ::ng-deep .mat-calendar {
     z-index: 10001 !important;
 }  */
+
+
+/* Change font family of the mat-label to match bootstrap's font */
+::ng-deep .mat-form-field-label,
+::ng-deep .mat-select-value-text,
+::ng-deep .mat-input-element {
+  font-family: "Nunito", sans-serif !important;
+}
+
+/* Also ensure the calendar uses the same font */
+::ng-deep .mat-calendar {
+  font-family: "Nunito", sans-serif !important;
+}
+
+/* Make sure month/year in calendar uses the correct font */
+::ng-deep .mat-calendar-body-cell-content {
+  font-family: "Nunito", sans-serif !important;
+}
+/* Change font family of the mat-label to match bootstrap's font */
+::ng-deep .mat-form-field-label,
+::ng-deep .mat-select-value-text,
+::ng-deep .mat-input-element {
+  font-family: "Nunito", sans-serif !important;
+}
+
+/* Also ensure the calendar uses the same font */
+::ng-deep .mat-calendar {
+  font-family: "Nunito", sans-serif !important;
+}
+
+/* Make sure month/year in calendar uses the correct font */
+::ng-deep .mat-calendar-body-cell-content {
+  font-family: "Nunito", sans-serif !important;
+}
