@@ -92,7 +92,7 @@ export class NonTrainingTargetCodeComponent implements OnInit {
           else if(this.selectedBudgetHead=='19'){
             this.getTravelDataBySubActive()
           }
-          else if(this.selectedBudgetHead=='12' || this.selectedBudgetHead=='13' || this.selectedBudgetHead=='14' || this.selectedBudgetHead=='15' || this.selectedBudgetHead=='16' || this.selectedBudgetHead=='17'){
+          else if(this.selectedBudgetHead=='12' || this.selectedBudgetHead=='13' || this.selectedBudgetHead=='14' || this.selectedBudgetHead=='15' || this.selectedBudgetHead=='16' || this.selectedBudgetHead=='17' || this.selectedBudgetHead=='74' || this.selectedBudgetHead=='75'){
             this.getResourceList()
             this.getContingencyDataById()
             this.getPaymentsDataById()
@@ -108,7 +108,7 @@ export class NonTrainingTargetCodeComponent implements OnInit {
            else if(this.selectedBudgetHead=='19'){
             this.getTravelDataBySubActive()
           }
-          else if(this.selectedBudgetHead=='11' || this.selectedBudgetHead=='12' || this.selectedBudgetHead=='13' || this.selectedBudgetHead=='14' || this.selectedBudgetHead=='15' || this.selectedBudgetHead=='16' || this.selectedBudgetHead=='17'){
+          else if(this.selectedBudgetHead=='11' || this.selectedBudgetHead=='12' || this.selectedBudgetHead=='13' || this.selectedBudgetHead=='14' || this.selectedBudgetHead=='15' || this.selectedBudgetHead=='16' || this.selectedBudgetHead=='17' || this.selectedBudgetHead=='74' || this.selectedBudgetHead=='75'){
             this.getResourceList()
             this.getContingencyDataById()
             this.getPaymentsDataById()
