@@ -275,7 +275,7 @@ createForm(): FormGroup {
           checkNo: item?.checkNo || '',
         checkDate: item?.checkDate ? this.convertToISOFormat(item?.checkDate) : '',
         purpose: item?.purpose || '',
-        uploadBillUrl: item?.uploadBillUrl || ''
+        uploadBillUrl: ''
       });
       
     }
@@ -735,7 +735,7 @@ resetForm(): void {
         bankName: item?.bankName || '',
         ifscCode: item?.ifscCode || '',
         accountNo: item?.accountNo || '',
-        uploadBillUrl: item?.uploadBillUrl || ''
+        uploadBillUrl:''
        
       });
     }
@@ -981,7 +981,7 @@ createFormTravel(): FormGroup {
         modeOfPayment: item?.modeOfPayment || '',
         transactionId: item?.transactionId || '',
         purpose: item?.purpose || '',
-        billInvoicePath: item?.billInvoicePath || ''
+        billInvoicePath:''
       });
     }
     const modal1 = new bootstrap.Modal(document.getElementById('addTravel'));
