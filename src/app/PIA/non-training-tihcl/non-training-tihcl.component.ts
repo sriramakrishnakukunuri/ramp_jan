@@ -107,6 +107,9 @@ export class NonTrainingTihclComponent implements OnInit {
       this.getListingOnNSEData=[]
      this._commonService.getDataByUrl(APIS.nontrainingtargets.tihcl.getTihclData+this.selectedBudgetHead).subscribe((res: any) => {
            this.getListingOnNSEData = res.data
+           this.physicalTargetAchievement=0
+           this.physicalTargetAchievement=res.data.length
+
              this.getListingOnNSEData?.map((item:any)=>{
               this.financialTargetAchievement+=Number(item?.amountOfLoanProvided)
             })
@@ -120,13 +123,16 @@ export class NonTrainingTihclComponent implements OnInit {
  getDataFianance(){
      this._commonService.getDataByUrl(APIS.nontrainingtargets.tihcl.getCorpusList).subscribe((res: any) => {
             this.getCorpusData=res;
-            // this.financialTargetAchievement=0
-            // // this.getCorpusData?.map((item:any)=>{
-            // //   this.financialTargetAchievement+=Number(item?.sanctionedAmount)
-            // // })
+            this.physicalTargetAchievement=0
+            this.physicalTargetAchievement=this.getCorpusData?.length
+            this.financialTargetAchievement=0
+            this.getCorpusData?.map((item:any)=>{
+              this.financialTargetAchievement+=Number(item?.sanctionedAmount)
+            })
         
         }, (error) => {
           // this.toastrService.error(error.message);
+          this.financialTargetAchievement=0
         });
  }
   // final submission

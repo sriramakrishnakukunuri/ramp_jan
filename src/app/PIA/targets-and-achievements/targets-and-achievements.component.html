@@ -59,43 +59,42 @@
             </button>
             <h6 class="fw-bold mb-3">Training Targets</h6>
             <!--  id=view-physical-table  -->
-            <div class="table-container" style="max-height: 400px; overflow-y: auto; border: 1px solid #dee2e6;">
-              <div style="overflow-x: auto;">
-                <table  class="table table-bordered table-striped nowrap w-100 fsize-10">
-                  <thead class="bg-lime-green text-white sticky-top">
-                    <tr>
-                      <th class="text-center"  rowspan="4">Activity Name</th>
-                      <th class="text-center" rowspan="4">Sub Activity Name</th>
-                      <ng-container *ngFor="let item of this.tableheaderList">
-                        <th  class="text-center"  colspan="20">FY{{item}}</th>
-                      </ng-container>
-                    </tr>
-                    <tr>
-                      <ng-container *ngFor="let item of this.tableheaderList">
-                        <th class="text-center" rowspan="1" colspan="4" >Grand Total</th>
-                        <th class="text-center"rowspan="1"  colspan="4" >Q1(Apr-Jun)</th>
-                        <th class="text-center" rowspan="1" colspan="4" >Q2(Jul-Sep)</th>
-                        <th class="text-center" rowspan="1" colspan="4" >Q3(Oct-Dec)</th>
-                        <th class="text-center" rowspan="1"  colspan="4" >Q4(Jan-Mar)</th>
-                      </ng-container>
-                    </tr>
-                    <tr>
-                      <ng-container *ngFor="let item of [1,2,3,4,5]">
-                        <th class="text-center"  rowspan="1" colspan="2">Physical</th>
-                        <th class="text-center" rowspan="1" colspan="2" >Financial</th>
-                      </ng-container>
-                    </tr>
-                    <tr>
-                      <ng-container *ngFor="let item of [1,2,3,4,5,6,7,8,9,10]">
-                        <th class="text-center" >Target</th>
-                        <th class="text-center" >Achieved</th>
-                      </ng-container>
-                    </tr>
-                  </thead>
-                  <tbody >
+            <div class="table-container">
+              <table  class="table table-bordered table-striped nowrap w-100 fsize-10">
+                <thead class="bg-lime-green text-white">
+                  <tr>
+                    <th class="text-center sticky-col-1" rowspan="4">Activity Name</th>
+                    <th class="text-center sticky-col-2" rowspan="4">Sub Activity Name</th>
+                    <ng-container *ngFor="let item of this.tableheaderList">
+                      <th  class="text-center"  colspan="20">FY{{item}}</th>
+                    </ng-container>
+                  </tr>
+                  <tr>
+                    <ng-container *ngFor="let item of this.tableheaderList">
+                      <th class="text-center" rowspan="1" colspan="4" >Grand Total</th>
+                      <th class="text-center"rowspan="1"  colspan="4" >Q1(Apr-Jun)</th>
+                      <th class="text-center" rowspan="1" colspan="4" >Q2(Jul-Sep)</th>
+                      <th class="text-center" rowspan="1" colspan="4" >Q3(Oct-Dec)</th>
+                      <th class="text-center" rowspan="1"  colspan="4" >Q4(Jan-Mar)</th>
+                    </ng-container>
+                  </tr>
+                  <tr>
+                    <ng-container *ngFor="let item of [1,2,3,4,5]">
+                      <th class="text-center"  rowspan="1" colspan="2">Physical</th>
+                      <th class="text-center" rowspan="1" colspan="2" >Financial</th>
+                    </ng-container>
+                  </tr>
+                  <tr>
+                    <ng-container *ngFor="let item of [1,2,3,4,5,6,7,8,9,10]">
+                      <th class="text-center" >Target</th>
+                      <th class="text-center" >Achieved</th>
+                    </ng-container>
+                  </tr>
+                </thead>
+                <tbody >
                     <tr *ngFor="let item of tableList; let i = index">
-                      <td>{{item?.activityName}}</td>
-                      <td>{{item?.subActivityName}}</td>
+                      <td class="sticky-col-1">{{item?.activityName}}</td>
+                      <td class="sticky-col-2">{{item?.subActivityName}}</td>
                       <td>{{item?.totalTarget}}</td>
                       <td>{{item?.totalAchieved}}</td>
                       <td>{{item?.totalFinancialTarget}}</td>
@@ -124,7 +123,6 @@
                     </tr>
                   </tbody>
                 </table>
-              </div>
             </div>
           
             
@@ -133,13 +131,12 @@
           <div class="card-body">
             <h6 class="fw-bold mb-3">Non Training Targets</h6>
             <!--  id=view-physical-table  -->
-            <div class="table-container" style="max-height: 400px; overflow-y: auto; border: 1px solid #dee2e6;">
-                <div style="overflow-x: auto;">
+            <div class="table-container" >
               <table  class="table table-bordered table-striped nowrap w-100 fsize-10">
-                <thead class="bg-lime-green text-white sticky-top">
+                <thead class="bg-lime-green text-white">
                   <tr>
-                    <th class="text-center"  rowspan="4">Activity Name</th>
-                     <th class="text-center"  rowspan="4">Sub Activity Name</th>
+                    <th class="text-center sticky-col-1" rowspan="4">Activity Name</th>
+                    <th class="text-center sticky-col-2" rowspan="4">Sub Activity Name</th>
                     <ng-container *ngFor="let item of this.tableheaderList">
                       <th  class="text-center"  colspan="20">FY{{item}}</th>
                     </ng-container>
@@ -168,8 +165,8 @@
                 </thead>
                 <tbody >
                   <tr *ngFor="let item of tableListNonTraining; let i = index">
-                    <td>{{item?.activityName}}</td>
-                    <td>{{item?.subActivityName}}</td>
+                    <td class="sticky-col-1">{{item?.activityName}}</td>
+                    <td class="sticky-col-2">{{item?.subActivityName}}</td>
                     <td>{{item?.totalTarget}}</td>
                     <td>{{item?.totalAchieved}}</td>
                     <td>{{item?.totalFinancialTarget}}</td>
@@ -218,7 +215,6 @@
                   
                 </tbody>
                 </table>
-                </div>
             </div>
           
             
@@ -331,4 +327,3 @@
       </div>
     </div>
   </div>
-  
