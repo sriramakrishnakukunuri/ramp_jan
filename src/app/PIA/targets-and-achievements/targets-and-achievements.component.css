@@ -57,16 +57,15 @@
   border: 1px solid #dee2e6;
 }
 
-.table-container table {
-  border-collapse: separate; /* Required for sticky header/columns to work with borders */
-  /* border-spacing: 0; */
-}
+/* .table-container table {
+  border-collapse: separate; 
+  border-spacing: 0; 
+} */
 
 .table-container thead th {
   position: sticky;
-  top: 0;
-  z-index: 2; /* Header should be above sticky columns */
   background-color: #8dc63f; /* Match .bg-lime-green */
+  z-index: 2;
 }
 
 /* --- Define Sticky Columns by Class --- */
@@ -110,14 +109,11 @@
   border-bottom: 2px solid #dee2e6;
 } */
 
-/* Add these new rules to fix the thead bottom border */
 
-/* Remove the current approach that's not working consistently */
-.table-container thead tr:last-child th {
+/* .table-container thead tr:last-child th {
   border-bottom: none; 
-}
+} */
 
-/* Add a clear border to the entire thead after all cells */
 .table-container thead::after {
   content: '';
   display: block;
@@ -129,6 +125,78 @@
   background-color: #dee2e6;
   z-index: 2;
   width: 100%;
+}
+
+.table-container thead th {
+  position: sticky;
+  background-color: #8dc63f; /* Match .bg-lime-green */
+  z-index: 2;
+}
+
+/* Fix for missing borders when scrolling */
+.table-container table {
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+/* Add explicit borders to all cells */
+.table-container th,
+.table-container td {
+  border: 1px solid #dee2e6;
+}
+
+/* Override Bootstrap's default border styles */
+.table-container .table-bordered > :not(caption) > * > * {
+  border-width: 1px !important;
+}
+
+/* Make sure thead cells have borders */
+.table-container thead th {
+  position: sticky;
+  background-color: #8dc63f; /* Match .bg-lime-green */
+  z-index: 2;
+  /* Add border to all sides */
+  border: 1px solid #dee2e6 !important;
+}
+
+/* Ensure each header row has a distinct background and border */
+.table-container thead tr:nth-child(1) th {
+  top: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3) !important;
+}
+
+.table-container thead tr:nth-child(2) th {
+  top: 38px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3) !important;
+}
+
+.table-container thead tr:nth-child(3) th {
+  top: 76px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3) !important;
+}
+
+.table-container thead tr:nth-child(4) th {
+  top: 114px;
+  border-bottom: 2px solid #dee2e6 !important; /* Thicker border for the last row */
+}
+
+/* Remove the after pseudo-element as we're using actual borders */
+.table-container thead::after {
+  display: none;
+}
+
+/* Ensure sticky columns have proper borders and background */
+.table-container .sticky-col-1,
+.table-container .sticky-col-2 {
+  position: sticky;
+  z-index: 1;
+  border: 1px solid #dee2e6 !important;
+}
+
+/* Fix z-index for sticky column headers to be above other headers */
+.table-container thead .sticky-col-1,
+.table-container thead .sticky-col-2 {
+  z-index: 3;
 }
 
 

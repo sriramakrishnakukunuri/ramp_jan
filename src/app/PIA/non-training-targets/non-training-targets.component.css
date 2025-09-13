@@ -1,0 +1,11 @@
+.table-scroll-container {
+  max-height: 250px; /* You can adjust this height */
+  overflow-y: auto;
+  position: relative;
+}
+
+.table-scroll-container thead {
+  position: sticky;
+  top: 0;
+  z-index: 1; /* Ensures the header stays on top of the scrolling content */
+}
