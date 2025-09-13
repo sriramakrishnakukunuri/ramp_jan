@@ -282,66 +282,84 @@ export class NonTrainingTargetsComponent implements OnInit {
 }
   iseditMode = false;
   preliminaryID:any
-  openModel(mode: string,item?: any): void {
-    if (mode === 'add') {
-      this.financialForm.reset();
-      this.iseditMode = false;
-      this.resetForm();
-    }
-    if (mode === 'edit') {
-      this.preliminaryID=item?.id
-      this.iseditMode = true;
-      this.modeOfPaymentIt(item?.modeOfPayment);
-      this.financialForm.patchValue({
-        agencyId: item?.agencyId || 0,
-        nonTrainingSubActivityId: item?.nonTrainingSubActivityId || 0,
-        paymentDate: item?.paymentDate ? this.convertToISOFormat(item?.paymentDate) : '',
-        expenditureAmount: item?.expenditureAmount || 0,
-        billNo: item?.billNo || '',
-        billDate: item?.billDate ? this.convertToISOFormat(item?.billDate) : '',
-        payeeName: item?.payeeName || '',
-        accountNumber: item?.accountNumber || '',
-        bankName: item?.bankName || '',
-        ifscCode: item?.ifscCode || '',
-        modeOfPayment: item?.modeOfPayment || '',
-        transactionId: item?.transactionId || '',
-        purpose: item?.purpose || '',
-        uploadBillUrl: item?.uploadBillUrl || ''
-      });
-    }
-    const modal1 = new bootstrap.Modal(document.getElementById('addSurvey'));
-    modal1.show();
+    // Add this property to track existing files
+  existingFileName: string = '';
+
+openModel(mode: string, item?: any): void {
+  if (mode === 'add') {
+    this.financialForm.reset();
+    this.iseditMode = false;
+    this.resetForm();
+    this.existingFileName = ''; // Clear the existing filename
   }
-  getPreliminaryData:any=[]
+  if (mode === 'edit') {
+    this.preliminaryID = item?.id;
+    this.iseditMode = true;
+    this.modeOfPaymentIt(item?.modeOfPayment);
+
+    // Create a copy of the form values WITHOUT the file input
+    const formValues = {...item};
+    
+    // Convert dates to ISO format for the date inputs
+    if (formValues.paymentDate) formValues.paymentDate = this.convertToISOFormat(formValues.paymentDate);
+    if (formValues.billDate) formValues.billDate = this.convertToISOFormat(formValues.billDate);
+    
+    // Remove the file property to avoid the error
+    delete formValues.uploadBillUrl;
+    
+    // Set form values without the file
+    this.financialForm.patchValue(formValues);
+    
+    // Store the filename separately
+    this.existingFileName = item?.uploadBillUrl || '';
+  }
+  const modal1 = new bootstrap.Modal(document.getElementById('addSurvey'));
+  modal1.show();
+}
+
+getPreliminaryData:any=[]
   onSubmit(): void {
      this.isSubmitted = true;
       if (this.financialForm.valid) {
      if(this.iseditMode){
         this.f['agencyId'].setValue(Number(this.selectedAgencyId));
          this.f['nonTrainingSubActivityId'].setValue(Number(this.selectedBudgetHead));
-+        this.f['nonTrainingActivityId'].setValue(Number(this.selectedActivity));
-         this._commonService.update(APIS.nontrainingtargets.updateNonTrainingtargetsAleapPriliminary,{...this.financialForm.value,nonTrainingSubActivityId:Number(this.selectedBudgetHead),id:this.preliminaryID},this.preliminaryID).subscribe((res: any) => {
-           this.toastrService.success('Data Updated successfully','Non Training Progress Data Success!');
-           
-           console.log('Preliminary Data:', this.getPreliminaryData);
-           this.getPreliminaryDataById()
+         this.f['nonTrainingActivityId'].setValue(Number(this.selectedActivity));
 
-           this.resetForm();
-           this.isSubmitted = false;
-           const modalElement = document.getElementById('addSurvey');
-           const modal1 = modalElement ? bootstrap.Modal.getInstance(modalElement) : null;
-           if (modal1) {
-             modal1.hide();
-           }
-         
-         }, (error) => {
-            this.resetForm();
-           this.isSubmitted = false;
-           const modal1 = bootstrap.Modal.getInstance(document.getElementById('addSurvey'));
-           modal1.hide();
-           this.toastrService.error(error.message,"Non Training Progress Data Error!");
-         });
-         this.getDeatilOfTargets()
+        const formData = {...this.financialForm.value, nonTrainingSubActivityId: Number(this.selectedBudgetHead), id: this.preliminaryID};
+        
+        // If no new file was selected but we have an existing file, use the existing filename
+        if (!this.uploadedFiles && this.existingFileName) {
+          formData.uploadBillUrl = this.existingFileName;
+        }
+
+         this._commonService.update(
+        APIS.nontrainingtargets.updateNonTrainingtargetsAleapPriliminary,
+        formData,
+        this.preliminaryID
+      ).subscribe({
+        next: (res: any) => {
+          this.toastrService.success('Data Updated successfully', 'Non Training Progress Data Success!');
+          this.getPreliminaryDataById();
+          this.resetForm();
+          this.isSubmitted = false;
+          const modalElement = document.getElementById('addSurvey');
+          const modal1 = modalElement ? bootstrap.Modal.getInstance(modalElement) : null;
+          if (modal1) {
+            modal1.hide();
+          }
+          this.existingFileName = ''; // Reset the filename after successful update
+        },
+        error: (error) => {
+          this.resetForm();
+          this.isSubmitted = false;
+          const modal1 = bootstrap.Modal.getInstance(document.getElementById('addSurvey'));
+          modal1.hide();
+          this.toastrService.error(error.message, "Non Training Progress Data Error!");
+        }
+      });
+      
+      this.getDeatilOfTargets()
      }
      else{
        console.log('Form Submitted:', this.financialForm.value);
