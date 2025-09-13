@@ -64,7 +64,7 @@
                                                 <label class="fs-md fw-600">{{physicalTarget}}</label>
                                             </div>
                                         </div>
-                                        <div class="col-12 col-sm-6 col-md-6 col-lg-6" *ngIf="physicalTarget<=1">
+                                        <!-- <div class="col-12 col-sm-6 col-md-6 col-lg-6" *ngIf="physicalTarget<=1">
                                             <div class="form-floating mb-3 mb-sm-3 mb-md-0 px-2 pe-2">
                                                 <select class="form-select" id="pt1" [(ngModel)]="physicalTargetAchievement">
                                                     <option value="">Select Physical Achievement</option>
@@ -74,11 +74,12 @@
                                                 </select>
                                                 <label for="pt1">Physical Achievement</label>
                                             </div>
-                                        </div>
-                                        <div class="col-12 col-sm-6 col-md-6 col-lg-6 px-2 " *ngIf="physicalTarget>1">
-                                            <div class="form-floating mb-3 mb-sm-3 mb-md-0 pe-2">
-                                                <input type="text" class="form-control" placeholder="" id="physicalTargetAchievement" [(ngModel)]="physicalTargetAchievement">
-                                                <label for="physicalTargetAchievement">Physical Achievement</label>
+                                        </div> -->
+                                        <!-- *ngIf="physicalTarget>1" -->
+                                        <div class="col-12 col-sm-6 col-md-6 col-lg-6 p-2">
+                                            <div class="mb-3">
+                                                <label class="fs-md fw-600 mb-1 d-block">Physical Achievement</label>
+                                                <label class="fs-md fw-600">{{physicalTargetAchievement}}</label>
                                             </div>
                                         </div>
                                     </div>
@@ -112,18 +113,19 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="card-body">                                
+                            <div class="card-body">      
+                                 <div class="table-scroll-container">                    
                                 <table id="view-Priliminary" class="table table-bordered nowrap w-100 trainingTable">
                                     <thead class="bg-lime-green text-white">
                                         <tr>
                                             <th>S.No</th>
                                             <th>Name of the MSME</th>
                                             <th>Date of application</th>
-                                            <th>Weightage</th>
+                                            <th>Weightage %</th>
                                             <th>Date of Sanction</th>
                                             <th>Sanctioned Amount</th>
-                                            <th>Date of amount released</th>
-                                            <th>Amount released</th>
+                                            <th>Amount Release Date</th>
+                                            <th>Amount Released</th>
                                             
                                         </tr>
                                     </thead>
@@ -135,7 +137,7 @@
                                             <td>{{ i + 1 }}</td>
                                             <td>{{ item?.enterpriseName }}</td>
                                             <td>{{ item?.createdOn }}</td>
-                                            <td>{{ item?.riskCategoryScore }}</td>
+                                            <td>{{ item?.riskCategoryScore }} %</td>
                                             <td>{{ item?.sanctionedDate }}</td>
                                             <td>{{ item?.sanctionedAmount | number:'1.0-0' }}</td>
                                             <td>{{ item?.collectionDate }}</td>
@@ -146,6 +148,8 @@
                                         </tr>
                                     </tbody>
                                 </table>
+                            </div>
+
                             </div>
                         </div>
                         <div class="card" *ngIf="selectedBudgetHead=='76'">
@@ -161,14 +165,15 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="card-body">                                
+                            <div class="card-body">    
+                            <div class="table-scroll-container">                    
                                 <table id="view-Priliminary" class="table table-bordered nowrap w-100 trainingTable">
                                     <thead class="bg-lime-green text-white">
                                         <tr>
                                             <th>S.No</th>
                                             <th>Name of the MSME Identified</th>
                                             <th>Date of Identification</th>
-                                            <th>Amount of Loan Provided</th>
+                                            <th>Loan Amount Provided</th>
                                             <th>Purpose</th>
                                             <th>Date of Loan</th>
                                             <th>Date of Listing</th>
@@ -194,6 +199,8 @@
                                         </tr>
                                     </tbody>
                                 </table>
+                            </div>
+
                             </div>
                         </div>
                         

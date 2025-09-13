@@ -1,5 +1,5 @@
 /* Sticky header styles for tables with scroll */
-.table-container {
+/* .table-container {
   position: relative;
 }
 
@@ -7,16 +7,16 @@
   position: sticky;
   top: 0;
   z-index: 10;
-}
+} */
 
 /* Ensure header cells maintain background color when sticky */
-.table-container .sticky-top th {
+/* .table-container .sticky-top th {
   background-color: #07C540 !important; /* lime-green color */
-  border-bottom: 2px solid #dee2e6;
-}
+  /* border-bottom: 2px solid #dee2e6; */
+/* } */ 
 
 /* Custom scrollbar for webkit browsers */
-.table-container::-webkit-scrollbar {
+/* .table-container::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
@@ -33,19 +33,102 @@
 
 .table-container::-webkit-scrollbar-thumb:hover {
   background: #555;
-}
+} */
 
 /* Improve table appearance in scrollable container */
-.table-container .table {
+/* .table-container .table {
   margin-bottom: 0;
-}
+} */
 
 /* Make sure the table header doesn't lose its styling when sticky */
-.table-container .table thead th {
+/* .table-container .table thead th {
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-}
+} */
 
 /* Fix for Bootstrap table responsiveness in scrollable container */
-.table-container .table-responsive {
+/* .table-container .table-responsive {
   overflow-x: visible;
+} */
+
+
+.table-container {
+  max-height: 350px; 
+  overflow: auto; /* Enables both vertical and horizontal scrolling */
+  border: 1px solid #dee2e6;
 }
+
+.table-container table {
+  border-collapse: separate; /* Required for sticky header/columns to work with borders */
+  /* border-spacing: 0; */
+}
+
+.table-container thead th {
+  position: sticky;
+  top: 0;
+  z-index: 2; /* Header should be above sticky columns */
+  background-color: #8dc63f; /* Match .bg-lime-green */
+}
+
+/* --- Define Sticky Columns by Class --- */
+.table-container .sticky-col-1,
+.table-container .sticky-col-2 {
+  position: sticky;
+  z-index: 1; /* Below the header */
+}
+
+.table-container .sticky-col-1 {
+  left: 0;
+  width: 200px;
+  min-width: 200px;
+}
+
+.table-container .sticky-col-2 {
+  left: 200px; /* Must match the width of the first column */
+  width: 200px;
+  min-width: 200px;
+}
+
+/* --- Set background for sticky columns to hide scrolling content --- */
+.table-container .sticky-col-1,
+.table-container .sticky-col-2 {
+    background-color: #ffffff; /* Default for even rows */
+}
+
+.table-striped > tbody > tr:nth-of-type(odd) > .sticky-col-1,
+.table-striped > tbody > tr:nth-of-type(odd) > .sticky-col-2 {
+    background-color: #f8f9fa; /* Bootstrap's stripe color for odd rows */
+}
+
+/* --- Ensure sticky header corners are on top --- */
+.table-container thead .sticky-col-1,
+.table-container thead .sticky-col-2 {
+  z-index: 3; /* Highest z-index for the top-left corner */
+}
+
+/* Add a solid border to the bottom of the entire header block */
+/* .table-container thead tr:last-child th {
+  border-bottom: 2px solid #dee2e6;
+} */
+
+/* Add these new rules to fix the thead bottom border */
+
+/* Remove the current approach that's not working consistently */
+.table-container thead tr:last-child th {
+  border-bottom: none; 
+}
+
+/* Add a clear border to the entire thead after all cells */
+.table-container thead::after {
+  content: '';
+  display: block;
+  position: sticky;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background-color: #dee2e6;
+  z-index: 2;
+  width: 100%;
+}
+
+
