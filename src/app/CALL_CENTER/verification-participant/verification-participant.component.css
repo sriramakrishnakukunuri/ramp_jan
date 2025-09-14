@@ -1,0 +1,8 @@
+/* Increase height of mat-select dropdown options for longer text */
+::ng-deep  .program-select-panel  .mat-option {
+  font-size: inherit;
+  line-height: 3em !important;
+  height: 4.5em !important;
+  /* white-space: normal; */
+}
+

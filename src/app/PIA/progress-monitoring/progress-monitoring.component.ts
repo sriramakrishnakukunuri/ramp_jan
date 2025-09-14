@@ -70,7 +70,7 @@ localStorageData: any;
           // Make API call to get actual data
           this._commonService.getDataByUrl(APIS.progressMonitoring.getTrainigAndNonTraining+"?agencyId="+value).subscribe({
             next: (dataListResponse: any) => {
-              if(dataListResponse && dataListResponse) {
+              if(dataListResponse ) {
                   this.tableList = dataListResponse;
               }
            
