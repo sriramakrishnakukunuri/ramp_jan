@@ -19,7 +19,8 @@ import { MonthlyRangeComponent } from '../monthly-range/monthly-range.component'
 export class NonTrainingTargetsComponent implements OnInit {
   financialForm!: FormGroup;
   paymentForm!: FormGroup;
-   isSubmitted = false;
+  isSubmitted = false;
+  isLoading = false; // Track loading state for buttons
   loginsessionDetails: any;
   selectedAgencyId: any;
   @ViewChild(MonthlyRangeComponent) monthlyRange!: MonthlyRangeComponent;
@@ -160,6 +161,7 @@ export class NonTrainingTargetsComponent implements OnInit {
       }
       // final submission
       onFinalSubmit(){
+        this.isLoading = true; // Set loading state
         let payload={
           "nonTrainingAchievementId": this.TargetDetails?.nonTrainingAchievementId,
           "nonTrainingActivityId": Number(this.selectedBudgetHead),
@@ -168,12 +170,16 @@ export class NonTrainingTargetsComponent implements OnInit {
           "financialTarget": Number(this.financialTarget),
           "financialTargetAchievement": Number(this.financialTargetAchievement)
           }
-        this._commonService.update(APIS.nontrainingtargets.updateTarets,payload,this.TargetDetails?.nonTrainingAchievementId).subscribe((res: any) => {
+        this._commonService.update(APIS.nontrainingtargets.updateTarets,payload,this.TargetDetails?.nonTrainingAchievementId).subscribe({
+          next: (res: any) => {
+            this.isLoading = false; // Reset loading state
             this.toastrService.success('Final Submission Done Successfully','Non Training Progress Data Success!');
-            this.getDeatilOfTargets()
-        
-        }, (error) => {
-          this.toastrService.error(error.message,"Non Training Progress Data Error!");
+            this.getDeatilOfTargets();
+          },
+          error: (error) => {
+            this.isLoading = false; // Reset loading state on error
+            this.toastrService.error(error.message,"Non Training Progress Data Error!");
+          }
         });
       }
        createForm(): FormGroup {
@@ -321,6 +327,7 @@ getPreliminaryData:any=[]
   onSubmit(): void {
      this.isSubmitted = true;
       if (this.financialForm.valid) {
+     this.isLoading = true; // Set loading state
      if(this.iseditMode){
         this.f['agencyId'].setValue(Number(this.selectedAgencyId));
          this.f['nonTrainingSubActivityId'].setValue(Number(this.selectedBudgetHead));
@@ -339,6 +346,7 @@ getPreliminaryData:any=[]
         this.preliminaryID
       ).subscribe({
         next: (res: any) => {
+          this.isLoading = false; // Reset loading state
           this.toastrService.success('Data Updated successfully', 'Non Training Progress Data Success!');
           this.getPreliminaryDataById();
           this.resetForm();
@@ -351,6 +359,7 @@ getPreliminaryData:any=[]
           this.existingFileName = ''; // Reset the filename after successful update
         },
         error: (error) => {
+          this.isLoading = false; // Reset loading state on error
           this.resetForm();
           this.isSubmitted = false;
           const modal1 = bootstrap.Modal.getInstance(document.getElementById('addSurvey'));
@@ -373,6 +382,7 @@ getPreliminaryData:any=[]
              formData.append("file", this.uploadedFiles);
              }
          this._commonService.add(APIS.nontrainingtargets.saveNonTrainingtargetsCodeIT,formData).subscribe((res: any) => {
+           this.isLoading = false; // Reset loading state
            this.toastrService.success('Data saved successfully','Non Training Progress Data Success!');
            this.getPreliminaryData.push(res.data)
            this.getPreliminaryDataById()
@@ -383,6 +393,7 @@ getPreliminaryData:any=[]
           
          
          }, (error) => {
+           this.isLoading = false; // Reset loading state on error
            this.resetForm();
            this.isSubmitted = false;
            const modal1 = bootstrap.Modal.getInstance(document.getElementById('addSurvey'));
@@ -634,9 +645,11 @@ if (file) {
    onSubmitContingency(): void {
       this.isSubmitted = true;
        if (this.contingencyForm.valid) {
+      this.isLoading = true; // Set loading state
       if(this.iseditModeContingency){
          
           this._commonService.update(APIS.nontrainingtargets.updateNonTrainingtargetsAleapContingency,{...this.contingencyForm.value,"expenditures":[],nonTrainingActivityId:Number(this.selectedActivity),nonTrainingSubActivityId:Number(this.selectedBudgetHead),dateOfJoining:this.contingencyForm?.value?.dateOfJoining?moment(this.contingencyForm?.value?.dateOfJoining).format('DD-MM-YYYY'):null},this.ContingencyID).subscribe((res: any) => {
+            this.isLoading = false; // Reset loading state
             this.toastrService.success('Data Updated successfully','Non Training Progress Data Success!');
             
             console.log('Preliminary Data:', this.getContingencyData);
@@ -646,6 +659,7 @@ if (file) {
             modal1.hide();
           
           }, (error) => {
+            this.isLoading = false; // Reset loading state on error
              this.resetFormContingency();
             this.isSubmitted = false;
             const modal1 = bootstrap.Modal.getInstance(document.getElementById('addContingency'));
@@ -656,6 +670,7 @@ if (file) {
       else{
         console.log('Form Submitted:', this.contingencyForm.value);
           this._commonService.add(APIS.nontrainingtargets.saveNonTrainingtargetsAleapContingency,{...this.contingencyForm.value,"expenditures":[],nonTrainingActivityId:Number(this.selectedActivity),nonTrainingSubActivityId:Number(this.selectedBudgetHead),dateOfJoining:this.contingencyForm?.value?.dateOfJoining?moment(this.contingencyForm?.value?.dateOfJoining).format('DD-MM-YYYY'):null}).subscribe((res: any) => {
+            this.isLoading = false; // Reset loading state
             this.toastrService.success('Data saved successfully','Non Training Progress Data Success!');
             this.resetFormContingency();
             this.isSubmitted = false;
@@ -664,6 +679,7 @@ if (file) {
            
           
           }, (error) => {
+            this.isLoading = false; // Reset loading state on error
             this.resetFormContingency();
             this.isSubmitted = false;
             const modal1 = bootstrap.Modal.getInstance(document.getElementById('addContingency'));
@@ -801,6 +817,7 @@ if (file) {
       this.isSubmitted = true;
       console.log(this.paymentForm.value);
       if (this.paymentForm.valid) {
+      this.isLoading = true; // Set loading state
         
          if(this.iseditModePayment){
           const formData: any = {
@@ -812,6 +829,7 @@ if (file) {
           resourceId: Number(this.paymentForm.value.resourceId)
         };
           this._commonService.update(APIS.nontrainingtargets.updateNonTrainingtargetsAleapContingencyPayment,{...formData},this.paymentID).subscribe((res: any) => {
+            this.isLoading = false; // Reset loading state
             this.toastrService.success('payments Updated successfully','Non Training Progress Data Success!');
             
             console.log('Preliminary Data:', this.getContingencyData);
@@ -822,6 +840,7 @@ if (file) {
              document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
           
           }, (error) => {
+            this.isLoading = false; // Reset loading state on error
             //  this.resetForm();
             this.isSubmitted = false;
             const modal1 = bootstrap.Modal.getInstance(document.getElementById('addPayment'));
@@ -844,6 +863,7 @@ if (file) {
               formData.append("file", this.uploadedFiles);
               }
           this._commonService.add(APIS.nontrainingtargets.saveNonTrainingtargetsAleapContingencyPayment,formData).subscribe((res: any) => {
+            this.isLoading = false; // Reset loading state
             this.toastrService.success('Payments saved successfully','Non Training Progress Data Success!');
             this.isSubmitted = false;
             const modal1 = bootstrap.Modal.getInstance(document.getElementById('addPayment'));
@@ -852,7 +872,7 @@ if (file) {
            
           
           }, (error) => {
-         
+            this.isLoading = false; // Reset loading state on error
             this.isSubmitted = false;
             const modal1 = bootstrap.Modal.getInstance(document.getElementById('addPayment'));
             modal1.hide();

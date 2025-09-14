@@ -52,7 +52,10 @@
                       <h6 class="fw-600 mb-2 mb-sm-3 mb-md-0" *ngIf="selectedActivity == 18">Call Center</h6>
                       
                       <div class="text-end">
-                            <button type="button" class="btn btn-sm btn-lime-green" (click)="onFinalSubmit()">Save</button>
+                            <button type="button" class="btn btn-sm btn-lime-green" (click)="onFinalSubmit()" [disabled]="isLoading">
+                                <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+                                {{isLoading ? 'Saving...' : 'Save'}}
+                            </button>
                         </div>
                       </div>
                     <div class="card-body">
@@ -618,7 +621,10 @@
 
           <div class="text-end mt-3">
             <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal" aria-label="Close" (click)="resetForm()">Close</button>
-            <button type="submit" class="btn btn-lime-green">{{iseditMode?'Update' :'Add'}}</button>
+            <button type="submit" class="btn btn-lime-green" [disabled]="isLoading">
+                <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+                {{isLoading ? (iseditMode ? 'Updating...' : 'Adding...') : (iseditMode ? 'Update' : 'Add')}}
+            </button>
           </div>
         </form>
       </div>
@@ -806,7 +812,10 @@ aria-hidden="true">
 
           <div class="text-end mt-3">
             <button type="button" class="btn btn-secondary me-2"  data-bs-dismiss="modal" aria-label="Close" (click)="resetFormContingency()">Close</button>
-            <button type="submit" class="btn btn-lime-green">{{iseditModeContingency?'Update' :'Add'}}</button>
+            <button type="submit" class="btn btn-lime-green" [disabled]="isLoading">
+                <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+                {{isLoading ? (iseditModeContingency ? 'Updating...' : 'Adding...') : (iseditModeContingency ? 'Update' : 'Add')}}
+            </button>
           </div>
         </form>
       </div>
@@ -1057,7 +1066,10 @@ aria-hidden="true">
 
           <div class="text-end mt-3">
             <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal" aria-label="Close" (click)="resetForm()">Close</button>
-            <button type="submit" class="btn btn-lime-green">{{iseditModePayment?'Update' :'Add'}}  Payment</button>
+            <button type="submit" class="btn btn-lime-green" [disabled]="isLoading">
+                <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+                {{isLoading ? (iseditModePayment ? 'Updating...' : 'Adding...') : (iseditModePayment ? 'Update' : 'Add')}}  Payment
+            </button>
           </div>
         </form>
       </div>
@@ -1307,7 +1319,10 @@ aria-hidden="true">
 
           <div class="text-end mt-3">
             <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal" aria-label="Close" (click)="resetForm()">Close</button>
-            <button type="submit" class="btn btn-lime-green">{{iseditMode?'Update' :'Add'}}</button>
+            <button type="submit" class="btn btn-lime-green" [disabled]="isLoading">
+                <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+                {{isLoading ? (iseditMode ? 'Updating...' : 'Adding...') : (iseditMode ? 'Update' : 'Add')}}
+            </button>
           </div>
         </form>
       </div>
