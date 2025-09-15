@@ -209,4 +209,10 @@ export const APIS = {
         GET_AGENCIES: API_BASE_URL+`/agencies`,
         GET_PROGRAMS: API_BASE_URL+`/agency/programs/dropdown`,
     },
+    questionsApis:{
+        getAllQuestions: API_BASE_URL + '/all/questions',
+        saveActivityQuestions: API_BASE_URL + '/save/subactivity/questions',
+        saveQuestion: API_BASE_URL + '/save/question',
+        getQuestionsById: API_BASE_URL + '/get/questions/subactivity/id/',
+    }
 }

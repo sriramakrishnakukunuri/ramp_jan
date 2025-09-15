@@ -60,7 +60,7 @@ import { NonTrainingCoiComponent } from './PIA/non-training-coi/non-training-coi
 import { NonTrainingProgressWehubComponent } from './PIA/non-training-progress-wehub/non-training-progress-wehub.component';
 import { NonTrainingCipetComponent } from './PIA/non-training-cipet/non-training-cipet.component';
 import { NonTrainingTihclComponent } from './PIA/non-training-tihcl/non-training-tihcl.component';
-
+import { QuestionAssignmentComponent } from './PIA/question-assignment/question-assignment.component';
 const routes: Routes = [
     {
         path: '',
@@ -390,6 +390,12 @@ const routes: Routes = [
         component: ProgressMonitoringComponent,
         canActivate: [AuthGuard],
         data: { roles: [Role.Admin,Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
+    },
+    {
+        path:'question-assignment',
+        component:QuestionAssignmentComponent,
+        canActivate: [AuthGuard],
+        data: { roles: [Role.Admin] }
     },
      {
         path: 'Training-Non-trainingAchievements',

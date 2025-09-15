@@ -1,0 +1,251 @@
+<main class="mt-4">
+    <section>
+        <div class="container-fluid">
+            <!-- Header Card -->
+            <div class="card mb-3">
+                <div class="card-header bg-transparent">
+                    <div class="row align-items-center">
+                        <div class="col-12">
+                            <h6 class="fw-600 mb-2 mb-sm-3 mb-md-0">Question Assignment to Sub Activity</h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <!-- Filter Dropdowns -->
+                    <div class="row">
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                            <div class="form-floating mb-3">
+                                <select class="form-select" id="agency" [(ngModel)]="selectedAgencyId" (change)="onAgencyChange($any($event.target).value)">
+                                    <option value="" disabled selected>Select Agency</option>
+                                    <option *ngFor="let agency of agencyList" [value]="agency.agencyId">
+                                        {{ agency.agencyName }}
+                                    </option>
+                                </select>
+                                <label for="agency">Agency</label>
+                            </div>
+                        </div>
+                        
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                            <div class="form-floating mb-3">
+                               <select class="form-select" [(ngModel)]="selectedActivityId" (change)="getSubActivitiesList($any($event.target).value)">
+                                        <option selected value="">Select Type Of Activity</option>
+                                        <option value="{{list.activityId}}" *ngFor="let list of activityList">{{list.activityName}}</option>
+                                    </select>
+                                <label for="activity">Activity</label>
+                            </div>
+                        </div>
+                        
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                            <div class="form-floating mb-3">
+                                 <select class="form-select" [(ngModel)]="selectedSubActivityId" (change)="onSubActivityChanged()">
+                                        <option selected value="">Select Sub Activity</option>
+                                        <option value="{{list.subActivityId}}" *ngFor="let list of subActivitiesList">{{list.subActivityName}}</option>
+                                    </select>
+                                <label for="subActivity">Sub Activity</label>
+                            </div>
+                        </div>
+                        
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>Select Question</mat-label>
+                                <mat-select [(ngModel)]="selectedQuestion" multiple>
+                                    <mat-select-filter [array]="questions" [displayMember]="'question'" (filteredReturn)="questionsFiltered = $event">
+                                    </mat-select-filter>
+                                    <mat-option *ngFor="let question of displayedOptions" [value]="question.questionId">
+                                        {{ question?.question }}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 text-end mb-3">
+                        <button type="button" class="btn btn-lime-green"
+                        [disabled]="!isFormValid()"
+                         [class.disabled]="!isFormValid()"
+                        (click)="onQuestionSave()">
+                            Save
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questions Table Card -->
+            <div class="card budgets mb-3">
+                <div class="card-header bg-transparent d-flex justify-content-between align-items-center">
+                    <h6 class="fw-600 mb-0">Questions Assignment</h6>
+                    <button type="button" class="btn btn-sm btn-lime-green" (click)="openQuestionModal('add')">
+                        Add Question
+                    </button>
+                </div>
+                <div class="card-body">
+                    <div class="table-scroll-container">
+                        <table class="table table-bordered nowrap w-100 trainingTable">
+                            <thead class="bg-lime-green text-white">
+                                <tr>
+                                    <th>S.No</th>
+                                    <th>Question Name</th>
+                                    <th>Options</th>
+                                    <th>Type</th>
+                                    <!-- <th>Options</th> -->
+                                    <!-- <th>Actions</th> -->
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let question of questionList; let i = index">
+                                    <td>{{ i + 1 }}</td>
+                                    <td>{{ question.questionName }}</td>
+                                    <td>{{question.answers}}</td>
+                                    <td>{{question.questionType}}</td>
+                                    <!-- <td>
+                                        <span class="badge bg-info">{{ question.questionFieldType }}</span>
+                                    </td> -->
+                                    <!-- <td>{{ question.options }}</td> -->
+                                    <!-- <td>
+                                        <button type="button" class="btn btn-sm btn-warning me-2" 
+                                                (click)="openQuestionModal('edit', question)">
+                                            Edit
+                                        </button>
+                                        <button type="button" class="btn btn-sm btn-danger" 
+                                                (click)="deleteQuestion(question.id)">
+                                            Delete
+                                        </button>
+                                    </td> -->
+                                </tr>
+                                <tr *ngIf="questionList.length === 0">
+                                    <td colspan="5" class="text-center"> <strong>Data not Available. </strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<!-- Add Question Modal -->
+<div class="modal fade" id="addQuestionModal" tabindex="-1" aria-labelledby="addQuestionModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header py-2">
+                <h6 class="modal-title text-white" id="addQuestionModalLabel">
+                    {{ isEditMode ? 'Update' : 'Add' }} Question
+                </h6>
+                <button type="button" class="btn-close me-1" data-bs-dismiss="modal" aria-label="Close" (click)="resetForm()"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="questionForm" (ngSubmit)="onSubmit()">
+                    <div class="row">
+                        <!-- Question Type -->
+                        <div class="col-12 mb-3">
+                            <!-- <label class="form-label fw-bold"></label> -->
+                            <div class="row">
+                                <div class="col-12 col-sm-4" >
+                                    <div class="form-floating mb-3">
+                                        <select class="form-select mb-2" formControlName="questionFieldType" id="questionFieldTypeDropdown">
+                                            <option value="" disabled selected>Select Question Type</option>
+                                            <option value="RadioButton">Radio Button</option>
+                                            <option value="checkBox">Checkbox</option>
+                                            <option value="text">Text</option>
+                                            <option value="number">Number</option>
+                                        </select>
+                                        <label>Question Type</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div *ngIf="isSubmitted && questionForm.get('questionFieldType')?.errors?.['required']" 
+                                 class="text-danger small">
+                                Question type is required
+                            </div>
+                        </div>
+                        
+                        <!-- Question Text -->
+                        <div class="col-12 mb-3">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div class="form-floating">
+                                        <textarea class="form-control" 
+                                                  id="questionText" 
+                                                  formControlName="questionText" 
+                                                  placeholder="Enter question text"
+                                                  style="height: 80px;"></textarea>
+                                        <label for="questionText">Question</label>
+                                    </div>
+                                    <div *ngIf="isSubmitted && questionForm.get('questionText')?.errors?.['required']" 
+                                         class="text-danger small">
+                                        Question text is required
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Options -->
+                        <div class="col-12 mb-3">
+                            <label for="newOption" class="form-label fw-bold">Options</label>
+                            
+                            <!-- Input Group for adding new options -->
+                            <div class="row mb-2">
+                                <div class="col-md-5">
+                                    <div class="input-group input-group-sm">
+                                        <input type="text" 
+                                               id="newOption"
+                                               class="form-control" 
+                                               [formControl]="newOptionControl" 
+                                               placeholder="Enter option"
+                                               (keydown.enter)="addOption(); $event.preventDefault()">
+                                        <button class="btn btn-success btn-sm btn-lime-green" style="margin-right:-24px" 
+                                                type="button" 
+                                                (click)="addOption()"
+                                                [disabled]="!newOptionControl.value?.trim()">
+                                            + Add
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- List of added options -->
+                            <div class="row" *ngIf="optionsArray.controls.length > 0">
+                                <div class="col-12">
+                                    <small class="fw-bold text-muted mb-1 d-block">Added Options:</small>
+                                    <div class="options-list">
+                                        <div class="d-flex flex-wrap gap-1">
+                                            <span *ngFor="let option of optionsArray.controls; let i = index" 
+                                                  class="option-tag">
+                                                <span class="option-number">{{ i + 1 }}.</span>
+                                                <span class="option-text">{{ option.value }}</span>
+                                                <button type="button" 
+                                                        class="btn-delete-option" 
+                                                        (click)="removeOption(i)"
+                                                        title="Remove option">
+                                                    ×
+                                                </button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Validation Message -->
+                            <div *ngIf="isSubmitted && optionsArray.hasError('required')" 
+                                 class="text-danger small mt-2">
+                                ! At least one option is required.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="text-end mt-3">
+                        <button type="button" class="btn btn-secondary me-2" 
+                                data-bs-dismiss="modal" aria-label="Close" (click)="resetForm()">
+                            Close
+                        </button>
+                        <button type="submit" class="btn btn-lime-green" [disabled]="!questionForm.valid">
+                            {{ isEditMode ? 'Update' : 'Add' }}
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
