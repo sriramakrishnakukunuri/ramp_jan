@@ -81,7 +81,7 @@
             </div>
           
             <!-- Non-Training Programs Table -->
-            <div class="row mb-4" *ngIf="tableList?.nonTrainingPrograms && tableList.nonTrainingPrograms.length > 0">
+            <div class="row mb-4" *ngIf="tableList && tableList.length > 0">
             <div class="col-12">
               <h6 class="fw-600 mb-3 text-success">Non-Training Programs</h6>
               <div class="scrollable-table">
@@ -100,7 +100,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr *ngFor="let nonTraining of tableList.nonTrainingPrograms; let i = index">
+                <tr *ngFor="let nonTraining of tableList; let i = index">
                   <td class="text-center">{{ i + 1 }}</td>
                   <td>{{ nonTraining?.nonTrainingActivity || 'N/A' }}</td>
                   <td>{{ nonTraining?.nonTrainingSubActivity || 'N/A' }}</td>

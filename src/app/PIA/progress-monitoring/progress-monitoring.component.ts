@@ -59,13 +59,13 @@ localStorageData: any;
           this.tableheaderList = []
           
           // Initialize with sample data structure
-          this.tableList = {
-              "trainingPrograms": [
+          // this.tableList = {
+          //     "trainingPrograms": [
                 
-              ],
-              "nonTrainingPrograms": [
-              ]
-          }
+          //     ],
+          //     "nonTrainingPrograms": [
+          //     ]
+          // }
           
           // Make API call to get actual data
           this._commonService.getDataByUrl(APIS.progressMonitoring.getTrainigAndNonTraining+"?agencyId="+value).subscribe({
