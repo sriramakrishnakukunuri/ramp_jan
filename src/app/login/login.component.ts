@@ -65,6 +65,9 @@ export class LoginComponent implements OnInit {
                             this.router.navigateByUrl('/program-creation');
                         }else if(res?.data.userRole === Role.CALL_CENTER
                         ) {
+                            this.router.navigateByUrl('/participant-details');
+                        }
+                        else{
                             this.router.navigateByUrl('/global-dashboard');
                         }
                 },
