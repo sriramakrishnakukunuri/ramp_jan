@@ -122,7 +122,7 @@ export class NonTrainingTihclComponent implements OnInit {
  getCorpusData:any=[]
  getDataFianance(){
      this._commonService.getDataByUrl(APIS.nontrainingtargets.tihcl.getCorpusList).subscribe((res: any) => {
-            this.getCorpusData=res;
+            this.getCorpusData=res.data;
             this.physicalTargetAchievement=0
             this.physicalTargetAchievement=this.getCorpusData?.length
             this.financialTargetAchievement=0
