@@ -15,6 +15,7 @@ export const APIS = {
         addResource: API_BASE_URL + '/resource/save',
         getProgramsList: API_BASE_URL + '/programs',
         getProgramsListByAgency: API_BASE_URL + '/agency/programs/dropdown/',
+        getNewProgramListByAgency: API_BASE_URL + '/programs/status/status-list/',
         getProgramsListByAgencyStatus: API_BASE_URL + '/programs/status',
         getProgramsListByAgencyDetails: API_BASE_URL + '/agency/programs/',
         getProgramsListByAgencyByStatusDetails: API_BASE_URL + '/agency/programs/by/status/',

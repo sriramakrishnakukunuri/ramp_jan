@@ -494,12 +494,12 @@
                      <li *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]" >
                     <a class="dropdown-item" routerLink="/non-training-progress-wehub" routerLinkActive="active">Non Training Progress</a>
                   </li>
-                  </ng-container> -->
-                    <!-- <ng-container *ngIf="this.user?.agencyName=='CIPET' || this.user.agencyId==6">
+                  </ng-container>
+                    <ng-container *ngIf="this.user?.agencyName=='CIPET' || this.user.agencyId==6">
                      <li *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]" >
                     <a class="dropdown-item" routerLink="/non-training-progress-cipet" routerLinkActive="active">Non Training Progress</a>
                   </li>
-                  </ng-container> -->
+                  </ng-container>  -->
                    <ng-container *ngIf="this.user?.agencyName=='TiHCL_05' || this.user.agencyId==1">
                      <li *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]" >
                     <a class="dropdown-item" routerLink="/non-training-progress-tihcl" routerLinkActive="active">Non Training Progress</a>
@@ -511,12 +511,12 @@
                   </li>
                   </ng-container> -->
                   
-                  <!-- Masters List (Agency) -->
+                 <!-- Masters List (Agency)  -->
                   <li *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]">
                     <a class="dropdown-item" routerLink="/view-table-organization" routerLinkActive="active">Masters List</a>
                   </li>
                   <!-- ESPD Training (Agency) -->
-                  <li *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]" class="dropdown-submenu isDisabled" style="position:relative;">
+                  <li *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]" class="dropdown-submenu isDisabled"  style="position:relative;">
                     <a class="dropdown-item d-flex justify-content-between align-items-center" href="#"
                       (click)="toggleSubMenu('esdpTraining', $event)">
                       <span>ESDP Training</span>
