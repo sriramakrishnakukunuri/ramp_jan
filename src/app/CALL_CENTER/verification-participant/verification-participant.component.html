@@ -9,12 +9,23 @@
                     <label for="agencySelect" class="form-label">Select Agency</label>
                 </div>
                 <div class="col-md-4">
-                    <select id="agencySelect" class="form-select" [(ngModel)]="selectedAgency"
+                    <!-- <select id="agencySelect" class="form-select" [(ngModel)]="selectedAgency"
                         (change)="onAgencyChange()">
                         <option value="" disabled selected>Select Agency</option>
                         <option *ngFor="let agency of agencies" [value]="agency.agencyId">{{ agency.agencyName }}
                         </option>
-                    </select>
+                    </select> -->
+                    <mat-form-field appearance="outline" class="w-100">
+                            <!-- <mat-label>Program</mat-label> -->
+                                <mat-select [(ngModel)]="selectedAgency" (selectionChange)="onAgencyChange()">
+                                <mat-select-filter [array]="agenciesFiltered" [displayMember]="'agencyName'" (filteredReturn)="agencies = $event">
+                                </mat-select-filter>
+                                <mat-option value="" disabled selected>Select Program</mat-option>
+                                <mat-option *ngFor="let list of agencies" [value]="list.agencyId">
+                                {{ list.agencyName }}
+                                </mat-option>
+                            </mat-select>
+                            </mat-form-field>
                 </div>
 
             </div>
@@ -23,12 +34,23 @@
                     <label for="programSelect" class="form-label">Select Program</label>
                 </div>
                 <div class="col-md-4">
-                    <select id="programSelect" class="form-select" (change)="onProgramChange()"
+                    <!-- <select id="programSelect" class="form-select" (change)="onProgramChange()"
                         [(ngModel)]="selectedProgram" [disabled]="!programs.length">
                         <option value="" disabled selected>Select Program</option>
                         <option *ngFor="let program of programs" [value]="program.programId">{{ program.programTitle }}
                         </option>
-                    </select>
+                    </select> -->
+                    <mat-form-field appearance="outline" class="w-100">
+                            <!-- <mat-label>Program</mat-label> -->
+                                <mat-select [(ngModel)]="selectedProgram" (selectionChange)="onProgramChange()" panelClass="program-select-panel">
+                                <mat-select-filter [array]="programsFiltered" [displayMember]="'programTitle'" (filteredReturn)="programs = $event">
+                                </mat-select-filter>
+                                <mat-option value="" disabled selected>Select Program</mat-option>
+                                <mat-option *ngFor="let list of programs" [value]="list.programId">
+                                {{ list.programTitle }}
+                                </mat-option>
+                            </mat-select>
+                            </mat-form-field>
                 </div>
             </div>
             <div class="row">&nbsp;</div>
@@ -80,7 +102,7 @@
                                         <div  style="color: green;">{{ participant?.ccVerificationStatus }}</div>
                                     </td>
                                     <td *ngIf="participant?.ccVerificationStatus!='Verified'">
-                                        <div  style="color: orange;">{{ participant?.ccVerificationStatus?participant?.ccVerificationStatus:'Not verified' }}</div>
+                                        <div  style="color: orange;">{{ participant?.ccVerificationStatus?participant?.ccVerificationStatus : 'Not verified' }}</div>
                                     </td>
                                     <td>{{ participant?.verifiedBy }}</td>
                                     <td>

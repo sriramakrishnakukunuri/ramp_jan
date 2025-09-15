@@ -1060,7 +1060,7 @@ createFormTravel(): FormGroup {
   }
   ConfirmdeleteExpenditureTravel(item:any){
       this._commonService
-      .deleteId(APIS.nontrainingtargets.deleteNonTrainingtargetsTravel,item).subscribe({
+      .deleteId(APIS.nontrainingtargets.deleteNonTrainingtargetsAleapPriliminary,item).subscribe({
         next: (data: any) => {
           if(data?.status==400){
             this.toastrService.error(data?.message, "Non Training Progress Data Error!");
