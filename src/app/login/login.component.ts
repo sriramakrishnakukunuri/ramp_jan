@@ -63,8 +63,12 @@ export class LoginComponent implements OnInit {
                             || res?.data.userRole === Role.AGENCY_EXECUTOR
                         ){
                             this.router.navigateByUrl('/program-creation');
-                        }else if(res?.data.userRole === Role.CALL_CENTER
+                        }
+                        else if(res?.data.userRole === Role.CALL_CENTER
                         ) {
+                            this.router.navigateByUrl('/participant-details');
+                        }
+                        else{
                             this.router.navigateByUrl('/global-dashboard');
                         }
                 },
