@@ -85,6 +85,7 @@ import { NonTrainingCipetComponent } from './PIA/non-training-cipet/non-training
 import { DisableFutureDatesDirective } from './PIA/disable-future-dates.directive';
 import { NonTrainingTihclComponent } from './PIA/non-training-tihcl/non-training-tihcl.component';
 import { QuestionAssignmentComponent } from './PIA/question-assignment/question-assignment.component';
+import { NotificationDisplayComponent } from './PIA/notification-display/notification-display.component';
 
 @NgModule({
     imports: [
@@ -175,7 +176,8 @@ import { QuestionAssignmentComponent } from './PIA/question-assignment/question-
         NonTrainingProgressWehubComponent,
         NonTrainingCipetComponent,
         NonTrainingTihclComponent,
-        QuestionAssignmentComponent
+        QuestionAssignmentComponent,
+        NotificationDisplayComponent
 
     ],
     exports:[MaterialModule],

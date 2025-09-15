@@ -215,5 +215,9 @@ export const APIS = {
         saveActivityQuestions: API_BASE_URL + '/save/subactivity/questions',
         saveQuestion: API_BASE_URL + '/save/question',
         getQuestionsById: API_BASE_URL + '/get/questions/subactivity/id/',
+    },
+    notificationDisplay:{
+        getNotifications: API_BASE_URL + '/notifications/by-user',
+        markAsRead: API_BASE_URL + '/notifications/mark-read',
     }
 }
