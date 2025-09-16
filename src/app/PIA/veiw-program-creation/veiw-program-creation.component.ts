@@ -331,14 +331,14 @@ export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
         return data ? data : '';
       }
     },
-    { 
-      data: 'agencyName',
-      title: 'Agency Name',
-      orderable: false,
-      render: function(data, type, row) {
-        return data ? data : '';
-      }
-    },
+    // { 
+    //   data: 'agencyName',
+    //   title: 'Agency Name',
+    //   orderable: false,
+    //   render: function(data, type, row) {
+    //     return data ? data : '';
+    //   }
+    // },
     { 
       data: 'programTitle',
       title: 'Title Of Program',

@@ -3,8 +3,15 @@
         <div class="card mb-3">
             <div class="card-header bg-transparent">
                 <div class="row align-items-center">
-                    <div class="col-12 col-sm-6 col-md-6 col-lg-6">
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-3">
                         <h6 class="fw-600 mb-2 mb-sm-0">Completed Programs</h6>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-3">
+                        <mat-radio-group  aria-label="Program Category" class="d-flex align-items-center">
+                            <label class="me-3 fw-bold">Program Category* </label>
+                            <mat-radio-button value="Ramp" class="me-3" checked>Ramp</mat-radio-button>
+                            <mat-radio-button value="Others">Others</mat-radio-button>
+                        </mat-radio-group>
                     </div>
                     <ng-container *ngIf="loginsessionDetails?.userRole == 'ADMIN'">
                         <div class="col-12 col-sm-3 col-md-3 col-lg-3">
@@ -31,7 +38,7 @@
                                 <!-- <option value="All Programs">All Programs</option>   -->
                             <!-- <option *ngFor="let list of agencyProgramList" value="{{list.programId}}">{{list.programTitle}}</option>
                             </select> -->
-                             <mat-form-field appearance="outline" class="w-100">
+                            <mat-form-field appearance="outline" class="w-100">
                             <mat-label>List Of Program</mat-label>
                                 <mat-select [(ngModel)]="programIds" (selectionChange)="dropdownProgramsList($event,'table')">
                                 <mat-select-filter [array]="agencyProgramList" [displayMember]="'programTitle'" (filteredReturn)="agencyProgramListFiltered = $event">
