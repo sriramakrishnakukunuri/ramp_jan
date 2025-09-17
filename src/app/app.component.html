@@ -367,6 +367,10 @@
                   <li *appHasRole="[Role.Admin]">
                     <a class="dropdown-item" routerLink="/view-table-organization" routerLinkActive="active">Masters List</a>
                   </li>
+                  
+                  <li *appHasRole="[Role.Admin]">
+                    <a class="dropdown-item" routerLink="/question-assignment" routerLinkActive="active">Question Assignment</a>
+                  </li>
                   <!-- Program Monitoring (Admin) -->
                   <!-- <li *appHasRole="[Role.Admin]">
                     <a class="dropdown-item" routerLink="/program-monitoring" routerLinkActive="active">Program Monitoring</a>
@@ -468,7 +472,7 @@
                     <ul class="dropdown-menu show shadow" *ngIf="openSubMenus['updateOutcomes']"
                       style="position:static; background: #dfebeb;min-width:180px;">
                       <li><a class="dropdown-item" routerLink="/capture-outcome" routerLinkActive="active">Capture Outcome</a></li>
-                      <li><a class="dropdown-item" routerLink="/shg-training" routerLinkActive="active">SHG Training Status</a></li>
+                      <li><a class="dropdown-item " routerLink="/shg-training"  routerLinkActive="active">SHG Training Status</a></li>
                     </ul>
                   </li>
                   <ng-container *ngIf="this.user?.agencyName=='ALEAP' || this.user.agencyId==9">
@@ -540,7 +544,7 @@
                     </ul>
                   </li>
                   <!-- Counsellor (Agency) -->
-                  <li *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]" class="dropdown-submenu" style="position:relative;">
+                  <li *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]" class="dropdown-submenu " style="position:relative;">
                     <a class="dropdown-item d-flex justify-content-between align-items-center" href="#"
                       (click)="toggleSubMenu('counsellor', $event)">
                       <span>Counsellor</span>
@@ -558,7 +562,7 @@
                     </ul>
                   </li>
                   <!-- Others (Agency) -->
-                  <li *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]" class="dropdown-submenu" style="position:relative;">
+                  <li *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]" class="dropdown-submenu " style="position:relative;">
                     <a class="dropdown-item d-flex justify-content-between align-items-center" href="#"
                       (click)="toggleSubMenu('others', $event)">
                       <span>Others</span>
@@ -582,6 +586,16 @@
             aria-controls="offcanvasNavbar2" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
+          <ul class="navbar-nav me-auto ms-2">
+            <li class="nav-item dropdown">
+              <a class="nav-link" href="#" id="homeDropdown" role="button" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                <!-- <span class="bi bi-person-circle fs-3"></span> -->
+                <app-notification-display></app-notification-display>
+
+              </a>
+            </li>
+          </ul>
           <ul class="navbar-nav me-auto ms-2">
             <li class="nav-item dropdown">
               <a class="nav-link" href="#" id="homeDropdown" role="button" data-bs-toggle="dropdown"

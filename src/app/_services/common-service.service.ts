@@ -38,6 +38,9 @@ export class CommonServiceService {
   public updatedata(URL: any, payload: any,): Observable<any> {
     return this.http.put(URL, payload).pipe(catchError(this.formatErrors));
   }
+   public patchData(URL: any, payload: any,): Observable<any> {
+    return this.http.patch(URL, payload).pipe(catchError(this.formatErrors));
+  }
   public getById(URL: any, id: any,): Observable<any> {
     return this.http.get(URL+id).pipe(catchError(this.formatErrors));
   }

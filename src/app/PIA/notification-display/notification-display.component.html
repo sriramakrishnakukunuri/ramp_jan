@@ -1,0 +1,24 @@
+<!-- Font Awesome Bell Icon -->
+<div class="notification-bell-container" (click)="togglePanel()" tabindex="0">
+  <i class="fa fa-bell"></i>
+  <span *ngIf="notificationCount > 0" class="notification-badge">{{ notificationCount }}</span>
+</div>
+
+<div class="notification-popup" [class.open]="panelOpen">
+  <div class="notification-popup-header">
+    <span class="fw-bold">Notifications</span>
+    <!-- <button class="btn btn-sm btn-aqua" (click)="markAllAsRead()" [disabled]="!notificationsList.length">Mark all as read</button> -->
+  </div>
+  <div class="notification-list">
+    <div *ngIf="!notificationsList.length" class="notification-empty">
+      <i class="fa fa-inbox fa-2x text-muted"></i>
+      <div class="mt-2 text-muted">No notifications</div>
+    </div>
+    <div *ngFor="let n of notificationsList" class="notification-card" [ngClass]="{'read': n.readRecipients}">
+      <div class="notification-card-content">
+        <!-- <div class="notification-card-title">{{ n.screenName }}</div> -->
+        <div class="notification-card-message">{{ n.message }}</div>
+      </div>
+    </div>
+  </div>
+</div>

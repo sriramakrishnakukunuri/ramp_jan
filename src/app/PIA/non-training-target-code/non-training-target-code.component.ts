@@ -92,7 +92,7 @@ export class NonTrainingTargetCodeComponent implements OnInit {
           else if(this.selectedBudgetHead=='19'){
             this.getTravelDataBySubActive()
           }
-          else if(this.selectedBudgetHead=='12' || this.selectedBudgetHead=='13' || this.selectedBudgetHead=='14' || this.selectedBudgetHead=='15' || this.selectedBudgetHead=='16' || this.selectedBudgetHead=='17'){
+          else if(this.selectedBudgetHead=='12' || this.selectedBudgetHead=='13' || this.selectedBudgetHead=='14' || this.selectedBudgetHead=='15' || this.selectedBudgetHead=='16' || this.selectedBudgetHead=='17' || this.selectedBudgetHead=='74' || this.selectedBudgetHead=='75'){
             this.getResourceList()
             this.getContingencyDataById()
             this.getPaymentsDataById()
@@ -108,7 +108,7 @@ export class NonTrainingTargetCodeComponent implements OnInit {
            else if(this.selectedBudgetHead=='19'){
             this.getTravelDataBySubActive()
           }
-          else if(this.selectedBudgetHead=='11' || this.selectedBudgetHead=='12' || this.selectedBudgetHead=='13' || this.selectedBudgetHead=='14' || this.selectedBudgetHead=='15' || this.selectedBudgetHead=='16' || this.selectedBudgetHead=='17'){
+          else if(this.selectedBudgetHead=='11' || this.selectedBudgetHead=='12' || this.selectedBudgetHead=='13' || this.selectedBudgetHead=='14' || this.selectedBudgetHead=='15' || this.selectedBudgetHead=='16' || this.selectedBudgetHead=='17' || this.selectedBudgetHead=='74' || this.selectedBudgetHead=='75'){
             this.getResourceList()
             this.getContingencyDataById()
             this.getPaymentsDataById()
@@ -275,7 +275,7 @@ createForm(): FormGroup {
         modeOfPayment: item?.modeOfPayment || '',
         transactionId: item?.transactionId || '',
         purpose: item?.purpose || '',
-        uploadBillUrl: item?.uploadBillUrl || '',
+        uploadBillUrl: '',
         checkNo: item?.checkNo || '',
         checkDate: item?.checkDate ? this.convertToISOFormat(item?.checkDate) : '',
        
@@ -566,7 +566,8 @@ createForm(): FormGroup {
       monthlySal: [0, [Validators.required, Validators.min(0)]],
       bankName: ['', Validators.required],
       ifscCode: ['', [Validators.required, Validators.pattern(/^[A-Z]{4}0[A-Z0-9]{6}$/)]],
-      accountNo: ['', [Validators.required]]
+      accountNo: ['', [Validators.required]],
+      uploadBillUrl: ['']
     });
   }
 
@@ -600,8 +601,10 @@ createForm(): FormGroup {
       this.contingencyForm.reset();
     }
     if (mode === 'edit') {
+      item['uploadBillUrl']=''
       this.ContingencyID=item?.resourceId
       this.iseditModeContingency = true;
+
       this.contingencyForm.patchValue({
         name: item?.name || '',
         designation: item?.designation || '',
@@ -741,7 +744,7 @@ resetForm(): void {
           this.monthlyRange.setValue(item.paymentForMonth);
         }
       }, 0);
-      
+       item['uploadBillUrl']=''
       this.paymentForm.patchValue({
         amount: item?.amount || 0,
         paymentForMonth: item?.paymentForMonth || '',
@@ -998,7 +1001,7 @@ createFormTravel(): FormGroup {
         modeOfPayment: item?.modeOfPayment || '',
         transactionId: item?.transactionId || '',
         purpose: item?.purpose || '',
-        billInvoicePath: item?.billInvoicePath || '',
+        billInvoicePath: '',
         checkNo: item?.checkNo || '',
         checkDate: item?.checkDate ? this.convertToISOFormat(item.checkDate) : ''
       });

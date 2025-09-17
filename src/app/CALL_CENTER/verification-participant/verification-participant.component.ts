@@ -106,10 +106,12 @@ export class VerificationParticipantComponent implements OnInit {
   }
 
   // Load Agencies
+  agenciesFiltered:any=[]
   loadAgencies(): void {
     this._commonService.getDataByUrl(APIS.masterList.agencyList).subscribe({
       next: (data: any) => {
         this.agencies = data.data;
+        this.agenciesFiltered = this.agencies
       },
       error: (err) => {
         console.error('Error loading agencies:', err);
@@ -117,13 +119,18 @@ export class VerificationParticipantComponent implements OnInit {
     });
   }
   // Load Programs
+  programsFiltered:any=[]
   onAgencyChange(): void {
     this.programs = [];
     this.selectedProgram = '';
     if (this.selectedAgency) {
-      this._commonService.getDataByUrl(`${APIS.programCreation.getProgramsListByAgency}/${this.selectedAgency}`).subscribe({
+      // https://metaverseedu.in/workflow/programs/status/status-list/1?statuses=Attendance%20Marked&statuses=Program%20Execution%20Updated&statuses=Program%20Expenditure%20Updated'
+      // `${APIS.programCreation.getProgramsListByAgency}/${this.selectedAgency}`
+      let url=`${APIS.programCreation.getNewProgramListByAgency}/${this.selectedAgency}?statuses=Attendance%20Marked&statuses=Program%20Execution%20Updated&statuses=Program%20Execution&statuses=Program%20Expenditure%20Updated`
+      this._commonService.getDataByUrl(url).subscribe({
         next: (data: any) => {
           this.programs = data.data;
+          this.programsFiltered = this.programs
         },
         error: (err) => {
           console.error('Error loading programs:', err);
@@ -218,39 +225,39 @@ export class VerificationParticipantComponent implements OnInit {
       }
     });
   }
-  GetQuestion:any=[]
+  GetQuestion: any[] = []; // Initialize as an array
  getQuestionBySubactivityId(){
-  this.GetQuestion={}
-  this.verificationForm=new FormGroup({verificationStatusId:new FormControl('',[Validators.required])})
-  this._commonService.getById(APIS.callCenter.getQuestionById,this.programData.subActivityId).subscribe({
+  this.GetQuestion = []; // Reset to an empty array at the start
+  this.verificationForm = this.fb.group({verificationStatusId:new FormControl('',[Validators.required])});
+
+  this._commonService.getById(APIS.callCenter.getQuestionById, this.programData.subActivityId).subscribe({
     next: (data: any) => {
-      this.verificationForm = this.fb.group({verificationStatusId:new FormControl('',[Validators.required])});
-      this.GetQuestion = data.data;
-    this.GetQuestion.forEach((question:any) => {
-      if (question.questionType === 'RadioButton') {
-        // For radio buttons, we'll store the selected value
-        this.verificationForm.addControl(`question_${question.questionId}`, new FormControl(''));
-      } else if (question.questionType === 'checkBox') {
-        // For checkboxes, we'll create a FormArray
-        const answers = question?.answers?.split(',').map((item:any) => item.trim());
-        const checkboxControls = answers.map(() => new FormControl(false));
-        this.verificationForm.addControl(`question_${question.questionId}`, new FormArray(checkboxControls));
+      // Ensure data.data is an array before assigning it
+      if (data && Array.isArray(data.data)) {
+        this.GetQuestion = data.data;
+      } else if (data && data.data) {
+        // If it's a single object, wrap it in an array
+        this.GetQuestion = [data.data];
+      } else {
+        // Otherwise, ensure it's an empty array
+        this.GetQuestion = [];
       }
-      else{
-          // For Text or any thing buttons, we'll store the selected value
+
+      this.GetQuestion.forEach((question:any) => {
+        if (question.questionType === 'RadioButton') {
           this.verificationForm.addControl(`question_${question.questionId}`, new FormControl(''));
-      }
-    });
-     
-      // this.GetQuestion.map((item:any,index:any)=>{
-      //   item.answers= item.answers.split(',')
-      //   item['formValue']='Q'+(index+1)
-      //   this.verificationForm.addControl('Q'+(index+1), new FormControl(''))
-      // })
-      
+        } else if (question.questionType === 'checkBox') {
+          const answers = this.getAnswersArray(question.answers);
+          const checkboxControls = answers.map(() => new FormControl(false));
+          this.verificationForm.addControl(`question_${question.questionId}`, new FormArray(checkboxControls));
+        } else {
+          this.verificationForm.addControl(`question_${question.questionId}`, new FormControl(''));
+        }
+      });
     },
     error: (err: any) => {
-      this.toastrService.error(err.message, "Error fetching Questions details!");
+      // this.toastrService.error("Could not fetch questions due to a server error.", "API Error!");
+      this.GetQuestion = []; 
     }
   });
  }

@@ -3,7 +3,7 @@
 }
 
 .table-scroll-container {
-  max-height: 250px; /* You can adjust this height */
+  max-height: 300px; /* You can adjust this height */
   overflow-y: auto;
   position: relative;
 }

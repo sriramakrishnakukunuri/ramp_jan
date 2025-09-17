@@ -159,10 +159,10 @@
                                   <tr *ngFor="let preliminary of getPreliminaryData; let i = index">
                                     <td>{{ i + 1 }}</td>
                                     <!-- <td>{{ preliminary?.category }}</td> -->
-                                    <td>{{ preliminary?.paymentDate }}</td>
+                                    <td class="noWrap">{{ preliminary?.paymentDate }}</td>
                                     <td>{{ preliminary?.expenditureAmount }}</td>
                                     <td>{{ preliminary?.billNo }}</td>
-                                    <td>{{ preliminary?.billDate }}</td>
+                                    <td class="noWrap">{{ preliminary?.billDate }}</td>
                                     <td>{{ preliminary?.modeOfPayment }}</td>
                                     <td>{{ preliminary?.payeeName }}</td>
                                     <td>{{ preliminary?.accountNumber }}</td>
@@ -170,7 +170,7 @@
                                     <td>{{ preliminary?.ifscCode }}</td>
                                     <td>{{ preliminary?.transactionId }}</td>
                                     <td>{{preliminary?.checkNo }}</td>
-                                    <td>{{preliminary?.checkDate }}</td>
+                                    <td class="noWrap">{{preliminary?.checkDate }}</td>
                                     <td>{{ preliminary?.purpose }}</td>
                                     <!-- <td class="text-center">
                                       <a href="#" class="btn btn-default text-primary btn-sm" *ngIf="preliminary?.uploadBillUrl">
@@ -181,7 +181,7 @@
                                       <button type="button" class="btn btn-default text-lime-green btn-sm" (click)="openModel('edit', preliminary)">
                                         <span class="bi bi-pencil"></span>
                                       </button>
-                                      <button type="button" class="btn btn-default text-danger btn-sm" (click)="deletePreliminary(preliminary?.id)">
+                                      <button type="button" class="btn btn-default text-danger btn-sm" (click)="deleteTravel(preliminary?.id)">
                                         <span class="bi bi-trash"></span>
                                       </button>
                                     </td>
@@ -242,10 +242,10 @@
                                   <tr *ngFor="let preliminary of getPreliminaryData; let i = index">
                                     <td>{{ i + 1 }}</td>
                                     <!-- <td>{{ preliminary?.category }}</td> -->
-                                    <td>{{ preliminary?.paymentDate }}</td>
+                                    <td class="noWrap">{{ preliminary?.paymentDate }}</td>
                                     <td>{{ preliminary?.expenditureAmount }}</td>
                                     <td>{{ preliminary?.billNo }}</td>
-                                    <td>{{ preliminary?.billDate }}</td>
+                                    <td class="noWrap">{{ preliminary?.billDate }}</td>
                                     <td>{{ preliminary?.modeOfPayment }}</td>
                                     <td>{{ preliminary?.payeeName }}</td>
                                     <td>{{ preliminary?.accountNumber }}</td>
@@ -253,7 +253,7 @@
                                     <td>{{ preliminary?.ifscCode }}</td>
                                     <td>{{ preliminary?.transactionId }}</td>
                                     <td>{{preliminary?.checkNo }}</td>
-                                    <td>{{preliminary?.checkDate }}</td>
+                                    <td class="noWrap">{{preliminary?.checkDate }}</td>
                                     <td>{{ preliminary?.purpose }}</td>
                                     <!-- <td class="text-center">
                                       <a href="#" class="btn btn-default text-primary btn-sm" *ngIf="preliminary?.uploadBillUrl">
@@ -264,7 +264,7 @@
                                       <button type="button" class="btn btn-default text-lime-green btn-sm" (click)="openModel('edit', preliminary)">
                                         <span class="bi bi-pencil"></span>
                                       </button>
-                                      <button type="button" class="btn btn-default text-danger btn-sm" (click)="deletePreliminary(preliminary?.id)">
+                                      <button type="button" class="btn btn-default text-danger btn-sm" (click)="deleteTravel(preliminary?.id)">
                                         <span class="bi bi-trash"></span>
                                       </button>
                                     </td>

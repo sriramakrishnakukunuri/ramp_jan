@@ -15,6 +15,7 @@ export const APIS = {
         addResource: API_BASE_URL + '/resource/save',
         getProgramsList: API_BASE_URL + '/programs',
         getProgramsListByAgency: API_BASE_URL + '/agency/programs/dropdown/',
+        getNewProgramListByAgency: API_BASE_URL + '/programs/status/status-list/',
         getProgramsListByAgencyStatus: API_BASE_URL + '/programs/status',
         getProgramsListByAgencyDetails: API_BASE_URL + '/agency/programs/',
         getProgramsListByAgencyByStatusDetails: API_BASE_URL + '/agency/programs/by/status/',
@@ -209,4 +210,14 @@ export const APIS = {
         GET_AGENCIES: API_BASE_URL+`/agencies`,
         GET_PROGRAMS: API_BASE_URL+`/agency/programs/dropdown`,
     },
+    questionsApis:{
+        getAllQuestions: API_BASE_URL + '/all/questions',
+        saveActivityQuestions: API_BASE_URL + '/save/subactivity/questions',
+        saveQuestion: API_BASE_URL + '/save/question',
+        getQuestionsById: API_BASE_URL + '/get/questions/subactivity/id/',
+    },
+    notificationDisplay:{
+        getNotifications: API_BASE_URL + '/notifications/by-user',
+        markAsRead: API_BASE_URL + '/notifications/mark-read',
+    }
 }

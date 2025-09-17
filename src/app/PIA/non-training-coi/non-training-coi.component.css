@@ -8,7 +8,12 @@
 }
 
 .table-scroll-container thead {
+  /* text-wrap-mode: nowrap; */
   position: sticky;
   top: 0;
   z-index: 1; /* Ensures the header stays on top of the scrolling content */
 }
+
+  .noWrap {
+  text-wrap-mode: nowrap;
+  }

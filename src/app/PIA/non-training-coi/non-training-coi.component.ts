@@ -281,7 +281,7 @@ createForm(): FormGroup {
           checkNo: item?.checkNo || '',
         checkDate: item?.checkDate ? this.convertToISOFormat(item?.checkDate) : '',
         purpose: item?.purpose || '',
-        uploadBillUrl: item?.uploadBillUrl || ''
+        uploadBillUrl: ''
       });
       
     }
@@ -757,7 +757,7 @@ resetForm(): void {
         bankName: item?.bankName || '',
         ifscCode: item?.ifscCode || '',
         accountNo: item?.accountNo || '',
-        uploadBillUrl: item?.uploadBillUrl || ''
+        uploadBillUrl:''
        
       });
     }
@@ -1005,7 +1005,7 @@ createFormTravel(): FormGroup {
         modeOfPayment: item?.modeOfPayment || '',
         transactionId: item?.transactionId || '',
         purpose: item?.purpose || '',
-        billInvoicePath: item?.billInvoicePath || ''
+        billInvoicePath:''
       });
     }
     const modal1 = new bootstrap.Modal(document.getElementById('addTravel'));
@@ -1087,7 +1087,7 @@ createFormTravel(): FormGroup {
   }
   ConfirmdeleteExpenditureTravel(item:any){
       this._commonService
-      .deleteId(APIS.nontrainingtargets.deleteNonTrainingtargetsTravel,item).subscribe({
+      .deleteId(APIS.nontrainingtargets.deleteNonTrainingtargetsAleapPriliminary,item).subscribe({
         next: (data: any) => {
           if(data?.status==400){
             this.toastrService.error(data?.message, "Non Training Progress Data Error!");

@@ -50,7 +50,7 @@ export class LoginComponent implements OnInit {
                 next: (res) => {
                     //this.router.navigateByUrl('/program-creation');
                     this.loading = false;
-                       
+                            sessionStorage.setItem('user', JSON.stringify(res.data));
                             if(res?.data.userRole === Role.Admin){
                                 if(res?.data?.userId=='districts@gmail.com'){
                                 this.router.navigateByUrl('/ViewPrograms-district-wise'); 
@@ -65,6 +65,9 @@ export class LoginComponent implements OnInit {
                             this.router.navigateByUrl('/program-creation');
                         }else if(res?.data.userRole === Role.CALL_CENTER
                         ) {
+                            this.router.navigateByUrl('/participant-details');
+                        }
+                        else{
                             this.router.navigateByUrl('/global-dashboard');
                         }
                 },
