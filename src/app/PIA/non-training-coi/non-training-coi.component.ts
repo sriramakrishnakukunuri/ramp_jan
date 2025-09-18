@@ -235,7 +235,7 @@ createForm(): FormGroup {
       ifscCode: ['', [Validators.required, Validators.pattern(/^[A-Z]{4}0[A-Z0-9]{6}$/)]],
       modeOfPayment: ['', Validators.required],
       transactionId: [''],
-      purpose: ['', Validators.required],
+      purpose: ['',],
       uploadBillUrl: [''],
        checkNo: [''],
       checkDate: ['']
