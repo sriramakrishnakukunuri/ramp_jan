@@ -612,7 +612,12 @@
           <div class="col-12 col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-4 offset-lg-4">
             <div>
               <label for="uploadCredit" class="form-label text-center fw-600">Upload Credit Appraisal Report <span class="text-danger">*</span></label>
-              <input class="form-control" id="uploadCredit" type="file" (change)="onFileSelected($event)">
+              <div class="d-flex justify-content-center gap-2 align-items-center">
+                <input class="form-control" id="uploadCredit" type="file" (change)="onFileSelected($event)">
+                <span *ngIf="rampChecklistForm.get('creditApprasialPath')?.value" (click)="openCreditPreviewModal()" >
+                                                  <i class="fa fa-eye"></i>
+                </span>
+              </div>
               <small *ngIf="rampChecklistForm.get('creditApprasialPath')?.value" class="text-muted">
                 Uploaded file: {{ rampChecklistForm.get('creditApprasialPath')?.value?.split('/').pop() }}
               </small>
@@ -631,3 +636,28 @@
      <button type="submit" class="btn btn-primary float-end" *ngIf="freeze<=7" >Submit</button>
   </fieldset>
 </form>
+
+<div class="modal fade" [ngClass]="{ 'show d-block': showCreditPreviewModal }" tabindex="-1">
+
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Credit Appraisal Preview</h5>
+        <button type="button" class="btn-close" (click)="closeCreditPreviewModal()"></button>
+      </div>
+      <div class="modal-body text-center">
+       <img [hidden]="!isImageFile(rampChecklistForm.get('creditApprasialPath')?.value)"
+     [src]="rampChecklistForm.get('creditApprasialPath')?.value"
+     alt="Preview" style="max-width:100%;max-height:400px;">
+
+<iframe [hidden]="isImageFile(rampChecklistForm.get('creditApprasialPath')?.value)" 
+        [src]="safePreviewUrl" 
+        style="width:100%;height:400px;" frameborder="0"></iframe>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeCreditPreviewModal()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

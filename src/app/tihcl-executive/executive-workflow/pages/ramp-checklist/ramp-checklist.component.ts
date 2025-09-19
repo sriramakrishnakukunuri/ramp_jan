@@ -1,10 +1,11 @@
- import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CommonServiceService } from '@app/_services/common-service.service';
 import { APIS } from '@app/constants/constants';
 import { ToastrService } from 'ngx-toastr';
 import { LoaderService } from '@app/common_components/loader-service.service';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-ramp-checklist',
@@ -17,6 +18,7 @@ export class RampChecklistComponent implements OnInit {
   applicationData:any
   constructor(private fb: FormBuilder, private toastrService: ToastrService,
     private loader: LoaderService,
+    private sanitizer: DomSanitizer,
         private _commonService: CommonServiceService,
         private router: Router,) {
            const applicationData = JSON.parse(sessionStorage.getItem('ApplicationData') || '{}');
@@ -148,10 +150,15 @@ export class RampChecklistComponent implements OnInit {
 
     this.rampChecklistForm.patchValue(response);
   }
+  
 filePath:any
   onFileSelected(event: any): void {
     const file: File = event.target.files[0];
     if (file) {
+       if (file.size > 10 * 1024 * 1024) { // 10 MB in bytes
+        this.toastrService.error('Upload file less than 10 MB');
+        return;
+      }
       // this.rampChecklistForm.get('creditApprasialPath')?.setValue(file.name);
   
             let formData =new FormData()
@@ -193,5 +200,33 @@ filePath:any
     }else{
       this.toastrService.error("Please fill all the required fields in the form")
     }
+  }
+  showCreditPreviewModal = false;
+
+safePreviewUrl: any;
+
+openCreditPreviewModal() {
+  const path = this.rampChecklistForm.get('creditApprasialPath')?.value;
+
+  if (path) {
+    // only create SafeResourceUrl once
+    this.safePreviewUrl = this.sanitizer.bypassSecurityTrustResourceUrl(path);
+  }
+
+  this.showCreditPreviewModal = true;
+}
+
+closeCreditPreviewModal() {
+  this.showCreditPreviewModal = false;
+}
+
+
+isImageFile(filePath: string): boolean {
+  return /\.(jpg|jpeg|png|gif)$/i.test(filePath || '');
+}
+
+ getSafePreviewUrl(): SafeResourceUrl {
+    const url = this.rampChecklistForm.get('creditApprasialPath')?.value;
+    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
 }

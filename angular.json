@@ -33,6 +33,7 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
               "./node_modules/ngx-toastr/toastr.css",
               "src/assets/vendors/_bootstrap.scss",
               "src/assets/abstracts/_variables.scss",

@@ -209,6 +209,13 @@ NextStep() {
     this._commonService.setCurrentStep(this.currentStep);
   }
 }
+
+onStepClick(step: number) {
+  if (step > this.freezeValue) return;
+  this.currentStep = step;
+  this._commonService.setCurrentStep(step);
+}
+
 }
 
 

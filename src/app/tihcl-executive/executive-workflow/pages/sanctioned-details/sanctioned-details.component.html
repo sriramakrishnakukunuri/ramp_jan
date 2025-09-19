@@ -233,19 +233,25 @@
       </div>
       <div class="card-body">
         <div class="row">
-          <div class="col-12 col-sm-12 col-md-4 col-lg-3">
-            <div class="form-floating">
-              <input type="file" class="form-control" id="letterUpload" 
+          <div class="col-12 col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-4 offset-lg-4">
+        <div>
+          <label for="uploadSanctionLetter" class="form-label text-center fw-600">Upload Sanctioned Letter <span class="text-danger">*</span></label>
+          <div class="d-flex justify-content-center gap-2 align-items-center">
+            <!-- <input class="form-control" id="uploadSanctionLetter" type="file" (change)="onSanctionLetterSelected($event)"> -->
+            <input type="file" class="form-control" id="letterUpload" 
                      (change)="onFileChange($event)">
-              <label for="letterUpload">Sanctioned Letter Upload <span class="text-danger"> *</span><span class="text-danger">*</span></label>
-            </div>
-            <small *ngIf="sanctionForm.get('sanctionLetterPath')?.value" class="text-muted">
-              Selected file: {{ sanctionForm.get('sanctionLetterPath')?.value?.split('/').pop() }}
-            </small>
-          </div>                                
+            <span *ngIf="sanctionForm.get('sanctionLetterPath')?.value" (click)="openCreditPreviewModal()">
+                                            <i class="fa fa-eye"></i>
+            </span>
+          </div>
+          <small *ngIf="sanctionForm.get('sanctionLetterPath')?.value" class="text-muted">
+            Uploaded file: {{ sanctionForm.get('sanctionLetterPath')?.value?.split('/').pop() }}
+          </small>
         </div>
       </div>
     </div>
+  </div>
+</div>
     
     <!-- <input type="button" name="previous" class="previous btn btn-secondary float-start" value="Previous" (click)="goToPrevious()"/> -->
     <button type="submit" class="btn btn-primary float-end" [ngClass]="{'isDisabled':sanctionForm.invalid}" *ngIf="freeze<=9">
@@ -253,3 +259,28 @@
     </button>
   </form>
 </fieldset>
+
+<div class="modal fade" [ngClass]="{ 'show d-block': showCreditPreviewModal }" tabindex="-1">
+
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Credit Appraisal Preview</h5>
+        <button type="button" class="btn-close" (click)="closeCreditPreviewModal()"></button>
+      </div>
+      <div class="modal-body text-center">
+       <img [hidden]="!isImageFile(sanctionForm.get('sanctionLetterPath')?.value)"
+     [src]="sanctionForm.get('sanctionLetterPath')?.value"
+     alt="Preview" style="max-width:100%;max-height:400px;">
+
+<iframe [hidden]="isImageFile(sanctionForm.get('sanctionLetterPath')?.value)" 
+        [src]="safePreviewUrl" 
+        style="width:100%;height:400px;" frameborder="0"></iframe>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeCreditPreviewModal()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

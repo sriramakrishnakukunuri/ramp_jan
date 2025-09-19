@@ -1,5 +1,43 @@
-.isDisabled{
+/* .isDisabled{
   pointer-events: none;
   cursor: not-allowed;
-  opacity: 0.5;
+  opacity: 0.5; 
+  border: 1px solid #e0e0e0 !important;
+  color: #495057 !important;
+
+  background-color: #e9ecef !important;
+  box-shadow: none !important;
+
 }
+
+isDisabled input,
+.isDisabled select,
+.isDisabled .form-check-label {
+  background-color: #e9ecef !important;
+  color: #495057 !important;
+  opacity: 1;
+  border: none;
+  box-shadow: none;
+} */
+
+
+.isDisabled {
+  pointer-events: none;
+  cursor: not-allowed;
+  background-color: #e9ecef !important;
+  opacity: 1;
+  color: #495057 !important;
+  border: 1px solid #e0e0e0 !important;
+  box-shadow: none !important;
+}
+
+.isDisabled input,
+.isDisabled select,
+.isDisabled textarea,
+.isDisabled .form-check-label {
+  background-color: #e9ecef !important;
+  color: #495057 !important;
+  opacity: 1;
+  border: none;
+  box-shadow: none;
+} 

@@ -1,4 +1,4 @@
- <fieldset>
+<fieldset>
                           <div class="card border rounded-2 shadow-none mb-3">
                             <div class="card-header bg-theme text-white">
                                 <h6 class="mb-0">Primary Lender NOC</h6>
@@ -9,11 +9,20 @@
                                   <div>
                                     <label for="uploadNoc" class="form-label text-center fw-600">Upload Primary Lender NOC<span class="text-danger">*</span></label>
                                     <!-- <input class="form-control" id="uploadNoc" type="file"> -->
+                                     <div class="d-flex justify-content-center gap-2 align-items-center">
                                      <input class="form-control" id="uploadNoc" type="file" (change)="onFileSelected($event)">
+                                   
+                                      <span *ngIf="managrData?.primaryLenderNocFilePath" (click)="openCreditPreviewModal()" style="cursor:pointer;">
+                                        <i class="fa fa-eye"></i>
+                                      </span>
+
+                                    </div>
+
                                       <small *ngIf="this.selectedfiles?.name " class="text-muted">
                                         Uploaded file: {{ this.selectedfiles?.name?.split('/').pop() }}
                                       </small>
                                       <small class="text-muted" *ngIf="this.managrData.primaryLenderNocFilePath">Uploaded file: {{ this.managrData.primaryLenderNocFilePath?.split('/').pop() }}</small>
+                                      
                                   </div>
                                 </div>
                               </div> 
@@ -22,3 +31,28 @@
                           <!-- <input type="button" name="previous" class="previous btn btn-secondary float-start" value="Previous"/> -->
                           <input type="button" name="next" class="next btn btn-primary float-end" (click)="FinalSubmit()" *ngIf="freeze<=8" value="Submit"/>
                       </fieldset>
+                   
+                   
+       
+
+<div class="modal fade" [ngClass]="{ 'show d-block': showCreditPreviewModal }" tabindex="-1">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Primary Lender NOC Preview</h5>
+        <button type="button" class="btn-close" (click)="closeCreditPreviewModal()"></button>
+      </div>
+      <div class="modal-body text-center">
+        <img [hidden]="!isImageFile(managrData?.primaryLenderNocFilePath)"
+             [src]="managrData?.primaryLenderNocFilePath"
+             alt="Preview" style="max-width:100%;max-height:400px;">
+        <iframe [hidden]="isImageFile(managrData?.primaryLenderNocFilePath)"
+                [src]="safePreviewUrl"
+                style="width:100%;height:400px;" frameborder="0"></iframe>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeCreditPreviewModal()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

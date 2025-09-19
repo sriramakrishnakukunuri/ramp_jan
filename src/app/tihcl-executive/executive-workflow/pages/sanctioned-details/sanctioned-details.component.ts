@@ -5,6 +5,7 @@ import { CommonServiceService } from '@app/_services/common-service.service';
 import { APIS } from '@app/constants/constants';
 import { ToastrService } from 'ngx-toastr';
 import { LoaderService } from '@app/common_components/loader-service.service';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-sanctioned-details',
@@ -21,7 +22,8 @@ export class SanctionedDetailsComponent implements OnInit {
       constructor(private fb: FormBuilder, private toastrService: ToastrService,
             private _commonService: CommonServiceService,
             private loader: LoaderService,
-            private router: Router,) {
+            private router: Router,
+            private sanitizer: DomSanitizer) {
                 const applicationData = JSON.parse(sessionStorage.getItem('ApplicationData') || '{}');
               this.applicationData=applicationData
               this.getDtataByUrl(APIS.tihclExecutive.registerData + (applicationData.registrationUsageId? applicationData?.registrationUsageId:applicationData?.registrationId))
@@ -137,6 +139,15 @@ managrData:any
   }
 filePath:any
   onFileChange(event: any): void {
+     const file = event.target.files[0];
+    if (file) {
+      if (file.size > 10 * 1024 * 1024) { // 10 MB in bytes
+        this.toastrService.error('Upload file less than 10 MB');
+        
+        return;
+      }
+     
+    }
     if (event.target.files.length > 0) {
       const file = event.target.files[0];
         if (file) {
@@ -160,7 +171,48 @@ filePath:any
     }
   }
 
-  goToPrevious(): void {
-    // Implement navigation to previous step
+  // const path = this.sanctionForm.get('sanctionLetterPath')?.value;
+
+showCreditPreviewModal = false;
+
+safePreviewUrl: any;
+
+openCreditPreviewModal() {
+  const path = this.sanctionForm.get('sanctionLetterPath')?.value;
+
+  if (path) {
+    // only create SafeResourceUrl once
+    this.safePreviewUrl = this.sanitizer.bypassSecurityTrustResourceUrl(path);
   }
+
+  this.showCreditPreviewModal = true;
+}
+
+closeCreditPreviewModal() {
+  this.showCreditPreviewModal = false;
+}
+
+
+isImageFile(filePath: string): boolean {
+  return /\.(jpg|jpeg|png|gif)$/i.test(filePath || '');
+}
+
+ getSafePreviewUrl(): SafeResourceUrl {
+    const url = this.sanctionForm.get('sanctionLetterPath')?.value;
+    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
+  }
+
+onSanctionLetterSelected(event: any): void {
+ const file = event.target.files[0];
+    if (file) {
+      if (file.size > 10 * 1024 * 1024) { // 10 MB in bytes
+        this.toastrService.error('Upload file less than 10 MB');
+        
+        return;
+      }
+     
+    }
+  }
+
+
 }

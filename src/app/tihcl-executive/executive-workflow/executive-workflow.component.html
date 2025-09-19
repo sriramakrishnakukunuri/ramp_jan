@@ -19,40 +19,44 @@
                 aria-valuemax="100"></div>
             </div>
             <div class="step-container d-flex justify-content-between">
-              <div class="step-circle fs-9" [class.active]="currentStep >= 1">1</div>
-              <div class="step-circle fs-9" [class.active]="currentStep >= 2">2</div>
-              <div class="step-circle fs-9" [class.active]="currentStep >= 3">3</div>
-              <div class="step-circle fs-9" [class.active]="currentStep >= 4">4</div>
-              <div class="step-circle fs-9" [class.active]="currentStep >= 5">5</div>
-              <div class="step-circle fs-9" [class.active]="currentStep >= 6" >6</div>
-              <div class="step-circle fs-9" [class.active]="currentStep >= 7">7</div>
-              <div class="step-circle fs-9" [class.active]="currentStep >= 8">8</div>
-              <div class="step-circle fs-9" [class.active]="currentStep >= 9">9</div>
-              <div class="step-circle fs-9" [class.active]="currentStep >= 10">10</div>
-              <div class="step-circle fs-9" [class.active]="currentStep >= 11">11</div>
+              <ng-container *ngFor="let step of statusList.slice(0, 11); let i = index">
+                <div
+                  class="step-circle fs-9"
+                  [class.active]="currentStep >= i + 1"
+                  [class.clickable]="freezeValue >= i + 1"
+                  [class.isDisabled]="freezeValue < i + 1"
+                  [style.cursor]="freezeValue >= i + 1 ? 'pointer' : 'not-allowed'"
+                  (click)="freezeValue >= i + 1 && onStepClick(i + 1)"
+                >
+                  {{ i + 1 }}
+                </div>
+              </ng-container>
             </div>
             <div class="step-container step-label d-flex justify-content-between">
-              <div class="fs-md fw-600" [class.active]="currentStep >= 1"  >Preliminary
-                Assessment</div>
-              <div class="fs-md fw-600" [class.active]="currentStep >= 2">Manager Approval 1
-              </div>
-              <div class="fs-md fw-600" [class.active]="currentStep >= 3" >Unit Visit</div>
-              <div class="fs-md fw-600" [class.active]="currentStep >= 4" >Diagnostic Report
-              </div>
-              <div class="fs-md fw-600" [class.active]="currentStep >= 5" >Manager Approval 2
-              </div>
-              <div class="fs-md fw-600" [class.active]="currentStep >= 6" >DIC Consent Letter
-              </div>
-              <div class="fs-md fw-600" [class.active]="currentStep >= 7" >Ramp Checklist &
-                Credit Appraisal Upload</div>
-              <div class="fs-md fw-600" [class.active]="currentStep >= 8" >Primary Lender NOC
-              </div>
-              <div class="fs-md fw-600" [class.active]="currentStep >= 9">Sanctioned Details &
-                Upload Of Sanctioned Letter</div>
-              <div class="fs-md fw-600" [class.active]="currentStep >= 10" >Manager Approval 3
-              </div>
-              <div class="fs-md fw-600" [class.active]="currentStep >= 11">Disbursement
-                Details</div>
+              <ng-container *ngFor="let label of [
+                'Preliminary Assessment',
+                'Manager Approval 1',
+                'Unit Visit',
+                'Diagnostic Report',
+                'Manager Approval 2',
+                'DIC Consent Letter',
+                'Ramp Checklist & Credit Appraisal Upload',
+                'Primary Lender NOC',
+                'Sanctioned Details & Upload Of Sanctioned Letter',
+                'Manager Approval 3',
+                'Disbursement Details'
+              ]; let i = index">
+                <div
+                  class="fs-md fw-600"
+                  [class.active]="currentStep >= i + 1"
+                  [class.clickable]="freezeValue >= i + 1"
+                  [class.isDisabled]="freezeValue < i + 1"
+                  [style.cursor]="freezeValue >= i + 1 ? 'pointer' : 'not-allowed'"
+                  (click)="freezeValue >= i + 1 && onStepClick(i + 1)"
+                >
+                  {{ label }}
+                </div>
+              </ng-container>
             </div>
           </div>
 

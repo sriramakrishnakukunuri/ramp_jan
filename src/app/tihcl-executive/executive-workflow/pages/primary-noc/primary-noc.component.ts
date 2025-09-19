@@ -1,10 +1,12 @@
- import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CommonServiceService } from '@app/_services/common-service.service';
 import { APIS, UploadPath } from '@app/constants/constants';
 import { ToastrService } from 'ngx-toastr';
 import { LoaderService } from '@app/common_components/loader-service.service';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+
 @Component({
   selector: 'app-primary-noc',
   templateUrl: './primary-noc.component.html',
@@ -16,7 +18,8 @@ export class PrimaryNocComponent implements OnInit {
   constructor(private fb: FormBuilder, private toastrService: ToastrService,
     private loader: LoaderService,
         private _commonService: CommonServiceService,
-        private router: Router,) {
+        private router: Router,
+        private sanitizer: DomSanitizer) {
            const applicationData = JSON.parse(sessionStorage.getItem('ApplicationData') || '{}');
           this.applicationData=applicationData
           this.getDtataByUrl(APIS.tihclExecutive.registerData + (applicationData.registrationUsageId? applicationData?.registrationUsageId:applicationData?.registrationId))
@@ -37,13 +40,23 @@ export class PrimaryNocComponent implements OnInit {
         }
       });
     }
+
+
+
+
   
    selectedfiles:any=''
   onFileSelected(event: any): void {
-
-    this.selectedfiles = event.target.files[0];
-      console.log(this.selectedfiles)
-    
+    const file = event.target.files[0];
+    if (file) {
+      if (file.size > 10 * 1024 * 1024) { // 10 MB in bytes
+        this.toastrService.error('Upload file less than 10 MB');
+        this.selectedfiles = '';
+        return;
+      }
+      this.selectedfiles = file;
+      console.log(this.selectedfiles);
+    }
   }
   FinalSubmit(){
    if(this.selectedfiles){
@@ -78,4 +91,29 @@ export class PrimaryNocComponent implements OnInit {
          }
        });
      }
+
+     
+     showCreditPreviewModal = false;
+safePreviewUrl: any;
+
+openCreditPreviewModal() {
+  const path = this.managrData?.primaryLenderNocFilePath;
+  if (path) {
+    this.safePreviewUrl = this.sanitizer.bypassSecurityTrustResourceUrl(path);
+  }
+  this.showCreditPreviewModal = true;
+}
+
+closeCreditPreviewModal() {
+  this.showCreditPreviewModal = false;
+}
+
+isImageFile(filePath: string): boolean {
+  return /\.(jpg|jpeg|png|gif)$/i.test(filePath || '');
+}
+
+getSafePreviewUrl(): SafeResourceUrl {
+  const url = this.managrData?.primaryLenderNocFilePath || '';
+  return this.sanitizer.bypassSecurityTrustResourceUrl(url);
+}
 }
