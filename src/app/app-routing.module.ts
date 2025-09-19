@@ -61,6 +61,7 @@ import { NonTrainingProgressWehubComponent } from './PIA/non-training-progress-w
 import { NonTrainingCipetComponent } from './PIA/non-training-cipet/non-training-cipet.component';
 import { NonTrainingTihclComponent } from './PIA/non-training-tihcl/non-training-tihcl.component';
 import { QuestionAssignmentComponent } from './PIA/question-assignment/question-assignment.component';
+import { NotificationViewerUpdateComponent } from './PIA/notification-viewer-update/notification-viewer-update.component';
 const routes: Routes = [
     {
         path: '',
@@ -226,6 +227,12 @@ const routes: Routes = [
     {
         path: 'global-dashboard',
         component: GlobalDashboardComponent,
+        canActivate: [AuthGuard],
+        data: { roles:  [Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR,Role.CALL_CENTER,Role.Admin] }
+    },
+    {
+        path: 'notification-viewer-update',
+        component: NotificationViewerUpdateComponent,
         canActivate: [AuthGuard],
         data: { roles:  [Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR,Role.CALL_CENTER,Role.Admin] }
     },

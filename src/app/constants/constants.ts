@@ -155,7 +155,8 @@ export const APIS = {
         add:API_BASE_URL + `/save/callcenter/verification/data`,
         getALLQuestion:API_BASE_URL + `/all/questions`,
         getVeriaficationStatus:API_BASE_URL + `/all/verification/status`,
-        saveVeriaficationStatus:API_BASE_URL + `/save/callcenter/verification/data`
+        saveVeriaficationStatus:API_BASE_URL + `/save/callcenter/verification/data`,
+        updateNotificationCCToAgency:API_BASE_URL + `/notifications/send/callcenter-to-agency`
     },
     Attendance:{
         getDeatails:API_BASE_URL +`/program/attendence/`,
@@ -217,7 +218,12 @@ export const APIS = {
         getQuestionsById: API_BASE_URL + '/get/questions/subactivity/id/',
     },
     notificationDisplay:{
+        getNotificationDisplayByAgency: API_BASE_URL + '/notifications/agency/remarks/',
+        getNotificationDisplayByCallCenter: API_BASE_URL + '/notifications/callcenter/remarks/',
+        getNotificationByAgency: API_BASE_URL + '/notifications/agency/',
+        getNotificationByCallCenter: API_BASE_URL + '/notifications/callcenter/',
         getNotifications: API_BASE_URL + '/notifications/by-user',
         markAsRead: API_BASE_URL + '/notifications/mark-read',
+        updateData: API_BASE_URL + '/notifications/status',
     }
 }

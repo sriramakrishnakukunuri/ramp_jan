@@ -116,7 +116,9 @@ export class CommonServiceService {
       catchError(this.formatErrors.bind(this))
     );
   }
-  
+  updatebyPatch(URL: any, payload: any): Observable<any> {
+    return this.http.patch(URL, payload).pipe(catchError(this.formatErrors));
+  }
   
   
 }

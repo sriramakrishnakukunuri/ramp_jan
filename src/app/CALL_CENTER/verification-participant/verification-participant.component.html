@@ -200,9 +200,21 @@
 
                         </div>
                     </div>
+                    <div *ngIf="!showQuestions">
+                        <div class="mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" formControlName="isNotificationSent" id="isNotificationSent" (change)="onNotificationCheckboxChange($event)">
+                                <label class="form-check-label" for="isNotificationSent">Is Notification Required?</label>
+                            </div>
+                        </div>
+                        <div class="mb-3" *ngIf="verificationForm.get('isNotificationSent')?.value">
+                            <label for="message" class="form-label">Remarks</label>
+                            <input type="text" class="form-control" id="message" formControlName="message" placeholder="Enter message">
+                        </div>
+                    </div>
 
                     <!-- Questions (Visible only if "Answered" is selected) -->
-                    <div [ngClass]="{'isDisabled': !showQuestions}" >
+                    <div [ngClass]="{'isDisabled': !showQuestions}"  *ngIf="showQuestions">
                         <ng-container *ngFor="let question of GetQuestion" >
                             <div class="mb-3" >
                                 <label class="form-label">{{question?.questionName}} ?</label>

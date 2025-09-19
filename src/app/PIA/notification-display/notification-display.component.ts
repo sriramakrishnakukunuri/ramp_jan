@@ -1,6 +1,7 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { CommonServiceService } from '@app/_services/common-service.service';
 import { APIS } from '@app/constants/constants';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-notification-display',
@@ -13,15 +14,18 @@ export class NotificationDisplayComponent implements OnInit {
   notificationCount: number = 0;
   panelOpen = false;
 
-  constructor(private commonService: CommonServiceService) { }
+  constructor(private commonService: CommonServiceService,private router: Router) { }
 
   ngOnInit(): void {
     this.userDetails = JSON.parse(sessionStorage.getItem('user') || '{}');
+    console.log(this.userDetails);
     if (this.userDetails && this.userDetails.userId) {
       this.getNotifications();
     }
   }
+
 togglePanel() {
+  this.getNotifications()
   if (!this.panelOpen) {
     this.panelOpen = true;
     this.markAllAsRead();
@@ -38,11 +42,19 @@ togglePanel() {
   }
 
   getNotifications() {
-    let url = APIS.notificationDisplay.getNotifications + "?userId=" + this.userDetails.userId;
+    // CALL_CENTER
+    let url:any= ''
+    if(this.userDetails.userRole=='AGENCY_MANAGER' || this.userDetails.userRole=='AGENCY_EXECUTOR'){ 
+        url=APIS.notificationDisplay.getNotificationDisplayByAgency + this.userDetails.agencyId
+    }
+    else{
+        url=APIS.notificationDisplay.getNotificationDisplayByCallCenter+this.userDetails.userId;
+    }
+    
     this.commonService.getDataByUrl(url)
       .subscribe((res: any) => {
-        if (res && res.length > 0) {
-          this.notificationsList = res;
+        if (res && res['remarks'].length > 0) {
+          this.notificationsList = res['remarks'];
           this.notificationCount = this.notificationsList.length;
         } else {
           this.notificationsList = [];
@@ -68,5 +80,10 @@ togglePanel() {
         console.log(err);
       });
     
+  }
+  openNotificationDetail(notification: any) {
+    // Add Router to constructor
+  this.router.navigate(['/notification-viewer-update',]);
+  // this.router.navigate(['/collage-home'])
   }
 }
