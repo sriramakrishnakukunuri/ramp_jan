@@ -192,15 +192,17 @@ this.questionList=[]
       next: (data: any) => {
         if(data.data){
           this.questionList = data.data;
+          this.selectedQuestion = this.questionList.map((q: any) => q.questionId);
           // this.selectedQuestion = this.questionList.map((q: any) => q.questionId);
           // this.questionsFiltered = this.questions.filter(q => this.selectedQuestion.includes(q.questionId));
         }else{
-
+          this.selectedQuestion=[]
           this.questionList = [];
           // this.toastrService.error(data.message);
         }
       },
       error: (err: any) => {
+          this.selectedQuestion=[]
         this.toastrService.error(err.error.message);
         this.questionList = [];
        
@@ -227,6 +229,8 @@ this.getQuestionsBySubActivityId()
       next: (data: any) => {
         this.selectedQuestion=[]
         if(data.status){
+          this.getQuestionsBySubActivityId()
+
           this.toastrService.success(data.message);
         }else{
           this.toastrService.error(data.message);
@@ -293,6 +297,8 @@ this.getQuestionsBySubActivityId()
             if(data.status){
               this.toastrService.success(data.message);
               this.getQuestionsList();
+          this.getQuestionsBySubActivityId()
+
             }else{
               this.toastrService.error(data.message);
             }
