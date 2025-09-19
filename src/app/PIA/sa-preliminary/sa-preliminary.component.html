@@ -1,0 +1,50 @@
+<div class="container my-4">
+  <div class="card shadow-lg border-0">
+    <div class="card-header bg-primary text-white">
+      <h5 class="mb-0 fw-bold">Preliminary Assessment</h5>
+    </div>
+    <div class="card-body">
+      <div class="row g-4">
+        <!-- Left Column -->
+        <div class="col-md-6">
+          <div class="card border-0 shadow-sm mb-3">
+            <div class="card-body">
+              <p class="mb-2"><span class="fw-bold">Name Of Firm:</span> {{ registrationDetails?.enterpriseName }}</p>
+              <p class="mb-2"><span class="fw-bold">Udyam Number:</span> {{ registrationDetails?.udyamRegNumber }}</p>
+              <p class="mb-2"><span class="fw-bold">Size Of Unit:</span> {{ registrationDetails?.enterpriseCategory }}</p>
+              <p class="mb-2"><span class="fw-bold">Nature Of Activity:</span> {{ registrationDetails?.natureOfActivity }}</p>
+              <p class="mb-2"><span class="fw-bold">Factory Location:</span> {{ registrationDetails?.industrialPark }}, {{ registrationDetails?.district }}</p>
+              <p class="mb-0"><span class="fw-bold">Source of Application:</span> {{ registrationDetails?.sourceOfApplication || 'N/A' }}</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column -->
+        <div class="col-md-6">
+          <div class="card border-0 shadow-sm mb-3">
+            <div class="card-body">
+              <p class="fw-bold mb-2">Problems Faced by the Unit:</p>
+              <p class="text-muted">{{ registrationDetails?.problemsFaced || 'N/A' }}</p>
+            </div>
+          </div>
+
+          <div class="card border-0 shadow-sm">
+            <div class="card-body">
+              <p class="fw-bold mb-3">Stress Score:</p>
+              <ul class="list-group list-group-flush">
+                <li *ngFor="let score of registrationDetails?.stressScore" class="list-group-item">
+                  <span class="fw-bold">{{ score.issue }}:</span>
+                  <span class="text-muted">{{ score.riskCategorisation }}</span>
+                </li>
+              </ul>
+              <div class="mt-3">
+                <span class="fw-bold">Total Risk Score:</span>
+                <span class="badge bg-primary">{{ registrationDetails?.riskCategoryScore }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

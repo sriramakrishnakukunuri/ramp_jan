@@ -30,6 +30,7 @@
         "datatables.net-responsive-dt": "^2.3.0",
         "file-saver": "^2.0.5",
         "jquery": "^3.6.0",
+        "mat-select-filter": "^2.4.1",
         "moment": "^2.29.4",
         "ngx-toastr": "^14.3.0",
         "rxjs": "~7.5.0",

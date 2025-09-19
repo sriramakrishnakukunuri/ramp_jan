@@ -127,6 +127,33 @@ export const APIS = {
     tihcl_uploads:{
         
        globalUpload: API_BASE_URL + '/files/upload',    
+    },
+    sanctionedAmount:{
+        preliminary:{
+            getData: API_BASE_URL + '/registrations/usage/id/',
+
+        },
+        unitVisit:{
+            getData: API_BASE_URL + '/unitvisit/fetch/registration/'
+        },
+        diagnosticReport:{
+            getData: API_BASE_URL + '/diagnostic-reports/getBy/usage/'
+        },
+        dicConsent:{
+            getData: API_BASE_URL + '/registrations/usage/id/'
+        },
+        rampChecklist:{
+            getData: API_BASE_URL + '/rampchecklist/fetch/registration/id/'
+        },
+        primaryLender:{
+            getData: API_BASE_URL + '/registrations/usage/id/'
+        },
+        sanctionDetails:{
+            getData: API_BASE_URL + '/registrations/usage/id/'
+        },
+        disbursementDetails:{
+            getData: API_BASE_URL + '/disbursement/details/registration/id/'
+        }
     }
 
 }

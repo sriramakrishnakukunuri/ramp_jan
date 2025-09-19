@@ -34,6 +34,7 @@ import { PendingApplicationExecutiveComponent } from './tihcl-executive/pending-
 import { ExecutiveWorkflowComponent } from './tihcl-executive/executive-workflow/executive-workflow.component';
 import { DicApprovalComponent } from './tihcl-dic/dic-approval/dic-approval.component';
 import { ViewApplicationsComponent } from './tihcl-coi/view-applications/view-applications.component';
+import { SanctionedAmountComponent } from './sanctioned-amount/sanctioned-amount.component';
 
 const routes: Routes = [
     {
@@ -197,6 +198,12 @@ const routes: Routes = [
         component: NewApplicationExecutiveComponent,
         canActivate: [AuthGuard],
         data: { roles: [Role.TIHCL_EXECUTOR] }
+    },
+    {
+        path: 'sanctioned-amount',
+        component: SanctionedAmountComponent,
+        canActivate: [AuthGuard],
+        data: { roles: [Role.TIHCL_MANAGER,Role.TIHCL_EXECUTOR] }
     },
     {
         path: 'pending-application',

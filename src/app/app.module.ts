@@ -62,9 +62,18 @@ import { MultiLevelDropdownComponent } from './seperate-components/multiselect-d
 import { DicApprovalComponent } from './tihcl-dic/dic-approval/dic-approval.component';
 import { ViewApplicationsComponent } from './tihcl-coi/view-applications/view-applications.component';
 import { LoaderComponent } from './common_components/loader/loader.component';
-
+import { SanctionedAmountComponent } from './sanctioned-amount/sanctioned-amount.component';
+import { MatSelectFilterModule } from 'mat-select-filter';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { MatOptionModule } from '@angular/material/core';
+import { SAPreliminaryComponent } from './PIA/sa-preliminary/sa-preliminary.component';
 @NgModule({
     imports: [
+        MatSelectModule,
+    MatOptionModule,
+        MatSelectFilterModule,
+        MatFormFieldModule,
         BrowserModule,
         ReactiveFormsModule,
         HttpClientModule,
@@ -112,6 +121,8 @@ import { LoaderComponent } from './common_components/loader/loader.component';
         DiConcernLetterComponent, RampChecklistComponent, PrimaryNocComponent, SanctionedDetailsComponent,
         DisbursementDetailsComponent, PaginationComponent, MultiLevelDropdownComponent, DicApprovalComponent, ViewApplicationsComponent,
         LoaderComponent,
+        SanctionedAmountComponent,
+        SAPreliminaryComponent,
     ],
     exports:[
         LoaderComponent

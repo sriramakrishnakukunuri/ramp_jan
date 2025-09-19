@@ -1,0 +1,646 @@
+<main class="pt-80">
+    <section class="pt-3">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="row">
+                    <div class="col-lg-8"></div>
+                    <div class="col-lg-4">
+                        <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>Select Enterprise</mat-label>
+                            <mat-select [(ngModel)]="selectedEnterprise" (ngModelChange)="onEnterpriseChange($event)">
+                                <mat-select-filter [array]="enterpriseList" [displayMember]="'enterpriseName'"
+                                    (filteredReturn)="filteredEnterprise = $event">
+                                </mat-select-filter>
+                                <mat-option *ngFor="let question of filteredEnterprise"
+                                    [value]="question.registrationUsageId">
+                                    {{ question?.enterpriseName }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+            <div class="card mb-3">
+
+                <div class="card-header bg-theme text-white">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="mb-0 fw-600">Application Status</span>
+                        <div class="d-flex align-items-center ms-auto">
+                            <span class="mb-0 fw-600 me-4">Application No :
+                                {{apllictaionDataGlobal?.applicationNo}}</span>
+                            <span class="mb-0 fw-600 me-4">Name Of Unit :
+                                {{apllictaionDataGlobal?.enterpriseName}}</span>
+                            <!-- <span class="mb-0 fw-600 "> District : {{apllictaionDataGlobal?.district}}</span> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Tabs start here -->
+        <div class="card-body">
+            <!-- <div class="row mb-3">
+                        <div class="col-12 col-sm-12 col-md-2 col-lg-2">
+                            <div class="card bg-primary text-white text-center shadow-none  p-2"  (click)="onTabChange('APPLICATIONS_RECEIVED')">
+                                <label class="mb-2 fw-600">Applications Received </label>
+                                <p class="fw-bold fs-6 mb-0 ">{{PrigramSummaryData?.applicationsReceived || 0}}</p>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-3 col-lg-3">
+                            <div class="card bg-warning text-white text-center shadow-none  p-2" (click)="onTabChange('APPLICATIONS_UNDER_PROCESS')">
+                                <label class="mb-2 fw-600" >Applications Under Process</label>
+                                <p class="fw-bold fs-6 mb-0 fw-600">{{PrigramSummaryData?.applicationsUnderProcess || 0}}</p>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-2 col-lg-2">
+                            <div class="card text-white text-center shadow-none pt-2 pb-2" style="background-color: chocolate;" (click)="onTabChange('APPLICATIONS_WITH_DIC')">
+                                <label class="mb-2 fw-600">Applications With DIC </label>
+                                <p class="fw-bold fs-6 mb-0">{{PrigramSummaryData?.applicationsWithDic || 0}}</p>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-2 col-lg-2 ">
+                            <div class="card  bg-success  text-white text-center shadow-none pt-2 pb-2" (click)="onTabChange('APPLICATIONS_SANCTIONED')">
+                                <label class="mb-2 fw-600">Applications Sanctioned </label>
+                                <p class="fw-bold fs-6 mb-0">{{PrigramSummaryData?.applicationsLoanSanctioned || 0}}</p>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-3 col-lg-3 ">
+                            <div class="card bg-danger text-white text-center shadow-none  p-2" (click)="onTabChange('APPLICATIONS_NOT_CONSIDERED')">
+                                <label class="mb-2 fw-600">Applications Not Considered </label>
+                                <p class="fw-bold fs-6 mb-0">{{PrigramSummaryData?.applicationsNotConsidered || 0}}</p>
+                            </div>
+                        </div>
+
+                    </div> -->
+            <nav>
+                <div class="nav nav-tabs mb-3" id="nav-tab" role="tablist">
+
+                    <button [ngClass]="{ 'active':activeTab==='APPLICATIONS_RECEIVED'}"
+                        (click)="onTabChange('APPLICATIONS_RECEIVED')" class="nav-link active" id="nav-home-tab"
+                        data-bs-toggle="tab" data-bs-target="#APPLICATIONS_RECEIVED" type="button" role="tab"
+                        aria-controls="nav-home" aria-selected="true"> Preliminary Assessment </button>
+                    <button [ngClass]="{ 'active':activeTab==='APPLICATIONS_UNDER_PROCESS'}"
+                        (click)="onTabChange('APPLICATIONS_UNDER_PROCESS')" class="nav-link" id="nav-profile-tab"
+                        data-bs-toggle="tab" data-bs-target="#APPLICATIONS_RECEIVED" type="button" role="tab"
+                        aria-controls="nav-profile" aria-selected="false"> Unit Visit Details </button>
+                    <button [ngClass]="{ 'active':activeTab==='APPLICATIONS_WITH_DIC'}"
+                        (click)="onTabChange('APPLICATIONS_WITH_DIC')" class="nav-link" id="nav-profile-tab"
+                        data-bs-toggle="tab" data-bs-target="#APPLICATIONS_RECEIVED" type="button" role="tab"
+                        aria-controls="nav-profile" aria-selected="false"> Diagnostic Report </button>
+                    <button [ngClass]="{ 'active':activeTab==='APPLICATIONS_SANCTIONED'}"
+                        (click)="onTabChange('APPLICATIONS_SANCTIONED')" class="nav-link" id="nav-profile-tab"
+                        data-bs-toggle="tab" data-bs-target="#APPLICATIONS_RECEIVED" type="button" role="tab"
+                        aria-controls="nav-profile" aria-selected="false"> DIC Consent letter</button>
+                    <button [ngClass]="{ 'active':activeTab==='APPLICATIONS_NOT_CONSIDERED'}"
+                        (click)="onTabChange('APPLICATIONS_NOT_CONSIDERED')" class="nav-link active" id="nav-home-tab"
+                        data-bs-toggle="tab" data-bs-target="#APPLICATIONS_RECEIVED" type="button" role="tab"
+                        aria-controls="nav-home" aria-selected="true"> Ramp Checklist & Credit Appraisal </button>
+                    <button [ngClass]="{ 'active':activeTab==='PRIMARY_LENDER_NOC'}"
+                        (click)="onTabChange('PRIMARY_LENDER_NOC')" class="nav-link" id="nav-primary-lender-noc-tab"
+                        data-bs-toggle="tab" data-bs-target="#PRIMARY_LENDER_NOC" type="button" role="tab"
+                        aria-controls="nav-primary-lender-noc" aria-selected="false">Primary Lender NOC</button>
+                    <button [ngClass]="{ 'active':activeTab==='SANCTIONED_DETAILS'}"
+                        (click)="onTabChange('SANCTIONED_DETAILS')" class="nav-link" id="nav-sanctioned-details-tab"
+                        data-bs-toggle="tab" data-bs-target="#SANCTIONED_DETAILS" type="button" role="tab"
+                        aria-controls="nav-sanctioned-details" aria-selected="false">Sanctioned Details</button>
+                    <button [ngClass]="{ 'active':activeTab==='DISBURSEMENT_DETAILS'}"
+                        (click)="onTabChange('DISBURSEMENT_DETAILS')" class="nav-link" id="nav-disbursement-details-tab"
+                        data-bs-toggle="tab" data-bs-target="#DISBURSEMENT_DETAILS" type="button" role="tab"
+                        aria-controls="nav-disbursement-details" aria-selected="false">Disbursement Details</button>
+                </div>
+            </nav>
+            <div class="tab-content border bg-light" id="nav-tabContent">
+                <div *ngIf="activeTab === 'APPLICATIONS_RECEIVED'">
+                    <app-sa-preliminary [selectedEnterprise]="selectedEnterprise"></app-sa-preliminary>
+                </div>
+                <div *ngIf="activeTab === 'APPLICATIONS_UNDER_PROCESS'">
+                    <!-- <p class="p-3">Unit Visit Details tab works!</p> -->
+
+
+                    <div class="container my-4">
+                        <div class="card shadow-sm border-0">
+                            <div class="card-header bg-primary text-white">
+                                <h5 class="mb-0 fw-bold">Unit Visit Details</h5>
+                            </div>
+                            <div class="card-body">
+                                <!-- Visit Person Details -->
+                                <div class="mb-3">
+                                    <h6 class="fw-bold">Visit Person Details</h6>
+                                    <div *ngIf="UnitDetails?.visitorsDetailsRequests?.length > 0; else noVisitors">
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item"
+                                                *ngFor="let visitor of UnitDetails?.visitorsDetailsRequests">
+                                                {{ visitor.name }} - {{ visitor.designation }}
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <ng-template #noVisitors>
+                                        <p class="text-muted mb-0">No visitor details available</p>
+                                    </ng-template>
+                                </div>
+
+                                <!-- Date & Time of Visit -->
+                                <div>
+                                    <h6 class="fw-bold">Date & Time of Visit</h6>
+                                    <p class="mb-1"><span class="fw-semibold">Date:</span> {{ UnitDetails?.dateOfVisit
+                                        }}</p>
+                                    <p class="mb-0"><span class="fw-semibold">Time:</span> {{ UnitDetails?.timeOfVisit
+                                        }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+
+
+
+
+                </div>
+                <div *ngIf="activeTab === 'APPLICATIONS_WITH_DIC'">
+                    <div class="container my-4" *ngIf="DiagnosticDetails?.length > 0">
+                        <div class="card shadow-sm border-0">
+                            <div class="card-header bg-primary text-white">
+                                <h5 class="mb-0 fw-bold">Diagnostic Report</h5>
+                            </div>
+                            <div class="card-body">
+                                <!-- Observations -->
+                                <div class="mb-3">
+                                    <h6 class="fw-bold">Observations</h6>
+                                    <p class="text-muted mb-0">{{ DiagnosticDetails[0]?.observations || 'No observations
+                                        available' }}</p>
+                                </div>
+
+                                <!-- Diagnostic Report PDF -->
+                                <div>
+                                    <h6 class="fw-bold">Uploaded Diagnostic Report</h6>
+                                    <button class="btn btn-outline-primary btn-sm" (click)="openCreditPreviewModal()">
+                                        <i class="fa fa-eye me-2"></i> View Report
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container my-4" *ngIf="DiagnosticDetails?.length === 0">
+                        <div class="text-center text-muted py-5">
+                            Data not available
+                        </div>
+                    </div>
+
+
+
+                </div>
+                <div *ngIf="activeTab === 'APPLICATIONS_SANCTIONED'">
+                    <div class="container my-4">
+                        <div class="card shadow-sm border-0">
+                            <div class="card-header bg-primary text-white">
+                                <h5 class="mb-0 fw-bold">DIC NOC File</h5>
+                            </div>
+
+                            <div class="card-body" *ngIf="dicDataLIst?.length > 0; else noData">
+                                <!-- File Preview -->
+                                <div *ngIf="dicDataLIst[0]?.dicNocFilePath; else noFile">
+                                    <iframe [src]="getSafePreviewUrl2(dicDataLIst[0]?.dicNocFilePath)" width="100%"
+                                        height="600px" frameborder="0" class="border rounded">
+                                    </iframe>
+                                </div>
+
+                                <!-- No File -->
+                                <ng-template #noFile>
+                                    <p class="text-center text-muted my-4">File not available</p>
+                                </ng-template>
+                            </div>
+
+                            <!-- No Data -->
+                            <ng-template #noData>
+                                <div class="card-body">
+                                    <p class="text-center text-muted my-4">Data not available</p>
+                                </div>
+                            </ng-template>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div *ngIf="activeTab === 'APPLICATIONS_NOT_CONSIDERED'">
+
+
+                    <div class="container my-4" *ngIf="rampCheckLIst">
+                        <div class="card shadow-sm border-0">
+                            <div class="card-header bg-primary text-white">
+                                <h5 class="mb-0 fw-bold">Ramp Check Details</h5>
+                            </div>
+                            <div class="card-body">
+                                <!-- Boolean Fields -->
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item">
+                                                Borrower Identified:
+                                                <span
+                                                    [ngClass]="rampCheckLIst.isBorrowerIdentified ? 'text-success fw-bold' : 'text-danger'">
+                                                    {{ rampCheckLIst.isBorrowerIdentified ? 'Yes' : 'No' }}
+                                                </span>
+                                            </li>
+                                            <li class="list-group-item">
+                                                Stress:
+                                                <span
+                                                    [ngClass]="rampCheckLIst.isStress ? 'text-success fw-bold' : 'text-danger'">
+                                                    {{ rampCheckLIst.isStress ? 'Yes' : 'No' }}
+                                                </span>
+                                            </li>
+                                            <li class="list-group-item">
+                                                KYC Verified:
+                                                <span
+                                                    [ngClass]="rampCheckLIst.isKycDocumentVerified ? 'text-success fw-bold' : 'text-danger'">
+                                                    {{ rampCheckLIst.isKycDocumentVerified ? 'Yes' : 'No' }}
+                                                </span>
+                                            </li>
+                                            <li class="list-group-item">
+                                                Technical Feasibility:
+                                                <span
+                                                    [ngClass]="rampCheckLIst.isTechnicalFeasibility ? 'text-success fw-bold' : 'text-danger'">
+                                                    {{ rampCheckLIst.isTechnicalFeasibility ? 'Yes' : 'No' }}
+                                                </span>
+                                            </li>
+                                            <li class="list-group-item">
+                                                Financial Viability:
+                                                <span
+                                                    [ngClass]="rampCheckLIst.isEstablishingFinancialViability ? 'text-success fw-bold' : 'text-danger'">
+                                                    {{ rampCheckLIst.isEstablishingFinancialViability ? 'Yes' : 'No' }}
+                                                </span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item">
+                                                Availability of Security:
+                                                <span
+                                                    [ngClass]="rampCheckLIst.isAvailabilityOfSecurity ? 'text-success fw-bold' : 'text-danger'">
+                                                    {{ rampCheckLIst.isAvailabilityOfSecurity ? 'Yes' : 'No' }}
+                                                </span>
+                                            </li>
+                                            <li class="list-group-item">
+                                                Capacity Utilization:
+                                                <span
+                                                    [ngClass]="rampCheckLIst.isCapacityUtilization ? 'text-success fw-bold' : 'text-danger'">
+                                                    {{ rampCheckLIst.isCapacityUtilization ? 'Yes' : 'No' }}
+                                                </span>
+                                            </li>
+                                            <li class="list-group-item">
+                                                Skilled Manpower:
+                                                <span
+                                                    [ngClass]="rampCheckLIst.isAvailabilityOfSkilledManpower ? 'text-success fw-bold' : 'text-danger'">
+                                                    {{ rampCheckLIst.isAvailabilityOfSkilledManpower ? 'Yes' : 'No' }}
+                                                </span>
+                                            </li>
+                                            <li class="list-group-item">
+                                                Pollution Control Permissions:
+                                                <span
+                                                    [ngClass]="rampCheckLIst.isPollutionControlPermissions ? 'text-success fw-bold' : 'text-danger'">
+                                                    {{ rampCheckLIst.isPollutionControlPermissions ? 'Yes' : 'No' }}
+                                                </span>
+                                            </li>
+                                            <li class="list-group-item">
+                                                Cleared From Risk Angle:
+                                                <span
+                                                    [ngClass]="rampCheckLIst.isProposalClearedFromRiskAngle ? 'text-success fw-bold' : 'text-danger'">
+                                                    {{ rampCheckLIst.isProposalClearedFromRiskAngle ? 'Yes' : 'No' }}
+                                                </span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <!-- File Preview Button -->
+                                <div class="mt-4">
+                                    <h6 class="fw-bold">Credit Appraisal Document</h6>
+                                    <div *ngIf="rampCheckLIst?.creditApprasialPath; else noCreditFile">
+                                        <button class="btn btn-outline-primary btn-sm"
+                                            (click)="openCreditPreviewModal3()">
+                                            <i class="fa fa-eye me-2"></i> View Document
+                                        </button>
+                                    </div>
+                                    <ng-template #noCreditFile>
+                                        <p class="text-muted mb-0">File not available</p>
+                                    </ng-template>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div *ngIf="activeTab === 'PRIMARY_LENDER_NOC'">
+                    <div class="container my-4">
+                        <div class="card shadow-sm border-0">
+                            <div class="card-header bg-primary text-white">
+                                <h5 class="mb-0 fw-bold">Primary Lender NOC</h5>
+                            </div>
+                            <div class="card-body" *ngIf="primaryLenderNoc?.primaryLenderNocFilePath; else noNocFile">
+                                <iframe [src]="getSafePreviewUrl2(primaryLenderNoc?.primaryLenderNocFilePath)" width="100%" height="600px" frameborder="0" class="border rounded"></iframe>
+                            </div>
+                            <ng-template #noNocFile>
+                                <p class="text-center text-muted my-4">NOC file not available</p>
+                            </ng-template>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="activeTab === 'SANCTIONED_DETAILS'">
+                    <div class="card shadow-sm mt-3">
+  <div class="card-header bg-primary text-white">
+    <h5 class="mb-0">Security Details</h5>
+  </div>
+  <div class="card-body">
+    <table class="table table-bordered table-hover">
+      <tbody>
+        <tr>
+          <th>Security Description</th>
+          <td>{{ sanctionList?.securityDescription || 'N/A' }}</td>
+        </tr>
+        <tr>
+          <th>Security Value</th>
+          <td>{{ sanctionList?.securityValue || 'N/A' }}</td>
+        </tr>
+        <tr>
+          <th>Security Type</th>
+          <td>{{ sanctionList?.securityType || 'N/A' }}</td>
+        </tr>
+        <tr>
+          <th>Product Type</th>
+          <td>{{ sanctionList?.productType || 'N/A' }}</td>
+        </tr>
+        <tr>
+          <th>Remarks</th>
+          <td>{{ sanctionList?.remarks || 'N/A' }}</td>
+        </tr>
+        <tr>
+          <th>Sanctioned Date</th>
+          <td>{{ sanctionList?.sanctionedDate | date: 'mediumDate' }}</td>
+        </tr>
+        <tr>
+          <th>Sanctioned Amount</th>
+          <td>{{ sanctionList?.sanctionedAmount }}</td>
+        </tr>
+        <tr>
+          <th>Rate of Interest</th>
+          <td>{{ sanctionList?.roi }} %</td>
+        </tr>
+        <tr>
+          <th>Tenor</th>
+          <td>{{ sanctionList?.tenor }} months</td>
+        </tr>
+        <tr>
+          <th>Moratorium Period</th>
+          <td>{{ sanctionList?.moratoriumPeriod }} months</td>
+        </tr>
+        <tr>
+          <th>DSRA Amount</th>
+          <td>{{ sanctionList?.dsraAmount }}</td>
+        </tr>
+        <tr>
+          <th>Sanction Letter</th>
+          <td>
+            <button class="btn btn-outline-primary btn-sm"
+                    (click)="openSanctionLetter(sanctionList?.sanctionLetterPath)">
+              <i class="bi bi-eye"></i> View File
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+
+
+
+
+
+                </div>
+                <div *ngIf="activeTab === 'DISBURSEMENT_DETAILS'">
+                    <div class="card shadow-sm mt-3">
+  <div class="card-header bg-success text-white">
+    <h5 class="mb-0">Disbursement Details</h5>
+  </div>
+  <div class="card-body">
+
+    <!-- If no data available -->
+    <div *ngIf="!disburseList || disburseList.length === 0" class="text-center text-muted p-4">
+      No Data Available
+    </div>
+
+    <!-- If data available -->
+    <div *ngIf="disburseList && disburseList.length > 0">
+
+      <table class="table table-bordered table-striped">
+        <tbody>
+          <tr>
+            <th>Total Sanctioned Amount</th>
+            <td>{{ disburseList[0]?.totalSanctionedAmount || 'N/A' }}</td>
+          </tr>
+          <tr>
+            <th>Total Disbursed Amount</th>
+            <td>{{ disburseList[0]?.totalDisbursedAmount || 'N/A' }}</td>
+          </tr>
+          <tr>
+            <th>Disbursement Date</th>
+            <td>{{ disburseList[0]?.disbursementDate | date:'dd/MM/yyyy' }}</td>
+          </tr>
+          <tr>
+            <th>TG-Ipass</th>
+            <td>{{ disburseList[0]?.tgIpass ? 'Applicable' : 'Not Applicable' }}</td>
+          </tr>
+          <tr>
+            <th>ROC Filing</th>
+            <td>{{ disburseList[0]?.rocFiling ? 'Applicable' : 'Not Applicable' }}</td>
+          </tr>
+          <tr class="table-secondary">
+            <th colspan="2" class="text-center">Processing Fee Details</th>
+          </tr>
+          <tr>
+            <th>Processing Fee Amount</th>
+            <td>{{ disburseList[0]?.processingFeeAmount || 'N/A' }}</td>
+          </tr>
+          <tr>
+            <th>Processing GST Amount</th>
+            <td>{{ disburseList[0]?.processingGstAmount || 'N/A' }}</td>
+          </tr>
+          <tr>
+            <th>Processing Fee Collected</th>
+            <td>{{ disburseList[0]?.processingFeeCollected || 'N/A' }}</td>
+          </tr>
+          <tr>
+            <th>Processing Fee Collected Date</th>
+            <td>{{ disburseList[0]?.processingFeeCollectedDate | date:'dd/MM/yyyy' }}</td>
+          </tr>
+          <tr>
+            <th>Remarks</th>
+            <td>{{ disburseList[0]?.remarks || 'N/A' }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Bank Details -->
+      <div class="mt-4">
+        <h6 class="fw-bold">Bank Details</h6>
+        <table class="table table-bordered table-hover">
+          <thead class="table-light">
+            <tr>
+              <th>S.No</th>
+              <th>Actions</th>
+              <th>Bank Name</th>
+              <th>IFSC Code</th>
+              <th>Account Name</th>
+              <th>Account Number</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let bank of disburseList[0]?.bankDetails; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td>
+                <button class="btn btn-sm btn-outline-primary me-1"><i class="bi bi-pencil"></i></button>
+                <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
+              </td>
+              <td>{{ bank.bankName }}</td>
+              <td>{{ bank.ifscCode }}</td>
+              <td>{{ bank.accountName }}</td>
+              <td>{{ bank.accountNumber }}</td>
+            </tr>
+            <tr *ngIf="!disburseList[0]?.bankDetails?.length">
+              <td colspan="6" class="text-center text-muted">No Bank Details Available</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Disbursement History -->
+      <div class="mt-4">
+        <h6 class="fw-bold">Disbursement History</h6>
+        <table class="table table-bordered table-hover">
+          <thead class="table-light">
+            <tr>
+              <th>S.No</th>
+              <th>Actions</th>
+              <th>Date</th>
+              <th>Amount</th>
+              <th>Details</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let dis of disburseList[0]?.disbursementHistory; let j = index">
+              <td>{{ j + 1 }}</td>
+              <td>
+                <button class="btn btn-sm btn-outline-primary me-1"><i class="bi bi-pencil"></i></button>
+                <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
+              </td>
+              <td>{{ dis.date | date:'dd/MM/yyyy' }}</td>
+              <td>{{ dis.amount }}</td>
+              <td>{{ dis.details }}</td>
+            </tr>
+            <tr *ngIf="!disburseList[0]?.disbursementHistory?.length">
+              <td colspan="5" class="text-center text-muted">No Disbursement History Available</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+    </section>
+</main>
+
+<!-- Unique Modal for Sanction Letter Preview -->
+<div class="modal fade" id="sanctionLetterModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bg-dark text-white">
+        <h5 class="modal-title">Sanction Letter Preview</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body text-center">
+        <ng-container *ngIf="sanctionLetterUrl">
+          <!-- Check if file is image -->
+          <img *ngIf="isImageFile(sanctionLetterUrl)" 
+               [src]="sanctionLetterUrl" 
+               alt="Sanction Letter" class="img-fluid rounded shadow">
+
+          <!-- Check if file is PDF -->
+          <iframe *ngIf="isPdfFile(sanctionLetterUrl)" 
+                  [src]="sanctionLetterUrl" 
+                  width="100%" height="600px" class="border rounded"></iframe>
+        </ng-container>
+        <div *ngIf="!sanctionLetterUrl" class="text-muted">
+          File not available
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" [ngClass]="{ 'show d-block': showCreditPreviewModal3 }" tabindex="-1">
+
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">File Preview</h5>
+                <button type="button" class="btn-close" (click)="closeCreditPreviewModal3()"></button>
+            </div>
+            <div class="modal-body text-center">
+                <img [hidden]="!isImageFile(rampCheckLIst?.creditApprasialPath)"
+                    [src]="rampCheckLIst.creditApprasialPath" alt="Preview" style="max-width:100%;max-height:400px;">
+
+                <iframe [hidden]="isImageFile(rampCheckLIst?.creditApprasialPath)" [src]="safePreviewUrl3"
+                    style="width:100%;height:400px;" frameborder="0"></iframe>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="closeCreditPreviewModal3()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="modal fade" [ngClass]="{ 'show d-block': showCreditPreviewModal }" tabindex="-1">
+
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">File Preview</h5>
+                <button type="button" class="btn-close" (click)="closeCreditPreviewModal()"></button>
+            </div>
+            <div class="modal-body text-center">
+                <img [hidden]="!isImageFile(DiagnosticDetails[0]?.urlForDiagnosticFile)"
+                    [src]="DiagnosticDetails[0]?.urlForDiagnosticFile" alt="Preview"
+                    style="max-width:100%;max-height:400px;">
+
+                <iframe [hidden]="isImageFile(DiagnosticDetails[0]?.urlForDiagnosticFile)" [src]="safePreviewUrl"
+                    style="width:100%;height:400px;" frameborder="0"></iframe>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="closeCreditPreviewModal()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
