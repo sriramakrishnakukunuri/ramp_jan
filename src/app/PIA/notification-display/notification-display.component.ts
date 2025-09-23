@@ -14,7 +14,9 @@ export class NotificationDisplayComponent implements OnInit {
   notificationCount: number = 0;
   panelOpen = false;
 
-  constructor(private commonService: CommonServiceService,private router: Router) { }
+  constructor(private commonService: CommonServiceService,
+    private router: Router,
+  ) { }
 
   ngOnInit(): void {
     this.userDetails = JSON.parse(sessionStorage.getItem('user') || '{}');
@@ -83,7 +85,9 @@ togglePanel() {
   }
   openNotificationDetail(notification: any) {
     // Add Router to constructor
-  this.router.navigate(['/notification-viewer-update',]);
-  // this.router.navigate(['/collage-home'])
-  }
+    this.panelOpen = false;
+  this.router.navigate(['/notification-viewer-update']).then(() => {
+    this.commonService.triggerRefresh(); // trigger refresh after navigation
+  });
+}
 }

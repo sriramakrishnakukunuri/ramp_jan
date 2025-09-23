@@ -257,23 +257,36 @@ export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
       { 
         title: 'Actions',
         data: null,
-        render: function(data:any, type:any, row:any,meta: any) {
-          // console.log(data,row,meta)
-            // if (this.loginsessionDetails?.userRole == 'AGENCY_MANAGER' || this.loginsessionDetails?.userRole == 'AGENCY_EXECUTOR') {
-            //  <button type="button" class="btn btn-default btn-sm text-danger editable-btn ${row.status=='Program Scheduled' ? '' : 'isdisable'}" data-id="${row.id}" title="Edit"><span class="bi bi-pencil"></span></button>
-            // <button type="button" class="btn btn-default btn-sm text-danger overDue-btn ${!row.overdue ? 'isdisable' : ''}" data-id="${row.id}" title="Over-due"><span class="bi bi-alarm-fill"></span></button>
-                return `  <button type="button" class="btn btn-default btn-sm text-lime-green edit-btn" 
-                title="Sessions" data-bs-toggle="modal" data-bs-target="#viewModal" 
-                data-id="${row.id}" title="View">
-                <span class="bi bi-eye"></span>
-              </button>
-                <button type="button" class="btn btn-default btn-sm text-danger editable-btn"  data-id="${row.id}" title="Edit"><span class="bi bi-pencil"></span></button>
-             
-             
-              `;
-            // }
-            // return '';
-        },
+  render: function(data:any, type:any, row:any, meta:any) {
+    const today = new Date();
+    const fiveDaysAgo = new Date(today);
+    fiveDaysAgo.setDate(today.getDate() - 5);
+
+    function parseDateOnly(dateStr: string): Date | null {
+      if (!dateStr) return null;
+      const [day, month, year] = dateStr.split('-').map(Number);
+      return new Date(year, month - 1, day); // dd-MM-yyyy → Date
+    }
+
+    const startDate = parseDateOnly(row.startDate);
+    const isEditDisabled = startDate && startDate <= fiveDaysAgo;
+
+    console.log(row.startDate, startDate, isEditDisabled, 'iseditdisable');
+
+    return `
+      <button type="button" class="btn btn-default btn-sm text-lime-green edit-btn" 
+        title="Sessions" data-bs-toggle="modal" data-bs-target="#viewModal" 
+        data-id="${row.id}">
+        <span class="bi bi-eye"></span>
+      </button>
+      <button type="button" 
+        class="btn btn-default btn-sm text-danger editable-btn"
+        data-id="${row.id}" title="Edit" 
+        ${isEditDisabled ? 'disabled' : ''}>
+        <span class="bi bi-pencil"></span>
+      </button>
+    `;
+  },
         orderable: false,
         className: 'text-center'
     },
@@ -418,10 +431,14 @@ export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
       }
       self.sessionDetails(rowData); // Call your method with proper data
     });
-    $('#view-table-program').on('click', '.editable-btn', (event:any) => {
-      const rowData = self.dataTable.row($(event.currentTarget).parents('tr')).data();
-      self.editProgram(rowData); // Call your method with proper data
-    });
+   $('#view-table-program').on('click', '.editable-btn', (event:any) => {
+  if ($(event.currentTarget).prop('disabled')) {
+    return; // don’t execute editProgram if disabled
+  }
+  const rowData = self.dataTable.row($(event.currentTarget).parents('tr')).data();
+  self.editProgram(rowData);
+});
+
    $('#view-table-program').on('click', '.overDue-btn', (event:any) => {
       const rowData = self.dataTable.row($(event.currentTarget).parents('tr')).data();
       self.OverDue(rowData);

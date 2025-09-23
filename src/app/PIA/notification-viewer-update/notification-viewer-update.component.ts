@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,OnChanges } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CommonServiceService } from '@app/_services/common-service.service';
 import { APIS } from '@app/constants/constants';
@@ -8,6 +8,8 @@ import DataTable from 'datatables.net-dt';
 import 'datatables.net-buttons-dt';
 import 'datatables.net-responsive-dt';
 declare var bootstrap: any;
+import { Router, NavigationEnd } from '@angular/router'; // Import Router and NavigationEnd
+import { LoaderService } from '@app/common_components/loader-service.service';
 
 interface NotificationData {
   id: number;
@@ -30,13 +32,16 @@ interface NotificationData {
   templateUrl: './notification-viewer-update.component.html',
   styleUrls: ['./notification-viewer-update.component.css']
 })
-export class NotificationViewerUpdateComponent implements OnInit {
+export class NotificationViewerUpdateComponent implements OnInit ,OnChanges{
   activeNotifications: any = [];
   closedNotifications: any = [];
   loading = false;
   error: string | null = null;
 
-  constructor(private commonService: CommonServiceService, private toastrService: ToastrService,) {}
+  constructor(private commonService: CommonServiceService,
+     private toastrService: ToastrService,private router: Router,
+    private loader:LoaderService
+    ) {}
   userDetails: any;
   ngOnInit() {
     this.formDeatials()
@@ -46,10 +51,31 @@ export class NotificationViewerUpdateComponent implements OnInit {
       // this.getNotifications();
       this.loadNotifications();
     }
+    // Listen for refresh events from service
+  this.commonService.refresh$.subscribe(() => {
+    this.loadNotifications();
+  });
+
+     // Listen for navigation events to reload notifications
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.loadNotifications();
+      }
+    });
     
   }
 
+  ngOnChanges() {
+      // Listen for navigation events to reload notifications
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.loadNotifications();
+      }
+    });
+  }
+
   loadNotifications() {
+    this.loader.show();
     this.loading = true;
     this.error = null;
      this.activeNotifications=[]
@@ -62,19 +88,22 @@ export class NotificationViewerUpdateComponent implements OnInit {
             url=APIS.notificationDisplay.getNotificationByCallCenter+this.userDetails.userId;
         }
     
-    this.commonService.getDataByUrl(url+'?statuses=OPEN&statuses=IN_PROGRESS').subscribe({
+    this.commonService.getDataByUrl(url+'?statuses=OPEN&statuses=IN_PROGRESS&statuses=Completed').subscribe({
       next: (data) => {
+        this.loader.hide();
          this.activeNotifications=data
         //  this.reinitializeDataTable();
         this.loading = false;
       },
       error: (err) => {
+        this.loader.hide();
+
         this.error = 'Failed to load notifications';
         this.loading = false;
         console.error('Error loading notifications:', err);
       }
     });
-     this.commonService.getDataByUrl(url+'?statuses=COMPLETED&statuses=CLOSED').subscribe({
+     this.commonService.getDataByUrl(url+'?statuses=CLOSED').subscribe({
       next: (data) => {
        
         this.closedNotifications=data

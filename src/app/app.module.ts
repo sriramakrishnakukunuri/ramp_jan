@@ -87,7 +87,7 @@ import { NonTrainingTihclComponent } from './PIA/non-training-tihcl/non-training
 import { QuestionAssignmentComponent } from './PIA/question-assignment/question-assignment.component';
 import { NotificationDisplayComponent } from './PIA/notification-display/notification-display.component';
 import { NotificationViewerUpdateComponent } from './PIA/notification-viewer-update/notification-viewer-update.component';
-
+import { LoaderComponent } from './common_components/loader/loader.component';
 @NgModule({
     imports: [
         MaterialModule,
@@ -179,10 +179,13 @@ import { NotificationViewerUpdateComponent } from './PIA/notification-viewer-upd
         NonTrainingTihclComponent,
         QuestionAssignmentComponent,
         NotificationDisplayComponent,
-        NotificationViewerUpdateComponent
+        NotificationViewerUpdateComponent,
+        LoaderComponent
 
     ],
-    exports:[MaterialModule],
+    exports:[MaterialModule,
+        LoaderComponent
+    ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
