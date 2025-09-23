@@ -290,7 +290,7 @@ showCreditPreviewModal3 = false;
   
   safePreviewUrl3: any;
   openCreditPreviewModal3() {
-    const path = this.DiagnosticDetails[0]?.urlForDiagnosticFile;
+    const path = this.rampCheckLIst?.creditApprasialPath
   
     if (path) {
       // only create SafeResourceUrl once
@@ -444,5 +444,59 @@ isSanctionOtherFile(filePath: any): boolean {
   const url = filePath.changingThisBreaksApplicationSecurity || filePath;
   return !this.isSanctionImageFile(filePath) && !this.isSanctionPdfFile(filePath) && !this.isSanctionVideoFile(filePath);
 }
+
+
+
+// Common file preview variables
+showCommonFilePreviewModal = false;
+commonFilePreviewUrl: SafeResourceUrl | null = null;
+
+// Open file preview modal (pass file path)
+openCommonFilePreview(path: string | null) {
+  if (path) {
+    // If path is relative, prepend S3 base URL
+    const fullPath = path.startsWith('http') ? path : 'https://tihcl.s3.us-east-1.amazonaws.com' + path;
+    this.commonFilePreviewUrl = this.sanitizer.bypassSecurityTrustResourceUrl(fullPath);
+  } else {
+    this.commonFilePreviewUrl = null;
+  }
+  this.showCommonFilePreviewModal = true;
+}
+
+// Close file preview modal
+closeCommonFilePreview() {
+  this.showCommonFilePreviewModal = false;
+  this.commonFilePreviewUrl = null;
+}
+
+// Check if file is an image
+isCommonImageFile(filePath: string | SafeResourceUrl): boolean {
+  const url = typeof filePath === 'string' ? filePath : (filePath as any).changingThisBreaksApplicationSecurity || filePath;
+  return /\.(jpg|jpeg|png|gif|bmp|webp)$/i.test(url || '');
+}
+
+// Check if file is a PDF
+isCommonPdfFile(filePath: string | SafeResourceUrl): boolean {
+  const url = typeof filePath === 'string' ? filePath : (filePath as any).changingThisBreaksApplicationSecurity || filePath;
+  return /\.pdf$/i.test(url || '');
+}
+
+// Check if file is a video
+isCommonVideoFile(filePath: string | SafeResourceUrl): boolean {
+  const url = typeof filePath === 'string' ? filePath : (filePath as any).changingThisBreaksApplicationSecurity || filePath;
+  return /\.(mp4|webm|ogg)$/i.test(url || '');
+}
+
+// Check if file is a Word/Excel/Other document
+isCommonDocFile(filePath: string | SafeResourceUrl): boolean {
+  const url = typeof filePath === 'string' ? filePath : (filePath as any).changingThisBreaksApplicationSecurity || filePath;
+  return /\.(doc|docx|xls|xlsx|ppt|pptx)$/i.test(url || '');
+}
+
+// Check if file is other type (for download)
+isCommonOtherFile(filePath: string | SafeResourceUrl): boolean {
+  return !this.isCommonImageFile(filePath) && !this.isCommonPdfFile(filePath) && !this.isCommonVideoFile(filePath) && !this.isCommonDocFile(filePath);
+}
+
 
 }
