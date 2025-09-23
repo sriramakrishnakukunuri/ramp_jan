@@ -88,7 +88,7 @@ export class NotificationViewerUpdateComponent implements OnInit ,OnChanges{
             url=APIS.notificationDisplay.getNotificationByCallCenter+this.userDetails.userId;
         }
     
-    this.commonService.getDataByUrl(url+'?statuses=OPEN&statuses=IN_PROGRESS&statuses=Completed').subscribe({
+    this.commonService.getDataByUrl(url+'?statuses=OPEN&statuses=IN_PROGRESS&statuses=COMPLETED').subscribe({
       next: (data) => {
         this.loader.hide();
          this.activeNotifications=data
