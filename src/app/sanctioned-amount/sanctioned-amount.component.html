@@ -669,10 +669,10 @@
                         <div class="card-body text-center">
                             <div
                                 *ngIf="sanctionList?.sanctionLetterPath && sanctionList.sanctionLetterPath.trim().length > 0; else noLetter">
-                                <button class="btn btn-outline-primary btn-sm"
-                                    (click)="openSanctionLetterPreview(sanctionList?.sanctionLetterPath)">
-                                    <i class="bi bi-eye"></i> View File
-                                </button>
+                               <button class="btn btn-outline-primary btn-sm"
+                                (click)="openSanctionLetterPreview(sanctionList?.sanctionLetterPath)">
+                                <i class="bi bi-eye"></i> View File
+                            </button>
                                 <div class="text-muted mt-2">
                                     File: {{ sanctionList?.sanctionLetterPath?.split('/').pop() }}
                                 </div>
@@ -794,31 +794,7 @@
     </section>
 </main>
 
-<!-- Unique Modal for Sanction Letter Preview -->
-<div class="modal fade" id="sanctionLetterModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-xl modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header bg-dark text-white">
-                <h5 class="modal-title">Sanction Letter Preview</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body text-center">
-                <ng-container *ngIf="sanctionLetterUrl">
-                    <!-- Check if file is image -->
-                    <img *ngIf="isImageFile(sanctionLetterUrl)" [src]="sanctionLetterUrl" alt="Sanction Letter"
-                        class="img-fluid rounded shadow">
 
-                    <!-- Check if file is PDF -->
-                    <iframe *ngIf="isPdfFile(sanctionLetterUrl)" [src]="sanctionLetterUrl" width="100%" height="600px"
-                        class="border rounded"></iframe>
-                </ng-container>
-                <div *ngIf="!sanctionLetterUrl" class="text-muted">
-                    File not available
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
 
 <div class="modal fade" [ngClass]="{ 'show d-block': showCreditPreviewModal3 }" tabindex="-1">
@@ -883,21 +859,7 @@
 
 
 
-<div class="modal fade" [ngClass]="{ 'show d-block': showCreditPreviewModalP }" tabindex="-1">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Primary Lender NOC Preview</h5>
-                <button type="button" class="btn-close" (click)="closeCreditPreviewModal2()"></button>
-            </div>
-            <div class="modal-body text-center">
-                <img [hidden]="!isImageFile(primaryLenderNoc?.primaryLenderNocFilePath)"
-                    [src]="primaryLenderNoc?.primaryLenderNocFilePath" alt="Preview not Available"
-                    style="max-width:100%;max-height:400px;">
-                <iframe [hidden]="isImageFile(primaryLenderNoc?.primaryLenderNocFilePath)" [src]="safePreviewUrl"
-                    style="width:100%;height:400px;" frameborder="0"></iframe>
-            </div>
-            <div class="modal-footer">
+
 
 
 
@@ -926,42 +888,42 @@
 
 
                 <!-- Modal for Sanction Letter Preview -->
-                <div class="modal fade" [ngClass]="{ 'show d-block': showSanctionLetterModal }" tabindex="-1">
-                    <div class="modal-dialog modal-lg modal-dialog-centered">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">Sanction Letter Preview</h5>
-                                <button type="button" class="btn-close" (click)="closeSanctionLetterModal()"></button>
-                            </div>
-                            <div class="modal-body text-center">
-                                <ng-container *ngIf="sanctionLetterPreviewUrl">
-                                    <img *ngIf="isSanctionImageFile(sanctionLetterPreviewUrl)"
-                                        [src]="sanctionLetterPreviewUrl" alt="Sanction Letter"
-                                        class="img-fluid rounded shadow mb-3" style="max-width:100%;max-height:400px;">
-                                    <iframe *ngIf="isSanctionPdfFile(sanctionLetterPreviewUrl)"
-                                        [src]="sanctionLetterPreviewUrl" width="100%" height="600px"
-                                        class="border rounded"></iframe>
-                                    <video *ngIf="isSanctionVideoFile(sanctionLetterPreviewUrl)"
-                                        [src]="sanctionLetterPreviewUrl" controls class="w-100 mb-3"
-                                        style="max-height:400px;"></video>
-                                    <div *ngIf="isSanctionOtherFile(sanctionLetterPreviewUrl)">
-                                        <a [href]="sanctionLetterPreviewUrl" target="_blank"
-                                            class="btn btn-outline-primary">
-                                            <i class="bi bi-download me-2"></i>Download File
-                                        </a>
-                                    </div>
-                                </ng-container>
-                                <div *ngIf="!sanctionLetterPreviewUrl" class="text-muted py-5">
-                                    File not available
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary"
-                                    (click)="closeSanctionLetterModal()">Close</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+  <div class="modal fade" [ngClass]="{ 'show d-block': showSanctionLetterModal }" tabindex="-1">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Sanction Letter Preview</h5>
+        <button type="button" class="btn-close" (click)="closeSanctionLetterModal()"></button>
+      </div>
+      <div class="modal-body text-center">
+        <ng-container *ngIf="sanctionLetterPreviewUrl">
+          <img *ngIf="isSanctionImageFile(sanctionList?.sanctionLetterPath)"
+               [src]="sanctionLetterPreviewUrl" alt="Sanction Letter"
+               class="img-fluid rounded shadow mb-3" style="max-width:100%;max-height:400px;">
+          <iframe *ngIf="isSanctionPdfFile(sanctionList?.sanctionLetterPath)"
+                  [src]="sanctionLetterPreviewUrl" width="100%" height="600px"
+                  class="border rounded"></iframe>
+          <video *ngIf="isSanctionVideoFile(sanctionList?.sanctionLetterPath)"
+                 [src]="sanctionLetterPreviewUrl" controls class="w-100 mb-3"
+                 style="max-height:400px;"></video>
+          <div *ngIf="isSanctionOtherFile(sanctionList?.sanctionLetterPath)">
+            <a [href]="sanctionLetterPreviewUrl" target="_blank"
+               class="btn btn-outline-primary">
+              <i class="bi bi-download me-2"></i>Download File
+            </a>
+          </div>
+        </ng-container>
+        <div *ngIf="!sanctionLetterPreviewUrl" class="text-muted py-5">
+          File not available
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary"
+                (click)="closeSanctionLetterModal()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 
 

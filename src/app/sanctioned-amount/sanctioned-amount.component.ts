@@ -308,9 +308,8 @@ getSafePreviewUrl2(path: string): SafeResourceUrl {
     return this.sanitizer.bypassSecurityTrustResourceUrl(path);
   }
 
-  openSanctionLetterPreview(path: string) {
+ openSanctionLetterPreview(path: string) {
   if (path) {
-    // If path is relative, prepend S3 base URL
     const fullPath = path.startsWith('http') ? path : 'https://tihcl.s3.us-east-1.amazonaws.com' + path;
     this.sanctionLetterPreviewUrl = this.sanitizer.bypassSecurityTrustResourceUrl(fullPath);
   }
