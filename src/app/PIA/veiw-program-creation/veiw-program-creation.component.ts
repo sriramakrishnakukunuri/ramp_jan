@@ -260,7 +260,7 @@ export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
   render: function(data:any, type:any, row:any, meta:any) {
     const today = new Date();
     const fiveDaysAgo = new Date(today);
-    fiveDaysAgo.setDate(today.getDate() - 5);
+    fiveDaysAgo.setDate(today.getDate() - 6);
 
     function parseDateOnly(dateStr: string): Date | null {
       if (!dateStr) return null;
@@ -269,7 +269,8 @@ export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
     }
 
     const startDate = parseDateOnly(row.startDate);
-    const isEditDisabled = startDate && startDate <= fiveDaysAgo;
+    const isEditDisabled = startDate && (startDate > fiveDaysAgo && startDate <= today);
+    //  const isEditDisabled = startDate && (startDate < today || startDate > fiveDaysAgo);
 
     console.log(row.startDate, startDate, isEditDisabled, 'iseditdisable');
 
