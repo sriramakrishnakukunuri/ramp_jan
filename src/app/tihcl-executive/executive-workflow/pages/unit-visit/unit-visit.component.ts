@@ -400,6 +400,7 @@ saveworkshift(): void {
       
       } 
       else {
+      this.loaderService.hide()
       Object.keys(this.unitVisitForm.controls).forEach(field => {
         const control = this.unitVisitForm.get(field);
         control?.markAsTouched({ onlySelf: true });
@@ -476,6 +477,7 @@ saveworkshift(): void {
         let payload:any={...this.unitVisitForm.value, "applicationNo": this.applicationData?.applicationNo,"applicationStatus": "MANAGER_APPROVAL_1"}
          this._commonService.add(APIS.tihclExecutive.saveUnitVisit,payload).subscribe({
           next: (response) => {
+            this.loaderService.hide()
            this.getDataById(response?.data?.id)
            this.progressBarStatusUpdate.emit({"update":true})
             this.toastrService.success('Unit Visit Data Saved Successfully','Unit Visit');
@@ -484,6 +486,7 @@ saveworkshift(): void {
     
           },
           error: (error) => {
+            this.loaderService.hide()
             console.error('Error submitting form:', error);
           }
         });
