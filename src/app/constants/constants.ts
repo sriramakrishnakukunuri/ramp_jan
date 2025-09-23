@@ -129,6 +129,7 @@ export const APIS = {
        globalUpload: API_BASE_URL + '/files/upload',    
     },
     sanctionedAmount:{
+        getAppStatus: API_BASE_URL + '/registrations/application/status?status=APPLICATIONS_SANCTIONED',
         preliminary:{
             getData: API_BASE_URL + '/registrations/usage/id/',
 
@@ -149,7 +150,7 @@ export const APIS = {
             getData: API_BASE_URL + '/registrations/usage/id/'
         },
         sanctionDetails:{
-            getData: API_BASE_URL + '/registrations/usage/id/'
+            getData: API_BASE_URL + '/sanction/details/registration/id/'
         },
         disbursementDetails:{
             getData: API_BASE_URL + '/disbursement/details/registration/id/'

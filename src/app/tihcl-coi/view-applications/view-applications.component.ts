@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonServiceService } from '@app/_services/common-service.service';
 import { APIS } from '@app/constants/constants';
 import { ToastrService } from 'ngx-toastr';
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-view-applications',
   templateUrl: './view-applications.component.html',
@@ -10,7 +10,10 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class ViewApplicationsComponent implements OnInit {
 
-  constructor(private _commonService: CommonServiceService,  private toastrService: ToastrService,) { }
+  constructor(private _commonService: CommonServiceService,  
+    private toastrService: ToastrService,
+  private router: Router
+  ) { }
   //  APPLICATIONS_RECEIVED, APPLICATIONS_UNDER_PROCESS, APPLICATIONS_WITH_DIC, APPLICATIONS_SANCTIONED, APPLICATIONS_NOT_CONSIDERED
 activeTab:any='APPLICATIONS_RECEIVED';
 districtName:any='district'
@@ -66,6 +69,14 @@ districtName:any='district'
      this.onTabChange(this.activeTab);
      this.getData()
   }
+
+  // data to pass to sanctioned amount
+  onRowClick(item: any) {
+    console.log(item,"item")
+  this._commonService.setSelectedRegistrationId(item.registrationId);
+  this.router.navigate(['/sanctioned-amount']);
+}
+
    PrigramSummaryData:any={}
   getData() {
     this.PrigramSummaryData ={}

@@ -1,3 +1,25 @@
+.nav-tabs {
+  flex-wrap: nowrap !important;
+  overflow-x: auto;
+  white-space: nowrap;
+  border-bottom: 2px solid #dee2e6;
+}
+
+.nav-tabs .nav-link {
+  min-width: 180px; /* Adjust width as needed for your labels */
+  text-align: center;
+  white-space: normal;
+  font-size: 1rem;
+}
+
+.nav-tabs::-webkit-scrollbar {
+  height: 6px;
+}
+.nav-tabs::-webkit-scrollbar-thumb {
+  background: #e0e0e0;
+  border-radius: 3px;
+}
+
 .nav button{
     text-wrap-mode: wrap;
 }

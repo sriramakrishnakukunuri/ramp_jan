@@ -518,7 +518,6 @@ onSubmit() {
 }
   // Submit the form
   Approved() {
-  this.LoaderService.show();
     console.log(this.assessmentForm?.value,this.applicationData)
      if (this.assessmentForm.valid) {
         const riskAssessment = this.generateRiskResponse();
@@ -548,6 +547,8 @@ onSubmit() {
         
 
       };
+  this.LoaderService.show();
+
       this.assessmentForm.removeControl('stressScore');
      this._commonService.add(APIS.tihclExecutive.submitPrimilinary+ this.applicationData?.applicationNo, formData).subscribe({
       next: (response) => {
@@ -723,4 +724,7 @@ modal.show()
   confirmation(val:any){
     this.confirmationdata.push(val)
   }
+
+
+  
 }

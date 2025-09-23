@@ -2,7 +2,7 @@ import { Component, Input,OnInit,OnChanges, SimpleChanges } from '@angular/core'
 import { CommonServiceService } from '@app/_services/common-service.service';
 import { ActivatedRoute } from '@angular/router';
 import { APIS } from '@app/constants/constants';
-
+import { LoaderService } from '@app/common_components/loader-service.service';
 @Component({
   selector: 'app-sa-preliminary',
   templateUrl: './sa-preliminary.component.html',
@@ -10,7 +10,9 @@ import { APIS } from '@app/constants/constants';
 })
 export class SAPreliminaryComponent implements OnInit,OnChanges {
 @Input() selectedEnterprise=""
-  constructor(private _commonService:CommonServiceService) { }
+  constructor(private _commonService:CommonServiceService,
+    private loaderService:LoaderService
+  ) { }
 
   ngOnInit(): void {
     this.getData()
@@ -22,11 +24,14 @@ export class SAPreliminaryComponent implements OnInit,OnChanges {
   }
 registrationDetails:any;
   getData(){
+    this.loaderService.show();
      this._commonService.getDataByUrl(APIS.sanctionedAmount.preliminary.getData + this.selectedEnterprise).subscribe({
         next: (res: any) => {
+          this.loaderService.hide();
           this.registrationDetails = res.data;
         },
         error: (err: any) => {
+          this.loaderService.hide();
           this.registrationDetails = null;
         }
       });

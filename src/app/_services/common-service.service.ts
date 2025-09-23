@@ -12,6 +12,19 @@ export class CommonServiceService {
   private formatErrors(error: HttpErrorResponse) {
     return throwError(() => error);
   }
+
+  // sanctioned amount data passing between components
+  private selectedRegistrationId: any = null;
+
+setSelectedRegistrationId(id: any) {
+  this.selectedRegistrationId = id;
+}
+
+getSelectedRegistrationId() {
+  return this.selectedRegistrationId;
+}
+
+
  setCurrentStep(step: number) {
     this.currentStep = step;
   }

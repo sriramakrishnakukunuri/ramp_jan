@@ -1,50 +1,79 @@
-<div class="container my-4">
+<div class="container my-5">
   <div class="card shadow-lg border-0">
     <div class="card-header bg-primary text-white">
-      <h5 class="mb-0 fw-bold">Preliminary Assessment</h5>
+      <h4 class="mb-0 fw-bold">
+        <i class="bi bi-clipboard-data me-2"></i>
+        Preliminary Assessment
+      </h4>
     </div>
     <div class="card-body">
       <div class="row g-4">
-        <!-- Left Column -->
-        <div class="col-md-6">
-          <div class="card border-0 shadow-sm mb-3">
-            <div class="card-body">
-              <p class="mb-2"><span class="fw-bold">Name Of Firm:</span> {{ registrationDetails?.enterpriseName }}</p>
-              <p class="mb-2"><span class="fw-bold">Udyam Number:</span> {{ registrationDetails?.udyamRegNumber }}</p>
-              <p class="mb-2"><span class="fw-bold">Size Of Unit:</span> {{ registrationDetails?.enterpriseCategory }}</p>
-              <p class="mb-2"><span class="fw-bold">Nature Of Activity:</span> {{ registrationDetails?.natureOfActivity }}</p>
-              <p class="mb-2"><span class="fw-bold">Factory Location:</span> {{ registrationDetails?.industrialPark }}, {{ registrationDetails?.district }}</p>
-              <p class="mb-0"><span class="fw-bold">Source of Application:</span> {{ registrationDetails?.sourceOfApplication || 'N/A' }}</p>
+        <!-- Left Column: Basic Info -->
+        <div >
+          <div class="mb-4">
+            <h5 class="fw-bold mb-3">
+              <i class="bi bi-info-circle me-2 text-primary"></i>
+              Basic Information
+            </h5>
+            <table class="table table-bordered">
+              <thead class="bg-theme text-white">
+                <tr>
+                  <th>Name Of Firm</th>
+                  <th>Udyam Number</th>
+                  <th>Size Of Unit</th>
+                  <th>Nature Of Activity</th>
+                  <th>Factory Location</th>
+                  <th>Source of Application</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>{{ registrationDetails?.enterpriseName }}</td>
+                  <td>{{ registrationDetails?.udyamRegNumber }}</td>
+                  <td>{{ registrationDetails?.enterpriseCategory }}</td>
+                  <td>{{ registrationDetails?.natureOfActivity }}</td>
+                  <td>{{ registrationDetails?.industrialPark }}, {{ registrationDetails?.district }}</td>
+                  <td>{{ registrationDetails?.sourceOfApplication || 'N/A' }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          
+        </div>
+</div>
+        <!-- Right Column: Problems & Stress Score -->
+        <div class="col-md-12">
+          <div class="mb-4">
+            <h5 class="fw-bold mb-3"><i class="bi bi-exclamation-triangle me-2 text-danger"></i>Problems Faced by the Unit</h5>
+            <div class="ps-2 text-muted fs-6">{{ registrationDetails?.problemsFaced || 'N/A' }}</div>
+          </div>
+          <div>
+            <h5 class="fw-bold mb-3"><i class="bi bi-bar-chart-line me-2 text-success"></i>Stress Score</h5>
+            <div class="table-responsive mb-3">
+              <table class="table align-middle">
+              <thead class="bg-theme text-white">
+                <tr>
+                <th>Issue</th>
+                <th>Risk Categorisation</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let score of registrationDetails?.stressScore">
+                <td class="fw-bold">{{ score.issue }}</td>
+                <td>
+                  <span class="form-control">{{ score.riskCategorisation }}</span>
+                </td>
+                </tr>
+              </tbody>
+              </table>
+            </div>
+            <div class="text-end">
+              <span class="fw-bold">Total Risk Score:</span>
+              <span class="badge bg-primary fs-6 ms-2">{{ registrationDetails?.riskCategoryScore }}</span>
             </div>
           </div>
         </div>
-
-        <!-- Right Column -->
-        <div class="col-md-6">
-          <div class="card border-0 shadow-sm mb-3">
-            <div class="card-body">
-              <p class="fw-bold mb-2">Problems Faced by the Unit:</p>
-              <p class="text-muted">{{ registrationDetails?.problemsFaced || 'N/A' }}</p>
-            </div>
-          </div>
-
-          <div class="card border-0 shadow-sm">
-            <div class="card-body">
-              <p class="fw-bold mb-3">Stress Score:</p>
-              <ul class="list-group list-group-flush">
-                <li *ngFor="let score of registrationDetails?.stressScore" class="list-group-item">
-                  <span class="fw-bold">{{ score.issue }}:</span>
-                  <span class="text-muted">{{ score.riskCategorisation }}</span>
-                </li>
-              </ul>
-              <div class="mt-3">
-                <span class="fw-bold">Total Risk Score:</span>
-                <span class="badge bg-primary">{{ registrationDetails?.riskCategoryScore }}</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      
     </div>
   </div>
 </div>

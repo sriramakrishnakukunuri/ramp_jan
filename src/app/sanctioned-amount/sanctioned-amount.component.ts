@@ -1,33 +1,55 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit, SimpleChanges, } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonServiceService } from '@app/_services/common-service.service';
 import { APIS } from '@app/constants/constants';
 import { ToastrService } from 'ngx-toastr';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-
+import { LoaderService } from '@app/common_components/loader-service.service';
 @Component({
   selector: 'app-sanctioned-amount',
   templateUrl: './sanctioned-amount.component.html',
   styleUrls: ['./sanctioned-amount.component.css']
 })
-export class SanctionedAmountComponent implements OnInit {
+export class SanctionedAmountComponent implements OnInit,OnChanges {
 
  constructor(
      private toastrService: ToastrService,
      private _commonService: CommonServiceService,
      private router: Router,
      private sanitizer: DomSanitizer,
+     private loader:LoaderService
    ) { 
     //  this.loginsessionDetails = JSON.parse(sessionStorage.getItem('user') || '{}');    
    }
 
+   regId:any;
   ngOnInit(): void {
-    this.getNewApplications(1, 100);
+      this.regId = this._commonService.getSelectedRegistrationId();
+  if (this.regId) {
+    console.log('Received Registration ID:', this.regId);
+    // Find the enterprise with this registrationId
+    this.getNewApplications(1, 100); // Load enterpriseList first
+    setTimeout(() => {
+      const selected = this.enterpriseList.find(
+        (e: { registrationId: any }) => e.registrationId == this.regId
+      );
+      if (selected) {
+        this.selectedEnterprise = selected.registrationUsageId;
+        this.onEnterpriseChange(this.selectedEnterprise);
+      }
+    }, 500); // Wait for enterpriseList to load
+  }else{
+    this.getNewApplications(1, 300);
      this.onTabChange('APPLICATIONS_RECEIVED')
-
+  }
 
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    // if (changes['selectedEnterprise']) {
+    //   this.onEnterpriseChange(this.selectedEnterprise);
+    // }
+  }
 activeTab:any='APPLICATIONS_RECEIVED';
    onTabChange(activeTab:any){
     this.activeTab = activeTab;
@@ -66,14 +88,23 @@ enterpriseList:any=[]
 selectedEnterprise:any
   getNewApplications(pageNo:any,PageSize:any): any {
       this.enterpriseList=[]
-       
+       this.loader.show()
         // this.activeTab='pendingApplications'
-         this._commonService.getDataByUrl(APIS.tihclExecutive.getNewApplications+'?userId='+this.loginsessionDetails?.userId+'&pageNo=' + (pageNo-1) + '&pageSize=' + PageSize).subscribe({
+        // let url=APIS.tihclExecutive.getNewApplications+'?userId='+this.loginsessionDetails?.userId+'&pageNo=' + (pageNo-1) + '&pageSize=' + PageSize
+        // let url=APIS.tihclExecutive.getNewApplications+'?userId='+this.loginsessionDetails?.userId
+      let url=APIS.sanctionedAmount.getAppStatus
+        this._commonService.getDataByUrl(url).subscribe({
         next: (dataList: any) => {
+          this.loader.hide()
           if(dataList){
           this.enterpriseList = dataList.data;
           this.filteredEnterprise=dataList.data
-          this.selectedEnterprise=this.enterpriseList[0]?.registrationUsageId;
+            if(this.regId){
+              this.selectedEnterprise=this.regId
+            }else{
+               this.selectedEnterprise=this.enterpriseList[0]?.registrationId;
+            }
+
           this.onEnterpriseChange(this.selectedEnterprise)
           }else{
           this.enterpriseList = [];
@@ -83,6 +114,7 @@ selectedEnterprise:any
           // this.reinitializeDataTable();
         },
         error: (error: any) => {
+          this.loader.hide()
           this.toastrService.error(error.error.message);  
           this.enterpriseList = [];
           this.filteredEnterprise=[]
@@ -94,27 +126,34 @@ selectedEnterprise:any
 apllictaionDataGlobal:any;
 onEnterpriseChange(selectedId: any) {
   this.apllictaionDataGlobal = this.enterpriseList.find(
-    (e: { registrationUsageId: any }) => e.registrationUsageId == selectedId
+    (e: { registrationId: any }) => e.registrationId == selectedId
   );
-  this.getDataUnit()
-  this.getDataDiagnostic();
-  this.getDicData()
-  this.getRampCheckList()
-  this.getprimaryNoc();
-  this.getSanctionList();
-  this.getdisburseList()
+  // this.getDataUnit()
+  // this.getDataDiagnostic();
+  // this.getDicData()
+  // this.getRampCheckList()
+  // this.getprimaryNoc();
+  // this.getSanctionList();
+  // this.getdisburseList()
+  this.onTabChange(this.activeTab)
 
   console.log('Selected Enterprise:', this.apllictaionDataGlobal);
 }
 
 primaryLenderNoc:any=[];
 getprimaryNoc(){
+          this.loader.show();
+
  this._commonService.getDataByUrl(APIS.sanctionedAmount.primaryLender.getData + this.selectedEnterprise).subscribe({
         next: (res: any) => {
+          this.loader.hide();
+
           if(res.data){
           this.primaryLenderNoc = res.data;
           }else{
-            this.primaryLenderNoc=[]
+          this.loader.hide();
+
+            this.primaryLenderNoc={}
           }
         },
         error: (err: any) => {
@@ -122,32 +161,47 @@ getprimaryNoc(){
         }
       });
 }
+sanctionLetterPreviewUrl: SafeResourceUrl | null = null;
+
 sanctionList:any=[];
 getSanctionList(){
+          this.loader.show();
+
  this._commonService.getDataByUrl(APIS.sanctionedAmount.sanctionDetails.getData + this.selectedEnterprise).subscribe({
         next: (res: any) => {
-          if(res.data){
-          this.sanctionList = res.data;
-          }else{
-            this.sanctionList=[]
-          }
+          this.loader.hide();
+
+          // if (res) {
+        this.sanctionList = res;
+        this.sanctionLetterPreviewUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.sanctionList?.sanctionLetterPath);
+      // } else {
+      //   this.sanctionList = {};
+      // }
         },
         error: (err: any) => {
+          this.loader.hide();
+
           this.sanctionList = [];
         }
       });
 }
 disburseList:any=[];
 getdisburseList(){
+          this.loader.show();
+
  this._commonService.getDataByUrl(APIS.sanctionedAmount.disbursementDetails.getData + this.selectedEnterprise).subscribe({
         next: (res: any) => {
-          if(res.data){
-          this.disburseList = res.data;
+          this.loader.hide();
+
+          if(res){
+          this.disburseList = res;
           }else{
-            this.disburseList=[]
+            this.disburseList={}
           }
         },
         error: (err: any) => {
+          this.loader.hide();
+
           this.disburseList = [];
         }
       });
@@ -155,15 +209,21 @@ getdisburseList(){
 
 rampCheckLIst:any=[];
 getRampCheckList(){
+          this.loader.show();
+
  this._commonService.getDataByUrl(APIS.sanctionedAmount.rampChecklist.getData + this.selectedEnterprise).subscribe({
         next: (res: any) => {
-          if(res.data){
-          this.rampCheckLIst = res.data;
+          this.loader.hide();
+
+          if(res){
+          this.rampCheckLIst = res;
           }else{
-            this.rampCheckLIst=[]
+            this.rampCheckLIst={}
           }
         },
         error: (err: any) => {
+          this.loader.hide();
+
           this.rampCheckLIst = [];
         }
       });
@@ -171,15 +231,21 @@ getRampCheckList(){
 
 dicDataLIst:any=[]
 getDicData(){
-    this._commonService.getDataByUrl(APIS.sanctionedAmount.unitVisit.getData + this.selectedEnterprise).subscribe({
+          this.loader.show();
+
+    this._commonService.getDataByUrl(APIS.sanctionedAmount.dicConsent.getData + this.selectedEnterprise).subscribe({
         next: (res: any) => {
+          this.loader.hide();
+
           if(res.data){
-          this.dicDataLIst = res.data;
+          this.dicDataLIst = res.data['dicNocFilePath'];
           }else{
             this.dicDataLIst=[]
           }
         },
         error: (err: any) => {
+          this.loader.hide();
+
           this.dicDataLIst = [];
         }
       });
@@ -188,11 +254,14 @@ getDicData(){
 
 UnitDetails:any;
   getDataUnit(){
+    this.loader.show();
      this._commonService.getDataByUrl(APIS.sanctionedAmount.unitVisit.getData + this.selectedEnterprise).subscribe({
         next: (res: any) => {
+          this.loader.hide();
           this.UnitDetails = res.data;
         },
         error: (err: any) => {
+          this.loader.hide()
           this.UnitDetails = null;
         }
       });
@@ -200,11 +269,17 @@ UnitDetails:any;
 
   DiagnosticDetails:any;
   getDataDiagnostic(){
+          this.loader.show();
+
      this._commonService.getDataByUrl(APIS.sanctionedAmount.diagnosticReport.getData + this.selectedEnterprise).subscribe({
         next: (res: any) => {
+          this.loader.hide();
+
           this.DiagnosticDetails = res.data;
         },
         error: (err: any) => {
+          this.loader.hide();
+
           this.DiagnosticDetails = null;
         }
       });
@@ -233,7 +308,18 @@ getSafePreviewUrl2(path: string): SafeResourceUrl {
     return this.sanitizer.bypassSecurityTrustResourceUrl(path);
   }
 
-  
+  openSanctionLetterPreview(path: string) {
+  if (path) {
+    // If path is relative, prepend S3 base URL
+    const fullPath = path.startsWith('http') ? path : 'https://tihcl.s3.us-east-1.amazonaws.com' + path;
+    this.sanctionLetterPreviewUrl = this.sanitizer.bypassSecurityTrustResourceUrl(fullPath);
+  }
+  this.showSanctionLetterModal = true;
+}
+closeSanctionLetterModal() {
+  this.showSanctionLetterModal = false;
+  this.sanctionLetterPreviewUrl = null;
+}
 
     showCreditPreviewModal = false;
   
@@ -255,9 +341,9 @@ getSafePreviewUrl2(path: string): SafeResourceUrl {
   }
   
   
-  isImageFile(filePath: string): boolean {
-    return /\.(jpg|jpeg|png|gif)$/i.test(filePath || '');
-  }
+  // isImageFile(filePath: string): boolean {
+  //   return /\.(jpg|jpeg|png|gif)$/i.test(filePath || '');
+  // }
   
    getSafePreviewUrl(): SafeResourceUrl {
       const url = this.DiagnosticDetails[0]?.urlForDiagnosticFile;
@@ -276,8 +362,87 @@ sanctionLetterUrl: string | null = null;
 
  
 
-  isPdfFile(path: string): boolean {
-    return /\.pdf$/i.test(path);
+  // isPdfFile(path: string): boolean {
+  //   return /\.pdf$/i.test(path);
+  // }
+formatTime(time: string): string {
+  if (!time) return 'N/A';
+  const [hour, minute] = time.split(':');
+  const h = parseInt(hour, 10);
+  const ampm = h < 12 ? 'AM' : 'PM';
+  const displayHour = h % 12 === 0 ? 12 : h % 12;
+  return `${displayHour}:${minute} ${ampm}`;
+}
+
+// Check if file is an image
+isImageFile(filePath: string): boolean {
+  return /\.(jpg|jpeg|png|gif|bmp|webp)$/i.test(filePath || '');
+}
+
+// Check if file is a PDF
+isPdfFile(filePath: string): boolean {
+  return /\.pdf$/i.test(filePath || '');
+}
+
+// Check if file is a video
+isVideoFile(filePath: string): boolean {
+  return /\.(mp4|webm|ogg)$/i.test(filePath || '');
+}
+
+// Check if file is a Word/Excel/Other document
+isDocFile(filePath: string): boolean {
+  return /\.(doc|docx|xls|xlsx|ppt|pptx)$/i.test(filePath || '');
+}
+
+// Get SafeResourceUrl for preview
+// getSafePreviewUrl(path: string): SafeResourceUrl {
+//   return this.sanitizer.bypassSecurityTrustResourceUrl(path);
+// }
+
+
+
+    
+     showCreditPreviewModalP = false;
+safePreviewUrl2: any;
+
+openCreditPreviewModal2(path: string) {
+  
+  if (path) {
+    this.safePreviewUrl2 = this.sanitizer.bypassSecurityTrustResourceUrl(path);
   }
+  this.showCreditPreviewModalP = true;
+}
+
+closeCreditPreviewModal2() {
+  this.showCreditPreviewModalP = false;
+}
+
+
+showSanctionLetterModal = false;
+
+
+
+
+// Unique file type checkers for sanction letter
+isSanctionImageFile(filePath: any): boolean {
+  if (!filePath) return false;
+  const url = filePath.changingThisBreaksApplicationSecurity || filePath;
+  return /\.(jpg|jpeg|png|gif|bmp|webp)$/i.test(url);
+}
+isSanctionPdfFile(filePath: any): boolean {
+  if (!filePath) return false;
+  const url = filePath.changingThisBreaksApplicationSecurity || filePath;
+  return /\.pdf$/i.test(url);
+}
+isSanctionVideoFile(filePath: any): boolean {
+  if (!filePath) return false;
+  const url = filePath.changingThisBreaksApplicationSecurity || filePath;
+  return /\.(mp4|webm|ogg)$/i.test(url);
+}
+isSanctionOtherFile(filePath: any): boolean {
+  if (!filePath) return false;
+  const url = filePath.changingThisBreaksApplicationSecurity || filePath;
+  return !this.isSanctionImageFile(filePath) && !this.isSanctionPdfFile(filePath) && !this.isSanctionVideoFile(filePath);
+}
 
 }

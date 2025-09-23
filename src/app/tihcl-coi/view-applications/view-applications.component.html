@@ -7,7 +7,7 @@
             <h6 class="fw-600 mb-2 mb-sm-0">View Applications</h6>
           </div>
           <!-- *ngIf="loginsessionDetails?.userRole != 'ADMIN'" -->
-            <div class="col-12 col-sm-3 col-md-3 col-lg-3 "></div>
+          <div class="col-12 col-sm-3 col-md-3 col-lg-3 "></div>
           <ng-container>
             <div class="col-12 col-sm-3 col-md-3 col-lg-3 ">
               <label for="Agencies" style="font-weight: 600;">List Of District</label>
@@ -21,39 +21,44 @@
         </div>
       </div>
       <div class="card-body">
-         <div class="row mb-3">
-                        <div class="col-12 col-sm-12 col-md-2 col-lg-2">
-                            <div class="card bg-primary text-white text-center shadow-none  p-2"  (click)="onTabChange('APPLICATIONS_RECEIVED')">
-                                <label class="mb-2 fw-600">Applications Received </label>
-                                <p class="fw-bold fs-6 mb-0 ">{{PrigramSummaryData?.applicationsReceived || 0}}</p>
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-12 col-md-3 col-lg-3">
-                            <div class="card bg-warning text-white text-center shadow-none  p-2" (click)="onTabChange('APPLICATIONS_UNDER_PROCESS')">
-                                <label class="mb-2 fw-600" >Applications Under Process</label>
-                                <p class="fw-bold fs-6 mb-0 fw-600">{{PrigramSummaryData?.applicationsUnderProcess || 0}}</p>
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-12 col-md-2 col-lg-2">
-                            <div class="card text-white text-center shadow-none pt-2 pb-2" style="background-color: chocolate;" (click)="onTabChange('APPLICATIONS_WITH_DIC')">
-                                <label class="mb-2 fw-600">Applications With DIC </label>
-                                <p class="fw-bold fs-6 mb-0">{{PrigramSummaryData?.applicationsWithDic || 0}}</p>
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-12 col-md-2 col-lg-2 ">
-                            <div class="card  bg-success  text-white text-center shadow-none pt-2 pb-2" (click)="onTabChange('APPLICATIONS_SANCTIONED')">
-                                <label class="mb-2 fw-600">Applications Sanctioned </label>
-                                <p class="fw-bold fs-6 mb-0">{{PrigramSummaryData?.applicationsLoanSanctioned || 0}}</p>
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-12 col-md-3 col-lg-3 ">
-                            <div class="card bg-danger text-white text-center shadow-none  p-2" (click)="onTabChange('APPLICATIONS_NOT_CONSIDERED')">
-                                <label class="mb-2 fw-600">Applications Not Considered </label>
-                                <p class="fw-bold fs-6 mb-0">{{PrigramSummaryData?.applicationsNotConsidered || 0}}</p>
-                            </div>
-                        </div>
+        <div class="row mb-3">
+          <div class="col-12 col-sm-12 col-md-2 col-lg-2">
+            <div class="card bg-primary text-white text-center shadow-none  p-2"
+              (click)="onTabChange('APPLICATIONS_RECEIVED')">
+              <label class="mb-2 fw-600">Applications Received </label>
+              <p class="fw-bold fs-6 mb-0 ">{{PrigramSummaryData?.applicationsReceived || 0}}</p>
+            </div>
+          </div>
+          <div class="col-12 col-sm-12 col-md-3 col-lg-3">
+            <div class="card bg-warning text-white text-center shadow-none  p-2"
+              (click)="onTabChange('APPLICATIONS_UNDER_PROCESS')">
+              <label class="mb-2 fw-600">Applications Under Process</label>
+              <p class="fw-bold fs-6 mb-0 fw-600">{{PrigramSummaryData?.applicationsUnderProcess || 0}}</p>
+            </div>
+          </div>
+          <div class="col-12 col-sm-12 col-md-2 col-lg-2">
+            <div class="card text-white text-center shadow-none pt-2 pb-2" style="background-color: chocolate;"
+              (click)="onTabChange('APPLICATIONS_WITH_DIC')">
+              <label class="mb-2 fw-600">Applications With DIC </label>
+              <p class="fw-bold fs-6 mb-0">{{PrigramSummaryData?.applicationsWithDic || 0}}</p>
+            </div>
+          </div>
+          <div class="col-12 col-sm-12 col-md-2 col-lg-2 ">
+            <div class="card  bg-success  text-white text-center shadow-none pt-2 pb-2"
+              (click)="onTabChange('APPLICATIONS_SANCTIONED')">
+              <label class="mb-2 fw-600">Applications Sanctioned </label>
+              <p class="fw-bold fs-6 mb-0">{{PrigramSummaryData?.applicationsLoanSanctioned || 0}}</p>
+            </div>
+          </div>
+          <div class="col-12 col-sm-12 col-md-3 col-lg-3 ">
+            <div class="card bg-danger text-white text-center shadow-none  p-2"
+              (click)="onTabChange('APPLICATIONS_NOT_CONSIDERED')">
+              <label class="mb-2 fw-600">Applications Not Considered </label>
+              <p class="fw-bold fs-6 mb-0">{{PrigramSummaryData?.applicationsNotConsidered || 0}}</p>
+            </div>
+          </div>
 
-                    </div>
+        </div>
         <nav>
           <div class="nav nav-tabs mb-3" id="nav-tab" role="tablist">
 
@@ -103,7 +108,18 @@
                   <tbody>
                     <tr *ngFor="let item of tableListReceived; let i = index">
                       <td class="text-start">{{ i + 1 }}</td>
-                      <td>{{ item.enterpriseName }}</td>
+                      <td>
+                        <ng-container
+                          *ngIf="activeTab === 'APPLICATIONS_SANCTIONED' || activeTab === 'APPLICATIONS_NOT_CONSIDERED'; else plainText">
+                          <a (click)="onRowClick(item)"
+                            style="color: #0d6efd; text-decoration: underline; cursor: pointer;">
+                            {{ item.enterpriseName }}
+                          </a>
+                        </ng-container>
+                        <ng-template #plainText>
+                          {{ item.enterpriseName }}
+                        </ng-template>
+                      </td>
                       <td>{{ item.district }}</td>
                       <td>{{ item.mandal }}</td>
                       <td>{{ item.natureOfActivity }}</td>
