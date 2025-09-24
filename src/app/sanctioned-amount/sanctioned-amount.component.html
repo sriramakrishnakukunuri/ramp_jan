@@ -512,7 +512,7 @@
                                     <div
                                         *ngIf="rampCheckLIst?.creditApprasialPath && rampCheckLIst.creditApprasialPath.trim().length > 0; else noCreditFile">
                                         <button class="btn btn-outline-primary btn-sm"
-                                            (click)="openCreditPreviewModal3()">
+                                            (click)="openCreditPreviewModal3(rampCheckLIst?.creditApprasialPath)">
                                             <i class="fa fa-eye me-2"></i> View Document
                                         </button>
                                         <div class="text-muted mt-2">

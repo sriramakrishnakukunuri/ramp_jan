@@ -289,15 +289,18 @@ UnitDetails:any;
 showCreditPreviewModal3 = false;
   
   safePreviewUrl3: any;
-  openCreditPreviewModal3() {
-    const path = this.rampCheckLIst?.creditApprasialPath
+  openCreditPreviewModal3(value: string) {
+
+this._commonService.openFile(value);
+
+    // const path = this.rampCheckLIst?.creditApprasialPath
   
-    if (path) {
-      // only create SafeResourceUrl once
-      this.safePreviewUrl3 = this.sanitizer.bypassSecurityTrustResourceUrl(path);
-    }
+    // if (path) {
+    //   // only create SafeResourceUrl once
+    //   this.safePreviewUrl3 = this.sanitizer.bypassSecurityTrustResourceUrl(path);
+    // }
   
-    this.showCreditPreviewModal3 = true;
+    // this.showCreditPreviewModal3 = true;
   }
 
     closeCreditPreviewModal3() {
