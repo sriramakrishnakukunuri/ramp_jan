@@ -1,0 +1,78 @@
+import { Component, OnInit } from '@angular/core';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { CommonServiceService } from '@app/_services/common-service.service';
+
+@Component({
+  selector: 'app-common-file-viewer',
+  templateUrl: './common-file-viewer.component.html',
+  styleUrls: ['./common-file-viewer.component.css']
+})
+export class CommonFileViewerComponent implements OnInit {
+  showModal = false;
+  filePath: string = '';
+  safeFileUrl!: SafeResourceUrl;
+  fileType: 'image' | 'pdf' | 'other' | 'invalid' = 'invalid';
+  errorMessage: string = '';
+
+  constructor(private fileService: CommonServiceService, private sanitizer: DomSanitizer) {}
+
+  ngOnInit(): void {
+    // Subscribe to service to get file path
+    this.fileService.file$.subscribe(path => {
+      if (!path) return;
+      console.log('Received file path:', path);
+
+      this.filePath = path;
+      this.errorMessage = '';
+      this.safeFileUrl = null as any;
+
+      // Validate URL
+      if (!this.isValidUrl(path)) {
+        this.fileType = 'invalid';
+        this.errorMessage = 'File view not available';
+      } else {
+        this.fileType = this.getFileType(path);
+
+        // Only create SafeResourceUrl if PDF
+        if (this.fileType === 'pdf') {
+          this.safeFileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(path);
+        }
+      }
+
+      this.showModal = true;
+    });
+  }
+
+  isZoomed = false;
+
+toggleZoom() {
+  this.isZoomed = !this.isZoomed;
+}
+
+
+  closeModal() {
+    this.showModal = false;
+    this.filePath = '';
+    this.errorMessage = '';
+  }
+
+  getFileType(path: string): 'image' | 'pdf' | 'other' {
+    const ext = path.split('.').pop()?.toLowerCase();
+    if (ext?.match(/(jpg|jpeg|png|gif|bmp)/)) return 'image';
+    if (ext === 'pdf') return 'pdf';
+    return 'other';
+  }
+
+  isValidUrl(path: string): boolean {
+    return /^(http|https):\/\//.test(path);
+  }
+
+  onImageError() {
+    this.errorMessage = 'Preview not available';
+    this.fileType = 'invalid';
+  }
+
+
+
+  
+}

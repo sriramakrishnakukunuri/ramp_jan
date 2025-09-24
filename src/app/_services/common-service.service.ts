@@ -1,7 +1,7 @@
 import { HttpClient,HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { APIS } from '@app/constants/constants';
-import { catchError, forkJoin, Observable, throwError } from 'rxjs';
+import { catchError, forkJoin, Observable, Subject, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +23,14 @@ setSelectedRegistrationId(id: any) {
 getSelectedRegistrationId() {
   return this.selectedRegistrationId;
 }
+
+// file viewer data passing between components
+  private fileSubject = new Subject<string>();
+  file$ = this.fileSubject.asObservable();
+
+  openFile(filePath: string) {
+    this.fileSubject.next(filePath);
+  }
 
 
  setCurrentStep(step: number) {

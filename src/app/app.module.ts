@@ -68,6 +68,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
 import { SAPreliminaryComponent } from './PIA/sa-preliminary/sa-preliminary.component';
+import { CommonFileViewerComponent } from './common_components/common-file-viewer/common-file-viewer.component';
 @NgModule({
     imports: [
         MatSelectModule,
@@ -123,6 +124,7 @@ import { SAPreliminaryComponent } from './PIA/sa-preliminary/sa-preliminary.comp
         LoaderComponent,
         SanctionedAmountComponent,
         SAPreliminaryComponent,
+        CommonFileViewerComponent,
     ],
     exports:[
         LoaderComponent

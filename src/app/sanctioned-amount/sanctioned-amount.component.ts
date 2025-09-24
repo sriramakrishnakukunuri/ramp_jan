@@ -309,11 +309,13 @@ getSafePreviewUrl2(path: string): SafeResourceUrl {
   }
 
  openSanctionLetterPreview(path: string) {
-  if (path) {
-    const fullPath = path.startsWith('http') ? path : 'https://tihcl.s3.us-east-1.amazonaws.com' + path;
-    this.sanctionLetterPreviewUrl = this.sanitizer.bypassSecurityTrustResourceUrl(fullPath);
-  }
-  this.showSanctionLetterModal = true;
+this._commonService.openFile(path);
+
+  // if (path) {
+  //   const fullPath = path.startsWith('http') ? path : 'https://tihcl.s3.us-east-1.amazonaws.com' + path;
+  //   this.sanctionLetterPreviewUrl = this.sanitizer.bypassSecurityTrustResourceUrl(fullPath);
+  // }
+  // this.showSanctionLetterModal = true;
 }
 closeSanctionLetterModal() {
   this.showSanctionLetterModal = false;
@@ -406,10 +408,12 @@ safePreviewUrl2: any;
 
 openCreditPreviewModal2(path: string) {
   
-  if (path) {
-    this.safePreviewUrl2 = this.sanitizer.bypassSecurityTrustResourceUrl(path);
-  }
-  this.showCreditPreviewModalP = true;
+this._commonService.openFile(path);
+
+  // if (path) {
+  //   this.safePreviewUrl2 = this.sanitizer.bypassSecurityTrustResourceUrl(path);
+  // }
+  // this.showCreditPreviewModalP = true;
 }
 
 closeCreditPreviewModal2() {
@@ -495,6 +499,11 @@ isCommonDocFile(filePath: string | SafeResourceUrl): boolean {
 // Check if file is other type (for download)
 isCommonOtherFile(filePath: string | SafeResourceUrl): boolean {
   return !this.isCommonImageFile(filePath) && !this.isCommonPdfFile(filePath) && !this.isCommonVideoFile(filePath) && !this.isCommonDocFile(filePath);
+}
+
+viewDIcFile(path: string) {
+this._commonService.openFile(path);
+
 }
 
 
