@@ -8,6 +8,7 @@ import 'datatables.net-buttons-dt';
 import 'datatables.net-responsive-dt';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 declare var bootstrap: any;
+import { LoaderService } from '@app/common_components/loader-service.service';
 declare var $: any;
 
 @Component({
@@ -32,6 +33,7 @@ approveForm!: FormGroup;
      private toastrService: ToastrService,
      private _commonService: CommonServiceService,
      private router: Router,
+     private loader:LoaderService
    ) { 
      this.loginsessionDetails = JSON.parse(sessionStorage.getItem('user') || '{}');    
    }
@@ -63,15 +65,19 @@ approveForm!: FormGroup;
   }
   activeTab = 'pendingApplications';
  getLevelOneData(pageNo:any,PageSize:any): any {
+  this.loader.show();
     this.tableList = '';
     if(this.searchType && this.searchText){
        this.activeTab='pendingNew'
       this._commonService.getDataByUrl(APIS.tihclManager.getLevelOneData+'&pageNo=' + (pageNo-1) + '&pageSize=' + PageSize+'&'+this.searchType+'='+this.searchText).subscribe({
         next: (dataList: any) => {
+          this.loader.hide()
           this.tableList = dataList.data;
           this.totalItems=dataList?.totalElements
         },
         error: (error: any) => {
+          this.loader.hide()
+
           this.toastrService.error(error.error.message);
         }
       });
@@ -80,11 +86,15 @@ approveForm!: FormGroup;
        this.activeTab='pendingApplications'
        this._commonService.getDataByUrl(APIS.tihclManager.getLevelOneData+'&pageNo=' + (pageNo-1) + '&pageSize=' + PageSize).subscribe({
       next: (dataList: any) => {
+          this.loader.hide()
+
         this.tableList = dataList.data;
         this.totalItems=dataList?.totalElements
         // this.reinitializeDataTable();
       },
       error: (error: any) => {
+          this.loader.hide()
+
         this.totalItems=0
         this.toastrService.error(error.error.message);
       }
@@ -98,47 +108,60 @@ approveForm!: FormGroup;
   }
   Remarks:any=''
   Approved(){
+    this.loader.show();
     // https://tihcl.com/tihcl/api/registrations/status/updation/TH647249?appStatus=MANAGER_APPROVAL_1&reasonForRejection=null
     this._commonService.updatedataByUrl(APIS.tihclManager.approveLevelOne+this.approvalData?.applicationNo+'?appStatus=MANAGER_APPROVAL_1&processType='+this.approveForm.value?.processType+'&product='+this.approveForm.value?.product).subscribe({
       next: (response) => {
+        this.loader.hide()
            const modal = new bootstrap.Modal(this.successModal.nativeElement);
            modal.show(); 
            this.getLevelOneData(this.currentPage,  this.pageSize);
       },
       error: (error) => {
+        this.loader.hide()
+
         console.error('Error submitting form:', error);
       }
     });
   }
   Reject(){
+    this.loader.show();
     console.log(this.Remarks,this.RejectForm.value)
     // https://tihcl.com/tihcl/api/registrations/status/updation/TH647249?appStatus=REJECTED_MANAGER_APPROVAL_1&reasonForRejection=by%20some%20reason
      
     this._commonService.updatedataByUrl(APIS.tihclManager.approveLevelOne+this.approvalData?.applicationNo+'?appStatus=REJECTED_MANAGER_APPROVAL_1&reasonForRejection='+this.RejectForm.value?.remarks).subscribe({
       next: (response) => {
+        this.loader.hide()
         this.RejectForm.reset()
         const modal = new bootstrap.Modal(this.ModalReject.nativeElement);
           modal.show(); 
      this.getLevelOneData(this.currentPage,  this.pageSize);
       },
       error: (error) => {
+        this.loader.hide()
+
         this.RejectForm.reset()
         console.error('Error submitting form:', error);
       }
     });
   }
   review(){
+        this.loader.show()
+
     console.log(this.Remarks,this.RejectForm.value)
     // https://tihcl.com/tihcl/api/registrations/status/updation/TH647249?appStatus=REJECTED_MANAGER_APPROVAL_1&reasonForRejection=by%20some%20reason
      
     this._commonService.updatedataByUrl(APIS.tihclManager.approveLevelOne+this.approvalData?.applicationNo+'?appStatus=MANAGER_REVERIFY_1&reasonForRejection='+this.RejectForm.value?.remarks).subscribe({
       next: (response) => {
+        this.loader.hide()
+
         this.RejectForm.reset()
         const modal = new bootstrap.Modal(this.ModalReview.nativeElement);
           modal.show(); 
      this.getLevelOneData(this.currentPage,  this.pageSize);
       },
       error: (error) => {
+        this.loader.hide()
         this.RejectForm.reset()
         console.error('Error submitting form:', error);
       }

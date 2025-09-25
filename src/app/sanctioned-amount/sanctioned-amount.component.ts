@@ -31,7 +31,7 @@ export class SanctionedAmountComponent implements OnInit,OnChanges {
     this.getNewApplications(1, 100); // Load enterpriseList first
     setTimeout(() => {
       const selected = this.enterpriseList.find(
-        (e: { registrationId: any }) => e.registrationId == this.regId
+        (e: { registrationUsageId: any }) => e.registrationUsageId == this.regId
       );
       if (selected) {
         this.selectedEnterprise = selected.registrationUsageId;
@@ -92,7 +92,7 @@ selectedEnterprise:any
         // this.activeTab='pendingApplications'
         // let url=APIS.tihclExecutive.getNewApplications+'?userId='+this.loginsessionDetails?.userId+'&pageNo=' + (pageNo-1) + '&pageSize=' + PageSize
         // let url=APIS.tihclExecutive.getNewApplications+'?userId='+this.loginsessionDetails?.userId
-      let url=APIS.sanctionedAmount.getAppStatus
+      let url=APIS.sanctionedAmount.getNewAppStatus
         this._commonService.getDataByUrl(url).subscribe({
         next: (dataList: any) => {
           this.loader.hide()
@@ -102,7 +102,7 @@ selectedEnterprise:any
             if(this.regId){
               this.selectedEnterprise=this.regId
             }else{
-               this.selectedEnterprise=this.enterpriseList[0]?.registrationId;
+               this.selectedEnterprise=this.enterpriseList[0]?.registrationUsageId;
             }
 
           this.onEnterpriseChange(this.selectedEnterprise)
@@ -126,7 +126,7 @@ selectedEnterprise:any
 apllictaionDataGlobal:any;
 onEnterpriseChange(selectedId: any) {
   this.apllictaionDataGlobal = this.enterpriseList.find(
-    (e: { registrationId: any }) => e.registrationId == selectedId
+    (e: { registrationUsageId: any }) => e.registrationUsageId == selectedId
   );
   // this.getDataUnit()
   // this.getDataDiagnostic();
@@ -329,15 +329,16 @@ closeSanctionLetterModal() {
   
   safePreviewUrl: any;
   
-  openCreditPreviewModal() {
-    const path = this.DiagnosticDetails[0]?.urlForDiagnosticFile;
+  openCreditPreviewModal(value:string) {
+    this._commonService.openFile(value);
+    // const path = this.DiagnosticDetails[0]?.urlForDiagnosticFile;
   
-    if (path) {
-      // only create SafeResourceUrl once
-      this.safePreviewUrl = this.sanitizer.bypassSecurityTrustResourceUrl(path);
-    }
+    // if (path) {
+    //   // only create SafeResourceUrl once
+    //   this.safePreviewUrl = this.sanitizer.bypassSecurityTrustResourceUrl(path);
+    // }
   
-    this.showCreditPreviewModal = true;
+    // this.showCreditPreviewModal = true;
   }
   
   closeCreditPreviewModal() {

@@ -136,6 +136,19 @@ export class DisbursementDetailsComponent implements OnInit {
       details: ['', Validators.required]
     });
   }
+
+  isValidUrl(path: string): boolean {
+  return !!path && (path.startsWith('http://') || path.startsWith('https://'));
+}
+
+  viewFile(path:string){
+    if(path){
+    this._commonService.openFile(path)
+    }
+
+  }
+
+
    initializeaddBankDetailsForm(): void {
     this.addBankDetailsForm = this.fb.group({
       id:[null],

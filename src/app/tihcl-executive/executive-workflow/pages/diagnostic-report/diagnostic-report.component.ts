@@ -315,6 +315,18 @@ formateBalnceSheet(data:any){
   this.BalnceShetData=data
 
 }
+// for file view code strarts here 
+ isValidUrl(path: string): boolean {
+  return !!path && (path.startsWith('http://') || path.startsWith('https://'));
+}
+
+  viewFile(path:string){
+    if(path){
+    this._commonService.openFile(path)
+    }
+
+  }
+
   // Form getters for easier access
   get basicDetails(): FormGroup {
     return this.diagnosticForm.get('basicDetails') as FormGroup;

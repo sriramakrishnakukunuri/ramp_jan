@@ -12,7 +12,7 @@
                                     (filteredReturn)="filteredEnterprise = $event">
                                 </mat-select-filter>
                                 <mat-option *ngFor="let question of filteredEnterprise"
-                                    [value]="question.registrationId">
+                                    [value]="question.registrationUsageId">
                                     {{ question?.enterpriseName }}
                                 </mat-option>
                             </mat-select>
@@ -218,7 +218,7 @@
                                         Report
                                     </h6>
                                     <button class="btn btn-outline-primary btn-sm px-3"
-                                        (click)="openCreditPreviewModal()">
+                                        (click)="openCreditPreviewModal(DiagnosticDetails[0]?.urlForDiagnosticFile)">
                                         <i class="fa fa-eye me-2"></i> View Report
                                     </button>
                                     <span *ngIf="!DiagnosticDetails[0]?.urlForDiagnosticFile"

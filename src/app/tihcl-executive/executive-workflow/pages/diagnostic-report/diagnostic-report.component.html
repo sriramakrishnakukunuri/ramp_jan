@@ -1736,7 +1736,7 @@
                      <label class="form-check-label" for="forwardVerfication">Forward To Physical Verification</label>
                    </div> -->
                  </div>
-                   <div class="mb-3">
+                   <div class="mb-1 d-flex align-items-center gap-2">
                                   <div>
                                     <label for="uploadNoc" class="form-label text-center fw-600">Upload Diagnostic Report<span class="text-danger">*</span></label>
                                      <input class="form-control" id="uploadNoc" type="file" (change)="onFileSelected($event)" >
@@ -1744,6 +1744,9 @@
                                         Uploaded file: {{ diagnosticForm.get('urlForDiagnosticFile')?.value?.split('/').pop() }}
                                       </small>
                                   </div>
+                                   <button *ngIf="isValidUrl(diagnosticForm.get('urlForDiagnosticFile')?.value)" type="button" class="btn btn-primary mt-2" (click)="viewFile(diagnosticForm.get('urlForDiagnosticFile')?.value)">
+                                    <i class="bi bi-eye"></i> 
+                                  </button>
                                 </div>
 
                  <div class="text-end">

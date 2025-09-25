@@ -9,6 +9,7 @@
  import { FormBuilder, FormGroup, Validators } from '@angular/forms';
  declare var bootstrap: any;
  declare var $: any;
+ import { LoaderService } from '@app/common_components/loader-service.service';
 
 @Component({
   selector: 'app-level3-approval',
@@ -29,6 +30,7 @@ export class Level3ApprovalComponent implements OnInit {
    private fb: FormBuilder,
       private toastrService: ToastrService,
       private _commonService: CommonServiceService,
+      private loader:LoaderService,
       private router: Router,
     ) { 
       this.loginsessionDetails = JSON.parse(sessionStorage.getItem('user') || '{}');    
@@ -54,15 +56,18 @@ export class Level3ApprovalComponent implements OnInit {
   }
   activeTab = 'pendingApplications';
    getLevelOneData(pageNo:any,PageSize:any): any {
+    this.loader.show();
     this.tableList = '';
     if(this.searchType && this.searchText){
       this.activeTab='pendingNew'
       this._commonService.getDataByUrl(APIS.tihclManager.getLevelThreeData+'&pageNo=' + (pageNo-1) + '&pageSize=' + PageSize+'&'+this.searchType+'='+this.searchText).subscribe({
         next: (dataList: any) => {
+          this.loader.hide();
           this.tableList = dataList.data;
           this.totalItems=dataList?.totalElements
         },
         error: (error: any) => {
+          this.loader.hide();
           this.toastrService.error(error.error.message);
         }
       });
@@ -71,11 +76,15 @@ export class Level3ApprovalComponent implements OnInit {
       this.activeTab='pendingApplications'
        this._commonService.getDataByUrl(APIS.tihclManager.getLevelThreeData+'&pageNo=' + (pageNo-1) + '&pageSize=' + PageSize).subscribe({
       next: (dataList: any) => {
+          this.loader.hide();
+
         this.tableList = dataList.data;
         this.totalItems=dataList?.totalElements
         // this.reinitializeDataTable();
       },
       error: (error: any) => {
+          this.loader.hide();
+
         this.totalItems=0
         this.toastrService.error(error.error.message);
       }
@@ -103,30 +112,39 @@ export class Level3ApprovalComponent implements OnInit {
      }
    Remarks:any=''
    Approved(){
+    this.loader.show();
      // https://tihcl.com/tihcl/api/registrations/status/updation/TH647249?appStatus=MANAGER_APPROVAL_1&reasonForRejection=null
      this._commonService.updatedataByUrl(APIS.tihclManager.approveLevelOne+this.approvalData?.applicationNo+'?appStatus=MANAGER_APPROVAL_3&reasonForRejection=null').subscribe({
        next: (response) => {
+        this.loader.hide();
             const modal = new bootstrap.Modal(this.successModal.nativeElement);
             modal.show(); 
             this.getLevelOneData(this.currentPage,  this.pageSize);
        },
        error: (error) => {
+        this.loader.hide();
          console.error('Error submitting form:', error);
        }
      });
    }
    Reject(){
+    this.loader.show();
+
      console.log(this.Remarks,this.RejectForm.value)
      // https://tihcl.com/tihcl/api/registrations/status/updation/TH647249?appStatus=REJECTED_MANAGER_APPROVAL_1&reasonForRejection=by%20some%20reason
       
      this._commonService.updatedataByUrl(APIS.tihclManager.approveLevelOne+this.approvalData?.applicationNo+'?appStatus=REJECTED_MANAGER_APPROVAL_3&reasonForRejection='+this.RejectForm.value?.remarks).subscribe({
        next: (response) => {
+    this.loader.hide();
+
          this.RejectForm.reset()
          const modal = new bootstrap.Modal(this.ModalReject.nativeElement);
            modal.show(); 
       this.getLevelOneData(this.currentPage,  this.pageSize);
        },
        error: (error) => {
+    this.loader.hide();
+
          this.RejectForm.reset()
          console.error('Error submitting form:', error);
        }

@@ -130,6 +130,7 @@ export const APIS = {
     },
     sanctionedAmount:{
         getAppStatus: API_BASE_URL + '/registrations/application/status?status=APPLICATIONS_SANCTIONED&pageNo=0&pageSize=100',
+        getNewAppStatus: API_BASE_URL + '/registrations/enterprise/dropdown/',
         preliminary:{
             getData: API_BASE_URL + '/registrations/usage/id/',
 

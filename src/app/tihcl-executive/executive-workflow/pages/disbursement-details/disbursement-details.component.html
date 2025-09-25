@@ -159,7 +159,7 @@
               </div>
             </div>
           </div>
-          <div class="col-12 col-sm-12 col-md-6  col-lg-4 " *ngIf="f['tgipassUpload']?.value === 'Yes'">
+          <div class="col-12 col-sm-12 col-md-6  col-lg-4 d-flex align-items-center gap-1" *ngIf="f['tgipassUpload']?.value === 'Yes'">
             <div>
               <label for="uploadNoc" class="form-label text-center fw-600">TG-ipass upload </label>
               <!-- <input class="form-control" id="uploadNoc" type="file"> -->
@@ -169,8 +169,11 @@
               </small>
               <small class="text-muted" *ngIf="disbursementForm.get('tgipassUploadPath')?.value">Uploaded file: {{ disbursementForm.get('tgipassUploadPath')?.value?.split('/').pop() }}</small>
             </div>
+            <button *ngIf="isValidUrl(disbursementForm.get('tgipassUploadPath')?.value)" type="button" class="btn btn-primary mt-2" (click)="viewFile(disbursementForm.get('tgipassUploadPath')?.value)">
+              <i class="bi bi-eye"></i> 
+            </button>
           </div>
-          <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+          <div class="col-12 col-sm-6 col-md-4 col-lg-3 d-flex align-items-center" >
             <div class="mb-3">
               <h6 class="fw-600 fs-md">ROC Filing <span class="text-danger">*</span></h6>
               <div class="form-check form-check-inline">
@@ -189,7 +192,7 @@
               </div>
             </div>
           </div>
-          <div class="col-12 col-sm-12 col-md-6  col-lg-4 " *ngIf="f['rocFiling']?.value === 'Yes'">
+          <div class="col-12 col-sm-12 col-md-6  col-lg-4 d-flex align-items-center gap-1" *ngIf="f['rocFiling']?.value === 'Yes'">
             <div>
               <label for="uploadNoc" class="form-label text-center fw-600">ROC upload</label>
               <!-- <input class="form-control" id="uploadNoc" type="file"> -->
@@ -199,6 +202,9 @@
               </small>
               <small class="text-muted" *ngIf="disbursementForm.get('rocFilingPath')?.value">Uploaded file: {{ disbursementForm.get('rocFilingPath')?.value?.split('/').pop() }}</small>
             </div>
+            <button *ngIf="isValidUrl(disbursementForm.get('rocFilingPath')?.value)" type="button" class="btn btn-primary mt-2" (click)="viewFile(disbursementForm.get('rocFilingPath')?.value)">
+              <i class="bi bi-eye"></i> 
+            </button>
           </div>
         </div>
          <div class="card border rounded-2 shadow-none mb-3">

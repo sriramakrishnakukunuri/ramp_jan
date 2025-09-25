@@ -75,22 +75,59 @@ toggleZoom() {
   }
 
 
-   downloadFile() {
-    if (!this.isValidUrl(this.filePath)) {
-      this.toastr.error('Cannot download. File URL is invalid.');
-      return;
-    }
-
-    const link = document.createElement('a');
-    link.href = this.filePath;
-
-    const segments = this.filePath.split('/');
-    link.download = segments[segments.length - 1] || 'file';
-
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+  downloadFile() {
+  if (!this.isValidUrl(this.filePath)) {
+    this.toastr.error('Cannot download. File URL is invalid.');
+    return;
   }
+
+  const fileUrl = this.filePath;
+  const fileName = fileUrl.split('/').filter(Boolean).pop() || 'file';
+
+  const link = document.createElement('a');
+  link.href = fileUrl;
+  link.download = fileName;   // only filename
+  // REMOVE target="_blank"
+  
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+
+
+
+
+//    downloadFile() {
+//   if (!this.isValidUrl(this.filePath)) {
+//     this.toastr.error('Cannot download. File URL is invalid.');
+//     return;
+//   }
+
+//   fetch(this.filePath, { mode: 'cors' })
+//     .then(response => {
+//       if (!response.ok) {
+//         throw new Error('Network response was not ok');
+//       }
+//       return response.blob();
+//     })
+//     .then(blob => {
+//       const url = window.URL.createObjectURL(blob);
+//       const link = document.createElement('a');
+//       link.href = url;
+
+//       const segments = this.filePath.split('/');
+//       link.download = segments[segments.length - 1] || 'file';
+
+//       document.body.appendChild(link);
+//       link.click();
+//       document.body.removeChild(link);
+
+//       window.URL.revokeObjectURL(url); // cleanup
+//     })
+//     .catch(() => {
+//       this.toastr.error('Download failed.');
+//     });
+// }
 
 
   
