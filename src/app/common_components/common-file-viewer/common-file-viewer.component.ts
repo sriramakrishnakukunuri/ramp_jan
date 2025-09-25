@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { CommonServiceService } from '@app/_services/common-service.service';
-
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-common-file-viewer',
   templateUrl: './common-file-viewer.component.html',
@@ -14,7 +14,9 @@ export class CommonFileViewerComponent implements OnInit {
   fileType: 'image' | 'pdf' | 'other' | 'invalid' = 'invalid';
   errorMessage: string = '';
 
-  constructor(private fileService: CommonServiceService, private sanitizer: DomSanitizer) {}
+  constructor(private fileService: CommonServiceService,
+     private sanitizer: DomSanitizer,
+    private toastr:ToastrService) {}
 
   ngOnInit(): void {
     // Subscribe to service to get file path
@@ -72,6 +74,23 @@ toggleZoom() {
     this.fileType = 'invalid';
   }
 
+
+   downloadFile() {
+    if (!this.isValidUrl(this.filePath)) {
+      this.toastr.error('Cannot download. File URL is invalid.');
+      return;
+    }
+
+    const link = document.createElement('a');
+    link.href = this.filePath;
+
+    const segments = this.filePath.split('/');
+    link.download = segments[segments.length - 1] || 'file';
+
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
 
 
   
