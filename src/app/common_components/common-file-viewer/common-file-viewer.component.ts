@@ -84,14 +84,22 @@ toggleZoom() {
   const fileUrl = this.filePath;
   const fileName = fileUrl.split('/').filter(Boolean).pop() || 'file';
 
-  const link = document.createElement('a');
-  link.href = fileUrl;
-  link.download = fileName;   // only filename
-  // REMOVE target="_blank"
+  // const link = document.createElement('a');
+  // link.href = fileUrl;
+  // link.download = fileName;   // only filename
+  // // REMOVE target="_blank"
   
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
+  // document.body.appendChild(link);
+  // link.click();
+  // document.body.removeChild(link);
+
+  const link = document.createElement('a');
+link.href = fileUrl;
+link.target = '_blank';   // open file in new tab
+document.body.appendChild(link);
+link.click();
+document.body.removeChild(link);
+
 }
 
 
