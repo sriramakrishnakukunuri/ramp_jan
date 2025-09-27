@@ -19,6 +19,7 @@
         <!-- <div class="notification-card-title">{{ n.screenName }}</div> -->
         <div class="notification-card-message">{{ n.remarksText }}</div>
          <div class="notification-card-message" style="font-size: 12px !important;">{{ n.remarksDate | date }}</div>
+         <div class="notification-card-message" style="font-size: 12px !important;color: #8f8d8d !important;">{{ this.userDetails.userRole=='CALL_CENTER'?n?.agencyName: n?.ccName }}</div>
       </div>
     </div>
   </div>

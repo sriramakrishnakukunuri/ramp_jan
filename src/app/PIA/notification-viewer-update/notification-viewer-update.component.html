@@ -162,7 +162,7 @@
                             Notification ID is required.
                         </div>
                     </div>
-                    <div class="mb-3">
+                    <div class="mb-3" *ngIf="userDetails?.userRole=='CALL_CENTER'">
                         <label for="status" class="form-label">Status</label>
                         <select class="form-select" id="status" formControlName="status" required>
                             <option value="OPEN">OPEN</option>
@@ -194,7 +194,9 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" [disabled]="updateForm.invalid">Save changes</button>
+                      <button type="submit" class="btn btn-lime-green" data-bs-dismiss="modal" [ngClass]="{'disabled': updateForm.invalid}">Save changes</button>
+                      <!--  <span *ngIf="loading" class="spinner-border spinner-border-sm me-1"></span> -->
+                    <!-- <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" >Save changes</button> -->
                 </div>
             </div>
         </form>

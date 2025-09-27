@@ -181,7 +181,7 @@ export class NotificationViewerUpdateComponent implements OnInit ,OnChanges{
   formDeatials(){
     this.updateForm = new FormGroup({
       notificationId: new FormControl(''),
-      status: new FormControl('',[Validators.required]),
+      status: new FormControl('',),
       remark: new FormControl('',[Validators.required, ]),
       remarkBy: new FormControl('')
     });
