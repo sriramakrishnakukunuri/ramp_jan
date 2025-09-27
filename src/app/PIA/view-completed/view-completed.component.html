@@ -62,7 +62,25 @@
                         <!-- <button type="button" [ngClass]="{'disabled': !programIds}" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModalDeleteConfirm">Final Submission</button> -->
                     </div>
                     <div class="col-12 col-12 col-sm-6 col-md-6 col-lg-6 text-end">
-                        <button type="button" [ngClass]="{'disabled': !programIds}" (click)="downloadParticipant()" class="btn btn-secondary">Download Participants</button> &nbsp;&nbsp;
+                        <div class="btn-group">
+                                <button [ngClass]="{'disabled': !programIds}" type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Download Participants
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a class="dropdown-item" (click)="downloadParticipant('excel')" href="javascript:void(0)">
+                                            Excel
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" (click)="downloadParticipant('pdf')" href="javascript:void(0)">
+                                            PDF
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        <!-- <button type="button" [ngClass]="{'disabled': !programIds}" (click)="downloadParticipant()" class="btn btn-secondary">Download Participants</button> -->
+                         &nbsp;&nbsp;
                         <!-- <button type="button"  (click)="openFileUploadModal()" class="btn btn-lime-green" >Upload Programs</button> -->
                     </div>
                 </div>

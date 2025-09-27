@@ -726,12 +726,13 @@ if (editSessionModal) {
           }
         })
     }
-    downloadProgram(){
-      let linkUrl = APIS.programCreation.downloadProgramsData+this.agencyId
+    downloadProgram(type:any){
+     
+      let linkUrl = type=='excel'?APIS.programCreation.downloadProgramsDataExcel+this.agencyId:APIS.programCreation.downloadProgramsDataPdf+this.agencyId
       const link = document.createElement("a");
       link.setAttribute("download", linkUrl);
       link.setAttribute("target", "_blank");
-      link.setAttribute("href", APIS.programCreation.downloadProgramsData+this.agencyId);
+      link.setAttribute("href", linkUrl);
       document.body.appendChild(link);
       link.click();
       link.remove();
