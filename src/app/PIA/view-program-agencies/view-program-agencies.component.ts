@@ -7,6 +7,7 @@ import DataTable from 'datatables.net-dt';
 import 'datatables.net-buttons-dt';
 import 'datatables.net-responsive-dt';
 declare var $: any;
+import { LoaderService } from '@app/common_components/loader-service.service';
 
 @Component({
   selector: 'app-view-program-agencies',
@@ -25,6 +26,7 @@ export class ViewProgramAgenciesComponent implements OnInit ,AfterViewInit{
       private toastrService: ToastrService,
       private _commonService: CommonServiceService,
       private router: Router,
+      private loader:LoaderService
     ) { 
       this.loginsessionDetails = JSON.parse(sessionStorage.getItem('user') || '{}');    
       this.agencyId = this.loginsessionDetails.agencyId;
@@ -117,7 +119,13 @@ export class ViewProgramAgenciesComponent implements OnInit ,AfterViewInit{
                   title="Sessions" data-bs-toggle="modal" data-bs-target="#viewModal" 
                   data-id="${row.id}" title="View">
                   <span class="bi bi-eye"></span>
-                </button>`;
+                </button>
+                 <button type="button" class="btn btn-default btn-sm text-lime-green reschedule-btn" 
+                  title="Reshedule Data" data-bs-toggle="modal" data-bs-target="#viewSheduleModal" 
+                  data-id="${row.id}">
+                  <span class="bi bi-arrow-repeat"></span>
+                </button>
+                `;
               // }
               // return '';
           },
@@ -310,9 +318,48 @@ export class ViewProgramAgenciesComponent implements OnInit ,AfterViewInit{
         const rowData = self.dataTable.row($(event.currentTarget).parents('tr')).data();
         self.sessionDetails(rowData); // Call your method with proper data
       });
+       $('#view-table-program').on('click', '.reschedule-btn', function(event: any) {
+      const rowData = self.dataTable.row($(event.currentTarget).parents('tr')).data();
+      self.openRescheduleModal(rowData);
+    });
     }
       });
     }
+
+
+    selectedRescheduleData: any = [];
+  openRescheduleModal(row: any) {
+  // Store the selected row/session data if needed
+  this.selectedRescheduleData = [];
+  // Show the modal using Bootstrap JS
+  // const modal = new bootstrap.Modal(document.getElementById('viewSheduleModal'));
+  // modal.show();
+
+  this.loader.show();
+
+  this._commonService.getById(APIS.programCreation.resheduleData, row.programId).subscribe({
+    next: (res: any) => {
+      this.selectedRescheduleData = res?.data;
+      this.loader.hide();
+  //      const modal = new bootstrap.Modal(document.getElementById('viewSheduleModal'));
+  // modal.show();
+      // console.log(this.selectedRescheduleData, 'selectedRescheduleData');
+    },
+    error: (err) => {
+  //      const modal = new bootstrap.Modal(document.getElementById('viewSheduleModal'));
+  // modal.show();
+      this.loader.hide();
+      this.toastrService.error('Data Not Available', "Session Data Error!");
+      new Error(err);
+    },
+  });
+
+  
+
+
+
+
+}
   
     reinitializeDataTable() {
       if (this.dataTable) {

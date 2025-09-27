@@ -41,6 +41,7 @@ export const APIS = {
         // get: API_BASE_URL + '/program/get',
         // update: API_BASE_URL + '/program/update',
         // delete: API_BASE_URL + '/program/delete',
+        resheduleData: API_BASE_URL + '/program-reschedule-data/',
     },
     physicalTagets:{
         getTargets: API_BASE_URL + '/targets/physical/agency/',
@@ -95,6 +96,9 @@ export const APIS = {
         getSectors: API_BASE_URL + '/getallsectors',
         getMandal: API_BASE_URL + '/getAllmandalsOfDistrictsById/',
         getMandalName: API_BASE_URL + '/getAllmandalsOfDistrictsByName/',
+        resourceDownload: API_BASE_URL + '/resource/excel/',
+        locationDownload: API_BASE_URL + '/location/excel/',
+        organizationDownload: API_BASE_URL + '/organization/excel',
     },
     trainingtargets:{
         getTrainingtargets: API_BASE_URL + '/targets/financial/year/summary',
