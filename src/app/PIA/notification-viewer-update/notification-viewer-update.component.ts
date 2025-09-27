@@ -191,7 +191,7 @@ export class NotificationViewerUpdateComponent implements OnInit ,OnChanges{
       notificationId: data.id,
       status: data.status,
       remark: '',
-      remarkBy: data.recipientType || 'AGENCY'
+      remarkBy: this.userDetails?.userRole=='CALL_CENTER'? 'CALL_CENTER' : 'AGENCY'
     });
       const modalElement = document.getElementById('updateNotificationModal');
       if (modalElement && modalElement.contains(document.activeElement)) {

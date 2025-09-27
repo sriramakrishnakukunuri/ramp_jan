@@ -29,9 +29,9 @@
                             <th>S.No</th>
                             <th>Date of First Notification</th>
                             <th>Agency Name</th>
-                            <th>Remarks Given by Me</th>
                             <th>Participant Name</th>
                             <th>Program Name</th>
+                            <th>Remarks by call center agent</th>
                             <th>Updation Details from Agency</th>
                             <!-- <th>Date of Fix</th> -->
                             <th>Status</th>
@@ -43,7 +43,10 @@
                             <td>{{ i + 1 }}</td>
                             <td>{{ notification?.dateOfFirstNotification || '' }}</td>
                             <td>{{ notification?.agencyName }}</td>
-                            <td>
+                           
+                            <td>{{ notification?.participantName }}</td>
+                            <td>{{ notification?.programName }}</td>
+                             <td>
                                 <ul *ngIf="notification.remarksByCallCenter && notification.remarksByCallCenter.length > 0">
                                     <li *ngFor="let remark of notification.remarksByCallCenter ; let i = index" >
                                         <span> {{ remark['remarksText'] }}</span>
@@ -52,8 +55,6 @@
                                 </ul>
                                 <span *ngIf="!notification.remarksByCallCenter || notification.remarksByCallCenter.length === 0">-</span>
                             </td>
-                            <td>{{ notification?.participantName }}</td>
-                            <td>{{ notification?.programName }}</td>
                             <td>
                                 <ul *ngIf="notification.remarksByAgency && notification.remarksByAgency.length > 0">
                                     
@@ -97,9 +98,10 @@
                             <th>S.No</th>
                             <th>Date of First Notification</th>
                             <th>Agency Name</th>
-                            <th>Remarks Given by Me</th>
+                          
                             <th>Participant Name</th>
                             <th>Program Name</th>
+                            <th>Remarks by call center agent</th>
                             <th>Updation Details from Agency</th>
                             <th>Date of Closure</th>
                             <th>Status</th>
@@ -111,7 +113,10 @@
                             <td>{{ i + 1 }}</td>
                             <td>{{ notification?.dateOfFirstNotification || '' }}</td>
                             <td>{{ notification?.agencyName }}</td>
-                            <td>
+                           
+                            <td>{{ notification?.participantName }}</td>
+                            <td>{{ notification?.programName }}</td>
+                             <td>
                                 <ul *ngIf="notification.remarksByCallCenter && notification.remarksByCallCenter.length > 0">
                                     <li *ngFor="let remark of notification.remarksByCallCenter ; let i = index" >
                                         <span> {{ remark['remarksText'] }}</span>
@@ -120,8 +125,6 @@
                                 </ul>
                                 <span *ngIf="!notification.remarksByCallCenter || notification.remarksByCallCenter.length === 0">-</span>
                             </td>
-                            <td>{{ notification?.participantName }}</td>
-                            <td>{{ notification?.programName }}</td>
                             <td>
                                 <ul *ngIf="notification.remarksByAgency && notification.remarksByAgency.length > 0">
                                     
