@@ -447,22 +447,32 @@
                 <button type="button" class="btn-close me-1" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
+                <h4 class="mb-3 text-start fw-bold text-primary border-bottom pb-2">{{ selectedRescheduleData?.[0]?.programTitle }}</h4>
                 <table class="table table-bordered">
                     <thead class="bg-lime-green text-white">
                         <tr>
                             <th>S no</th>
-                            <th>Program Name</th>
-                            <th>Start Time</th>
-                            <th>End Time</th>
+                            <th>Reshedule Date & Time</th>
+                            <th>Old Start Date</th>
+                            <th>Old End Date</th>
+                            <th>New Start Date</th>
+                            <th>New End Date</th>
                            
                         </tr>
                     </thead>
                     <tbody *ngFor="let session of selectedRescheduleData; let i = index">
                         <tr>
                             <td class="text-start">{{ i+1 }}</td>
-                            <td>{{ session.programTitle }}</td>
+                            <td>
+                                <span *ngIf="session.rescheduledTimestamp">
+                                    {{ session.rescheduledTimestamp }}
+                                </span>
+                            </td>
                             <td>{{ session.oldStartDate }}</td>
+                            <td>{{ session.oldEndDate }}</td>
                             <td>{{ session.newStartDate }}</td>
+                            <td>{{ session.newEndDate }}</td>
+
                         </tr>
                     </tbody>
                 </table>
