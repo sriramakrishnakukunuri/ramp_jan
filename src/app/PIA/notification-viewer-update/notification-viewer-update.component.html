@@ -49,7 +49,7 @@
                              <td>
                                 <ul *ngIf="notification.remarksByCallCenter && notification.remarksByCallCenter.length > 0">
                                     <li *ngFor="let remark of notification.remarksByCallCenter ; let i = index" >
-                                        <span> {{ remark['remarksText'] }}</span>--
+                                        <span> {{ remark['remarksText'] }}</span> -- 
                                         <span> {{ remark?.['remarksDate'] | date:'dd/MM/yyyy HH:mm:ss' }}</span>
                                     </li>
                                 </ul>
@@ -59,7 +59,7 @@
                                 <ul *ngIf="notification.remarksByAgency && notification.remarksByAgency.length > 0">
                                     
                                         <li *ngFor="let detail of notification.remarksByAgency">
-                                        {{ detail['remarksText'] }}--
+                                        {{ detail['remarksText'] }} -- 
                                         {{ detail?.['remarksDate'] | date:'dd/MM/yyyy HH:mm:ss' }}
                                     </li>
                                   
@@ -120,7 +120,7 @@
                              <td>
                                 <ul *ngIf="notification.remarksByCallCenter && notification.remarksByCallCenter.length > 0">
                                     <li *ngFor="let remark of notification.remarksByCallCenter ; let i = index" >
-                                        <span> {{ remark['remarksText'] }}</span>-- <span> {{ remark?.['remarksDate'] | date:'dd/MM/yyyy HH:mm:ss' }}</span>
+                                        <span> {{ remark['remarksText'] }}</span> -- <span> {{ remark?.['remarksDate'] | date:'dd/MM/yyyy HH:mm:ss' }}</span>
                                        
                                     </li>
                                 </ul>
@@ -130,7 +130,7 @@
                                 <ul *ngIf="notification.remarksByAgency && notification.remarksByAgency.length > 0">
                                     
                                         <li *ngFor="let detail of notification.remarksByAgency">
-                                        {{ detail['remarksText'] }}-- {{ detail?.['remarksDate'] | date:'dd/MM/yyyy HH:mm:ss' }}
+                                        {{ detail['remarksText'] }} -- {{ detail?.['remarksDate'] | date:'dd/MM/yyyy HH:mm:ss' }}
                                     </li>
                                   
                                    
