@@ -9,6 +9,7 @@ import 'datatables.net-responsive-dt';
 import { event } from 'jquery';
 declare var bootstrap: any;
 declare var $: any;
+import { LoaderService } from '@app/common_components/loader-service.service';
 
 @Component({
   selector: 'app-veiw-program-creation',
@@ -27,6 +28,7 @@ export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
     private toastrService: ToastrService,
     private _commonService: CommonServiceService,
     private router: Router,
+    private loader:LoaderService
   ) { 
     this.loginsessionDetails = JSON.parse(sessionStorage.getItem('user') || '{}');    
     this.agencyId = this.loginsessionDetails.agencyId;
@@ -286,6 +288,11 @@ export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
         ${isEditDisabled ? 'disabled' : ''}>
         <span class="bi bi-pencil"></span>
       </button>
+      <button type="button" class="btn btn-default btn-sm text-lime-green reschedule-btn" 
+        title="Reshedule Data" data-bs-toggle="modal" data-bs-target="#viewSheduleModal" 
+        data-id="${row.id}">
+        <span class="bi bi-arrow-repeat"></span>
+      </button>
     `;
   },
         orderable: false,
@@ -444,6 +451,10 @@ export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
       const rowData = self.dataTable.row($(event.currentTarget).parents('tr')).data();
       self.OverDue(rowData);
     });
+    $('#view-table-program').on('click', '.reschedule-btn', function(event: any) {
+      const rowData = self.dataTable.row($(event.currentTarget).parents('tr')).data();
+      self.openRescheduleModal(rowData);
+    });
     // $('#view-table-program').on('click', '.delete-btn', (event:any) => {
     //   const rowData = self.dataTable.row($(event.currentTarget).parents('tr')).data();
     //   self.deleteExpenditure(rowData);
@@ -504,6 +515,39 @@ export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
       default: return 'fas fa-file';
     }
   }
+selectedRescheduleData: any = [];
+  openRescheduleModal(row: any) {
+  // Store the selected row/session data if needed
+  this.selectedRescheduleData = [];
+  // Show the modal using Bootstrap JS
+  // const modal = new bootstrap.Modal(document.getElementById('viewSheduleModal'));
+  // modal.show();
+
+  this.loader.show();
+
+  this._commonService.getById(APIS.programCreation.resheduleData, row.programId).subscribe({
+    next: (res: any) => {
+      this.selectedRescheduleData = res?.data;
+      this.loader.hide();
+  //      const modal = new bootstrap.Modal(document.getElementById('viewSheduleModal'));
+  // modal.show();
+      // console.log(this.selectedRescheduleData, 'selectedRescheduleData');
+    },
+    error: (err) => {
+  //      const modal = new bootstrap.Modal(document.getElementById('viewSheduleModal'));
+  // modal.show();
+      this.loader.hide();
+      this.toastrService.error('Data Not Available', "Session Data Error!");
+      new Error(err);
+    },
+  });
+
+  
+
+
+
+
+}
   
   getIconColor(filePath: string): string {
     const ext = filePath.split('.').pop()?.toLowerCase();

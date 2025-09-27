@@ -60,6 +60,9 @@
                         <div class="col-12 col-sm-7 col-md-8 col-lg-9">
                             <h6 class="fw-600 mb-2 mb-sm-0 text-green">View Locations</h6>
                         </div>
+                        <div class="col-12 col-sm-5 col-md-4 col-lg-3 text-end">
+                            <button type="button" (click)="downloadProgramApi('location')" class="btn btn-secondary">Download Locations</button>
+                        </div>
                         <ng-container *ngIf="loginsessionDetails?.userRole == 'ADMIN'">
                             <div class="col-12 col-sm-5 col-md-4 col-lg-3">
                                 <!-- <label for="Agencies" style="font-weight: 600;">List Of Agencies</label>
@@ -107,8 +110,8 @@
                                     <td class="text-start">{{i+1}}</td>
                                     <td *ngIf="loginsessionDetails?.userRole == 'ADMIN'" >{{item?.agencyName}}</td>
                                     <td>{{item?.locationName}}</td>
-                                    <td>{{item?.locationName}}</td>
-                                    <td>{{item?.locationName}}</td>
+                                    <td>{{item?.district}}</td>
+                                    <td>{{item?.mandal}}</td>
                                     <td>{{item?.typeOfVenue}}</td>
                                     <td>{{item?.capacity}}</td>
                                     <td>{{item?.ownershipType}}</td>
@@ -133,6 +136,9 @@
                         <div class="col-12 col-sm-7 col-md-8 col-lg-9">
                             <h6 class="fw-600 mb-2 mb-sm-0 text-green">View Resources</h6>
                         </div>
+                        <div class="col-12 col-sm-5 col-md-4 col-lg-3 text-end">
+                            <button type="button" (click)="downloadProgramApi('resource')" class="btn btn-secondary">Download Resources</button> &nbsp;&nbsp;
+                        </div>
                         <ng-container *ngIf="loginsessionDetails?.userRole == 'ADMIN'">
                             <div class="col-12 col-sm-5 col-md-4 col-lg-3">
                                 <label for="Agencies" style="font-weight: 600;">List Of Agencies</label>
@@ -148,12 +154,10 @@
                 </div>
                 <div class="card-body">
                     <div class="row mb-3">
-                        <div class="col-12 col-sm-6 col-md-6 col-lg-6">
+                        <div class="col-12 col-sm-6 col-md-6 col-lg-9">
                             <!-- <button type="button" [ngClass]="{'disabled': !programIds}" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModalDeleteConfirm">Final Submission</button> -->
                         </div>
-                        <div class="col-12 col-12 col-sm-6 col-md-6 col-lg-6 text-end">
-                            <button type="button" (click)="downloadProgram()" class="btn btn-secondary">Download Resources</button> &nbsp;&nbsp;
-                        </div>
+                         
                     </div>
                     <div class="dtable-container">                        
                         <table id="view-table-resourcePerson1" class="display" style="width:100%">
@@ -196,7 +200,12 @@
                     <div class="row align-items-center">
                         <div class="col-12 col-sm-7 col-md-8 col-lg-9">
                             <h6 class="fw-600 mb-2 mb-sm-0 text-green">View Organizations</h6>
+                       
                         </div>
+                         <div class="col-12 col-sm-5 col-md-4 col-lg-3 text-end">
+                            <button type="button" (click)="downloadProgramApi('org')" class="btn btn-secondary">Download Resources</button> &nbsp;&nbsp;
+                        </div>
+
                         <!-- <ng-container *ngIf="loginsessionDetails?.userRole == 'ADMIN'">
                             <div class="col-12 col-sm-5 col-md-4 col-lg-3">
                                 <label for="Agencies" style="font-weight: 600;">List Of Agencies</label>
