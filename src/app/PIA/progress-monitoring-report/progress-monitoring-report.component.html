@@ -1,0 +1,41 @@
+<main class="mt-4">
+    <section>
+        <div class="container-fluid">
+            <div class="card mb-3">
+                <div class="card-header bg-transparent">
+                    <div class="row align-items-center">
+                        <div class="col-12">
+                            <h6 class="fw-600 mb-2 mb-sm-3 mb-md-0">Progress Monitoring Report</h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <!-- Filter Dropdowns -->
+                    <div class="row">
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                            <div class="form-floating mb-3">
+                                <select class="form-select" id="agency" [(ngModel)]="selectedAgencyId"
+                                    (change)="onAgencyChange($any($event.target).value)">
+                                    <option value="" disabled selected>Select Agency</option>
+                                    <option *ngFor="let agency of agencyList" [value]="agency.agencyId">
+                                        {{ agency.agencyName }}
+                                    </option>
+                                </select>
+                                <label for="agency">Agency</label>
+                            </div>
+                        </div>
+
+
+
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+    </section>
+</main>

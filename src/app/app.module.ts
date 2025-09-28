@@ -88,6 +88,7 @@ import { QuestionAssignmentComponent } from './PIA/question-assignment/question-
 import { NotificationDisplayComponent } from './PIA/notification-display/notification-display.component';
 import { NotificationViewerUpdateComponent } from './PIA/notification-viewer-update/notification-viewer-update.component';
 import { LoaderComponent } from './common_components/loader/loader.component';
+import { ProgressMonitoringReportComponent } from './PIA/progress-monitoring-report/progress-monitoring-report.component';
 @NgModule({
     imports: [
         MaterialModule,
@@ -180,7 +181,8 @@ import { LoaderComponent } from './common_components/loader/loader.component';
         QuestionAssignmentComponent,
         NotificationDisplayComponent,
         NotificationViewerUpdateComponent,
-        LoaderComponent
+        LoaderComponent,
+        ProgressMonitoringReportComponent
 
     ],
     exports:[MaterialModule,
