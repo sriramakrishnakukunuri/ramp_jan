@@ -12,12 +12,12 @@ declare var $: any;
 import { LoaderService } from '@app/common_components/loader-service.service';
 
 @Component({
-  selector: 'app-veiw-program-creation',
-  templateUrl: './veiw-program-creation.component.html',
-  styleUrls: ['./veiw-program-creation.component.css']
+  selector: 'app-reshedule-programs',
+  templateUrl: './reshedule-programs.component.html',
+  styleUrls: ['./reshedule-programs.component.css']
 })
-export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
-  localStorageData: any;
+export class ResheduleProgramsComponent implements OnInit {
+ localStorageData: any;
   sessionDetailsList: any;
   tableList: any;
   dataTable: any;
@@ -32,8 +32,6 @@ export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
   ) { 
     this.loginsessionDetails = JSON.parse(sessionStorage.getItem('user') || '{}');    
     this.agencyId = this.loginsessionDetails.agencyId;
-    this.StatusData = 'programsInProcess'; // Set default status
-
   }
 
   ngOnInit(): void {
@@ -43,15 +41,14 @@ export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
     }
     else{
       this.getProgramDetails();
-      this.getData()
+      // this.getData()
       this.selectedAgencyId=this.agencyId
     }
     
   }
 
   ngAfterViewInit() {
-      // for inprogress by default
-    this.initializeDataTable(this.selectedAgencyId || this.agencyId);
+    this.initializeDataTable(this.loginsessionDetails.agencyId);
   }
 
 
@@ -59,8 +56,6 @@ export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
   getProgramsByStatus(status: string) {
     if(status==this.StatusData){
       this.StatusData=''
-      // for inprogress by default
-      this.reinitializeDataTable();
     }
     else{
        this.StatusData= status;
@@ -78,7 +73,7 @@ export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
   GetProgramsByAgency(event:any){
     this.agencyByAdmin=event;
     this.selectedAgencyId = event;
-    this.getData()
+    // this.getData()
     this._commonService.getDataByUrl(APIS.programCreation.getProgramsListByAgencyDetails+event).subscribe({
       next: (dataList: any) => {
         this.tableList = dataList.data;
@@ -213,7 +208,7 @@ export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
             // console.log(data)
           },
           error: (err) => {
-            this.toastrService.error(err.message, "Programs Data Error!");
+            // this.toastrService.error(err.message, "Programs Data Error!");
             console.error(err);
             callback({
               draw: data.draw,
@@ -225,10 +220,12 @@ export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
         });
       }
       else{
-         this._commonService.getDataByUrl(`${APIS.programCreation.getProgramsListByAgencyDetails}${agency}${params}`)
+        this.loader.show();
+         this._commonService.getDataByUrl(`${APIS.resheduleProgram.getResheduleData}${agency}${params}`)
         .pipe()
         .subscribe({
           next: (res: any) => {
+            this.loader.hide();
             callback({
               draw: data.draw,
               recordsTotal: res.totalElements,
@@ -237,7 +234,9 @@ export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
             });
           },
           error: (err) => {
-            this.toastrService.error(err.message, "Programs Data Error!");
+            this.loader.hide();
+
+            // this.toastrService.error(err.message, "Programs Data Error!");
             console.error(err);
             callback({
               draw: data.draw,
@@ -282,17 +281,7 @@ export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
     console.log(row.startDate, startDate, isEditDisabled, 'iseditdisable');
 
     return `
-      <button type="button" class="btn btn-default btn-sm text-lime-green edit-btn" 
-        title="Sessions" data-bs-toggle="modal" data-bs-target="#viewModal" 
-        data-id="${row.id}">
-        <span class="bi bi-eye"></span>
-      </button>
-      <button type="button" 
-        class="btn btn-default btn-sm text-danger editable-btn"
-        data-id="${row.id}" title="Edit" 
-        ${isEditDisabled ? 'disabled' : ''}>
-        <span class="bi bi-pencil"></span>
-      </button>
+     
       <button type="button" class="btn btn-default btn-sm text-lime-green reschedule-btn" 
         title="Reshedule Data" data-bs-toggle="modal" data-bs-target="#viewSheduleModal" 
         data-id="${row.id}">
@@ -300,6 +289,17 @@ export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
       </button>
     `;
   },
+  //  <button type="button" class="btn btn-default btn-sm text-lime-green edit-btn" 
+  //       title="Sessions" data-bs-toggle="modal" data-bs-target="#viewModal" 
+  //       data-id="${row.id}">
+  //       <span class="bi bi-eye"></span>
+  //     </button>
+  //     <button type="button" 
+  //       class="btn btn-default btn-sm text-danger editable-btn"
+  //       data-id="${row.id}" title="Edit" 
+  //       ${isEditDisabled ? 'disabled' : ''}>
+  //       <span class="bi bi-pencil"></span>
+  //     </button>
         orderable: false,
         className: 'text-center'
     },
@@ -494,7 +494,7 @@ export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
       this.agencyList = res.data;
       this.selectedAgencyId =-1
       this.getData()
-      this.GetProgramsByAgency(-1);
+      // this.GetProgramsByAgency(-1);
     }, (error) => {
       this.toastrService.error(error.error.message);
     });
@@ -587,7 +587,7 @@ selectedRescheduleData: any = [];
       this.PrigramSummaryData = res?.data
       },
       error: (err) => {
-        this.toastrService.error('Data Not Available', "Summary Data Error!");
+        // this.toastrService.error('Data Not Available', "Summary Data Error!");
         new Error(err);
       },
     });
@@ -618,7 +618,7 @@ if (editSessionModal) {
   this._commonService.updatedata(APIS.programCreation.updateOverDue+id+'/update-overdue',{}).subscribe({
     next: (data: any) => {
       if(data?.status==400){
-        this.toastrService.error(data?.message, "Program Data Error!");
+        // this.toastrService.error(data?.message, "Program Data Error!");
         this.closeModalOverDue();
         this.overDueId =''
       }

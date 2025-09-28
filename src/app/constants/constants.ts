@@ -44,6 +44,10 @@ export const APIS = {
         // delete: API_BASE_URL + '/program/delete',
         resheduleData: API_BASE_URL + '/program-reschedule-data/',
     },
+    resheduleProgram:{
+        getResheduleData: API_BASE_URL + '/program-reschedule-data/programs/',
+
+    },
     physicalTagets:{
         getTargets: API_BASE_URL + '/targets/physical/agency/',
         saveTargets: API_BASE_URL + '/targets/physical/save',

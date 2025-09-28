@@ -30,6 +30,8 @@ export class ViewProgramAgenciesComponent implements OnInit ,AfterViewInit{
     ) { 
       this.loginsessionDetails = JSON.parse(sessionStorage.getItem('user') || '{}');    
       this.agencyId = this.loginsessionDetails.agencyId;
+    this.StatusData = 'programsInProcess'; // Set default status
+
     }
   
     ngOnInit(): void {
@@ -37,27 +39,33 @@ export class ViewProgramAgenciesComponent implements OnInit ,AfterViewInit{
     }
   
     ngAfterViewInit() {
-      this.initializeDataTable(-1);
+      // this.initializeDataTable(-1);
+    this.initializeDataTable(this.selectedAgencyId || this.agencyId);
+
     }
     GetProgramsByAgency(event:any){
       this.agencyByAdmin=event;
-      this.StatusData=''
+      // this.StatusData=''
       this.selectedAgencyId = event;
+      this.StatusData = 'programsInProcess'; // Always set to In-Progress on agency change
+  
       this.getData()
-      this._commonService.getDataByUrl(APIS.programCreation.getProgramsListByAgencyDetails+event).subscribe({
-        next: (dataList: any) => {
-          this.tableList = dataList.data;
+      // this._commonService.getDataByUrl(APIS.programCreation.getProgramsListByAgencyDetails+event).subscribe({
+      //   next: (dataList: any) => {
+      //     this.tableList = dataList.data;
           this.reinitializeDataTable();
-        },
-        error: (error: any) => {
-          this.toastrService.error(error.error.message);
-        }
-      });
+      //   },
+      //   error: (error: any) => {
+      //     this.toastrService.error(error.error.message);
+      //   }
+      // });
     }
     StatusData:any=''
   getProgramsByStatus(status: string) {
     if(status==this.StatusData){
       this.StatusData=''
+      this.reinitializeDataTable();
+
     }
     else{
        this.StatusData= status;
@@ -378,6 +386,7 @@ export class ViewProgramAgenciesComponent implements OnInit ,AfterViewInit{
       this._commonService.getDataByUrl(APIS.masterList.agencyList).subscribe((res: any) => {
         this.agencyList = res.data;
         this.agencyListFiltered=this.agencyList;
+           this.StatusData = 'programsInProcess'; 
         this.selectedAgencyId =-1
         this.GetProgramsByAgency(-1);
       }, (error) => {

@@ -62,6 +62,7 @@ import { NonTrainingCipetComponent } from './PIA/non-training-cipet/non-training
 import { NonTrainingTihclComponent } from './PIA/non-training-tihcl/non-training-tihcl.component';
 import { QuestionAssignmentComponent } from './PIA/question-assignment/question-assignment.component';
 import { NotificationViewerUpdateComponent } from './PIA/notification-viewer-update/notification-viewer-update.component';
+import { ResheduleProgramsComponent } from './PIA/reshedule-programs/reshedule-programs.component';
 const routes: Routes = [
     {
         path: '',
@@ -377,6 +378,12 @@ const routes: Routes = [
      {
         path: 'non-training-progress-coi',
         component: NonTrainingCoiComponent,
+        canActivate: [AuthGuard],
+        data: { roles: [Role.Admin,Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
+    },
+    {
+        path:"reshedule-programs",
+        component:ResheduleProgramsComponent,
         canActivate: [AuthGuard],
         data: { roles: [Role.Admin,Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
     },
