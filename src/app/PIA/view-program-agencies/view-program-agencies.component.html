@@ -36,7 +36,32 @@
                     </div>
                 </div>
                 <div class="card-body">
-              
+                    <div class="row mb-3">
+                        <div class="col-12 col-sm-6 col-md-6 col-lg-6">
+                            <!-- <button type="button" [ngClass]="{'disabled': !programIds}" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModalDeleteConfirm">Final Submission</button> -->
+                        </div>
+                        <div class="col-12 col-12 col-sm-6 col-md-6 col-lg-6 text-end">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Download Programs
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a class="dropdown-item" (click)="downloadProgram('excel')" href="javascript:void(0)">
+                                            Excel
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" (click)="downloadProgram('pdf')" href="javascript:void(0)">
+                                            PDF
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            &nbsp;&nbsp;
+                            <!-- <button type="button"  (click)="openFileUploadModal()" class="btn btn-lime-green" >Upload Programs</button> -->
+                        </div>
+                    </div>
                     <div class="row mb-3 g-2">
                         <div class="col-12 col-sm-6 col-md-4 col-lg-2">
                             <div class="card h-100 text-white text-center p-3 cursor-pointer position-relative"
@@ -363,6 +388,7 @@
                 <button type="button" class="btn-close me-1" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
+                <h5 class="mb-3 text-start fw-bold text-primary border-bottom pb-2">Title Of Program : {{ selectedRescheduleData?.[0]?.programTitle }}</h5>
                 <table class="table table-bordered">
                     <thead class="bg-lime-green text-white">
                         <tr>
