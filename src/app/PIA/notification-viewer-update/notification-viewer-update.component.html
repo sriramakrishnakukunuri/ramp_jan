@@ -1,0 +1,208 @@
+<main class="mt-4">
+    <section>
+        <div class="card mb-3">
+            <div class="card-header bg-transparent">
+          <div class="row align-items-center">
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-6">
+                        <h6 class="fw-600 mb-2 mb-sm-0" >{{userDetails?.userRole=='CALL_CENTER' ? 'Call Center Notifications' :'Agency Notifications'}}   </h6>
+
+                    </div>
+                   
+                </div>
+                </div>
+        </div>
+         <div class="card mb-3">
+            <div class="card-header bg-transparent">
+                <div class="row align-items-center">
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-6">
+                        <h6 class="fw-600 mb-2 mb-sm-0">{{userDetails?.userRole=='CALL_CENTER' ? 'Received Updates on Notifications' :'Pending Notifications'}}  </h6>
+
+                    </div>
+                   
+                </div>
+            </div>
+            <div class="card-body">
+               
+                <table id="view-table-participant1" class="table table-borderless table-striped nowrap">
+                    <thead class="bg-lime-green text-white">
+                        <tr>
+                            <th>S.No</th>
+                            <th>Date of First Notification</th>
+                            <th>Agency Name</th>
+                            <th>Participant Name</th>
+                            <th>Program Name</th>
+                            <th>Remarks by call center agent</th>
+                            <th>Updation Details from Agency</th>
+                            <!-- <th>Date of Fix</th> -->
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody *ngIf="activeNotifications">
+                      <tr *ngFor="let notification of activeNotifications; let i = index">
+                            <td>{{ i + 1 }}</td>
+                            <td>{{ notification?.dateOfFirstNotification || '' }}</td>
+                            <td>{{ notification?.agencyName }}</td>
+                           
+                            <td>{{ notification?.participantName }}</td>
+                            <td>{{ notification?.programName }}</td>
+                             <td>
+                                <ul *ngIf="notification.remarksByCallCenter && notification.remarksByCallCenter.length > 0">
+                                    <li *ngFor="let remark of notification.remarksByCallCenter ; let i = index" >
+                                        <span> {{ remark['remarksText'] }}</span> -- 
+                                        <span> {{ remark?.['remarksDate'] | date:'dd/MM/yyyy HH:mm:ss' }}</span>
+                                    </li>
+                                </ul>
+                                <span *ngIf="!notification.remarksByCallCenter || notification.remarksByCallCenter.length === 0">-</span>
+                            </td>
+                            <td>
+                                <ul *ngIf="notification.remarksByAgency && notification.remarksByAgency.length > 0">
+                                    
+                                        <li *ngFor="let detail of notification.remarksByAgency">
+                                        {{ detail['remarksText'] }} -- 
+                                        {{ detail?.['remarksDate'] | date:'dd/MM/yyyy HH:mm:ss' }}
+                                    </li>
+                                  
+                                   
+                                </ul>
+                                <span *ngIf="!notification.remarksByAgency || notification.remarksByAgency.length === 0">-</span>
+                            </td>
+                            <!-- <td>{{ notification?.dateOfClosure || '' }}</td> -->
+                            <td>{{ notification?.status }}</td>
+                            
+                            <td>
+                                <button type="button" class="btn btn-default text-lime-green btn-sm" (click)="openModel(notification)">
+                                <span class="bi bi-pencil"></span>
+                            </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+        </div>
+        <div class="card mb-3">
+            <div class="card-header bg-transparent">
+                <div class="row align-items-center">
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-6">
+                        <h6 class="fw-600 mb-2 mb-sm-0">Closed Notifications </h6>
+
+                    </div>
+                   
+                </div>
+            </div>
+            <div class="card-body">
+               
+                 <table id="view-table-participant2" class="table table-borderless table-striped nowrap">
+                    <thead class="bg-lime-green text-white">
+                        <tr>
+                            <th>S.No</th>
+                            <th>Date of First Notification</th>
+                            <th>Agency Name</th>
+                          
+                            <th>Participant Name</th>
+                            <th>Program Name</th>
+                            <th>Remarks by call center agent</th>
+                            <th>Updation Details from Agency</th>
+                            <th>Date of Closure</th>
+                            <th>Status</th>
+                            <!-- <th>Update</th> -->
+                        </tr>
+                    </thead>
+                    <tbody *ngIf="closedNotifications">
+                        <tr *ngFor="let notification of closedNotifications; let i = index">
+                            <td>{{ i + 1 }}</td>
+                            <td>{{ notification?.dateOfFirstNotification || '' }}</td>
+                            <td>{{ notification?.agencyName }}</td>
+                           
+                            <td>{{ notification?.participantName }}</td>
+                            <td>{{ notification?.programName }}</td>
+                             <td>
+                                <ul *ngIf="notification.remarksByCallCenter && notification.remarksByCallCenter.length > 0">
+                                    <li *ngFor="let remark of notification.remarksByCallCenter ; let i = index" >
+                                        <span> {{ remark['remarksText'] }}</span> -- <span> {{ remark?.['remarksDate'] | date:'dd/MM/yyyy HH:mm:ss' }}</span>
+                                       
+                                    </li>
+                                </ul>
+                                <span *ngIf="!notification.remarksByCallCenter || notification.remarksByCallCenter.length === 0">-</span>
+                            </td>
+                            <td>
+                                <ul *ngIf="notification.remarksByAgency && notification.remarksByAgency.length > 0">
+                                    
+                                        <li *ngFor="let detail of notification.remarksByAgency">
+                                        {{ detail['remarksText'] }} -- {{ detail?.['remarksDate'] | date:'dd/MM/yyyy HH:mm:ss' }}
+                                    </li>
+                                  
+                                   
+                                </ul>
+                                <span *ngIf="!notification.remarksByAgency || notification.remarksByAgency.length === 0">-</span>
+                            </td>
+                            <td>{{ notification?.dateOfClosure || '' }}</td>
+                            <td>{{ notification?.status }}</td>
+                        </tr>
+                    </tbody>
+                </table>            
+            </div>
+            
+        </div>
+    </section>
+</main>
+
+
+<!-- Modal -->
+<div class="modal fade" id="updateNotificationModal" tabindex="-1" aria-labelledby="updateNotificationModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <form [formGroup]="updateForm" (ngSubmit)="submitUpdate()">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="updateNotificationModalLabel">Update Notification</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3" hidden>
+                        <label for="notificationId" class="form-label">Notification ID</label>
+                        <input type="number" class="form-control" id="notificationId" formControlName="notificationId" required>
+                        <div *ngIf="updateForm.get('notificationId')?.invalid && updateForm.get('notificationId')?.touched" class="text-danger">
+                            Notification ID is required.
+                        </div>
+                    </div>
+                    <div class="mb-3" *ngIf="userDetails?.userRole=='CALL_CENTER'">
+                        <label for="status" class="form-label">Status</label>
+                        <select class="form-select" id="status" formControlName="status" required>
+                            <option value="OPEN">OPEN</option>
+                            <option value="IN_PROGRESS">IN_PROGRESS</option>
+                            <option value="COMPLETED">COMPLETED</option>
+                             <option value="CLOSED">CLOSED</option>
+                        </select>
+                        <div *ngIf="updateForm.get('status')?.invalid && updateForm.get('status')?.touched" class="text-danger">
+                            Status is required.
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="remark" class="form-label">Remark</label>
+                        <textarea class="form-control" id="remark" formControlName="remark" required></textarea>
+                        <div *ngIf="updateForm.get('remark')?.invalid && updateForm.get('remark')?.touched" class="text-danger">
+                            Remark is required.
+                        </div>
+                    </div>
+                    <div class="mb-3" hidden>
+                        <label for="remarkBy" class="form-label">Remark By</label>
+                        <select class="form-select" id="remarkBy" formControlName="remarkBy" required>
+                            <option value="AGENCY">AGENCY</option>
+                            <option value="CALL_CENTER">CALL_CENTER</option>
+                        </select>
+                        <div *ngIf="updateForm.get('remarkBy')?.invalid && updateForm.get('remarkBy')?.touched" class="text-danger">
+                            Remark By is required.
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      <button type="submit" class="btn btn-lime-green" data-bs-dismiss="modal" [ngClass]="{'disabled': updateForm.invalid}">Save changes</button>
+                      <!--  <span *ngIf="loading" class="spinner-border spinner-border-sm me-1"></span> -->
+                    <!-- <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" >Save changes</button> -->
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

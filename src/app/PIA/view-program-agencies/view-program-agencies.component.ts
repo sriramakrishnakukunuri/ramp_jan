@@ -7,6 +7,7 @@ import DataTable from 'datatables.net-dt';
 import 'datatables.net-buttons-dt';
 import 'datatables.net-responsive-dt';
 declare var $: any;
+import { LoaderService } from '@app/common_components/loader-service.service';
 
 @Component({
   selector: 'app-view-program-agencies',
@@ -25,9 +26,12 @@ export class ViewProgramAgenciesComponent implements OnInit ,AfterViewInit{
       private toastrService: ToastrService,
       private _commonService: CommonServiceService,
       private router: Router,
+      private loader:LoaderService
     ) { 
       this.loginsessionDetails = JSON.parse(sessionStorage.getItem('user') || '{}');    
       this.agencyId = this.loginsessionDetails.agencyId;
+    this.StatusData = 'programsInProcess'; // Set default status
+
     }
   
     ngOnInit(): void {
@@ -35,27 +39,33 @@ export class ViewProgramAgenciesComponent implements OnInit ,AfterViewInit{
     }
   
     ngAfterViewInit() {
-      this.initializeDataTable(-1);
+      // this.initializeDataTable(-1);
+    this.initializeDataTable(this.selectedAgencyId || this.agencyId);
+
     }
     GetProgramsByAgency(event:any){
       this.agencyByAdmin=event;
-      this.StatusData=''
+      // this.StatusData=''
       this.selectedAgencyId = event;
+      this.StatusData = 'programsInProcess'; // Always set to In-Progress on agency change
+  
       this.getData()
-      this._commonService.getDataByUrl(APIS.programCreation.getProgramsListByAgencyDetails+event).subscribe({
-        next: (dataList: any) => {
-          this.tableList = dataList.data;
+      // this._commonService.getDataByUrl(APIS.programCreation.getProgramsListByAgencyDetails+event).subscribe({
+      //   next: (dataList: any) => {
+      //     this.tableList = dataList.data;
           this.reinitializeDataTable();
-        },
-        error: (error: any) => {
-          this.toastrService.error(error.error.message);
-        }
-      });
+      //   },
+      //   error: (error: any) => {
+      //     this.toastrService.error(error.error.message);
+      //   }
+      // });
     }
     StatusData:any=''
   getProgramsByStatus(status: string) {
     if(status==this.StatusData){
       this.StatusData=''
+      this.reinitializeDataTable();
+
     }
     else{
        this.StatusData= status;
@@ -117,7 +127,13 @@ export class ViewProgramAgenciesComponent implements OnInit ,AfterViewInit{
                   title="Sessions" data-bs-toggle="modal" data-bs-target="#viewModal" 
                   data-id="${row.id}" title="View">
                   <span class="bi bi-eye"></span>
-                </button>`;
+                </button>
+                 <button type="button" class="btn btn-default btn-sm text-lime-green reschedule-btn" 
+                  title="Reshedule Data" data-bs-toggle="modal" data-bs-target="#viewSheduleModal" 
+                  data-id="${row.id}">
+                  <span class="bi bi-arrow-repeat"></span>
+                </button>
+                `;
               // }
               // return '';
           },
@@ -310,9 +326,48 @@ export class ViewProgramAgenciesComponent implements OnInit ,AfterViewInit{
         const rowData = self.dataTable.row($(event.currentTarget).parents('tr')).data();
         self.sessionDetails(rowData); // Call your method with proper data
       });
+       $('#view-table-program').on('click', '.reschedule-btn', function(event: any) {
+      const rowData = self.dataTable.row($(event.currentTarget).parents('tr')).data();
+      self.openRescheduleModal(rowData);
+    });
     }
       });
     }
+
+
+    selectedRescheduleData: any = [];
+  openRescheduleModal(row: any) {
+  // Store the selected row/session data if needed
+  this.selectedRescheduleData = [];
+  // Show the modal using Bootstrap JS
+  // const modal = new bootstrap.Modal(document.getElementById('viewSheduleModal'));
+  // modal.show();
+
+  this.loader.show();
+
+  this._commonService.getById(APIS.programCreation.resheduleData, row.programId).subscribe({
+    next: (res: any) => {
+      this.selectedRescheduleData = res?.data;
+      this.loader.hide();
+  //      const modal = new bootstrap.Modal(document.getElementById('viewSheduleModal'));
+  // modal.show();
+      // console.log(this.selectedRescheduleData, 'selectedRescheduleData');
+    },
+    error: (err) => {
+  //      const modal = new bootstrap.Modal(document.getElementById('viewSheduleModal'));
+  // modal.show();
+      this.loader.hide();
+      this.toastrService.error('Data Not Available', "Session Data Error!");
+      new Error(err);
+    },
+  });
+
+  
+
+
+
+
+}
   
     reinitializeDataTable() {
       if (this.dataTable) {
@@ -331,6 +386,7 @@ export class ViewProgramAgenciesComponent implements OnInit ,AfterViewInit{
       this._commonService.getDataByUrl(APIS.masterList.agencyList).subscribe((res: any) => {
         this.agencyList = res.data;
         this.agencyListFiltered=this.agencyList;
+           this.StatusData = 'programsInProcess'; 
         this.selectedAgencyId =-1
         this.GetProgramsByAgency(-1);
       }, (error) => {
@@ -397,5 +453,16 @@ export class ViewProgramAgenciesComponent implements OnInit ,AfterViewInit{
         },
       });
       // console.log(this.ParticipantAttentance)
+    }
+     downloadProgram(type:any){
+     
+      let linkUrl = type=='excel'?APIS.programCreation.downloadProgramsDataExcel+this.selectedAgencyId:APIS.programCreation.downloadProgramsDataPdf+this.selectedAgencyId
+      const link = document.createElement("a");
+      link.setAttribute("download", linkUrl);
+      link.setAttribute("target", "_blank");
+      link.setAttribute("href", linkUrl);
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
     }
   }

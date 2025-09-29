@@ -85,7 +85,10 @@ import { NonTrainingCipetComponent } from './PIA/non-training-cipet/non-training
 import { DisableFutureDatesDirective } from './PIA/disable-future-dates.directive';
 import { NonTrainingTihclComponent } from './PIA/non-training-tihcl/non-training-tihcl.component';
 import { QuestionAssignmentComponent } from './PIA/question-assignment/question-assignment.component';
-
+import { NotificationDisplayComponent } from './PIA/notification-display/notification-display.component';
+import { NotificationViewerUpdateComponent } from './PIA/notification-viewer-update/notification-viewer-update.component';
+import { LoaderComponent } from './common_components/loader/loader.component';
+import { ResheduleProgramsComponent } from './PIA/reshedule-programs/reshedule-programs.component';
 @NgModule({
     imports: [
         MaterialModule,
@@ -175,10 +178,16 @@ import { QuestionAssignmentComponent } from './PIA/question-assignment/question-
         NonTrainingProgressWehubComponent,
         NonTrainingCipetComponent,
         NonTrainingTihclComponent,
-        QuestionAssignmentComponent
+        QuestionAssignmentComponent,
+        NotificationDisplayComponent,
+        NotificationViewerUpdateComponent,
+        LoaderComponent,
+        ResheduleProgramsComponent
 
     ],
-    exports:[MaterialModule],
+    exports:[MaterialModule,
+        LoaderComponent
+    ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },

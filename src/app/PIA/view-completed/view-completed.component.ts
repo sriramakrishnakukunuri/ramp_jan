@@ -669,16 +669,16 @@ export class ViewCompletedComponent implements OnInit {
         modalInstance.hide();
       }
     }
-    downloadParticipant(){
-      let linkUrl = APIS.participantdata.downloadParticipantData+this.programIds
-      const link = document.createElement("a");
-      link.setAttribute("download", linkUrl);
-      link.setAttribute("target", "_blank");
-      link.setAttribute("href", APIS.participantdata.downloadParticipantData+this.programIds);
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-    }
+   downloadParticipant(type:any){
+    let linkUrl =type=='excel'? APIS.participantdata.downloadParticipantDataExcel+this.programIds:APIS.participantdata.downloadParticipantDataPdf+this.programIds
+    const link = document.createElement("a");
+    link.setAttribute("download", linkUrl);
+    link.setAttribute("target", "_blank");
+    link.setAttribute("href",linkUrl);
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+  }
     }
   
   

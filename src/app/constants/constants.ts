@@ -33,7 +33,8 @@ export const APIS = {
         programSummary: API_BASE_URL + '/programs/status/summary/',
         sessionFilesDelete: API_BASE_URL + '/program-session-files/', 
         uploadProgram: API_BASE_URL + '/program/import', 
-        downloadProgramsData: API_BASE_URL + '/program/pdf/',
+        downloadProgramsDataPdf: API_BASE_URL + '/program/pdf/',
+        downloadProgramsDataExcel: API_BASE_URL + '/program-details/excel/',
         downloadResourceData: API_BASE_URL + '/resource/excel/',
         downloadSessionsData: API_BASE_URL + '/program/session/pdf/',
         updateOverDue: API_BASE_URL + '/',
@@ -41,6 +42,11 @@ export const APIS = {
         // get: API_BASE_URL + '/program/get',
         // update: API_BASE_URL + '/program/update',
         // delete: API_BASE_URL + '/program/delete',
+        resheduleData: API_BASE_URL + '/program-reschedule-data/',
+    },
+    resheduleProgram:{
+        getResheduleData: API_BASE_URL + '/program-reschedule-data/programs/',
+
     },
     physicalTagets:{
         getTargets: API_BASE_URL + '/targets/physical/agency/',
@@ -69,7 +75,8 @@ export const APIS = {
         getParticipantDetailsById: API_BASE_URL + '/getParticipantById/',
         uploadParticipant: API_BASE_URL + '/upload',
         uploadParticipantData: API_BASE_URL + '/participants/import',
-        downloadParticipantData: API_BASE_URL + '/program/participant/pdf/',
+        downloadParticipantDataPdf: API_BASE_URL + '/program/participant/pdf/',
+        downloadParticipantDataExcel: API_BASE_URL + '/participant-details/excel/',
         downloadParticipantTempData: API_BASE_URL + '/ParticipantTemp/excel/sheets/',
         migrateApi: API_BASE_URL + '/participants/temp/migrate',
         deleteTempParticipant: API_BASE_URL + '/participants/temp/',
@@ -95,6 +102,9 @@ export const APIS = {
         getSectors: API_BASE_URL + '/getallsectors',
         getMandal: API_BASE_URL + '/getAllmandalsOfDistrictsById/',
         getMandalName: API_BASE_URL + '/getAllmandalsOfDistrictsByName/',
+        resourceDownload: API_BASE_URL + '/resource/excel/',
+        locationDownload: API_BASE_URL + '/location/excel/',
+        organizationDownload: API_BASE_URL + '/organization/excel',
     },
     trainingtargets:{
         getTrainingtargets: API_BASE_URL + '/targets/financial/year/summary',
@@ -155,7 +165,8 @@ export const APIS = {
         add:API_BASE_URL + `/save/callcenter/verification/data`,
         getALLQuestion:API_BASE_URL + `/all/questions`,
         getVeriaficationStatus:API_BASE_URL + `/all/verification/status`,
-        saveVeriaficationStatus:API_BASE_URL + `/save/callcenter/verification/data`
+        saveVeriaficationStatus:API_BASE_URL + `/save/callcenter/verification/data`,
+        updateNotificationCCToAgency:API_BASE_URL + `/notifications/send/callcenter-to-agency`
     },
     Attendance:{
         getDeatails:API_BASE_URL +`/program/attendence/`,
@@ -215,5 +226,14 @@ export const APIS = {
         saveActivityQuestions: API_BASE_URL + '/save/subactivity/questions',
         saveQuestion: API_BASE_URL + '/save/question',
         getQuestionsById: API_BASE_URL + '/get/questions/subactivity/id/',
+    },
+    notificationDisplay:{
+        getNotificationDisplayByAgency: API_BASE_URL + '/notifications/agency/remarks/',
+        getNotificationDisplayByCallCenter: API_BASE_URL + '/notifications/callcenter/remarks/',
+        getNotificationByAgency: API_BASE_URL + '/notifications/agency/',
+        getNotificationByCallCenter: API_BASE_URL + '/notifications/callcenter/',
+        getNotifications: API_BASE_URL + '/notifications/by-user',
+        markAsRead: API_BASE_URL + '/notifications/mark-read',
+        updateData: API_BASE_URL + '/notifications/status',
     }
 }

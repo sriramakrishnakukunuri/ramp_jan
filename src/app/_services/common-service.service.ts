@@ -1,7 +1,7 @@
 import { HttpClient,HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { APIS } from '@app/constants/constants';
-import { catchError, forkJoin, map, Observable, throwError } from 'rxjs';
+import { catchError, forkJoin, map, Observable, Subject, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +11,13 @@ export class CommonServiceService {
   constructor(private http: HttpClient) { }
   private formatErrors(error: HttpErrorResponse) {
     return throwError(() => error);
+  }
+
+   private refreshSubject = new Subject<void>();
+  refresh$ = this.refreshSubject.asObservable();
+
+  triggerRefresh() {
+    this.refreshSubject.next();
   }
   public changePassword(url:any,Payload:any) {     
     let headers = new HttpHeaders({
@@ -37,6 +44,9 @@ export class CommonServiceService {
   }
   public updatedata(URL: any, payload: any,): Observable<any> {
     return this.http.put(URL, payload).pipe(catchError(this.formatErrors));
+  }
+   public patchData(URL: any, payload: any,): Observable<any> {
+    return this.http.patch(URL, payload).pipe(catchError(this.formatErrors));
   }
   public getById(URL: any, id: any,): Observable<any> {
     return this.http.get(URL+id).pipe(catchError(this.formatErrors));
@@ -113,7 +123,9 @@ export class CommonServiceService {
       catchError(this.formatErrors.bind(this))
     );
   }
-  
+  updatebyPatch(URL: any, payload: any): Observable<any> {
+    return this.http.patch(URL, payload).pipe(catchError(this.formatErrors));
+  }
   
   
 }

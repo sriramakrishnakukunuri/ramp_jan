@@ -59,6 +59,7 @@ toggleSubMenu(menu: string, event: Event) {
 
     logout() {
         this.authenticationService.logout();
+        sessionStorage.removeItem('user');
     }
 }
 

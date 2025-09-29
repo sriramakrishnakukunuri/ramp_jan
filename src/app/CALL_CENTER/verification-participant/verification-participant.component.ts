@@ -24,14 +24,18 @@ export class VerificationParticipantComponent implements OnInit {
   showTable: boolean = false;
   dataTable: any;
   agencyId:any;
+  userDetails:any
   constructor(
     private _commonService: CommonServiceService,
     private toastrService: ToastrService,
     private fb: FormBuilder
   ) {
+    this.userDetails = JSON.parse(sessionStorage.getItem('user') || '{}');
+    console.log(this.userDetails);
     this.agencyId = JSON.parse(sessionStorage.getItem('user') || '{}').email;
     console.log(this.agencyId,'agency')
-    this.verificationForm=new FormGroup({verificationStatusId:new FormControl('',[Validators.required])})
+    this.verificationForm=this.fb.group({verificationStatusId:new FormControl('',[Validators.required] ),isNotificationSent:new FormControl(false),message:new FormControl('')});
+    
   }
 
   ngOnInit(): void {
@@ -225,10 +229,20 @@ export class VerificationParticipantComponent implements OnInit {
       }
     });
   }
+  onNotificationCheckboxChange(event: any) {
+    if (event.target.checked) {
+      this.fVerf['message'].setValue(this.fVerf['message'].value || '');
+      this.fVerf['message'].setValidators([Validators.required, Validators.minLength(10)]);
+    } else {
+       this.fVerf['message'].setValue('');
+      this.fVerf['message'].clearValidators();
+    }
+    this.fVerf['message'].updateValueAndValidity();
+  }
   GetQuestion: any[] = []; // Initialize as an array
  getQuestionBySubactivityId(){
   this.GetQuestion = []; // Reset to an empty array at the start
-  this.verificationForm = this.fb.group({verificationStatusId:new FormControl('',[Validators.required])});
+  this.verificationForm = this.fb.group({verificationStatusId:new FormControl('',[Validators.required] ),isNotificationSent:new FormControl(false),message:new FormControl('')});
 
   this._commonService.getById(APIS.callCenter.getQuestionById, this.programData.subActivityId).subscribe({
     next: (data: any) => {
@@ -279,11 +293,35 @@ export class VerificationParticipantComponent implements OnInit {
       "verifiedBy": this.agencyId,
       "verificationDate": moment().format('yyyy-MM-DD'),
       "verificationStatusId": this.verificationForm.value?.verificationStatusId?Number(this.verificationForm.value?.verificationStatusId):7,
-      "questionAnswerList": this.prepareQuestionAnswers(this.verificationForm.value)
+      "questionAnswerList": this.prepareQuestionAnswers(this.verificationForm.value),
+      "message": this.fVerf['isNotificationSent'].value ? this.fVerf['message'].value : null,
     }
     console.log(payload,'srk')
     this._commonService
       .add(APIS.callCenter.add, payload).subscribe({
+        next: (data: any) => {
+         this.showParticipants()
+          if(!this.verificationForm.value?.isNotificationSent){
+            this.toastrService.success('Participant Verification Updated Successfully', 'Success');
+          }
+         
+        },
+        error: (err) => {
+
+          this.toastrService.error(err.message, "Participant Data Error!");
+          new Error(err);
+        },
+      });
+    
+      if(this.verificationForm.value?.isNotificationSent){
+        let payloadNotifiction= {
+                        "callCenterUserId":   this.agencyId, 
+                        "agencyId": this.programData.agencyId,
+                        "participantId": this.getParticipantByUpdate?.participantId,
+                        "programId": this.programData.programId,
+                        "message": this.fVerf['isNotificationSent'].value ? this.fVerf['message'].value : null,
+                      }
+         this._commonService.add(APIS.callCenter.updateNotificationCCToAgency,payloadNotifiction).subscribe({
         next: (data: any) => {
          this.showParticipants()
          this.toastrService.success('Participant Verification Updated Successfully', 'Success');
@@ -294,6 +332,8 @@ export class VerificationParticipantComponent implements OnInit {
           new Error(err);
         },
       });
+
+      }
   
   }
   prepareQuestionAnswers(formData: any): any[] {

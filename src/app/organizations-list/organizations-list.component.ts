@@ -244,6 +244,7 @@ export class OrganizationsListComponent implements OnInit {
     });
   }
   downloadProgram(){
+
     let linkUrl = APIS.programCreation.downloadResourceData+this.agencyId
     const link = document.createElement("a");
     link.setAttribute("download", linkUrl);
@@ -253,7 +254,42 @@ export class OrganizationsListComponent implements OnInit {
     link.click();
     link.remove();
   }
+downloadProgramApi(type:string){
+  let url=''
+  if(type=='location'){
+    url=APIS.masterList.locationDownload+this.agencyId
+  
+  }else if(type=='resource'){
+    url=APIS.masterList.resourceDownload+this.agencyId
 
+  }else if(type=='org'){
+    url=APIS.masterList.organizationDownload
+
+  }
+  this.http.get(url  + "", { responseType: 'blob' }).subscribe({
+    next: (blob: Blob) => {
+      const link = document.createElement('a');
+      link.href = window.URL.createObjectURL(blob);
+      if (type === 'location') {
+        link.download = 'location.xlsx';
+      } else if (type === 'resource') {
+        link.download = 'resource.xlsx';
+      } else if (type === 'org') {
+        link.download = 'organization.xlsx';
+      }
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(link.href);
+    },
+    error: (err) => {
+      this.toastrService.error("Failed to download the Excel file.", "Download Error");
+    },
+  });
+
+
+
+}
 
   // delete 
    // delete Expenditure
