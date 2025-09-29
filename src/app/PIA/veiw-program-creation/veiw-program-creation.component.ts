@@ -54,23 +54,24 @@ export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
     this.initializeDataTable(this.selectedAgencyId || this.agencyId);
   }
 
-   dateRange = {
+dateRange = {
   start: new Date(new Date().getFullYear(), new Date().getMonth(), 1),
   end: new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0)
 };
- onDateRangeChange(event: any) {
-  this.dateRange = event;   // if ngModelChange
+
+onDateRangeChange() {
   console.log('Selected date range:', this.dateRange);
 
-  this.StatusData = '';
-  if (this.loginsessionDetails.userRole === 'ADMIN') {
-    this.getAgenciesList();
-  } else {
-    this.getProgramDetails();
-    this.getData();
-    this.selectedAgencyId = this.agencyId;
+  // Run only if both dates are selected
+  if (this.dateRange.start && this.dateRange.end) {
+    this.StatusData=""
+        this.initializeDataTable(this.selectedAgencyId || this.agencyId);
+
   }
 }
+
+
+
 
 
 
@@ -244,6 +245,21 @@ export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
         });
       }
       else{
+        let startDate = this.dateRange.start
+        if (startDate) {
+          const day = String(startDate.getDate()).padStart(2, '0');
+          const month = String(startDate.getMonth() + 1).padStart(2, '0');
+          const year = startDate.getFullYear();
+          params += `&startDate=${day}-${month}-${year}`;
+        }
+        let endDate = this.dateRange.end;
+        if (endDate) {
+          const day = String(endDate.getDate()).padStart(2, '0');
+          const month = String(endDate.getMonth() + 1).padStart(2, '0');
+          const year = endDate.getFullYear();
+          params += `&endDate=${day}-${month}-${year}`;
+        }
+        
          this._commonService.getDataByUrl(`${APIS.programCreation.getProgramsListByAgencyDetails}${agency}${params}`)
         .pipe()
         .subscribe({
@@ -298,7 +314,7 @@ export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
     const isEditDisabled = startDate && (startDate > fiveDaysAgo && startDate <= today);
     //  const isEditDisabled = startDate && (startDate < today || startDate > fiveDaysAgo);
 
-    console.log(row.startDate, startDate, isEditDisabled, 'iseditdisable');
+    // console.log(row.startDate, startDate, isEditDisabled, 'iseditdisable');
 
     return `
       <button type="button" class="btn btn-default btn-sm text-lime-green edit-btn" 
