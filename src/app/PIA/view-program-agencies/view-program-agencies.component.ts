@@ -484,4 +484,15 @@ onDateRangeChange() {
       });
       // console.log(this.ParticipantAttentance)
     }
+     downloadProgram(type:any){
+     
+      let linkUrl = type=='excel'?APIS.programCreation.downloadProgramsDataExcel+this.selectedAgencyId:APIS.programCreation.downloadProgramsDataPdf+this.selectedAgencyId
+      const link = document.createElement("a");
+      link.setAttribute("download", linkUrl);
+      link.setAttribute("target", "_blank");
+      link.setAttribute("href", linkUrl);
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    }
   }

@@ -42,13 +42,13 @@ export class ResheduleProgramsComponent implements OnInit {
     else{
       this.getProgramDetails();
       // this.getData()
-      this.selectedAgencyId=this.agencyId
+      this.selectedAgencyId=this.agencyId?this.agencyId:-1
     }
     
   }
 
   ngAfterViewInit() {
-    this.initializeDataTable(this.loginsessionDetails.agencyId);
+    this.initializeDataTable(this.agencyId?this.agencyId:this.selectedAgencyId);
   }
 
 
@@ -194,7 +194,7 @@ export class ResheduleProgramsComponent implements OnInit {
 
       }
       if(this.StatusData){
-        this._commonService.getDataByUrl(`${APIS.programCreation.getProgramsListByAgencyByStatusDetails}${agency}${statusDataurl}${params}`)
+        this._commonService.getDataByUrl(`${APIS.programCreation.getProgramsListByAgencyByStatusDetails}${agency?agency:this.selectedAgencyId}${statusDataurl}${params}`)
         .pipe()
         .subscribe({
           next: (res: any) => {
@@ -478,10 +478,10 @@ export class ResheduleProgramsComponent implements OnInit {
     }
     setTimeout(() => {
       if( this.loginsessionDetails?.userRole == 'ADMIN'){
-        this.initializeDataTable( this.agencyByAdmin);
+        this.initializeDataTable(this.agencyId?this.agencyId:this.selectedAgencyId);
       }
       else{
-        this.initializeDataTable(this.loginsessionDetails.agencyId);
+        this.initializeDataTable(this.agencyId?this.agencyId:this.selectedAgencyId)
       }
      
     }, 0);
@@ -580,7 +580,7 @@ selectedRescheduleData: any = [];
   PrigramSummaryData:any={}
   getData() {
     this.PrigramSummaryData ={}
-    this._commonService.getById(APIS.programCreation.programSummary, this.agencyId).subscribe({
+    this._commonService.getById(APIS.programCreation.programSummary, this.agencyId?this.agencyId:this.selectedAgencyId).subscribe({
       next: (res: any) => {          
         // this.PrigramSummaryData = res?.data   
       // console.log( this.PrigramSummaryData)
