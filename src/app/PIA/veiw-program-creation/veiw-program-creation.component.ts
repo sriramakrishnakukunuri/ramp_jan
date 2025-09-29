@@ -54,6 +54,25 @@ export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
     this.initializeDataTable(this.selectedAgencyId || this.agencyId);
   }
 
+   dateRange = {
+  start: new Date(new Date().getFullYear(), new Date().getMonth(), 1),
+  end: new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0)
+};
+ onDateRangeChange(event: any) {
+  this.dateRange = event;   // if ngModelChange
+  console.log('Selected date range:', this.dateRange);
+
+  this.StatusData = '';
+  if (this.loginsessionDetails.userRole === 'ADMIN') {
+    this.getAgenciesList();
+  } else {
+    this.getProgramDetails();
+    this.getData();
+    this.selectedAgencyId = this.agencyId;
+  }
+}
+
+
 
      StatusData:any=''
   getProgramsByStatus(status: string) {

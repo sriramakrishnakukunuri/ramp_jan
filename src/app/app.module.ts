@@ -89,6 +89,10 @@ import { NotificationDisplayComponent } from './PIA/notification-display/notific
 import { NotificationViewerUpdateComponent } from './PIA/notification-viewer-update/notification-viewer-update.component';
 import { LoaderComponent } from './common_components/loader/loader.component';
 import { ResheduleProgramsComponent } from './PIA/reshedule-programs/reshedule-programs.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatInputModule } from '@angular/material/input';
+import { MatNativeDateModule } from '@angular/material/core';
+
 @NgModule({
     imports: [
         MaterialModule,
@@ -113,7 +117,10 @@ import { ResheduleProgramsComponent } from './PIA/reshedule-programs/reshedule-p
         MatSortModule,
         NgxMaterialTimepickerModule,
         NgxDocViewerModule,
-        FontAwesomeModule
+        FontAwesomeModule,
+         MatDatepickerModule,
+    MatInputModule,
+    MatNativeDateModule,
     ],
     declarations: [
         DisableFutureDatesDirective,

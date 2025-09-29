@@ -23,8 +23,21 @@
                 </div>
                 <div class="card-body">
                     <div class="row mb-3">
-                        <div class="col-12 col-sm-6 col-md-6 col-lg-6">
+                        <div class="col-12 col-sm-6 col-md-6 col-lg-3">
                             <!-- <button type="button" [ngClass]="{'disabled': !programIds}" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModalDeleteConfirm">Final Submission</button> -->
+                           <mat-form-field appearance="outline" class="mb-3 w-100">
+  <mat-label>Select Date Range</mat-label>
+  <mat-date-range-input [rangePicker]="picker" [(ngModel)]="dateRange" 
+                        (dateChange)="onDateRangeChange($event)">
+    <input matStartDate placeholder="Start date">
+    <input matEndDate placeholder="End date">
+  </mat-date-range-input>
+  <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+  <mat-date-range-picker #picker></mat-date-range-picker>
+</mat-form-field>
+
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-6 col-lg-3">
                         </div>
                         <div class="col-12 col-12 col-sm-6 col-md-6 col-lg-6 text-end">
                             <div class="btn-group">
