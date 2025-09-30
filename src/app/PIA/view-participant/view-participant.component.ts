@@ -481,6 +481,14 @@ export class ViewParticipantComponent implements OnInit {
     }
   }
   downloadParticipant(type:any){
+     let payload ='?agencyId='+this.selectedAgencyId+'&programId='+this.programIds 
+    if(!this.programIds && this.selectedAgencyId){
+      payload = '?agencyId='+this.selectedAgencyId
+    }
+    else{
+      payload ='?agencyId='+this.selectedAgencyId+'&programId='+this.programIds
+    }
+   
     let linkUrl =type=='excel'? APIS.participantdata.downloadParticipantDataExcel+this.programIds:APIS.participantdata.downloadParticipantDataPdf+this.programIds
     const link = document.createElement("a");
     link.setAttribute("download", linkUrl);
