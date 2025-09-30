@@ -81,6 +81,22 @@ export class ViewProgramAgenciesComponent implements OnInit ,AfterViewInit{
         }
       });
   }
+
+  dateRange = {
+  start: new Date(new Date().getFullYear(), new Date().getMonth(), 1),
+  end: new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0)
+};
+
+onDateRangeChange() {
+  console.log('Selected date range:', this.dateRange);
+
+  // Run only if both dates are selected
+  if (this.dateRange.start && this.dateRange.end) {
+    this.StatusData=""
+        this.initializeDataTable(this.selectedAgencyId || this.agencyId);
+
+  }
+}
     sessionDetails(dataList: any): any {
       // console.log(dataList)
       this.sessionDetailsList = dataList.programSessionList;
@@ -292,6 +308,20 @@ export class ViewProgramAgenciesComponent implements OnInit ,AfterViewInit{
         });
       }
       else{
+        let startDate = this.dateRange.start
+        if (startDate) {
+          const day = String(startDate.getDate()).padStart(2, '0');
+          const month = String(startDate.getMonth() + 1).padStart(2, '0');
+          const year = startDate.getFullYear();
+          params += `&startDate=${day}-${month}-${year}`;
+        }
+        let endDate = this.dateRange.end;
+        if (endDate) {
+          const day = String(endDate.getDate()).padStart(2, '0');
+          const month = String(endDate.getMonth() + 1).padStart(2, '0');
+          const year = endDate.getFullYear();
+          params += `&endDate=${day}-${month}-${year}`;
+        }
         this._commonService.getDataByUrl(`${APIS.programCreation.getProgramsListByAgencyDetails}${agency}${params}`)
         .pipe()
         .subscribe({

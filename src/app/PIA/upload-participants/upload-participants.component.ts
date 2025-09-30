@@ -530,12 +530,21 @@ EditProgramId:any=false
       modalInstance.hide();
     }
   }
-  downloadParticipant(){
-    let linkUrl = APIS.participantdata.downloadParticipantTempData+this.programIds
+  downloadParticipant(type:any){
+    console.log(type,this.agencyId,this.selectedAgencyId,this.programIds)
+     let payload ='?agencyId='+this.agencyId?this.agencyId:this.selectedAgencyId+'&programId='+this.programIds 
+    if(!this.programIds && this.selectedAgencyId){
+      payload = '?agencyId='+this.agencyId?this.agencyId:this.selectedAgencyId
+    }
+    else{
+      payload ='?agencyId='+this.agencyId?this.agencyId:this.selectedAgencyId+'&programId='+this.programIds
+    }
+   
+    let linkUrl =type=='excel'? APIS.participantdata.downloadParticipantDataExcel+payload:APIS.participantdata.downloadParticipantDataPdf+this.programIds
     const link = document.createElement("a");
     link.setAttribute("download", linkUrl);
     link.setAttribute("target", "_blank");
-    link.setAttribute("href", APIS.participantdata.downloadParticipantTempData+this.programIds);
+    link.setAttribute("href",linkUrl);
     document.body.appendChild(link);
     link.click();
     link.remove();
