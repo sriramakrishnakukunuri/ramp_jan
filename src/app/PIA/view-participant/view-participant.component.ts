@@ -480,16 +480,16 @@ export class ViewParticipantComponent implements OnInit {
       modalInstance.hide();
     }
   }
-  downloadParticipant(type:any){
-     let payload ='?agencyId='+this.selectedAgencyId+'&programId='+this.programIds 
+    downloadParticipant(type:any){
+     let payload ='?agencyId='+(this.agencyId?this.agencyId:this.selectedAgencyId)+'&programId='+this.programIds 
     if(!this.programIds && this.selectedAgencyId){
-      payload = '?agencyId='+this.selectedAgencyId
+      payload = '?agencyId='+(this.agencyId?this.agencyId:this.selectedAgencyId)
     }
     else{
-      payload ='?agencyId='+this.selectedAgencyId+'&programId='+this.programIds
+      payload ='?agencyId='+(this.agencyId?this.agencyId:this.selectedAgencyId)+'&programId='+this.programIds
     }
-   
-    let linkUrl =type=='excel'? APIS.participantdata.downloadParticipantDataExcel+this.programIds:APIS.participantdata.downloadParticipantDataPdf+this.programIds
+    console.log(type,this.agencyId,this.selectedAgencyId,this.programIds,payload)
+    let linkUrl =type=='excel'? APIS.participantdata.downloadParticipantDataExcel+payload:APIS.participantdata.downloadParticipantDataPdf+this.programIds
     const link = document.createElement("a");
     link.setAttribute("download", linkUrl);
     link.setAttribute("target", "_blank");

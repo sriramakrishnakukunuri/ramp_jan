@@ -52,8 +52,8 @@ export class ViewCompletedComponent implements OnInit {
       agencyProgramList: any;
       agencyProgramListFiltered:any;
       getProgramsByAgencyAdmin(agency:any) {
-        if(agency == 'All Agencies') {
-          this.programIds = 'All Programs'
+        if(agency == -1) {
+          this.programIds = -1
           this.agencyProgramList=[]
           this.agencyProgramListFiltered=[]
           this.getData()
@@ -93,7 +93,7 @@ export class ViewCompletedComponent implements OnInit {
       dropdownProgramsList(event: any, type: any) {
         this.submitedData = ''
         this.programIds = event.value
-        if(event.value == 'All Programs') {
+        if(event.value == -1) {
           this.getData()
 
         }
@@ -114,7 +114,7 @@ export class ViewCompletedComponent implements OnInit {
         // if(resList){
         //   this.submitedData=JSON.parse(resList)
         // }
-        if(this.selectedAgencyId=='All Agencies') {
+        if(this.selectedAgencyId==-1) {
           this._commonService.getDataByUrl(APIS.participantdata.getDataByProgramBYDeatisl+-1+`?page=0&size=200`).subscribe({
             next: (res: any) => {
               this.submitedData = res?.data
@@ -132,7 +132,7 @@ export class ViewCompletedComponent implements OnInit {
             },
           });
         }
-        else if(this.programIds == 'All Programs') {
+        else if(this.programIds == -1) {
           this._commonService.getDataByUrl(APIS.participantdata.getDataByProgramBYDeatisl+-2+`?agencyId=`+this.selectedAgencyId+`&page=0&size=200`).subscribe({
             next: (res: any) => {
               this.submitedData = res?.data
@@ -216,10 +216,10 @@ export class ViewCompletedComponent implements OnInit {
             if (data.search.value) {
               params += `&search=${encodeURIComponent(data.search.value)}`;
             }
-            if(this.selectedAgencyId=='All Agencies') {
+            if(this.selectedAgencyId==-1) {
               Url=APIS.participantdata.getDataByProgramBYDeatisl+-1+params
             }
-            else if(this.programIds == 'All Programs') {
+            else if(this.programIds == -1) {
               Url=APIS.participantdata.getDataByProgramBYDeatisl+-2+'?agencyId='+this.selectedAgencyId+'&page='+page+'&size='+size
             }
             else{
@@ -669,8 +669,16 @@ export class ViewCompletedComponent implements OnInit {
         modalInstance.hide();
       }
     }
-   downloadParticipant(type:any){
-    let linkUrl =type=='excel'? APIS.participantdata.downloadParticipantDataExcel+this.programIds:APIS.participantdata.downloadParticipantDataPdf+this.programIds
+    downloadParticipant(type:any){
+     let payload ='?agencyId='+(this.agencyId?this.agencyId:this.selectedAgencyId)+'&programId='+this.programIds 
+    if(!this.programIds && this.selectedAgencyId){
+      payload = '?agencyId='+(this.agencyId?this.agencyId:this.selectedAgencyId)
+    }
+    else{
+      payload ='?agencyId='+(this.agencyId?this.agencyId:this.selectedAgencyId)+'&programId='+this.programIds
+    }
+   console.log(type,this.agencyId,this.selectedAgencyId,this.programIds,payload)
+    let linkUrl =type=='excel'? APIS.participantdata.downloadParticipantDataExcel+payload:APIS.participantdata.downloadParticipantDataPdf+this.programIds
     const link = document.createElement("a");
     link.setAttribute("download", linkUrl);
     link.setAttribute("target", "_blank");
