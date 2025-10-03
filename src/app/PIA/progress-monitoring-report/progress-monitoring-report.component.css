@@ -1,0 +1,83 @@
+.card {
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.card-header {
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #eaeaea;
+}
+
+.accordion-item {
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 6px;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+}
+
+.accordion-header {
+  background-color: limegreen;
+  border-radius: 6px 6px 0 0;
+  padding: 12px 16px;
+}
+
+.accordion-button {
+  background-color: transparent !important;
+  box-shadow: none !important;
+  padding: 0;
+  width: 25px;
+}
+
+.accordion-button:focus {
+  box-shadow: none !important;
+}
+
+.accordion-button::after {
+  margin-left: 0;
+}
+
+.accordion-body {
+  padding: 20px;
+  background-color: #e3e3e3;
+}
+
+.section-title {
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #ffffff;
+  margin: 0;
+}
+
+.edit-icon {
+  cursor: pointer;
+  color: #007bff;
+  margin-left: 10px;
+  transition: transform 0.2s ease;
+}
+
+.edit-icon:hover {
+  transform: scale(1.1);
+}
+
+.form-label {
+  font-weight: 500;
+  margin-bottom: 8px;
+  font-size: 1rem;
+}
+
+.form-control:disabled {
+  background-color: #f9f9f9;
+  opacity: 1;
+}
+
+.form-check-input:disabled {
+  opacity: 0.7;
+}
+
+.form-check-label {
+  padding-left: 4px;
+}
+
+.update-btn {
+  margin-top: 20px;
+}

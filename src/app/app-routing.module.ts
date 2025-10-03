@@ -63,6 +63,7 @@ import { NonTrainingTihclComponent } from './PIA/non-training-tihcl/non-training
 import { QuestionAssignmentComponent } from './PIA/question-assignment/question-assignment.component';
 import { NotificationViewerUpdateComponent } from './PIA/notification-viewer-update/notification-viewer-update.component';
 import { ResheduleProgramsComponent } from './PIA/reshedule-programs/reshedule-programs.component';
+import { ProgressMonitoringReportComponent } from './PIA/progress-monitoring-report/progress-monitoring-report.component';
 const routes: Routes = [
     {
         path: '',
@@ -410,6 +411,12 @@ const routes: Routes = [
         component:QuestionAssignmentComponent,
         canActivate: [AuthGuard],
         data: { roles: [Role.Admin] }
+    },
+    {
+        path: 'progress-monitoring-report',
+        component: ProgressMonitoringReportComponent,
+        canActivate: [AuthGuard],
+        data: { roles: [Role.Admin,Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
     },
      {
         path: 'Training-Non-trainingAchievements',

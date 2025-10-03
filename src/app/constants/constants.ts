@@ -95,6 +95,7 @@ export const APIS = {
     masterList: {
         changePassword:API_BASE_URL+'/login/change-password',
         agencyList: API_BASE_URL + '/agencies',
+        getUserBasedOnAgency:API_BASE_URL+'/new/program/monitoring-dropdown/',
         locationList: API_BASE_URL + '/locations',
         getUserList: API_BASE_URL + '/login/allusrs',
         getresources: API_BASE_URL + '/resources',
@@ -171,6 +172,10 @@ export const APIS = {
     Attendance:{
         getDeatails:API_BASE_URL +`/program/attendence/`,
         saveAttendance:API_BASE_URL +`/program/attendence`,
+    },
+    programFeedback:{
+        updateFeedbackData:API_BASE_URL+'/new/program/feedback/update/',
+        getFeedbackData:API_BASE_URL+'/new/program/feedback/id/'
     },
     rawMaterial:{
         getDeatails:API_BASE_URL +`/program/rawmaterial/`,

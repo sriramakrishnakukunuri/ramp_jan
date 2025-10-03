@@ -93,6 +93,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { MatNativeDateModule } from '@angular/material/core';
 
+import { ProgressMonitoringReportComponent } from './PIA/progress-monitoring-report/progress-monitoring-report.component';
 @NgModule({
     imports: [
         MaterialModule,
@@ -189,7 +190,8 @@ import { MatNativeDateModule } from '@angular/material/core';
         NotificationDisplayComponent,
         NotificationViewerUpdateComponent,
         LoaderComponent,
-        ResheduleProgramsComponent
+        ResheduleProgramsComponent,
+        ProgressMonitoringReportComponent
 
     ],
     exports:[MaterialModule,
