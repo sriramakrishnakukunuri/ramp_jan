@@ -71,7 +71,7 @@
                     <div class="col-12 col-sm-6 col-md-6 col-lg-6">
                         <button type="button" [ngClass]="{'disabled': !programIds}" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModalDeleteConfirm">Final Submission</button>
                     </div>
-                    <div class="col-12 col-12 col-sm-6 col-md-6 col-lg-6 text-end">
+                    <!-- <div class="col-12 col-12 col-sm-6 col-md-6 col-lg-6 text-end">
                          <div class="btn-group">
                                 <button [ngClass]="{'disabled': !programIds}" type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                                     Download Participants
@@ -89,10 +89,9 @@
                                     </li>
                                 </ul>
                             </div>
-                        <!-- <button type="button"  (click)="downloadParticipant()" class="btn btn-secondary">Download Participants</button>  -->
                         &nbsp;&nbsp;
-                        <!-- <button type="button" [ngClass]="{'disabled': !programIds}" (click)="openFileUploadModal()" class="btn btn-lime-green" >Upload Participants</button> -->
-                    </div>
+                        <button type="button" [ngClass]="{'disabled': !programIds}" (click)="openFileUploadModal()" class="btn btn-lime-green" >Upload Participants</button>
+                    </div> -->
                 </div>
                 <br>
                 <table id="view-table-participant1" class="table table-borderless table-striped nowrap">

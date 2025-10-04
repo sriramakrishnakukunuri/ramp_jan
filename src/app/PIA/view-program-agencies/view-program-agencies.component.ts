@@ -92,7 +92,7 @@ onDateRangeChange() {
 
   // Run only if both dates are selected
   if (this.dateRange.start && this.dateRange.end) {
-    this.StatusData=""
+
         this.initializeDataTable(this.selectedAgencyId || this.agencyId);
 
   }
@@ -213,11 +213,14 @@ onDateRangeChange() {
             orderable: false,
             title: 'Type Of Activity'
         },
-        { 
-            data: 'subActivityName',
-            orderable: false,
-            title: 'Sub Activity'
-        },
+         { 
+          data: 'subActivityName',
+          title: 'Sub Activity',
+          orderable: false ,
+          render: function(data, type, row) {
+            return data ? data : '';
+          }
+      },
        
       
       
@@ -281,34 +284,7 @@ onDateRangeChange() {
         statusDataurl = `?status=${this.StatusData}`;
 
       }
-      if(this.StatusData){
-        this._commonService.getDataByUrl(`${APIS.programCreation.getProgramsListByAgencyByStatusDetails}${agency}${statusDataurl}${params}`)
-        .pipe()
-        .subscribe({
-          next: (res: any) => {
-            callback({
-              draw: data.draw,
-              recordsTotal: res.totalElements,
-              recordsFiltered: res.totalElements,
-              data: res.data
-             
-            });
-            // console.log(data)
-          },
-          error: (err) => {
-            this.toastrService.error(err.message, "Programs Data Error!");
-            console.error(err);
-            callback({
-              draw: data.draw,
-              recordsTotal: 0,
-              recordsFiltered: 0,
-              data: []
-            });
-          }
-        });
-      }
-      else{
-        let startDate = this.dateRange.start
+       let startDate = this.dateRange.start
         if (startDate) {
           const day = String(startDate.getDate()).padStart(2, '0');
           const month = String(startDate.getMonth() + 1).padStart(2, '0');
@@ -322,7 +298,8 @@ onDateRangeChange() {
           const year = endDate.getFullYear();
           params += `&endDate=${day}-${month}-${year}`;
         }
-        this._commonService.getDataByUrl(`${APIS.programCreation.getProgramsListByAgencyDetails}${agency}${params}`)
+        
+         this._commonService.getDataByUrl(`${APIS.programCreation.getProgramsListByAgencyByStatusDetails}${agency}${this.StatusData?statusDataurl:''}${params}`)
         .pipe()
         .subscribe({
           next: (res: any) => {
@@ -346,7 +323,49 @@ onDateRangeChange() {
             });
           }
         });
-      }
+      // if(this.StatusData){
+       
+      // }
+      // else{
+      //   let startDate = this.dateRange.start
+      //   if (startDate) {
+      //     const day = String(startDate.getDate()).padStart(2, '0');
+      //     const month = String(startDate.getMonth() + 1).padStart(2, '0');
+      //     const year = startDate.getFullYear();
+      //     params += `&startDate=${day}-${month}-${year}`;
+      //   }
+      //   let endDate = this.dateRange.end;
+      //   if (endDate) {
+      //     const day = String(endDate.getDate()).padStart(2, '0');
+      //     const month = String(endDate.getMonth() + 1).padStart(2, '0');
+      //     const year = endDate.getFullYear();
+      //     params += `&endDate=${day}-${month}-${year}`;
+      //   }
+      //   this._commonService.getDataByUrl(`${APIS.programCreation.getProgramsListByAgencyDetails}${agency}${params}`)
+      //   .pipe()
+      //   .subscribe({
+      //     next: (res: any) => {
+      //       callback({
+      //         draw: data.draw,
+      //         recordsTotal: res.totalElements,
+      //         recordsFiltered: res.totalElements,
+      //         data: res.data
+             
+      //       });
+      //       // console.log(data)
+      //     },
+      //     error: (err) => {
+      //       this.toastrService.error(err.message, "Programs Data Error!");
+      //       console.error(err);
+      //       callback({
+      //         draw: data.draw,
+      //         recordsTotal: 0,
+      //         recordsFiltered: 0,
+      //         data: []
+      //       });
+      //     }
+      //   });
+      // }
       
     },
    
