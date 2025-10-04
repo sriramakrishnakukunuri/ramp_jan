@@ -201,8 +201,8 @@ export class DownloadExcelPdfComponent implements OnInit {
   downloadSessionsPdf(value:string){
 
          if(value=='1'){
-      let url=""
-      let fileName=""
+      let url=APIS.programCreation.downloadSessionsData+this.selectedProgramId
+      let fileName = `Program_Session.pdf`
       this.downloadFile(url,fileName)
     }
       
@@ -255,7 +255,7 @@ export class DownloadExcelPdfComponent implements OnInit {
   }
 
   downloadAllAgenciesProgramsPdf(){
-    
+
   }
 
   downloadProgramPdf() {
