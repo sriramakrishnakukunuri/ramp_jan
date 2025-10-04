@@ -73,6 +73,12 @@ export class CommonServiceService {
     return this.http.delete(URL + id).pipe(catchError(this.formatErrors));
   }
 
+  public downloadFile(url: string): Observable<Blob> {
+    return this.http.get(url, {
+      responseType: 'blob'
+    });
+  }
+
   public getDataByUrl(URL: any): Observable<any> {
     return this.http.get(URL).pipe(catchError(this.formatErrors));
   }

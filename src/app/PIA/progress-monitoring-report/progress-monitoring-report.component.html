@@ -12,8 +12,8 @@
         <div class="card-body">
           <!-- Filter Dropdowns -->
           <div class="row">
-            <div class="col-12 col-sm-6 col-md-4 col-lg-9"></div>
-            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+            <div class="col-12 col-sm-6 col-md-4 col-lg-8"></div>
+            <div class="col-12 col-sm-6 col-md-4 col-lg-2">
               <div class="form-floating mb-3">
                 <select class="form-select" id="agency" [(ngModel)]="selectedAgencyId"
                   (change)="getAgenciesBasedUserList($any($event.target).value)">
@@ -24,6 +24,10 @@
                 </select>
                 <label for="agency">Agency</label>
               </div>
+              </div>
+
+            <div class="col-12 col-sm-6 col-md-4 col-lg-2">
+
               <div class="form-floating mb-3">
                 <select class="form-select" id="agency" [(ngModel)]="selectedUserId"
                   (change)="onAgencyChange($any($event.target).value)">
@@ -37,6 +41,35 @@
             </div>
             </div>
           </div>
+          
+<!-- Summary Card Section -->
+<!-- Summary Card Section -->
+<div class="card-body pb-0">
+  <div class="program-summary">
+    <div class="d-flex align-items-center mb-2">
+      <!-- <h5 class="program-title mb-0">Program Summary</h5> -->
+     
+    </div>
+    <div class="summary-details">
+      <div class="summary-detail">
+        <i class="bi bi-building"></i>
+        <span class="summary-label">Agency:</span>
+        <span class="summary-value">{{formData?.agencyName || 'N/A'}}</span>
+      </div>
+      <div class="summary-detail">
+        <i class="bi bi-geo-alt"></i>
+        <span class="summary-label">District:</span>
+        <span class="summary-value">{{formData?.district || 'N/A'}}</span>
+      </div>
+      <div class="summary-detail">
+        <i class="bi bi-journal-text"></i>
+        <span class="summary-label">Program:</span>
+        <span class="summary-value">{{formData?.programName || 'N/A'}}</span>
+      </div>
+    </div>
+  </div>
+</div>
+
 
         <!-- Pre-Event Preparation Section -->
         <div class="card-body">
@@ -54,7 +87,7 @@
                     </button>
                     <h5 class="section-title">Pre-Event Preparation</h5>
                   </div>
-                  <i class="bi bi-pencil-square edit-icon" (click)="toggleEdit('preEvent')"></i>
+                  <!-- <i class="bi bi-pencil-square edit-icon" (click)="toggleEdit('preEvent')"></i> -->
                 </div>
               </div>
               <div 
@@ -150,7 +183,7 @@
                       </div>
                     </div>
                     <div class="d-flex justify-content-end" *ngIf="isEditable.preEvent">
-                      <button class="btn btn-success update-btn" type="button" (click)="updateSection('preEvent')">Update</button>
+                      <button class="btn btn btn-secondary update-btn" type="button" (click)="updateSection('preEvent')">Update</button>
                     </div>
                   </form>
                 </div>
@@ -175,7 +208,7 @@
                     </button>
                     <h5 class="section-title">Audience Profile</h5>
                   </div>
-                  <i class="bi bi-pencil-square edit-icon" (click)="toggleEdit('audienceProfile')"></i>
+                  <!-- <i class="bi bi-pencil-square edit-icon" (click)="toggleEdit('audienceProfile')"></i> -->
                 </div>
               </div>
               <div 
@@ -289,25 +322,24 @@
                     </div>
                     
                     <div class="mb-3">
-                      <label class="form-label">8. No of IAs participated</label>
-                      <div class="row">
-                        <div class="col-md-3">
-                          <div class="form-check mb-2" *ngFor="let ia of iaListLeft">
-                            <input class="form-check-input" type="checkbox" [value]="ia" (change)="onIACheckboxChange($event, ia)" [disabled]="!isEditable.audienceProfile" [id]="ia">
-                            <label class="form-check-label" [for]="ia">{{ ia }}</label>
-                          </div>
-                        </div>
-                        <div class="col-md-3">
-                          <div class="form-check mb-2" *ngFor="let ia of iaListRight">
-                            <input class="form-check-input" type="checkbox" [value]="ia" (change)="onIACheckboxChange($event, ia)" [disabled]="!isEditable.audienceProfile" [id]="ia">
-                            <label class="form-check-label" [for]="ia">{{ ia }}</label>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    
+  <label class="form-label">8. No of IAs participated</label>
+  <div class="row">
+    <div class="col-md-3">
+      <div class="form-check mb-2" *ngFor="let ia of iaListLeft">
+        <input class="form-check-input" type="checkbox" [value]="ia" (change)="onIACheckboxChange($event, ia)" [checked]="selectedIAs.includes(ia)" [disabled]="!isEditable.audienceProfile" [id]="ia">
+        <label class="form-check-label" [for]="ia">{{ ia }}</label>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="form-check mb-2" *ngFor="let ia of iaListRight">
+        <input class="form-check-input" type="checkbox" [value]="ia" (change)="onIACheckboxChange($event, ia)" [checked]="selectedIAs.includes(ia)" [disabled]="!isEditable.audienceProfile" [id]="ia">
+        <label class="form-check-label" [for]="ia">{{ ia }}</label>
+      </div>
+    </div>
+  </div>
+</div>
                     <div class="d-flex justify-content-end" *ngIf="isEditable.audienceProfile">
-                      <button class="btn btn-success update-btn" type="button" (click)="updateSection('audienceProfile')">Update</button>
+                      <button class="btn btn btn-secondary update-btn" type="button" (click)="updateSection('audienceProfile')">Update</button>
                     </div>
                   </form>
                 </div>
@@ -332,7 +364,7 @@
                     </button>
                     <h5 class="section-title">Program Delivery - Session 1</h5>
                   </div>
-                  <i class="bi bi-pencil-square edit-icon" (click)="toggleEdit('programDelivery1')"></i>
+                  <!-- <i class="bi bi-pencil-square edit-icon" (click)="toggleEdit('programDelivery1')"></i> -->
                 </div>
               </div>
               <div 
@@ -436,7 +468,7 @@
                     </div>
                     
                     <div class="d-flex justify-content-end" *ngIf="isEditable.programDelivery1">
-                      <button class="btn btn-success update-btn" type="button" (click)="updateSection('programDelivery1')">Update</button>
+                      <button class="btn btn btn-secondary update-btn" type="button" (click)="updateSection('programDelivery1')">Update</button>
                     </div>
                   </form>
                 </div>
@@ -461,7 +493,7 @@
                     </button>
                     <h5 class="section-title">Program Delivery - Session 2</h5>
                   </div>
-                  <i class="bi bi-pencil-square edit-icon" (click)="toggleEdit('programDelivery2')"></i>
+                  <!-- <i class="bi bi-pencil-square edit-icon" (click)="toggleEdit('programDelivery2')"></i> -->
                 </div>
               </div>
               <div 
@@ -565,7 +597,7 @@
                     </div>
                     
                     <div class="d-flex justify-content-end" *ngIf="isEditable.programDelivery2">
-                      <button class="btn btn-success update-btn" type="button" (click)="updateSection('programDelivery2')">Update</button>
+                      <button class="btn btn btn-secondary update-btn" type="button" (click)="updateSection('programDelivery2')">Update</button>
                     </div>
                   </form>
                 </div>
@@ -590,7 +622,7 @@
                     </button>
                     <h5 class="section-title">Logistics / Facilities</h5>
                   </div>
-                  <i class="bi bi-pencil-square edit-icon" (click)="toggleEdit('logisticsFacilities')"></i>
+                  <!-- <i class="bi bi-pencil-square edit-icon" (click)="toggleEdit('logisticsFacilities')"></i> -->
                 </div>
               </div>
               <div 
@@ -717,7 +749,7 @@
                     </div>
                     
                     <div class="d-flex justify-content-end" *ngIf="isEditable.logisticsFacilities">
-                      <button class="btn btn-success update-btn" type="button" (click)="updateSection('logisticsFacilities')">Update</button>
+                      <button class="btn btn btn-secondary update-btn" type="button" (click)="updateSection('logisticsFacilities')">Update</button>
                     </div>
                   </form>
                 </div>
@@ -742,7 +774,7 @@
                     </button>
                     <h5 class="section-title">Participants Feedback</h5>
                   </div>
-                  <i class="bi bi-pencil-square edit-icon" (click)="toggleEdit('participantsFeedback')"></i>
+                  <!-- <i class="bi bi-pencil-square edit-icon" (click)="toggleEdit('participantsFeedback')"></i> -->
                 </div>
               </div>
               <div 
@@ -811,7 +843,7 @@
                     </div>
                     
                     <div class="d-flex justify-content-end" *ngIf="isEditable.participantsFeedback">
-                      <button class="btn btn-success update-btn" type="button" (click)="updateSection('participantsFeedback')">Update</button>
+                      <button class="btn btn btn-secondary update-btn" type="button" (click)="updateSection('participantsFeedback')">Update</button>
                     </div>
                   </form>
                 </div>
@@ -836,7 +868,7 @@
                     </button>
                     <h5 class="section-title">Speaker Evaluation</h5>
                   </div>
-                  <i class="bi bi-pencil-square edit-icon" (click)="toggleEdit('feedbackOnSpeaker')"></i>
+                  <!-- <i class="bi bi-pencil-square edit-icon" (click)="toggleEdit('feedbackOnSpeaker')"></i> -->
                 </div>
               </div>
               <div 
@@ -921,7 +953,7 @@
                     </div>
                     
                     <div class="d-flex justify-content-end" *ngIf="isEditable.feedbackOnSpeaker">
-                      <button class="btn btn-success update-btn" type="button" (click)="updateSection('feedbackOnSpeaker')">Update</button>
+                      <button class="btn btn btn-secondary update-btn" type="button" (click)="updateSection('feedbackOnSpeaker')">Update</button>
                     </div>
                   </form>
                 </div>
@@ -946,31 +978,43 @@
                     </button>
                     <h5 class="section-title">Additional Information</h5>
                   </div>
-                  <i class="bi bi-pencil-square edit-icon" (click)="toggleEdit('additionalFields')"></i>
+                  <!-- <i class="bi bi-pencil-square edit-icon" (click)="toggleEdit('additionalFields')"></i> -->
                 </div>
               </div>
               <div 
                 id="collapseAdditionalFields" 
                 class="accordion-collapse collapse" 
-                [ngClass]="{'show': collapseState.additionalFields}" 
-                aria-labelledby="headingAdditionalFields">
+                [ngClass]="{'show': collapseState.additionalFields}"
+                aria-labelledby="headingAdditionalFields"
+              >
                 <div class="accordion-body">
                   <form [formGroup]="additionalFieldsForm">
-                     <div class="row mb-3">
-                      <div class="col-md-12 mb-3">
-                        <label class="form-label">Best Practices Identified</label>
-                        <div class="input-group">
-                          <input type="text" class="form-control" #bestPracticeInput placeholder="Enter best practice">
-                          <button class="btn btn-outline-secondary" type="button" (click)="addBestPractice(bestPracticeInput)" [disabled]="!isEditable.additionalFields">Add</button>
-                        </div>
-                        <div class="mt-2">
-                          <span class="badge bg-secondary me-2 mb-2" *ngFor="let practice of bestPracticesList">
-                            {{ practice }}
-                            <i class="bi bi-x ms-1" (click)="removeBestPractice(practice)" *ngIf="isEditable.additionalFields"></i>
-                          </span>
-                        </div>
-                      </div>
-                    </div>
+<div class="row mb-3">
+  <div class="col-md-12 mb-3">
+    <label class="form-label">Best Practices Identified</label>
+    <div class="row g-3">
+      <div class="col-md-4" *ngFor="let practice of bestPracticesArray; let i = index; trackBy: trackByIndex">
+        <div class="input-group">
+          <input 
+            type="text" 
+            class="form-control"
+            [value]="practice"
+            (input)="updateBestPractice($event, i)"
+            [disabled]="!isEditable.additionalFields"
+            placeholder="Enter best practice">
+          <button 
+            class="btn btn-secondary" 
+            type="button" 
+            (click)="clearBestPractice(i)" 
+            [disabled]="!isEditable.additionalFields"
+            *ngIf="bestPracticesArray[i]">
+            <i class="bi bi-x"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
                     <div class="row mb-3">
                       <div class="col-md-12 mb-3">
                         <label class="form-label">Remarks</label>
@@ -981,7 +1025,7 @@
                    
                     
                     <div class="d-flex justify-content-end" *ngIf="isEditable.additionalFields">
-                      <button class="btn btn-success update-btn" type="button" (click)="updateSection('additionalFields')">Update</button>
+                      <button class="btn btn btn-secondary update-btn" type="button" (click)="updateSection('additionalFields')">Update</button>
                     </div>
                   </form>
                 </div>

@@ -35,14 +35,14 @@ export class ProgressMonitoringReportComponent implements OnInit {
   
   // Track editable state for each section
   isEditable: { [key: string]: boolean } = { 
-    preEvent: false, 
-    audienceProfile: false, 
-    programDelivery1: false,
-    programDelivery2: false,
-    logisticsFacilities: false,
-    participantsFeedback: false,
-    feedbackOnSpeaker: false,
-    additionalFields: false
+    preEvent: true, 
+    audienceProfile: true, 
+    programDelivery1: true,
+    programDelivery2: true,
+    logisticsFacilities: true,
+    participantsFeedback: true,
+    feedbackOnSpeaker: true,
+    additionalFields: true
   };
 
   // Forms
@@ -69,12 +69,27 @@ export class ProgressMonitoringReportComponent implements OnInit {
   iaListLeft = ['CoI', 'IITH', 'RICH', 'WEHub', 'CIPET'];
   iaListRight = ['NIMSME', 'TGTPC', 'ALEAP', 'CITD'];
   selectedIAs: string[] = [];
-  bestPracticesList: string[] = [];
+  bestPracticesArray: string[] = ['', '', ''];
+  loginData: any;
 
   ngOnInit(): void {
+    const agencyDataGlobal = JSON.parse(sessionStorage.getItem('user') || '{}');
+    this.loginData = agencyDataGlobal;
+
+    // Determine if the user is an admin
+    const isAdmin = this.loginData?.userRole === 'ADMIN';
+
+    // Set the editable state for all sections based on the user role
+    Object.keys(this.isEditable).forEach(key => {
+      this.isEditable[key] = isAdmin;
+    });
+
     this.getAgenciesList();
     this.initializeForms();
-     this.fetchReportData(1);
+  }
+
+  trackByIndex(index: number, item: any): number {
+    return index;
   }
 
   getAgenciesList() {
@@ -82,6 +97,8 @@ export class ProgressMonitoringReportComponent implements OnInit {
     this._commonService.getDataByUrl(APIS.masterList.agencyList).subscribe((res: any) => {
       this.agencyList = res.data;
       this.agencyListFiltered = this.agencyList;
+      this.selectedAgencyId = this.agencyListFiltered[0]?.agencyId;
+      this.getAgenciesBasedUserList(this.selectedAgencyId);
     }, (error) => {
       this.toastrService.error(error.error.message);
     });
@@ -95,6 +112,8 @@ export class ProgressMonitoringReportComponent implements OnInit {
     this._commonService.getDataByUrl(APIS.masterList.getUserBasedOnAgency+user).subscribe((res: any) => {
       this.UserList = res.data;
       this.UserListFiltered = this.UserList;
+      this.selectedUserId= this.UserListFiltered[0]?.programMonitoringId;
+      this.fetchReportData(this.selectedUserId);
     }, (error) => {
       this.toastrService.error(error.error.message);
     });
@@ -122,46 +141,34 @@ export class ProgressMonitoringReportComponent implements OnInit {
   }
 
   mapResponseToForms() {
-    if (!this.formData) return;
+    if (!this.formData) {
+      // If there's no form data at all, ensure the array is reset for a fresh form
+      this.bestPracticesArray = ['', '', ''];
+      return;
+    }
 
     // Map API data to forms
-    if (this.formData) {
-      this.preEventForm.patchValue(this.formData);
+    this.preEventForm.patchValue(this.formData);
+    this.audienceProfileForm.patchValue(this.formData);
+    if (this.formData.noIAsParticipated) {
+      this.selectedIAs = [...this.formData.noIAsParticipated];
+    } else {
+      this.selectedIAs = [];
     }
-    
-    if (this.formData) {
-      this.audienceProfileForm.patchValue(this.formData);
-      // Handle IA checkboxes
-      if (this.formData) {
-        this.selectedIAs = [...this.formData.noIAsParticipated];
-      }
-    }
-       if (this.formData) {
-        this.programDeliveryForm1.patchValue(this.formData);
-      }
-       if (this.formData) {
-        this.programDeliveryForm2.patchValue(this.formData);
-      }
-   
-
-    if (this.formData) {
-      this.logisticsFacilitiesForm.patchValue(this.formData);
-    }
-
-    if (this.formData) {
-      this.participantsFeedbackForm.patchValue(this.formData);
-    }
-
-    if (this.formData) {
-      this.feedbackOnSpeakerForm.patchValue(this.formData);
-    }
-
-    if (this.formData) {
-      this.additionalFieldsForm.patchValue(this.formData);
-      if (this.formData.bestPracticesIdentified) {
-        this.bestPracticesList = [...this.formData.bestPracticesIdentified];
-      }
-    }
+    this.programDeliveryForm1.patchValue(this.formData);
+    this.programDeliveryForm2.patchValue(this.formData);
+    this.logisticsFacilitiesForm.patchValue(this.formData);
+    this.participantsFeedbackForm.patchValue(this.formData);
+    this.feedbackOnSpeakerForm.patchValue(this.formData);
+    this.additionalFieldsForm.patchValue(this.formData);
+      
+    // Correctly handle bestPracticesIdentified
+    const practices = this.formData.bestPracticesIdentified || [];
+    this.bestPracticesArray = [
+      practices[0] || '',
+      practices[1] || '',
+      practices[2] || ''
+    ];
   }
 
   initializeForms() {
@@ -251,25 +258,8 @@ export class ProgressMonitoringReportComponent implements OnInit {
     });
   }
 
-  addBestPractice(input: HTMLInputElement) {
-    const practice = input.value.trim();
-    if (practice && !this.bestPracticesList.includes(practice)) {
-      this.bestPracticesList.push(practice);
-      this.additionalFieldsForm.patchValue({
-        bestPracticesIdentified: this.bestPracticesList
-      });
-      input.value = '';
-    }
-  }
-
-  removeBestPractice(practice: string) {
-    const index = this.bestPracticesList.indexOf(practice);
-    if (index > -1) {
-      this.bestPracticesList.splice(index, 1);
-      this.additionalFieldsForm.patchValue({
-        bestPracticesIdentified: this.bestPracticesList
-      });
-    }
+  clearBestPractice(index: number) {
+    this.bestPracticesArray[index] = '';
   }
 
   toggleCollapse(section: string) {
@@ -311,7 +301,14 @@ export class ProgressMonitoringReportComponent implements OnInit {
         formData = {...this.feedbackOnSpeakerForm.value, stepNumber: 7}
         break;
       case 'additionalFields':
-        formData = {...this.additionalFieldsForm.value, stepNumber: 8}
+        // Filter out any empty strings before sending
+        const nonEmptyPractices = this.bestPracticesArray.filter(p => p.trim() !== '');
+        
+        formData = {
+          ...this.additionalFieldsForm.value, 
+          stepNumber: 8,
+          bestPracticesIdentified: nonEmptyPractices
+        };
         break;
       default:
         return;
@@ -322,14 +319,15 @@ export class ProgressMonitoringReportComponent implements OnInit {
       agencyId: Number(this.selectedAgencyId),
       district: '', // You might need to get this from somewhere
       programId: 0, // You might need to get this from somewhere
-      userId: 'string', // You might need to get this from authentication // You might need to set this appropriately
+      userId: Number(this.selectedUserId), // Convert to number
       ...formData
     };
 
     this._commonService.add(`${APIS.programFeedback.updateFeedbackData}${this.selectedUserId?this.selectedUserId:1}`, finalData).subscribe(
       (response: any) => {
         this.toastrService.success(`${this.getSectionTitle(section)} updated successfully`);
-        this.isEditable[section] = false;
+        // this.isEditable[section] = false;
+        this.fetchReportData(this.selectedUserId);
         
         // Update local data
         if (!this.formData) this.formData = {};
@@ -339,6 +337,11 @@ export class ProgressMonitoringReportComponent implements OnInit {
         this.toastrService.error(`Failed to update ${this.getSectionTitle(section)}`);
       }
     );
+  }
+
+  // Add this new method
+  updateBestPractice(event: any, index: number) {
+    this.bestPracticesArray[index] = event.target.value;
   }
 
   getSectionTitle(section: string): string {

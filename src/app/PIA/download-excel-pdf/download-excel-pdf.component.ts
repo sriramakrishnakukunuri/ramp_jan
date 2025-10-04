@@ -1,0 +1,247 @@
+import { Component, OnInit } from '@angular/core';
+import { CommonServiceService } from '@app/_services/common-service.service';
+import { ToastrService } from 'ngx-toastr';
+import { APIS } from '@app/constants/constants';
+import { Role } from '@app/_models';
+
+@Component({
+  selector: 'app-download-excel-pdf',
+  templateUrl: './download-excel-pdf.component.html',
+  styleUrls: ['./download-excel-pdf.component.css']
+})
+export class DownloadExcelPdfComponent implements OnInit {
+  currentUser: any;
+  isAdmin: boolean = false;
+  agencyId: any;
+  agencyList: any[] = [];
+  agencyListFiltered: any[] = [];
+  programList: any[] = [];
+  programListFiltered: any[] = [];
+  selectedAgencyId: any = '';
+  selectedProgramId: any = '';
+  isDownloading: boolean = false;
+
+  constructor(
+    private _commonService: CommonServiceService,
+    private toastrService: ToastrService
+  ) {}
+
+  ngOnInit(): void {
+    this.currentUser = JSON.parse(sessionStorage.getItem('user') || '{}');
+    this.isAdmin = this.currentUser.role === Role.Admin;
+    this.agencyId = this.currentUser.agencyId;
+
+    if (this.isAdmin) {
+      this.getAgenciesList();
+    } else {
+      this.selectedAgencyId = this.agencyId;
+      this.getProgramsByAgency(this.agencyId);
+    }
+  }
+
+  getAgenciesList() {
+    this._commonService.getDataByUrl(APIS.masterList.agencyList).subscribe({
+      next: (res: any) => {
+        this.agencyList = res.data;
+        this.agencyListFiltered = this.agencyList;
+      },
+      error: (err) => {
+        this.toastrService.error(err.error.message);
+      },
+    });
+  }
+
+  getProgramsByAgency(agencyId: any) {
+    if (!agencyId) {
+      this.programList = [];
+      this.programListFiltered = [];
+      this.selectedProgramId = '';
+      return;
+    }
+    this._commonService
+      .getDataByUrl(`${APIS.programCreation.getProgramsListBySession + agencyId}?status=Program Scheduled`)
+      .subscribe({
+        next: (res: any) => {
+          this.programList = res?.data || [];
+          this.programListFiltered = this.programList;
+          this.selectedProgramId = '';
+        },
+        error: (err) => {
+          this.programList = [];
+          this.programListFiltered = [];
+          this.selectedProgramId = '';
+          this.toastrService.error(err.error.message);
+        },
+      });
+  }
+
+  onAgencySelect(agencyId: any) {
+    this.selectedAgencyId = agencyId;
+    this.getProgramsByAgency(agencyId);
+  }
+
+  onProgramSelect(programId: any) {
+    this.selectedProgramId = programId;
+  }
+
+  downloadFile(url: string, fileName: string) {
+    this.isDownloading = true;
+    this._commonService.downloadFile(url).subscribe({
+      next: (response: Blob) => {
+        this.isDownloading = false;
+        const a = document.createElement('a');
+        const objectUrl = URL.createObjectURL(response);
+        a.href = objectUrl;
+        a.download = fileName;
+        a.click();
+        URL.revokeObjectURL(objectUrl);
+        this.toastrService.success('File downloaded successfully.');
+      },
+      error: (err) => {
+        this.isDownloading = false;
+        this.toastrService.error(err.error?.message || 'Failed to download file.');
+      },
+    });
+  }
+
+  // Program Downloads
+  downloadProgramExcel() {
+    const agency = this.selectedAgencyId || this.agencyId;
+    this.downloadFile(
+      `${APIS.programCreation.downloadProgramsDataExcel}${agency}`,
+      `Program_Details_${agency}.xlsx`
+    );
+  }
+
+  downloadProgramPdf() {
+    const agency = this.selectedAgencyId || this.agencyId;
+    this.downloadFile(
+      `${APIS.programCreation.downloadProgramsDataPdf}${agency}`,
+      `Program_Details_${agency}.pdf`
+    );
+  }
+
+  // Program Session Downloads
+  downloadProgramSessionPdf() {
+    if (!this.selectedProgramId) {
+      this.toastrService.info('Please select a program.');
+      return;
+    }
+    this.downloadFile(
+      `${APIS.programCreation.downloadSessionsData}${this.selectedProgramId}`,
+      `Program_Session_${this.selectedProgramId}.pdf`
+    );
+  }
+
+  // Participant Downloads
+  downloadParticipantExcel() {
+    const agency = this.selectedAgencyId || this.agencyId;
+    let url = `${APIS.participantdata.downloadParticipantDataExcel}?agencyId=${agency}`;
+    if (this.selectedProgramId) {
+      url += `&programId=${this.selectedProgramId}`;
+    }
+    this.downloadFile(
+      url,
+      `Participant_Details.xlsx`
+    );
+  }
+
+  downloadParticipantPdf() {
+    if (!this.selectedProgramId) {
+      this.toastrService.info('Please select a program.');
+      return;
+    }
+    this.downloadFile(
+      `${APIS.participantdata.downloadParticipantDataPdf}${this.selectedProgramId}`,
+      `Program_Participants_${this.selectedProgramId}.pdf`
+    );
+  }
+
+  // Program Summary Downloads
+  downloadProgramSummaryPdf() {
+    if (!this.selectedProgramId) {
+      this.toastrService.info('Please select a program.');
+      return;
+    }
+    this.downloadFile(
+      `${APIS.programCreation.downloadProgramSummaryPdf}${this.selectedProgramId}`,
+      `Program_Summary_${this.selectedProgramId}.pdf`
+    );
+  }
+
+  downloadProgramSummaryExcel() {
+    if (!this.selectedProgramId) {
+      this.toastrService.info('Please select a program.');
+      return;
+    }
+    this.downloadFile(
+      `${APIS.programCreation.downloadProgramSummaryExcel}${this.selectedProgramId}`,
+      `Program_Summary_${this.selectedProgramId}.xlsx`
+    );
+  }
+
+  // Expenditure Downloads
+  downloadExpenditureSeparateExcel() {
+    let url = `${APIS.programCreation.downloadProgramExpenditureExcel}?agencyId=${this.selectedAgencyId || this.agencyId}`;
+    if(this.selectedProgramId){
+      url += `&programId=${this.selectedProgramId}`;
+    }
+    this.downloadFile(
+      url,
+      `Program_Expenditure_Separate.xlsx`
+    );
+  }
+
+  downloadExpenditureCombinedExcel() {
+    if (!this.selectedProgramId) {
+      this.toastrService.info('Please select a program.');
+      return;
+    }
+    this.downloadFile(
+      `${APIS.programCreation.downloadCombinedExpenditureExcel}${this.selectedProgramId}`,
+      `Program_Expenditure_Combined_${this.selectedProgramId}.xlsx`
+    );
+  }
+
+  // Program Overview & Status Downloads
+  downloadProgramOverviewExcel() {
+    const agency = this.selectedAgencyId || this.agencyId;
+    this.downloadFile(
+      `${APIS.programCreation.downloadProgramOverviewReportExcel}${agency}/excel`,
+      `Program_Overview_${agency}.xlsx`
+    );
+  }
+
+  downloadProgramParticipantStatusExcel() {
+    const agency = this.selectedAgencyId || this.agencyId;
+    this.downloadFile(
+      `${APIS.programCreation.downloadProgramParticipantStatusExcel}${agency}`,
+      `Program_Participant_Status_${agency}.xlsx`
+    );
+  }
+
+  downloadProgramParticipantStatusPdf() {
+    const agency = this.selectedAgencyId || this.agencyId;
+    this.downloadFile(
+      `${APIS.programCreation.downloadProgramParticipantStatusPdf}${agency}`,
+      `Program_Participant_Status_${agency}.pdf`
+    );
+  }
+
+  // Program Monitoring
+  downloadProgramMonitoringPdf() {
+    // Assuming monitoringId is available or passed. For now, this is a placeholder.
+    // if (!monitoringId) {
+    //   this.toastrService.info('Monitoring ID is required for this download.');
+    //   return;
+    // }
+    if (!this.selectedProgramId) {
+      this.toastrService.info('Please select a program.');
+      return;
+    }
+    this.downloadFile(
+      `${APIS.programCreation.downloadProgramMonitoringReportPdf}${this.selectedProgramId}`,
+      `Program_Monitoring_Report_${this.selectedProgramId}.pdf`
+    );
+  }
+}

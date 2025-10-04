@@ -64,6 +64,7 @@ import { QuestionAssignmentComponent } from './PIA/question-assignment/question-
 import { NotificationViewerUpdateComponent } from './PIA/notification-viewer-update/notification-viewer-update.component';
 import { ResheduleProgramsComponent } from './PIA/reshedule-programs/reshedule-programs.component';
 import { ProgressMonitoringReportComponent } from './PIA/progress-monitoring-report/progress-monitoring-report.component';
+import { DownloadExcelPdfComponent } from './PIA/download-excel-pdf/download-excel-pdf.component';
 const routes: Routes = [
     {
         path: '',
@@ -357,6 +358,12 @@ const routes: Routes = [
         component: TrainingTargetsComponent,
         canActivate: [AuthGuard],
         data: { roles: [Role.Admin,Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
+    },
+    {
+        path: 'download-excel-pdf',
+        component: DownloadExcelPdfComponent,
+        canActivate: [AuthGuard],
+        data: { roles: [Role.Admin, Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR] }
     },
      {
         path: 'non-training-targets',

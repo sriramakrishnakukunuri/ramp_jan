@@ -94,6 +94,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatNativeDateModule } from '@angular/material/core';
 
 import { ProgressMonitoringReportComponent } from './PIA/progress-monitoring-report/progress-monitoring-report.component';
+import { DownloadExcelPdfComponent } from './PIA/download-excel-pdf/download-excel-pdf.component';
 @NgModule({
     imports: [
         MaterialModule,
@@ -191,7 +192,8 @@ import { ProgressMonitoringReportComponent } from './PIA/progress-monitoring-rep
         NotificationViewerUpdateComponent,
         LoaderComponent,
         ResheduleProgramsComponent,
-        ProgressMonitoringReportComponent
+        ProgressMonitoringReportComponent,
+        DownloadExcelPdfComponent
 
     ],
     exports:[MaterialModule,

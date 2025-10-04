@@ -1,0 +1,160 @@
+<main class="mt-4">
+    <section>
+        <div class="card mb-3">
+            <div class="card-header bg-transparent">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h6 class="fw-600 mb-0">Download Reports</h6>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <!-- Filters -->
+                <div class="row mb-4">
+                    <div class="col-md-4" *ngIf="isAdmin">
+                        <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>Select Agency</mat-label>
+                            <mat-select [(ngModel)]="selectedAgencyId" (selectionChange)="onAgencySelect($event.value)">
+                                <mat-select-filter [array]="agencyList" [displayMember]="'agencyName'" (filteredReturn)="agencyListFiltered = $event"></mat-select-filter>
+                                <mat-option *ngFor="let agency of agencyListFiltered" [value]="agency.agencyId">
+                                    {{ agency.agencyName }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-4">
+                        <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>Select Program</mat-label>
+                            <mat-select [(ngModel)]="selectedProgramId" (selectionChange)="onProgramSelect($event.value)">
+                                <mat-select-filter [array]="programList" [displayMember]="'programTitle'" (filteredReturn)="programListFiltered = $event"></mat-select-filter>
+                                <mat-option *ngFor="let program of programListFiltered" [value]="program.programId">
+                                    {{ program.programTitle }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <!-- Loader -->
+                <div *ngIf="isDownloading" class="text-center my-3">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <p class="mt-2">Downloading file, please wait...</p>
+                </div>
+
+                <!-- Download Reports Grid -->
+                <div class="row" *ngIf="!isDownloading">
+                    <!-- Program Details -->
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100">
+                            <div class="card-header">Program Details</div>
+                            <div class="card-body">
+                                <p>Download program details for the selected agency.</p>
+                                <button class="btn btn-sm btn-outline-success me-2" (click)="downloadProgramExcel()" [disabled]="!selectedAgencyId && !agencyId">
+                                    <i class="bi bi-file-earmark-excel"></i> Excel
+                                </button>
+                                <button class="btn btn-sm btn-outline-danger" (click)="downloadProgramPdf()" [disabled]="!selectedAgencyId && !agencyId">
+                                    <i class="bi bi-file-earmark-pdf"></i> PDF
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Program Session -->
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100">
+                            <div class="card-header">Program Session</div>
+                            <div class="card-body">
+                                <p>Download session details for the selected program.</p>
+                                <button class="btn btn-sm btn-outline-danger" (click)="downloadProgramSessionPdf()" [disabled]="!selectedProgramId">
+                                    <i class="bi bi-file-earmark-pdf"></i> PDF
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Participant Details -->
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100">
+                            <div class="card-header">Participant Details</div>
+                            <div class="card-body">
+                                <p>Download participant details for the selected program/agency.</p>
+                                <button class="btn btn-sm btn-outline-success me-2" (click)="downloadParticipantExcel()" [disabled]="!selectedAgencyId && !agencyId">
+                                    <i class="bi bi-file-earmark-excel"></i> Excel
+                                </button>
+                                <button class="btn btn-sm btn-outline-danger" (click)="downloadParticipantPdf()" [disabled]="!selectedProgramId">
+                                    <i class="bi bi-file-earmark-pdf"></i> PDF
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Program Summary -->
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100">
+                            <div class="card-header">Program Summary</div>
+                            <div class="card-body">
+                                <p>Download summary for the selected program.</p>
+                                <button class="btn btn-sm btn-outline-success me-2" (click)="downloadProgramSummaryExcel()" [disabled]="!selectedProgramId">
+                                    <i class="bi bi-file-earmark-excel"></i> Excel
+                                </button>
+                                <button class="btn btn-sm btn-outline-danger" (click)="downloadProgramSummaryPdf()" [disabled]="!selectedProgramId">
+                                    <i class="bi bi-file-earmark-pdf"></i> PDF
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Expenditure -->
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100">
+                            <div class="card-header">Expenditure</div>
+                            <div class="card-body">
+                                <p>Download program expenditure reports.</p>
+                                <button class="btn btn-sm btn-outline-success me-2" (click)="downloadExpenditureSeparateExcel()" [disabled]="!selectedAgencyId && !agencyId" title="Separate Expenditure">
+                                    <i class="bi bi-file-earmark-excel"></i> Separate Excel
+                                </button>
+                                <button class="btn btn-sm btn-outline-success" (click)="downloadExpenditureCombinedExcel()" [disabled]="!selectedProgramId" title="Combined Expenditure">
+                                    <i class="bi bi-file-earmark-excel"></i> Combined Excel
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Program Overview & Status -->
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100">
+                            <div class="card-header">Overview & Status</div>
+                            <div class="card-body">
+                                <p>Download overview and participant status reports.</p>
+                                <button class="btn btn-sm btn-outline-success me-2" (click)="downloadProgramOverviewExcel()" [disabled]="!selectedAgencyId && !agencyId" title="Program Overview">
+                                    <i class="bi bi-file-earmark-excel"></i> Overview
+                                </button>
+                                <button class="btn btn-sm btn-outline-success me-2" (click)="downloadProgramParticipantStatusExcel()" [disabled]="!selectedAgencyId && !agencyId" title="Participant Status">
+                                    <i class="bi bi-file-earmark-excel"></i> Status (Excel)
+                                </button>
+                                <button class="btn btn-sm btn-outline-danger" (click)="downloadProgramParticipantStatusPdf()" [disabled]="!selectedAgencyId && !agencyId" title="Participant Status">
+                                    <i class="bi bi-file-earmark-pdf"></i> Status (PDF)
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Program Monitoring -->
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100">
+                            <div class="card-header">Program Monitoring</div>
+                            <div class="card-body">
+                                <p>Download monitoring report for the selected program.</p>
+                                <button class="btn btn-sm btn-outline-danger" (click)="downloadProgramMonitoringPdf()" [disabled]="!selectedProgramId">
+                                    <i class="bi bi-file-earmark-pdf"></i> PDF
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
