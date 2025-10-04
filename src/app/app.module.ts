@@ -92,6 +92,9 @@ import { ResheduleProgramsComponent } from './PIA/reshedule-programs/reshedule-p
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatSelectModule } from '@angular/material/select';
 
 import { ProgressMonitoringReportComponent } from './PIA/progress-monitoring-report/progress-monitoring-report.component';
 import { DownloadExcelPdfComponent } from './PIA/download-excel-pdf/download-excel-pdf.component';
@@ -123,6 +126,9 @@ import { DownloadExcelPdfComponent } from './PIA/download-excel-pdf/download-exc
          MatDatepickerModule,
     MatInputModule,
     MatNativeDateModule,
+     MatMenuModule,
+    MatTooltipModule,
+    MatSelectModule,
     ],
     declarations: [
         DisableFutureDatesDirective,

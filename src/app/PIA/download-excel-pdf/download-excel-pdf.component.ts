@@ -28,7 +28,7 @@ export class DownloadExcelPdfComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentUser = JSON.parse(sessionStorage.getItem('user') || '{}');
-    this.isAdmin = this.currentUser.role === Role.Admin;
+    this.isAdmin = this.currentUser.userRole === 'ADMIN';
     this.agencyId = this.currentUser.agencyId;
 
     if (this.isAdmin) {
@@ -84,6 +84,142 @@ export class DownloadExcelPdfComponent implements OnInit {
     this.selectedProgramId = programId;
   }
 
+
+ downloadAllParticipantsExcel(value: any) {
+  const agency = this.selectedAgencyId || this.agencyId;
+  
+  if (value == '1') {
+      if (this.isAdmin) {
+
+
+        let url = APIS.participantdata.downloadParticipantDataExcel+this.selectedAgencyId
+        let fileName = "All_Participants_Report.xlsx"
+        this.downloadFile(url, fileName)
+      } else {
+        let url = APIS.participantdata.downloadParticipantDataExcel+this.selectedAgencyId
+        let fileName = ""
+        this.downloadFile(url, fileName)
+      }
+    }
+  else if (value == '2') { // All Programs
+     if (this.isAdmin) {
+
+
+        let url = APIS.programCreation.downloadProgramsDataExcel+this.selectedAgencyId
+        let fileName = "All_Programs_Report.xlsx"
+        this.downloadFile(url, fileName)
+      } else {
+         let url = APIS.programCreation.downloadProgramsDataExcel+this.selectedAgencyId
+        let fileName = "All_Programs_Report.xlsx"
+        this.downloadFile(url, fileName)
+      }
+  }
+  else if (value == '3') { // All Expenditure
+    let url = `${APIS.programCreation.downloadProgramExpenditureExcel}`;
+    let fileName = `All_Expenditure_Report.xlsx`;
+    this.downloadFile(url, fileName);
+  }
+  else if (value == '4') { // All Programs Overview
+    let url = `${APIS.programCreation.downloadProgramOverviewReportExcel}${agency}`;
+    let fileName = `Programs_Overview_Report.xlsx`;
+    this.downloadFile(url, fileName);
+  }
+} 
+  downloadAllParticipantsPdf(value: string) {
+    if (value == '1') {
+      if (this.isAdmin) {
+
+
+        let url = APIS.participantdata.downloadParticipantDataExcel+this.selectedAgencyId
+        let fileName = "All_Participants_Report.xlsx"
+        this.downloadFile(url, fileName)
+      } else {
+        let url = APIS.participantdata.downloadParticipantDataExcel+this.selectedAgencyId
+        let fileName = ""
+        this.downloadFile(url, fileName)
+      }
+    }
+
+    else if (value == '2') {
+      if (this.isAdmin) {
+
+
+        let url = APIS.programCreation.downloadProgramsDataPdf+this.selectedAgencyId
+        let fileName = "All_Programs_Report.pdf"
+        this.downloadFile(url, fileName)
+      } else {
+        let url = APIS.programCreation.downloadProgramsDataPdf+this.selectedAgencyId
+        let fileName = "All_Programs_Report.pdf"
+        this.downloadFile(url, fileName)
+      }
+    }
+    else if (value == '3') {
+      if (this.isAdmin) {
+
+
+        let url = ""
+        let fileName = ""
+        this.downloadFile(url, fileName)
+      } else {
+        let url = ""
+        let fileName = ""
+        this.downloadFile(url, fileName)
+      }
+    }
+    else if (value == '4') {
+      let url = ""
+      let fileName = ""
+      this.downloadFile(url, fileName)
+    }
+
+
+  }
+
+  downloadSessionsExcel(value:string){
+      if(value=='1'){
+      let url=""
+      let fileName=""
+      this.downloadFile(url,fileName)
+    }
+      
+    else  if(value=='2'){
+      let url=APIS.participantdata.downloadParticipantDataPdf+this.selectedProgramId
+      let fileName = "Program_Participants" + ".pdf"
+      this.downloadFile(url,fileName)
+    }  
+    else  if(value=='3'){
+      let url=""
+      let fileName=""
+      this.downloadFile(url,fileName)
+    } 
+ 
+
+
+  }
+
+
+  downloadSessionsPdf(value:string){
+
+         if(value=='1'){
+      let url=""
+      let fileName=""
+      this.downloadFile(url,fileName)
+    }
+      
+    else  if(value=='2'){
+      let url=""
+      let fileName=""
+      this.downloadFile(url,fileName)
+    }  
+    else  if(value=='3'){
+      let url=""
+      let fileName=""
+      this.downloadFile(url,fileName)
+    } 
+ 
+  }
+
+  
   downloadFile(url: string, fileName: string) {
     this.isDownloading = true;
     this._commonService.downloadFile(url).subscribe({
@@ -104,6 +240,7 @@ export class DownloadExcelPdfComponent implements OnInit {
     });
   }
 
+
   // Program Downloads
   downloadProgramExcel() {
     const agency = this.selectedAgencyId || this.agencyId;
@@ -111,6 +248,14 @@ export class DownloadExcelPdfComponent implements OnInit {
       `${APIS.programCreation.downloadProgramsDataExcel}${agency}`,
       `Program_Details_${agency}.xlsx`
     );
+  }
+
+  downloadAllAgenciesProgramsExcel(){
+
+  }
+
+  downloadAllAgenciesProgramsPdf(){
+    
   }
 
   downloadProgramPdf() {
@@ -244,4 +389,37 @@ export class DownloadExcelPdfComponent implements OnInit {
       `Program_Monitoring_Report_${this.selectedProgramId}.pdf`
     );
   }
+
+
+  downloadAllParticipants(){
+
+  }
+
+  downloadExpenditure(){
+
+  }
+
+  downloadParticipants(){
+
+  }
+
+  downloadSessions(){
+
+  }
+  downloadAllProgramsOverview(){
+
+  }
+
+  downloadAllExpenditure(){
+
+  }
+
+  downloadAllPrograms(){
+
+  }
+
+  downloadAllAgencies(){
+    
+  }
+
 }
