@@ -131,6 +131,7 @@ export class ProgressMonitoringReportComponent implements OnInit {
     
     if (this.formData) {
       this.audienceProfileForm.patchValue(this.formData);
+      
       // Handle IA checkboxes
       if (this.formData) {
         this.selectedIAs = [...this.formData.noIAsParticipated];

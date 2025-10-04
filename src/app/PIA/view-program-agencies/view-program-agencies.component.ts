@@ -485,7 +485,7 @@ onDateRangeChange() {
       // console.log(this.ParticipantAttentance)
     }
      downloadProgram(type:any){
-     
+     this.loader.show();
       let linkUrl = type=='excel'?APIS.programCreation.downloadProgramsDataExcel+this.selectedAgencyId:APIS.programCreation.downloadProgramsDataPdf+this.selectedAgencyId
       const link = document.createElement("a");
       link.setAttribute("download", linkUrl);
@@ -494,5 +494,6 @@ onDateRangeChange() {
       document.body.appendChild(link);
       link.click();
       link.remove();
+      this.loader.hide();
     }
   }
