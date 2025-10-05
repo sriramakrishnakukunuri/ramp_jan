@@ -260,11 +260,11 @@ onDateRangeChange() {
       const sortField = data.columns[sortColumn]?.data;
       
       // Prepare parameters for API call
-      let statusDataurl=`&status=${this.StatusData}`
+      let statusDataurl=`&status=${this.StatusData?this.StatusData:'programsScheduled'}`;
       let params = `?page=${page}&size=${size}`;
-      params=this.StatusData?`&page=${page}&size=${size}`:`?page=${page}&size=${size}`
+      params=`&page=${page}&size=${size}`
       if(sortField=='programLocationName' || sortField=='subActivityName' || sortField=='activityName'){
-        params=this.StatusData?`&page=${page}&size=${size}`:`?page=${page}&size=${size}`
+        params=`&page=${page}&size=${size}`
         // params = `?page=${page}&size=${size}`
         
       }
@@ -279,11 +279,8 @@ onDateRangeChange() {
       if (data.search.value) {
         params += `&search=${encodeURIComponent(data.search.value)}`;
       }
-      if(this.StatusData){
-        
-        statusDataurl = `?status=${this.StatusData}`;
-
-      }
+     
+      statusDataurl = `?status=${this.StatusData?this.StatusData:'programsScheduled'}`;
        let startDate = this.dateRange.start
         if (startDate) {
           const day = String(startDate.getDate()).padStart(2, '0');
@@ -299,7 +296,7 @@ onDateRangeChange() {
           params += `&endDate=${day}-${month}-${year}`;
         }
         
-         this._commonService.getDataByUrl(`${APIS.programCreation.getProgramsListByAgencyByStatusDetails}${agency}${this.StatusData?statusDataurl:''}${params}`)
+         this._commonService.getDataByUrl(`${APIS.programCreation.getProgramsListByAgencyByStatusDetails}${agency}${statusDataurl}${params}`)
         .pipe()
         .subscribe({
           next: (res: any) => {

@@ -29,6 +29,22 @@
                             </mat-menu>
                         </div>
                     </div>
+                    <div class="col-12 col-sm-6 col-md-8 col-lg-8 d-flex flex-wrap gap-2">
+                        <!-- All Agencies Programs Button -->
+                        <div>
+                            <button type="button" class="btn btn-outline-success" style="background-color: limegreen;" matTooltip="Download all agencies programs as Excel or PDF" [matMenuTriggerFor]="allAgenciesParticipantMenu">
+                                <i class="bi bi-building me-2"></i>All Agencies Participants
+                            </button>
+                            <mat-menu #allAgenciesParticipantMenu="matMenu">
+                                <button mat-menu-item (click)="downloadAllAgenciesparticipatExcel()">
+                                    <i class="bi bi-file-earmark-excel me-2"></i>Excel
+                                </button>
+                                <button mat-menu-item (click)="downloadAllAgenciesparticipatPdf()">
+                                    <i class="bi bi-file-earmark-pdf me-2"></i>PDF
+                                </button>
+                            </mat-menu>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Agency Selection Row -->

@@ -72,12 +72,27 @@ export class CommonServiceService {
   deleteId(URL: any, id: any): Observable<any> {
     return this.http.delete(URL + id).pipe(catchError(this.formatErrors));
   }
+  public downloadFileUrl(url: string): Observable<any> {
+    return this.http.get(url);
+  }
 
   public downloadFile(url: string): Observable<Blob> {
     return this.http.get(url, {
       responseType: 'blob'
     });
   }
+//   public downloadFile(url: string): Observable<{blob: Blob, fileType: string}> {
+//   return this.http.get(url, {
+//     responseType: 'blob',
+//     observe: 'response'
+//   }).pipe(
+//     map(response => ({
+//       blob: response.body as Blob,
+//       fileType: response.headers.get('content-type') || 'application/octet-stream'
+//     })),
+//     catchError(this.formatErrors)
+//   );
+// }
 
   public getDataByUrl(URL: any): Observable<any> {
     return this.http.get(URL).pipe(catchError(this.formatErrors));
