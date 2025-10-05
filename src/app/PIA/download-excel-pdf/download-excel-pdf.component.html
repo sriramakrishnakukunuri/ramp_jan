@@ -135,9 +135,9 @@
                                 <i class="bi bi-calendar-event me-2"></i>Sessions
                             </button>
                             <mat-menu #downloadSessionsMenu="matMenu">
-                                <button mat-menu-item (click)="downloadSessionsExcel('1')">
+                                <!-- <button mat-menu-item (click)="downloadSessionsExcel('1')">
                                     <i class="bi bi-file-earmark-excel me-2"></i>Excel
-                                </button>
+                                </button> -->
                                 <button mat-menu-item (click)="downloadSessionsPdf('1')">
                                     <i class="bi bi-file-earmark-pdf me-2"></i>PDF
                                 </button>
@@ -152,7 +152,7 @@
                                 <button mat-menu-item (click)="downloadSessionsExcel('2')">
                                     <i class="bi bi-file-earmark-excel me-2"></i>Excel
                                 </button>
-                                <button mat-menu-item (click)="downloadSessionsPdf('2')">
+                                <button *ngIf="!isAdmin" mat-menu-item (click)="downloadSessionsPdf('2')">
                                     <i class="bi bi-file-earmark-pdf me-2"></i>PDF
                                 </button>
                             </mat-menu>
