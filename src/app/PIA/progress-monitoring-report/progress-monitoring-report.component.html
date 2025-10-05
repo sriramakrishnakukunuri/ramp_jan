@@ -12,11 +12,11 @@
         <div class="card-body">
           <!-- Filter Dropdowns -->
           <div class="row">
-            <div class="col-12 col-sm-6 col-md-4 col-lg-8"></div>
-            <div class="col-12 col-sm-6 col-md-4 col-lg-2">
+            <div class="col-12 col-sm-4 col-md-4 col-lg-6"></div>
+            <div class="col-12 col-sm-6 col-md-4 col-lg-2" style="margin-top: 12px;">
               <div class="form-floating mb-3">
                 <select class="form-select" id="agency" [(ngModel)]="selectedAgencyId"
-                  (change)="getAgenciesBasedUserList($any($event.target).value)">
+                  (change)="getProgramsByAgency($any($event.target).value)">
                   <option value="" disabled selected>Select Agency</option>
                   <option *ngFor="let agency of agencyList" [value]="agency.agencyId">
                     {{ agency.agencyName }}
@@ -25,8 +25,31 @@
                 <label for="agency">Agency</label>
               </div>
               </div>
-
             <div class="col-12 col-sm-6 col-md-4 col-lg-2">
+              <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>Select Program</mat-label>
+                            <mat-select [(ngModel)]="selectedProgramId" (selectionChange)="getAgenciesBasedUserList($event.value)">
+                                <mat-select-filter [array]="programList" [displayMember]="'programTitle'" (filteredReturn)="programListFiltered = $event">
+                                </mat-select-filter>
+                                <mat-option value="" disabled>Select Program</mat-option>
+                                <!-- <mat-option [value]="'ALL'">All Programs</mat-option> -->
+                                <mat-option *ngFor="let program of programListFiltered" [value]="program.programId">
+                                    {{ program.programTitle }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+              <!-- <div class="form-floating mb-3">
+                <select class="form-select" id="agency" [(ngModel)]="selectedProgramId"
+                  (change)="getAgenciesBasedUserList($any($event.target).value)">
+                  <option value="" disabled selected>Select Agency</option>
+                  <option *ngFor="let agency of programListFiltered" [value]="agency.programId">
+                    {{ agency.programTitle }}
+                  </option>
+                </select>
+                <label for="agency">Programs</label>
+              </div> -->
+              </div>
+<div class="col-12 col-sm-6 col-md-4 col-lg-2" style="margin-top: 12px;">
 
               <div class="form-floating mb-3">
                 <select class="form-select" id="agency" [(ngModel)]="selectedUserId"

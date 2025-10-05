@@ -98,22 +98,50 @@ export class ProgressMonitoringReportComponent implements OnInit {
       this.agencyList = res.data;
       this.agencyListFiltered = this.agencyList;
       this.selectedAgencyId = this.agencyListFiltered[0]?.agencyId;
-      this.getAgenciesBasedUserList(this.selectedAgencyId);
+      this.getProgramsByAgency(this.selectedAgencyId);
     }, (error) => {
       this.toastrService.error(error.error.message);
     });
+  }
+  programList: any;
+  programListFiltered: any
+  selectedProgramId: any;
+   getProgramsByAgency(agencyId: any) {
+   this.selectedAgencyId = agencyId;  
+    this._commonService
+      .getDataByUrl(`${APIS.programCreation.getNewProgramListByAgency + this.selectedAgencyId}?statuses=Participants%20Added&statuses=Attendance%20Marked&statuses=Program%20Execution%20Updated&statuses=Program%20Execution&statuses=Program%20Expenditure%20Updated`)
+      .subscribe({
+        next: (res: any) => {
+          this.programList= res.data;
+          this.programList = this.programList;
+          this.programListFiltered = this.programList;
+          this.selectedProgramId= this.programListFiltered[0]?.programId;
+          if(res.data.length>0){
+            this.getAgenciesBasedUserList(this.selectedProgramId);
+          }
+          
+        },
+        error: (err) => {
+          
+        },
+      });
   }
   UserList:any=[]
   UserListFiltered:any=[]
   selectedUserId:any
   getAgenciesBasedUserList(user:any) {
-     this.selectedAgencyId = user;
+     this.selectedProgramId = user;
     this.UserList = [];
     this._commonService.getDataByUrl(APIS.masterList.getUserBasedOnAgency+user).subscribe((res: any) => {
       this.UserList = res.data;
       this.UserListFiltered = this.UserList;
       this.selectedUserId= this.UserListFiltered[0]?.programMonitoringId;
-      this.fetchReportData(this.selectedUserId);
+      this.formData=[]
+      if(res.data.length>0){
+        this.fetchReportData(this.selectedUserId);
+
+      }
+      
     }, (error) => {
       this.toastrService.error(error.error.message);
     });
@@ -129,7 +157,8 @@ export class ProgressMonitoringReportComponent implements OnInit {
   }
 
   fetchReportData(agencyId: any) {
-    this._commonService.getDataByUrl(`${APIS.programFeedback.getFeedbackData}${agencyId?agencyId:1}`).subscribe(
+    if(agencyId){
+      this._commonService.getDataByUrl(`${APIS.programFeedback.getFeedbackData}${agencyId}`).subscribe(
       (response: any) => {
         this.formData = response.data;
         this.mapResponseToForms();
@@ -138,6 +167,11 @@ export class ProgressMonitoringReportComponent implements OnInit {
         this.toastrService.error('Failed to load report data');
       }
     );
+    }
+    else{
+      this.toastrService.error('No User Data Found' );
+    }
+    
   }
 
   mapResponseToForms() {
@@ -322,7 +356,10 @@ export class ProgressMonitoringReportComponent implements OnInit {
       userId: Number(this.selectedUserId), // Convert to number
       ...formData
     };
-
+    if(!this.selectedUserId){
+      this.toastrService.error('No User Data Found' );
+      return;
+    }
     this._commonService.add(`${APIS.programFeedback.updateFeedbackData}${this.selectedUserId?this.selectedUserId:1}`, finalData).subscribe(
       (response: any) => {
         this.toastrService.success(`${this.getSectionTitle(section)} updated successfully`);

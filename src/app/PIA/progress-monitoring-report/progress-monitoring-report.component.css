@@ -173,3 +173,6 @@
 .update-btn {
   margin-top: 20px;
 }
+.mat-form-field-appearance-outline .mat-form-field-infix {
+    padding: 0.4em 0 1em 0 !important;
+}
