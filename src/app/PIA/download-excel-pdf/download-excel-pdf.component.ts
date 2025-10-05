@@ -210,7 +210,8 @@ export class DownloadExcelPdfComponent implements OnInit {
       this.downloadFile(url,fileName)
     }  
     else  if(value=='3'){
-      let url=API_BASE_URL+"/combined/expenditure/excel/"+this.selectedProgramId
+      let url=API_BASE_URL+'/export-program-expenditure?programId='+this.selectedAgencyId+'&agencyId='+this.selectedProgramId
+      // let url=API_BASE_URL+"/combined/expenditure/excel/"+this.selectedProgramId
       let fileName="program_Expenditure_Combined_"+".xlsx"
       this.downloadFile(url,fileName)
     } 
