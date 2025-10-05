@@ -87,7 +87,10 @@ export class DownloadExcelPdfComponent implements OnInit {
 
  downloadAllParticipantsExcel(value: any) {
   const agency = this.selectedAgencyId || this.agencyId;
-  
+     if (!agency) {
+      this.toastrService.info('Please select an Agency.');
+      return;
+    }
   if (value == '1') {
       if (this.isAdmin) {
 
@@ -126,15 +129,20 @@ export class DownloadExcelPdfComponent implements OnInit {
   }
 } 
   downloadAllParticipantsPdf(value: string) {
+     const agency = this.selectedAgencyId || this.agencyId;
+    if (!agency) {
+      this.toastrService.info('Please select an agency.');
+      return;
+    }
     if (value == '1') {
       if (this.isAdmin) {
 
 
-        let url = APIS.participantdata.downloadParticipantDataExcel+this.selectedAgencyId
+        let url = APIS.participantdata.downloadParticipantDataExcel+agency
         let fileName = "All_Participants_Report.xlsx"
         this.downloadFile(url, fileName)
       } else {
-        let url = APIS.participantdata.downloadParticipantDataExcel+this.selectedAgencyId
+        let url = APIS.participantdata.downloadParticipantDataExcel+agency
         let fileName = ""
         this.downloadFile(url, fileName)
       }
@@ -144,11 +152,11 @@ export class DownloadExcelPdfComponent implements OnInit {
       if (this.isAdmin) {
 
 
-        let url = APIS.programCreation.downloadProgramsDataPdf+this.selectedAgencyId
+        let url = APIS.programCreation.downloadProgramsDataPdf+agency
         let fileName = "All_Programs_Report.pdf"
         this.downloadFile(url, fileName)
       } else {
-        let url = APIS.programCreation.downloadProgramsDataPdf+this.selectedAgencyId
+        let url = APIS.programCreation.downloadProgramsDataPdf+agency
         let fileName = "All_Programs_Report.pdf"
         this.downloadFile(url, fileName)
       }
@@ -176,6 +184,10 @@ export class DownloadExcelPdfComponent implements OnInit {
   }
 
   downloadSessionsExcel(value:string){
+      if (!this.selectedProgramId) {
+      this.toastrService.info('Please select a Program.');
+      return;
+    }
       if(value=='1'){
       let url=""
       let fileName=""
@@ -199,7 +211,10 @@ export class DownloadExcelPdfComponent implements OnInit {
 
 
   downloadSessionsPdf(value:string){
-
+      if (!this.selectedProgramId) {
+      this.toastrService.info('Please select a Program.');
+      return;
+    }
          if(value=='1'){
       let url=APIS.programCreation.downloadSessionsData+this.selectedProgramId
       let fileName = `Program_Session.pdf`
@@ -251,10 +266,16 @@ export class DownloadExcelPdfComponent implements OnInit {
   }
 
   downloadAllAgenciesProgramsExcel(){
+    let fileName = "All_Agencies_Report.xlsx"
+    let url=""
+    this.downloadFile(url,fileName)
 
   }
 
   downloadAllAgenciesProgramsPdf(){
+ let fileName="All_Agencies_Report.pdf"
+    let url=""
+    this.downloadFile(url,fileName)
 
   }
 

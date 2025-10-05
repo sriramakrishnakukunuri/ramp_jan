@@ -1,0 +1,88 @@
+/* Layout & spacing tweaks for download UI - no structural HTML changes */
+/* Card padding and body spacing */
+.card {
+  border-radius: 8px;
+}
+.card .card-body {
+  padding: 22px;
+}
+
+/* Add consistent spacing between the rows inside card-body */
+.card .card-body > .row {
+  margin-bottom: 18px;
+}
+
+/* Make form fields align and not too wide */
+.mat-form-field {
+  width: 100%;
+  max-width: 420px;
+  display: block;
+}
+
+/* Ensure the select field label doesn't crowd buttons */
+.mat-form-field .mat-form-field-wrapper {
+  padding-bottom: 0.35rem;
+}
+
+/* Button group spacing when using d-flex + gap utilities */
+.card .d-flex.flex-wrap > div {
+  margin-right: 12px; /* space between button blocks */
+  margin-bottom: 8px;
+}
+
+/* Buttons: consistent min width and padding */
+.card .btn {
+  min-width: 170px;
+  padding: 10px 14px;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+/* Smaller icon spacing inside buttons */
+.card .btn i {
+  margin-right: 8px;
+  font-size: 1.05rem;
+}
+
+/* Improve mat-menu items padding slightly */
+.mat-menu-panel .mat-menu-item {
+  padding: 8px 14px;
+}
+
+/* Card header spacing */
+.card .card-header {
+  padding: 14px 22px;
+}
+
+/* Info/warning alerts spacing */
+.card .alert {
+  margin: 0 auto;
+  max-width: 680px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 767px) {
+  .card .d-flex.flex-wrap > div {
+    flex: 1 1 100%;
+    margin-right: 0;
+  }
+  .card .btn {
+    width: 100%;
+    min-width: 0;
+  }
+  .mat-form-field {
+    max-width: 100%;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .card .d-flex.flex-wrap > div {
+    flex: 1 1 48%;
+  }
+}
+
+@media (min-width: 992px) {
+  .card .d-flex.flex-wrap > div {
+    flex: 0 0 auto;
+  }
+}
