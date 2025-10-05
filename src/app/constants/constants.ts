@@ -81,7 +81,10 @@ export const APIS = {
         uploadParticipant: API_BASE_URL + '/upload',
         uploadParticipantData: API_BASE_URL + '/participants/import',
         downloadParticipantDataPdf: API_BASE_URL + '/program/participant/pdf/',
+        
         downloadParticipantDataExcel: API_BASE_URL + '/participant-details/excel/',
+        downloadParticipantAgencyDataPdf: API_BASE_URL + '/programs-participant-status/pdf/',
+        downloadParticipantAgencyDataEXcel: API_BASE_URL + '/programs-participant-status/',
         downloadParticipantTempData: API_BASE_URL + '/ParticipantTemp/excel/sheets/',
         migrateApi: API_BASE_URL + '/participants/temp/migrate',
         deleteTempParticipant: API_BASE_URL + '/participants/temp/',

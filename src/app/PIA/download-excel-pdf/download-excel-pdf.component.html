@@ -59,7 +59,7 @@
                                 <button mat-menu-item (click)="downloadAllParticipantsExcel('1')">
                                     <i class="bi bi-file-earmark-excel me-2"></i>Excel
                                 </button>
-                                <button mat-menu-item (click)="downloadAllParticipantsPdf('1')">
+                                <button *ngIf="!isAdmin" mat-menu-item (click)="downloadAllParticipantsPdf('1')">
                                     <i class="bi bi-file-earmark-pdf me-2"></i>PDF
                                 </button>
                             </mat-menu>
@@ -73,7 +73,7 @@
                                 <button mat-menu-item (click)="downloadAllParticipantsExcel('2')">
                                     <i class="bi bi-file-earmark-excel me-2"></i>Excel
                                 </button>
-                                <button mat-menu-item (click)="downloadAllParticipantsPdf('2')">
+                                <button *ngIf="!isAdmin" mat-menu-item (click)="downloadAllParticipantsPdf('2')">
                                     <i class="bi bi-file-earmark-pdf me-2"></i>PDF
                                 </button>
                             </mat-menu>
@@ -87,9 +87,9 @@
                                 <button mat-menu-item (click)="downloadAllParticipantsExcel('3')">
                                     <i class="bi bi-file-earmark-excel me-2"></i>Excel
                                 </button>
-                                <button mat-menu-item (click)="downloadAllParticipantsPdf('3')">
+                                <!-- <button mat-menu-item (click)="downloadAllParticipantsPdf('3')">
                                     <i class="bi bi-file-earmark-pdf me-2"></i>PDF
-                                </button>
+                                </button> -->
                             </mat-menu>
                         </div>
                         <!-- All Programs Overview Button -->
@@ -101,9 +101,9 @@
                                 <button mat-menu-item (click)="downloadAllParticipantsExcel('4')">
                                     <i class="bi bi-file-earmark-excel me-2"></i>Excel
                                 </button>
-                                <button mat-menu-item (click)="downloadAllParticipantsPdf('4')">
+                                <!-- <button mat-menu-item (click)="downloadAllParticipantsPdf('4')">
                                     <i class="bi bi-file-earmark-pdf me-2"></i>PDF
-                                </button>
+                                </button> -->
                             </mat-menu>
                         </div>
                     </div>
@@ -118,7 +118,7 @@
                                 <mat-select-filter [array]="programList" [displayMember]="'programTitle'" (filteredReturn)="programListFiltered = $event">
                                 </mat-select-filter>
                                 <mat-option value="" disabled>Select Program</mat-option>
-                                <mat-option [value]="'ALL'">All Programs</mat-option>
+                                <!-- <mat-option [value]="'ALL'">All Programs</mat-option> -->
                                 <mat-option *ngFor="let program of programListFiltered" [value]="program.programId">
                                     {{ program.programTitle }}
                                 </mat-option>
@@ -138,9 +138,9 @@
                                 <button mat-menu-item (click)="downloadSessionsExcel('1')">
                                     <i class="bi bi-file-earmark-excel me-2"></i>Excel
                                 </button>
-                                <button mat-menu-item (click)="downloadSessionsPdf('1')">
+                                <!-- <button mat-menu-item (click)="downloadSessionsPdf('1')">
                                     <i class="bi bi-file-earmark-pdf me-2"></i>PDF
-                                </button>
+                                </button> -->
                             </mat-menu>
                         </div>
                         <!-- Download Participants Button -->
@@ -166,9 +166,9 @@
                                 <button mat-menu-item (click)="downloadSessionsExcel('3')">
                                     <i class="bi bi-file-earmark-excel me-2"></i>Excel
                                 </button>
-                                <button mat-menu-item (click)="downloadSessionsPdf('3')">
+                                <!-- <button mat-menu-item (click)="downloadSessionsPdf('3')">
                                     <i class="bi bi-file-earmark-pdf me-2"></i>PDF
-                                </button>
+                                </button> -->
                             </mat-menu>
                         </div>
                     </div>

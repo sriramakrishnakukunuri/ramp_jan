@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonServiceService } from '@app/_services/common-service.service';
 import { ToastrService } from 'ngx-toastr';
-import { APIS } from '@app/constants/constants';
+import { API_BASE_URL, APIS } from '@app/constants/constants';
 import { Role } from '@app/_models';
+import { LoaderService } from '@app/common_components/loader-service.service';
 
 @Component({
   selector: 'app-download-excel-pdf',
@@ -23,7 +24,8 @@ export class DownloadExcelPdfComponent implements OnInit {
 
   constructor(
     private _commonService: CommonServiceService,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private loaderService: LoaderService
   ) {}
 
   ngOnInit(): void {
@@ -93,13 +95,17 @@ export class DownloadExcelPdfComponent implements OnInit {
     }
   if (value == '1') {
       if (this.isAdmin) {
-
-
-        let url = APIS.participantdata.downloadParticipantDataExcel+this.selectedAgencyId
+    //      if(!this.programIds && this.selectedAgencyId){
+    //   payload = '?agencyId='+(this.agencyId?this.agencyId:this.selectedAgencyId)
+    // }
+    // else{
+    //   payload ='?agencyId='+(this.agencyId?this.agencyId:this.selectedAgencyId)+'&programId='+this.programIds
+    // }
+        let url = APIS.participantdata.downloadParticipantAgencyDataEXcel+this.selectedAgencyId
         let fileName = "All_Participants_Report.xlsx"
         this.downloadFile(url, fileName)
       } else {
-        let url = APIS.participantdata.downloadParticipantDataExcel+this.selectedAgencyId
+        let url = APIS.participantdata.downloadParticipantAgencyDataEXcel+this.selectedAgencyId
         let fileName = ""
         this.downloadFile(url, fileName)
       }
@@ -118,7 +124,13 @@ export class DownloadExcelPdfComponent implements OnInit {
       }
   }
   else if (value == '3') { // All Expenditure
-    let url = `${APIS.programCreation.downloadProgramExpenditureExcel}`;
+     //      if(!this.programIds && this.selectedAgencyId){
+    //   payload = '?agencyId='+(this.agencyId?this.agencyId:this.selectedAgencyId)
+    // }
+    // else{
+    //   payload ='?agencyId='+(this.agencyId?this.agencyId:this.selectedAgencyId)+'&programId='+this.programIds
+    // }
+    let url = `${APIS.programCreation.downloadCombinedExpenditureExcel}-1`;
     let fileName = `All_Expenditure_Report.xlsx`;
     this.downloadFile(url, fileName);
   }
@@ -136,13 +148,11 @@ export class DownloadExcelPdfComponent implements OnInit {
     }
     if (value == '1') {
       if (this.isAdmin) {
-
-
-        let url = APIS.participantdata.downloadParticipantDataExcel+agency
+        let url = APIS.participantdata.downloadParticipantAgencyDataPdf+agency
         let fileName = "All_Participants_Report.xlsx"
         this.downloadFile(url, fileName)
       } else {
-        let url = APIS.participantdata.downloadParticipantDataExcel+agency
+        let url = APIS.participantdata.downloadParticipantAgencyDataPdf+agency
         let fileName = ""
         this.downloadFile(url, fileName)
       }
@@ -195,13 +205,13 @@ export class DownloadExcelPdfComponent implements OnInit {
     }
       
     else  if(value=='2'){
-      let url=APIS.participantdata.downloadParticipantDataPdf+this.selectedProgramId
+      let url=APIS.participantdata.downloadParticipantDataExcel+'?agencyId='+(this.agencyId?this.agencyId:this.selectedAgencyId)+'&programId='+this.selectedProgramId
       let fileName = "Program_Participants" + ".pdf"
       this.downloadFile(url,fileName)
     }  
     else  if(value=='3'){
-      let url=""
-      let fileName=""
+      let url=API_BASE_URL+"/combined/expenditure/excel/"+this.selectedProgramId
+      let fileName="program_Expenditure_Combined_"+".xlsx"
       this.downloadFile(url,fileName)
     } 
  
@@ -222,8 +232,8 @@ export class DownloadExcelPdfComponent implements OnInit {
     }
       
     else  if(value=='2'){
-      let url=""
-      let fileName=""
+      let url=APIS.participantdata.downloadParticipantDataPdf+this.selectedProgramId
+      let fileName="Program_Participants" + ".pdf"
       this.downloadFile(url,fileName)
     }  
     else  if(value=='3'){
@@ -237,8 +247,10 @@ export class DownloadExcelPdfComponent implements OnInit {
   
   downloadFile(url: string, fileName: string) {
     this.isDownloading = true;
+    this.loaderService.show('Downloading file...');
     this._commonService.downloadFile(url).subscribe({
       next: (response: Blob) => {
+        this.loaderService.hide();
         this.isDownloading = false;
         const a = document.createElement('a');
         const objectUrl = URL.createObjectURL(response);
@@ -249,6 +261,7 @@ export class DownloadExcelPdfComponent implements OnInit {
         this.toastrService.success('File downloaded successfully.');
       },
       error: (err) => {
+        this.loaderService.hide();
         this.isDownloading = false;
         this.toastrService.error(err.error?.message || 'Failed to download file.');
       },
@@ -267,14 +280,14 @@ export class DownloadExcelPdfComponent implements OnInit {
 
   downloadAllAgenciesProgramsExcel(){
     let fileName = "All_Agencies_Report.xlsx"
-    let url=""
+    let url=API_BASE_URL+"/program-details/excel/-1"
     this.downloadFile(url,fileName)
 
   }
 
   downloadAllAgenciesProgramsPdf(){
- let fileName="All_Agencies_Report.pdf"
-    let url=""
+    let fileName="All_Agencies_Report.pdf"
+    let url=API_BASE_URL+"/program/pdf/-1"
     this.downloadFile(url,fileName)
 
   }
