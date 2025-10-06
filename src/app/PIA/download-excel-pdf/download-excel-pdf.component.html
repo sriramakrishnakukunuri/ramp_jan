@@ -23,7 +23,7 @@
                                 <button mat-menu-item (click)="downloadAllAgenciesProgramsExcel()">
                                     <i class="bi bi-file-earmark-excel me-2"></i>Excel
                                 </button>
-                                <button mat-menu-item (click)="downloadAllAgenciesProgramsPdf()">
+                                <button *ngIf="!isAdmin" mat-menu-item (click)="downloadAllAgenciesProgramsPdf()">
                                     <i class="bi bi-file-earmark-pdf me-2"></i>PDF
                                 </button>
                             </mat-menu>

@@ -109,7 +109,7 @@ export class DownloadExcelPdfComponent implements OnInit {
         let fileName = "All_Participants_Report.xls"
         this.downloadFile(url, fileName)
       } else {
-        let url = APIS.participantdata.downloadParticipantAgencyDataEXcel+this.selectedAgencyId
+        let url=APIS.participantdata.downloadParticipantDataExcel+'?agencyId='+(this.agencyId?this.agencyId:this.selectedAgencyId)
         let fileName = ""
         this.downloadFile(url, fileName)
       }
@@ -214,7 +214,7 @@ export class DownloadExcelPdfComponent implements OnInit {
       this.downloadFile(url,fileName)
     }  
     else  if(value=='3'){
-      let url=API_BASE_URL+'/export-program-expenditure?programId='+this.selectedAgencyId+'&agencyId='+this.selectedProgramId
+      let url=API_BASE_URL+'/export-program-expenditure?agencyId='+this.selectedAgencyId?this.selectedAgencyId:this.agencyId+'&programId='+this.selectedProgramId
       // let url=API_BASE_URL+"/combined/expenditure/excel/"+this.selectedProgramId
       let fileName="program_Expenditure_Combined_"+".xls"
       this.downloadFile(url,fileName)
@@ -413,6 +413,7 @@ export class DownloadExcelPdfComponent implements OnInit {
     const agency = this.selectedAgencyId || this.agencyId;
     this.downloadFile(
       `${APIS.programCreation.downloadProgramParticipantStatusExcel}${agency}`,
+      
       `Program_Participant_Status_${agency}.xls`
     );
   }
