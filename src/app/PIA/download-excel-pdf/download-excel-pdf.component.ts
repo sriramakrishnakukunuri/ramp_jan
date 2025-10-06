@@ -110,7 +110,7 @@ export class DownloadExcelPdfComponent implements OnInit {
         this.downloadFile(url, fileName)
       } else {
         let url=APIS.participantdata.downloadParticipantDataExcel+'?agencyId='+(this.agencyId?this.agencyId:this.selectedAgencyId)
-        let fileName = ""
+        let fileName = "All_Participants_Report.xls"
         this.downloadFile(url, fileName)
       }
     }
