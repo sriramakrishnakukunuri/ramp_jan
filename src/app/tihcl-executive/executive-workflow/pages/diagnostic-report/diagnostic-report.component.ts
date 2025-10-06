@@ -1152,7 +1152,7 @@ saveStressReason(): void {
       sundryCreditors: [0, [Validators.required, Validators.min(0)]],
       sundryDebtors: [0, [Validators.required, Validators.min(0)]],
       unsecuredLoans: [0, [Validators.required, Validators.min(0)]],
-      netAddCapInfused: [0, [Validators.required, Validators.min(0)]],
+netAddCapInfused: [0, [Validators.required]],
       tol: [0, [Validators.required, Validators.min(0)]],
       tnw: [0, [Validators.required, Validators.min(0)]],
       tolTnwRatio: [0],

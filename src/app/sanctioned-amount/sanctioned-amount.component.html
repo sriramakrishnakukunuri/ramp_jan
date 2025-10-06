@@ -21,7 +21,6 @@
                 </div>
             </div>
             <div class="card mb-3">
-
                 <div class="card-header bg-theme text-white">
                     <div class="d-flex justify-content-between align-items-center">
                         <span class="mb-0 fw-600">Application Status</span>
@@ -31,6 +30,45 @@
                             <span class="mb-0 fw-600 me-4">Name Of Unit :
                                 {{apllictaionDataGlobal?.enterpriseName}}</span>
                             <!-- <span class="mb-0 fw-600 "> District : {{apllictaionDataGlobal?.district}}</span> -->
+                        </div>
+                    </div>
+                </div>
+                <!-- Rejection Info Card: Show only if rejected -->
+                <div *ngIf="registrationDetails?.applicationStatus?.startsWith('REJECTED')" class="card-body bg-light border-top">
+                    <div class="alert alert-danger d-flex align-items-center mb-3" role="alert">
+                        <i class="bi bi-x-circle-fill fs-4 me-3"></i>
+                        <div class="fw-bold fs-5">Application Rejected</div>
+                    </div>
+                    <div class="row text-center">
+                        <div class="col-md-4 mb-2">
+                            <div class="card shadow-sm border-0 h-100">
+                                <div class="card-body py-3">
+                                    <div class="fw-semibold text-muted mb-1">Date of Rejection</div>
+                                    <div class="fs-6 fw-bold text-danger">
+                                        {{ registrationDetails?.executiveFeedbackDate | date:'dd MMM yyyy' }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-2">
+                            <div class="card shadow-sm border-0 h-100">
+                                <div class="card-body py-3">
+                                   <div class="fw-semibold text-muted mb-1">Reason for Rejection</div>
+                                    <div class="fs-6 fw-bold text-danger">
+                                        {{ registrationDetails?.reasonForRejection ? registrationDetails.reasonForRejection : '-' }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-2">
+                            <div class="card shadow-sm border-0 h-100">
+                                <div class="card-body py-3">
+                                    <div class="fw-semibold text-muted mb-1">Rejected At Level</div>
+                                    <div class="fs-6 fw-bold text-danger">
+                                        {{ getReadableStatus(registrationDetails?.applicationStatus) }}
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -702,13 +740,29 @@
                                     <div>{{ disburseList?.processingFeeReceivedDate | date:'dd/MM/yyyy' }}</div>
                                 </div>
                                 <div class="col-md-4 mb-2">
-                                    <label class="fw-bold">TG-Ipass:</label>
-                                    <div>{{ disburseList?.tgipassUpload }}</div>
-                                </div>
-                                <div class="col-md-4 mb-2">
-                                    <label class="fw-bold">ROC Filing:</label>
-                                    <div>{{ disburseList?.rocFiling }}</div>
-                                </div>
+        <label class="fw-bold">TG-Ipass:</label>
+        <div class="d-flex align-items-center gap-4" style="width: 70%;justify-content: space-between;">
+            {{ disburseList?.tgipassUpload }}
+            <button *ngIf="disburseList?.tgipassUpload === 'Yes' && disburseList?.tgipassUploadPath"
+                class="btn btn-primary btn-sm ms-2"
+                (click)="openFile(disburseList?.tgipassUpload)"
+                title="View TG-Ipass File">
+                <i class="fa fa-eye"></i>
+            </button>
+        </div>
+    </div>
+                                 <div class="col-md-4 mb-2">
+        <label class="fw-bold">ROC Filing:</label>
+        <div class="d-flex align-items-center gap-4 "  style="width: 70%;justify-content: space-between;">
+            {{ disburseList?.rocFiling }}
+            <button *ngIf="disburseList?.rocFiling === 'Yes' && disburseList?.rocFilingPath"
+                class="btn btn-primary btn-sm ms-2"
+                (click)="openFile(disburseList?.rocFilingPath)"
+                title="View ROC Filing File">
+                <i class="fa fa-eye"></i>
+            </button>
+        </div>
+    </div>
                                 <div class="col-md-4 mb-2">
                                     <label class="fw-bold">Remarks:</label>
                                     <div>{{ disburseList?.remarks ?? 'N/A' }}</div>

@@ -54,7 +54,7 @@ activeTab:any='APPLICATIONS_RECEIVED';
    onTabChange(activeTab:any){
     this.activeTab = activeTab;
     if(activeTab=='APPLICATIONS_RECEIVED' ) { 
-    
+    this.getData()
     }
     if(activeTab=='APPLICATIONS_UNDER_PROCESS') {
       console.log(activeTab)
@@ -81,6 +81,25 @@ activeTab:any='APPLICATIONS_RECEIVED';
   this.getdisburseList()
 
     }
+  }
+
+
+  getReadableStatus(status: string | null | undefined): string {
+  return status ? status.replace(/_/g, ' ') : '';
+}
+  registrationDetails:any;
+  getData(){
+    // this.loaderService.show();
+     this._commonService.getDataByUrl(APIS.sanctionedAmount.preliminary.getData + this.selectedEnterprise).subscribe({
+        next: (res: any) => {
+          // this.loaderService.hide();
+          this.registrationDetails = res.data;
+        },
+        error: (err: any) => {
+          // this.loaderService.hide();
+          this.registrationDetails = null;
+        }
+      });
   }
 loginsessionDetails:any
 filteredEnterprise:any=[]
@@ -284,7 +303,9 @@ UnitDetails:any;
         }
       });
   }
-
+openFile(path: string) {
+  this._commonService.openFile(path);
+}
 
 showCreditPreviewModal3 = false;
   

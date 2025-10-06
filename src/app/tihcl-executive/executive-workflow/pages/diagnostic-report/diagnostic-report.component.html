@@ -1607,7 +1607,7 @@
                            </div>
 
                            <!-- Net Additional Capital Infused -->
-                           <div class="col-12 col-md-6 mb-3">
+                           <!-- <div class="col-12 col-md-6 mb-3">
                              <div class="form-floating">
                                <input type="number" class="form-control" id="netAddCapInfused"
                                  formControlName="netAddCapInfused" min="0">
@@ -1616,7 +1616,17 @@
                              <div *ngIf="balanceSheetsForm.get('netAddCapInfused')?.invalid" class="text-danger small">
                                Must be a positive number
                              </div>
-                           </div>
+                           </div> -->
+                           <div class="col-12 col-md-6 mb-3">
+                        <div class="form-floating">
+                          <input type="number" class="form-control" id="netAddCapInfused"
+                            formControlName="netAddCapInfused">
+                          <label for="netAddCapInfused">Net Additional Capital Infused</label>
+                        </div>
+                        <div *ngIf="balanceSheetsForm.get('netAddCapInfused')?.invalid" class="text-danger small">
+                          Required
+                        </div>
+                      </div>
 
                            <!-- TOL -->
                            <div class="col-12 col-md-6 mb-3">
