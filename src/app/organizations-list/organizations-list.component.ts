@@ -268,19 +268,23 @@ downloadProgramApi(type:string){
   }
   this.http.get(url  + "", { responseType: 'blob' }).subscribe({
     next: (blob: Blob) => {
-      const link = document.createElement('a');
-      link.href = window.URL.createObjectURL(blob);
+      let fileName = '';
+      // const link = document.createElement('a');
+      // link.href = window.URL.createObjectURL(blob);
       if (type === 'location') {
-        link.download = 'location.xls';
+        fileName= 'location.xls';
       } else if (type === 'resource') {
-        link.download = 'resource.xls';
+        fileName= 'resource.xls';
       } else if (type === 'org') {
-        link.download = 'organization.xls';
+        fileName= 'organization.xls';
       }
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      window.URL.revokeObjectURL(link.href);
+        const a = document.createElement('a');
+        const objectUrl = URL.createObjectURL(blob);
+        a.href = objectUrl;
+        a.download = fileName;
+        a.click();
+        URL.revokeObjectURL(objectUrl);
+        this.toastrService.success('File downloaded successfully.');
     },
     error: (err) => {
       this.toastrService.error("Failed to download the Excel file.", "Download Error");
