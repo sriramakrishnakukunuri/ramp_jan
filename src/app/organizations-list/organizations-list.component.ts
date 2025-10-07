@@ -256,40 +256,54 @@ export class OrganizationsListComponent implements OnInit {
   }
 downloadProgramApi(type:string){
   let url=''
+    let fileName = '';
   if(type=='location'){
     url=APIS.masterList.locationDownload+this.agencyId
+      fileName= 'location.xls';
   
   }else if(type=='resource'){
     url=APIS.masterList.resourceDownload+this.agencyId
+    fileName= 'resource.xls';
 
   }else if(type=='org'){
     url=APIS.masterList.organizationDownload
+    fileName= 'organization.xls';
 
   }
-  this.http.get(url  + "", { responseType: 'blob' }).subscribe({
-    next: (blob: Blob) => {
-      let fileName = '';
-      // const link = document.createElement('a');
-      // link.href = window.URL.createObjectURL(blob);
-      if (type === 'location') {
-        fileName= 'location.xls';
-      } else if (type === 'resource') {
-        fileName= 'resource.xls';
-      } else if (type === 'org') {
-        fileName= 'organization.xls';
-      }
+    this._commonService.downloadFile(url).subscribe({
+      next: (response: Blob) => {
+        console.log(response)
+        
         const a = document.createElement('a');
-        const objectUrl = URL.createObjectURL(blob);
+        const objectUrl = URL.createObjectURL(response);
         a.href = objectUrl;
         a.download = fileName;
         a.click();
         URL.revokeObjectURL(objectUrl);
         this.toastrService.success('File downloaded successfully.');
-    },
-    error: (err) => {
-      this.toastrService.error("Failed to download the Excel file.", "Download Error");
-    },
-  });
+      },
+      error: (err) => {
+       
+        this.toastrService.error(err.error?.message || 'Failed to download file.');
+      },
+    });
+  // this.http.get(url  + "", { responseType: 'blob' }).subscribe({
+  //   next: (blob: Blob) => {
+    
+  //     // const link = document.createElement('a');
+  //     // link.href = window.URL.createObjectURL(blob);
+  //       const a = document.createElement('a');
+  //       const objectUrl = URL.createObjectURL(blob);
+  //       a.href = objectUrl;
+  //       a.download = fileName;
+  //       a.click();
+  //       URL.revokeObjectURL(objectUrl);
+  //       this.toastrService.success('File downloaded successfully.');
+  //   },
+  //   error: (err) => {
+  //     this.toastrService.error("Failed to download the Excel file.", "Download Error");
+  //   },
+  // });
 
 
 
