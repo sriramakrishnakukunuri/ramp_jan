@@ -271,11 +271,11 @@ downloadProgramApi(type:string){
       const link = document.createElement('a');
       link.href = window.URL.createObjectURL(blob);
       if (type === 'location') {
-        link.download = 'location.xlsx';
+        link.download = 'location.xls';
       } else if (type === 'resource') {
-        link.download = 'resource.xlsx';
+        link.download = 'resource.xls';
       } else if (type === 'org') {
-        link.download = 'organization.xlsx';
+        link.download = 'organization.xls';
       }
       document.body.appendChild(link);
       link.click();
