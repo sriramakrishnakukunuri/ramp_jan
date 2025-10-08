@@ -1,0 +1,12 @@
+/* Make program status cards font larger and clearer */
+.card-body label.fw-600.small {
+	font-size: 1.1rem !important;
+	font-weight: 600 !important;
+	color: #fff !important;
+}
+.card-body p.fw-bold.fs-5.mb-0 {
+	font-size: 1.1rem !important;
+	font-weight: 700 !important;
+	color: #fff !important;
+	margin-bottom: 0 !important;
+}
