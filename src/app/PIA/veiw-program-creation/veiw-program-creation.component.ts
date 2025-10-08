@@ -65,6 +65,7 @@ onDateRangeChange() {
   // Run only if both dates are selected
   if (this.dateRange.start && this.dateRange.end) {
     this.StatusData=""
+        this.getData()
         this.initializeDataTable(this.selectedAgencyId || this.agencyId);
 
   }
@@ -219,14 +220,14 @@ onDateRangeChange() {
           const day = String(startDate.getDate()).padStart(2, '0');
           const month = String(startDate.getMonth() + 1).padStart(2, '0');
           const year = startDate.getFullYear();
-          params += `&startDate=${day}-${month}-${year}`;
+          params += `&fromDate=${day}-${month}-${year}`;
         }
         let endDate = this.dateRange.end;
         if (endDate) {
           const day = String(endDate.getDate()).padStart(2, '0');
           const month = String(endDate.getMonth() + 1).padStart(2, '0');
           const year = endDate.getFullYear();
-          params += `&endDate=${day}-${month}-${year}`;
+          params += `&toDate=${day}-${month}-${year}`;
         }
          this._commonService.getDataByUrl(`${APIS.programCreation.getProgramsListByAgencyByStatusDetails}${agency}${statusDataurl}${params}`)
         .pipe()
@@ -625,8 +626,23 @@ selectedRescheduleData: any = [];
   }
   PrigramSummaryData:any={}
   getData() {
+    let params:any=''
     this.PrigramSummaryData ={}
-    this._commonService.getById(APIS.programCreation.programSummary, this.agencyId).subscribe({
+    let startDate = this.dateRange.start
+        if (startDate) {
+          const day = String(startDate.getDate()).padStart(2, '0');
+          const month = String(startDate.getMonth() + 1).padStart(2, '0');
+          const year = startDate.getFullYear();
+          params += `?fromDate=${day}-${month}-${year}`;
+        }
+        let endDate = this.dateRange.end;
+        if (endDate) {
+          const day = String(endDate.getDate()).padStart(2, '0');
+          const month = String(endDate.getMonth() + 1).padStart(2, '0');
+          const year = endDate.getFullYear();
+          params += `&toDate=${day}-${month}-${year}`;
+        }
+    this._commonService.getDataByUrl(APIS.programCreation.programSummary+this.agencyId+params).subscribe({
       next: (res: any) => {          
         // this.PrigramSummaryData = res?.data   
       // console.log( this.PrigramSummaryData)

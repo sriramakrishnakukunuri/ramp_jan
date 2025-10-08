@@ -287,26 +287,7 @@ downloadProgramApi(type:string){
         this.toastrService.error(err.error?.message || 'Failed to download file.');
       },
     });
-  // this.http.get(url  + "", { responseType: 'blob' }).subscribe({
-  //   next: (blob: Blob) => {
-    
-  //     // const link = document.createElement('a');
-  //     // link.href = window.URL.createObjectURL(blob);
-  //       const a = document.createElement('a');
-  //       const objectUrl = URL.createObjectURL(blob);
-  //       a.href = objectUrl;
-  //       a.download = fileName;
-  //       a.click();
-  //       URL.revokeObjectURL(objectUrl);
-  //       this.toastrService.success('File downloaded successfully.');
-  //   },
-  //   error: (err) => {
-  //     this.toastrService.error("Failed to download the Excel file.", "Download Error");
-  //   },
-  // });
-
-
-
+  
 }
 
   // delete 
