@@ -4,10 +4,22 @@
             <div class="card mb-3">
                 <div class="card-header bg-transparent">
                     <div class="row align-items-center">
-                        <div class="col-12 col-sm-7 col-md-8 col-lg-9">
+                        <div class="col-12 col-sm-7 col-md-8 col-lg-6">
                             <h6 class="fw-600 mb-2 mb-sm-0 text-green">View Programs</h6>
                         </div>
                         <ng-container >
+                                                        <div class="col-12 col-sm-6 col-md-4 col-lg-3 custom-ui " style="margin-bottom: 2rem;">
+                            <mat-form-field appearance="outline" class="mb-3 w-100">
+                            <mat-label>Select Date Range</mat-label>
+                            <mat-date-range-input [rangePicker]="picker">
+                                <input matStartDate placeholder="Start date" [(ngModel)]="dateRange.start" (dateChange)="onDateRangeChange()">
+                                <input matEndDate placeholder="End date" [(ngModel)]="dateRange.end" (dateChange)="onDateRangeChange()">
+                            </mat-date-range-input>
+                            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-date-range-picker #picker></mat-date-range-picker>
+                            </mat-form-field>
+                        
+                    </div>
                             <div class="col-12 col-sm-5 col-md-4 col-lg-3">
                                 <!-- Material Select with Filter -->
                                 <mat-form-field appearance="outline" class="w-100">
@@ -37,22 +49,7 @@
                 </div>
                 <div class="card-body">
                     <div class="row mb-3">
-                        <!-- <div class="col-12 col-sm-6 col-md-6 col-lg-6"> -->
-                            <div class="col-12 col-sm-6 col-md-4 col-lg-3" style="margin-bottom: 2rem;">
-                            <mat-form-field appearance="outline" class="mb-3 w-100">
-                            <mat-label>Select Date Range</mat-label>
-                            <mat-date-range-input [rangePicker]="picker">
-                                <input matStartDate placeholder="Start date" [(ngModel)]="dateRange.start" (dateChange)="onDateRangeChange()">
-                                <input matEndDate placeholder="End date" [(ngModel)]="dateRange.end" (dateChange)="onDateRangeChange()">
-                            </mat-date-range-input>
-                            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                            <mat-date-range-picker #picker></mat-date-range-picker>
-                            </mat-form-field>
-                        
-                    </div>
-                    <div  class="col-12 col-sm-6 col-md-4 col-lg-3">
-
-                    </div>
+                     
                         <!-- <div class="col-12 col-12 col-sm-6 col-md-6 col-lg-6 text-end">
                             <div class="btn-group">
                                 <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
