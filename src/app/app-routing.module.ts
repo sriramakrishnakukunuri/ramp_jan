@@ -65,6 +65,7 @@ import { NotificationViewerUpdateComponent } from './PIA/notification-viewer-upd
 import { ResheduleProgramsComponent } from './PIA/reshedule-programs/reshedule-programs.component';
 import { ProgressMonitoringReportComponent } from './PIA/progress-monitoring-report/progress-monitoring-report.component';
 import { DownloadExcelPdfComponent } from './PIA/download-excel-pdf/download-excel-pdf.component';
+import { NonTrainingNimsmeComponent } from './PIA/non-training-nimsme/non-training-nimsme.component';
 const routes: Routes = [
     {
         path: '',
@@ -364,6 +365,12 @@ const routes: Routes = [
         component: DownloadExcelPdfComponent,
         canActivate: [AuthGuard],
         data: { roles: [Role.Admin, Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR] }
+    },
+     {
+        path: 'non-training-progress-nimme',
+        component: NonTrainingNimsmeComponent,
+        canActivate: [AuthGuard],
+        data: { roles: [Role.Admin,Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
     },
      {
         path: 'non-training-targets',

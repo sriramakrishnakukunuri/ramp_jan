@@ -152,6 +152,13 @@ export const APIS = {
             getTihclData: API_BASE_URL + '/listing-on-nse/sub-activity/',
             savetihclData: API_BASE_URL + '/listing-on-nse/save',
             deletetihclData: API_BASE_URL + '/listing-on-nse/delete/',
+        },
+         nimsme:{
+            getCorpusList: API_BASE_URL + '/corpusDebitFinancing',
+            getdataMedia_doc: API_BASE_URL + '/central-data/content/subActivity/',
+            savedataMedia_doc: API_BASE_URL + '/central-data/content/save',
+            deletedataMedia_doc: API_BASE_URL + '/central-data/content/',
+            updatedataMedia_doc: API_BASE_URL + '/central-data/content/',
         }
        
     },

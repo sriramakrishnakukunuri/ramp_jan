@@ -98,6 +98,7 @@ import { MatSelectModule } from '@angular/material/select';
 
 import { ProgressMonitoringReportComponent } from './PIA/progress-monitoring-report/progress-monitoring-report.component';
 import { DownloadExcelPdfComponent } from './PIA/download-excel-pdf/download-excel-pdf.component';
+import { NonTrainingNimsmeComponent } from './PIA/non-training-nimsme/non-training-nimsme.component';
 @NgModule({
     imports: [
         MaterialModule,
@@ -199,7 +200,8 @@ import { DownloadExcelPdfComponent } from './PIA/download-excel-pdf/download-exc
         LoaderComponent,
         ResheduleProgramsComponent,
         ProgressMonitoringReportComponent,
-        DownloadExcelPdfComponent
+        DownloadExcelPdfComponent,
+        NonTrainingNimsmeComponent
 
     ],
     exports:[MaterialModule,
