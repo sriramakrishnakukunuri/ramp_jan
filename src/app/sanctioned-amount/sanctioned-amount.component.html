@@ -156,7 +156,7 @@
                     <!-- <p class="p-3">Unit Visit Details tab works!</p> -->
 
 
-                    <div class="container my-4">
+                    <div class="ms-3 me-2 my-4">
                         <div class="card shadow-sm border-0">
                             <div class="card-header bg-primary text-white">
                                 <h5 class="mb-0 fw-bold">
@@ -205,7 +205,7 @@
                                     <div class="row">
                                         <div class="col-md-6 mb-2">
                                             <span class="fw-semibold">Date:</span>
-                                            <span class="ms-2">{{ UnitDetails?.dateOfVisit || 'N/A' }}</span>
+                                            <span class="ms-2">{{ (UnitDetails?.dateOfVisit | date:'dd/MM/yyyy') || 'N/A' }}</span>
                                         </div>
                                         <div class="col-md-6 mb-2">
                                             <span class="fw-semibold">Time:</span>
@@ -227,7 +227,7 @@
 
                 </div>
                 <div *ngIf="activeTab === 'APPLICATIONS_WITH_DIC'">
-                    <div class="container my-4" *ngIf="DiagnosticDetails?.length > 0">
+                    <div class="ms-3 me-2 my-4" *ngIf="DiagnosticDetails?.length > 0">
                         <div class="card shadow-sm border-0">
                             <div class="card-header bg-theme text-white d-flex align-items-center">
                                 <i class="bi bi-file-earmark-medical me-2 fs-4"></i>
@@ -276,7 +276,7 @@
                 </div>
                 <div *ngIf="activeTab === 'APPLICATIONS_SANCTIONED'">
                     <!-- DIC Consent Letter Preview -->
-                    <div class="container my-4">
+                    <div class="ms-3 me-2 my-4">
                         <div class="card shadow-sm border-0">
                             <div class="card-header bg-primary text-white">
                                 <h5 class="mb-0 fw-bold">
@@ -310,7 +310,7 @@
 
 
                     <!-- Ramp Checklist & Credit Appraisal View -->
-                    <div class="container my-4">
+                    <div class="ms-3 me-2 my-4">
                         <div class="card shadow-sm border-0">
                             <div class="card-header bg-primary text-white">
                                 <h5 class="mb-0 fw-bold">Ramp Checklist & Credit Appraisal</h5>
@@ -321,94 +321,94 @@
                                         <table class="table table-borderless align-middle">
                                             <tbody>
                                                 <tr>
-                                                    <th class="w-75">Borrower Identified</th>
+                                                    <th class="w-75">Identification of Borrower and to ensure they are within our Target Group of MSE – Manufacturing Enterprises</th>
                                                     <td><span
                                                             [ngClass]="rampCheckLIst.isBorrowerIdentified ? 'text-success fw-bold' : 'text-danger'">{{
                                                             rampCheckLIst.isBorrowerIdentified ? 'Yes' : 'No' }}</span>
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <th>Stress</th>
+                                                    <th>Whether identified Unit is under Financial Stress / Incipient Sickness, which are eligible for initiating revival / rehabilitation</th>
                                                     <td><span
                                                             [ngClass]="rampCheckLIst.isStress ? 'text-success fw-bold' : 'text-danger'">{{
                                                             rampCheckLIst.isStress ? 'Yes' : 'No' }}</span></td>
                                                 </tr>
                                                 <tr>
-                                                    <th>Brief Profile</th>
+                                                    <th>Brief Profile of the Promoter and the Unit</th>
                                                     <td><span
                                                             [ngClass]="rampCheckLIst.isBriefProfile ? 'text-success fw-bold' : 'text-danger'">{{
                                                             rampCheckLIst.isBriefProfile ? 'Yes' : 'No' }}</span></td>
                                                 </tr>
                                                 <tr>
-                                                    <th>Brief History Account</th>
+                                                    <th>Brief History of the Account</th>
                                                     <td><span
                                                             [ngClass]="rampCheckLIst.isBriefHistoryAccount ? 'text-success fw-bold' : 'text-danger'">{{
                                                             rampCheckLIst.isBriefHistoryAccount ? 'Yes' : 'No' }}</span>
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <th>KYC Verified</th>
+                                                    <th>To obtain and verify related KYC documents like Aadhar, PAN Card, Udyami Registration, etc.</th>
                                                     <td><span
                                                             [ngClass]="rampCheckLIst.isKycDocumentVerified ? 'text-success fw-bold' : 'text-danger'">{{
                                                             rampCheckLIst.isKycDocumentVerified ? 'Yes' : 'No' }}</span>
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <th>Proper & Effective</th>
+                                                    <th>Whether proper and effective due diligence of the unit and promoter is conducted? This includes Unit visits, visits to the Promoter's residences, confidential reports from the existing Banks / FIs, etc.</th>
                                                     <td><span
                                                             [ngClass]="rampCheckLIst.isProperAndEffective ? 'text-success fw-bold' : 'text-danger'">{{
                                                             rampCheckLIst.isProperAndEffective ? 'Yes' : 'No' }}</span>
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <th>Loan Application Docs</th>
+                                                    <th>To obtain Loan Application, financial statements for the required period, CMA data, Receipts confirming payment of statutory payments, etc.</th>
                                                     <td><span
                                                             [ngClass]="rampCheckLIst.isLoanApplicationDocs ? 'text-success fw-bold' : 'text-danger'">{{
                                                             rampCheckLIst.isLoanApplicationDocs ? 'Yes' : 'No' }}</span>
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <th>Existing Banking Arrangements</th>
+                                                    <th>Existing Banking arrangements and views of the primary bank / FI on the Unit.</th>
                                                     <td><span
                                                             [ngClass]="rampCheckLIst.isExistingBankingArrangements ? 'text-success fw-bold' : 'text-danger'">{{
                                                             rampCheckLIst.isExistingBankingArrangements ? 'Yes' : 'No'
                                                             }}</span></td>
                                                 </tr>
                                                 <tr>
-                                                    <th>NOC Certificate</th>
+                                                    <th>NOC from the existing banks / FIs, to avail the credit facilities from TIHCL and to extend Pari passu charge, wherever required.</th>
                                                     <td><span
                                                             [ngClass]="rampCheckLIst.isNocCertificate ? 'text-success fw-bold' : 'text-danger'">{{
                                                             rampCheckLIst.isNocCertificate ? 'Yes' : 'No' }}</span></td>
                                                 </tr>
                                                 <tr>
-                                                    <th>Present Request</th>
+                                                    <th>Present request / requirement of the Unit.</th>
                                                     <td><span
                                                             [ngClass]="rampCheckLIst.isPresentRequest ? 'text-success fw-bold' : 'text-danger'">{{
                                                             rampCheckLIst.isPresentRequest ? 'Yes' : 'No' }}</span></td>
                                                 </tr>
                                                 <tr>
-                                                    <th>Analyze & Identify</th>
+                                                    <th>To study, analyze and identify the reasons for reported stress / incipient sickness / sickness in the Unit and possible solution thereof.</th>
                                                     <td><span
                                                             [ngClass]="rampCheckLIst.isAnalyzeAndIdentify ? 'text-success fw-bold' : 'text-danger'">{{
                                                             rampCheckLIst.isAnalyzeAndIdentify ? 'Yes' : 'No' }}</span>
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <th>Technical Feasibility</th>
+                                                    <th>Establishing Technical Feasibility and Financial Viability of the Unit by considering the following:</th>
                                                     <td><span
                                                             [ngClass]="rampCheckLIst.isTechnicalFeasibility ? 'text-success fw-bold' : 'text-danger'">{{
                                                             rampCheckLIst.isTechnicalFeasibility ? 'Yes' : 'No'
                                                             }}</span></td>
                                                 </tr>
                                                 <tr>
-                                                    <th>Analysis of Credit Bureau Reports</th>
+                                                    <th>Analysis of Credit Bureau reports</th>
                                                     <td><span
                                                             [ngClass]="rampCheckLIst.isAnalysisOfCreditBureauReports ? 'text-success fw-bold' : 'text-danger'">{{
                                                             rampCheckLIst.isAnalysisOfCreditBureauReports ? 'Yes' : 'No'
                                                             }}</span></td>
                                                 </tr>
                                                 <tr>
-                                                    <th>Demand for Product & Market Potential</th>
+                                                    <th>Demand for Product and Market Potential</th>
                                                     <td><span
                                                             [ngClass]="rampCheckLIst.isDemandForProductAndMarketPotential ? 'text-success fw-bold' : 'text-danger'">{{
                                                             rampCheckLIst.isDemandForProductAndMarketPotential ? 'Yes' :
@@ -422,7 +422,7 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <th>List of Top Buyers & Suppliers</th>
+                                                    <th>List of Top Buyers and Suppliers</th>
                                                     <td><span
                                                             [ngClass]="rampCheckLIst.isListOfTopBuyersAndSuppliers ? 'text-success fw-bold' : 'text-danger'">{{
                                                             rampCheckLIst.isListOfTopBuyersAndSuppliers ? 'Yes' : 'No'
@@ -436,49 +436,49 @@
                                         <table class="table table-borderless align-middle">
                                             <tbody>
                                                 <tr>
-                                                    <th>Existing Marketing Arrangements</th>
+                                                    <th>Existing Marketing arrangements</th>
                                                     <td><span
                                                             [ngClass]="rampCheckLIst.isExistingMarketingArrangements ? 'text-success fw-bold' : 'text-danger'">{{
                                                             rampCheckLIst.isExistingMarketingArrangements ? 'Yes' : 'No'
                                                             }}</span></td>
                                                 </tr>
                                                 <tr>
-                                                    <th>Analysis of Financials</th>
+                                                    <th>Analysis of Financials – Audited Financial Statements, Provisional Financial Statements and CMA date for future estimates / projections.</th>
                                                     <td><span
                                                             [ngClass]="rampCheckLIst.isAnalysisOfFinancials ? 'text-success fw-bold' : 'text-danger'">{{
                                                             rampCheckLIst.isAnalysisOfFinancials ? 'Yes' : 'No'
                                                             }}</span></td>
                                                 </tr>
                                                 <tr>
-                                                    <th>Establishing Financial Viability</th>
+                                                    <th>Establishing financial viability by reviewing DSCR / Interest Coverage Ratio / DE Ratio. TOL /TNW, etc.</th>
                                                     <td><span
                                                             [ngClass]="rampCheckLIst.isEstablishingFinancialViability ? 'text-success fw-bold' : 'text-danger'">{{
                                                             rampCheckLIst.isEstablishingFinancialViability ? 'Yes' :
                                                             'No' }}</span></td>
                                                 </tr>
                                                 <tr>
-                                                    <th class="w-75">Availability of Security</th>
+                                                    <th class="w-75">Availability of security – Primary / Collateral, personal guarantees.</th>
                                                     <td><span
                                                             [ngClass]="rampCheckLIst.isAvailabilityOfSecurity ? 'text-success fw-bold' : 'text-danger'">{{
                                                             rampCheckLIst.isAvailabilityOfSecurity ? 'Yes' : 'No'
                                                             }}</span></td>
                                                 </tr>
                                                 <tr>
-                                                    <th>Capacity & Resources</th>
+                                                    <th>Capacity and resources to bring in required margins</th>
                                                     <td><span
                                                             [ngClass]="rampCheckLIst.isCapacityAndResources ? 'text-success fw-bold' : 'text-danger'">{{
                                                             rampCheckLIst.isCapacityAndResources ? 'Yes' : 'No'
                                                             }}</span></td>
                                                 </tr>
                                                 <tr>
-                                                    <th>Pending Statutory Dues</th>
+                                                    <th>Pending Statutory Dues, if any, and impact of the same on the functioning of the Unit. Plan of action to clear the pending dues.</th>
                                                     <td><span
                                                             [ngClass]="rampCheckLIst.isPendingStatutoryDues ? 'text-success fw-bold' : 'text-danger'">{{
                                                             rampCheckLIst.isPendingStatutoryDues ? 'Yes' : 'No'
                                                             }}</span></td>
                                                 </tr>
                                                 <tr>
-                                                    <th>Processing the Proposal</th>
+                                                    <th>While processing the proposal, a Unit visit will be conducted to get firsthand information about the functioning of the Unit and to understand the practical difficulties being faced by the Unit.</th>
                                                     <td><span
                                                             [ngClass]="rampCheckLIst.isProcessingTheProposal ? 'text-success fw-bold' : 'text-danger'">{{
                                                             rampCheckLIst.isProcessingTheProposal ? 'Yes' : 'No'
@@ -492,14 +492,14 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <th>Achievement of Breakeven Production Levels</th>
+                                                    <th>Achievement of Breakeven production levels</th>
                                                     <td><span
                                                             [ngClass]="rampCheckLIst.isAchievementOfBreakevenProductionLevels ? 'text-success fw-bold' : 'text-danger'">{{
                                                             rampCheckLIst.isAchievementOfBreakevenProductionLevels ?
                                                             'Yes' : 'No' }}</span></td>
                                                 </tr>
                                                 <tr>
-                                                    <th>Availability of Skilled Manpower</th>
+                                                    <th>Availability of skilled manpower</th>
                                                     <td><span
                                                             [ngClass]="rampCheckLIst.isAvailabilityOfSkilledManpower ? 'text-success fw-bold' : 'text-danger'">{{
                                                             rampCheckLIst.isAvailabilityOfSkilledManpower ? 'Yes' : 'No'
@@ -527,14 +527,14 @@
                                                             }}</span></td>
                                                 </tr>
                                                 <tr>
-                                                    <th>Various Risk Elements</th>
+                                                    <th>Various Risk elements, specific to Credit Risk and Market Risk, that may affect the decision on the proposal will be jotted down and mitigates for the risks identified will be arrived at. If a proposal is to be taken up with unmitigated risks, proper justification for the same will be incorporated in the process note.</th>
                                                     <td><span
                                                             [ngClass]="rampCheckLIst.isVariousRiskElements ? 'text-success fw-bold' : 'text-danger'">{{
                                                             rampCheckLIst.isVariousRiskElements ? 'Yes' : 'No' }}</span>
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <th>Cleared From Risk Angle</th>
+                                                    <th>Finally, whether the proposal is cleared from Risk angle</th>
                                                     <td><span
                                                             [ngClass]="rampCheckLIst.isProposalClearedFromRiskAngle ? 'text-success fw-bold' : 'text-danger'">{{
                                                             rampCheckLIst.isProposalClearedFromRiskAngle ? 'Yes' : 'No'
@@ -724,7 +724,7 @@
                                     <div>{{ disburseList?.totalDisbursedAmount ?? 'N/A' }}</div>
                                 </div>
                                 <div class="col-md-4 mb-2">
-                                    <label class="fw-bold">Collection Date:</label>
+                                    <label class="fw-bold">Disbursement Date:</label>
                                     <div>{{ disburseList?.collectionDate | date:'dd/MM/yyyy' }}</div>
                                 </div>
                                 <div class="col-md-4 mb-2">
@@ -743,24 +743,24 @@
         <label class="fw-bold">TG-Ipass:</label>
         <div class="d-flex align-items-center gap-4" style="width: 70%;justify-content: space-between;">
             {{ disburseList?.tgipassUpload }}
-            <button *ngIf="disburseList?.tgipassUpload === 'Yes' && disburseList?.tgipassUploadPath"
+            <!-- <button *ngIf="disburseList?.tgipassUpload === 'Yes' && disburseList?.tgipassUploadPath"
                 class="btn btn-primary btn-sm ms-2"
                 (click)="openFile(disburseList?.tgipassUpload)"
                 title="View TG-Ipass File">
                 <i class="fa fa-eye"></i>
-            </button>
+            </button> -->
         </div>
     </div>
                                  <div class="col-md-4 mb-2">
         <label class="fw-bold">ROC Filing:</label>
         <div class="d-flex align-items-center gap-4 "  style="width: 70%;justify-content: space-between;">
             {{ disburseList?.rocFiling }}
-            <button *ngIf="disburseList?.rocFiling === 'Yes' && disburseList?.rocFilingPath"
+            <!-- <button *ngIf="disburseList?.rocFiling === 'Yes' && disburseList?.rocFilingPath"
                 class="btn btn-primary btn-sm ms-2"
                 (click)="openFile(disburseList?.rocFilingPath)"
                 title="View ROC Filing File">
                 <i class="fa fa-eye"></i>
-            </button>
+            </button> -->
         </div>
     </div>
                                 <div class="col-md-4 mb-2">
@@ -945,12 +945,12 @@
           <video *ngIf="isSanctionVideoFile(sanctionList?.sanctionLetterPath)"
                  [src]="sanctionLetterPreviewUrl" controls class="w-100 mb-3"
                  style="max-height:400px;"></video>
-          <div *ngIf="isSanctionOtherFile(sanctionList?.sanctionLetterPath)">
+          <!-- <div *ngIf="isSanctionOtherFile(sanctionList?.sanctionLetterPath)">
             <a [href]="sanctionLetterPreviewUrl" target="_blank"
                class="btn btn-outline-primary">
               <i class="bi bi-download me-2"></i>Download File
             </a>
-          </div>
+          </div> -->
         </ng-container>
         <div *ngIf="!sanctionLetterPreviewUrl" class="text-muted py-5">
           File not available
@@ -984,11 +984,11 @@
                   style="width:100%;height:400px;" frameborder="0"></iframe>
           <video *ngIf="isCommonVideoFile(commonFilePreviewUrl)" [src]="commonFilePreviewUrl"
                  controls class="w-100 mb-3" style="max-height:400px;"></video>
-          <div *ngIf="isCommonOtherFile(commonFilePreviewUrl)">
+          <!-- <div *ngIf="isCommonOtherFile(commonFilePreviewUrl)">
             <a [href]="commonFilePreviewUrl" target="_blank" class="btn btn-outline-primary">
               <i class="bi bi-download me-2"></i>Download File
             </a>
-          </div>
+          </div> -->
         </ng-container>
         <div *ngIf="!commonFilePreviewUrl" class="text-muted py-5">
           File not available
