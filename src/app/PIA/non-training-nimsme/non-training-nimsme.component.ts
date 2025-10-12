@@ -438,6 +438,8 @@ deleteVendorID: any = null;
       vendorCompanyName: ['', [Validators.required, Validators.minLength(2)]],
       dateOfOrder: ['', Validators.required],
       orderDetails: ['', [Validators.required, Validators.minLength(10)]],
+      orderUpload: [''],
+       DummyorderUpload: [''],
       subActivityId: [0]
     });
   }
@@ -449,6 +451,8 @@ deleteVendorID: any = null;
       vendorCompanyName: ['', [Validators.required, Validators.minLength(2)]],
       dateOfOrder: ['', Validators.required],
       orderDetails: ['', [Validators.required, Validators.minLength(10)]],
+      orderUpload: [''],
+       DummyorderUpload: [''],
       subActivityId: [0]
     });
   }
@@ -676,6 +680,7 @@ closeModalDelete(): void {
 
   // Open Vendor Modal
   openVendorModal(mode: string, data?: any) {
+    this.uploadedFilesVendor=''
     this.isEditModeVendor = mode === 'edit';
     this.isSubmitted = false;
     
@@ -685,7 +690,9 @@ closeModalDelete(): void {
         vendorCompanyName: data.vendorCompanyName,
         dateOfOrder: data.dateOfOrder ? new Date(data.dateOfOrder).toISOString().split('T')[0] : '',
         orderDetails: data.orderDetails,
-        subActivityId: data.subActivityId
+        subActivityId: data.subActivityId,
+        orderUpload:data.orderUpload,
+        DummyorderUpload: '',
       });
     } else {
       this.resetVendorForm();
@@ -724,16 +731,36 @@ closeModalDelete(): void {
       this.createVendor(vendorData);
     }
   }
-
+      uploadedFilesVendor: any ;
+  onOrderUploadSelected(event: any): void {
+    this.uploadedFilesVendor=''
+    const file = event.target.files[0];
+    if (file) {
+      this.uploadedFilesVendor = file;
+      // Handle file upload logic here
+      // You might want to upload the file and then set the URL
+      this.vendorForm.patchValue({
+        DummyorderUpload: file.name // This would be the uploaded file URL
+      });
+    }
+  }
   // Create Vendor
   createVendor(vendorData: any) {
-    this._commonService.add(APIS.nontrainingtargets.nimsme.savedataVendor_doc, vendorData).subscribe({
+    let formdata=new FormData()
+     formdata.append("file",this.uploadedFilesVendor)
+     delete vendorData.DummyorderUpload
+    formdata.append("vendorDetailsDto",JSON.stringify(vendorData))
+   
+    
+    this._commonService.add(APIS.nontrainingtargets.nimsme.savedataVendor_doc, formdata).subscribe({
       next: (response) => {
+        this.uploadedFilesVendor=''
         this.toastrService.success('Vendor details created successfully', 'Non Training Progress Data Success!');
         this.loadVendorData();
         this.closeVendorModal();
       },
       error: (error) => {
+        this.uploadedFilesVendor=''
         this.toastrService.error('Failed to create vendor details', 'Non Training Progress Data Error!');
         console.error('Create vendor error:', error);
         this.closeVendorModal();
@@ -743,6 +770,7 @@ closeModalDelete(): void {
 
   // Update Vendor
   updateVendor(vendorData: any) {
+
     this._commonService.update(APIS.nontrainingtargets.nimsme.updatedataVendor_doc, vendorData, vendorData.vendorId).subscribe({
       next: (response) => {
         this.toastrService.success('Vendor details updated successfully', 'Non Training Progress Data Success!');
@@ -815,6 +843,7 @@ closeModalDelete(): void {
 
   // Reset Vendor Form
   resetVendorForm() {
+    this.uploadedFilesVendor=''
     this.vendorForm.reset();
     this.isSubmitted = false;
     this.isEditModeVendor = false;

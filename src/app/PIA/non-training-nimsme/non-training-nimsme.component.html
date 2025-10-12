@@ -118,7 +118,7 @@
             <div class="card-header bg-transparent">
               <div class="row align-items-center">
                 <div class="col-8 col-sm-8 col-md-9 col-lg-10">
-                  <h6 class="fw-600 mb-2 mb-sm-3 mb-md-0">Content Upload</h6>
+                  <h6 class="fw-600 mb-2 mb-sm-3 mb-md-0">Media Deatils</h6>
                 </div>
                 <div class="col-4 col-sm-4 col-md-3 col-lg-2">
                   <div class="text-end">
@@ -133,7 +133,7 @@
                 <thead class="bg-lime-green text-white">
                   <tr>
                     <th>S.No</th>
-                    <th>{{selectedBudgetHead=='77'?'Video':'Content'}} Name</th>
+                    <th>{{selectedBudgetHead=='77'?'Video':'Document'}} Name</th>
                     <th>Content Type</th>
                     <th>Topic</th>
                     <th>Duration/Pages</th>
@@ -316,7 +316,7 @@
                                 </div>
                             </div>
                             <div class="card-body mb-3">
-                                <h6 class="fw-600 mb-2 mb-sm-3 mb-md-0">View Resource Details</h6>
+                                <h6 class="fw-600 mb-2 mb-sm-3 mb-md-0">View Employee Details</h6>
                                   <div class="table-scroll-container">
                                 <table id="view-Priliminary" class="table table-bordered nowrap w-100 trainingTable">
                                   <thead class="bg-lime-green text-white">
@@ -432,9 +432,9 @@
                                        formControlName="contentName"
                                        [class.is-invalid]="isSubmitted && fMedia['contentName'].invalid"
                                        placeholder="Content Name">
-                                <label for="contentName">{{selectedBudgetHead=='77'?'Video':'Content'}} Name</label>
+                                <label for="contentName">{{selectedBudgetHead=='77'?'Video':'Document'}} Name</label>
                                 <div *ngIf="isSubmitted && fMedia['contentName'].invalid" class="invalid-feedback">
-                                    {{selectedBudgetHead=='77'?'Video':'Content'}} name is required
+                                    {{selectedBudgetHead=='77'?'Video':'Document'}} name is required
                                 </div>
                             </div>
                         </div>
@@ -1126,6 +1126,16 @@ aria-hidden="true">
                   </span>
                 </div>
               </div>
+            </div>
+            <!-- Order Upload File Input -->
+            <div class="col-12 col-sm-6 col-md-6 col-lg-6">
+                <div class="form-floating mb-3">
+                    <input type="file" class="form-control" id="DummyorderUpload" formControlName="DummyorderUpload" (change)="onOrderUploadSelected($event)">
+                    <label for="DummyorderUpload">Upload Order Document</label>
+                    <div *ngIf="isSubmitted && fVendor['DummyorderUpload'].invalid" class="invalid-feedback">
+                        Order document is required
+                    </div>
+                </div>
             </div>
           </div>
         </div>
