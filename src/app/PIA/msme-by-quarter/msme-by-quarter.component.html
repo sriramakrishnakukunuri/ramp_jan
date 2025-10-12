@@ -3,24 +3,26 @@
       <div class="container-fluid">
         <div class="card mb-3">
           <div class="card-header bg-transparent">
-            <div class="row align-items-center">
-              <div class="col-12 col-sm-12 col-md-4 col-lg-3">
-                <!-- <h6 class="fw-600 mb-2 mb-sm-2 mb-md-0">Quarterly Progress Monitoring</h6> -->
+            <div class="row"> 
+               <h6 class="fw-bold mb-3">Quaterly Wise MoMSME Report</h6>
+            </div>
+            <div class="row align-items-center mt-2">
+              <!-- <div class="col-12 col-sm-12 col-md-4 col-lg-3 hidden">
                 <mat-radio-group [(ngModel)]="selectedType" (change)="onTypeChange($event.value)" aria-label="Select Data Type">
                     <mat-radio-button value="Actuals" class="me-3">Actuals</mat-radio-button>
                     <mat-radio-button value="Submitted">Submitted</mat-radio-button>
                 </mat-radio-group>
-              </div>
+              </div> -->
               <div class="col-12 col-sm-5 col-md-4 col-lg-3">
            
                 <mat-form-field appearance="outline" class="w-100">
-                            <mat-label>List Of Agencies</mat-label>
+                            <mat-label>List Of Intervention</mat-label>
                                 <mat-select [(ngModel)]="selectedAgencyId" (selectionChange)="GetProgramsByAgency($any($event).value)">
                                 <mat-select-filter [array]="agencyList"  (filteredReturn)="agencyListFiltered = $event">
                                 </mat-select-filter>
                                 <!-- <mat-option value="-1" >All Agencies</mat-option> -->
-                                <mat-option *ngFor="let list of agencyListFiltered" [value]="list.agencyId">
-                                {{ list.agencyName }}
+                                <mat-option *ngFor="let list of agencyListFiltered" [value]="list.moMSMEActivityId">
+                                {{ list.intervention }}
                                 </mat-option>
                             </mat-select>
                             </mat-form-field>
@@ -55,7 +57,7 @@
           </div>
           <div class="card-body mb-3">
 
-            <h6 class="fw-bold mb-3">MSME</h6>
+            <!-- <h6 class="fw-bold mb-3">Quaterly Wise MoMSME Report</h6> -->
             <!--  id=view-physical-table  -->
             <div class="table-container">
               <table  class="table table-bordered table-striped nowrap w-100 fsize-10">
@@ -76,10 +78,10 @@
                   <tr>
                     <!-- <ng-container *ngFor="let item of [1,2,3,4,5]"> -->
                       <th class="text-center"  rowspan="1" colspan="5">Targets v/s Achievements</th>
-                      <th class="text-center" rowspan="1" colspan="4" >MSME's Benifitted</th>
+                      <th class="text-center" rowspan="1" colspan="4" >  	MoMSME's Benifitted</th>
                       
                       <th class="text-center"  rowspan="1" colspan="5">Targets v/s Achievements</th>
-                      <th class="text-center" rowspan="1" colspan="4" >MSME's Benifitted</th>
+                      <th class="text-center" rowspan="1" colspan="4" >  	MoMSME's Benifitted</th>
                     <!-- </ng-container> -->
                   </tr>
                   <tr>
@@ -109,14 +111,38 @@
                     <!-- </ng-container> -->
                   </tr>
                 </thead>
-                <!-- <tbody >
-                  <tr>
-
-                  </tr>
-                  </tbody> -->
+              
                   <tbody >
-                    <tr>
-                      <td class="text-center" colspan="21">Data Not Available</td>
+
+                    <tr *ngIf="!errorMessage">
+                      <td class="text-center sticky-col-1">{{ getTableData.intervention }}</td>
+                      <td class="text-center sticky-col-2">{{ getTableData.component }}</td>
+                      <td class="text-center sticky-col-2">{{ getTableData.activity }}</td>
+                      <!-- Cumulative (1-Apr-2024-Till date) Targets v/s Achievements -->
+                      <td class="text-center">{{ getTableData.cumulativeMoMSMEBenefitedDto?.physicalTarget ?? 0 }}</td>
+                      <td class="text-center">{{ getTableData.cumulativeMoMSMEBenefitedDto?.physicalAchievement ?? 0 }}</td>
+                      <td class="text-center">{{ getTableData.cumulativeMoMSMEBenefitedDto?.financialTarget ?? 0 }}</td>
+                      <td class="text-center">{{ getTableData.cumulativeMoMSMEBenefitedDto?.financialAchievement ?? 0 }}</td>
+                      <td class="text-center">{{ getTableData.cumulativeMoMSMEBenefitedDto?.total ?? 0 }}</td>
+                      <!-- Cumulative MSME's Benefitted -->
+                      <td class="text-center">{{ getTableData.cumulativeMoMSMEBenefitedDto?.women ?? 0 }}</td>
+                      <td class="text-center">{{ getTableData.cumulativeMoMSMEBenefitedDto?.st ?? 0 }}</td>
+                      <td class="text-center">{{ getTableData.cumulativeMoMSMEBenefitedDto?.sc ?? 0 }}</td>
+                      <td class="text-center">{{ getTableData.cumulativeMoMSMEBenefitedDto?.obc ?? 0 }}</td>
+                      <!-- Current Quarter Targets v/s Achievements -->
+                      <td class="text-center">{{ getTableData.physicalTarget ?? 0 }}</td>
+                      <td class="text-center">{{ getTableData.physicalAchievement ?? 0 }}</td>
+                      <td class="text-center">{{ getTableData.financialTarget ?? 0 }}</td>
+                      <td class="text-center">{{ getTableData.financialAchievement ?? 0 }}</td>
+                      <td class="text-center">{{ getTableData.currentQuarterMoMSMEBenefitedDto?.total ?? 0 }}</td>
+                      <!-- Current Quarter MSME's Benefitted -->
+                      <td class="text-center">{{ getTableData.currentQuarterMoMSMEBenefitedDto?.women ?? 0 }}</td>
+                      <td class="text-center">{{ getTableData.currentQuarterMoMSMEBenefitedDto?.st ?? 0 }}</td>
+                      <td class="text-center">{{ getTableData.currentQuarterMoMSMEBenefitedDto?.sc ?? 0 }}</td>
+                      <td class="text-center">{{ getTableData.currentQuarterMoMSMEBenefitedDto?.obc ?? 0 }}</td>
+                    </tr>
+                    <tr *ngIf="errorMessage">
+                      <td class="text-center" colspan="22">Data not available</td>
                     </tr>
                   </tbody>
                 </table>

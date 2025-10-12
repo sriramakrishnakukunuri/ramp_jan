@@ -259,5 +259,9 @@ export const APIS = {
         getNotifications: API_BASE_URL + '/notifications/by-user',
         markAsRead: API_BASE_URL + '/notifications/mark-read',
         updateData: API_BASE_URL + '/notifications/status',
+    },
+    msmeQueaterly:{
+        getMSMEByQuarter: API_BASE_URL + '/momsme/report/by-quarter',
+        getlistOfIntervention: API_BASE_URL + '/momsme/interventions',
     }
 }

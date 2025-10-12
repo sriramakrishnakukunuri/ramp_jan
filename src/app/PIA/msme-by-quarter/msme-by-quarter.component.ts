@@ -29,10 +29,13 @@ export class MsmeByQuarterComponent implements OnInit {
    agencyListFiltered: any[] = [];
  selectedAgencyId: any;
      getAgenciesList() {
-     this._commonService.getDataByUrl(APIS.masterList.agencyList).subscribe({
+     this._commonService.getDataByUrl(APIS.msmeQueaterly.getlistOfIntervention).subscribe({
        next: (res: any) => {
          this.agencyList = res.data;
+         this.selectedAgencyId=res.data[0]?.moMSMEActivityId
+         this.selectedQuarter='Q1'
          this.agencyListFiltered = this.agencyList;
+         this.getBasedOnQuarterSelection()
        },
        error: (err) => {
          this.toastrService.error(err.error.message);
@@ -48,7 +51,7 @@ export class MsmeByQuarterComponent implements OnInit {
 
 
    GetProgramsByAgency(value: any) {
-   
+     this.getBasedOnQuarterSelection()
   }
 
 
@@ -88,11 +91,51 @@ export class MsmeByQuarterComponent implements OnInit {
 
     onQuarterChange(value: string) {
       this.selectedQuarter = value;
+       this.getBasedOnQuarterSelection()
       // You can add additional logic here if needed when the quarter changes
     }
 
     getBasedOnYearSelection(event: any) {
+      this.getBasedOnQuarterSelection()
+    }
+    getTableData:any={}
+    errorMessage:any=''
+    getBasedOnQuarterSelection() {
+      this.errorMessage='Data Not Available'
+      if(!this.selectedAgencyId){
+        this.toastrService.error('Please select Intervention');
+        return;
+      }
+      if(!this.selectedFinancialYear){
+        this.toastrService.error('Please select Financial Year');
+        return;
+      }
+      if(!this.selectedQuarter){
+        this.toastrService.error('Please select Quarter');
+        return;
+      }
+      this.getTableData={}
+        let url=APIS.msmeQueaterly.getMSMEByQuarter+'?moMSMEActivityId='+this.selectedAgencyId+'&financialYear='+this.selectedFinancialYear+'&quarter='+this.selectedQuarter
+         this._commonService.getDataByUrl(url).subscribe({
+       next: (res: any) => {
 
+       
+         if(Object.keys(res.data).length){
+            this.errorMessage=''
+            this.getTableData = res.data;
+         }
+         else{
+           this.errorMessage='Data Not Available'
+         this.getTableData ={}
+         }
+         console.log(this.getTableData,'getTableData' );
+       },
+       error: (err) => {
+        this.errorMessage='Data Not Available'
+         this.getTableData ={}
+         this.toastrService.error(err.error.message);
+       },
+     });
     }
 
 }
