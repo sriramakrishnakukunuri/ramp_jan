@@ -109,6 +109,11 @@
   box-sizing: border-box;
 }
 
+.month-picker-container .cdk-overlay-pane {
+  justify-content: flex-end !important;
+}
+
+
 
 .mat-form-field-type-mat-date-range-input .mat-form-field-infix {
     width: 200px !important;

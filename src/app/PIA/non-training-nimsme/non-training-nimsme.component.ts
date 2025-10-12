@@ -21,23 +21,24 @@ export class NonTrainingNimsmeComponent implements OnInit {
   financialForm!: FormGroup;
   travelForm!: FormGroup;
   paymentForm!: FormGroup;
+  vendorForm!: FormGroup;
    isSubmitted = false;
   loginsessionDetails: any;
   selectedAgencyId: any;
   @ViewChild(MonthlyRangeComponent) monthlyRange!: MonthlyRangeComponent;
- constructor(private fb: FormBuilder, private toastrService: ToastrService,
+  constructor(private fb: FormBuilder, private toastrService: ToastrService,
       private _commonService: CommonServiceService,
       private router: Router,) {
    this.loginsessionDetails = JSON.parse(sessionStorage.getItem('user') || '{}');    
      this.selectedAgencyId = this.loginsessionDetails.agencyId;
 
+        this.financialForm = this.createForm();
         this.contingencyForm = this.createFormContingency();
         this.paymentForm = this.createFormPayment();
 
-  }
-
-  ngOnInit(): void {
+  }  ngOnInit(): void {
     this.initializemediaDeatilsForm();
+    this.initializeVendorForm();
      this.getBudgetHeadList()
     
   }
@@ -86,10 +87,22 @@ export class NonTrainingNimsmeComponent implements OnInit {
           this.financialTarget = this.TargetDetails?.financialTarget || 0;
           this.physicalTargetAchievement = this.TargetDetails?.physicalTargetAchievement || 0;
           this.financialTargetAchievement = this.TargetDetails?.financialTargetAchievement || 0;
-          this.loadMediaDeatilsData()
-          this.getContingencyDataById()
+          // Load expenditure data for selectedBudgetHead==89
+            if (
+            this.selectedBudgetHead == '77' ||
+            this.selectedBudgetHead == '78' ||
+            this.selectedBudgetHead == '79' ||
+            this.selectedBudgetHead == '80' ||
+            this.selectedBudgetHead == '81'
+            ) {
+               this.loadVendorData()
+               this.loadMediaDeatilsData()
+            this.getPreliminaryDataById();
+            }else{
+               this.getContingencyDataById()
             this.getPaymentsDataById()
               this.getResourceList()
+            }
           // console.log('TargetDetails:', this.TargetDetails);
           // if( this.selectedBudgetHead=='27' || this.selectedBudgetHead=='28'){
           //   this.getPreliminaryDataById()
@@ -153,12 +166,256 @@ export class NonTrainingNimsmeComponent implements OnInit {
         });
       }
 
+// Expenditure CRUD operations
+createForm(): FormGroup {
+    return this.fb.group({
+      agencyId: [0, ],
+      nonTrainingSubActivityId: [0, ],
+       nonTrainingActivityId: [0, ],
+      paymentDate: ['', Validators.required],
+      expenditureAmount: [0, [Validators.required, Validators.min(0)]],
+      billNo: ['', Validators.required],
+      billDate: ['', Validators.required],
+      payeeName: ['', Validators.required],
+      accountNumber: ['', Validators.required],
+      bankName: ['', Validators.required],
+      ifscCode: ['', [Validators.required, Validators.pattern(/^[A-Z]{4}0[A-Z0-9]{6}$/)]],
+      modeOfPayment: ['', Validators.required],
+      transactionId: [''],
+      purpose: ['',],
+      uploadBillUrl: [''],
+       DummyuploadBillUrl: [''],
+       checkNo: [''],
+      checkDate: ['']
+    });
+  }
+
+  get f() {
+    return this.financialForm.controls;
+  }
+ 
+  iseditMode = false;
+  preliminaryID:any
+  openModel(mode: string,item?: any): void {
+    if (mode === 'add') {
+      this.iseditMode = false;
+      this.preliminaryID = '';
+      this.financialForm.reset();
+    }
+    if (mode === 'edit') {
+      this.iseditMode = true;
+      this.preliminaryID = item?.id;
+    
+      this.financialForm.patchValue({
+        agencyId: item?.agencyId || 0,
+        nonTrainingSubActivityId: item?.nonTrainingSubActivityId || 0,
+        paymentDate: item?.paymentDate ? this.convertToISOFormat(item?.paymentDate) : '',
+        // category: item?.category ? item?.category : '',
+        expenditureAmount: item?.expenditureAmount || 0,
+        billNo: item?.billNo || '',
+        billDate: item?.billDate ? this.convertToISOFormat(item?.billDate) : '',
+        payeeName: item?.payeeName || '',
+        accountNumber: item?.accountNumber || '',
+        bankName: item?.bankName || '',
+        ifscCode: item?.ifscCode || '',
+        modeOfPayment: item?.modeOfPayment || '',
+        transactionId: item?.transactionId || '',
+          checkNo: item?.checkNo || '',
+        checkDate: item?.checkDate ? this.convertToISOFormat(item?.checkDate) : '',
+        purpose: item?.purpose || '',
+        uploadBillUrl: '',
+        DummyuploadBillUrl: item?.uploadBillUrl || '',
+      });
+      this.modeOfPaymentIt(item?.modeOfPayment || '')
+    }
+    const modal1 = new bootstrap.Modal(document.getElementById('addSurvey'));
+    modal1.show();
+  }
+
+  modeOfPaymentIt(val:any){
+      if(val=='CASH'){
+        this.financialForm.patchValue({
+          ifscCode: '',
+          transactionId: '',
+          checkNo: '',
+          checkDate: ''
+        });
+        this.financialForm.get('ifscCode')?.clearValidators();
+        this.financialForm.get('transactionId')?.clearValidators();
+        this.financialForm.get('checkNo')?.clearValidators();
+        this.financialForm.get('checkDate')?.clearValidators();
+        
+        this.financialForm.get('ifscCode')?.updateValueAndValidity();
+        this.financialForm.get('transactionId')?.updateValueAndValidity();
+        this.financialForm.get('checkNo')?.updateValueAndValidity();
+        this.financialForm.get('checkDate')?.updateValueAndValidity();
+      }
+      else if(val=='BANK_TRANSFER'){
+        this.financialForm.patchValue({
+          transactionId: '',
+          checkNo: '',
+          checkDate: ''
+        });
+        this.financialForm.get('ifscCode')?.setValidators([Validators.required, Validators.pattern(/^[A-Z]{4}0[A-Z0-9]{6}$/)]);
+        this.financialForm.get('transactionId')?.setValidators([Validators.required]);
+        this.financialForm.get('checkNo')?.clearValidators();
+        this.financialForm.get('checkDate')?.clearValidators();
+        
+        this.financialForm.get('ifscCode')?.updateValueAndValidity();
+        this.financialForm.get('transactionId')?.updateValueAndValidity();
+        this.financialForm.get('checkNo')?.updateValueAndValidity();
+        this.financialForm.get('checkDate')?.updateValueAndValidity();
+      }
+      else if(val=='UPI'){
+        this.financialForm.patchValue({
+          ifscCode: '',
+          checkNo: '',
+          checkDate: ''
+        });
+        this.financialForm.get('ifscCode')?.clearValidators();
+        this.financialForm.get('transactionId')?.setValidators([Validators.required]);
+        this.financialForm.get('checkNo')?.clearValidators();
+        this.financialForm.get('checkDate')?.clearValidators();
+        
+        this.financialForm.get('ifscCode')?.updateValueAndValidity();
+        this.financialForm.get('transactionId')?.updateValueAndValidity();
+        this.financialForm.get('checkNo')?.updateValueAndValidity();
+        this.financialForm.get('checkDate')?.updateValueAndValidity();
+      }
+       else if(val=='CHEQUE'){
+        this.financialForm.patchValue({
+          ifscCode: '',
+          transactionId: ''
+        });
+        this.financialForm.get('ifscCode')?.clearValidators();
+        this.financialForm.get('transactionId')?.clearValidators();
+        this.financialForm.get('checkNo')?.setValidators([Validators.required]);
+        this.financialForm.get('checkDate')?.setValidators([Validators.required]);
+        
+        this.financialForm.get('ifscCode')?.updateValueAndValidity();
+        this.financialForm.get('transactionId')?.updateValueAndValidity();
+        this.financialForm.get('checkNo')?.updateValueAndValidity();
+        this.financialForm.get('checkDate')?.updateValueAndValidity();
+      }
+    }
+
+  getPreliminaryData:any=[]
+ 
+    onSubmit(): void {
+      this.isSubmitted = true;
+       if (this.financialForm.valid) {
+      if(this.iseditMode){
+         this.f['agencyId'].setValue(Number(this.selectedAgencyId));
+          this.f['nonTrainingSubActivityId'].setValue(Number(this.selectedBudgetHead));
+  +        this.f['nonTrainingActivityId'].setValue(Number(this.selectedActivity));
+            // this.f['uploadBillUrl'].patchValue(this.f['DummyuploadBillUrl'].value);
+            // delete this.f['DummyuploadBillUrl'];
+          console.log('Form Submitted for Update:', this.financialForm.value);
+          this._commonService.update(APIS.nontrainingtargets.updateNonTrainingtargetsAleapPriliminary,{...this.financialForm.value,nonTrainingSubActivityId:Number(this.selectedBudgetHead),id:this.preliminaryID,uploadBillUrl:this.f['DummyuploadBillUrl'].value},this.preliminaryID).subscribe((res: any) => {
+            this.toastrService.success('Data Updated successfully','Non Training Progress Data Success!');
+            
+            console.log('Preliminary Data:', this.getPreliminaryData);
+            this.resetForm();
+            this.isSubmitted = false;
+            const modalElement = document.getElementById('addSurvey');
+            const modal1 = modalElement ? bootstrap.Modal.getInstance(modalElement) : null;
+            if (modal1) {
+              modal1.hide();
+            }
+          
+          }, (error) => {
+             this.resetForm();
+            this.isSubmitted = false;
+            const modal1 = bootstrap.Modal.getInstance(document.getElementById('addSurvey'));
+            modal1.hide();
+            this.toastrService.error(error.message,"Non Training Progress Data Error!");
+          });
+          this.getDeatilOfTargets()
+      }
+      else{
+        console.log('Form Submitted:', this.financialForm.value);
+        this.f['agencyId'].setValue(Number(this.selectedAgencyId));
+          this.f['nonTrainingSubActivityId'].setValue(Number(this.selectedBudgetHead));
+  +        this.f['nonTrainingActivityId'].setValue(Number(this.selectedActivity));
+            this.financialForm.removeControl('DummyuploadBillUrl');
+           const formData = new FormData();
+            formData.append("dto", JSON.stringify({...this.financialForm.value}));
+  
+            if (this.financialForm.value.uploadBillUrl) {
+              formData.append("file", this.uploadedFiles);
+              }
+          this._commonService.add(APIS.nontrainingtargets.saveNonTrainingtargetsCodeIT,formData).subscribe((res: any) => {
+            this.toastrService.success('Data saved successfully','Non Training Progress Data Success!');
+            // this.getPreliminaryData.push(res.data)
+            this.resetForm();
+            this.isSubmitted = false;
+            const modal1 = bootstrap.Modal.getInstance(document.getElementById('addSurvey'));
+            modal1.hide();
+           
+          
+          }, (error) => {
+            this.resetForm();
+            this.isSubmitted = false;
+            const modal1 = bootstrap.Modal.getInstance(document.getElementById('addSurvey'));
+            modal1.hide();
+            this.toastrService.error(error.message);
+          });
+          this.getDeatilOfTargets()
+      }
+     
+      }
+  
+    }
+
+  getPreliminaryDataById(){
+    this._commonService.getDataByUrl(APIS.nontrainingtargets.getNonTrainingtargetsAleapPriliminaryById+this.selectedBudgetHead).subscribe((res: any) => {
+      this.getPreliminaryData = res.data || [];
+    }, (error) => {
+      console.error('Error fetching preliminary data:', error);
+    });
+  }
+
+  deletePreliminaryID:any
+  deletePreliminary(id:any):void{
+    this.deletePreliminaryID=id
+     const previewModal = document.getElementById('exampleModalDelete');
+    if (previewModal) {
+      const modal = new bootstrap.Modal(previewModal);
+      modal.show();
+    }
+  }
+
+  ConfirmdeleteExpenditure(item:any){
+      this._commonService
+      .deleteId(APIS.nontrainingtargets.deleteNonTrainingtargetsAleapContingency,item).subscribe({
+        next: (data: any) => {
+          this.toastrService.success('Expenditure deleted successfully', 'Success!');
+          const editSessionModal = document.getElementById('exampleModalDelete');
+          if (editSessionModal) {
+            const modal = bootstrap.Modal.getInstance(editSessionModal);
+            if (modal) modal.hide();
+          }
+          this.getDeatilOfTargets();
+          this.getPreliminaryDataById();
+        },
+        error: (err) => {
+          this.toastrService.error(err.message || 'Failed to delete expenditure', 'Error!');
+        },
+      });
+    }
+
+
 
 // media upload code
 isEditModeUpload = false;
 selectedUploadFile: File | null = null;
 getUploadData: any[] = [];
 deleteUploadID: any = null;
+
+// vendor management code
+isEditModeVendor = false;
+getVendorData: any[] = [];
+deleteVendorID: any = null;
  initializemediaDeatilsForm() {
     this.mediaDeatilsForm = this.fb.group({
       id: [''],
@@ -174,9 +431,36 @@ deleteUploadID: any = null;
     });
   }
 
+  // Initialize Vendor Form
+  initializeVendorForm() {
+    this.vendorForm = this.fb.group({
+      vendorId: [0],
+      vendorCompanyName: ['', [Validators.required, Validators.minLength(2)]],
+      dateOfOrder: ['', Validators.required],
+      orderDetails: ['', [Validators.required, Validators.minLength(10)]],
+      subActivityId: [0]
+    });
+  }
+
+  // Create Vendor Form (used in constructor)
+  createVendorForm(): FormGroup {
+    return this.fb.group({
+      vendorId: [0],
+      vendorCompanyName: ['', [Validators.required, Validators.minLength(2)]],
+      dateOfOrder: ['', Validators.required],
+      orderDetails: ['', [Validators.required, Validators.minLength(10)]],
+      subActivityId: [0]
+    });
+  }
+
   // Getter for upload form controls
   get fMedia() {
     return this.mediaDeatilsForm.controls;
+  }
+
+  // Getter for vendor form controls
+  get fVendor() {
+    return this.vendorForm.controls;
   }
  // Open Upload Modal
   openUploadModal(mode: string, data?: any) {
@@ -360,7 +644,7 @@ closeModalDelete(): void {
     // Reset form with default values
     this.mediaDeatilsForm.patchValue({
       id: '',
-      contentType: 'Video',
+      contentType: this.selectedBudgetHead=='77'?'Video':'Document',
       contentName: '',
       durationOrPages: 0,
       topic: '',
@@ -386,6 +670,184 @@ closeModalDelete(): void {
       modal?.hide();
     }
     this.resetmediaDeatilsForm();
+  }
+
+  // ================= VENDOR MANAGEMENT METHODS =================
+
+  // Open Vendor Modal
+  openVendorModal(mode: string, data?: any) {
+    this.isEditModeVendor = mode === 'edit';
+    this.isSubmitted = false;
+    
+    if (mode === 'edit' && data) {
+      this.vendorForm.patchValue({
+        vendorId: data.vendorId,
+        vendorCompanyName: data.vendorCompanyName,
+        dateOfOrder: data.dateOfOrder ? new Date(data.dateOfOrder).toISOString().split('T')[0] : '',
+        orderDetails: data.orderDetails,
+        subActivityId: data.subActivityId
+      });
+    } else {
+      this.resetVendorForm();
+    }
+
+    // Open modal using Bootstrap
+    const modalElement = document.getElementById('addVendor');
+    if (modalElement) {
+      const modal = new (window as any).bootstrap.Modal(modalElement);
+      modal.show();
+    }
+  }
+
+  // Submit Vendor Form
+  onSubmitVendor() {
+    this.isSubmitted = true;
+    
+    if (this.vendorForm.invalid) {
+      console.log('Vendor form is invalid');
+      return;
+    }
+
+    const vendorData = { ...this.vendorForm.value };
+    
+    // Set subActivityId to current selected budget head
+    vendorData.subActivityId = parseInt(this.selectedBudgetHead);
+    
+    // Convert date to ISO string
+    if (vendorData.dateOfOrder) {
+      vendorData.dateOfOrder = new Date(vendorData.dateOfOrder).toISOString();
+    }
+
+    if (this.isEditModeVendor) {
+      this.updateVendor(vendorData);
+    } else {
+      this.createVendor(vendorData);
+    }
+  }
+
+  // Create Vendor
+  createVendor(vendorData: any) {
+    this._commonService.add(APIS.nontrainingtargets.nimsme.savedataVendor_doc, vendorData).subscribe({
+      next: (response) => {
+        this.toastrService.success('Vendor details created successfully', 'Non Training Progress Data Success!');
+        this.loadVendorData();
+        this.closeVendorModal();
+      },
+      error: (error) => {
+        this.toastrService.error('Failed to create vendor details', 'Non Training Progress Data Error!');
+        console.error('Create vendor error:', error);
+        this.closeVendorModal();
+      }
+    });
+  }
+
+  // Update Vendor
+  updateVendor(vendorData: any) {
+    this._commonService.update(APIS.nontrainingtargets.nimsme.updatedataVendor_doc, vendorData, vendorData.vendorId).subscribe({
+      next: (response) => {
+        this.toastrService.success('Vendor details updated successfully', 'Non Training Progress Data Success!');
+        this.loadVendorData();
+        this.closeVendorModal();
+      },
+      error: (error) => {
+        this.toastrService.error('Failed to update vendor details', 'Non Training Progress Data Error!');
+        console.error('Update vendor error:', error);
+        this.closeVendorModal();
+      }
+    });
+  }
+
+  // Load Vendor Data
+  loadVendorData() {
+    // Only load vendor data for selectedBudgetHead 79, 80, 81
+    if (!this.selectedBudgetHead || !['79', '80', '81'].includes(this.selectedBudgetHead)) {
+      this.getVendorData = [];
+      return;
+    }
+
+    this._commonService.getDataByUrl(APIS.nontrainingtargets.nimsme.getdataVendor_doc + this.selectedBudgetHead).subscribe({
+      next: (response) => {
+        this.getVendorData = response.data || [];
+      },
+      error: (error) => {
+        this.toastrService.error('Failed to load vendor details', 'Non Training Progress Data Error!');
+        console.error('Load vendor data error:', error);
+      }
+    });
+  }
+
+  // Delete Vendor
+  deleteVendor(id: any) {
+    this.deleteVendorID = id;
+    const modalElement = document.getElementById('exampleModalDeleteVendor');
+    if (modalElement) {
+      const modal = new (window as any).bootstrap.Modal(modalElement);
+      modal.show();
+    }
+  }
+
+  // Confirm Delete Vendor
+  confirmDeleteVendor(id: any) {
+    this._commonService.deleteId(APIS.nontrainingtargets.nimsme.deletedataMedia_doc, id).subscribe({
+      next: (response) => {
+        this.toastrService.success('Vendor details deleted successfully', 'Non Training Progress Data Success!');
+        this.loadVendorData();
+        this.closeVendorDeleteModal();
+      },
+      error: (error) => {
+        this.toastrService.error('Failed to delete vendor details', 'Non Training Progress Data Error!');
+        this.loadVendorData();
+        this.closeVendorDeleteModal();
+        console.error('Delete vendor data error:', error);
+      }
+    });
+  }
+
+  // Close Vendor Delete Modal
+  closeVendorDeleteModal(): void {
+    document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+    const deleteVendorModal = document.getElementById('exampleModalDeleteVendor');
+    if (deleteVendorModal) {
+      const modalInstance = bootstrap.Modal.getInstance(deleteVendorModal);
+      modalInstance.hide();
+    }
+  }
+
+  // Reset Vendor Form
+  resetVendorForm() {
+    this.vendorForm.reset();
+    this.isSubmitted = false;
+    this.isEditModeVendor = false;
+    
+    // Reset form with default values
+    this.vendorForm.patchValue({
+      vendorId: 0,
+      vendorCompanyName: '',
+      dateOfOrder: '',
+      orderDetails: '',
+      subActivityId: parseInt(this.selectedBudgetHead || '0')
+    });
+    
+    // Reset form validation
+    Object.keys(this.fVendor).forEach(key => {
+      this.fVendor[key].markAsUntouched();
+      this.fVendor[key].markAsPristine();
+    });
+  }
+
+  // Close Vendor Modal
+  closeVendorModal() {
+    const modalElement = document.getElementById('addVendor');
+    if (modalElement) {
+      const modal = (window as any).bootstrap.Modal.getInstance(modalElement);
+      modal?.hide();
+    }
+    this.resetVendorForm();
+  }
+
+  // Check if current budget head supports vendor management
+  isVendorBudgetHead(): boolean {
+    return ['79', '80', '81'].includes(this.selectedBudgetHead);
   }
 
 

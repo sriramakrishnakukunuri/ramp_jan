@@ -47,6 +47,7 @@ export class MonthlyRangeComponent implements OnInit, OnChanges {
     @Output() monthChangeValue = new EventEmitter<any>();
     @Input() paymentForMonth: any;
     @Input() disableFuture: boolean = false;
+     @Input() NameOfField: any ='';
     maxDate: Moment;
 
 

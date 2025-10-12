@@ -99,6 +99,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { ProgressMonitoringReportComponent } from './PIA/progress-monitoring-report/progress-monitoring-report.component';
 import { DownloadExcelPdfComponent } from './PIA/download-excel-pdf/download-excel-pdf.component';
 import { NonTrainingNimsmeComponent } from './PIA/non-training-nimsme/non-training-nimsme.component';
+import { MsmeByQuarterComponent } from './PIA/msme-by-quarter/msme-by-quarter.component';
+import { MsmeByMonthComponent } from './PIA/msme-by-month/msme-by-month.component';
 @NgModule({
     imports: [
         MaterialModule,
@@ -201,7 +203,9 @@ import { NonTrainingNimsmeComponent } from './PIA/non-training-nimsme/non-traini
         ResheduleProgramsComponent,
         ProgressMonitoringReportComponent,
         DownloadExcelPdfComponent,
-        NonTrainingNimsmeComponent
+        NonTrainingNimsmeComponent,
+        MsmeByQuarterComponent,
+        MsmeByMonthComponent
 
     ],
     exports:[MaterialModule,

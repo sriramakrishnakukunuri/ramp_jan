@@ -332,6 +332,13 @@
                    <li *appHasRole="[Role.Admin]">
                     <a class="dropdown-item" routerLink="/progress-monitoring" routerLinkActive="active">Progress Monitoring</a>
                   </li>
+                  <!-- Progress Monitoring (Admin) -->
+                    <!-- <li *appHasRole="[Role.Admin,Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]">
+                    <a class="dropdown-item" routerLink="/msme-by-month" routerLinkActive="active">MSME By Month</a>
+                    </li>
+                    <li *appHasRole="[Role.Admin,Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]">
+                    <a class="dropdown-item" routerLink="/msme-by-quarter" routerLinkActive="active">MSME By Quarter</a>
+                    </li> -->
                   <!-- Programs Per Agencies (submenu) -->
                   <li *appHasRole="[Role.Admin]" class="dropdown-submenu" style="position:relative;">
                     <a class="dropdown-item d-flex justify-content-between align-items-center" href="#"

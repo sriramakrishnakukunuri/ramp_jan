@@ -1,0 +1,158 @@
+
+.table-container {
+  max-height: 350px; 
+  overflow: auto; /* Enables both vertical and horizontal scrolling */
+  border: 1px solid #dee2e6;
+}
+
+/* .table-container table {
+  border-collapse: separate; 
+  border-spacing: 0; 
+} */
+
+.table-container thead th {
+  position: sticky;
+  background-color: #8dc63f; /* Match .bg-lime-green */
+  z-index: 2;
+}
+
+/* --- Define Sticky Columns by Class --- */
+.table-container .sticky-col-1,
+.table-container .sticky-col-2 {
+  position: sticky;
+  z-index: 1; /* Below the header */
+}
+
+.table-container .sticky-col-1 {
+  left: 0;
+  width: 200px;
+  min-width: 200px;
+}
+
+.table-container .sticky-col-2 {
+  left: 200px; /* Must match the width of the first column */
+  width: 200px;
+  min-width: 200px;
+}
+
+/* --- Set background for sticky columns to hide scrolling content --- */
+.table-container .sticky-col-1,
+.table-container .sticky-col-2 {
+    background-color: #ffffff; /* Default for even rows */
+}
+
+.table-striped > tbody > tr:nth-of-type(odd) > .sticky-col-1,
+.table-striped > tbody > tr:nth-of-type(odd) > .sticky-col-2 {
+    background-color: #f8f9fa; /* Bootstrap's stripe color for odd rows */
+}
+
+/* --- Ensure sticky header corners are on top --- */
+.table-container thead .sticky-col-1,
+.table-container thead .sticky-col-2 {
+  z-index: 3; /* Highest z-index for the top-left corner */
+}
+
+
+.table-container thead::after {
+  content: '';
+  display: block;
+  position: sticky;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background-color: #dee2e6;
+  z-index: 2;
+  width: 100%;
+}
+
+.table-container thead th {
+  position: sticky;
+  background-color: #8dc63f; /* Match .bg-lime-green */
+  z-index: 2;
+}
+
+/* Fix for missing borders when scrolling */
+.table-container table {
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+/* Add explicit borders to all cells */
+.table-container th,
+.table-container td {
+  border: 1px solid #dee2e6;
+}
+
+/* Override Bootstrap's default border styles */
+.table-container .table-bordered > :not(caption) > * > * {
+  border-width: 1px !important;
+}
+
+/* Make sure thead cells have borders */
+.table-container thead th {
+  position: sticky;
+  background-color: #07c540; /* Match .bg-lime-green */
+  z-index: 2;
+  /* Add border to all sides */
+  border: 1px solid #dee2e6 !important;
+}
+
+/* Ensure each header row has a distinct background and border */
+.table-container thead tr:nth-child(1) th {
+  top: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3) !important;
+}
+
+.table-container thead tr:nth-child(2) th {
+  top: 38px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3) !important;
+}
+
+.table-container thead tr:nth-child(3) th {
+  top: 76px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3) !important;
+}
+
+.table-container thead tr:nth-child(4) th {
+  top: 114px;
+  border-bottom: 2px solid #dee2e6 !important; /* Thicker border for the last row */
+}
+
+/* Remove the after pseudo-element as we're using actual borders */
+.table-container thead::after {
+  display: none;
+}
+
+/* Ensure sticky columns have proper borders and background */
+.table-container .sticky-col-1,
+.table-container .sticky-col-2 {
+  position: sticky;
+  z-index: 1;
+  border: 1px solid #dee2e6 !important;
+}
+
+/* Fix z-index for sticky column headers to be above other headers */
+.table-container thead .sticky-col-1,
+.table-container thead .sticky-col-2 {
+  z-index: 3;
+}
+
+.month-picker .mat-calendar-period-button {
+  pointer-events: none;
+}
+
+.month-picker .mat-calendar-arrow {
+  display: none;
+}
+
+
+
+.mat-form-field {
+    font-size: inherit;
+    font-weight: 400;
+    line-height: 1.125;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    letter-spacing: normal;
+    height: 3.5rem !important;
+}

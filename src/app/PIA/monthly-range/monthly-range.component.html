@@ -28,7 +28,7 @@
            readonly
            (click)="dp1.open()" 
            (keydown)="$event.preventDefault()">
-    <label for="paymentForMonthInput">Payment For Month</label>
+    <label for="paymentForMonthInput">{{NameOfField?NameOfField: 'Payment For Month'}}</label>
     <mat-datepicker-toggle matSuffix [for]="dp1"></mat-datepicker-toggle>
     <mat-datepicker #dp1 
                     startView="multi-year" 

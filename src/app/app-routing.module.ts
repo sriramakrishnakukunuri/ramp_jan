@@ -66,6 +66,8 @@ import { ResheduleProgramsComponent } from './PIA/reshedule-programs/reshedule-p
 import { ProgressMonitoringReportComponent } from './PIA/progress-monitoring-report/progress-monitoring-report.component';
 import { DownloadExcelPdfComponent } from './PIA/download-excel-pdf/download-excel-pdf.component';
 import { NonTrainingNimsmeComponent } from './PIA/non-training-nimsme/non-training-nimsme.component';
+import { MsmeByMonthComponent } from './PIA/msme-by-month/msme-by-month.component';
+import { MsmeByQuarterComponent } from './PIA/msme-by-quarter/msme-by-quarter.component';
 const routes: Routes = [
     {
         path: '',
@@ -431,6 +433,18 @@ const routes: Routes = [
         component: ProgressMonitoringReportComponent,
         canActivate: [AuthGuard],
         data: { roles: [Role.Admin,Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
+    },
+    {
+        path: 'msme-by-month',
+        component: MsmeByMonthComponent,
+        canActivate: [AuthGuard],
+        data: { roles: [Role.Admin, Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR] }
+    },
+    {
+        path: 'msme-by-quarter',
+        component: MsmeByQuarterComponent,
+        canActivate: [AuthGuard],
+        data: { roles: [Role.Admin, Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR] }
     },
      {
         path: 'Training-Non-trainingAchievements',

@@ -159,6 +159,10 @@ export const APIS = {
             savedataMedia_doc: API_BASE_URL + '/central-data/content/save',
             deletedataMedia_doc: API_BASE_URL + '/central-data/content/',
             updatedataMedia_doc: API_BASE_URL + '/central-data/content/',
+             getdataVendor_doc: API_BASE_URL + '/vendors/get/',
+            savedataVendor_doc: API_BASE_URL + '/vendors/save',
+            deletedataVendor_doc: API_BASE_URL + '/vendors/',
+            updatedataVendor_doc: API_BASE_URL + '/vendors/',
         }
        
     },
