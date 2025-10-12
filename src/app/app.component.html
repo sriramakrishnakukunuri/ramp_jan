@@ -333,9 +333,7 @@
                     <a class="dropdown-item" routerLink="/progress-monitoring" routerLinkActive="active">Progress Monitoring</a>
                   </li>
                   <!-- Progress Monitoring (Admin) -->
-                    <!-- <li *appHasRole="[Role.Admin,Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]">
-                    <a class="dropdown-item" routerLink="/msme-by-month" routerLinkActive="active">MSME By Month</a>
-                    </li> -->
+                    
                     <!-- <li *appHasRole="[Role.Admin,Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]">
                     <a class="dropdown-item" routerLink="/msme-by-quarter" routerLinkActive="active">Quaterly Wise MoMSME Report</a>
                     </li> -->
@@ -374,6 +372,9 @@
                   <li *appHasRole="[Role.Admin]">
                     <a class="dropdown-item" routerLink="/view-table-organization" routerLinkActive="active">Masters List</a>
                   </li>
+                  <li *appHasRole="[Role.Admin]">
+                    <a class="dropdown-item" routerLink="/msme-by-month" routerLinkActive="active">Add MoMSME Report By Month</a>
+                    </li>
                     <li *appHasRole="[Role.Admin]">
                     <a class="dropdown-item" routerLink="/msme-by-quarter" routerLinkActive="active">Quaterly Wise MoMSME Report</a>
                     </li>
