@@ -185,6 +185,7 @@ createForm(): FormGroup {
       purpose: ['',],
       uploadBillUrl: [''],
        DummyuploadBillUrl: [''],
+       category:[''],
        checkNo: [''],
       checkDate: ['']
     });
@@ -210,7 +211,7 @@ createForm(): FormGroup {
         agencyId: item?.agencyId || 0,
         nonTrainingSubActivityId: item?.nonTrainingSubActivityId || 0,
         paymentDate: item?.paymentDate ? this.convertToISOFormat(item?.paymentDate) : '',
-        // category: item?.category ? item?.category : '',
+        category: item?.category ? item?.category : '',
         expenditureAmount: item?.expenditureAmount || 0,
         billNo: item?.billNo || '',
         billDate: item?.billDate ? this.convertToISOFormat(item?.billDate) : '',

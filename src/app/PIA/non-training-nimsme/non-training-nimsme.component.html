@@ -254,6 +254,7 @@
                             <tr>
                                 <th>S.No</th>
                                 <th>Date of hiring</th>
+                                <th *ngIf="selectedBudgetHead=='79' || selectedBudgetHead=='80' || selectedBudgetHead=='81'"> Vendor Company Name</th>
                                 <th>Expenditure Amount</th>
                                 <th>Bill No.</th>
                                 <th>Bill Date</th>
@@ -275,6 +276,7 @@
                             <tr *ngFor="let preliminary of getPreliminaryData; let i = index">
                                 <td>{{ i + 1 }}</td>
                                 <td class="noWrap">{{ preliminary?.paymentDate }}</td>
+                                <td *ngIf="selectedBudgetHead=='79' || selectedBudgetHead=='80' || selectedBudgetHead=='81'">{{ preliminary?.category }}</td>
                                 <td>{{ preliminary?.expenditureAmount }}</td>
                                 <td>{{ preliminary?.billNo }}</td>
                                 <td class="noWrap">{{ preliminary?.billDate }}</td>
@@ -1188,7 +1190,22 @@ aria-hidden="true">
                 <label for="agencyId">Agency ID</label>
               </div>
             </div>
-
+            <!-- Vendor Dropdown -->
+            <div class="col-12 col-sm-6 col-md-4 col-lg-4" *ngIf="selectedBudgetHead=='79' || selectedBudgetHead=='80' || selectedBudgetHead=='81'">
+                <div class="form-floating mb-3">
+                    <select class="form-select" formControlName="category"
+                                    [class.is-invalid]="isSubmitted && f['vendorId'].invalid">
+                        <option value="">Select Vendor</option>
+                        <option *ngFor="let vendor of getVendorData" [value]="vendor?.vendorCompanyName">
+                            {{ vendor?.vendorCompanyName }}
+                        </option>
+                    </select>
+                    <label for="vendorId">Vendor</label>
+                    <div *ngIf="isSubmitted && f['vendorId'].invalid" class="invalid-feedback">
+                        Vendor selection is required
+                    </div>
+                </div>
+            </div>
             <!-- Payment Date -->
             <div class="col-12 col-sm-6 col-md-4 col-lg-4">
               <div class="form-floating mb-3">
