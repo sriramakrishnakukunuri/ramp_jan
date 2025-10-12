@@ -23,7 +23,7 @@ export class MsmeByMonthComponent implements OnInit {
     'january', 'february', 'march', 'april', 'may', 'june',
     'july', 'august', 'september', 'october', 'november', 'december'
   ];
-  selectedMonthName: string = 'january';
+  selectedMonthName: string = 'april';
   agencyList: any[] = [];
   agencyListFiltered: any[] = [];
 
@@ -47,7 +47,7 @@ export class MsmeByMonthComponent implements OnInit {
        next: (res: any) => {
          this.agencyList = res.data;
          this.selectedAgencyId=res.data[0]?.moMSMEActivityId
-         this.selectedMonthName='january'
+         this.selectedMonthName='april'
          this.agencyListFiltered = this.agencyList;
          this.getBasedOnQuarterSelection()
        },
