@@ -101,6 +101,7 @@ import { DownloadExcelPdfComponent } from './PIA/download-excel-pdf/download-exc
 import { NonTrainingNimsmeComponent } from './PIA/non-training-nimsme/non-training-nimsme.component';
 import { MsmeByQuarterComponent } from './PIA/msme-by-quarter/msme-by-quarter.component';
 import { MsmeByMonthComponent } from './PIA/msme-by-month/msme-by-month.component';
+import { ProgramMonitoringReportApprovalComponent } from './PIA/program-monitoring-report-approval/program-monitoring-report-approval.component';
 @NgModule({
     imports: [
         MaterialModule,
@@ -205,7 +206,8 @@ import { MsmeByMonthComponent } from './PIA/msme-by-month/msme-by-month.componen
         DownloadExcelPdfComponent,
         NonTrainingNimsmeComponent,
         MsmeByQuarterComponent,
-        MsmeByMonthComponent
+        MsmeByMonthComponent,
+        ProgramMonitoringReportApprovalComponent
 
     ],
     exports:[MaterialModule,

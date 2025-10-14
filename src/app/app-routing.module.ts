@@ -68,6 +68,7 @@ import { DownloadExcelPdfComponent } from './PIA/download-excel-pdf/download-exc
 import { NonTrainingNimsmeComponent } from './PIA/non-training-nimsme/non-training-nimsme.component';
 import { MsmeByMonthComponent } from './PIA/msme-by-month/msme-by-month.component';
 import { MsmeByQuarterComponent } from './PIA/msme-by-quarter/msme-by-quarter.component';
+import { ProgramMonitoringReportApprovalComponent } from './PIA/program-monitoring-report-approval/program-monitoring-report-approval.component';
 const routes: Routes = [
     {
         path: '',
@@ -433,6 +434,12 @@ const routes: Routes = [
         component: ProgressMonitoringReportComponent,
         canActivate: [AuthGuard],
         data: { roles: [Role.Admin,Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
+    },
+     {
+        path: 'progress-monitoring-report-approval',
+        component: ProgramMonitoringReportApprovalComponent,
+        canActivate: [AuthGuard],
+        data: { roles: [Role.Admin,Role.DEPARTMENT] }
     },
     {
         path: 'msme-by-month',
