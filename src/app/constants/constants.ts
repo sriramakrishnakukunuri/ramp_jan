@@ -194,7 +194,8 @@ export const APIS = {
     },
     programFeedback:{
         updateFeedbackData:API_BASE_URL+'/new/program/feedback/update/',
-        getFeedbackData:API_BASE_URL+'/new/program/feedback/id/'
+        getFeedbackData:API_BASE_URL+'/new/program/feedback/id/',
+        approvalFeedbackData:API_BASE_URL+'/jd-approvals/save',
     },
     rawMaterial:{
         getDeatails:API_BASE_URL +`/program/rawmaterial/`,

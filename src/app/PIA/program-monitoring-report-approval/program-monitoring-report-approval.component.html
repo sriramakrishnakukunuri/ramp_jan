@@ -12,7 +12,7 @@
         <div class="card-body">
           <!-- Filter Dropdowns -->
           <div class="row">
-            <div class="col-12 col-sm-4 col-md-4 col-lg-3"></div>
+            <div class="col-12 col-sm-4 col-md-4 col-lg-6"></div>
             <div class="col-12 col-sm-6 col-md-4 col-lg-2" style="margin-top: 12px;">
               <div class="form-floating mb-3">
                 <select class="form-select" id="agency" [(ngModel)]="selectedAgencyId"
@@ -72,18 +72,18 @@
                         <div class="row align-items-end">
                             <div class="col-md-4 mb-3">
                                 <label class="form-label">Approval Remarks</label>
-                                <textarea class="form-control" name="approvalRemarks" placeholder="Enter remarks" rows="1"></textarea>
+                                <textarea class="form-control" [(ngModel)]="remarks" name="remarks" placeholder="Enter remarks" rows="1"></textarea>
                             </div>
                             <div class="col-md-4 mb-3">
                                 <label class="form-label">Approval Status</label>
-                                <select class="form-select" name="approvalStatus">
+                                <select class="form-select" [(ngModel)]="status" name="status">
                                     <option value="" disabled selected>Select status</option>
                                     <option value="APPROVED">Approved</option>
                                     <option value="REJECTED">Rejected</option>
                                 </select>
                             </div>
-                            <div class="col-12 d-flex justify-content-end mt-3">
-                                <button class="btn btn-lime-green px-4" type="button" disabled>Save</button>
+                            <div class="col-12 d-flex justify-content-end mt-3" >
+                                <button class="btn btn-lime-green px-4" type="button" (click)="saveApproal()" [ngClass]="{'disabled': !(selectedUserId && status && remarks)}">Save</button>
                             </div>
                         </div>
                     </form>

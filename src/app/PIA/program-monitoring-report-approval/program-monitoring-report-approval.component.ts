@@ -21,6 +21,8 @@ export class ProgramMonitoringReportApprovalComponent implements OnInit {
   agencyListFiltered: any;
   agencyList: any;
   selectedAgencyId: any;
+  status:any=''
+  remarks:any=''
   
   // Track collapse state for each section
   collapseState: { [key: string]: boolean } = {
@@ -103,6 +105,38 @@ export class ProgramMonitoringReportApprovalComponent implements OnInit {
     }, (error) => {
       this.toastrService.error(error.error.message);
     });
+  }
+  saveApproal(){
+    if(!this.selectedUserId){
+      this.toastrService.error('No User Data Found' );
+      return;
+    }
+    if(!this.status){
+      this.toastrService.error('Please select status' );
+      return;
+    }
+    if(!this.remarks){
+      this.toastrService.error('Please enter remarks' );
+      return;
+    }
+    const finalData={
+        "programId": Number(this.selectedProgramId),
+        "programMonitoringId": Number(this.selectedUserId),
+        "agencyId": Number(this.selectedAgencyId),
+        "status": this.status,
+        "remarks": this.remarks
+    }
+    this._commonService.add(`${APIS.programFeedback.approvalFeedbackData}`, finalData).subscribe(
+      (response: any) => {
+        this.toastrService.success(`Status Updated successfully`);
+        this.getAgenciesBasedUserList(this.selectedProgramId);
+        this.status=''
+        this.remarks=''
+      },
+      (error) => {
+        this.toastrService.error(`Failed to update Report`);
+      }
+    );
   }
   programList: any;
   programListFiltered: any
