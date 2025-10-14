@@ -15,7 +15,7 @@
                     </div>
                 </div>
                 <div class="card-body">   
-                    <table id="expenditure-table-bulk" class="table table-bordered nowrap w-100">
+                  <table id="expenditure-table-bulk" class="table table-bordered nowrap w-100">
                         <thead class="bg-lime-green text-white">
                             <tr>
                                 <th>S.No</th>
@@ -23,6 +23,8 @@
                                 <th>Name of Item</th>
                                 <th>Purchase Date</th>
                                 <th>Quantity Purchased</th>
+                                 <th>Consumable Quantity</th>
+                                <th>Available Quantity</th>
                                 <th>Unit Price</th>
                                 <th>Total Cost</th>
                                 <th>Bill No</th>
@@ -43,8 +45,11 @@
                                 <td>{{item?.itemName}}</td>
                                 <td>{{item?.purchaseDate}}</td>
                                 <td>{{item?.purchasedQuantity}}</td>
+                                <td>{{item?.consumedQuantity}}</td>
+                                <td>{{item?.availableQuantity}}</td>
                                 <td>{{item?.unitCost}}</td>
                                 <td>{{item?.totalCost}}</td>
+                                
                                 <td>{{item?.billNo}}</td>
                                 <td>{{item?.billDate}}</td>
                                 <td>{{item?.checkNo}}</td>
@@ -84,7 +89,7 @@
                             <td></td>
                             <td></td>
                         </tr> -->
-                    </table>            
+                    </table>    
                 </div>
             </div>
 
