@@ -136,7 +136,7 @@
                     <th>{{selectedBudgetHead=='77'?'Video':'Document'}} Name</th>
                     <th>Content Type</th>
                     <th>Topic</th>
-                    <th>Duration/Pages</th>
+                    <th>{{selectedBudgetHead=='77'?'Duration':'Pages'}}</th>
                     <th>Status</th>
                     <th>Date of Upload</th>
                     <!-- <th>Download</th> -->
@@ -253,7 +253,7 @@
                         <thead class="bg-lime-green text-white">
                             <tr>
                                 <th>S.No</th>
-                                <th>Date of hiring</th>
+                                <th *ngIf="selectedBudgetHead=='77' || selectedBudgetHead=='78'">Date of Payment</th>
                                 <th *ngIf="selectedBudgetHead=='79' || selectedBudgetHead=='80' || selectedBudgetHead=='81'"> Vendor Company Name</th>
                                 <th>Expenditure Amount</th>
                                 <th>Bill No.</th>
@@ -275,7 +275,7 @@
                             </tr>
                             <tr *ngFor="let preliminary of getPreliminaryData; let i = index">
                                 <td>{{ i + 1 }}</td>
-                                <td class="noWrap">{{ preliminary?.paymentDate }}</td>
+                                <td *ngIf="selectedBudgetHead=='77' || selectedBudgetHead=='78'" class="noWrap">{{ preliminary?.paymentDate }}</td>
                                 <td *ngIf="selectedBudgetHead=='79' || selectedBudgetHead=='80' || selectedBudgetHead=='81'">{{ preliminary?.category }}</td>
                                 <td>{{ preliminary?.expenditureAmount }}</td>
                                 <td>{{ preliminary?.billNo }}</td>
@@ -484,7 +484,7 @@
                                        [class.is-invalid]="isSubmitted && fMedia['durationOrPages'].invalid"
                                        min="1"
                                        placeholder="Duration (minutes) or Pages">
-                                <label for="durationOrPages">Duration (minutes) or Pages</label>
+                                <label for="durationOrPages">{{selectedBudgetHead=='77'?'Duration':'Pages'}}</label>
                                 <div *ngIf="isSubmitted && fMedia['durationOrPages'].invalid" class="invalid-feedback">
                                     <span *ngIf="fMedia['durationOrPages'].errors?.['required']">This field is required</span>
                                     <span *ngIf="fMedia['durationOrPages'].errors?.['min']">Value must be at least 1</span>
@@ -516,7 +516,7 @@
                                 <input type="date" class="form-control" id="dateOfUpload" 
                                        formControlName="dateOfUpload"
                                        [class.is-invalid]="isSubmitted && fMedia['dateOfUpload'].invalid"
-                                       placeholder="Date of Upload">
+                                       placeholder="Date of Upload" appDisableFutureDates>
                                 <label for="dateOfUpload">Date of Upload</label>
                                 <div *ngIf="isSubmitted && fMedia['dateOfUpload'].invalid" class="invalid-feedback">
                                     Date of upload is required
@@ -1207,7 +1207,7 @@ aria-hidden="true">
                 </div>
             </div>
             <!-- Payment Date -->
-            <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+            <div class="col-12 col-sm-6 col-md-4 col-lg-4" *ngIf="selectedBudgetHead!='79' && selectedBudgetHead!='80' && selectedBudgetHead!='81'">
               <div class="form-floating mb-3">
                 <input type="date" class="form-control" formControlName="paymentDate" appDisableFutureDates
                        [class.is-invalid]="isSubmitted && f['paymentDate'].invalid">

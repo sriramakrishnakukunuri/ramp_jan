@@ -18,37 +18,46 @@
 
 /* --- Define Sticky Columns by Class --- */
 .table-container .sticky-col-1,
-.table-container .sticky-col-2 {
+.table-container .sticky-col-2,
+.table-container .sticky-col-3 {
   position: sticky;
   z-index: 1; /* Below the header */
 }
 
 .table-container .sticky-col-1 {
   left: 0;
-  width: 200px;
-  min-width: 200px;
+  width: 100px;
+  min-width: 100px;
 }
 
 .table-container .sticky-col-2 {
-  left: 200px; /* Must match the width of the first column */
+  left: 100px; /* Must match the width of the first column */
+  width: 200px;
+  min-width: 200px;
+}
+.table-container .sticky-col-3 {
+  left: 300px; /* Must match the width of the first column */
   width: 200px;
   min-width: 200px;
 }
 
 /* --- Set background for sticky columns to hide scrolling content --- */
 .table-container .sticky-col-1,
-.table-container .sticky-col-2 {
+.table-container .sticky-col-2,
+.table-container .sticky-col-3 {
     background-color: #ffffff; /* Default for even rows */
 }
 
 .table-striped > tbody > tr:nth-of-type(odd) > .sticky-col-1,
-.table-striped > tbody > tr:nth-of-type(odd) > .sticky-col-2 {
+.table-striped > tbody > tr:nth-of-type(odd) > .sticky-col-2,
+.table-striped > tbody > tr:nth-of-type(odd) > .sticky-col-3 {
     background-color: #f8f9fa; /* Bootstrap's stripe color for odd rows */
 }
 
 /* --- Ensure sticky header corners are on top --- */
 .table-container thead .sticky-col-1,
-.table-container thead .sticky-col-2 {
+.table-container thead .sticky-col-2,
+.table-container thead .sticky-col-3 {
   z-index: 3; /* Highest z-index for the top-left corner */
 }
 
@@ -126,7 +135,8 @@
 
 /* Ensure sticky columns have proper borders and background */
 .table-container .sticky-col-1,
-.table-container .sticky-col-2 {
+.table-container .sticky-col-2,
+.table-container .sticky-col-3 {
   position: sticky;
   z-index: 1;
   border: 1px solid #dee2e6 !important;
@@ -134,7 +144,8 @@
 
 /* Fix z-index for sticky column headers to be above other headers */
 .table-container thead .sticky-col-1,
-.table-container thead .sticky-col-2 {
+.table-container thead .sticky-col-2,
+.table-container thead .sticky-col-3 {
   z-index: 3;
 }
 

@@ -62,7 +62,7 @@ newRow: any = {};
 tableData: any[] = []; // Your data array
 
 showViewModal = false;
-viewRowData: any = {};
+viewRowData: any=[] ;
 
 
 
@@ -107,7 +107,7 @@ closeViewModal() {
     this.selectedMonthName=event
         this.getBasedOnQuarterSelection()
      }
-     getTableData:any={}
+     getTableData:any=[]
     errorMessage:any=''
  getBasedOnQuarterSelection() {
     this.isAddingRow = false;
@@ -124,7 +124,7 @@ closeViewModal() {
         this.toastrService.error('Please select Month');
         return;
       }
-      this.getTableData={}
+      this.getTableData=[]
         let url=APIS.msmeQueaterly.getMSMEByMonth+'?moMSMEActivityId='+this.selectedAgencyId+'&financialYear='+this.selectedFinancialYear+'&month='+this.selectedMonthName
          this._commonService.getDataByUrl(url).subscribe({
        next: (res: any) => {
@@ -138,13 +138,13 @@ closeViewModal() {
          }
          else{
            this.errorMessage='Data Not Available'
-         this.getTableData ={}
+         this.getTableData =[]
          }
          console.log(this.getTableData,'getTableData' );
        },
        error: (err) => {
         this.errorMessage='Data Not Available'
-         this.getTableData ={}
+         this.getTableData =[]
          this.toastrService.error(err.error.message);
        },
      });
@@ -204,8 +204,18 @@ cancelRow() {
 }
 
 viewRow(row?: any) {
-  this.viewRowData = row;
+  this.viewRowData=[]
   this.showViewModal = true;
+  let url=APIS.msmeQueaterly.getCuulativebyIntervention+'?moMSMEActivityId='+row.moMSMEActivityId+'&financialYear='+this.selectedFinancialYear
+  this._commonService.getDataByUrl(url).subscribe({
+       next: (res: any) => {
+          this.viewRowData = res?.data?.data || [];
+          console.log( this.viewRowData,'viewRowData', );
+       },
+       error: (err) => {
+         this.toastrService.error(err.error.message);
+       },
+     });
 }
   
 }

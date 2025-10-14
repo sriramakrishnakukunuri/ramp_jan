@@ -32,7 +32,7 @@ export class MsmeByQuarterComponent implements OnInit {
      this._commonService.getDataByUrl(APIS.msmeQueaterly.getlistOfIntervention).subscribe({
        next: (res: any) => {
          this.agencyList = res.data;
-         this.selectedAgencyId=res.data[0]?.moMSMEActivityId
+         this.selectedAgencyId=-1
          this.selectedQuarter='Q1'
          this.agencyListFiltered = this.agencyList;
          this.getBasedOnQuarterSelection()

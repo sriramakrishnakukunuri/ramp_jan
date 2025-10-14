@@ -172,7 +172,7 @@ createForm(): FormGroup {
       agencyId: [0, ],
       nonTrainingSubActivityId: [0, ],
        nonTrainingActivityId: [0, ],
-      paymentDate: ['', Validators.required],
+      paymentDate: [''],
       expenditureAmount: [0, [Validators.required, Validators.min(0)]],
       billNo: ['', Validators.required],
       billDate: ['', Validators.required],
@@ -371,6 +371,9 @@ createForm(): FormGroup {
   getPreliminaryDataById(){
     this._commonService.getDataByUrl(APIS.nontrainingtargets.getNonTrainingtargetsAleapPriliminaryById+this.selectedBudgetHead).subscribe((res: any) => {
       this.getPreliminaryData = res.data || [];
+       this.getPreliminaryData?.map((item:any)=>{
+              this.financialTargetAchievement+=Number(item?.expenditureAmount)
+            })
     }, (error) => {
       console.error('Error fetching preliminary data:', error);
     });
@@ -575,6 +578,7 @@ deleteVendorID: any = null;
  this._commonService.getDataByUrl(APIS.nontrainingtargets.nimsme.getdataMedia_doc+this.selectedBudgetHead).subscribe({
      next: (response) => {
         this.getUploadData = response.data || [];
+        this.physicalTargetAchievement=response.data.length
       },
       error: (error) => {
         // this.showError('Failed to load media details');
