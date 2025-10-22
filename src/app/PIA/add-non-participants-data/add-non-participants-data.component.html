@@ -18,7 +18,7 @@
                 <div class="card-body" id="">
                     <form [formGroup]="ParticipantDataForm">
                         <div class="row mb-3">
-                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-4">
                                 <div class="form-floating mb-3">
                                     <input type="text" class="form-control" id="mobileNo" placeholder="" formControlName="mobileNo" (input)="getDataByMobileNumber($any($event.target).value)">
                                     <label id="mobileNo">Mobile No<span class="c-red"> *</span></label>
@@ -26,7 +26,7 @@
                                 <div *ngIf="f2['mobileNo'].touched && !f2['mobileNo'].valid && !f2['mobileNo']?.errors?.['pattern']" class="error">Mobile No is required</div>
                                 <div *ngIf="f2['mobileNo'].touched && !f2['mobileNo'].valid && f2['mobileNo']?.errors?.['pattern']" class="error">Mobile No Starts with 6,7,8,9 and should be 10 digits</div>
                             </div>
-                            <div class="col-12 col-sm-3 col-md-3 col-lg-3 hidden" style="display: none;">
+                            <div class="col-12 col-sm-3 col-md-3 col-lg-4 hidden" style="display: none;">
                                 <!-- <label class="fs-md fw-600 mb-1">Post Training Assessment</label> -->
                                 <div>
                                     <div class="form-check form-check-inline" [ngClass]="{'isDisabled': DefaultDisabled}">
@@ -39,7 +39,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12 col-sm-6 col-md-4 col-lg-3 relative field" *ngIf="this.f2['isAspirant'].value=='Existing Oragnization'">
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-4 relative field" *ngIf="this.f2['isAspirant'].value=='Existing Oragnization'">
                                 <div [ngClass]="{'isDisabled': DefaultDisabled}" >
                                       <ng-multiselect-dropdown   class="multi"
                                         placeholder="Select Organisation*"
@@ -53,6 +53,14 @@
                                     
                                 </div>
                                
+                            </div>
+                             <div class="col-12 col-sm-6 col-md-4 col-lg-4" >
+                                <div class="form-floating mb-3 " [ngClass]="{'isDisabled': DefaultDisabled}">
+                                    <input type="text" class="form-control" id="participantName" formControlName="participantName" placeholder="">
+                                    <label for="participantName">Name Of The Participant <span class="c-red"> *</span></label>
+                                </div>
+                                <div *ngIf="f2['participantName'].touched && !f2['participantName'].valid && !f2['participantName']?.errors?.['pattern']" class="error">Name  Of Participant is required</div>
+                                <div *ngIf="f2['participantName'].touched && !f2['participantName'].valid && f2['participantName']?.errors?.['pattern']" class="error">Participant Name Should be Characters</div>
                             </div>
                             <!-- <div class="col-12 col-sm-4 col-md-4 col-lg-4" *ngIf="this.f2['isAspirant'].value=='Existing Oragnization'">
                                 <div class="form-floating mb-3">
@@ -83,15 +91,8 @@
                                 </div>
                             </div> -->
                           
-                            <div class="col-12 col-sm-6 col-md-4 col-lg-3" >
-                                <div class="form-floating mb-3 " [ngClass]="{'isDisabled': DefaultDisabled}">
-                                    <input type="text" class="form-control" id="participantName" formControlName="participantName" placeholder="">
-                                    <label for="participantName">Name Of The Participant <span class="c-red"> *</span></label>
-                                </div>
-                                <div *ngIf="f2['participantName'].touched && !f2['participantName'].valid && !f2['participantName']?.errors?.['pattern']" class="error">Name  Of Participant is required</div>
-                                <div *ngIf="f2['participantName'].touched && !f2['participantName'].valid && f2['participantName']?.errors?.['pattern']" class="error">Participant Name Should be Characters</div>
-                            </div>
-                            <div class="col-12 col-sm-6 col-md-4 col-lg-3" >
+                           
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-4" >
                                 <div class="form-floating mb-3" [ngClass]="{'isDisabled': DefaultDisabled}">
                                     <input type="text" class="form-control" id="aadharNo" formControlName="aadharNo" placeholder="">
                                     <label for="aadharNo">Aadhar Number </label>
@@ -101,7 +102,7 @@
                            
                             </div>
                            
-                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-4">
                                 <div class="form-floating mb-3" [ngClass]="{'isDisabled': DefaultDisabled}">
                                     <input type="email" class="form-control" id="email" placeholder="" formControlName="email">
                                     <label for="email">Email</label>
@@ -110,7 +111,7 @@
                                 <div *ngIf="f2['email'].touched && !f2['email'].valid && f2['email']?.errors?.['email']" class="error">Please Enter Proper Email Id</div>
                            
                             </div>
-                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-4">
                                 <div class="form-floating mb-3" [ngClass]="{'isDisabled': DefaultDisabled}">
                                     <select class="form-select" id="gender" formControlName="gender">
                                       <option selected value="">Select Gender</option>
@@ -122,7 +123,7 @@
                                 </div>
                                 <div *ngIf="f2['gender'].touched && !f2['gender'].valid" class="error">Gender is required</div>
                             </div>
-                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-4">
                                 <div class="form-floating mb-3" [ngClass]="{'isDisabled': DefaultDisabled}">
                                     <select class="form-select" id="category" formControlName="category">
                                       <option selected value="">Select Category</option>
@@ -136,7 +137,7 @@
                                 </div>
                                 <div *ngIf="f2['category'].touched && !f2['category'].valid" class="error">Category is required</div>
                             </div>
-                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-4">
                                 <div class="form-floating mb-3" [ngClass]="{'isDisabled': DefaultDisabled}">
                                     <select class="form-select" id="disability" formControlName="disability">
                                       <option selected value="">Select Disability</option>
@@ -147,7 +148,7 @@
                                 </div>
                                 <div *ngIf="f2['disability'].touched && !f2['disability'].valid" class="error">Disability is required</div>
                             </div>    
-                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-4">
                                 <div class="form-floating mb-3">
                                     <div class="form-floating mb-3" [ngClass]="{'isDisabled': DefaultDisabled}">
                                         <input type="text" class="form-control" id="designation" placeholder="" formControlName="designation">
