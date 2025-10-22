@@ -136,7 +136,7 @@
                     <th>{{selectedBudgetHead=='77'?'Video':'Document'}} Name</th>
                     <th>Content Type</th>
                     <th>Topic</th>
-                    <th>{{selectedBudgetHead=='77'?'Duration':'Pages'}}</th>
+                    <th>{{selectedBudgetHead=='77'?'Duration(in min)':'Pages'}}</th>
                     <th>Status</th>
                     <th>Date of Upload</th>
                     <!-- <th>Download</th> -->
@@ -483,8 +483,8 @@
                                        formControlName="durationOrPages"
                                        [class.is-invalid]="isSubmitted && fMedia['durationOrPages'].invalid"
                                        min="1"
-                                       placeholder="Duration (minutes) or Pages">
-                                <label for="durationOrPages">{{selectedBudgetHead=='77'?'Duration':'Pages'}}</label>
+                                       >
+                                <label for="durationOrPages">{{selectedBudgetHead=='77'?'Duration(in min)':'Pages'}}</label>
                                 <div *ngIf="isSubmitted && fMedia['durationOrPages'].invalid" class="invalid-feedback">
                                     <span *ngIf="fMedia['durationOrPages'].errors?.['required']">This field is required</span>
                                     <span *ngIf="fMedia['durationOrPages'].errors?.['min']">Value must be at least 1</span>
@@ -1211,7 +1211,7 @@ aria-hidden="true">
               <div class="form-floating mb-3">
                 <input type="date" class="form-control" formControlName="paymentDate" appDisableFutureDates
                        [class.is-invalid]="isSubmitted && f['paymentDate'].invalid">
-                <label for="paymentDate">Date of hiring</label>
+                <label for="paymentDate">Date of Payment</label>
                 <div *ngIf="isSubmitted && f['paymentDate'].invalid" class="invalid-feedback">
                   <span *ngIf="f['paymentDate'].errors?.['required']">Payment date is required</span>
                 </div>

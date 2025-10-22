@@ -18,8 +18,13 @@ export class CaptureOutcomeDynamicComponent implements OnInit {
   agencyId: any;
   constructor(private fb: FormBuilder,
     private toastrService: ToastrService,
+    private router: Router,
     private _commonService: CommonServiceService) { 
       this.agencyId = JSON.parse(sessionStorage.getItem('user') || '{}').agencyId;
+      this.MobileNumber=this._commonService.getOption('mobileNumberForNonParticipant')
+      if(this._commonService.getOption('mobileNumberForNonParticipant')){
+        this.Search();
+      }
     }
 
   ngOnInit(): void {
@@ -44,12 +49,31 @@ export class CaptureOutcomeDynamicComponent implements OnInit {
       }
     })
   }
+  addParticipant(){
+    this._commonService.setOption('mobileNumberForNonParticipant', this.MobileNumber);
+    // this._commonService.navigateToRoute('/PIA/add-non-participant-data');
+    this.router.navigateByUrl('/add-non-participant-data');
+  }
+  enableButtoneTrue:boolean=false
   Search(){
+    this.enableButtoneTrue=false
     this._commonService.getById(APIS.captureOutcome.getParticipantData,this.MobileNumber).subscribe({
       next: (res: any) => {
-        this.ParticipantData = res?.data
+        if(res.data){
+          this.enableButtoneTrue=false
+          this.ParticipantData = res?.data
+        }
+        else{
+          this.enableButtoneTrue=true
+          this.toastrService.warning('No participant data found for this mobile number. Please add Non participant details to proceed.', "Capture Program Outcome!");
+          this.ParticipantData={}
+        }
+        
+
       },
       error: (err) => {
+        this.enableButtoneTrue=true
+         this.toastrService.warning('No participant data found for this mobile number. Please add Non participant details to proceed.', "Capture Program Outcome!");
         new Error(err);
       }
     })
@@ -141,8 +165,9 @@ export class CaptureOutcomeDynamicComponent implements OnInit {
         this.OutComeForm.reset()
         },
         error: (err) => {
+          console.log(err)
           new Error(err);
-          this.toastrService.error(err.error, "Capture Program Outcome Success!");
+          this.toastrService.error(err.message, "Capture Program Outcome!");
         }
       })
     }

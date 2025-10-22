@@ -67,6 +67,13 @@ export const APIS = {
         deleteTargets: API_BASE_URL + '/targets/physical/',
         getTargetById: API_BASE_URL + '/targets/physical/',
     },
+    nonparticipant:{
+         add: API_BASE_URL + '/influenced-participants/save',
+         update: API_BASE_URL + '/influenced-participants/',
+         delete: API_BASE_URL + '/influenced-participants/',
+
+    },
+
     participantdata:{
         add: API_BASE_URL + '/participant/save',
         update: API_BASE_URL + '/updateParticipant',

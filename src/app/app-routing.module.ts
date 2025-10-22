@@ -69,6 +69,7 @@ import { NonTrainingNimsmeComponent } from './PIA/non-training-nimsme/non-traini
 import { MsmeByMonthComponent } from './PIA/msme-by-month/msme-by-month.component';
 import { MsmeByQuarterComponent } from './PIA/msme-by-quarter/msme-by-quarter.component';
 import { ProgramMonitoringReportApprovalComponent } from './PIA/program-monitoring-report-approval/program-monitoring-report-approval.component';
+import { AddNonParticipantsDataComponent } from './PIA/add-non-participants-data/add-non-participants-data.component';
 const routes: Routes = [
     {
         path: '',
@@ -150,6 +151,18 @@ const routes: Routes = [
     {
         path: 'add-participant-data-edit/:id',
         component: AddParticipantDataComponent,
+        canActivate: [AuthGuard],
+        data: { roles: [Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
+    },
+     {
+        path: 'add-non-participant-data',
+        component: AddNonParticipantsDataComponent,
+        canActivate: [AuthGuard],
+        data: { roles: [Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
+    },
+    {
+        path: 'add-non-participant-data-edit/:id',
+        component: AddNonParticipantsDataComponent,
         canActivate: [AuthGuard],
         data: { roles: [Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
     },
