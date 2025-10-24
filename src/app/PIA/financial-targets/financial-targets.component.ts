@@ -31,6 +31,7 @@ export class FinancialTargetsComponent implements OnInit {
   ) { 
     this.loginsessionDetails = JSON.parse(sessionStorage.getItem('user') || '{}');    
     this.selectedAgencyId = this.loginsessionDetails.agencyId;
+    
   }
 
   ngOnInit(): void {
@@ -44,12 +45,23 @@ export class FinancialTargetsComponent implements OnInit {
   selectedAgencyId: any;
   FinanCialYear: any;
   agencyListFiltered:any;
+  isFromOutputProgress:boolean=false
   getAgenciesList() {
+    this.isFromOutputProgress=false
       this.agencyList = [];
       this._commonService.getDataByUrl(APIS.masterList.agencyList).subscribe((res: any) => {
         this.agencyList = res.data;
         this.agencyListFiltered = this.agencyList;
-        this.selectedAgencyId = res.data[0].agencyId;
+        let id=Number(sessionStorage.getItem('selectAgecytoOutpuAchievements')) || null
+        console.log(id, typeof(id),'selectAgecytoOutpuAchievements');
+        if(id){
+          this.selectedAgencyId=id==-1?'-1':id
+          this.isFromOutputProgress=true
+        }
+        else{
+           this.selectedAgencyId = res.data[0].agencyId;
+        }
+        // this.selectedAgencyId = res.data[0].agencyId;
         this.GetProgramsByAgency(this.selectedAgencyId);
       }, (error) => {
         // this.toastrService.error(error.message);
@@ -331,4 +343,7 @@ export class FinancialTargetsComponent implements OnInit {
     }
     this.GetProgramsByAgency(this.selectedAgencyId);
      } 
+     goBack(){
+       this.router.navigate(['/output-progress'])
+    }
 }

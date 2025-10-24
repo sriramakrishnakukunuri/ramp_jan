@@ -1,0 +1,221 @@
+import { Component, OnInit } from '@angular/core';
+import { CommonServiceService } from '@app/_services/common-service.service';
+import { ToastrService } from 'ngx-toastr';
+import { API_BASE_URL, APIS } from '@app/constants/constants';
+import { Role } from '@app/_models';
+import { LoaderService } from '@app/common_components/loader-service.service';
+import { DateAdapter } from '@angular/material/core';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { FormControl } from '@angular/forms';
+@Component({
+  selector: 'app-msme-by-month',
+  templateUrl: './msme-by-month.component.html',
+  styleUrls: ['./msme-by-month.component.css']
+})
+export class MsmeByMonthComponent implements OnInit {
+  namemonth='Select Month'
+  selectedAgencyId: any = null;
+  selectedFinancialYear: any = '';
+  financialYears: any[] = [];
+  financialYRFiltered: any[] = [];
+  selectedMonth: Date | null = null;
+  monthsList: string[] = [
+    'january', 'february', 'march', 'april', 'may', 'june',
+    'july', 'august', 'september', 'october', 'november', 'december'
+  ];
+  selectedMonthName: string = 'april';
+  agencyList: any[] = [];
+  agencyListFiltered: any[] = [];
+
+  constructor(
+    private _commonService: CommonServiceService,
+    private toastrService: ToastrService,
+    private loaderService: LoaderService,
+    private dateAdapter: DateAdapter<Date>
+  ) {
+    this.dateAdapter.setLocale('en-GB');
+  }
+
+  ngOnInit(): void {
+    this.getAgenciesList();
+    this.generateFinancialYears();
+      // Set current month by default
+  }
+
+  getAgenciesList() {
+     this._commonService.getDataByUrl(APIS.msmeQueaterly.getlistOfIntervention).subscribe({
+       next: (res: any) => {
+         this.agencyList = res.data;
+         this.selectedAgencyId=res.data[0]?.moMSMEActivityId
+         this.selectedMonthName='april'
+         this.agencyListFiltered = this.agencyList;
+         this.getBasedOnQuarterSelection()
+       },
+       error: (err) => {
+         this.toastrService.error(err.error.message);
+       },
+     });
+    }
+
+  isAddingRow = false;
+newRow: any = {};
+tableData: any[] = []; // Your data array
+
+showViewModal = false;
+viewRowData: any=[] ;
+
+
+
+closeViewModal() {
+  this.showViewModal = false;
+} 
+
+  GetProgramsByAgency(value: any) {
+    this.selectedAgencyId = value;
+    this.getBasedOnQuarterSelection()
+    // Add your logic here
+  }
+
+  generateFinancialYears() {
+    const currentYear = new Date().getFullYear();
+    const range = 2;
+    for (let i = 2024; i < currentYear; i++) {
+      const year = i;
+      this.financialYears.push(`${year}-${year + 1}`);
+    }
+    for (let i = 0; i <= range; i++) {
+      const year = currentYear + i;
+      this.financialYears.push(`${year}-${year + 1}`);
+    }
+    this.financialYRFiltered = this.financialYears;
+    this.selectedFinancialYear = this.getCurrentFinancialYear();
+  }
+
+  getCurrentFinancialYear(): string {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = today.getMonth() + 1;
+    return month >= 4 ? `${year}-${year + 1}` : `${year - 1}-${year}`;
+  }
+
+  getBasedOnYearSelection(value: any) {
+    this.selectedFinancialYear = value;
+     this.getBasedOnQuarterSelection()
+    // Add your logic here
+  }
+ getSelectedMonth(event:any){
+    this.selectedMonthName=event
+        this.getBasedOnQuarterSelection()
+     }
+     getTableData:any=[]
+    errorMessage:any=''
+ getBasedOnQuarterSelection() {
+    this.isAddingRow = false;
+      this.errorMessage='Data Not Available'
+      if(!this.selectedAgencyId){
+        this.toastrService.error('Please select Intervention');
+        return;
+      }
+      if(!this.selectedFinancialYear){
+        this.toastrService.error('Please select Financial Year');
+        return;
+      }
+      if(!this.selectedMonthName){
+        this.toastrService.error('Please select Month');
+        return;
+      }
+      this.getTableData=[]
+        let url=APIS.msmeQueaterly.getMSMEByMonth+'?moMSMEActivityId='+this.selectedAgencyId+'&financialYear='+this.selectedFinancialYear+'&month='+this.selectedMonthName
+         this._commonService.getDataByUrl(url).subscribe({
+       next: (res: any) => {
+
+       
+         if(Object.keys(res.data).length){
+            this.errorMessage=''
+            this.getTableData = res.data;
+
+            this.newRow = { ...this.getTableData }; // Create a copy of the existing row data
+         }
+         else{
+           this.errorMessage='Data Not Available'
+         this.getTableData =[]
+         }
+         console.log(this.getTableData,'getTableData' );
+       },
+       error: (err) => {
+        this.errorMessage='Data Not Available'
+         this.getTableData =[]
+         this.toastrService.error(err.error.message);
+       },
+     });
+    }
+    editRow() {
+      this.isAddingRow = true;
+      this.newRow = { ...this.getTableData };
+      if(this.getTableData.currentMonthMoMSMEBenefitedDto && Object.keys(this.getTableData.currentMonthMoMSMEBenefitedDto).length ){
+        this.newRow.currentMonthMoMSMEBenefitedDto = { ...this.getTableData.currentMonthMoMSMEBenefitedDto };
+      }
+      else{
+        this.newRow.currentMonthMoMSMEBenefitedDto = { total:0, women:0, sc:0, st:0, obc:0 }
+      }
+      
+       // Create a copy of the existing row data
+      // this.viewRow(this.getTableData); // Open the view modal with the existing data
+
+      }
+
+
+saveRow(newRow?: any) {
+  let payload={
+  "moMSMEActivityId": this.selectedAgencyId,
+  "financialYear": this.selectedFinancialYear,
+  "month": this.selectedMonthName,
+  "physicalAchievement": newRow?.currentPhysicalAchievement || 0,
+  "financialAchievement": newRow?.currentFinancialAchievement || 0,
+  "total": newRow.currentMonthMoMSMEBenefitedDto.total,
+  "women": newRow.currentMonthMoMSMEBenefitedDto.women,
+  "sc": newRow.currentMonthMoMSMEBenefitedDto.sc,
+  "st": newRow.currentMonthMoMSMEBenefitedDto.st,
+  "obc": newRow.currentMonthMoMSMEBenefitedDto.obc,
+  
+}
+  // this.tableData.push({ ...this.newRow });
+   this._commonService.add(APIS.msmeQueaterly.saveMonth,payload).subscribe({
+       next: (res: any) => {
+        this.getBasedOnQuarterSelection()
+        this.toastrService.success('Data saved successfully.');
+       
+       
+       },
+       error: (err) => {
+        this.getBasedOnQuarterSelection()
+        this.toastrService.error(err.error.message);
+       
+       },
+     });
+  this.isAddingRow = false;
+  this.newRow = {};
+}
+
+cancelRow() {
+  this.isAddingRow = false;
+  this.newRow = {};
+  this.getBasedOnQuarterSelection()
+}
+
+viewRow(row?: any) {
+  this.viewRowData=[]
+  this.showViewModal = true;
+  let url=APIS.msmeQueaterly.getCuulativebyIntervention+'?moMSMEActivityId='+row.moMSMEActivityId+'&financialYear='+this.selectedFinancialYear
+  this._commonService.getDataByUrl(url).subscribe({
+       next: (res: any) => {
+          this.viewRowData = res?.data?.data || [];
+          console.log( this.viewRowData,'viewRowData', );
+       },
+       error: (err) => {
+         this.toastrService.error(err.error.message);
+       },
+     });
+}
+  
+}

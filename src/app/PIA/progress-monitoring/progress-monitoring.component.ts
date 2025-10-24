@@ -45,7 +45,7 @@ localStorageData: any;
         }
         else{
            this.selectedAgencyId = res.data[0].agencyId;
-        this.GetProgramsByAgency(this.selectedAgencyId);
+          this.GetProgramsByAgency(this.selectedAgencyId);
         }
        
       }, (error) => {

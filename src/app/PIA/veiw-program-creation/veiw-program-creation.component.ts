@@ -54,9 +54,9 @@ export class VeiwProgramCreationComponent implements OnInit, AfterViewInit {
     this.initializeDataTable(this.selectedAgencyId || this.agencyId);
   }
 
-dateRange = {
-  start: new Date(new Date().getFullYear(), new Date().getMonth(), 1),
-  end: new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0)
+dateRange: { start: Date | null; end: Date | null } = {
+  start: null,
+  end: null
 };
 
 onDateRangeChange() {
@@ -215,20 +215,20 @@ onDateRangeChange() {
         params += `&search=${encodeURIComponent(data.search.value)}`;
       }
       statusDataurl = `?status=${this.StatusData?this.StatusData:'programsScheduled'}`;
-       let startDate = this.dateRange.start
-        if (startDate) {
-          const day = String(startDate.getDate()).padStart(2, '0');
-          const month = String(startDate.getMonth() + 1).padStart(2, '0');
-          const year = startDate.getFullYear();
-          params += `&fromDate=${day}-${month}-${year}`;
-        }
-        let endDate = this.dateRange.end;
-        if (endDate) {
-          const day = String(endDate.getDate()).padStart(2, '0');
-          const month = String(endDate.getMonth() + 1).padStart(2, '0');
-          const year = endDate.getFullYear();
-          params += `&toDate=${day}-${month}-${year}`;
-        }
+      let startDate = this.dateRange.start;
+      if (startDate && Object.prototype.toString.call(startDate) === '[object Date]' && !isNaN(startDate.getTime())) {
+        const day = String(startDate.getDate()).padStart(2, '0');
+        const month = String(startDate.getMonth() + 1).padStart(2, '0');
+        const year = startDate.getFullYear();
+        params += `&fromDate=${day}-${month}-${year}`;
+      }
+      let endDate = this.dateRange.end;
+      if (endDate && Object.prototype.toString.call(endDate) === '[object Date]' && !isNaN(endDate.getTime())) {
+        const day = String(endDate.getDate()).padStart(2, '0');
+        const month = String(endDate.getMonth() + 1).padStart(2, '0');
+        const year = endDate.getFullYear();
+        params += `&toDate=${day}-${month}-${year}`;
+      }
          this._commonService.getDataByUrl(`${APIS.programCreation.getProgramsListByAgencyByStatusDetails}${agency}${statusDataurl}${params}`)
         .pipe()
         .subscribe({
@@ -314,7 +314,7 @@ onDateRangeChange() {
   render: function(data:any, type:any, row:any, meta:any) {
     const today = new Date();
     const fiveDaysAgo = new Date(today);
-    fiveDaysAgo.setDate(today.getDate() - 6);
+    fiveDaysAgo.setDate(today.getDate() + 5);
 
     function parseDateOnly(dateStr: string): Date | null {
       if (!dateStr) return null;
@@ -323,7 +323,7 @@ onDateRangeChange() {
     }
 
     const startDate = parseDateOnly(row.startDate);
-    const isEditDisabled = startDate && (startDate > fiveDaysAgo && startDate <= today);
+    const isEditDisabled = startDate && (startDate < fiveDaysAgo);
     //  const isEditDisabled = startDate && (startDate < today || startDate > fiveDaysAgo);
 
     // console.log(row.startDate, startDate, isEditDisabled, 'iseditdisable');
@@ -628,20 +628,20 @@ selectedRescheduleData: any = [];
   getData() {
     let params:any=''
     this.PrigramSummaryData ={}
-    let startDate = this.dateRange.start
-        if (startDate) {
-          const day = String(startDate.getDate()).padStart(2, '0');
-          const month = String(startDate.getMonth() + 1).padStart(2, '0');
-          const year = startDate.getFullYear();
-          params += `?fromDate=${day}-${month}-${year}`;
-        }
-        let endDate = this.dateRange.end;
-        if (endDate) {
-          const day = String(endDate.getDate()).padStart(2, '0');
-          const month = String(endDate.getMonth() + 1).padStart(2, '0');
-          const year = endDate.getFullYear();
-          params += `&toDate=${day}-${month}-${year}`;
-        }
+    let startDate = this.dateRange.start;
+    if (startDate && Object.prototype.toString.call(startDate) === '[object Date]' && !isNaN(startDate.getTime())) {
+      const day = String(startDate.getDate()).padStart(2, '0');
+      const month = String(startDate.getMonth() + 1).padStart(2, '0');
+      const year = startDate.getFullYear();
+      params += `?fromDate=${day}-${month}-${year}`;
+    }
+    let endDate = this.dateRange.end;
+    if (endDate && Object.prototype.toString.call(endDate) === '[object Date]' && !isNaN(endDate.getTime())) {
+      const day = String(endDate.getDate()).padStart(2, '0');
+      const month = String(endDate.getMonth() + 1).padStart(2, '0');
+      const year = endDate.getFullYear();
+      params += `&toDate=${day}-${month}-${year}`;
+    }
     this._commonService.getDataByUrl(APIS.programCreation.programSummary+this.agencyId+params).subscribe({
       next: (res: any) => {          
         // this.PrigramSummaryData = res?.data   

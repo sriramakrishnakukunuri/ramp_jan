@@ -65,6 +65,12 @@ import { NotificationViewerUpdateComponent } from './PIA/notification-viewer-upd
 import { ResheduleProgramsComponent } from './PIA/reshedule-programs/reshedule-programs.component';
 import { ProgressMonitoringReportComponent } from './PIA/progress-monitoring-report/progress-monitoring-report.component';
 import { DownloadExcelPdfComponent } from './PIA/download-excel-pdf/download-excel-pdf.component';
+import { NonTrainingNimsmeComponent } from './PIA/non-training-nimsme/non-training-nimsme.component';
+import { MsmeByMonthComponent } from './PIA/msme-by-month/msme-by-month.component';
+import { MsmeByQuarterComponent } from './PIA/msme-by-quarter/msme-by-quarter.component';
+import { ProgramMonitoringReportApprovalComponent } from './PIA/program-monitoring-report-approval/program-monitoring-report-approval.component';
+import { AddNonParticipantsDataComponent } from './PIA/add-non-participants-data/add-non-participants-data.component';
+import { OutputProgressComponent } from './PIA/output-progress/output-progress.component';
 const routes: Routes = [
     {
         path: '',
@@ -146,6 +152,18 @@ const routes: Routes = [
     {
         path: 'add-participant-data-edit/:id',
         component: AddParticipantDataComponent,
+        canActivate: [AuthGuard],
+        data: { roles: [Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
+    },
+     {
+        path: 'add-non-participant-data',
+        component: AddNonParticipantsDataComponent,
+        canActivate: [AuthGuard],
+        data: { roles: [Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
+    },
+    {
+        path: 'add-non-participant-data-edit/:id',
+        component: AddNonParticipantsDataComponent,
         canActivate: [AuthGuard],
         data: { roles: [Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
     },
@@ -366,6 +384,12 @@ const routes: Routes = [
         data: { roles: [Role.Admin, Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR] }
     },
      {
+        path: 'non-training-progress-nimme',
+        component: NonTrainingNimsmeComponent,
+        canActivate: [AuthGuard],
+        data: { roles: [Role.Admin,Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
+    },
+     {
         path: 'non-training-targets',
         component: NonTrainingTargetsComponent,
         canActivate: [AuthGuard],
@@ -414,6 +438,12 @@ const routes: Routes = [
         data: { roles: [Role.Admin,Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
     },
     {
+        path: 'output-progress',
+        component: OutputProgressComponent,
+        canActivate: [AuthGuard],
+        data: { roles: [Role.Admin,Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
+    },
+    {
         path:'question-assignment',
         component:QuestionAssignmentComponent,
         canActivate: [AuthGuard],
@@ -424,6 +454,24 @@ const routes: Routes = [
         component: ProgressMonitoringReportComponent,
         canActivate: [AuthGuard],
         data: { roles: [Role.Admin,Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
+    },
+     {
+        path: 'progress-monitoring-report-approval',
+        component: ProgramMonitoringReportApprovalComponent,
+        canActivate: [AuthGuard],
+        data: { roles: [Role.Admin,Role.DEPARTMENT] }
+    },
+    {
+        path: 'msme-by-month',
+        component: MsmeByMonthComponent,
+        canActivate: [AuthGuard],
+        data: { roles: [Role.Admin, Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR] }
+    },
+    {
+        path: 'msme-by-quarter',
+        component: MsmeByQuarterComponent,
+        canActivate: [AuthGuard],
+        data: { roles: [Role.Admin, Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR] }
     },
      {
         path: 'Training-Non-trainingAchievements',

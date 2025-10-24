@@ -1,0 +1,1088 @@
+<main class="mt-4">
+  <section>
+    <div class="container-fluid">
+      <div class="card mb-3">
+        <div class="card-header bg-transparent">
+          <div class="row align-items-center">
+            <div class="col-12">
+              <h6 class="fw-600 mb-2 mb-sm-3 mb-md-0">Progress Monitoring Report - JD APPROVAL</h6>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <!-- Filter Dropdowns -->
+          <div class="row">
+            <div class="col-12 col-sm-4 col-md-4 col-lg-6"></div>
+            <div class="col-12 col-sm-6 col-md-4 col-lg-2" style="margin-top: 12px;">
+              <div class="form-floating mb-3">
+                <select class="form-select" id="agency" [(ngModel)]="selectedAgencyId"
+                  (change)="getProgramsByAgency($any($event.target).value)">
+                  <option value="" disabled selected>Select Agency</option>
+                  <option *ngFor="let agency of agencyList" [value]="agency.agencyId">
+                    {{ agency.agencyName }}
+                  </option>
+                </select>
+                <label for="agency">Agency</label>
+              </div>
+              </div>
+            <div class="col-12 col-sm-6 col-md-4 col-lg-2">
+              <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>Select Program</mat-label>
+                            <mat-select [(ngModel)]="selectedProgramId" (selectionChange)="getAgenciesBasedUserList($event.value)">
+                                <mat-select-filter [array]="programList" [displayMember]="'programTitle'" (filteredReturn)="programListFiltered = $event">
+                                </mat-select-filter>
+                                <mat-option value="" disabled>Select Program</mat-option>
+                                <!-- <mat-option [value]="'ALL'">All Programs</mat-option> -->
+                                <mat-option *ngFor="let program of programListFiltered" [value]="program.programId">
+                                    {{ program.programTitle }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+              <!-- <div class="form-floating mb-3">
+                <select class="form-select" id="agency" [(ngModel)]="selectedProgramId"
+                  (change)="getAgenciesBasedUserList($any($event.target).value)">
+                  <option value="" disabled selected>Select Agency</option>
+                  <option *ngFor="let agency of programListFiltered" [value]="agency.programId">
+                    {{ agency.programTitle }}
+                  </option>
+                </select>
+                <label for="agency">Programs</label>
+              </div> -->
+              </div>
+<div class="col-12 col-sm-6 col-md-4 col-lg-2" style="margin-top: 12px;">
+
+              <div class="form-floating mb-3">
+                <select class="form-select" id="agency" [(ngModel)]="selectedUserId"
+                  (change)="onAgencyChange($any($event.target).value)">
+                  <option value="" disabled selected>Select Users</option>
+                  <option *ngFor="let agency of UserListFiltered" [value]="agency.programMonitoringId">
+                    {{ agency.userName }}
+                  </option>
+                </select>
+                <label for="agency">Users</label>
+              </div>
+            </div>
+            </div>
+            <div class="card mb-4">
+                <div class="card-header bg-light">
+                    <h6 class="fw-600 mb-0">Approval Section</h6>
+                </div>
+                <div class="card-body">
+                    <form>
+                        <div class="row align-items-end">
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Approval Remarks</label>
+                                <textarea class="form-control" [(ngModel)]="remarks" name="remarks" placeholder="Enter remarks" rows="1"></textarea>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Approval Status</label>
+                                <select class="form-select" [(ngModel)]="status" name="status">
+                                    <option value="" disabled selected>Select status</option>
+                                    <option value="APPROVED">Approved</option>
+                                    <option value="REJECTED">Rejected</option>
+                                </select>
+                            </div>
+                            <div class="col-12 d-flex justify-content-end mt-3" >
+                                <button class="btn btn-lime-green px-4" type="button" (click)="saveApproal()" [ngClass]="{'disabled': !(selectedUserId && status && remarks)}">Save</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+          </div>
+          
+<!-- Summary Card Section -->
+<!-- Summary Card Section -->
+<div class="card-body pb-0">
+  <div class="program-summary">
+    <div class="d-flex align-items-center mb-2">
+      <!-- <h5 class="program-title mb-0">Program Summary</h5> -->
+     
+    </div>
+    <div class="summary-details">
+      <div class="summary-detail">
+        <i class="bi bi-building"></i>
+        <span class="summary-label">Agency:</span>
+        <span class="summary-value">{{formData?.agencyName || 'N/A'}}</span>
+      </div>
+      <div class="summary-detail">
+        <i class="bi bi-geo-alt"></i>
+        <span class="summary-label">District:</span>
+        <span class="summary-value">{{formData?.district || 'N/A'}}</span>
+      </div>
+      <div class="summary-detail">
+        <i class="bi bi-journal-text"></i>
+        <span class="summary-label">Program:</span>
+        <span class="summary-value">{{formData?.programName || 'N/A'}}</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+        <!-- Pre-Event Preparation Section -->
+        <div class="card-body">
+          <div class="accordion" id="preEventAccordion">
+            <div class="accordion-item">
+              <div class="accordion-header" id="headingPreEvent">
+                <div class="d-flex align-items-center justify-content-between">
+                  <div class="d-flex align-items-center">
+                    <button 
+                      class="accordion-button" 
+                      [ngClass]="{'collapsed': !collapseState.preEvent}" 
+                      type="button" 
+                      (click)="toggleCollapse('preEvent')"
+                      aria-expanded="false">
+                    </button>
+                    <h5 class="section-title">Pre-Event Preparation</h5>
+                  </div>
+                  <!-- <i class="bi bi-pencil-square edit-icon" (click)="toggleEdit('preEvent')"></i> -->
+                </div>
+              </div>
+              <div 
+                id="collapsePreEvent" 
+                class="accordion-collapse collapse" 
+                [ngClass]="{'show': collapseState.preEvent}" 
+                aria-labelledby="headingPreEvent">
+                <div class="accordion-body">
+                  <form [formGroup]="preEventForm">
+                    <div class="row mb-3">
+                      <div class="col-md-6 mb-3">
+                        <label class="form-label">1. Program agenda circulated</label>
+                        <div class="d-flex gap-3 mt-2">
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" formControlName="programAgendaCirculated" [value]="true" [disabled]="!isEditable.preEvent" id="programAgendaCirculatedYes">
+                            <label class="form-check-label" for="programAgendaCirculatedYes">Yes</label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" formControlName="programAgendaCirculated" [value]="false" [disabled]="!isEditable.preEvent" id="programAgendaCirculatedNo">
+                            <label class="form-check-label" for="programAgendaCirculatedNo">No</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label class="form-label">2. Program as per schedule</label>
+                        <div class="d-flex gap-3 mt-2">
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" formControlName="programAsPerSchedule" [value]="true" [disabled]="!isEditable.preEvent" id="programAsPerScheduleYes">
+                            <label class="form-check-label" for="programAsPerScheduleYes">Yes</label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" formControlName="programAsPerSchedule" [value]="false" [disabled]="!isEditable.preEvent" id="programAsPerScheduleNo">
+                            <label class="form-check-label" for="programAsPerScheduleNo">No</label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <div class="col-md-6 mb-3">
+                        <label class="form-label">3. Training material supplied</label>
+                        <div class="d-flex gap-3 mt-2">
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" formControlName="trainingMaterialSupplied" [value]="true" [disabled]="!isEditable.preEvent" id="trainingMaterialSuppliedYes">
+                            <label class="form-check-label" for="trainingMaterialSuppliedYes">Yes</label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" formControlName="trainingMaterialSupplied" [value]="false" [disabled]="!isEditable.preEvent" id="trainingMaterialSuppliedNo">
+                            <label class="form-check-label" for="trainingMaterialSuppliedNo">No</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label class="form-label">4. Seating arrangements made</label>
+                        <div class="d-flex gap-3 mt-2">
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" formControlName="seatingArrangementsMade" [value]="true" [disabled]="!isEditable.preEvent" id="seatingArrangementsMadeYes">
+                            <label class="form-check-label" for="seatingArrangementsMadeYes">Yes</label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" formControlName="seatingArrangementsMade" [value]="false" [disabled]="!isEditable.preEvent" id="seatingArrangementsMadeNo">
+                            <label class="form-check-label" for="seatingArrangementsMadeNo">No</label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <div class="col-md-6 mb-3">
+                        <label class="form-label">5. AV Projector available</label>
+                        <div class="d-flex gap-3 mt-2">
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" formControlName="avProjectorAvailable" [value]="true" [disabled]="!isEditable.preEvent" id="avProjectorAvailableYes">
+                            <label class="form-check-label" for="avProjectorAvailableYes">Yes</label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" formControlName="avProjectorAvailable" [value]="false" [disabled]="!isEditable.preEvent" id="avProjectorAvailableNo">
+                            <label class="form-check-label" for="avProjectorAvailableNo">No</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label class="form-label">6. How did the participants know about the program?</label>
+                        <div class="form-floating mt-2">
+                          <select class="form-select" formControlName="howDidYouKnowAboutProgram" [disabled]="!isEditable.preEvent" id="howDidYouKnowAboutProgram">
+                            <option value="" disabled selected>Select source</option>
+                            <option value="Officials">Officials</option>
+                            <option value="Organizers (IAS)">Organizers (IAS)</option>
+                            <option value="News Paper/TV">News Paper/TV</option>
+                            <option value="Social Media">Social Media</option>
+                            <option value="Others">Others</option>
+                          </select>
+                          <label for="howDidYouKnowAboutProgram">Source</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="d-flex justify-content-end" *ngIf="isEditable.preEvent">
+                      <button class="btn btn btn-secondary update-btn" type="button" (click)="updateSection('preEvent')">Update</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Audience Profile Section -->
+        <div class="card-body">
+          <div class="accordion" id="audienceProfileAccordion">
+            <div class="accordion-item">
+              <div class="accordion-header" id="headingAudienceProfile">
+                <div class="d-flex align-items-center justify-content-between">
+                  <div class="d-flex align-items-center">
+                    <button 
+                      class="accordion-button" 
+                      [ngClass]="{'collapsed': !collapseState.audienceProfile}" 
+                      type="button" 
+                      (click)="toggleCollapse('audienceProfile')"
+                      aria-expanded="false">
+                    </button>
+                    <h5 class="section-title">Audience Profile</h5>
+                  </div>
+                  <!-- <i class="bi bi-pencil-square edit-icon" (click)="toggleEdit('audienceProfile')"></i> -->
+                </div>
+              </div>
+              <div 
+                id="collapseAudienceProfile" 
+                class="accordion-collapse collapse" 
+                [ngClass]="{'show': collapseState.audienceProfile}" 
+                aria-labelledby="headingAudienceProfile">
+                <div class="accordion-body">
+                  <form [formGroup]="audienceProfileForm">
+                    <div class="row mb-3">
+                      <div class="col-md-6 mb-3">
+                        <label class="form-label">1. Male representation</label>
+                        <div class="d-flex gap-3 mt-2">
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" formControlName="participantsMale" [value]="true" [disabled]="!isEditable.audienceProfile" id="participantsMaleYes">
+                            <label class="form-check-label" for="participantsMaleYes">Yes</label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" formControlName="participantsMale" [value]="false" [disabled]="!isEditable.audienceProfile" id="participantsMaleNo">
+                            <label class="form-check-label" for="participantsMaleNo">No</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label class="form-label">2. Female representation</label>
+                        <div class="d-flex gap-3 mt-2">
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" formControlName="participantsFemale" [value]="true" [disabled]="!isEditable.audienceProfile" id="participantsFemaleYes">
+                            <label class="form-check-label" for="participantsFemaleYes">Yes</label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" formControlName="participantsFemale" [value]="false" [disabled]="!isEditable.audienceProfile" id="participantsFemaleNo">
+                            <label class="form-check-label" for="participantsFemaleNo">No</label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="row mb-3">
+                      <div class="col-md-6 mb-3">
+                        <label class="form-label">3. Transgender representation</label>
+                        <div class="d-flex gap-3 mt-2">
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" formControlName="participantsTransgender" [value]="true" [disabled]="!isEditable.audienceProfile" id="participantsTransgenderYes">
+                            <label class="form-check-label" for="participantsTransgenderYes">Yes</label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" formControlName="participantsTransgender" [value]="false" [disabled]="!isEditable.audienceProfile" id="participantsTransgenderNo">
+                            <label class="form-check-label" for="participantsTransgenderNo">No</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label class="form-label">4. DIC representatives participated</label>
+                        <div class="d-flex gap-3 mt-2">
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" formControlName="dicRegistrationParticipated" [value]="true" [disabled]="!isEditable.audienceProfile" id="dicRegistrationParticipatedYes">
+                            <label class="form-check-label" for="dicRegistrationParticipatedYes">Yes</label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" formControlName="dicRegistrationParticipated" [value]="false" [disabled]="!isEditable.audienceProfile" id="dicRegistrationParticipatedNo">
+                            <label class="form-check-label" for="dicRegistrationParticipatedNo">No</label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="row mb-3">
+                      <div class="col-md-6 mb-3">
+                        <label class="form-label">5. SHG representatives participated</label>
+                        <div class="d-flex gap-3 mt-2">
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" formControlName="shgRegistrationParticipated" [value]="true" [disabled]="!isEditable.audienceProfile" id="shgRegistrationParticipatedYes">
+                            <label class="form-check-label" for="shgRegistrationParticipatedYes">Yes</label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" formControlName="shgRegistrationParticipated" [value]="false" [disabled]="!isEditable.audienceProfile" id="shgRegistrationParticipatedNo">
+                            <label class="form-check-label" for="shgRegistrationParticipatedNo">No</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label class="form-label">6. MSME representatives participated</label>
+                        <div class="d-flex gap-3 mt-2">
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" formControlName="msmeRegistrationParticipated" [value]="true" [disabled]="!isEditable.audienceProfile" id="msmeRegistrationParticipatedYes">
+                            <label class="form-check-label" for="msmeRegistrationParticipatedYes">Yes</label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" formControlName="msmeRegistrationParticipated" [value]="false" [disabled]="!isEditable.audienceProfile" id="msmeRegistrationParticipatedNo">
+                            <label class="form-check-label" for="msmeRegistrationParticipatedNo">No</label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="row mb-3">
+                      <div class="col-md-6 mb-3">
+                        <label class="form-label">7. Startup representatives participated</label>
+                        <div class="d-flex gap-3 mt-2">
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" formControlName="startupsRegistrationParticipated" [value]="true" [disabled]="!isEditable.audienceProfile" id="startupsRegistrationParticipatedYes">
+                            <label class="form-check-label" for="startupsRegistrationParticipatedYes">Yes</label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" formControlName="startupsRegistrationParticipated" [value]="false" [disabled]="!isEditable.audienceProfile" id="startupsRegistrationParticipatedNo">
+                            <label class="form-check-label" for="startupsRegistrationParticipatedNo">No</label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="mb-3">
+  <label class="form-label">8. No of IAs participated</label>
+  <div class="row">
+    <div class="col-md-3">
+      <div class="form-check mb-2" *ngFor="let ia of iaListLeft">
+        <input class="form-check-input" type="checkbox" [value]="ia" (change)="onIACheckboxChange($event, ia)" [checked]="selectedIAs.includes(ia)" [disabled]="!isEditable.audienceProfile" [id]="ia">
+        <label class="form-check-label" [for]="ia">{{ ia }}</label>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="form-check mb-2" *ngFor="let ia of iaListRight">
+        <input class="form-check-input" type="checkbox" [value]="ia" (change)="onIACheckboxChange($event, ia)" [checked]="selectedIAs.includes(ia)" [disabled]="!isEditable.audienceProfile" [id]="ia">
+        <label class="form-check-label" [for]="ia">{{ ia }}</label>
+      </div>
+    </div>
+  </div>
+</div>
+                    <div class="d-flex justify-content-end" *ngIf="isEditable.audienceProfile">
+                      <button class="btn btn btn-secondary update-btn" type="button" (click)="updateSection('audienceProfile')">Update</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Program Delivery Section 1 -->
+        <div class="card-body">
+          <div class="accordion" id="programDelivery1Accordion">
+            <div class="accordion-item">
+              <div class="accordion-header" id="headingProgramDelivery1">
+                <div class="d-flex align-items-center justify-content-between">
+                  <div class="d-flex align-items-center">
+                    <button 
+                      class="accordion-button" 
+                      [ngClass]="{'collapsed': !collapseState.programDelivery1}" 
+                      type="button" 
+                      (click)="toggleCollapse('programDelivery1')"
+                      aria-expanded="false">
+                    </button>
+                    <h5 class="section-title">Program Delivery - Session 1</h5>
+                  </div>
+                  <!-- <i class="bi bi-pencil-square edit-icon" (click)="toggleEdit('programDelivery1')"></i> -->
+                </div>
+              </div>
+              <div 
+                id="collapseProgramDelivery1" 
+                class="accordion-collapse collapse" 
+                [ngClass]="{'show': collapseState.programDelivery1}" 
+                aria-labelledby="headingProgramDelivery1">
+                <div class="accordion-body">
+                  <form [formGroup]="programDeliveryForm1">
+                    <div class="row mb-3">
+                      <div class="col-md-6 mb-3">
+                        <label class="form-label">1. Speaker Name</label>
+                        <input type="text" class="form-control" formControlName="speaker1Name" [disabled]="!isEditable.programDelivery1" placeholder="Enter speaker name">
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label class="form-label">2. Topics as per session plan</label>
+                        <div class="d-flex gap-3 mt-2">
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" formControlName="topicAsPerSessionPlan1" [value]="true" [disabled]="!isEditable.programDelivery1" id="topicAsPerSessionPlan1Yes">
+                            <label class="form-check-label" for="topicAsPerSessionPlan1Yes">Yes</label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" formControlName="topicAsPerSessionPlan1" [value]="false" [disabled]="!isEditable.programDelivery1" id="topicAsPerSessionPlan1No">
+                            <label class="form-check-label" for="topicAsPerSessionPlan1No">No</label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="row mb-3">
+                      <div class="col-md-6 mb-3">
+                        <label class="form-label">3. Time taken (in min)</label>
+                        <input type="number" class="form-control" formControlName="timeTaken1" [disabled]="!isEditable.programDelivery1" placeholder="Enter time in minutes">
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label class="form-label">4. Audio visual aid used</label>
+                        <div class="d-flex gap-3 mt-2">
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" formControlName="audioVisualAidUsed1" [value]="true" [disabled]="!isEditable.programDelivery1" id="audioVisualAidUsed1Yes">
+                            <label class="form-check-label" for="audioVisualAidUsed1Yes">Yes</label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" formControlName="audioVisualAidUsed1" [value]="false" [disabled]="!isEditable.programDelivery1" id="audioVisualAidUsed1No">
+                            <label class="form-check-label" for="audioVisualAidUsed1No">No</label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="row mb-3">
+                      <div class="col-md-12 mb-3">
+                        <label class="form-label">5. Relevance</label>
+                        <div class="d-flex flex-wrap gap-4 mt-2">
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" formControlName="relevance1" value="HIGH" [disabled]="!isEditable.programDelivery1" id="relevance1High">
+                            <label class="form-check-label" for="relevance1High">HIGH</label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" formControlName="relevance1" value="MEDIUM" [disabled]="!isEditable.programDelivery1" id="relevance1Medium">
+                            <label class="form-check-label" for="relevance1Medium">MEDIUM</label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" formControlName="relevance1" value="POOR" [disabled]="!isEditable.programDelivery1" id="relevance1Poor">
+                            <label class="form-check-label" for="relevance1Poor">POOR</label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" formControlName="relevance1" value="VERY POOR" [disabled]="!isEditable.programDelivery1" id="relevance1VeryPoor">
+                            <label class="form-check-label" for="relevance1VeryPoor">VERY POOR</label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="row mb-3">
+                      <div class="col-md-6 mb-3">
+                        <label class="form-label">6. Session continuity</label>
+                        <div class="d-flex gap-3 mt-2">
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" formControlName="sessionContinuity1" [value]="true" [disabled]="!isEditable.programDelivery1" id="sessionContinuity1Yes">
+                            <label class="form-check-label" for="sessionContinuity1Yes">Yes</label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" formControlName="sessionContinuity1" [value]="false" [disabled]="!isEditable.programDelivery1" id="sessionContinuity1No">
+                            <label class="form-check-label" for="sessionContinuity1No">No</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label class="form-label">7. Participants interaction</label>
+                        <div class="d-flex gap-3 mt-2">
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" formControlName="participantInteraction1" [value]="true" [disabled]="!isEditable.programDelivery1" id="participantInteraction1Yes">
+                            <label class="form-check-label" for="participantInteraction1Yes">Yes</label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" formControlName="participantInteraction1" [value]="false" [disabled]="!isEditable.programDelivery1" id="participantInteraction1No">
+                            <label class="form-check-label" for="participantInteraction1No">No</label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="d-flex justify-content-end" *ngIf="isEditable.programDelivery1">
+                      <button class="btn btn btn-secondary update-btn" type="button" (click)="updateSection('programDelivery1')">Update</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Program Delivery Section 2 -->
+        <div class="card-body">
+          <div class="accordion" id="programDelivery2Accordion">
+            <div class="accordion-item">
+              <div class="accordion-header" id="headingProgramDelivery2">
+                <div class="d-flex align-items-center justify-content-between">
+                  <div class="d-flex align-items-center">
+                    <button 
+                      class="accordion-button" 
+                      [ngClass]="{'collapsed': !collapseState.programDelivery2}" 
+                      type="button" 
+                      (click)="toggleCollapse('programDelivery2')"
+                      aria-expanded="false">
+                    </button>
+                    <h5 class="section-title">Program Delivery - Session 2</h5>
+                  </div>
+                  <!-- <i class="bi bi-pencil-square edit-icon" (click)="toggleEdit('programDelivery2')"></i> -->
+                </div>
+              </div>
+              <div 
+                id="collapseProgramDelivery2" 
+                class="accordion-collapse collapse" 
+                [ngClass]="{'show': collapseState.programDelivery2}" 
+                aria-labelledby="headingProgramDelivery2">
+                <div class="accordion-body">
+                  <form [formGroup]="programDeliveryForm2">
+                    <div class="row mb-3">
+                      <div class="col-md-6 mb-3">
+                        <label class="form-label">1. Speaker Name</label>
+                        <input type="text" class="form-control" formControlName="speaker2Name" [disabled]="!isEditable.programDelivery2" placeholder="Enter speaker name">
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label class="form-label">2. Topics as per session plan</label>
+                        <div class="d-flex gap-3 mt-2">
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" formControlName="topicAsPerSessionPlan2" [value]="true" [disabled]="!isEditable.programDelivery2" id="topicAsPerSessionPlan2Yes">
+                            <label class="form-check-label" for="topicAsPerSessionPlan2Yes">Yes</label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" formControlName="topicAsPerSessionPlan2" [value]="false" [disabled]="!isEditable.programDelivery2" id="topicAsPerSessionPlan2No">
+                            <label class="form-check-label" for="topicAsPerSessionPlan2No">No</label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="row mb-3">
+                      <div class="col-md-6 mb-3">
+                        <label class="form-label">3. Time taken (in min)</label>
+                        <input type="number" class="form-control" formControlName="timeTaken2" [disabled]="!isEditable.programDelivery2" placeholder="Enter time in minutes">
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label class="form-label">4. Audio visual aid used</label>
+                        <div class="d-flex gap-3 mt-2">
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" formControlName="audioVisualAidUsed2" [value]="true" [disabled]="!isEditable.programDelivery2" id="audioVisualAidUsed2Yes">
+                            <label class="form-check-label" for="audioVisualAidUsed2Yes">Yes</label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" formControlName="audioVisualAidUsed2" [value]="false" [disabled]="!isEditable.programDelivery2" id="audioVisualAidUsed2No">
+                            <label class="form-check-label" for="audioVisualAidUsed2No">No</label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="row mb-3">
+                      <div class="col-md-12 mb-3">
+                        <label class="form-label">5. Relevance</label>
+                        <div class="d-flex flex-wrap gap-4 mt-2">
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" formControlName="relevance2" value="HIGH" [disabled]="!isEditable.programDelivery2" id="relevance2High">
+                            <label class="form-check-label" for="relevance2High">HIGH</label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" formControlName="relevance2" value="MEDIUM" [disabled]="!isEditable.programDelivery2" id="relevance2Medium">
+                            <label class="form-check-label" for="relevance2Medium">MEDIUM</label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" formControlName="relevance2" value="POOR" [disabled]="!isEditable.programDelivery2" id="relevance2Poor">
+                            <label class="form-check-label" for="relevance2Poor">POOR</label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" formControlName="relevance2" value="VERY POOR" [disabled]="!isEditable.programDelivery2" id="relevance2VeryPoor">
+                            <label class="form-check-label" for="relevance2VeryPoor">VERY POOR</label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="row mb-3">
+                      <div class="col-md-6 mb-3">
+                        <label class="form-label">6. Session continuity</label>
+                        <div class="d-flex gap-3 mt-2">
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" formControlName="sessionContinuity2" [value]="true" [disabled]="!isEditable.programDelivery2" id="sessionContinuity2Yes">
+                            <label class="form-check-label" for="sessionContinuity2Yes">Yes</label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" formControlName="sessionContinuity2" [value]="false" [disabled]="!isEditable.programDelivery2" id="sessionContinuity2No">
+                            <label class="form-check-label" for="sessionContinuity2No">No</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label class="form-label">7. Participants interaction</label>
+                        <div class="d-flex gap-3 mt-2">
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" formControlName="participantInteraction2" [value]="true" [disabled]="!isEditable.programDelivery2" id="participantInteraction2Yes">
+                            <label class="form-check-label" for="participantInteraction2Yes">Yes</label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" formControlName="participantInteraction2" [value]="false" [disabled]="!isEditable.programDelivery2" id="participantInteraction2No">
+                            <label class="form-check-label" for="participantInteraction2No">No</label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="d-flex justify-content-end" *ngIf="isEditable.programDelivery2">
+                      <button class="btn btn btn-secondary update-btn" type="button" (click)="updateSection('programDelivery2')">Update</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Logistics / Facilities Section -->
+        <div class="card-body">
+          <div class="accordion" id="logisticsFacilitiesAccordion">
+            <div class="accordion-item">
+              <div class="accordion-header" id="headingLogisticsFacilities">
+                <div class="d-flex align-items-center justify-content-between">
+                  <div class="d-flex align-items-center">
+                    <button 
+                      class="accordion-button" 
+                      [ngClass]="{'collapsed': !collapseState.logisticsFacilities}" 
+                      type="button" 
+                      (click)="toggleCollapse('logisticsFacilities')"
+                      aria-expanded="false">
+                    </button>
+                    <h5 class="section-title">Logistics / Facilities</h5>
+                  </div>
+                  <!-- <i class="bi bi-pencil-square edit-icon" (click)="toggleEdit('logisticsFacilities')"></i> -->
+                </div>
+              </div>
+              <div 
+                id="collapseLogisticsFacilities" 
+                class="accordion-collapse collapse" 
+                [ngClass]="{'show': collapseState.logisticsFacilities}" 
+                aria-labelledby="headingLogisticsFacilities">
+                <div class="accordion-body">
+                  <form [formGroup]="logisticsFacilitiesForm">
+                    <div class="row mb-3">
+                      <div class="col-md-6 mb-3">
+                        <label class="form-label">1. Venue quality</label>
+                        <div class="d-flex gap-3 mt-2">
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" formControlName="venueQuality" [value]="true" [disabled]="!isEditable.logisticsFacilities" id="venueQualityYes">
+                            <label class="form-check-label" for="venueQualityYes">Yes</label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" formControlName="venueQuality" [value]="false" [disabled]="!isEditable.logisticsFacilities" id="venueQualityNo">
+                            <label class="form-check-label" for="venueQualityNo">No</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label class="form-label">2. Accessibility to disabilities</label>
+                        <div class="d-flex gap-3 mt-2">
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" formControlName="accessibility" [value]="true" [disabled]="!isEditable.logisticsFacilities" id="accessibilityYes">
+                            <label class="form-check-label" for="accessibilityYes">Yes</label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" formControlName="accessibility" [value]="false" [disabled]="!isEditable.logisticsFacilities" id="accessibilityNo">
+                            <label class="form-check-label" for="accessibilityNo">No</label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="row mb-3">
+                      <div class="col-md-6 mb-3">
+                        <label class="form-label">3. Tea/Snacks provided</label>
+                        <div class="d-flex gap-3 mt-2">
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" formControlName="teaSnacks" [value]="true" [disabled]="!isEditable.logisticsFacilities" id="teaSnacksYes">
+                            <label class="form-check-label" for="teaSnacksYes">Yes</label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" formControlName="teaSnacks" [value]="false" [disabled]="!isEditable.logisticsFacilities" id="teaSnacksNo">
+                            <label class="form-check-label" for="teaSnacksNo">No</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label class="form-label">4. Lunch provided</label>
+                        <div class="d-flex gap-3 mt-2">
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" formControlName="lunch" [value]="true" [disabled]="!isEditable.logisticsFacilities" id="lunchYes">
+                            <label class="form-check-label" for="lunchYes">Yes</label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" formControlName="lunch" [value]="false" [disabled]="!isEditable.logisticsFacilities" id="lunchNo">
+                            <label class="form-check-label" for="lunchNo">No</label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="row mb-3">
+                      <div class="col-md-6 mb-3">
+                        <label class="form-label">5. Canned water available</label>
+                        <div class="d-flex gap-3 mt-2">
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" formControlName="cannedWater" [value]="true" [disabled]="!isEditable.logisticsFacilities" id="cannedWaterYes">
+                            <label class="form-check-label" for="cannedWaterYes">Yes</label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" formControlName="cannedWater" [value]="false" [disabled]="!isEditable.logisticsFacilities" id="cannedWaterNo">
+                            <label class="form-check-label" for="cannedWaterNo">No</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label class="form-label">6. Toilet Hygiene</label>
+                        <div class="d-flex gap-3 mt-2">
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" formControlName="toiletHygiene" [value]="true" [disabled]="!isEditable.logisticsFacilities" id="toiletHygieneYes">
+                            <label class="form-check-label" for="toiletHygieneYes">Yes</label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" formControlName="toiletHygiene" [value]="false" [disabled]="!isEditable.logisticsFacilities" id="toiletHygieneNo">
+                            <label class="form-check-label" for="toiletHygieneNo">No</label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="row mb-3">
+                      <div class="col-md-6 mb-3">
+                        <label class="form-label">7. AV Equipment</label>
+                        <div class="d-flex gap-3 mt-2">
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" formControlName="avEquipment" [value]="true" [disabled]="!isEditable.logisticsFacilities" id="avEquipmentYes">
+                            <label class="form-check-label" for="avEquipmentYes">Yes</label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" formControlName="avEquipment" [value]="false" [disabled]="!isEditable.logisticsFacilities" id="avEquipmentNo">
+                            <label class="form-check-label" for="avEquipmentNo">No</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label class="form-label">8. Stationary</label>
+                        <div class="d-flex gap-3 mt-2">
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" formControlName="stationary" [value]="true" [disabled]="!isEditable.logisticsFacilities" id="stationaryYes">
+                            <label class="form-check-label" for="stationaryYes">Yes</label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" formControlName="stationary" [value]="false" [disabled]="!isEditable.logisticsFacilities" id="stationaryNo">
+                            <label class="form-check-label" for="stationaryNo">No</label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="d-flex justify-content-end" *ngIf="isEditable.logisticsFacilities">
+                      <button class="btn btn btn-secondary update-btn" type="button" (click)="updateSection('logisticsFacilities')">Update</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Participants Feedback Section -->
+        <div class="card-body">
+          <div class="accordion" id="participantsFeedbackAccordion">
+            <div class="accordion-item">
+              <div class="accordion-header" id="headingParticipantsFeedback">
+                <div class="d-flex align-items-center justify-content-between">
+                  <div class="d-flex align-items-center">
+                    <button 
+                      class="accordion-button" 
+                      [ngClass]="{'collapsed': !collapseState.participantsFeedback}" 
+                      type="button" 
+                      (click)="toggleCollapse('participantsFeedback')"
+                      aria-expanded="false">
+                    </button>
+                    <h5 class="section-title">Participants Feedback</h5>
+                  </div>
+                  <!-- <i class="bi bi-pencil-square edit-icon" (click)="toggleEdit('participantsFeedback')"></i> -->
+                </div>
+              </div>
+              <div 
+                id="collapseParticipantsFeedback" 
+                class="accordion-collapse collapse" 
+                [ngClass]="{'show': collapseState.participantsFeedback}" 
+                aria-labelledby="headingParticipantsFeedback">
+                <div class="accordion-body">
+                  <form [formGroup]="participantsFeedbackForm">
+                    <div class="row mb-3">
+                      <div class="col-md-6 mb-3">
+                        <label class="form-label">1. Relevant</label>
+                        <div class="d-flex gap-3 mt-2">
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" formControlName="relevant" [value]="true" [disabled]="!isEditable.participantsFeedback" id="relevantYes">
+                            <label class="form-check-label" for="relevantYes">Yes</label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" formControlName="relevant" [value]="false" [disabled]="!isEditable.participantsFeedback" id="relevantNo">
+                            <label class="form-check-label" for="relevantNo">No</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label class="form-label">2. Enthusiastic</label>
+                        <div class="d-flex gap-3 mt-2">
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" formControlName="enthusiast" [value]="true" [disabled]="!isEditable.participantsFeedback" id="enthusiastYes">
+                            <label class="form-check-label" for="enthusiastYes">Yes</label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" formControlName="enthusiast" [value]="false" [disabled]="!isEditable.participantsFeedback" id="enthusiastNo">
+                            <label class="form-check-label" for="enthusiastNo">No</label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="row mb-3">
+                      <div class="col-md-6 mb-3">
+                        <label class="form-label">3. Felt useful</label>
+                        <div class="d-flex gap-3 mt-2">
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" formControlName="feltUseful" [value]="true" [disabled]="!isEditable.participantsFeedback" id="feltUsefulYes">
+                            <label class="form-check-label" for="feltUsefulYes">Yes</label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" formControlName="feltUseful" [value]="false" [disabled]="!isEditable.participantsFeedback" id="feltUsefulNo">
+                            <label class="form-check-label" for="feltUsefulNo">No</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label class="form-label">4. Further willing to engage</label>
+                        <div class="d-flex gap-3 mt-2">
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" formControlName="futureWillingToEngage" [value]="true" [disabled]="!isEditable.participantsFeedback" id="futureWillingToEngageYes">
+                            <label class="form-check-label" for="futureWillingToEngageYes">Yes</label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" formControlName="futureWillingToEngage" [value]="false" [disabled]="!isEditable.participantsFeedback" id="futureWillingToEngageNo">
+                            <label class="form-check-label" for="futureWillingToEngageNo">No</label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="d-flex justify-content-end" *ngIf="isEditable.participantsFeedback">
+                      <button class="btn btn btn-secondary update-btn" type="button" (click)="updateSection('participantsFeedback')">Update</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Speaker Evaluation Section -->
+        <div class="card-body">
+          <div class="accordion" id="feedbackOnSpeakerAccordion">
+            <div class="accordion-item">
+              <div class="accordion-header" id="headingFeedbackOnSpeaker">
+                <div class="d-flex align-items-center justify-content-between">
+                  <div class="d-flex align-items-center">
+                    <button 
+                      class="accordion-button" 
+                      [ngClass]="{'collapsed': !collapseState.feedbackOnSpeaker}" 
+                      type="button" 
+                      (click)="toggleCollapse('feedbackOnSpeaker')"
+                      aria-expanded="false">
+                    </button>
+                    <h5 class="section-title">Speaker Evaluation</h5>
+                  </div>
+                  <!-- <i class="bi bi-pencil-square edit-icon" (click)="toggleEdit('feedbackOnSpeaker')"></i> -->
+                </div>
+              </div>
+              <div 
+                id="collapseFeedbackOnSpeaker" 
+                class="accordion-collapse collapse" 
+                [ngClass]="{'show': collapseState.feedbackOnSpeaker}" 
+                aria-labelledby="headingFeedbackOnSpeaker">
+                <div class="accordion-body">
+                  <form [formGroup]="feedbackOnSpeakerForm">
+                    <div class="row mb-4">
+                      <div class="col-md-6 mb-3">
+                        <label class="form-label">1. Qualified</label>
+                        <div class="d-flex gap-3 mt-2">
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" formControlName="qualified" [value]="true" [disabled]="!isEditable.feedbackOnSpeaker" id="qualifiedYes">
+                            <label class="form-check-label" for="qualifiedYes">Yes</label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" formControlName="qualified" [value]="false" [disabled]="!isEditable.feedbackOnSpeaker" id="qualifiedNo">
+                            <label class="form-check-label" for="qualifiedNo">No</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label class="form-label">2. Experienced</label>
+                        <div class="d-flex gap-3 mt-2">
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" formControlName="experienced" [value]="true" [disabled]="!isEditable.feedbackOnSpeaker" id="experiencedYes">
+                            <label class="form-check-label" for="experiencedYes">Yes</label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" formControlName="experienced" [value]="false" [disabled]="!isEditable.feedbackOnSpeaker" id="experiencedNo">
+                            <label class="form-check-label" for="experiencedNo">No</label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="row mb-4">
+                      <div class="col-md-6 mb-3">
+                        <label class="form-label">3. Certified</label>
+                        <div class="d-flex gap-3 mt-2">
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" formControlName="certified" [value]="true" [disabled]="!isEditable.feedbackOnSpeaker" id="certifiedYes">
+                            <label class="form-check-label" for="certifiedYes">Yes</label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" formControlName="certified" [value]="false" [disabled]="!isEditable.feedbackOnSpeaker" id="certifiedNo">
+                            <label class="form-check-label" for="certifiedNo">No</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label class="form-label">4. Delivery methodology good</label>
+                        <div class="d-flex gap-3 mt-2">
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" formControlName="deliveryMethodologyGood" [value]="true" [disabled]="!isEditable.feedbackOnSpeaker" id="deliveryMethodologyGoodYes">
+                            <label class="form-check-label" for="deliveryMethodologyGoodYes">Yes</label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" formControlName="deliveryMethodologyGood" [value]="false" [disabled]="!isEditable.feedbackOnSpeaker" id="deliveryMethodologyGoodNo">
+                            <label class="form-check-label" for="deliveryMethodologyGoodNo">No</label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="row mb-4">
+                      <div class="col-md-6 mb-3">
+                        <label class="form-label">5. Comes with relevant experience</label>
+                        <div class="d-flex gap-3 mt-2">
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" formControlName="relevantExperience" [value]="true" [disabled]="!isEditable.feedbackOnSpeaker" id="relevantExperienceYes">
+                            <label class="form-check-label" for="relevantExperienceYes">Yes</label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" formControlName="relevantExperience" [value]="false" [disabled]="!isEditable.feedbackOnSpeaker" id="relevantExperienceNo">
+                            <label class="form-check-label" for="relevantExperienceNo">No</label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="d-flex justify-content-end" *ngIf="isEditable.feedbackOnSpeaker">
+                      <button class="btn btn btn-secondary update-btn" type="button" (click)="updateSection('feedbackOnSpeaker')">Update</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Additional Fields Section -->
+        <div class="card-body">
+          <div class="accordion" id="additionalFieldsAccordion">
+            <div class="accordion-item">
+              <div class="accordion-header" id="headingAdditionalFields">
+                <div class="d-flex align-items-center justify-content-between">
+                  <div class="d-flex align-items-center">
+                    <button 
+                      class="accordion-button" 
+                      [ngClass]="{'collapsed': !collapseState.additionalFields}" 
+                      type="button" 
+                      (click)="toggleCollapse('additionalFields')"
+                      aria-expanded="false">
+                    </button>
+                    <h5 class="section-title">Additional Information</h5>
+                  </div>
+                  <!-- <i class="bi bi-pencil-square edit-icon" (click)="toggleEdit('additionalFields')"></i> -->
+                </div>
+              </div>
+              <div 
+                id="collapseAdditionalFields" 
+                class="accordion-collapse collapse" 
+                [ngClass]="{'show': collapseState.additionalFields}"
+                aria-labelledby="headingAdditionalFields"
+              >
+                <div class="accordion-body">
+                  <form [formGroup]="additionalFieldsForm">
+<div class="row mb-3">
+  <div class="col-md-12 mb-3">
+    <label class="form-label">Best Practices Identified</label>
+    <div class="row g-3">
+      <div class="col-md-4" *ngFor="let practice of bestPracticesArray; let i = index; trackBy: trackByIndex">
+        <div class="input-group">
+          <input 
+            type="text" 
+            class="form-control"
+            [value]="practice"
+            (input)="updateBestPractice($event, i)"
+            [disabled]="!isEditable.additionalFields"
+            placeholder="Enter best practice">
+          <button 
+            class="btn btn-secondary" 
+            type="button" 
+            (click)="clearBestPractice(i)" 
+            [disabled]="!isEditable.additionalFields"
+            *ngIf="bestPracticesArray[i]">
+            <i class="bi bi-x"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+                    <div class="row mb-3">
+                      <div class="col-md-12 mb-3">
+                        <label class="form-label">Remarks</label>
+                        <textarea class="form-control" formControlName="overallObservation" [disabled]="!isEditable.additionalFields" placeholder="Enter remarks" rows="4"></textarea>
+                      </div>
+                    </div>
+                    
+                   
+                    
+                    <div class="d-flex justify-content-end" *ngIf="isEditable.additionalFields">
+                      <button class="btn btn btn-secondary update-btn" type="button" (click)="updateSection('additionalFields')">Update</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>

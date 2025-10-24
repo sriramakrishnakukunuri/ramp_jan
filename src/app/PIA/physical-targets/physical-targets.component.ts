@@ -102,10 +102,10 @@ export class PhysicalTargetsComponent implements OnInit {
       this.targetsScreenForm = new FormGroup({
         "outcomeId": new FormControl("", [Validators.required]),
         "financialYear": new FormControl(this.selectedFinancialYear, [Validators.required]),
-        "q1":new FormControl("",[Validators.required,Validators.pattern(/^[1-9]\d*$/)]),
-        "q2": new FormControl("",[Validators.required,Validators.pattern(/^[1-9]\d*$/)]),
-        "q3": new FormControl("",[Validators.required,Validators.pattern(/^[1-9]\d*$/)]),
-        "q4": new FormControl("",[Validators.required,Validators.pattern(/^[1-9]\d*$/)]),
+        "q1":new FormControl("",[Validators.required,Validators.pattern(/^[0-9]\d*$/)]),
+        "q2": new FormControl("",[Validators.required,Validators.pattern(/^[0-9]\d*$/)]),
+        "q3": new FormControl("",[Validators.required,Validators.pattern(/^[0-9]\d*$/)]),
+        "q4": new FormControl("",[Validators.required,Validators.pattern(/^[0-9]\d*$/)]),
       }
     );
   }

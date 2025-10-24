@@ -1,0 +1,151 @@
+<main class="mt-4">
+    <section>
+        <div class="card mb-3">
+            <div class="card-header bg-transparent ">
+                <div class="row align-items-center mb-3">
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-6">
+                        <h6 class="fw-600 mb-2 mb-sm-0">View Output Progress</h6>
+                    </div>
+                    <ng-container *ngIf="loginsessionDetails?.userRole == 'ADMIN'">
+                        <div class="col-12 col-sm-3 col-md-3 col-lg-3">
+                           
+                            <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>List Of Agencies</mat-label>
+                                <mat-select [(ngModel)]="selectedAgencyId" (selectionChange)="getDataBasedOnAgencyOutcome()">
+                                <mat-select-filter [array]="agencyList" [displayMember]="'agencyName'" (filteredReturn)="agencyListFiltered = $event">
+                                </mat-select-filter>
+                                <mat-option  value="-1" >All Agencies</mat-option>
+                                <mat-option *ngFor="let list of agencyListFiltered" [value]="list.agencyId">
+                                {{ list.agencyName }}
+                                </mat-option>
+                            </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-12 col-sm-3 col-md-3 col-lg-3">
+                             <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>List Of Outcomes</mat-label>
+                                <mat-select [(ngModel)]="outcomeIds" (selectionChange)="getDataBasedOnAgencyOutcome()">
+                                <mat-select-filter [array]="agencyOutcomesList" [displayMember]="'programTitle'" (filteredReturn)="agencyOutcomesListFiltered = $event">
+                                </mat-select-filter>
+                                <mat-option  value="-1" >All Outcomes</mat-option>
+                                <mat-option *ngFor="let list of agencyOutcomesListFiltered" [value]="list.outcomeTableId">
+                                {{ list.outcomeTableDisplayName }}
+                                </mat-option>
+                            </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </ng-container>   
+                    <!-- <ng-container *ngIf="loginsessionDetails?.userRole != 'ADMIN'">
+                        <div class="col-12 col-sm-3 col-md-3 col-lg-3">
+                            <label for="Agencies" style="font-weight: 600;">List Of Programs</label>
+                            <select class="form-select" [(ngModel)]="outcomeIds" (change)="dropdownProgramsList($event,'table')">
+                                <option value="">Select Program</option>
+                            <option *ngFor="let list of agencyProgramList" value="{{list.programId}}">{{list.programTitle}}</option>
+                            </select>
+                        </div>
+                    </ng-container> -->
+                   
+                </div>
+            </div>
+            <div class="card-body">
+                  <div class="text-end mb-3">
+            <button (click)="redirectAchievements()" class="btn btn-lime-green me-2">Quarterly Wise Output Achievements</button>
+            <!-- <button (click)="redirectPrograms()" class="btn btn-lime-green">View Programs</button> -->
+          </div>
+                <div class="row mb-3">
+                    <div class="col-12 col-sm-6 col-md-3 col-lg-3" *ngIf="!(outcomeIds==-1 && selectedAgencyId==-1)">
+                        <h6 class="fw-600 mb-2 mb-sm-0 text-primary" *ngIf="outcomeIds==-1">Agency Name:{{getagencynamebyid(selectedAgencyId)}}</h6>
+                         <h6 class="fw-600 mb-2 mb-sm-0 text-primary" *ngIf="selectedAgencyId==-1">Outcome Name:{{getoutcomenamebyid(outcomeIds)}}
+                        </h6>
+                    </div>
+                 </div>
+                 <div class="table-container">
+                    <!-- all agency and all outcomes -->
+                      <table class="table table-bordered table-striped" *ngIf="outcomeIds==-1 && selectedAgencyId==-1">
+                    <thead class="bg-lime-green text-white">
+                        <tr>
+                            <th class="text-center" rowspan="2">S.No</th>
+                            <!-- <th rowspan="2" >Agency Name</th> -->
+                            <th rowspan="2" class=" text-center sticky-col-1 " >Outcome Name</th>
+                              <ng-container *ngFor="let key of headers ">
+                                    <th class="text-center" colspan="5">{{key.agencyName}}</th>
+                                </ng-container>
+                        </tr>
+                        <tr>
+                              <ng-container *ngFor="let key of headers">
+                                <th class="text-center">Outcome Target</th>
+                                <th class="text-center">Participant Achievement</th>
+                                <th class="text-center">Influencer Achievement</th>
+                                <th class="text-center">Total</th>
+                                <th class="text-center">% Achievement</th>
+                                
+                            </ng-container>
+                               
+                        </tr>
+                    </thead>
+                    <tbody *ngIf="allagencyOutcomedata && allagencyOutcomedata.length">
+                        <tr *ngFor="let key of allagencyOutcomedata; let i = index">
+                            <td>{{ i + 1 }}</td>
+                            <!-- <td *ngIf="selectedAgencyId==-1 || outcomeIds!=-1">{{ item.agencyName }}</td> -->
+                            <td  class="sticky-col-1">{{ key }}</td>
+                            <ng-container *ngFor="let item of getDataByAgencyOutcome[key]">
+                            <td>{{ item.outComeTarget }}</td>
+                            <td>{{ item.outComeParticipantAchievement }}</td>
+                            <td>{{ item.outComeInfluencerAchievement }}</td>
+                            <td>{{ (item.outComeParticipantAchievement || 0) + (item.outComeInfluencerAchievement || 0) }}</td>
+                            <td>
+                            {{ item.outComeTarget ? ((((item.outComeParticipantAchievement || 0) + (item.outComeInfluencerAchievement || 0)) / item.outComeTarget * 100) | number:'1.0-2') + '%' : '0%' }}
+                            </td>
+                            </ng-container>
+                            
+                           
+                        </tr>
+                    </tbody>
+                    <tbody *ngIf="!allagencyOutcomedata || !allagencyOutcomedata.length">
+                        <tr>
+                            <td colspan="10" class="text-center">No data available</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!-- except all agency and all outcomes -->
+                 <table class="table table-bordered table-striped" *ngIf="!(outcomeIds==-1 && selectedAgencyId==-1)">
+                    <thead class="bg-lime-green text-white">
+                        <tr>
+                            <th >S.No</th>
+                            <th *ngIf="selectedAgencyId==-1 || outcomeIds!=-1">Agency Name</th>
+                            <th *ngIf="outcomeIds==-1 || selectedAgencyId!=-1">Outcome Name</th>
+                            <th>Outcome Target</th>
+                            <th>Participant Achievement</th>
+                            <th>Influencer Achievement</th>
+                            <th>Total</th>
+                            <th>% Achievement</th>
+                        </tr>
+                    </thead>
+                    <tbody *ngIf="getDataByAgencyOutcome && getDataByAgencyOutcome.length">
+                        <tr *ngFor="let item of getDataByAgencyOutcome; let i = index">
+                            <td>{{ i + 1 }}</td>
+                            <td *ngIf="selectedAgencyId==-1 || outcomeIds!=-1">{{ item.agencyName }}</td>
+                            <td *ngIf="outcomeIds==-1 || selectedAgencyId!=-1">{{ item.outComeName }}</td>
+                            <td>{{ item.outComeTarget }}</td>
+                            <td>{{ item.outComeParticipantAchievement }}</td>
+                            <td>{{ item.outComeInfluencerAchievement }}</td>
+                            <td>{{ (item.outComeParticipantAchievement || 0) + (item.outComeInfluencerAchievement || 0) }}</td>
+                           <td>
+                            {{ item.outComeTarget ? ((((item.outComeParticipantAchievement || 0) + (item.outComeInfluencerAchievement || 0)) / item.outComeTarget * 100) | number:'1.0-2') + '%' : '0%' }}
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tbody *ngIf="!getDataByAgencyOutcome || !getDataByAgencyOutcome.length">
+                        <tr>
+                            <td colspan="6" class="text-center">No data available</td>
+                        </tr>
+                    </tbody>
+                </table>
+                 </div>
+                
+               
+            </div>
+            
+        </div>
+    </section>
+</main>

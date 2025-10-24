@@ -1,0 +1,309 @@
+<main class="mt-4">
+    <section>
+      <div class="container-fluid">
+        <div class="card mb-3">
+          <div class="card-header bg-transparent">
+              <div class="row"> 
+               <h6 class="fw-bold mb-3">Add MoMSME Report Data By monthly </h6>
+            </div>
+            <div class="row align-items-center mb-2">
+              <div class="col-12 col-sm-12 col-md-4 col-lg-3">
+                <!-- <h6 class="fw-600 mb-2 mb-sm-2 mb-md-0">Quarterly Progress Monitoring</h6> -->
+            
+              </div>
+              <div class="col-12 col-sm-5 col-md-4 col-lg-3">
+                
+               <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>List Of Intervention</mat-label>
+                                <mat-select [(ngModel)]="selectedAgencyId" (selectionChange)="GetProgramsByAgency($any($event).value)">
+                                <mat-select-filter [array]="agencyList"  (filteredReturn)="agencyListFiltered = $event">
+                                </mat-select-filter>
+                                <!-- <mat-option value="-1" >All Agencies</mat-option> -->
+                                <mat-option *ngFor="let list of agencyListFiltered" [value]="list.moMSMEActivityId">
+                                {{ list.intervention }}
+                                </mat-option>
+                            </mat-select>
+                            </mat-form-field>
+              </div>
+           
+              <div class="col-12 col-sm-5 col-md-4 col-lg-3">
+            
+                <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>List Of FY</mat-label>
+                                <mat-select [(ngModel)]="selectedFinancialYear" (selectionChange)="getBasedOnYearSelection($any($event).value)">
+                                <mat-select-filter [array]="financialYears" (filteredReturn)="financialYRFiltered = $event">
+                                </mat-select-filter>
+                                <!-- <mat-option value="" disabled>Select Program</mat-option> -->
+                                <mat-option *ngFor="let list of financialYRFiltered" [value]="list">
+                                {{ list }}
+                                </mat-option>
+                            </mat-select>
+                            </mat-form-field>
+              </div>
+              <div class="col-12 col-sm-12 col-md-4 col-lg-3">
+                 <mat-form-field appearance="outline" class="w-100">
+                 <mat-label>List Of Months</mat-label>
+                                <mat-select [(ngModel)]="selectedMonthName" (selectionChange)="getSelectedMonth($any($event).value)">
+                                <!-- <mat-select-filter [array]="financialYears" (filteredReturn)="financialYRFiltered = $event"> -->
+                                <!-- </mat-select-filter> -->
+                                <!-- <mat-option value="" disabled>Select Program</mat-option> -->
+                                <mat-option *ngFor="let list of monthsList" [value]="list">
+                                {{ list | uppercase}}
+                                </mat-option>
+                            </mat-select>
+                            </mat-form-field>
+ 
+                </div>
+            </div>
+          </div>
+          <div class="card-body mb-3">
+
+            <!--  id=view-physical-table  -->
+            <div class="table-container">
+              <table  class="table table-bordered table-striped nowrap w-100 fsize-10">
+                <thead class="bg-lime-green text-white">
+                  <tr>
+                    <th class="text-center sticky-col-1" rowspan="4" colspan="1" >Actions </th>
+                    <th   class="text-center sticky-col-2" rowspan="4">Intervention</th>
+                    <th class="text-center sticky-col-3" rowspan="4">Component</th>
+                    <th class="text-center sticky-col-3" rowspan="4">Activity</th>
+
+                    
+                 
+                    <!-- <ng-container *ngFor="let item of this.tableheaderList"> -->
+                     <th class="text-center" rowspan="1" colspan="16" >Current Month: {{ selectedMonthName | uppercase  }} </th>
+                      <th class="text-center" rowspan="4" colspan="1" >View </th>
+                      
+
+                  
+                    <!-- </ng-container> -->
+                  </tr>
+                  <tr>
+                    <!-- <ng-container *ngFor="let item of [1,2,3,4,5]"> -->
+                      <th class="text-center"  rowspan="1" colspan="4"> Current Quarter
+                        Targets v/s Achievements</th>
+                           <th class="text-center"  rowspan="1" colspan="2"> Current Month Targets v/s Achievements</th>
+                      <!-- <th class="text-center" rowspan="1" colspan="1" ></th>
+                      <th class="text-center" rowspan="1" colspan="1" ></th>
+                       -->
+                      <th class="text-center"  rowspan="1" colspan="5">Current Quarter MSME's Benifitted</th>
+                      <th class="text-center" rowspan="1" colspan="5" >Current Month MSME's Benifitted</th>
+                    <!-- </ng-container> -->
+                  </tr>
+                  <tr>
+                    <!-- <ng-container *ngFor="let item of [1,2,3,4,5,6,7,8,9,10]"> -->
+                      <th class="text-center" >Physical Target</th>
+                      <th class="text-center" >Physical Achievements</th>
+                        <th class="text-center" >Financial Target</th>
+                        <th class="text-center" >Financial Achievements </th>
+                      <th class="text-center" >Physical Achievements</th>
+                        <th class="text-center" >Financial Achievements </th>
+
+                        <th  class="text-center">Total</th>
+
+                        <th  class="text-center">Women</th>
+                        <th  class="text-center">ST</th>
+                        <th  class="text-center">SC</th>
+                        <th  class="text-center">OBC</th>
+
+                        
+                         <th  class="text-center">Total</th>
+                        <th  class="text-center">Women</th>
+                        <th  class="text-center">ST</th>
+                        <th  class="text-center">SC</th>
+                        <th  class="text-center">OBC</th>
+
+                    <!-- </ng-container> -->
+                  </tr>
+                </thead>
+                 <tbody >
+                  <tr  *ngFor="let row of getTableData ; let i = index" >
+                         <ng-container *ngIf="!isAddingRow">
+                      <td class="text-center sticky-col-1">
+                        <button class="btn btn-default text-lime-green btn-sm" (click)="editRow()" aria-label="Edit Row">
+                          <i class="bi bi-pencil-square fw-bold"></i>
+                        </button>
+                      </td>
+                     </ng-container>
+                     <ng-container *ngIf="isAddingRow">
+                      <td class="text-center sticky-col-1" style="width: fit-content;">
+                        <div class="d-flex justify-content-center align-items-center gap-2">
+                          <button class="btn btn-default text-lime-green btn-sm" (click)="saveRow(newRow)" title="Save">
+                            <i class="bi bi-save"></i>
+                          </button>
+                          <button class="btn btn-default text-lime-green btn-sm" (click)="cancelRow()" title="Cancel">
+                            <i class="bi bi-x-lg"></i>
+                          </button>
+                        </div>
+                      </td>
+                     </ng-container>
+                         <td class="text-center sticky-col-2">{{ row?.intervention }}</td>
+                      <td class="text-center sticky-col-3">{{ row?.component }}</td>
+                      <td class="text-center sticky-col-3">{{ row?.activity }}</td>
+                    
+                      <td class="text-center">{{ row?.physicalTarget ?? 0 }}</td>
+                      <td class="text-center">{{ row?.physicalAchievement ?? 0 }}</td>
+                      <td class="text-center">{{ row?.financialTarget ?? 0 }}</td>
+                      <td class="text-center">{{ row?.financialAchievement ?? 0 }}</td>
+                      <ng-container *ngIf="!isAddingRow">
+                        <td class="text-center">{{ row?.currentPhysicalAchievement ?? 0 }}</td>
+                        <td class="text-center">{{ row?.currentFinancialAchievement ?? 0 }}</td>
+                      </ng-container>
+                      <ng-container *ngIf="isAddingRow">
+                        <td class="text-center"><input class="form-control form-control-sm" style="width: fit-content;" type="number" [(ngModel)]="newRow.currentPhysicalAchievement"></td>
+                        <td class="text-center"><input class="form-control form-control-sm" style="width: fit-content;" type="number" [(ngModel)]="newRow.currentFinancialAchievement"></td>
+                      </ng-container>
+                      <td class="text-center">{{ row.currentQuarterMoMSMEBenefitedDto?.total ?? 0 }}</td>
+                     
+                      <td class="text-center">{{ row.currentQuarterMoMSMEBenefitedDto?.women ?? 0 }}</td>
+                      <td class="text-center">{{ row.currentQuarterMoMSMEBenefitedDto?.st ?? 0 }}</td>
+                      <td class="text-center">{{ row.currentQuarterMoMSMEBenefitedDto?.sc ?? 0 }}</td>
+                      <td class="text-center">{{ row.currentQuarterMoMSMEBenefitedDto?.obc ?? 0 }}</td>
+                      <ng-container *ngIf="!isAddingRow">
+                        <td class="text-center">{{ row.currentMonthMoMSMEBenefitedDto?.total ?? 0 }}</td>
+                      
+                      <td class="text-center">{{ row.currentMonthMoMSMEBenefitedDto?.women ?? 0 }}</td>
+                      <td class="text-center">{{ row.currentMonthMoMSMEBenefitedDto?.st ?? 0 }}</td>
+                      <td class="text-center">{{ row.currentMonthMoMSMEBenefitedDto?.sc ?? 0 }}</td>
+                      <td class="text-center">{{ row.currentMonthMoMSMEBenefitedDto?.obc ?? 0 }}</td>
+                      </ng-container>
+                      <ng-container *ngIf="isAddingRow">
+                         <td class="text-center"><input class="form-control form-control-sm" type="number" style="width: fit-content;" [(ngModel)]="newRow.currentMonthMoMSMEBenefitedDto.total"></td>
+                      <td class="text-center"><input class="form-control form-control-sm" type="number" style="width: fit-content;" [(ngModel)]="newRow.currentMonthMoMSMEBenefitedDto.women"></td>
+                      <td class="text-center"><input class="form-control form-control-sm" type="number" style="width: fit-content;" [(ngModel)]="newRow.currentMonthMoMSMEBenefitedDto.st"></td>
+                      <td class="text-center"><input class="form-control form-control-sm" type="number" style="width: fit-content;" [(ngModel)]="newRow.currentMonthMoMSMEBenefitedDto.sc"></td>
+                      <td class="text-center"><input class="form-control form-control-sm" type="number" style="width: fit-content;" [(ngModel)]="newRow.currentMonthMoMSMEBenefitedDto.obc"></td>
+                      </ng-container>
+                      <td>  <button class="btn btn-outline-secondary btn-sm"(click)="viewRow(row)" data-bs-toggle="modal" data-bs-target="#viewRowModal"title="View"> <i class="bi bi-eye"></i></button></td>
+                    
+                  </tr>
+                    <!-- <tr *ngIf="!errorMessage">
+                      <td class="text-center sticky-col-1">{{ getTableData?.intervention }}</td>
+                      <td class="text-center sticky-col-2">{{ getTableData?.component }}</td>
+                      <td class="text-center sticky-col-2">{{ getTableData?.activity }}</td>
+                    
+                      <td class="text-center">{{ getTableData?.physicalTarget ?? 0 }}</td>
+                      <td class="text-center">{{ getTableData?.physicalAchievement ?? 0 }}</td>
+                      <td class="text-center">{{ getTableData?.financialTarget ?? 0 }}</td>
+                      <td class="text-center">{{ getTableData?.financialAchievement ?? 0 }}</td>
+                      <ng-container *ngIf="!isAddingRow">
+                        <td class="text-center">{{ getTableData?.currentPhysicalAchievement ?? 0 }}</td>
+                        <td class="text-center">{{ getTableData?.currentFinancialAchievement ?? 0 }}</td>
+                      </ng-container>
+                      <ng-container *ngIf="isAddingRow">
+                        <td class="text-center"><input class="form-control form-control-sm" style="width: fit-content;" type="number" [(ngModel)]="newRow.currentPhysicalAchievement"></td>
+                        <td class="text-center"><input class="form-control form-control-sm" style="width: fit-content;" type="number" [(ngModel)]="newRow.currentFinancialAchievement"></td>
+                      </ng-container>
+                      <td class="text-center">{{ getTableData.currentQuarterMoMSMEBenefitedDto?.total ?? 0 }}</td>
+                     
+                      <td class="text-center">{{ getTableData.currentQuarterMoMSMEBenefitedDto?.women ?? 0 }}</td>
+                      <td class="text-center">{{ getTableData.currentQuarterMoMSMEBenefitedDto?.st ?? 0 }}</td>
+                      <td class="text-center">{{ getTableData.currentQuarterMoMSMEBenefitedDto?.sc ?? 0 }}</td>
+                      <td class="text-center">{{ getTableData.currentQuarterMoMSMEBenefitedDto?.obc ?? 0 }}</td>
+                      <ng-container *ngIf="!isAddingRow">
+                        <td class="text-center">{{ getTableData.currentMonthMoMSMEBenefitedDto?.total ?? 0 }}</td>
+                      
+                      <td class="text-center">{{ getTableData.currentMonthMoMSMEBenefitedDto?.women ?? 0 }}</td>
+                      <td class="text-center">{{ getTableData.currentMonthMoMSMEBenefitedDto?.st ?? 0 }}</td>
+                      <td class="text-center">{{ getTableData.currentMonthMoMSMEBenefitedDto?.sc ?? 0 }}</td>
+                      <td class="text-center">{{ getTableData.currentMonthMoMSMEBenefitedDto?.obc ?? 0 }}</td>
+                      </ng-container>
+                      <ng-container *ngIf="isAddingRow">
+                         <td class="text-center"><input class="form-control form-control-sm" type="number" style="width: fit-content;" [(ngModel)]="newRow.currentMonthMoMSMEBenefitedDto.total"></td>
+                      <td class="text-center"><input class="form-control form-control-sm" type="number" style="width: fit-content;" [(ngModel)]="newRow.currentMonthMoMSMEBenefitedDto.women"></td>
+                      <td class="text-center"><input class="form-control form-control-sm" type="number" style="width: fit-content;" [(ngModel)]="newRow.currentMonthMoMSMEBenefitedDto.st"></td>
+                      <td class="text-center"><input class="form-control form-control-sm" type="number" style="width: fit-content;" [(ngModel)]="newRow.currentMonthMoMSMEBenefitedDto.sc"></td>
+                      <td class="text-center"><input class="form-control form-control-sm" type="number" style="width: fit-content;" [(ngModel)]="newRow.currentMonthMoMSMEBenefitedDto.obc"></td>
+                      </ng-container>
+                      <td>  <button class="btn btn-outline-secondary btn-sm"(click)="viewRow(getTableData)" data-bs-toggle="modal" data-bs-target="#viewRowModal"title="View"> <i class="bi bi-eye"></i></button></td>
+                     <ng-container *ngIf="!isAddingRow">
+                      <td class="text-center">
+                        <button class="btn btn-default text-lime-green btn-sm" (click)="editRow()" aria-label="Edit Row">
+                          <i class="bi bi-pencil-square fw-bold"></i>
+                        </button>
+                      </td>
+                     </ng-container>
+                     <ng-container *ngIf="isAddingRow">
+                      <td class="text-center" style="width: fit-content;">
+                        <div class="d-flex justify-content-center align-items-center gap-2">
+                          <button class="btn btn-default text-lime-green btn-sm" (click)="saveRow(newRow)" title="Save">
+                            <i class="bi bi-save"></i>
+                          </button>
+                          <button class="btn btn-default text-lime-green btn-sm" (click)="cancelRow()" title="Cancel">
+                            <i class="bi bi-x-lg"></i>
+                          </button>
+                        </div>
+                      </td>
+                     </ng-container>
+
+                     
+                      
+                    </tr> -->
+         
+          <tr *ngIf="getTableData.length==0 && !isAddingRow">
+          <td class="text-center" colspan="21">Data Not Available</td>
+          </tr>
+              </tbody>
+                </table>
+            </div>
+          
+            
+        
+          </div>
+       
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- View Row Modal -->
+<!-- View Row Modal -->
+<div class="modal fade" id="viewRowModal" tabindex="-1" aria-labelledby="viewRowModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+    <div class="modal-content">
+      <div class="modal-header py-2">
+        <h6 class="modal-title" id="viewRowModalLabel">View Cumulative Details</h6>
+        <button type="button" class="btn-close me-1" data-bs-dismiss="modal" (click)="closeViewModal()" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <table class="table table-bordered">
+            <thead class="bg-lime-green text-white">
+                <tr>
+                    <th colspan="4">Targets v/s Achievements {{selectedFinancialYear}}</th>
+                    <th colspan="5">MSME's Benifitted</th>
+                </tr>
+                <tr>
+                    <th>Physical Target</th>
+                    <th>Physical Achievements</th>
+                    <th>Financial Target</th>
+                    <th>Financial Achievements</th>
+                    <th>Total</th>
+                    <th>Women</th>
+                    <th>SC</th>
+                    <th>ST</th>
+                    <th>OBC</th>
+                    <!-- Add more headers as needed -->
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngIf="viewRowData?.length === 0">
+                  <td class="text-center" colspan="9">Data Not Available</td>
+                </tr>
+                <tr *ngFor="let data of viewRowData ; let i = index" >
+                  <td>{{data?.cumulativeMoMSMEBenefitedDto?.physicalTarget}}</td>
+                  <td>{{data?.cumulativeMoMSMEBenefitedDto?.physicalAchievement}}</td>
+                  <td>{{data?.cumulativeMoMSMEBenefitedDto?.financialTarget}}</td>
+                  <td>{{data?.cumulativeMoMSMEBenefitedDto?.financialAchievement}}</td>
+                  <td>{{data?.cumulativeMoMSMEBenefitedDto?.total}}</td>
+                  <td>{{data?.cumulativeMoMSMEBenefitedDto?.women}}</td>
+                  <td>{{data?.cumulativeMoMSMEBenefitedDto?.sc}}</td>
+                  <td>{{data?.cumulativeMoMSMEBenefitedDto?.st}}</td>
+                  <td>{{data?.cumulativeMoMSMEBenefitedDto?.obc}}</td>
+                  <!-- Add more values as needed -->
+                </tr>
+            </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

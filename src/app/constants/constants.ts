@@ -67,6 +67,13 @@ export const APIS = {
         deleteTargets: API_BASE_URL + '/targets/physical/',
         getTargetById: API_BASE_URL + '/targets/physical/',
     },
+    nonparticipant:{
+         add: API_BASE_URL + '/influenced-participants/save',
+         update: API_BASE_URL + '/influenced-participants/',
+         delete: API_BASE_URL + '/influenced-participants/',
+
+    },
+
     participantdata:{
         add: API_BASE_URL + '/participant/save',
         update: API_BASE_URL + '/updateParticipant',
@@ -152,6 +159,17 @@ export const APIS = {
             getTihclData: API_BASE_URL + '/listing-on-nse/sub-activity/',
             savetihclData: API_BASE_URL + '/listing-on-nse/save',
             deletetihclData: API_BASE_URL + '/listing-on-nse/delete/',
+        },
+         nimsme:{
+            getCorpusList: API_BASE_URL + '/corpusDebitFinancing',
+            getdataMedia_doc: API_BASE_URL + '/central-data/content/subActivity/',
+            savedataMedia_doc: API_BASE_URL + '/central-data/content/save',
+            deletedataMedia_doc: API_BASE_URL + '/central-data/content/',
+            updatedataMedia_doc: API_BASE_URL + '/central-data/content/',
+             getdataVendor_doc: API_BASE_URL + '/vendors/get/',
+            savedataVendor_doc: API_BASE_URL + '/vendors/save',
+            deletedataVendor_doc: API_BASE_URL + '/vendors/',
+            updatedataVendor_doc: API_BASE_URL + '/vendors/',
         }
        
     },
@@ -163,9 +181,11 @@ export const APIS = {
     },
     captureOutcome:{
         getParticipantData: API_BASE_URL + '/getParticipantsByMobileNo/',
+        getParticipantDataByMobile: API_BASE_URL + '/participants/search-by-mobile/',
         getOutcomelistData: API_BASE_URL + '/program/outcome/tables',
         getDynamicFormDataBasedOnOutCome: API_BASE_URL + '/program/outcome/details/',
         saveOutComes:API_BASE_URL + '/program/outcome/save/',
+        getOutputProgressData:API_BASE_URL + '/get/outcome-targets/',
     },
     callCenter:{
         getParticipantVerificationById:API_BASE_URL + `/program/participant-verification`,
@@ -183,7 +203,8 @@ export const APIS = {
     },
     programFeedback:{
         updateFeedbackData:API_BASE_URL+'/new/program/feedback/update/',
-        getFeedbackData:API_BASE_URL+'/new/program/feedback/id/'
+        getFeedbackData:API_BASE_URL+'/new/program/feedback/id/',
+        approvalFeedbackData:API_BASE_URL+'/jd-approvals/save',
     },
     rawMaterial:{
         getDeatails:API_BASE_URL +`/program/rawmaterial/`,
@@ -248,5 +269,12 @@ export const APIS = {
         getNotifications: API_BASE_URL + '/notifications/by-user',
         markAsRead: API_BASE_URL + '/notifications/mark-read',
         updateData: API_BASE_URL + '/notifications/status',
+    },
+    msmeQueaterly:{
+        getMSMEByQuarter: API_BASE_URL + '/momsme/report/by-quarter',
+        getlistOfIntervention: API_BASE_URL + '/momsme/interventions',
+        getMSMEByMonth: API_BASE_URL + '/momsme/report/by-month',
+        saveMonth: API_BASE_URL + '/momsme/submitted-save',
+        getCuulativebyIntervention: API_BASE_URL + '/momsme/report/by-cumulative',
     }
 }

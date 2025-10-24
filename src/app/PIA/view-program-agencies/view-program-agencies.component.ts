@@ -82,10 +82,10 @@ export class ViewProgramAgenciesComponent implements OnInit ,AfterViewInit{
       });
   }
 
-  dateRange = {
-  start: new Date(new Date().getFullYear(), new Date().getMonth(), 1),
-  end: new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0)
-};
+  dateRange: { start: Date | null; end: Date | null } = {
+    start: null,
+    end: null
+  };
 
 onDateRangeChange() {
   console.log('Selected date range:', this.dateRange);

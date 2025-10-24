@@ -7,6 +7,9 @@ import { catchError, forkJoin, map, Observable, Subject, throwError } from 'rxjs
   providedIn: 'root'
 })
 export class CommonServiceService {
+  navigateToRoute(arg0: string) {
+    throw new Error('Method not implemented.');
+  }
 
   constructor(private http: HttpClient) { }
   private formatErrors(error: HttpErrorResponse) {
@@ -93,7 +96,15 @@ export class CommonServiceService {
 //     catchError(this.formatErrors)
 //   );
 // }
+private options: { [key: string]: any } = {};
 
+  setOption(key: string, value: any): void {
+    this.options[key] = value;
+  }
+
+  getOption(key: string): any {
+    return this.options[key];
+  }
   public getDataByUrl(URL: any): Observable<any> {
     return this.http.get(URL).pipe(catchError(this.formatErrors));
   }
