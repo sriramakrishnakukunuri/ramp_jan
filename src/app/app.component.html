@@ -328,7 +328,7 @@
                     <a class="dropdown-item" routerLink="/training-targets" routerLinkActive="active">Training Targets</a>
                   </li>
                   <!-- non training targets -->
-                   <li *appHasRole="[Role.Admin]" class="dropdown-submenu" style="position:relative;">
+                     <li *appHasRole="[Role.Admin]" class="dropdown-submenu" style="position:relative;">
                     <a [ngClass]="{'submenu-open': openSubMenus['Progress']}"
                       class="dropdown-item d-flex justify-content-between align-items-center" href="#"
                       (click)="toggleSubMenu('Progress', $event)">
@@ -342,8 +342,12 @@
                         <li ><a class="dropdown-item" routerLink="/output-progress" routerLinkActive="active">Output Progress</a></li>
                     </ul>
                   </li>
-                  
-                   
+                   <!-- <li *appHasRole="[Role.Admin]">
+                    <a class="dropdown-item" routerLink="/progress-monitoring" routerLinkActive="active">Progress Monitoring</a>
+                  </li>
+                     <li *appHasRole="[Role.Admin]">
+                    <a class="dropdown-item" routerLink="/output-progress" routerLinkActive="active">Output Progress</a>
+                  </li> -->
                   <!-- Progress Monitoring (Admin) -->
                     
                     <!-- <li *appHasRole="[Role.Admin,Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]">
