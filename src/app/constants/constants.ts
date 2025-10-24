@@ -181,9 +181,11 @@ export const APIS = {
     },
     captureOutcome:{
         getParticipantData: API_BASE_URL + '/getParticipantsByMobileNo/',
+        getParticipantDataByMobile: API_BASE_URL + '/participants/search-by-mobile/',
         getOutcomelistData: API_BASE_URL + '/program/outcome/tables',
         getDynamicFormDataBasedOnOutCome: API_BASE_URL + '/program/outcome/details/',
         saveOutComes:API_BASE_URL + '/program/outcome/save/',
+        getOutputProgressData:API_BASE_URL + '/get/outcome-targets/',
     },
     callCenter:{
         getParticipantVerificationById:API_BASE_URL + `/program/participant-verification`,

@@ -57,7 +57,7 @@ export class CaptureOutcomeDynamicComponent implements OnInit {
   enableButtoneTrue:boolean=false
   Search(){
     this.enableButtoneTrue=false
-    this._commonService.getById(APIS.captureOutcome.getParticipantData,this.MobileNumber).subscribe({
+    this._commonService.getById(APIS.captureOutcome.getParticipantDataByMobile,this.MobileNumber).subscribe({
       next: (res: any) => {
         if(res.data){
           this.enableButtoneTrue=false
@@ -101,8 +101,8 @@ export class CaptureOutcomeDynamicComponent implements OnInit {
       console.log(type)
       Outcome=type[0]+'?type='+type[1]
     }
-    if(this.ParticipantData?.participantId){
-      this._commonService.getById(APIS.captureOutcome.getDynamicFormDataBasedOnOutCome+this.ParticipantData?.participantId+'/',Outcome).subscribe({
+    if(this.ParticipantData?.participantId || this.ParticipantData?.influencedId ){
+      this._commonService.getDataByUrl(APIS.captureOutcome.getDynamicFormDataBasedOnOutCome+(this.ParticipantData?.influencedId?this.ParticipantData?.influencedId:this.ParticipantData?.participantId)+'/'+Outcome+'?isInfluenced='+(this.ParticipantData?.influencedId?true:false)).subscribe({
         next: (res: any) => {
           if(res.status==200){
           let object:any
@@ -156,6 +156,7 @@ export class CaptureOutcomeDynamicComponent implements OnInit {
     }
     formData.set("data", JSON.stringify({...payload,
       participantId:this.ParticipantData?.participantId,
+      influencedId:this.ParticipantData?.influencedId,
       organizationId:this.ParticipantData?.organizationId,
       agencyId:this.agencyId
    }));

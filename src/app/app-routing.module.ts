@@ -70,6 +70,7 @@ import { MsmeByMonthComponent } from './PIA/msme-by-month/msme-by-month.componen
 import { MsmeByQuarterComponent } from './PIA/msme-by-quarter/msme-by-quarter.component';
 import { ProgramMonitoringReportApprovalComponent } from './PIA/program-monitoring-report-approval/program-monitoring-report-approval.component';
 import { AddNonParticipantsDataComponent } from './PIA/add-non-participants-data/add-non-participants-data.component';
+import { OutputProgressComponent } from './PIA/output-progress/output-progress.component';
 const routes: Routes = [
     {
         path: '',
@@ -433,6 +434,12 @@ const routes: Routes = [
     {
         path: 'progress-monitoring',
         component: ProgressMonitoringComponent,
+        canActivate: [AuthGuard],
+        data: { roles: [Role.Admin,Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
+    },
+    {
+        path: 'output-progress',
+        component: OutputProgressComponent,
         canActivate: [AuthGuard],
         data: { roles: [Role.Admin,Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
     },
