@@ -168,7 +168,7 @@ export class CaptureOutcomeDynamicComponent implements OnInit {
         error: (err) => {
           console.log(err)
           new Error(err);
-          this.toastrService.error(err.message, "Capture Program Outcome!");
+          this.toastrService.error(err, "Capture Program Outcome!");
         }
       })
     }
