@@ -48,6 +48,10 @@
                 </div>
             </div>
             <div class="card-body">
+                  <div class="text-end mb-3">
+            <button (click)="redirectAchievements()" class="btn btn-lime-green me-2">Quarterly Wise Output Achievements</button>
+            <!-- <button (click)="redirectPrograms()" class="btn btn-lime-green">View Programs</button> -->
+          </div>
                 <div class="row mb-3">
                     <div class="col-12 col-sm-6 col-md-3 col-lg-3" *ngIf="!(outcomeIds==-1 && selectedAgencyId==-1)">
                         <h6 class="fw-600 mb-2 mb-sm-0 text-primary" *ngIf="outcomeIds==-1">Agency Name:{{getagencynamebyid(selectedAgencyId)}}</h6>
@@ -55,10 +59,59 @@
                         </h6>
                     </div>
                  </div>
-                <table class="table table-bordered table-striped">
+                 <div class="table-container">
+                    <!-- all agency and all outcomes -->
+                      <table class="table table-bordered table-striped" *ngIf="outcomeIds==-1 && selectedAgencyId==-1">
                     <thead class="bg-lime-green text-white">
                         <tr>
-                            <th>S.No</th>
+                            <th class="text-center" rowspan="2">S.No</th>
+                            <!-- <th rowspan="2" >Agency Name</th> -->
+                            <th rowspan="2" class=" text-center sticky-col-1 " >Outcome Name</th>
+                              <ng-container *ngFor="let key of headers ">
+                                    <th class="text-center" colspan="5">{{key.agencyName}}</th>
+                                </ng-container>
+                        </tr>
+                        <tr>
+                              <ng-container *ngFor="let key of headers">
+                                <th class="text-center">Outcome Target</th>
+                                <th class="text-center">Participant Achievement</th>
+                                <th class="text-center">Influencer Achievement</th>
+                                <th class="text-center">Total</th>
+                                <th class="text-center">% Achievement</th>
+                                
+                            </ng-container>
+                               
+                        </tr>
+                    </thead>
+                    <tbody *ngIf="allagencyOutcomedata && allagencyOutcomedata.length">
+                        <tr *ngFor="let key of allagencyOutcomedata; let i = index">
+                            <td>{{ i + 1 }}</td>
+                            <!-- <td *ngIf="selectedAgencyId==-1 || outcomeIds!=-1">{{ item.agencyName }}</td> -->
+                            <td  class="sticky-col-1">{{ key }}</td>
+                            <ng-container *ngFor="let item of getDataByAgencyOutcome[key]">
+                            <td>{{ item.outComeTarget }}</td>
+                            <td>{{ item.outComeParticipantAchievement }}</td>
+                            <td>{{ item.outComeInfluencerAchievement }}</td>
+                            <td>{{ (item.outComeParticipantAchievement || 0) + (item.outComeInfluencerAchievement || 0) }}</td>
+                            <td>
+                            {{ item.outComeTarget ? ((((item.outComeParticipantAchievement || 0) + (item.outComeInfluencerAchievement || 0)) / item.outComeTarget * 100) | number:'1.0-2') + '%' : '0%' }}
+                            </td>
+                            </ng-container>
+                            
+                           
+                        </tr>
+                    </tbody>
+                    <tbody *ngIf="!allagencyOutcomedata || !allagencyOutcomedata.length">
+                        <tr>
+                            <td colspan="10" class="text-center">No data available</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!-- except all agency and all outcomes -->
+                 <table class="table table-bordered table-striped" *ngIf="!(outcomeIds==-1 && selectedAgencyId==-1)">
+                    <thead class="bg-lime-green text-white">
+                        <tr>
+                            <th >S.No</th>
                             <th *ngIf="selectedAgencyId==-1 || outcomeIds!=-1">Agency Name</th>
                             <th *ngIf="outcomeIds==-1 || selectedAgencyId!=-1">Outcome Name</th>
                             <th>Outcome Target</th>
@@ -77,8 +130,8 @@
                             <td>{{ item.outComeParticipantAchievement }}</td>
                             <td>{{ item.outComeInfluencerAchievement }}</td>
                             <td>{{ (item.outComeParticipantAchievement || 0) + (item.outComeInfluencerAchievement || 0) }}</td>
-                            <td>
-                        {{(((item.outComeParticipantAchievement || 0) + (item.outComeInfluencerAchievement || 0)) / item.outComeTarget * 100) | number:'1.0-2'}}%
+                           <td>
+                            {{ item.outComeTarget ? ((((item.outComeParticipantAchievement || 0) + (item.outComeInfluencerAchievement || 0)) / item.outComeTarget * 100) | number:'1.0-2') + '%' : '0%' }}
                             </td>
                         </tr>
                     </tbody>
@@ -88,6 +141,9 @@
                         </tr>
                     </tbody>
                 </table>
+                 </div>
+                
+               
             </div>
             
         </div>

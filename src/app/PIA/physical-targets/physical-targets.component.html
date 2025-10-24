@@ -3,7 +3,7 @@
     <div class="container-fluid">
       <div class="card mb-3">
         <div class="card-header bg-transparent">
-          <div class="row align-items-center">
+          <div class="row align-items-center mb-3">
             <div class="col-12 col-sm-12 col-md-6 col-lg-7">
               <h6 class="fw-600 mb-2 mb-sm-2 mb-md-0">Output Targets</h6>
             </div>
@@ -63,7 +63,7 @@
               </tr>
   
               </thead>
-              <tbody *ngIf="tableList.length">
+              <tbody *ngIf="tableList?.length">
                 <tr *ngFor="let item of tableList; let i = index">
                   <td>{{item?.outcomeTableName}}</td>
                   <td>{{item?.grandTotal}}</td>
@@ -90,7 +90,7 @@
                 </tr>
   
               </tbody>
-              <tbody *ngIf="!tableList.length">
+              <tbody *ngIf="!tableList?.length">
                 <tr>
                   <td class="text-center" colspan="7">Data Not Available</td>
                 </tr>
@@ -146,7 +146,7 @@
             <div *ngIf="f2['q1'].touched && !f2['q1'].valid && !f2['q1']?.errors?.['pattern']" class="error">Apr-Jun(Q1)
               is required</div>
             <div *ngIf="f2['q1'].touched && !f2['q1'].valid && f2['q1']?.errors?.['pattern']" class="error">Apr-Jun(Q1)
-              Should be Greater than Zero</div>
+              Should be Greater than or equals Zero</div>
           </div>
           <div class="form-floating mb-3">
             <div class="form-floating mb-3">
@@ -156,7 +156,7 @@
             <div *ngIf="f2['q2'].touched && !f2['q2'].valid && !f2['q2']?.errors?.['pattern']" class="error">Jul-Sep(Q2)
               is required</div>
             <div *ngIf="f2['q2'].touched && !f2['q2'].valid && f2['q2']?.errors?.['pattern']" class="error">Jul-Sep(Q2)
-              Should be Greater than Zero</div>
+              Should be Greater than or equals  Zero</div>
           </div>
           <div class="form-floating mb-3">
             <div class="form-floating mb-3">
@@ -166,7 +166,7 @@
             <div *ngIf="f2['q3'].touched && !f2['q3'].valid && !f2['q3']?.errors?.['pattern']" class="error">Oct-Dec(Q3)
               is required</div>
             <div *ngIf="f2['q3'].touched && !f2['q3'].valid && f2['q3']?.errors?.['pattern']" class="error">Oct-Dec(Q3)
-              Should be Greater than Zero</div>
+              Should be Greater than or equals Zero</div>
           </div>
           <div class="form-floating mb-3">
             <div class="form-floating mb-3">
@@ -176,7 +176,7 @@
             <div *ngIf="f2['q4'].touched && !f2['q4'].valid && !f2['q4']?.errors?.['pattern']" class="error">Jan-Mar(Q4)
               is required</div>
             <div *ngIf="f2['q4'].touched && !f2['q4'].valid && f2['q4']?.errors?.['pattern']" class="error">Jan-Mar(Q4)
-              Should be Greater than Zero</div>
+              Should be Greater than or equals Zero</div>
           </div>
           <div class="text-end">
             <button type="button" class="btn btn-lime-green" data-bs-dismiss="modal" aria-label="Close"

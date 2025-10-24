@@ -20,7 +20,7 @@
                                 <mat-select [(ngModel)]="selectedAgency" (selectionChange)="onAgencyChange()">
                                 <mat-select-filter [array]="agenciesFiltered" [displayMember]="'agencyName'" (filteredReturn)="agencies = $event">
                                 </mat-select-filter>
-                                <mat-option value="" disabled selected>Select Program</mat-option>
+                                <mat-option value="" disabled selected>Select Agency</mat-option>
                                 <mat-option *ngFor="let list of agencies" [value]="list.agencyId">
                                 {{ list.agencyName }}
                                 </mat-option>

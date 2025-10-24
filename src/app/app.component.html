@@ -288,11 +288,11 @@
             <ul class="navbar-nav justify-content-end flex-grow-1 pe-3" *ngIf="user?.email!='districts@gmail.com'">
 
               <!-- new tab code starts here This is to handle the submenu toggle functionality  || 27th july 2025 -->
-              <li class="nav-item dropdown" style="position: relative;">
-                <a class="nav-link" href="#"  style="cursor:pointer;" data-bs-toggle="dropdown">
+              <li class="nav-item dropdown" style="position: relative;" (mouseenter)="openMainDropdown()" (mouseleave)="closeMainDropdown()">
+                <a class="nav-link" href="#"  style="cursor:pointer;" data-bs-toggle="dropdown"  >
                   <img src="../RAMP1/assets/img/9-dots.png" style="width: 30px;" alt="menu" />
                 </a>
-                <ul class="dropdown-menu shadow" 
+                <ul class="dropdown-menu shadow"  [class.show]="isMainDropdownOpen"
                   style="min-width:220px; max-width:260px; box-shadow:0 4px 16px rgba(0,0,0,0.13); padding: 8px 0; border-radius: 8px; right:-100%; top:100%;">
                   <!-- Dashboard -->
                   <li *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR,Role.CALL_CENTER,Role.Admin]">
@@ -318,14 +318,13 @@
                     </a>
                     <ul class="dropdown-menu show shadow submenu-static" *ngIf="openSubMenus['targets']"
                       style="position:static;background: #dfebeb; min-width:180px;">
+                      <li><a class="dropdown-item" routerLink="/training-targets" routerLinkActive="active">Training Targets</a></li>
                       <li><a class="dropdown-item" routerLink="/physical-targets" routerLinkActive="active">Output Targets</a></li>
-                      <li><a class="dropdown-item" routerLink="/financial-targets" routerLinkActive="active">Output Achievements</a>
-                      </li>
                     </ul>
                   </li>
                   <!-- training targets -->
                     <li *appHasRole="[Role.Admin]">
-                    <a class="dropdown-item" routerLink="/training-targets" routerLinkActive="active">Training Targets</a>
+                    
                   </li>
                   <!-- non training targets -->
                      <li *appHasRole="[Role.Admin]" class="dropdown-submenu" style="position:relative;">
@@ -338,6 +337,7 @@
                     </a>
                     <ul class="dropdown-menu show shadow submenu-static" *ngIf="openSubMenus['Progress']"
                       style="position:static;background: #dfebeb; min-width:180px;">
+                      <li><a class="dropdown-item" routerLink="/financial-targets" routerLinkActive="active" (click)="clearSession()">Output Achievements</a></li>
                        <li > <a class="dropdown-item" routerLink="/progress-monitoring" routerLinkActive="active">Training & Non-Training Progress</a> </li>
                         <li ><a class="dropdown-item" routerLink="/output-progress" routerLinkActive="active">Output Progress</a></li>
                     </ul>

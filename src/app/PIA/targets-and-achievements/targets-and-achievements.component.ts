@@ -66,7 +66,6 @@ export class TargetsAndAchievementsComponent implements OnInit {
     }
     goBack(){
        this.router.navigate(['/progress-monitoring'])
-
     }
     ListOfOutCome:any
     GetOutComes(){

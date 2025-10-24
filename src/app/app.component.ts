@@ -24,6 +24,9 @@ export class AppComponent {
      clearOutcomes(){
         this._commonService.setOption('mobileNumberForNonParticipant', null);
     }
+    clearSession(){
+        sessionStorage.removeItem('selectAgecytoOutpuAchievements');
+    }
 // This is to handle the submenu toggle functionality --added by upendranath reddy || 27th july 2025
     menuOpen = false;
 openSubMenus: {[key: string]: boolean} = {};
@@ -65,6 +68,23 @@ toggleSubMenu(menu: string, event: Event) {
         this.authenticationService.logout();
         sessionStorage.removeItem('user');
     }
+    isMainDropdownOpen = false;
+private dropdownTimeout: any;
+
+    openMainDropdown() {
+  if (this.dropdownTimeout) {
+    clearTimeout(this.dropdownTimeout);
+  }
+  this.isMainDropdownOpen = true;
+}
+
+closeMainDropdown() {
+  this.dropdownTimeout = setTimeout(() => {
+    this.isMainDropdownOpen = false;
+    // Close all submenus when main dropdown closes
+    // this.openSubMenus = {};
+  }, 200); // Small delay to prevent flickering
+}
 }
 
 @Directive({
@@ -97,5 +117,8 @@ export class HasRoleDirective {
             this.viewContainer.clear();
         }
     }
+    // 
+    
+
    
 }

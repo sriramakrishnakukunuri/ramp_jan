@@ -22,6 +22,7 @@ export class OutputProgressComponent implements OnInit {
       constructor(private fb: FormBuilder,
         private toastrService: ToastrService,
         private _commonService: CommonServiceService, private router: Router,) { 
+          // sessionStorage.removeItem('selectAgecytoOutpuAchievements');
           this.agencyId = JSON.parse(sessionStorage.getItem('user') || '{}').agencyId;
         }
     
@@ -34,7 +35,10 @@ export class OutputProgressComponent implements OnInit {
         else{
           // this.getProgramsByAgency()
         }
-        this.getDataBasedOnAgencyOutcome()
+        setTimeout(() => {
+          this.getDataBasedOnAgencyOutcome()
+        }, 100);
+        
        
       }
       selectedAgencyId:any='-1';
@@ -45,7 +49,14 @@ export class OutputProgressComponent implements OnInit {
       this._commonService.getDataByUrl(APIS.masterList.agencyList).subscribe((res: any) => {
         this.agencyList = res.data;
         this.agencyListFiltered = this.agencyList;
-        this.selectedAgencyId = '-1'
+         if(Number(sessionStorage.getItem('selectAgecytoOutpuAchievements'))){
+          this.selectedAgencyId=Number(sessionStorage.getItem('selectAgecytoOutpuAchievements'))
+          this.selectedAgencyId=this.selectedAgencyId==-1?'-1':this.selectedAgencyId
+         }
+        else{
+         this.selectedAgencyId = '-1'
+        }
+        
         // this.getProgramsByAgencyAdmin(this.selectedAgencyId)
       }, (error) => {
         this.toastrService.error(error.error.message);
@@ -75,17 +86,23 @@ getoutcomenamebyid(id:any){
   return outcomename?outcomename.outcomeTableDisplayName:''
 }
 getDataByAgencyOutcome:any=[]
+allagencyOutcomedata:any=[]
+headers:any=[]
  getDataBasedOnAgencyOutcome(){
   this.getDataByAgencyOutcome=[]
+  this.allagencyOutcomedata=[]
   if(this.selectedAgencyId==-1 && this.outcomeIds==-1){
     this._commonService.getDataByUrl(APIS.captureOutcome.getOutputProgressData+this.selectedAgencyId+'?outcomeId='+this.outcomeIds).subscribe((res: any) => {
         this.getDataByAgencyOutcome = res.data;
-         if(this.getDataByAgencyOutcome.length==0){
+         if(Object.keys(this.getDataByAgencyOutcome).length==0){
           this.toastrService.info('No data found for the selected Agency and Outcome.');
         }
         else{
-          this.getDataByAgencyOutcome = this.getDataByAgencyOutcome.flat().filter((item: any) => Object.keys(item).length > 0);
-            console.log(this.getDataByAgencyOutcome)
+          this.headers = this.getDataByAgencyOutcome[Object.keys(this.getDataByAgencyOutcome)[0]];
+          this.allagencyOutcomedata=Object.keys(this.getDataByAgencyOutcome)
+          
+          
+            console.log(this.getDataByAgencyOutcome, this.headers,this.allagencyOutcomedata)
         }
       }, (error) => {
         this.toastrService.error(error.error.message);
@@ -107,5 +124,10 @@ getDataByAgencyOutcome:any=[]
   }
      
  }
+ redirectAchievements(){
+  console.log(this.selectedAgencyId,'selectedAgencyId');
+          sessionStorage.setItem('selectAgecytoOutpuAchievements',this.selectedAgencyId)
+          this.router.navigate(['/financial-targets'])
+        }
 
 }
