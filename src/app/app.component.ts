@@ -50,19 +50,28 @@ openSubMenus: {[key: string]: boolean} = {};
     onMenuClick(event: Event) {
         event.stopPropagation();
     }
-toggleSubMenu(menu: string, event: Event) {
-  event.preventDefault();
-  event.stopPropagation();
-  // If the submenu is already open, close it. Otherwise, close all and open the clicked one.
-  if (this.openSubMenus[menu]) {
-    this.openSubMenus[menu] = false;
-  } else {
+openSubMenu(menu: string) {
     Object.keys(this.openSubMenus).forEach(key => {
-      this.openSubMenus[key] = false;
+        this.openSubMenus[key] = false;
     });
     this.openSubMenus[menu] = true;
-  }
 }
+
+closeSubMenu(menu: string) {
+  setTimeout(() => {
+    this.openSubMenus[menu] = false;
+  }, 800); // 200ms delay to allow moving to submenu
+}
+
+toggleSubMenu(menu: string, event?: Event) {
+  if (event) {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+  // Toggle submenu open/close
+  this.openSubMenus[menu] = !this.openSubMenus[menu];
+}
+
 
     logout() {
         this.authenticationService.logout();
