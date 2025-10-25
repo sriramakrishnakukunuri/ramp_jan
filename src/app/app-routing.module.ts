@@ -203,7 +203,7 @@ const routes: Routes = [
         path: 'sanctioned-amount',
         component: SanctionedAmountComponent,
         canActivate: [AuthGuard],
-        data: { roles: [Role.TIHCL_COI] }
+        data: { roles: [Role.TIHCL_COI,Role.TIHCL_DIC] }
     },
     {
         path: 'pending-application',

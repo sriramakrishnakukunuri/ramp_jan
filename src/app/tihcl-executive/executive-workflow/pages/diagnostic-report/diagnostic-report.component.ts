@@ -34,7 +34,8 @@ export class DiagnosticReportComponent implements OnInit {
     operational: false,
     stress: false,
     balancesheet: false,
-    status: false
+    status: false,
+    unitPhotos: false 
     // BASIC_DETAILS,
     // TOP_5_BUYERS,
     // RECEIVABLES_PAYABLES,
@@ -43,6 +44,7 @@ export class DiagnosticReportComponent implements OnInit {
     // BALANCE_SHEET,
     // STATUS_UPDATE;
   };
+  
   today: any=this._commonService.getDate()
 loginsessionDetails:any
 applicationData:any
@@ -71,6 +73,7 @@ applicationData:any
     this.initPayableForm()
     this.initializebalanceSheetsForm()
     this.operationtableformsInit()
+    
   }
 getDtataByUrl(url: string) {
     this._commonService.getDataByUrl(url).subscribe({
@@ -304,10 +307,13 @@ getDtataByUrl(url: string) {
 
     // Status Update
     this.diagnosticForm.patchValue({
+      unitVisitPhotos:data.unitVisitPhotos,
       observations: data.observations,
       approvalStatus: data.approvalStatus,
       urlForDiagnosticFile: data.urlForDiagnosticFile || null
     });
+    setTimeout(() => { this.loadUploadedFiles();}, 500);
+   
   }
   BalnceShetData:any=[]
 formateBalnceSheet(data:any){
@@ -1275,7 +1281,7 @@ saveStatusUpdate(): void {
           this.loader.hide()
           this.toastrService.success('Status Update saved successfully', "Status Update");
           console.log(res)
-          this.currentTab='STATUS_UPDATE'
+          this.currentTab='UNIT_VISIT_PHOTOS'
           this.loadDiagnosticData()
       },
       (error:any)=>{
@@ -1424,4 +1430,187 @@ Approved(){
     })
 }
 
+// unitvisit phots
+// Add these properties to your existing component
+
+  // Multi-file upload properties
+  uploadedFiles: Array<{
+    fileName: string;
+    filePath: string;
+  }> = [];
+  isUploading = false;
+  maxFiles = 5;
+
+
+  /**
+   * Load uploaded files if they exist in diagnostic data
+   */
+  loadUploadedFiles(): void {
+    if (this.getDataOfDiagnostic?.unitVisitPhotos && Array.isArray(this.getDataOfDiagnostic.unitVisitPhotos)) {
+      this.uploadedFiles = this.getDataOfDiagnostic.unitVisitPhotos.map((file: any) => ({
+        fileName: file?.split('/').pop() || 'Unknown file',
+        filePath: file,
+      }));
+    }
+    console.log( this.uploadedFiles,this.getDataOfDiagnostic)
+  }
+
+  /**
+   * Trigger file input click
+   */
+  triggerFileUpload(): void {
+    if (this.uploadedFiles.length >= this.maxFiles) {
+      this.toastrService.warning(`Maximum ${this.maxFiles} files allowed`);
+      return;
+    }
+    
+    // Target the specific multi-file upload input by ID
+    const fileInput = document.getElementById('multiFileUpload') as HTMLInputElement;
+    if (fileInput) {
+      fileInput.click();
+    }
+  }
+  /**
+   * Handle file selection for multi-file upload
+   */
+  onMultiFileSelected(event: any): void {
+    const file: File = event.target.files[0];
+    
+    if (!file) {
+      return;
+    }
+
+    // Check maximum files
+    if (this.uploadedFiles.length >= this.maxFiles) {
+      this.toastrService.warning(`Maximum ${this.maxFiles} files allowed`);
+      event.target.value = '';
+      return;
+    }
+
+    // Validate file size (10MB limit)
+    const maxSize = 10 * 1024 * 1024; // 10MB
+    if (file.size > maxSize) {
+      this.toastrService.error('File size should not exceed 10MB');
+      event.target.value = '';
+      return;
+    }
+
+    // Validate file type
+    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'application/pdf', 
+                         'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+    if (!allowedTypes.includes(file.type)) {
+      this.toastrService.error('Only JPG, PNG, PDF, DOC, and DOCX files are allowed');
+      event.target.value = '';
+      return;
+    }
+
+    // Check duplicate file names
+    const isDuplicate = this.uploadedFiles.some(uploadedFile => 
+      uploadedFile.fileName === file.name
+    );
+    
+    if (isDuplicate) {
+      this.toastrService.warning('A file with this name already exists');
+      event.target.value = '';
+      return;
+    }
+
+    this.uploadFileToServer(file);
+    
+    // Clear the input
+    event.target.value = '';
+  }
+removeUploadedFile(index: number): void {
+   const removedFile = this.uploadedFiles.splice(index, 1)[0];
+    this.toastrService.success(`${removedFile.fileName} removed successfully`);
+}
+  /**
+   * Upload file to server
+   */
+  uploadFileToServer(file: File): void {
+    console.log('Uploading file:', file);
+    this.isUploading = true;
+    
+    const formData = new FormData();
+    formData.set('file', file);
+    formData.set('directory', `/unitVisitPhotos/${this.applicationData?.applicationNo}`);
+
+    this._commonService.add(APIS.tihcl_uploads.globalUpload, formData).subscribe({
+      next: (response: any) => {
+        console.log('File uploaded successfully:', response);
+        const newFile = {
+          fileName: file.name,
+          filePath: response?.filePath
+        };
+        
+        this.uploadedFiles.push(newFile);
+        this.isUploading = false;
+        console.log(this.uploadedFiles);
+        
+        this.toastrService.success(`${file.name} uploaded successfully`);
+      },
+      error: (error: any) => {
+        console.error('Error uploading file:', error);
+        this.isUploading = false;
+        this.toastrService.error(`Error uploading ${file.name}`);
+      }
+    });
+  }
+
+  /**
+   * Remove uploaded file
+   */
+
+  /**
+   * Save unit visit photos to server
+   */
+  saveUnitVisitPhotos(): void {
+    if (this.uploadedFiles.length === 0) {
+      this.toastrService.error('Please upload at least one file');
+      return;
+    }
+
+    this.loader.show();
+
+    const payload = {
+      unitVisitPhotos: this.uploadedFiles.map(file => file.filePath),
+      currentScreenStatus: 'STATUS_UPDATE',
+      applicationNo: this.applicationData.applicationNo,
+      id: this.getDataOfDiagnostic?.id,
+      applicationStatus: 'UNIT_VISIT'
+    };
+
+    this._commonService.add(APIS.tihclExecutive.saveDiagnostic, payload).subscribe({
+      next: (res: any) => {
+        this.loader.hide();
+        this.toastrService.success('Unit visit photos saved successfully');
+        this.saveSuccess.unitPhotos = true;
+        setTimeout(() => this.saveSuccess.unitPhotos = false, 3000);
+        this.loadDiagnosticData();
+      },
+      error: (error: any) => {
+        this.loader.hide();
+        this.toastrService.error('Error saving unit visit photos');
+        console.error('Save error:', error);
+      }
+    });
+  }
+
+  // Update the patchFormValues method to load unit visit photos
+  patchFormValues1(data: any): void {
+    // ...existing patchFormValues code...
+
+    // Load unit visit photos
+    if (data?.unitVisitPhotos && Array.isArray(data.unitVisitPhotos)) {
+      this.uploadedFiles = data.unitVisitPhotos.map((file: any) => ({
+        fileName: file.fileName || file.filePath?.split('/').pop() || 'Unknown file',
+        filePath: file.filePath,
+        uploadDate: file.uploadDate ? new Date(file.uploadDate) : new Date()
+      }));
+    }
+
+    // ...rest of existing patchFormValues code...
+  }
+
+  // ...existing methods...
 }

@@ -9,16 +9,25 @@ import { Router } from '@angular/router';
   styleUrls: ['./view-applications.component.css']
 })
 export class ViewApplicationsComponent implements OnInit {
-
+loginsessionDetails:any
   constructor(private _commonService: CommonServiceService,  
     private toastrService: ToastrService,
   private router: Router
-  ) { }
+  ) {
+    this.loginsessionDetails = JSON.parse(sessionStorage.getItem('user') || '{}');  
+    console.log(this.loginsessionDetails)
+   }
   //  APPLICATIONS_RECEIVED, APPLICATIONS_UNDER_PROCESS, APPLICATIONS_WITH_DIC, APPLICATIONS_SANCTIONED, APPLICATIONS_NOT_CONSIDERED
 activeTab:any='APPLICATIONS_RECEIVED';
 districtName:any='district'
   ngOnInit(): void {
-    this.getAllDistricts()
+    if(this.loginsessionDetails.userRole=='DIC'){
+      this.districtName=this.loginsessionDetails.district
+    }
+    else{
+      this.districtName='district'
+       this.getAllDistricts()
+    }
      this.onTabChange('APPLICATIONS_RECEIVED')
      this.getData()
   }

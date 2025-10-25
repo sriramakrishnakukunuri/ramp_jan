@@ -72,6 +72,7 @@ StatusofApplication:any=''
       email: ['', [Validators.email]],
       village: ['', [Validators.required,Validators.minLength(3)]],
       street: ['', [Validators.required,Validators.minLength(3)]],
+      howDidYouKnowAboutTihcl: ['',],
       pincode: ['', [Validators.required, Validators.pattern(/^[1-9][0-9]{5}$/)]],
       address: ['',],
       // Step 2 - Application
@@ -134,6 +135,7 @@ StatusofApplication:any=''
           address: enterpreneur.address || '',
           village: enterpreneur.village || '',
           street: enterpreneur.street || '',
+          howDidYouKnowAboutTihcl: enterpreneur.howDidYouKnowAboutTihcl || '',
           pincode: enterpreneur.pincode || '',
           enterpriseCategory: enterpreneur.enterpriseCategory || '',
           natureOfActivity: enterpreneur.natureOfActivity || '',
@@ -495,6 +497,7 @@ this.applicationForm.get('district')?.setValidators(null);
 this.applicationForm.get('mandal')?.setValidators(null);
 this.applicationForm.get('email')?.setValidators(null);
 this.applicationForm.get('address')?.setValidators(null);
+this.applicationForm.get('howDidYouKnowAboutTihcl')?.setValidators([Validators.required]);
 this.applicationForm.get('village')?.setValidators([Validators.required,Validators.minLength(3)]);
 this.applicationForm.get('street')?.setValidators([Validators.required,Validators.minLength(3)]);
 this.applicationForm.get('pincode')?.setValidators([Validators.required, Validators.pattern(/^[1-9][0-9]{5}$/)]);
@@ -533,6 +536,7 @@ this.applicationForm.get('email')?.updateValueAndValidity()
 this.applicationForm.get('address')?.updateValueAndValidity()
 this.applicationForm.get('village')?.updateValueAndValidity()
 this.applicationForm.get('street')?.updateValueAndValidity()
+this.applicationForm.get('howDidYouKnowAboutTihcl')?.updateValueAndValidity()
 this.applicationForm.get('pincode')?.updateValueAndValidity()
 this.applicationForm.get('operatingDifficulties')?.updateValueAndValidity()
 // Update validity for all controls
@@ -562,6 +566,7 @@ console.log(this.applicationForm.value);
       this.applicationForm.get('address')?.setValidators(null);
       this.applicationForm.get('village')?.setValidators([Validators.required,Validators.minLength(3)]);
       this.applicationForm.get('street')?.setValidators([Validators.required,Validators.minLength(3)]);
+      this.applicationForm.get('howDidYouKnowAboutTihcl')?.setValidators(null);
       this.applicationForm.get('pincode')?.setValidators([Validators.required, Validators.pattern(/^[1-9][0-9]{5}$/)]);
       this.applicationForm.get('operatingDifficulties')?.setValidators([Validators.required]);
       
@@ -615,6 +620,7 @@ this.applicationForm.get('email')?.updateValueAndValidity()
 this.applicationForm.get('address')?.updateValueAndValidity()
 this.applicationForm.get('village')?.updateValueAndValidity()
 this.applicationForm.get('street')?.updateValueAndValidity()
+this.applicationForm.get('howDidYouKnowAboutTihcl')?.updateValueAndValidity()
 this.applicationForm.get('pincode')?.updateValueAndValidity()
 this.applicationForm.get('operatingDifficulties')?.updateValueAndValidity()
       

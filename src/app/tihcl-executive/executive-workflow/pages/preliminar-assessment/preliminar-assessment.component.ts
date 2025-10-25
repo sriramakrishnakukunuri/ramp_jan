@@ -54,6 +54,7 @@ export class PreliminarAssessmentComponent implements OnInit {
     issue: "Production below projected level of capacity utilization",
     Probable_Cause: "Absence of expert operators. Lack of raw materials. Improper factory setup. Power/labour problems. Lack of demand.",
     impact: "Lack of required WC funds to meet the operations / Low cashflow- unable to operate / Unable to meet overheads / cashflow mismatch / unable to make repayments to Banks/FIs / Account is out of order.",
+
     options: [
       { value: 1, label: "Temporarily(2)" },
       { value: 2, label: "Frequently(6)" },
@@ -67,6 +68,7 @@ export class PreliminarAssessmentComponent implements OnInit {
     issue: "Gradual decrease of sales",
     Probable_Cause: "Diversion of fund. Nonrealization of Book Debts. Lack of concentration on Marketing. Production bottleneck. Mismanagement. Poor quality. Increased competition.",
     impact: "Low cashflow- unable to operate / Unable to meet overheads / cashflow mismatch / unable to make repayments to Banks/FIs / Account is out of order.",
+
     options: [
       { value: 1, label: "Fair Chance to increase(4)" },
       { value: 2, label: "Moderate Chance to increase(6)" },
@@ -93,6 +95,7 @@ export class PreliminarAssessmentComponent implements OnInit {
     issue: "Diversion of working capital for capital expenses",
     Probable_Cause: "May be for urgent settlement. Inadequate internal accrual. Lack of planning. May be a deliberate act.",
     impact: "Low capacity utilization / decline in cashflow- unable to operate / Unable to meet overheads / cashflow mismatch / unable to make repayments to Banks/FIs / Account is out of order.",
+
     options: [
       { value: 1, label: "Diversion with definite source of resources to rebuild working capital in a specific timeline(5)" },
       { value: 2, label: "Diversion without identified source to rebuild the working capital(8)" },
@@ -106,6 +109,7 @@ export class PreliminarAssessmentComponent implements OnInit {
     issue: "Abnormal increase in creditors",
     Probable_Cause: "Suppliers trying to dump the product. Lack of production planning. Inadequate cash flow. Diversion of funds. Overtrading. Non realisation of Trade receivables within the contacted credit period. Decline in demand",
     impact: "Low capacity utilization / decline in cashflow- unable to operate / Unable to meet overheads / cashflow mismatch / unable to make repayments to Banks/FIs / Account is out of order.",
+
     options: [
       { value: 1, label: "Temporary phenomena due to unforeseen Internal(2)" },
       { value: 2, label: "External factors, with definite timeline for correction(6)" },
@@ -119,6 +123,7 @@ export class PreliminarAssessmentComponent implements OnInit {
     issue: "SMA 2 / NPA Status of the Account",
     Probable_Cause: "Stress, Incipient sickness or sickness of the Unit.",
     impact: "Sealing of the unit / Initiate recovery procedure / Winding of the unit",
+
     options: [
       { value: 1, label: "SMA 1/2/3 (2)" },
       { value: 2, label: "NPA(10)" },
@@ -131,6 +136,7 @@ export class PreliminarAssessmentComponent implements OnInit {
     issue: "Unjustified rapid expansion without proper financial tie-up",
     Probable_Cause: "To have better market share. Improper planning.",
     impact: "Diversion of funds / Low capacity utilization / decline in cashflow- unable to operate / Unable to meet overheads / cashflow mismatch / unable to make repayments to Banks/FIs / Account is out of order.",
+
     options: [
       { value: 1, label: "Non-significant(2)" },
       { value: 2, label: "Significant(6)" },
@@ -144,7 +150,8 @@ export class PreliminarAssessmentComponent implements OnInit {
     issue: "Leverage Position",
     Probable_Cause: "",
     impact: "Long term liquidity issues / Low capacity utilization / decline in cashflow- unable to operate / Unable to meet overheads / cashflow mismatch / unable to make repayments to Banks/FIs / Account is out of order.",
-     options: [
+
+    options: [
       { value: 1, label: "Non-significant(2)" },
       { value: 2, label: "Significant(6)" },
       { value: 3, label: "Serious(10)" },
@@ -157,7 +164,7 @@ export class PreliminarAssessmentComponent implements OnInit {
     issue: "Liquidity Position",
     Probable_Cause: "",
     impact: "Short term liquidity issues/ Low capacity utilization / decline in cashflow- unable to operate / Unable to meet overheads / cashflow mismatch / unable to make repayments to Banks/FIs / Account is out of order.",
-   options: [
+    options: [
       { value: 1, label: "Non-significant(2)" },
       { value: 2, label: "Significant(6)" },
       { value: 3, label: "Serious(10)" },
@@ -241,7 +248,7 @@ loginsessionDetails:any
     this._commonService.getDataByUrl(url).subscribe({
       next: (dataList: any) => {
        
-         this.assessmentForm.patchValue(dataList.data);
+         this.assessmentForm.patchValue({...dataList.data,howDidYouKnowAboutTihcl:dataList.data.sourceOfApplication});
          this.getApplicationData=dataList.data
          console.log(dataList?.data)
 
@@ -265,6 +272,7 @@ loginsessionDetails:any
             if (option) {
               // Patch the form control with the full label
               this.assessmentForm.get(`stressScore_${question.id}`)?.patchValue(option.label);
+              this.assessmentForm.get(`stressScoreJustification_${question.id}`)?.patchValue(item.stressScoreJustification);
             }
           }
         });
@@ -372,6 +380,7 @@ loginsessionDetails:any
       sourceOfApplication: ['', Validators.required],
       // sector: ['', Validators.required],
       typeOfProduct: ['', [Validators.required, ]],
+      // stressScoreJustification: ['', [Validators.required, ]],
       productUsage: ['', [Validators.required, ]],
       
       // Problems and solutions
@@ -386,10 +395,12 @@ loginsessionDetails:any
     });
     for (let i = 1; i <= 10; i++) {
      this.assessmentForm.removeControl(`stressScore_${i}`);
+      this.assessmentForm.removeControl(`stressScoreJustification_${i}`);
    }
     // Initialize stress score controls
     this.stressScoreOptions.forEach((question:any) => {
       this.assessmentForm.addControl(`stressScore_${question.id}`, this.fb.control('', Validators.required));
+      this.assessmentForm.addControl(`stressScoreJustification_${question.id}`, this.fb.control('',));
     });
   }
     private gstValidator(): ValidatorFn {
@@ -497,6 +508,7 @@ loginsessionDetails:any
         
         riskResponse.push({
           issue: question.issue,
+          stressScoreJustification:this.assessmentForm.get(`stressScoreJustification_${question.id}`)?.value,
           riskCategorisation: labelWithoutScore
         });
       }
@@ -528,6 +540,7 @@ onSubmit() {
 // Remove all stressScore controls from the form
       for (let i = 1; i <= 10; i++) {
         this.assessmentForm.removeControl(`stressScore_${i}`);
+        this.assessmentForm.removeControl(`stressScoreJustification_${i}`);
 }
 
   // If you want to remove a control named 'stressScore' from the form, use:
@@ -589,6 +602,7 @@ onSubmit() {
 // Remove all stressScore controls from the form
       for (let i = 1; i <= 10; i++) {
         this.assessmentForm.removeControl(`stressScore_${i}`);
+        this.assessmentForm.removeControl(`stressScoreJustification_${i}`);
 }
 
   // If you want to remove a control named 'stressScore' from the form, use:

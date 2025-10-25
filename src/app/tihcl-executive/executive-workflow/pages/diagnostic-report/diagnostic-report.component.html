@@ -35,6 +35,10 @@
                <button class="nav-link rounded-0 py-1 fs-md" [class.active]="currentTab === 'STATUS_UPDATE'"
                  (click)="switchTab('STATUS_UPDATE')">Observations</button>
              </li>
+             <li class="nav-item" role="presentation">
+               <button class="nav-link rounded-0 py-1 fs-md" [class.active]="currentTab === 'UNIT_VISIT_PHOTOS'"
+                 (click)="switchTab('UNIT_VISIT_PHOTOS')">Unit Visit Photos</button>
+             </li>
            </ul>
            <form [formGroup]="diagnosticForm">
              <div class="tab-content mt-2">
@@ -48,7 +52,8 @@
                      <div class="row">
                        <div class="col-12 col-sm-12 col-md-6 col-lg-4">
                          <div class="form-floating mb-3">
-                           <input type="text" class="form-control" id="nameInput" placeholder="" formControlName="nameOfUnit">
+                           <input type="text" class="form-control" id="nameInput" placeholder=""
+                             formControlName="nameOfUnit">
                            <label for="nameInput">Name of the Unit <span class="text-danger">*</span></label>
                            <div
                              *ngIf="basicDetails.get('nameOfUnit')?.invalid && (basicDetails.get('nameOfUnit')?.dirty || basicDetails.get('nameOfUnit')?.touched)"
@@ -111,7 +116,8 @@
                        <div class="col-12 col-sm-12 col-md-6 col-lg-4">
                          <div class="mb-3">
                            <div class="form-floating mb-3">
-                             <select class="form-select" id="landDetails" formControlName="constitution" (change)="onConstitutionChange($any($event.target).value)"
+                             <select class="form-select" id="landDetails" formControlName="constitution"
+                               (change)="onConstitutionChange($any($event.target).value)"
                                [ngClass]="{'isDisabled':freeze>4}">
                                <option value="" disabled selected>Select Constitution</option>
                                <option value="Sole proprietorship">Sole proprietorship</option>
@@ -130,7 +136,8 @@
                        </div>
                      </div>
 
-                     <div class="border p-2 rounded-3 mb-3" *ngIf="basicDetails.get('constitution')?.value === 'Limited company'">
+                     <div class="border p-2 rounded-3 mb-3"
+                       *ngIf="basicDetails.get('constitution')?.value === 'Limited company'">
                        <div class="row align-items-center">
                          <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
                            <label class="fs-md fw-bold mb-1">Shareholding Pattern</label>
@@ -157,17 +164,19 @@
                              </tr>
                            </thead>
                            <tbody formArrayName="shareholdersNewDto">
-                             <tr *ngFor="let shareholder of shareholdersNewDto.controls; let i = index" [formGroupName]="i">
+                             <tr *ngFor="let shareholder of shareholdersNewDto.controls; let i = index"
+                               [formGroupName]="i">
                                <td>{{i + 1}}</td>
                                <td>{{ shareholder.get('nameOfTheShareholder')?.value }}</td>
                                <td>{{ shareholder.get('position')?.value }}</td>
                                <td>{{ shareholder.get('shareholdingPercentage')?.value }}</td>
                                <td class="text-center">
-                                 <button type="button" [ngClass]="{'isDisabled':!(freeze<=4)}" (click)="openShareholderModal(i)"
-                                   class="btn btn-default text-primary btn-sm">
+                                 <button type="button" [ngClass]="{'isDisabled':!(freeze<=4)}"
+                                   (click)="openShareholderModal(i)" class="btn btn-default text-primary btn-sm">
                                    <span class="bi bi-pencil"></span>
                                  </button>
-                                 <button type="button" [ngClass]="{'isDisabled':!(freeze<=4)}" (click)="removeShareholder(i,shareholder.get('id')?.value)"
+                                 <button type="button" [ngClass]="{'isDisabled':!(freeze<=4)}"
+                                   (click)="removeShareholder(i,shareholder.get('id')?.value)"
                                    class="btn btn-default text-danger btn-sm">
                                    <span class="bi bi-trash"></span>
                                  </button>
@@ -190,7 +199,8 @@
                          No Shareholders added yet
                        </div>
                      </div>
-                      <div class="border p-2 rounded-3 mb-3" *ngIf="basicDetails.get('constitution')?.value === 'Partnership'">
+                     <div class="border p-2 rounded-3 mb-3"
+                       *ngIf="basicDetails.get('constitution')?.value === 'Partnership'">
                        <div class="row align-items-center">
                          <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
                            <label class="fs-md fw-bold mb-1">Partnership Details</label>
@@ -223,18 +233,19 @@
                                <td>{{ shareholder.get('position')?.value }}</td>
                                <td>{{ shareholder.get('profitSharingPercentage')?.value }}</td>
                                <td class="text-center">
-                                 <button type="button" [ngClass]="{'isDisabled':!(freeze<=4)}" (click)="openPartnershipModal(i)"
-                                   class="btn btn-default text-primary btn-sm">
+                                 <button type="button" [ngClass]="{'isDisabled':!(freeze<=4)}"
+                                   (click)="openPartnershipModal(i)" class="btn btn-default text-primary btn-sm">
                                    <span class="bi bi-pencil"></span>
                                  </button>
-                                 <button type="button" [ngClass]="{'isDisabled':!(freeze<=4)}" (click)="removePartnerShip(i,shareholder.get('id')?.value)"
+                                 <button type="button" [ngClass]="{'isDisabled':!(freeze<=4)}"
+                                   (click)="removePartnerShip(i,shareholder.get('id')?.value)"
                                    class="btn btn-default text-danger btn-sm">
                                    <span class="bi bi-trash"></span>
                                  </button>
                                </td>
                              </tr>
                            </tbody>
-                          
+
                          </table>
                        </div>
 
@@ -300,11 +311,12 @@
                                <td class="text-start">{{ buyer.get('amount')?.value }}</td>
                                <td>{{ buyer.get('remarks')?.value || '-' }}</td>
                                <td class="text-center">
-                                 <button type="button" [ngClass]="{'isDisabled':!(freeze<=4)}" (click)="openBuyerModal(i)"
-                                   class="btn btn-default text-primary btn-sm">
+                                 <button type="button" [ngClass]="{'isDisabled':!(freeze<=4)}"
+                                   (click)="openBuyerModal(i)" class="btn btn-default text-primary btn-sm">
                                    <span class="bi bi-pencil"></span>
                                  </button>
-                                 <button type="button" [ngClass]="{'isDisabled':!(freeze<=4)}" (click)="removeBuyer(i,buyer.get('id')?.value)"
+                                 <button type="button" [ngClass]="{'isDisabled':!(freeze<=4)}"
+                                   (click)="removeBuyer(i,buyer.get('id')?.value)"
                                    class="btn btn-default text-danger btn-sm">
                                    <span class="bi bi-trash"></span>
                                  </button>
@@ -358,11 +370,12 @@
                                <td class="text-start">{{ supplier.get('amount')?.value }}</td>
                                <td>{{ supplier.get('remarks')?.value || '-' }}</td>
                                <td class="text-center">
-                                 <button type="button" [ngClass]="{'isDisabled':!(freeze<=4)}" (click)="openSupplierModal(i)"
-                                   class="btn btn-default text-primary btn-sm">
+                                 <button type="button" [ngClass]="{'isDisabled':!(freeze<=4)}"
+                                   (click)="openSupplierModal(i)" class="btn btn-default text-primary btn-sm">
                                    <span class="bi bi-pencil"></span>
                                  </button>
-                                 <button type="button" [ngClass]="{'isDisabled':!(freeze<=4)}" (click)="removeSupplier(i,supplier.get('id')?.value)"
+                                 <button type="button" [ngClass]="{'isDisabled':!(freeze<=4)}"
+                                   (click)="removeSupplier(i,supplier.get('id')?.value)"
                                    class="btn btn-default text-danger btn-sm">
                                    <span class="bi bi-trash"></span>
                                  </button>
@@ -575,7 +588,7 @@
                        <div class="col-12">
                          <div>
                            <table class="table table-striped table-borderless fs-md">
-                           <thead class="bg-theme text-white">
+                             <thead class="bg-theme text-white">
                                <tr>
                                  <th class="text-start">S.No</th>
                                  <th>To be received from</th>
@@ -591,11 +604,12 @@
                                  <!-- <td>{{ formatDate(receivable.get('receivableDate')?.value) }}</td> -->
                                  <td>{{ receivable.get('receivableAmount')?.value }}</td>
                                  <td class="text-center">
-                                   <button type="button" [ngClass]="{'isDisabled':!(freeze<=4)}" (click)="openReceivableModal(i)"
-                                     class="btn btn-default text-primary btn-sm">
+                                   <button type="button" [ngClass]="{'isDisabled':!(freeze<=4)}"
+                                     (click)="openReceivableModal(i)" class="btn btn-default text-primary btn-sm">
                                      <span class="bi bi-pencil"></span>
                                    </button>
-                                   <button type="button" [ngClass]="{'isDisabled':!(freeze<=4)}" (click)="removeReceivable(i,receivable.get('id')?.value)"
+                                   <button type="button" [ngClass]="{'isDisabled':!(freeze<=4)}"
+                                     (click)="removeReceivable(i,receivable.get('id')?.value)"
                                      class="btn btn-default text-danger btn-sm">
                                      <span class="bi bi-trash"></span>
                                    </button>
@@ -607,7 +621,7 @@
                              </tbody>
                              <tfoot *ngIf="receivables.controls.length > 0">
                                <tr>
-                             
+
                                  <td></td>
                                  <td>Total</td>
                                  <td>{{ getTotalReceivables() }}</td>
@@ -642,7 +656,7 @@
                        <div class="col-12">
                          <div>
                            <table class="table table-striped table-borderless fs-md">
-                           <thead class="bg-theme text-white">
+                             <thead class="bg-theme text-white">
                                <tr>
                                  <th class="text-start">S.No</th>
                                  <th>To be Paid to</th>
@@ -658,11 +672,12 @@
                                  <!-- <td>{{ formatDate(payable.get('payableDate')?.value) }}</td> -->
                                  <td>{{ payable.get('payableAmount')?.value }}</td>
                                  <td class="text-center">
-                                   <button type="button" [ngClass]="{'isDisabled':!(freeze<=4)}" (click)="openPayableModal(i)"
-                                     class="btn btn-default text-primary btn-sm">
+                                   <button type="button" [ngClass]="{'isDisabled':!(freeze<=4)}"
+                                     (click)="openPayableModal(i)" class="btn btn-default text-primary btn-sm">
                                      <span class="bi bi-pencil"></span>
                                    </button>
-                                   <button type="button" [ngClass]="{'isDisabled':!(freeze<=4)}" (click)="removePayable(i,payable.get('id')?.value)"
+                                   <button type="button" [ngClass]="{'isDisabled':!(freeze<=4)}"
+                                     (click)="removePayable(i,payable.get('id')?.value)"
                                      class="btn btn-default text-danger btn-sm">
                                      <span class="bi bi-trash"></span>
                                    </button>
@@ -674,7 +689,7 @@
                              </tbody>
                              <tfoot *ngIf="payables.controls.length > 0">
                                <tr>
-                               
+
                                  <td></td>
                                  <td>Total</td>
                                  <td>{{ getTotalPayables() }}</td>
@@ -752,7 +767,8 @@
                              <div class="form-floating mb-3">
                                <input type="number" class="form-control" id="receivableAmount" placeholder=""
                                  formControlName="receivableAmount" min="0">
-                               <label for="receivableAmount">Receivable Amount <span class="text-danger">*</span></label>
+                               <label for="receivableAmount">Receivable Amount <span
+                                   class="text-danger">*</span></label>
                                <div
                                  *ngIf="receivableForm.get('receivableAmount')?.invalid && (receivableForm.get('receivableAmount')?.dirty || receivableForm.get('receivableAmount')?.touched)"
                                  class="text-danger small">
@@ -979,11 +995,12 @@
                                  <td>{{position.get('orderValue')?.value | number}}</td>
                                  <td>{{position.get('remarks')?.value}}</td>
                                  <td class="text-center">
-                                   <button type="button" [ngClass]="{'isDisabled':!(freeze<=4)}" (click)="editOrderBookPosition(i)"
-                                     class="btn btn-sm btn-outline-primary me-2">
+                                   <button type="button" [ngClass]="{'isDisabled':!(freeze<=4)}"
+                                     (click)="editOrderBookPosition(i)" class="btn btn-sm btn-outline-primary me-2">
                                      <i class="bi bi-pencil"></i>
                                    </button>
-                                   <button type="button" [ngClass]="{'isDisabled':!(freeze<=4)}" (click)="removeOrderBookPosition(i,position.get('id')?.value)"
+                                   <button type="button" [ngClass]="{'isDisabled':!(freeze<=4)}"
+                                     (click)="removeOrderBookPosition(i,position.get('id')?.value)"
                                      class="btn btn-sm btn-outline-danger">
                                      <i class="bi bi-trash"></i>
                                    </button>
@@ -1036,7 +1053,7 @@
                                </div>
                                <div class="col-12">
                                  <table class="table table-striped table-borderless fs-md">
-                                    <thead class="bg-theme text-white">
+                                   <thead class="bg-theme text-white">
                                      <tr>
                                        <th class="text-start">S.No</th>
                                        <th>Source</th>
@@ -1054,11 +1071,12 @@
                                        <td class="text-start">{{loan.get('sinceWhen')?.value | date:'dd-MM-yyyy'}}</td>
                                        <td>{{loan.get('tenor')?.value || '-'}}</td>
                                        <td class="text-center">
-                                         <button type="button" [ngClass]="{'isDisabled':!(freeze<=4)}" (click)="editUnsecuredLoan(i)"
-                                           class="btn btn-sm btn-outline-primary me-2">
+                                         <button type="button" [ngClass]="{'isDisabled':!(freeze<=4)}"
+                                           (click)="editUnsecuredLoan(i)" class="btn btn-sm btn-outline-primary me-2">
                                            <i class="bi bi-pencil"></i>
                                          </button>
-                                         <button type="button" [ngClass]="{'isDisabled':!(freeze<=4)}" (click)="removeUnsecuredLoan(i,loan.get('id')?.value)"
+                                         <button type="button" [ngClass]="{'isDisabled':!(freeze<=4)}"
+                                           (click)="removeUnsecuredLoan(i,loan.get('id')?.value)"
                                            class="btn btn-sm btn-outline-danger">
                                            <i class="bi bi-trash"></i>
                                          </button>
@@ -1223,7 +1241,8 @@
                              <div class="form-floating">
                                <input type="text" class="form-control" id="modalCustomerName"
                                  formControlName="nameOfTheBuyer">
-                               <label for="modalCustomerName">Name Of The Buyer <span class="text-danger">*</span></label>
+                               <label for="modalCustomerName">Name Of The Buyer <span
+                                   class="text-danger">*</span></label>
                              </div>
                            </div>
                          </div>
@@ -1241,7 +1260,7 @@
                          <div class="row mb-3">
                            <div class="col-md-12">
                              <div class="form-floating">
-                               <input type="text" class="form-control" id="Remarks"formControlName="remarks">
+                               <input type="text" class="form-control" id="Remarks" formControlName="remarks">
                                <label for="Remarks">Remarks</label>
                              </div>
                            </div>
@@ -1299,7 +1318,8 @@
                              <div class="form-floating">
                                <input type="date" class="form-control" id="modalSinceWhen" formControlName="sinceWhen"
                                  max="{{ today | date:'yyyy-MM-dd' }}">
-                               <label for="modalSinceWhen">Since when/Sanctioned date <span class="text-danger">*</span></label>
+                               <label for="modalSinceWhen">Since when/Sanctioned date <span
+                                   class="text-danger">*</span></label>
                              </div>
                            </div>
                          </div>
@@ -1379,7 +1399,8 @@
                              <tr>
                                <th class="text-start">S.No</th>
                                <th>Parameter</th>
-                               <th *ngFor="let data of BalnceShetData">{{data?.financialYear}} ({{data?.balanceSheetType}})</th>
+                               <th *ngFor="let data of BalnceShetData">{{data?.financialYear}}
+                                 ({{data?.balanceSheetType}})</th>
 
                              </tr>
                            </thead>
@@ -1459,10 +1480,10 @@
                        </div>
                      </div>
                      <div>
-                        <div class="text-end">
-                          <button type="button" [ngClass]="{'disabled':BalnceShetData?.length==0}" (click)="nextsteptoBalancesheeet()" *ngIf="freeze<=4"
-                            class="btn btn-primary">Save</button>
-                        </div>
+                       <div class="text-end">
+                         <button type="button" [ngClass]="{'disabled':BalnceShetData?.length==0}"
+                           (click)="nextsteptoBalancesheeet()" *ngIf="freeze<=4" class="btn btn-primary">Save</button>
+                       </div>
                      </div>
                    </div>
                  </div>
@@ -1507,7 +1528,8 @@
                                <select class="form-select" id="financialYear" formControlName="financialYear">
                                  <option *ngFor="let val of this.financialYears" value="{{val}}">{{val}}</option>
                                </select>
-                               <label for="financialYear" style="font-weight: 600;">Financial Year <span class="text-danger">*</span></label>
+                               <label for="financialYear" style="font-weight: 600;">Financial Year <span
+                                   class="text-danger">*</span></label>
                                <div
                                  *ngIf="balanceSheetsForm.get('financialYear')?.invalid && balanceSheetsForm.get('financialYear')?.touched"
                                  class="text-danger small">
@@ -1515,13 +1537,15 @@
                                </div>
                              </div>
                            </div>
-                            <div class="col-12 col-md-6 mb-3">
+                           <div class="col-12 col-md-6 mb-3">
                              <div class="form-check form-check-inline">
-                               <input class="form-check-input" type="radio" formControlName="balanceSheetType" id="yes" value="Audited" >
+                               <input class="form-check-input" type="radio" formControlName="balanceSheetType" id="yes"
+                                 value="Audited">
                                <label class="form-check-label fs-md" for="yes">Audited</label>
                              </div>
                              <div class="form-check form-check-inline">
-                               <input class="form-check-input" type="radio" formControlName="balanceSheetType" id="nounsecured" value="Provisional">
+                               <input class="form-check-input" type="radio" formControlName="balanceSheetType"
+                                 id="nounsecured" value="Provisional">
                                <label class="form-check-label fs-md" for="nounsecured">Provisional</label>
                              </div>
                            </div>
@@ -1618,15 +1642,15 @@
                              </div>
                            </div> -->
                            <div class="col-12 col-md-6 mb-3">
-                        <div class="form-floating">
-                          <input type="number" class="form-control" id="netAddCapInfused"
-                            formControlName="netAddCapInfused">
-                          <label for="netAddCapInfused">Net Additional Capital Infused</label>
-                        </div>
-                        <div *ngIf="balanceSheetsForm.get('netAddCapInfused')?.invalid" class="text-danger small">
-                          Required
-                        </div>
-                      </div>
+                             <div class="form-floating">
+                               <input type="number" class="form-control" id="netAddCapInfused"
+                                 formControlName="netAddCapInfused">
+                               <label for="netAddCapInfused">Net Additional Capital Infused</label>
+                             </div>
+                             <div *ngIf="balanceSheetsForm.get('netAddCapInfused')?.invalid" class="text-danger small">
+                               Required
+                             </div>
+                           </div>
 
                            <!-- TOL -->
                            <div class="col-12 col-md-6 mb-3">
@@ -1746,18 +1770,20 @@
                      <label class="form-check-label" for="forwardVerfication">Forward To Physical Verification</label>
                    </div> -->
                  </div>
-                   <div class="mb-1 d-flex align-items-center gap-2">
-                                  <div>
-                                    <label for="uploadNoc" class="form-label text-center fw-600">Upload Diagnostic Report<span class="text-danger">*</span></label>
-                                     <input class="form-control" id="uploadNoc" type="file" (change)="onFileSelected($event)" >
-                                      <small *ngIf="diagnosticForm.get('urlForDiagnosticFile')?.value" class="text-muted">
-                                        Uploaded file: {{ diagnosticForm.get('urlForDiagnosticFile')?.value?.split('/').pop() }}
-                                      </small>
-                                  </div>
-                                   <button *ngIf="isValidUrl(diagnosticForm.get('urlForDiagnosticFile')?.value)" type="button" class="btn btn-primary mt-2" (click)="viewFile(diagnosticForm.get('urlForDiagnosticFile')?.value)">
-                                    <i class="bi bi-eye"></i> 
-                                  </button>
-                                </div>
+                 <div class="mb-1 d-flex align-items-center gap-2">
+                   <div>
+                     <label for="uploadNoc" class="form-label text-center fw-600">Upload Diagnostic Report<span
+                         class="text-danger">*</span></label>
+                     <input class="form-control" id="uploadNoc" type="file" (change)="onFileSelected($event)">
+                     <small *ngIf="diagnosticForm.get('urlForDiagnosticFile')?.value" class="text-muted">
+                       Uploaded file: {{ diagnosticForm.get('urlForDiagnosticFile')?.value?.split('/').pop() }}
+                     </small>
+                   </div>
+                   <button *ngIf="isValidUrl(diagnosticForm.get('urlForDiagnosticFile')?.value)" type="button"
+                     class="btn btn-primary mt-2" (click)="viewFile(diagnosticForm.get('urlForDiagnosticFile')?.value)">
+                     <i class="bi bi-eye"></i>
+                   </button>
+                 </div>
 
                  <div class="text-end">
                    <button type="button" (click)="saveStatusUpdate()" class="btn btn-primary" *ngIf="freeze<=4">
@@ -1767,9 +1793,81 @@
                      Observations Saved successfully!
                    </div>
                  </div>
+                
+               </div>
+               <div class="tab-pane fade p-2" id="statusupdate" role="tabpanel" aria-labelledby="statusupdate-tab"
+                 [class.show.active]="currentTab === 'UNIT_VISIT_PHOTOS'"
+                 [ngClass]="{ 'active': currentTab === 'UNIT_VISIT_PHOTOS' }">
+                 <!-- Multi-file Upload Section - Add this where you want the upload facility -->
+                 <!-- Multi-file Upload Section -->
+                 <div class="mb-3">
+                   <label class="form-label fw-600">Upload Unit Visit Photos (Max 5 files)<span
+                       class="text-danger">*</span></label>
+
+                   <!-- Upload Button -->
+                   <div class="mb-2">
+                     <button type="button" class="btn btn-outline-primary btn-sm" (click)="triggerFileUpload()"
+                       [disabled]="uploadedFiles.length >= 5 || isUploading">
+                       <i class="bi bi-cloud-upload me-1"></i>
+                       {{ uploadedFiles.length >= 5 ? 'Maximum files reached' : 'Choose File to Upload' }}
+                     </button>
+                     <small class="text-muted ms-2">({{ uploadedFiles.length }}/5 files uploaded)</small>
+                   </div>
+
+                   <!-- Hidden file input with specific ID for multi-file upload -->
+                   <input type="file" #multiFileInput id="multiFileUpload" style="display: none"
+                     accept=".jpg,.jpeg,.png,.pdf,.doc,.docx" (change)="onMultiFileSelected($event)">
+
+                   <!-- Upload Progress -->
+                   <div *ngIf="isUploading" class="mb-2">
+                     <div class="progress" style="height: 4px;">
+                       <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+                         style="width: 100%"></div>
+                     </div>
+                     <small class="text-muted">Uploading file...</small>
+                   </div>
+
+                   <!-- Uploaded Files Display -->
+                   <div *ngFor="let file of uploadedFiles; let i = index" class="mb-1 d-flex align-items-center gap-2">
+                     <div class="flex-grow-1">
+                       <div class="d-flex align-items-center gap-2">
+                         <i class="bi bi-file-earmark text-primary"></i>
+                         <small class="text-muted">{{ file.fileName }}</small>
+                         <small class="text-success">✓ Uploaded</small>
+                       </div>
+                     </div>
+                     <button type="button" class="btn btn-primary btn-sm" (click)="viewFile(file.filePath)"
+                       title="View File">
+                       <i class="bi bi-eye"></i>
+                     </button>
+                     <button type="button" *ngIf="freeze <= 4" class="btn btn-danger btn-sm"
+                       (click)="removeUploadedFile(i)" title="Remove File">
+                       <i class="bi bi-trash"></i>
+                     </button>
+                   </div>
+
+                   <!-- No files message -->
+                   <div *ngIf="uploadedFiles.length === 0"
+                     class="text-center py-3 border border-dashed rounded bg-light">
+                     <i class="bi bi-cloud-upload fs-2 text-muted"></i>
+                     <p class="text-muted mb-0 mt-2">No files uploaded yet</p>
+                   </div>
+                 </div>
+
+                 <!-- Save Button -->
                  <div class="text-end mt-3">
-                   <input type="button" name="next" class="next btn btn-primary float-end" data-bs-toggle="modal" *ngIf="freeze<=4" [ngClass]="{'disabled': !diagnosticForm.get('urlForDiagnosticFile')?.value}"
-                      data-bs-target="#approvedModal" data-bs-dismiss="modal" value="Submit For Manager Approval" />
+                   <button type="button" (click)="saveUnitVisitPhotos()" class="btn btn-primary" *ngIf="freeze <= 4"
+                     [disabled]="uploadedFiles.length === 0">
+                     Save Unit Visit Photos
+                   </button>
+                   <div *ngIf="saveSuccess.unitPhotos" class="text-success small mt-2">
+                     Unit visit photos saved successfully!
+                   </div>
+                 </div>
+                  <div class="text-end mt-3">
+                   <input type="button" name="next" class="next btn btn-primary float-end" data-bs-toggle="modal"
+                     *ngIf="freeze<=4" [ngClass]="{'disabled': !diagnosticForm.get('urlForDiagnosticFile')?.value || uploadedFiles.length===0}"
+                     data-bs-target="#approvedModal" data-bs-dismiss="modal" value="Submit For Manager Approval" />
                  </div>
                </div>
                <!-- Model of balance sheet -->
@@ -1784,7 +1882,7 @@
      </div>
    </div>
    <!-- <input type="button" name="previous" class="previous btn btn-secondary float-start" value="Previous" /> -->
-  
+
  </fieldset>
 
 
@@ -1824,12 +1922,13 @@
                <div
                  *ngIf="shareholderForm.get('position')?.invalid && (shareholderForm.get('position')?.dirty || shareholderForm.get('position')?.touched)"
                  class="text-danger small">
-                  Position is required
+                 Position is required
                </div>
              </div>
              <div class="col-12">
                <div class="form-floating mb-3">
-                 <input type="number" class="form-control" id="shareholderShares" formControlName="shareholdingPercentage">
+                 <input type="number" class="form-control" id="shareholderShares"
+                   formControlName="shareholdingPercentage">
                  <label for="holderShares">Percentage of Shares <span class="text-danger">*</span></label>
                </div>
                <div
@@ -1854,16 +1953,16 @@
  </div>
  <div class="modal-backdrop fade" [class.show]="showShareholderModal"
    [style.display]="showShareholderModal ? 'block' : 'none'"></div>
-   <!-- Partnership model -->
-   <div class="modal fade" [class.show]="showPartnershipModal" [style.display]="showPartnershipModal ? 'block' : 'none'"
+ <!-- Partnership model -->
+ <div class="modal fade" [class.show]="showPartnershipModal" [style.display]="showPartnershipModal ? 'block' : 'none'"
    id="shareholdingPattern" tabindex="-1" aria-labelledby="shareholdingPatternLabel" aria-hidden="true">
    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
      <div class="modal-content">
        <div class="modal-header py-1 bg-theme">
          <h6 class="modal-title text-white"> {{ isEditModePartnership ? 'Edit' : 'Add' }} Partnership </h6>
 
-         <button type="button" class="btn-close text-white fs-4 p-0" data-bs-dismiss="modal" (click)="closePartnershipModal()"
-           aria-label="Close"><span class="bi bi-x"></span> </button>
+         <button type="button" class="btn-close text-white fs-4 p-0" data-bs-dismiss="modal"
+           (click)="closePartnershipModal()" aria-label="Close"><span class="bi bi-x"></span> </button>
        </div>
        <div class="modal-body">
          <form [formGroup]="partnershipForm">
@@ -1887,12 +1986,13 @@
                <div
                  *ngIf="partnershipForm.get('position')?.invalid && (partnershipForm.get('position')?.dirty || partnershipForm.get('position')?.touched)"
                  class="text-danger small">
-                  Position is required
+                 Position is required
                </div>
              </div>
              <div class="col-12">
                <div class="form-floating mb-3">
-                 <input type="number" class="form-control" id="shareholderShares" formControlName="profitSharingPercentage">
+                 <input type="number" class="form-control" id="shareholderShares"
+                   formControlName="profitSharingPercentage">
                  <label for="holderShares">Profit Sharing Percentage <span class="text-danger">*</span></label>
                </div>
                <div

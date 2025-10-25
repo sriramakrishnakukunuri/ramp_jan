@@ -410,7 +410,7 @@
                         <div class="row">
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                 <div class="mb-3">
-                                    <label class="d-block fs-md fw-600 mb-1">Type Of Product</label>
+                                    <label class="d-block fs-md fw-600 mb-1">Products Manufactured</label>
                                     <label class="d-block fs-md">{{ approvalData?.typeOfProduct || 'N/A' }}</label>
                                 </div>
                             </div>
@@ -517,12 +517,14 @@
                                                     <tr>
                                                         <th>Issues / Problems</th>
                                                         <th>Risk Categorisation</th>
+                                                        <th>Remarks</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody class="fs-md">
                                                     <tr *ngFor="let question of approvalData?.stressScore">
                                                         <td>{{ question.issue || 'N/A' }}</td>
                                                         <td>{{ question.riskCategorisation || 'N/A' }}</td>
+                                                        <td>{{ question.stressScoreJustification || 'N/A' }}</td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -531,6 +533,11 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- <div class="mb-3">
+                            <label class="d-block fs-md fw-600 mb-1">Stress Score Justification</label>
+                            <label class="d-block fs-md">{{ approvalData?.stressScoreJustification || 'N/A' }}</label>
+
+                        </div> -->
                         <div class="text-end">
                             <p class="badge bg-dark rounded-pill fs-md mb-0">Total Risk Score: <span>{{ approvalData?.riskCategoryScore || 0 }}%</span></p>
                         </div>
