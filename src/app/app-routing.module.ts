@@ -221,7 +221,7 @@ const routes: Routes = [
         path: 'view-application',
         component: ViewApplicationsComponent,
         canActivate: [AuthGuard],
-        data: { roles: [Role.TIHCL_COI] }
+        data: { roles: [Role.TIHCL_COI,Role.TIHCL_DIC] }
     },
       {
         path: 'DIC-NOC',
