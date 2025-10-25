@@ -633,16 +633,22 @@ export class AddNonParticipantsDataComponent implements OnInit {
       next: (data: any) => {
         // this.advanceSearch(this.getSelDataRange);
         // modal.close()
+
         this.toastrService.success('Organization Data Added Successfully', "Organization Data Success!");
+         this.getOrganizationData(data.data)
+         console.log(data)
+        
       },
       error: (err) => {
+        this.getOrganizationData()
         this.toastrService.error(err.message, "Organization Data Error!");
         new Error(err);
       },
     });
     this.OrganisationForm.reset();
     // this.getData()
-    this.getOrganizationData()
+   
+   
 
   }
   // district list()
@@ -678,11 +684,17 @@ export class AddNonParticipantsDataComponent implements OnInit {
     }
   }
   OrganizationData: any = []
-  getOrganizationData() {
+  getOrganizationData(Orgvalue?:any) {
     this._commonService.getDataByUrl(APIS.participantdata.getOrgnizationData).subscribe({
       next: (res: any) => {
         this.OrganizationData = res?.data
+
         this.assignFluidData1Org()
+         this.f2['organizationId'].patchValue(this.OrganizationData.filter((data:any)=>{
+          if(data.organizationId==Orgvalue?.organizationId){
+                return data
+              }
+          }))
         // this.submitedData=res?.data?.data
         // this.advanceSearch(this.getSelDataRange);
         // modal.close()

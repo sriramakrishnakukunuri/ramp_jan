@@ -162,7 +162,13 @@ export class CaptureOutcomeDynamicComponent implements OnInit {
    }));
       this._commonService.add(APIS.captureOutcome.saveOutComes+this.OutComeForm.value?.outcomesName,formData).subscribe({
         next: (res: any) => {
-          this.toastrService.success('Capture Program Outcome Created Successfully', "Capture Program Outcome Success!");
+          if(res.status==200){
+             this.toastrService.success('Capture Program Outcome Created Successfully', "Capture Program Outcome Success!");
+          }
+          else{
+            this.toastrService.error(res?.message, "Capture Program Outcome!");
+          }
+         
         this.OutComeForm.reset()
         },
         error: (err) => {
