@@ -13,7 +13,7 @@
         <div class="d-none d-sm-none d-md-none d-lg-block me-5">
           <p class="mb-0">
             <span class="bi bi-geo-alt"></span> Location: Hyderabad, India |
-            <span class="bi bi-envelope"></span> Mail: compliance@tihcl.org  |
+            <span class="bi bi-envelope"></span> Mail: compliance@tihcl.org |
             <span class="bi bi-telephone"></span> Contact: 040-23236399
           </p>
         </div>
@@ -121,7 +121,8 @@
                               class="text-danger">
                               Promoter Name must be at least 3 characters
                             </div>
-                            <div *ngIf="applicationForm.get('promoterName')?.hasError('pattern')"  class="text-danger">Promoter
+                            <div *ngIf="applicationForm.get('promoterName')?.hasError('pattern')" class="text-danger">
+                              Promoter
                               Name Should be Characters and Allow Spaces and dot(.)</div>
                           </div>
                         </div>
@@ -205,7 +206,7 @@
                             </div>
                           </div>
                         </div>
-                       
+
                         <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                           <div class="form-floating mb-3"
                             [ngClass]="applicationForm.get('udyamRegNumber')?.valid ? '' :'isDisabled'">
@@ -241,11 +242,10 @@
                             </div>
                           </div>
                         </div>
-                         <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                           <div class="mb-3">
                             <!-- Radio buttons for GST Number Exist -->
-                            <div class="mb-2"
-                              [ngClass]="applicationForm.get('district')?.valid ? '' :'isDisabled'">
+                            <div class="mb-2" [ngClass]="applicationForm.get('district')?.valid ? '' :'isDisabled'">
                               <label class="form-label fs-md fw-600 mb-1">Is Industrial Area Exist?</label>
                               <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" id="gstExistYes"
@@ -279,7 +279,7 @@
                               <option value="">Select Industrial Area</option>
                               <option *ngFor="let list of industrialParks" value="{{list}}">
                                 {{list}}</option>
-                                </select>
+                            </select>
                           </div>
                           <div
                             *ngIf="applicationForm.get('industrialPark')?.invalid && applicationForm.get('industrialPark')?.touched"
@@ -311,7 +311,7 @@
                             </div>
                           </div>
                         </div>
-                          <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                           <div class="form-floating mb-3"
                             [ngClass]="applicationForm.get('mandal')?.valid ? '' :'isDisabled'">
                             <input type="text" class="form-control" id="village" formControlName="village"
@@ -327,9 +327,9 @@
                             </div> -->
                           </div>
                         </div>
-                         
+
                         <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                           <div class="form-floating mb-3"
+                          <div class="form-floating mb-3"
                             [ngClass]="applicationForm.get('village')?.valid ? '' :'isDisabled'">
                             <input type="text" class="form-control" id="street" formControlName="street"
                               placeholder="street">
@@ -344,8 +344,8 @@
                             </div>
                           </div>
                         </div>
-                         <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                         
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+
                           <div class="form-floating mb-3"
                             [ngClass]="applicationForm.get('street')?.valid ? '' :'isDisabled'">
                             <input type="number" class="form-control" id="pincode" formControlName="pincode"
@@ -377,6 +377,7 @@
                             </div> -->
                           </div>
                         </div>
+                         
                       </div>
                       <div class="text-end">
                         <button type="button" class="btn btn-primary" (click)="nextStep()"
@@ -550,6 +551,7 @@
 
                           <div class="show-hide" id="operationalNo" *ngIf="operationStatus === false">
                             <div class="row">
+                             
                               <div class="col-12 col-sm-6 col-md-6 col-lg-4">
                                 <div class="form-floating mb-3">
                                   <input type="date" class="form-control" id="date"
@@ -616,8 +618,9 @@
 
                           <div class="border rounded-3 p-3 mb-3 show-hide1" id="creditYes"
                             *ngIf="existingStatus === true">
-                              <div class="text-end">
-                               <button type="button" class="btn btn-sm btn-primary mb-3" (click)="addCreditDetail()">Add</button>
+                            <div class="text-end">
+                              <button type="button" class="btn btn-sm btn-primary mb-3"
+                                (click)="addCreditDetail()">Add</button>
                             </div>
                             <div class="table-responsive">
                               <table class="table table-bordered">
@@ -652,7 +655,7 @@
                                 </tbody>
                               </table>
                             </div>
-                          
+
                             <div class="">
                               <div>
                                 <label class="form-label fs-md fw-600 mb-1">Status of the unit<span
@@ -782,6 +785,31 @@
                             </div>
                           </div>
                         </div>
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                <div class="mb-3">
+                                  <div class="form-floating mb-3">
+                                    <select class="form-select" id="landDetails" formControlName="howDidYouKnowAboutTihcl">
+                                      <option value="" disabled selected>Select Option</option>
+                                      <option value="Walk-in">Walk-in</option>
+                                      <option value="Cold calling">Cold calling</option>
+                                      <option value="Awareness programme">Awareness programme</option>
+                                      <option value="DIC">DIC</option>
+                                      <option value="COI">COI</option>
+                                      <option value="Primary Lender">Primary Lender</option>
+                                      <option value="Reference by existing customers">Reference by existing customers
+                                      </option>
+                                      <option value="Conversion from PR">Conversion from PR</option>
+                                      <option value="Others">Others</option>
+                                    </select>
+                                    <label for="product">How do you know about TIHCL?<span class="text-danger">*</span></label>
+                                    <div
+                                      *ngIf="applicationForm.get('howDidYouKnowAboutTihcl')?.invalid && applicationForm.get('howDidYouKnowAboutTihcl')?.touched && !applicationForm.get('howDidYouKnowAboutTihcl')?.hasError('pattern')"
+                                      class="text-danger small">
+                                      How do you know about TIHCL? is required
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
                         <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                           <div class="mb-3">
                             <label for="comments" class="form-label fs-md fw-600" mb-1>How can we help you?</label>
@@ -819,7 +847,9 @@
                                 <p class="fw-600 fs-md mb-0">Application No.</p>
                               </div>
                               <div>
-                                <p class="fs-md fw-600 mb-0">{{enterPrenuerResponseData?.applicationNo?enterPrenuerResponseData?.applicationNo:enterPrenuerResponseData?.applicationNumber}}</p>
+                                <p class="fs-md fw-600 mb-0">
+                                  {{enterPrenuerResponseData?.applicationNo?enterPrenuerResponseData?.applicationNo:enterPrenuerResponseData?.applicationNumber}}
+                                </p>
                               </div>
                             </div>
                             <div class="d-flex align-items-center justify-content-between mb-3">
@@ -914,10 +944,10 @@
                 <div
                   *ngIf="creditDetailsForm.get('natureOfLoan')?.invalid && creditDetailsForm.get('natureOfLoan')?.touched  && !creditDetailsForm.get('natureOfLoan')?.hasError('pattern')"
                   class="text-danger">
-                   Nature of Loan is required
+                  Nature of Loan is required
                 </div>
                 <div *ngIf="creditDetailsForm.get('natureOfLoan')?.hasError('pattern')" class="text-danger">
-                   Nature of Loan Should be Characters and Numbers</div>
+                  Nature of Loan Should be Characters and Numbers</div>
               </div>
               <!-- <div class="form-floating mb-3">
                 <select class="form-select" id="natureOfLoan" formControlName="natureOfLoan">

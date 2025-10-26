@@ -271,7 +271,7 @@
           </div>
         </div>
         <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4" *ngIf="assessmentForm.get('isGSTNumberExist')?.value">
-          <div class="mb-3">
+          <div class="mb-3 ">
             <div class="form-floating mb-3">
               <input type="text" class="form-control" id="gst" placeholder="GST" formControlName="gstNumber"
                 [readOnly]="freeze>1">
@@ -290,9 +290,9 @@
       </div>
       <div class="row">
         <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4">
-          <div class="mb-3">
+          <div class="mb-3 mt-1">
             <div class="form-floating mb-3">
-              <select class="form-select" id="landDetails" formControlName="sourceOfApplication"
+              <select class="form-select" id="landDetails" formControlName="sourceOfApplication" (click)="onSourceSelect($any($event.target).value)"
                 [ngClass]="{'isDisabled':freeze>1}">
                 <option value="" disabled selected>Select Option</option>
                 <option value="Walk-in">Walk-in</option>
@@ -314,6 +314,34 @@
             </div>
           </div>
         </div>
+        <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4" *ngIf="fassessmentForm['sourceOfApplication'].value=='Awareness programme'">
+          <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>Ramp Program Name</mat-label>
+                            <mat-select formControlName="rampProgramName"  [ngClass]="{'isDisabled':freeze>1}">
+                                <mat-select-filter [array]="getDatarampProgramName" 
+                                    (filteredReturn)="filterrampProgramName = $event">
+                                </mat-select-filter>
+                                <mat-option *ngFor="let question of filterrampProgramName" [value]="question">
+                                    {{ question }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+          <!-- <div class="mb-3">
+            <div class="form-floating mb-3">
+              <select class="form-select" id="landDetails" formControlName="rampProgramName" 
+                [ngClass]="{'isDisabled':freeze>1}">
+                <option value="" disabled selected>Select Option</option>
+               <option *ngFor="let val of getDatarampProgramName" value="{{val}}">{{val}}</option>
+              </select>
+              <label for="product">Ramp Program Name<span class="text-danger">*</span></label>
+              <div
+                *ngIf="assessmentForm.get('rampProgramName')?.invalid && assessmentForm.get('rampProgramName')?.touched && !assessmentForm.get('rampProgramName')?.hasError('pattern')"
+                class="text-danger small">
+                Ramp Program Name is required
+              </div>
+            </div>
+          </div> -->
+        </div>
         <!-- <div class="col-12 col-sm-12 col-md-6 col-lg-4">
           <div class="form-floating mb-3">
             <select class="form-select" id="sector" formControlName="sector" aria-label="" [ngClass]="{'isDisabled':freeze>1}">
@@ -329,17 +357,17 @@
           </div>
         </div> -->
         <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4">
-          <div class="mb-3">
+          <div class="mb-3 mt-1">
             <div class="form-floating mb-3">
-              <input type="text" class="form-control" id="product" placeholder="Type Of Product" [readOnly]="freeze>1"
+              <input type="text" class="form-control" id="product" placeholder="Products Manufactured" [readOnly]="freeze>1"
                 formControlName="typeOfProduct">
-              <label for="product">Type Of Product<span class="text-danger"> *</span></label>
+              <label for="product">Products Manufactured<span class="text-danger"> *</span></label>
               <div
                 *ngIf="assessmentForm.get('typeOfProduct')?.invalid && assessmentForm.get('typeOfProduct')?.touched && !assessmentForm.get('typeOfProduct')?.hasError('pattern')"
                 class="text-danger small">
-                Type Of Product is required
+                Products Manufactured is required
               </div>
-              <div *ngIf="assessmentForm.get('typeOfProduct')?.hasError('pattern')" class="text-danger"> Type Of Product
+              <div *ngIf="assessmentForm.get('typeOfProduct')?.hasError('pattern')" class="text-danger"> Products Manufactured
                 Should be Characters Only</div>
             </div>
           </div>
@@ -418,6 +446,7 @@
                           <th>Probable Cause</th>
                           <th>Impact</th>
                           <th>Risk Categorisation</th>
+                          <th>Remarks</th>
                         </tr>
                       </thead>
                       <tbody class="fs-md">
@@ -426,6 +455,7 @@
                           <td>{{ question.issue }}</td>
                           <td>{{ question.Probable_Cause }}</td>
                           <td>{{ question.impact }}</td>
+                          
                           <td>
                             <select class="form-select" [formControlName]="'stressScore_' + question.id"
                               (change)="calculateScore()">
@@ -440,6 +470,10 @@
                               Please select an option
                             </div>
                           </td>
+                          <td>
+                            <input  style="width: 200px;" type="text" class="form-control" id="product" placeholder="Remarks" 
+                             [formControlName]="'stressScoreJustification_' + question.id">
+                          </td>
                         </tr>
                       </tbody>
                     </table>
@@ -448,11 +482,36 @@
               </div>
             </div>
           </div>
-          <div class="text-end">
+            <div class="d-flex justify-content-between mb-3">
+            <div>
+               <p class="badge bg-warning rounded-pill fs-md mb-0">
+                Note :<span class="ms-2">(Score ≤ 30 and ≥80  : Not Applicable)</span>
+            </p>
+            </div>
+            <div class="text-end">
             <p class="badge bg-dark rounded-pill fs-md mb-0">Total Score: <span>{{ totalScore }}%</span></p>
           </div>
-        </div>
+            
+          </div>
 
+          
+        </div>
+        <!-- <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4">
+          <div class="mb-3">
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="product" placeholder="Remarks" [readOnly]="freeze>1"
+                formControlName="stressScoreJustification">
+              <label for="product">Remarks<span class="text-danger"> *</span></label>
+              <div
+                *ngIf="assessmentForm.get('stressScoreJustification')?.invalid && assessmentForm.get('stressScoreJustification')?.touched && !assessmentForm.get('stressScoreJustification')?.hasError('pattern')"
+                class="text-danger small">
+                Remarks is required
+              </div>
+              <div *ngIf="assessmentForm.get('stressScoreJustification')?.hasError('pattern')" class="text-danger"> Remarks
+                Should be Characters Only</div>
+            </div>
+          </div>
+        </div> -->
         <!-- Observations -->
         <div class="mb-3">
           <label class="fs-md fw-600 mb-1">Executive Views<span class="text-danger">*</span></label>

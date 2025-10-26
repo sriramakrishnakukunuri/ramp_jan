@@ -161,8 +161,12 @@ createForm(): void {
   createVisitForm(): void {
     this.visitForm = this.fb.group({
       visitedBy: ['', Validators.required],
+      visitedPersonDesignation:['',Validators.required],
       id:[null],
       nameOfThePersonMet: ['', Validators.required],
+      metPersonEmail: ['', [Validators.required, Validators.email]],
+      metPersonContactNumber: ['', [Validators.pattern(/^[6789]\d{9}$/)]],
+
       designation: ['', [Validators.required]],
     });
   }
@@ -257,8 +261,12 @@ createForm(): void {
   addVisitDetail(visit?: any): void {
     const visitGroup = this.fb.group({
       visitedBy: [visit ? visit.visitedBy : '', Validators.required],
+      visitedPersonDesignation:[visit ? visit.visitedPersonDesignation : '',Validators.required],
       id:[visit?visit.id:null],
       nameOfThePersonMet: [visit ? visit.nameOfThePersonMet : '', Validators.required],
+      metPersonEmail: [visit ? visit.metPersonEmail : '', [Validators.required, Validators.email]],
+      metPersonContactNumber: [visit ? visit.metPersonContactNumber : '', [Validators.required,Validators.pattern(/^[6789]\d{9}$/)]],
+
       designation: [visit ? visit.designation : '', [Validators.required]],
     }); 
     this.VisitArray.push(visitGroup);
@@ -595,6 +603,9 @@ saveworkshift(): void {
       visitedBy: [item?.visitedBy, Validators.required],
       id: [item?.id ? item.id : null],
       nameOfThePersonMet: [item?.nameOfThePersonMet, Validators.required],
+      metPersonEmail: [item?.metPersonEmail, [Validators.required, Validators.email]],
+      metPersonContactNumber: [item?.metPersonContactNumber, [Validators.pattern(/^[6789]\d{9}$/)]],
+      visitedPersonDesignation:[item?.visitedPersonDesignation,Validators.required],
       designation: [item?.designation, [Validators.required]],
     });
     const visitDetailsArray = this.unitVisitForm.get('visitorsDetailsRequests') as FormArray;
