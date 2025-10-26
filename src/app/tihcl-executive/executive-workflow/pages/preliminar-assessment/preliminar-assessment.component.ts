@@ -442,12 +442,15 @@ loginsessionDetails:any
   }
   // get data based source of application
   getDatarampProgramName:any=[]
+  filterrampProgramName:any=[]
   onSourceSelect(value: any) {
     this.getDatarampProgramName=[]
+    this.filterrampProgramName=[]
    if(value==='Awareness programme'){
     this._commonService.getDataByUrl(APIS.tihclExecutive.getDatarampProgramName).subscribe({
       next: (response: any) => {
         this.getDatarampProgramName=response
+        this.filterrampProgramName=response
         console.log('Programs API response:', response);
         // You can handle the response here as needed
       },

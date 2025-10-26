@@ -271,7 +271,7 @@
           </div>
         </div>
         <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4" *ngIf="assessmentForm.get('isGSTNumberExist')?.value">
-          <div class="mb-3">
+          <div class="mb-3 ">
             <div class="form-floating mb-3">
               <input type="text" class="form-control" id="gst" placeholder="GST" formControlName="gstNumber"
                 [readOnly]="freeze>1">
@@ -290,7 +290,7 @@
       </div>
       <div class="row">
         <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4">
-          <div class="mb-3">
+          <div class="mb-3 mt-1">
             <div class="form-floating mb-3">
               <select class="form-select" id="landDetails" formControlName="sourceOfApplication" (click)="onSourceSelect($any($event.target).value)"
                 [ngClass]="{'isDisabled':freeze>1}">
@@ -315,9 +315,24 @@
           </div>
         </div>
         <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4" *ngIf="fassessmentForm['sourceOfApplication'].value=='Awareness programme'">
-          <div class="mb-3">
+          <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>Ramp Program Name</mat-label>
+                            <mat-select formControlName="rampProgramName"  [ngClass]="{'isDisabled':freeze>1}">
+                                <mat-select-filter [array]="getDatarampProgramName" 
+                                    (filteredReturn)="filterrampProgramName = $event">
+                                </mat-select-filter>
+                                <mat-option value="djdj">sjjdjjdjd jdjdjd jdjjd djdjjdd j jd jd jd jd jdjd jjdjdj jd jd jd j jdjd jdd j jd jd jdj</mat-option>
+                                <mat-option value="djdj">sjjdjjdjd jdjdjd jdjjd djdjjdd j jd jd jd jd jdjd jjdjdj jd jd jd j jdjd jdd j jd jd jdj</mat-option>
+                                 <mat-option value="djdj">sjjdjjdjd jdjdjd jdjjd djdjjdd j jd jd jd jd jdjd jjdjdj jd jd jd j jdjd jdd j jd jd jdj</mat-option>
+                                
+                                <mat-option *ngFor="let question of filterrampProgramName" [value]="question">
+                                    {{ question }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+          <!-- <div class="mb-3">
             <div class="form-floating mb-3">
-              <select class="form-select" id="landDetails" formControlName="rampProgramName" (click)="onSourceSelect($any($event.target).value)"
+              <select class="form-select" id="landDetails" formControlName="rampProgramName" 
                 [ngClass]="{'isDisabled':freeze>1}">
                 <option value="" disabled selected>Select Option</option>
                <option *ngFor="let val of getDatarampProgramName" value="{{val}}">{{val}}</option>
@@ -329,7 +344,7 @@
                 Ramp Program Name is required
               </div>
             </div>
-          </div>
+          </div> -->
         </div>
         <!-- <div class="col-12 col-sm-12 col-md-6 col-lg-4">
           <div class="form-floating mb-3">
@@ -346,7 +361,7 @@
           </div>
         </div> -->
         <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4">
-          <div class="mb-3">
+          <div class="mb-3 mt-1">
             <div class="form-floating mb-3">
               <input type="text" class="form-control" id="product" placeholder="Products Manufactured" [readOnly]="freeze>1"
                 formControlName="typeOfProduct">
