@@ -102,6 +102,8 @@
                       <th>Mandal</th>
                       <th>Business activity</th>
                       <th>Stress Score</th>
+                      <th *ngIf="activeTab === 'APPLICATIONS_NOT_CONSIDERED'">Reason For Rejection</th>
+                       <th *ngIf="activeTab === 'APPLICATIONS_NOT_CONSIDERED'">Date Of Rejection</th>
                       <th>Status of application</th>
                     </tr>
                   </thead>
@@ -113,18 +115,20 @@
                           *ngIf="activeTab === 'APPLICATIONS_SANCTIONED' || activeTab === 'APPLICATIONS_NOT_CONSIDERED'; else plainText">
                           <a (click)="onRowClick(item)"
                             style="color: #0d6efd; text-decoration: underline; cursor: pointer;">
-                            {{ item.enterpriseName }}
+                            {{ item?.enterpriseName }}
                           </a>
                         </ng-container>
                         <ng-template #plainText>
-                          {{ item.enterpriseName }}
+                          {{ item?.enterpriseName }}
                         </ng-template>
                       </td>
-                      <td>{{ item.district }}</td>
-                      <td>{{ item.mandal }}</td>
-                      <td>{{ item.natureOfActivity }}</td>
-                      <td>{{ item.riskCategoryScore }}</td>
-                      <td>{{ item.applicationStatus }}</td>
+                      <td>{{ item?.district }}</td>
+                      <td>{{ item?.mandal }}</td>
+                      <td>{{ item?.natureOfActivity }}</td>
+                      <td>{{ item?.riskCategoryScore }}</td>
+                      <td *ngIf="activeTab === 'APPLICATIONS_NOT_CONSIDERED'">{{item?.reasonForRejection}}</td>
+                      <td *ngIf="activeTab === 'APPLICATIONS_NOT_CONSIDERED'">{{item?.dateOfRejection}}</td>
+                      <td>{{ item?.applicationStatus }}</td>
                     </tr>
                   </tbody>
                 </table>
