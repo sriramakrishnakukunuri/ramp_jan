@@ -70,6 +70,7 @@ export const APIS = {
         submitLoanApplication: API_BASE_URL + '/registrations/save',
     },
     tihclExecutive:{
+        getDatarampProgramName:API_BASE_URL+'/ramp/programs?agencyId=1&activityId=1',
         getNewApplications:API_BASE_URL+`/registrations/new/applications`,
         getPendingApplications:API_BASE_URL+`/registrations/under-processing`,
         registerData: API_BASE_URL + '/registrations/usage/id/',
@@ -98,7 +99,7 @@ export const APIS = {
         deleteseller:API_BASE_URL+'/diagnostic-reports/seller/delete/',
         deleteunsecured:API_BASE_URL+'/diagnostic-reports/unsecured-loans/',
         deleteorderBookPosition:API_BASE_URL+'/diagnostic-reports/orderBookPosition/delete/',
-
+        
         }
 
 

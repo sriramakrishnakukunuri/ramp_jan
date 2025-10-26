@@ -65,12 +65,21 @@ managrData:any
       sanctionLetterPath: ['',[Validators?.required]],
     });
   }
+   private formatDateForInput(dateStr: string): string | null {
+    // Assumes input format is "DD-MM-YYYY"
+    if (!dateStr) return null;
+    const parts = dateStr.split('-');
+    if (parts.length === 3) {
+      return `${parts[2]}-${parts[1].padStart(2, '0')}-${parts[0].padStart(2, '0')}`;
+    }
+    return null;
+  }
   getExistingData(url:any){
       this._commonService.getDataByUrl(url).subscribe({
        next: (dataList: any) => {
          if (dataList) {
            this.sanctionForm.patchValue({
-        sanctionedDate: dataList?.sanctionedDate || '',
+        sanctionedDate: dataList?.sanctionedDate?this.formatDateForInput(dataList?.sanctionedDate) :null,
         sanctionedAmount: dataList?.sanctionedAmount || 0,
         roi: dataList?.roi || 0,
         tenor: dataList?.tenor || 0,

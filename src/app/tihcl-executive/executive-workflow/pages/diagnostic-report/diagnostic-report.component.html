@@ -6,7 +6,9 @@
      <div class="card-body">
        <div class="row">
          <div class="col-12">
-           <ul class="nav nav-tabs" role="tablist">
+           <ul class="nav nav-tabs flex-nowrap overflow-x-auto" role="tablist"
+             style="white-space:nowrap; max-width: 100%; overflow-x: auto; overflow-y: hidden;">
+
              <li class="nav-item" role="presentation">
                <button class="nav-link rounded-0 py-1 fs-md" [class.active]="currentTab === 'BASIC_DETAILS'"
                  (click)="switchTab('BASIC_DETAILS')">Basic Details</button>
@@ -1793,7 +1795,7 @@
                      Observations Saved successfully!
                    </div>
                  </div>
-                
+
                </div>
                <div class="tab-pane fade p-2" id="statusupdate" role="tabpanel" aria-labelledby="statusupdate-tab"
                  [class.show.active]="currentTab === 'UNIT_VISIT_PHOTOS'"
@@ -1864,9 +1866,10 @@
                      Unit visit photos saved successfully!
                    </div>
                  </div>
-                  <div class="text-end mt-3">
+                 <div class="text-end mt-3">
                    <input type="button" name="next" class="next btn btn-primary float-end" data-bs-toggle="modal"
-                     *ngIf="freeze<=4" [ngClass]="{'disabled': !diagnosticForm.get('urlForDiagnosticFile')?.value || uploadedFiles.length===0}"
+                     *ngIf="freeze<=4"
+                     [ngClass]="{'disabled': !diagnosticForm.get('urlForDiagnosticFile')?.value || uploadedFiles.length===0}"
                      data-bs-target="#approvedModal" data-bs-dismiss="modal" value="Submit For Manager Approval" />
                  </div>
                </div>

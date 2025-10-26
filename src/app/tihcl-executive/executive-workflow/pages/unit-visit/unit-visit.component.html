@@ -312,13 +312,13 @@
                     {{item?.noOfMachines}}
                   </td>
                   <td>
-                    {{item?.costOfMachinePurchased}}
+                    {{ item?.costOfMachinePurchased | number:'1.0-2' }}
                   </td>
                   <td>
                     {{item?.currentCondition}}
                   </td>
                   <td>
-                    {{item?.valueOfMachinery}}
+                    {{ item?.valueOfMachinery | number:'1.0-2' }}
                   </td>
                 </tr>
               </tbody>

@@ -63,11 +63,11 @@ export class DisbursementDetailsComponent implements OnInit {
               id: dataList?.id || null,
             //  totalSanctionedAmount: dataList?.totalSanctionedAmount || 0,
              totalDisbursedAmount: dataList?.totalDisbursedAmount || 0,
-             dateDisbursement: dataList?.dateDisbursement || null,
-             collectionDate: dataList?.collectionDate || null,
+             dateDisbursement: dataList?.dateDisbursement ? this.formatDateForInput(dataList.dateDisbursement) : null,
+             collectionDate: dataList?.collectionDate ? this.formatDateForInput(dataList.collectionDate) : null,
              processingFeeCollectedAmount: dataList?.processingFeeCollectedAmount || '',
-             processingFeeReceivedDate: dataList?.processingFeeReceivedDate || null,
-             processingFeeGSTPercent: dataList?.processingFeeGSTPercent || '',
+             processingFeeReceivedDate:dataList?.processingFeeReceivedDate ? this.formatDateForInput(dataList.processingFeeReceivedDate) : null,
+            processingFeeGSTPercent: dataList?.processingFeeGSTPercent || '',
              tgipassUpload: dataList?.tgipassUpload || '',
              rocFiling: dataList?.rocFiling || '',
              tgipassUploadPath: dataList?.tgipassUploadPath || null,
@@ -90,6 +90,17 @@ export class DisbursementDetailsComponent implements OnInit {
           });
   }
   today: any=this._commonService.getDate()
+
+  private formatDateForInput(dateStr: string): string | null {
+    // Assumes input format is "DD-MM-YYYY"
+    if (!dateStr) return null;
+    const parts = dateStr.split('-');
+    if (parts.length === 3) {
+      return `${parts[2]}-${parts[1].padStart(2, '0')}-${parts[0].padStart(2, '0')}`;
+    }
+    return null;
+  }
+
   initializeForm(): void {
     this.disbursementForm = this.fb.group({
       id:[null],

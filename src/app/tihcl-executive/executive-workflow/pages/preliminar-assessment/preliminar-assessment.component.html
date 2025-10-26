@@ -292,7 +292,7 @@
         <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4">
           <div class="mb-3">
             <div class="form-floating mb-3">
-              <select class="form-select" id="landDetails" formControlName="sourceOfApplication"
+              <select class="form-select" id="landDetails" formControlName="sourceOfApplication" (click)="onSourceSelect($any($event.target).value)"
                 [ngClass]="{'isDisabled':freeze>1}">
                 <option value="" disabled selected>Select Option</option>
                 <option value="Walk-in">Walk-in</option>
@@ -310,6 +310,23 @@
                 *ngIf="assessmentForm.get('sourceOfApplication')?.invalid && assessmentForm.get('sourceOfApplication')?.touched && !assessmentForm.get('sourceOfApplication')?.hasError('pattern')"
                 class="text-danger small">
                 Source Of Application is required
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4" *ngIf="fassessmentForm['sourceOfApplication'].value=='Awareness programme'">
+          <div class="mb-3">
+            <div class="form-floating mb-3">
+              <select class="form-select" id="landDetails" formControlName="rampProgramName" (click)="onSourceSelect($any($event.target).value)"
+                [ngClass]="{'isDisabled':freeze>1}">
+                <option value="" disabled selected>Select Option</option>
+               <option *ngFor="let val of getDatarampProgramName" value="{{val}}">{{val}}</option>
+              </select>
+              <label for="product">Ramp Program Name<span class="text-danger">*</span></label>
+              <div
+                *ngIf="assessmentForm.get('rampProgramName')?.invalid && assessmentForm.get('rampProgramName')?.touched && !assessmentForm.get('rampProgramName')?.hasError('pattern')"
+                class="text-danger small">
+                Ramp Program Name is required
               </div>
             </div>
           </div>

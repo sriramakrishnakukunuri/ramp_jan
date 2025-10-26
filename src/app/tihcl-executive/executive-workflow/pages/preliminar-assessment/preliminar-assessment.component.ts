@@ -33,7 +33,9 @@ export class PreliminarAssessmentComponent implements OnInit {
       overdueDate: '2025-05-09'
     }
   ];
-
+get fassessmentForm(){
+    return this.assessmentForm.controls;
+}
   // Stress score options
  stressScoreOptions:any = [
   {
@@ -239,6 +241,7 @@ loginsessionDetails:any
            this.initializeForm();
            this.createCreditDetail()
            this.getAllDistricts()
+           this.onSourceSelect('Awareness programme')
          console.log(applicationData)
           this.getDtataByUrl(APIS.tihclExecutive.registerData + (applicationData.registrationUsageId?applicationData.registrationUsageId:applicationData.registrationId));
    
@@ -249,6 +252,7 @@ loginsessionDetails:any
       next: (dataList: any) => {
        
          this.assessmentForm.patchValue({...dataList.data,howDidYouKnowAboutTihcl:dataList.data.sourceOfApplication});
+        
          this.getApplicationData=dataList.data
          console.log(dataList?.data)
 
@@ -378,6 +382,7 @@ loginsessionDetails:any
       isGSTNumberExist: [false],
       gstNumber: ['',this.gstValidator()],
       sourceOfApplication: ['', Validators.required],
+      rampProgramName: [''],
       // sector: ['', Validators.required],
       typeOfProduct: ['', [Validators.required, ]],
       // stressScoreJustification: ['', [Validators.required, ]],
@@ -434,6 +439,23 @@ loginsessionDetails:any
       // Reset the loan form
       this.assessmentForm.get('loanForm')?.reset();
     }
+  }
+  // get data based source of application
+  getDatarampProgramName:any=[]
+  onSourceSelect(value: any) {
+    this.getDatarampProgramName=[]
+   if(value==='Awareness programme'){
+    this._commonService.getDataByUrl(APIS.tihclExecutive.getDatarampProgramName).subscribe({
+      next: (response: any) => {
+        this.getDatarampProgramName=response
+        console.log('Programs API response:', response);
+        // You can handle the response here as needed
+      },
+      error: (error: any) => {
+        console.error('Error fetching programs:', error);
+      }
+    });
+   }
   }
 
   // Calculate total stress score
