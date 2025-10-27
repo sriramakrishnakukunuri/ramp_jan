@@ -233,10 +233,10 @@
                   </td>
                   <td>{{item?.bankName}}</td>
                   <td>{{item?.natureOfLoan}}</td>
-                  <td>{{item?.limitSanctioned}}</td>
-                  <td>{{item?.outstandingAmount}}</td>
-                  <td>{{item?.overdueAmount}}</td>
-                  <td>{{item?.overdueDate}}</td>
+                    <td>{{ item?.limitSanctioned  | number:'1.0-2':'en-IN' }}</td>
+                    <td>{{ item?.outstandingAmount  | number:'1.0-2':'en-IN' }}</td>
+                    <td>{{ item?.overdueAmount  | number:'1.0-2':'en-IN' }}</td>
+                    <td>{{ item?.overdueDate }}</td>
                 </tr>
               </tbody>
             </table>
