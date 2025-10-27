@@ -71,6 +71,7 @@ import { MsmeByQuarterComponent } from './PIA/msme-by-quarter/msme-by-quarter.co
 import { ProgramMonitoringReportApprovalComponent } from './PIA/program-monitoring-report-approval/program-monitoring-report-approval.component';
 import { AddNonParticipantsDataComponent } from './PIA/add-non-participants-data/add-non-participants-data.component';
 import { OutputProgressComponent } from './PIA/output-progress/output-progress.component';
+import { TrainigNontrainingTargetsComponent } from './PIA/trainig-nontraining-targets/trainig-nontraining-targets.component';
 const routes: Routes = [
     {
         path: '',
@@ -476,6 +477,12 @@ const routes: Routes = [
      {
         path: 'Training-Non-trainingAchievements',
         component: TargetsAndAchievementsComponent,
+        canActivate: [AuthGuard],
+        data: { roles: [Role.Admin,Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
+    },
+     {
+        path: 'Training-Non-training-targets',
+        component: TrainigNontrainingTargetsComponent,
         canActivate: [AuthGuard],
         data: { roles: [Role.Admin,Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
     },

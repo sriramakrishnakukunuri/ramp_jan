@@ -104,6 +104,7 @@ import { MsmeByMonthComponent } from './PIA/msme-by-month/msme-by-month.componen
 import { ProgramMonitoringReportApprovalComponent } from './PIA/program-monitoring-report-approval/program-monitoring-report-approval.component';
 import { AddNonParticipantsDataComponent } from './PIA/add-non-participants-data/add-non-participants-data.component';
 import { OutputProgressComponent } from './PIA/output-progress/output-progress.component';
+import { TrainigNontrainingTargetsComponent } from './PIA/trainig-nontraining-targets/trainig-nontraining-targets.component';
 @NgModule({
     imports: [
         MaterialModule,
@@ -211,7 +212,8 @@ import { OutputProgressComponent } from './PIA/output-progress/output-progress.c
         MsmeByMonthComponent,
         ProgramMonitoringReportApprovalComponent,
         AddNonParticipantsDataComponent,
-        OutputProgressComponent
+        OutputProgressComponent,
+        TrainigNontrainingTargetsComponent
 
     ],
     exports:[MaterialModule,
