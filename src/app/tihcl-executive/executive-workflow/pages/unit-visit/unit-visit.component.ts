@@ -15,12 +15,14 @@ import { LoaderService } from '@app/common_components/loader-service.service';
 export class UnitVisitComponent implements OnInit {
 @ViewChild('addmachinary') addmachinary!: ElementRef;
 @ViewChild('addvisit') addvisit!: ElementRef;
+@ViewChild('addResourcePerson') addResourcePerson!: ElementRef;
   unitVisitForm!: FormGroup;
   machineryDetailsRequest: any[] = [];
   @Input() freeze:any
   isSameAddress: boolean = true;
   machineForm!: FormGroup;
   visitForm!: FormGroup;
+  resorcePersonForm!: FormGroup;
   applicationData:any
    @Output() progressBarStatusUpdate:any = new EventEmitter();
    constructor(private fb: FormBuilder,private toastrService: ToastrService,
@@ -38,6 +40,7 @@ export class UnitVisitComponent implements OnInit {
     this.initworkShiftsDtoForm();
     this.createForm();
     this.createVisitForm();
+    this.createResourcePersonForm();
   }
  today:any= this._commonService.getDate();
  initForm(): void {
@@ -89,6 +92,7 @@ export class UnitVisitComponent implements OnInit {
       powerBillPaidDate: ['', Validators.required],
       machineryDetailsRequest: this.fb.array([]),
       visitorsDetailsRequests: this.fb.array([]),
+       metPersonDetailsDtos: this.fb.array([]),
       workShiftsDto: this.fb.array([]),
     });
   }
@@ -163,15 +167,30 @@ createForm(): void {
       visitedBy: ['', Validators.required],
       visitedPersonDesignation:['',Validators.required],
       id:[null],
-      nameOfThePersonMet: ['', Validators.required],
-      metPersonEmail: ['', [Validators.required, Validators.email]],
-      metPersonContactNumber: ['', [Validators.pattern(/^[6789]\d{9}$/)]],
+      // nameOfThePerson: ['', Validators.required],
+      // metPersonEmail: ['', [Validators.required, Validators.email]],
+      // contactNumber: ['', [Validators.pattern(/^[6789]\d{9}$/)]],
+
+      // designation: ['', [Validators.required]],
+    });
+  }
+  createResourcePersonForm(): void {
+    this.resorcePersonForm = this.fb.group({
+      // visitedBy: ['', Validators.required],
+      // visitedPersonDesignation:['',Validators.required],
+      id:[null],
+      nameOfThePerson: ['', Validators.required],
+      // metPersonEmail: ['', [Validators.required, Validators.email]],
+      contactNumber: ['', [Validators.pattern(/^[6789]\d{9}$/)]],
 
       designation: ['', [Validators.required]],
     });
   }
   get VisitArray(): FormArray {
     return this.unitVisitForm.get('visitorsDetailsRequests') as FormArray;
+  }
+   get ResourcePersonArray(): FormArray {
+    return this.unitVisitForm.get('metPersonDetailsDtos') as FormArray;
   }
   get factoryDetailsArray(): FormArray {
     return this.unitVisitForm.get('machineryDetailsRequest') as FormArray;
@@ -247,9 +266,15 @@ createForm(): void {
       this.addMachineDetail(machine);
     });
       this.createVisitForm();
+      this.createResourcePersonForm()
       this.VisitArray.clear();
+      this.ResourcePersonArray.clear();
+      
       data?.visitorsDetailsRequests.forEach((visit:any) => {
         this.addVisitDetail(visit);
+      });
+       data?.metPersonDetailsDtos.forEach((visit:any) => {
+        this.addResourcePersonDetail(visit);
       });
       this.workShiftsDto.clear();
         data?.workShiftsDto.forEach((partnership:any) => {
@@ -263,13 +288,26 @@ createForm(): void {
       visitedBy: [visit ? visit.visitedBy : '', Validators.required],
       visitedPersonDesignation:[visit ? visit.visitedPersonDesignation : '',Validators.required],
       id:[visit?visit.id:null],
-      nameOfThePersonMet: [visit ? visit.nameOfThePersonMet : '', Validators.required],
-      metPersonEmail: [visit ? visit.metPersonEmail : '', [Validators.required, Validators.email]],
-      metPersonContactNumber: [visit ? visit.metPersonContactNumber : '', [Validators.required,Validators.pattern(/^[6789]\d{9}$/)]],
+      // nameOfThePerson: [visit ? visit.nameOfThePerson : '', Validators.required],
+      // metPersonEmail: [visit ? visit.metPersonEmail : '', [Validators.required, Validators.email]],
+      // contactNumber: [visit ? visit.contactNumber : '', [Validators.required,Validators.pattern(/^[6789]\d{9}$/)]],
+
+      // designation: [visit ? visit.designation : '', [Validators.required]],
+    }); 
+    this.VisitArray.push(visitGroup);
+  }
+   addResourcePersonDetail(visit?: any): void {
+    const visitGroup = this.fb.group({
+      // visitedBy: [visit ? visit.visitedBy : '', Validators.required],
+      // visitedPersonDesignation:[visit ? visit.visitedPersonDesignation : '',Validators.required],
+      id:[visit?visit.id:null],
+      nameOfThePerson: [visit ? visit.nameOfThePerson : '', Validators.required],
+      // metPersonEmail: [visit ? visit.metPersonEmail : '', [Validators.required, Validators.email]],
+      contactNumber: [visit ? visit.contactNumber : '', [Validators.required,Validators.pattern(/^[6789]\d{9}$/)]],
 
       designation: [visit ? visit.designation : '', [Validators.required]],
     }); 
-    this.VisitArray.push(visitGroup);
+    this.ResourcePersonArray.push(visitGroup);
   }
  addMachineDetail(machine?: any): void {
     const machineGroup = this.fb.group({
@@ -602,9 +640,9 @@ saveworkshift(): void {
     this.visitForm = this.fb.group({
       visitedBy: [item?.visitedBy, Validators.required],
       id: [item?.id ? item.id : null],
-      nameOfThePersonMet: [item?.nameOfThePersonMet, Validators.required],
-      metPersonEmail: [item?.metPersonEmail, [Validators.required, Validators.email]],
-      metPersonContactNumber: [item?.metPersonContactNumber, [Validators.pattern(/^[6789]\d{9}$/)]],
+      nameOfThePerson: [item?.nameOfThePerson, Validators.required],
+      // metPersonEmail: [item?.metPersonEmail, [Validators.required, Validators.email]],
+      contactNumber: [item?.contactNumber, [Validators.pattern(/^[6789]\d{9}$/)]],
       visitedPersonDesignation:[item?.visitedPersonDesignation,Validators.required],
       designation: [item?.designation, [Validators.required]],
     });
@@ -631,5 +669,64 @@ saveworkshift(): void {
       document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
     }
     this.visitForm.reset();
+  }
+  onSubmitModelResourcePerson(): void {
+    if (this.resorcePersonForm.valid) {
+      const resorcePersonArray = this.unitVisitForm.get('metPersonDetailsDtos') as FormArray;
+      resorcePersonArray.push(this.fb.group(this.resorcePersonForm.value));
+      this.toastrService.success('Resource Details Added Successfully');
+      this.onCloseResourcePerson();
+    } else {
+      this.markFormGroupTouchedResourcePerson(this.resorcePersonForm);
+    }
+    this.resorcePersonForm.reset();
+  }
+
+  markFormGroupTouchedResourcePerson(formGroup: FormGroup) {
+    Object.values(formGroup.controls).forEach(control => {
+      control.markAsTouched();
+      if (control instanceof FormGroup) {
+        this.markFormGroupTouchedResourcePerson(control);
+      }
+    });
+  }
+
+  openModelResourcePerson() {
+    this.resorcePersonForm.reset();
+    const modal = new bootstrap.Modal(this.addResourcePerson.nativeElement);
+    modal.show();
+  }
+
+  editCreditDetailsResourcePerson(item: any) {
+    this.resorcePersonForm = this.fb.group({
+      id: [item?.id ? item.id : null],
+      nameOfThePerson: [item?.nameOfThePerson, Validators.required],
+      // metPersonEmail: [item?.metPersonEmail, [Validators.required, Validators.email]],
+      contactNumber: [item?.contactNumber, [Validators.pattern(/^[6789]\d{9}$/)]],
+      designation: [item?.designation, [Validators.required]],
+    });
+    const visitDetailsArray = this.unitVisitForm.get('metPersonDetailsDtos') as FormArray;
+    const index = visitDetailsArray.controls.findIndex(control => control.value === item);
+    if (index !== -1) {
+      visitDetailsArray.removeAt(index);
+    }
+    const modal = new bootstrap.Modal(this.addResourcePerson.nativeElement);
+    modal.show();
+  }
+
+  deleteCreditDetailResourcePerson(item: any, index: number) {
+    // If you want to call delete API for visit, add here
+    const visitDetailsArray = this.unitVisitForm.get('metPersonDetailsDtos') as FormArray;
+    visitDetailsArray.removeAt(index);
+  }
+
+  onCloseResourcePerson(): void {
+    const editSessionModal = document.getElementById('addResourcePerson');
+    if (editSessionModal) {
+      const modalInstance = bootstrap.Modal.getInstance(editSessionModal);
+      modalInstance.hide();
+      document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+    }
+    this.resorcePersonForm.reset();
   }
 }

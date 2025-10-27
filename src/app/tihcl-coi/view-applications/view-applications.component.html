@@ -112,7 +112,7 @@
                       <td class="text-start">{{ i + 1 }}</td>
                       <td>
                         <ng-container
-                          *ngIf="activeTab === 'APPLICATIONS_SANCTIONED' || activeTab === 'APPLICATIONS_NOT_CONSIDERED'; else plainText">
+                          *ngIf="activeTab === 'APPLICATIONS_SANCTIONED' || activeTab === 'APPLICATIONS_UNDER_PROCESS' || activeTab === 'APPLICATIONS_NOT_CONSIDERED'; else plainText">
                           <a (click)="onRowClick(item)"
                             style="color: #0d6efd; text-decoration: underline; cursor: pointer;">
                             {{ item?.enterpriseName }}
