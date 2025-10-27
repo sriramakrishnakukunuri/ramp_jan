@@ -5,7 +5,7 @@
           <div class="card-header bg-transparent ">
             <div class="row align-items-center mb-3">
               <div class="col-12 col-sm-12 col-md-4 col-lg-6">
-                <h6 class="fw-600 mb-2 mb-sm-2 mb-md-0">Quarterly Progress Monitoring</h6>
+                <h6 class="fw-600 mb-2 mb-sm-2 mb-md-0">Training And Non-Training Targets</h6>
               </div>
               <div class="col-12 col-sm-5 col-md-4 col-lg-3">
                 <!-- <label for="Agencies" style="font-weight: 600;">List Of Agencies</label>
@@ -54,67 +54,67 @@
             </div>
           </div>
           <div class="card-body mb-3">
-            <button class="btn btn-secondary mb-3" type="button" (click)="goBack()">
+            <!-- <button class="btn btn-secondary mb-3" type="button" (click)="goBack()">
               <i class="bi bi-arrow-left"></i> Back
-            </button>
-            <h6 class="fw-bold mb-3">Training Targets Vs Achivements</h6>
+            </button> -->
+            <h6 class="fw-bold mb-3">Training Targets </h6>
             <!--  id=view-physical-table  -->
             <div class="table-container">
               <table  class="table table-bordered table-striped nowrap w-100 fsize-10">
                 <thead class="bg-lime-green text-white">
                   <tr>
-                    <th class="text-center sticky-col-1" rowspan="4">Activity Name</th>
-                    <th class="text-center sticky-col-2" rowspan="4">Sub Activity Name</th>
+                    <th class="text-center sticky-col-1" rowspan="3">Activity Name</th>
+                    <th class="text-center sticky-col-2" rowspan="3">Sub Activity Name</th>
                     <ng-container *ngFor="let item of this.tableheaderList">
                       <th  class="text-center"  colspan="20">FY{{item}}</th>
                     </ng-container>
                   </tr>
                   <tr>
                     <ng-container *ngFor="let item of this.tableheaderList">
-                      <th class="text-center" rowspan="1" colspan="4" >Grand Total</th>
-                      <th class="text-center"rowspan="1"  colspan="4" >Q1(Apr-Jun)</th>
-                      <th class="text-center" rowspan="1" colspan="4" >Q2(Jul-Sep)</th>
-                      <th class="text-center" rowspan="1" colspan="4" >Q3(Oct-Dec)</th>
-                      <th class="text-center" rowspan="1"  colspan="4" >Q4(Jan-Mar)</th>
+                      <th class="text-center" rowspan="1" colspan="2" >Grand Total</th>
+                      <th class="text-center"rowspan="1"  colspan="2" >Q1(Apr-Jun)</th>
+                      <th class="text-center" rowspan="1" colspan="2" >Q2(Jul-Sep)</th>
+                      <th class="text-center" rowspan="1" colspan="2" >Q3(Oct-Dec)</th>
+                      <th class="text-center" rowspan="1"  colspan="2" >Q4(Jan-Mar)</th>
                     </ng-container>
                   </tr>
                   <tr>
                     <ng-container *ngFor="let item of [1,2,3,4,5]">
-                      <th class="text-center"  rowspan="1" colspan="2">Physical</th>
-                      <th class="text-center" rowspan="1" colspan="2" >Financial</th>
+                      <th class="text-center"  rowspan="1" colspan="1">Physical Targets</th>
+                      <th class="text-center" rowspan="1" colspan="1" >Financial Targets</th>
                     </ng-container>
                   </tr>
-                  <tr>
+                  <!-- <tr>
                     <ng-container *ngFor="let item of [1,2,3,4,5,6,7,8,9,10]">
                       <th class="text-center" >Target</th>
                       <th class="text-center" >Achieved</th>
                     </ng-container>
-                  </tr>
+                  </tr> -->
                 </thead>
                 <tbody >
                     <tr *ngFor="let item of tableList; let i = index">
                       <td class="sticky-col-1">{{item?.activityName}}</td>
                       <td class="sticky-col-2">{{item?.subActivityName}}</td>
                       <td>{{item?.totalTarget}}</td>
-                      <td>{{item?.totalAchieved}}</td>
+                      <!-- <td>{{item?.totalAchieved}}</td> -->
                       <td>{{item?.totalFinancialTarget}}</td>
-                      <td>{{item?.totalFinancialAchieved}}</td>
+                      <!-- <td>{{item?.totalFinancialAchieved}}</td> -->
                       <td>{{item?.trainingTargetQ1}}</td>
-                      <td>{{item?.achievedQ1}}</td>
+                      <!-- <td>{{item?.achievedQ1}}</td> -->
                       <td>{{item?.financialTargetQ1}}</td>
-                      <td>{{item?.financialAchievedQ1}}</td>
+                      <!-- <td>{{item?.financialAchievedQ1}}</td> -->
                       <td>{{item?.trainingTargetQ2}}</td>
-                      <td>{{item?.achievedQ2}}</td>
+                      <!-- <td>{{item?.achievedQ2}}</td> -->
                       <td>{{item?.financialTargetQ2}}</td>
-                      <td>{{item?.financialAchievedQ2}}</td>
+                      <!-- <td>{{item?.financialAchievedQ2}}</td> -->
                       <td>{{item?.trainingTargetQ3}}</td>
-                      <td>{{item?.achievedQ3}}</td>
+                      <!-- <td>{{item?.achievedQ3}}</td> -->
                       <td>{{item?.financialTargetQ3}}</td>
-                      <td>{{item?.financialAchievedQ3}}</td>
+                      <!-- <td>{{item?.financialAchievedQ3}}</td> -->
                       <td>{{item?.trainingTargetQ4}}</td>
-                      <td>{{item?.achievedQ4}}</td>
+                      <!-- <td>{{item?.achievedQ4}}</td> -->
                       <td>{{item?.financialTargetQ4}}</td>
-                      <td>{{item?.financialAchievedQ4}}</td>
+                      <!-- <td>{{item?.financialAchievedQ4}}</td> -->
                     </tr>
                   </tbody>
                   <tbody *ngIf="!tableList?.length">
@@ -129,14 +129,14 @@
         
           </div>
           <div class="card-body">
-            <h6 class="fw-bold mb-3">Non Training Targets Vs Achivements</h6>
+            <h6 class="fw-bold mb-3">Non Training Targets </h6>
             <!--  id=view-physical-table  -->
             <div class="table-container" >
               <table  class="table table-bordered table-striped nowrap w-100 fsize-10">
                 <thead class="bg-lime-green text-white">
                   <tr>
-                    <th class="text-center sticky-col-1" rowspan="4">Activity Name</th>
-                    <th class="text-center sticky-col-2" rowspan="4">Sub Activity Name</th>
+                    <th class="text-center sticky-col-1" rowspan="3">Activity Name</th>
+                    <th class="text-center sticky-col-2" rowspan="3">Sub Activity Name</th>
                     <ng-container *ngFor="let item of this.tableheaderList">
                       <th  class="text-center"  colspan="20">FY{{item}}</th>
                     </ng-container>
@@ -144,49 +144,49 @@
                 </tr>
                 <tr>
                   <ng-container *ngFor="let item of this.tableheaderList">
-                    <th class="text-center" rowspan="1" colspan="4" >Grand Total</th>
-                    <th class="text-center"rowspan="1"  colspan="4" >Q1(Apr-Jun)</th>
-                    <th class="text-center" rowspan="1" colspan="4" >Q2(Jul-Sep)</th>
-                    <th class="text-center" rowspan="1" colspan="4" >Q3(Oct-Dec)</th>
-                    <th class="text-center" rowspan="1"  colspan="4" >Q4(Jan-Mar)</th>
+                    <th class="text-center" rowspan="1" colspan="2" >Grand Total</th>
+                    <th class="text-center"rowspan="1"  colspan="2" >Q1(Apr-Jun)</th>
+                    <th class="text-center" rowspan="1" colspan="2" >Q2(Jul-Sep)</th>
+                    <th class="text-center" rowspan="1" colspan="2" >Q3(Oct-Dec)</th>
+                    <th class="text-center" rowspan="1"  colspan="2" >Q4(Jan-Mar)</th>
                   </ng-container>
                  
                    
     
                 </tr>
                 <tr> <ng-container *ngFor="let item of [1,2,3,4,5]">
-                  <th class="text-center"  rowspan="1" colspan="2">Physical</th>
-                  <th class="text-center" rowspan="1" colspan="2" >Financial</th>
+                  <th class="text-center"  rowspan="1" colspan="1">Physical Targets</th>
+                  <th class="text-center" rowspan="1" colspan="1" >Financial Targets</th>
                 </ng-container></tr>
-                <tr> <ng-container *ngFor="let item of [1,2,3,4,5,6,7,8,9,10]">
+                <!-- <tr> <ng-container *ngFor="let item of [1,2,3,4,5,6,7,8,9,10]">
                   <th class="text-center" >Target</th>
                   <th class="text-center" >Achieved</th>
-                </ng-container></tr>
+                </ng-container></tr> -->
                 </thead>
                 <tbody >
                   <tr *ngFor="let item of tableListNonTraining; let i = index">
                     <td class="sticky-col-1">{{item?.activityName}}</td>
                     <td class="sticky-col-2">{{item?.subActivityName}}</td>
                     <td>{{item?.totalTarget}}</td>
-                    <td>{{item?.totalAchieved}}</td>
+                    <!-- <td>{{item?.totalAchieved}}</td> -->
                     <td>{{item?.totalFinancialTarget}}</td>
-                    <td>{{item?.totalFinancialAchieved}}</td>
+                    <!-- <td>{{item?.totalFinancialAchieved}}</td> -->
                     <td>{{item?.trainingTargetQ1}}</td>
-                    <td>{{item?.achievedQ1}}</td>
+                    <!-- <td>{{item?.achievedQ1}}</td> -->
                     <td>{{item?.financialTargetQ1}}</td>
-                    <td>{{item?.financialAchievedQ1}}</td>
+                    <!-- <td>{{item?.financialAchievedQ1}}</td> -->
                     <td>{{item?.trainingTargetQ2}}</td>
-                    <td>{{item?.achievedQ2}}</td>
+                    <!-- <td>{{item?.achievedQ2}}</td> -->
                     <td>{{item?.financialTargetQ2}}</td>
-                    <td>{{item?.financialAchievedQ2}}</td>
+                    <!-- <td>{{item?.financialAchievedQ2}}</td> -->
                     <td>{{item?.trainingTargetQ3}}</td>
-                    <td>{{item?.achievedQ3}}</td>
+                    <!-- <td>{{item?.achievedQ3}}</td> -->
                     <td>{{item?.financialTargetQ3}}</td>
-                    <td>{{item?.financialAchievedQ3}}</td>
+                    <!-- <td>{{item?.financialAchievedQ3}}</td> -->
                     <td>{{item?.trainingTargetQ4}}</td>
-                    <td>{{item?.achievedQ4}}</td>
+                    <!-- <td>{{item?.achievedQ4}}</td> -->
                     <td>{{item?.financialTargetQ4}}</td>
-                    <td>{{item?.financialAchievedQ4}}</td>
+                    <!-- <td>{{item?.financialAchievedQ4}}</td> -->
                     <!-- <ng-container *ngFor="let list of this.tableheaderList; let i = index;">
                       <ng-container *ngIf="getYearData(item, list) as yearData">
                         <td>{{yearData.total || 0}}</td>
