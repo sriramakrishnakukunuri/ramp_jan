@@ -35,6 +35,7 @@ import { ExecutiveWorkflowComponent } from './tihcl-executive/executive-workflow
 import { DicApprovalComponent } from './tihcl-dic/dic-approval/dic-approval.component';
 import { ViewApplicationsComponent } from './tihcl-coi/view-applications/view-applications.component';
 import { SanctionedAmountComponent } from './sanctioned-amount/sanctioned-amount.component';
+import { RepaymentLedgerComponent } from './tihcl-executive/repayment-ledger/repayment-ledger.component';
 
 const routes: Routes = [
     {
@@ -228,6 +229,12 @@ const routes: Routes = [
         component: DicApprovalComponent,
         canActivate: [AuthGuard],
         data: { roles: [Role.TIHCL_MANAGER,Role.TIHCL_DIC] }
+    },
+    {
+        path: 'repayment-ledger',
+        component: RepaymentLedgerComponent,
+        canActivate: [AuthGuard],
+        data: { roles: [Role.TIHCL_MANAGER,Role.TIHCL_DIC,Role.TIHCL_COI,Role.TIHCL_EXECUTOR] }
     },
 
 

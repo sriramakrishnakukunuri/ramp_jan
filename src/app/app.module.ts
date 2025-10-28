@@ -69,6 +69,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
 import { SAPreliminaryComponent } from './PIA/sa-preliminary/sa-preliminary.component';
 import { CommonFileViewerComponent } from './common_components/common-file-viewer/common-file-viewer.component';
+import { CommaSeperationPipe } from './common_components/comma-seperation.pipe';
+import { RepaymentLedgerComponent } from './tihcl-executive/repayment-ledger/repayment-ledger.component';
 @NgModule({
     imports: [
         MatSelectModule,
@@ -125,6 +127,8 @@ import { CommonFileViewerComponent } from './common_components/common-file-viewe
         SanctionedAmountComponent,
         SAPreliminaryComponent,
         CommonFileViewerComponent,
+        CommaSeperationPipe,
+        RepaymentLedgerComponent,
     ],
     exports:[
         LoaderComponent

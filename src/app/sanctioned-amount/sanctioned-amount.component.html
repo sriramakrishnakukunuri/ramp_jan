@@ -130,15 +130,15 @@
                         (click)="onTabChange('APPLICATIONS_SANCTIONED')" class="nav-link" id="nav-profile-tab"
                         data-bs-toggle="tab" data-bs-target="#APPLICATIONS_RECEIVED" type="button" role="tab"
                         aria-controls="nav-profile" aria-selected="false"> DIC Consent letter</button>
-                    <button [ngClass]="{ 'active':activeTab==='APPLICATIONS_NOT_CONSIDERED'}"
+                    <button [ngClass]="{ 'active':activeTab==='APPLICATIONS_NOT_CONSIDERED'}" *ngIf="loginsessionDetails?.userRole !='DIC'"
                         (click)="onTabChange('APPLICATIONS_NOT_CONSIDERED')" class="nav-link active" id="nav-home-tab"
                         data-bs-toggle="tab" data-bs-target="#APPLICATIONS_RECEIVED" type="button" role="tab"
                         aria-controls="nav-home" aria-selected="true"> Ramp Checklist & Credit Appraisal </button>
-                    <button [ngClass]="{ 'active':activeTab==='PRIMARY_LENDER_NOC'}"
+                    <button [ngClass]="{ 'active':activeTab==='PRIMARY_LENDER_NOC'}" *ngIf="loginsessionDetails?.userRole !='DIC'"
                         (click)="onTabChange('PRIMARY_LENDER_NOC')" class="nav-link" id="nav-primary-lender-noc-tab"
                         data-bs-toggle="tab" data-bs-target="#PRIMARY_LENDER_NOC" type="button" role="tab"
                         aria-controls="nav-primary-lender-noc" aria-selected="false">Primary Lender NOC</button>
-                    <button [ngClass]="{ 'active':activeTab==='SANCTIONED_DETAILS'}"
+                    <button [ngClass]="{ 'active':activeTab==='SANCTIONED_DETAILS'}" *ngIf="loginsessionDetails?.userRole !='DIC'"
                         (click)="onTabChange('SANCTIONED_DETAILS')" class="nav-link" id="nav-sanctioned-details-tab"
                         data-bs-toggle="tab" data-bs-target="#SANCTIONED_DETAILS" type="button" role="tab"
                         aria-controls="nav-sanctioned-details" aria-selected="false">Sanctioned Details</button>
@@ -613,8 +613,8 @@
                                 </div>
                                 <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
                                     <label class="fw-bold">Sanctioned Amount:</label>
-                                    <div>{{ sanctionList?.sanctionedAmount !== null && sanctionList?.sanctionedAmount
-                                        !== undefined ? sanctionList.sanctionedAmount : 'N/A' }}</div>
+                                    <div>{{ sanctionList?.sanctionedAmount !== null && sanctionList?.sanctionedAmount 
+                                        !== undefined ? (sanctionList.sanctionedAmount | commaSeperation ) : 'N/A' }}</div>
                                 </div>
                                 <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
                                     <label class="fw-bold">ROI (%):</label>
@@ -634,7 +634,7 @@
                                 <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
                                     <label class="fw-bold">DSRA Amount:</label>
                                     <div>{{ sanctionList?.dsraAmount !== null && sanctionList?.dsraAmount !== undefined
-                                        ? sanctionList.dsraAmount : 'N/A' }}</div>
+                                        ? (sanctionList.dsraAmount | commaSeperation ) : 'N/A' }}</div>
                                 </div>
                                 <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
                                     <label class="fw-bold">Security Provided:</label>
@@ -717,11 +717,11 @@
                             <div class="row mb-4">
                                 <div class="col-md-4 mb-2">
                                     <label class="fw-bold">Total Sanctioned Amount:</label>
-                                    <div>{{ disburseList?.totalSanctionedAmount || 'N/A' }}</div>
+                                    <div>{{ (disburseList?.totalSanctionedAmount | commaSeperation ) || 'N/A' }}</div>
                                 </div>
                                 <div class="col-md-4 mb-2">
                                     <label class="fw-bold">Total Disbursed Amount:</label>
-                                    <div>{{ disburseList?.totalDisbursedAmount ?? 'N/A' }}</div>
+                                    <div>{{ (disburseList?.totalDisbursedAmount | commaSeperation ) ?? 'N/A' }}</div>
                                 </div>
                                 <div class="col-md-4 mb-2">
                                     <label class="fw-bold">Disbursement Date:</label>
@@ -729,11 +729,11 @@
                                 </div>
                                 <div class="col-md-4 mb-2">
                                     <label class="fw-bold">Processing Fee Collected Amount:</label>
-                                    <div>{{ disburseList?.processingFeeCollectedAmount ?? 'N/A' }}</div>
+                                    <div>{{ (disburseList?.processingFeeCollectedAmount | commaSeperation ) ?? 'N/A' }}</div>
                                 </div>
                                 <div class="col-md-4 mb-2">
                                     <label class="fw-bold">Processing Fee GST Amount:</label>
-                                    <div>{{ disburseList?.processingFeeGSTAmount ?? 'N/A' }}</div>
+                                    <div>{{ (disburseList?.processingFeeGSTAmount | commaSeperation ) ?? 'N/A' }}</div>
                                 </div>
                                 <div class="col-md-4 mb-2">
                                     <label class="fw-bold">Processing Fee Received Date:</label>
@@ -810,7 +810,7 @@
                                     <tr *ngFor="let dis of disburseList?.disbursements; let j = index">
                                         <td>{{ j + 1 }}</td>
                                         <td>{{ dis.disbursementDate | date:'dd/MM/yyyy' }}</td>
-                                        <td>{{ dis.amount }}</td>
+                                        <td>{{ dis.amount | commaSeperation  }}</td>
                                         <td>{{ dis.details }}</td>
                                     </tr>
                                     <tr *ngIf="!disburseList?.disbursements?.length">

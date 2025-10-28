@@ -440,7 +440,7 @@
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                 <div class="mb-3">
                                     <label class="d-block fs-md fw-600 mb-1">Required Credit Limit</label>
-                                    <label class="d-block fs-md">{{ approvalData?.requiredCreditLimit | currency:'INR' || 'N/A' }}</label>
+                                    <label class="d-block fs-md">{{ (approvalData?.requiredCreditLimit | commaSeperation) || 'N/A' }}</label>
                                 </div>
                             </div>
                         </div>
@@ -462,9 +462,9 @@
                                         <tr *ngFor="let item of approvalData?.creditFacilityDetails; let i = index">
                                             <td>{{i+1}}</td>
                                             <td>{{item?.bankName || 'N/A'}}</td>
-                                            <td>{{item?.limitSanctioned | currency:'INR' || 'N/A'}}</td>
-                                            <td>{{item?.outstandingAmount | currency:'INR' || 'N/A'}}</td>
-                                            <td>{{item?.overdueAmount | currency:'INR' || 'N/A'}}</td>
+                                            <td>{{(item?.limitSanctioned | commaSeperation) || 'N/A'}}</td>
+                                            <td>{{(item?.outstandingAmount | commaSeperation) || 'N/A'}}</td>
+                                            <td>{{(item?.overdueAmount | commaSeperation) || 'N/A'}}</td>
                                         </tr>
                                     </tbody>
                                 </table>

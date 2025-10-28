@@ -233,9 +233,9 @@
                   </td>
                   <td>{{item?.bankName}}</td>
                   <td>{{item?.natureOfLoan}}</td>
-                    <td>{{ item?.limitSanctioned  | currency:'INR' }}</td>
-                    <td>{{ item?.outstandingAmount  | currency:'INR' }}</td>
-                    <td>{{ item?.overdueAmount  | currency:'INR' }}</td>
+                    <td>{{ item?.limitSanctioned  | commaSeperation }}</td>
+                    <td>{{ item?.outstandingAmount  | commaSeperation }}</td>
+                    <td>{{ item?.overdueAmount  | commaSeperation }}</td>
                     <td>{{ item?.overdueDate }}</td>
                 </tr>
               </tbody>

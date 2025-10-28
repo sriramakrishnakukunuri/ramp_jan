@@ -102,7 +102,7 @@
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                 <div class="mb-3">
                                     <label class="d-block fs-md fw-600 mb-1">Sanctioned Amount</label>
-                                    <label class="d-block fs-md">{{ (ExistingunitVisit?.sanctionedAmount | currency:'INR') || 'N/A' }}</label>
+                                    <label class="d-block fs-md">{{ (ExistingunitVisit?.sanctionedAmount | commaSeperation ) || 'N/A' }}</label>
                                 </div>
                             </div>
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
@@ -126,7 +126,7 @@
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                 <div class="mb-3">
                                     <label class="d-block fs-md fw-600 mb-1">DSRA Amount</label>
-                                    <label class="d-block fs-md">{{ (ExistingunitVisit?.dsraAmount | currency:'INR') || 'N/A' }}</label>
+                                    <label class="d-block fs-md">{{ (ExistingunitVisit?.dsraAmount | commaSeperation ) || 'N/A' }}</label>
                                 </div>
                             </div>
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
@@ -144,7 +144,7 @@
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3" *ngIf="ExistingunitVisit?.isSecurityProvided">
                                 <div class="mb-3">
                                     <label class="d-block fs-md fw-600 mb-1">Security Value</label>
-                                    <label class="d-block fs-md">{{ (ExistingunitVisit?.securityValue | currency:'INR') || 'N/A' }}</label>
+                                    <label class="d-block fs-md">{{ (ExistingunitVisit?.securityValue | commaSeperation) || 'N/A' }}</label>
                                 </div>
                             </div>
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3">

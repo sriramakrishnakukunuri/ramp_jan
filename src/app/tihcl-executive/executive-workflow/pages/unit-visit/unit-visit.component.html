@@ -357,13 +357,13 @@
                     {{item?.noOfMachines}}
                   </td>
                   <td>
-                    {{ item?.costOfMachinePurchased  | currency:'INR'  }}
+                    {{ item?.costOfMachinePurchased  | commaSeperation  }}
                   </td>
                   <td>
                     {{item?.currentCondition}}
                   </td>
                   <td>
-                    {{ item?.valueOfMachinery  | currency:'INR'  }}
+                    {{ item?.valueOfMachinery  | commaSeperation  }}
                   </td>
                 </tr>
               </tbody>
