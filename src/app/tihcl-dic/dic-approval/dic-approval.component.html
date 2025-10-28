@@ -13,13 +13,13 @@
                                     <th>View</th>
                                     <th>Date Application</th>
                                     <th>Application Number</th>
-                                    <th>Executive Name</th>
-                                    <th>Executive Feedback Date</th>
+                                    <!-- <th>Executive Name</th> -->
+                                    <!-- <th>Executive Feedback Date</th> -->
                                     <th>Unit Name</th>
                                     <th>Promoter Name</th>
                                     <th>Mobile No.</th>
                                     <th>Industry</th>
-                                    <th>Sector</th>
+                                    <!-- <th>Sector</th> -->
                                 </tr>
                             </thead>
                             <tbody>
@@ -28,14 +28,14 @@
                                     <td><a href="#" data-bs-toggle="modal" data-bs-target="#viewModal" (click)="ShowDataForApproval(item)"><span class="bi bi-eye"></span></a></td>
                                     <td>{{ item.dateOfSubmission }}</td>
                                     <td>{{item?.applicationNo}}</td>
-                                    <td>{{ item.executive }}</td>
+                                    <!-- <td>{{ item.executive }}</td> -->
                                     <!-- <td>{{ item.executiveFeedbackDate }}</td> -->
-                                     <td>13-05-2025</td>
+                                     <!-- <td>13-05-2025</td> -->
                                     <td>{{ item.enterpriseName }}</td>
                                     <td>{{ item.promoterName }}</td>
                                     <td>{{ item.contactNumber }}</td>
                                     <td>{{ item.natureOfActivity }}</td>
-                                    <td>{{ item.sector }}</td>
+                                    <!-- <td>{{ item.sector }}</td> -->
                                 </tr>
                            
                             </tbody>
@@ -75,8 +75,8 @@
                         <div class="row">
                             <div class="col-12 col-sm-12 col-md-4 col-lg-3">
                                 <div class="mb-3">
-                                    <label class="d-block fs-md fw-600 mb-1">Executive Name</label>
-                                    <label class="d-block fs-md">{{ approvalData?.executive || 'N/A' }}</label>
+                                    <label class="d-block fs-md fw-600 mb-1">Promoter Name</label>
+                                    <label class="d-block fs-md">{{ approvalData?.promoterName || 'N/A' }}</label>
                                 </div>
                             </div>
                             <div class="col-12 col-sm-12 col-md-4 col-lg-3">
@@ -91,12 +91,12 @@
                                     <label class="d-block fs-md">{{ approvalData?.contactNumber || 'N/A' }}</label>
                                 </div>
                             </div>
-                            <div class="col-12 col-sm-12 col-md-4 col-lg-3">
+                            <!-- <div class="col-12 col-sm-12 col-md-4 col-lg-3">
                                 <div class="mb-3">
                                     <label class="d-block fs-md fw-600 mb-1">Email</label>
                                     <label class="d-block fs-md">{{ approvalData?.email || 'N/A' }}</label>
                                 </div>
-                            </div>
+                            </div> -->
                               <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                 <div class="mb-3">
                                     <label class="d-block fs-md fw-600 mb-1">District</label>
@@ -115,12 +115,12 @@
                                     <label class="d-block fs-md">{{ approvalData?.address || 'N/A' }}</label>
                                 </div>
                             </div>
-                            <div class="col-12 col-sm-12 col-md-4 col-lg-3">
+                            <!-- <div class="col-12 col-sm-12 col-md-4 col-lg-3">
                                 <div class="mb-3">
                                     <label class="d-block fs-md fw-600 mb-1">Sector</label>
                                     <label class="d-block fs-md">{{ approvalData?.sector || 'N/A' }}</label>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="col-12 col-sm-12 col-md-4 col-lg-3">
                                 <div class="mb-3">
                                     <label class="d-block fs-md fw-600 mb-1">Enterprise Category</label>
@@ -129,15 +129,15 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
+                    <!-- <div class="row">
                         <div class="col-12 col-sm-12 col-md-4 col-lg-3">
-                            <h6 class="fs-md fw-600 mb-1">Upload DIC NOC<span class="text-danger">*</span></h6>
+                            <h6 class="fs-md fw-600 mb-1">Upload DIC Consent Letter<span class="text-danger">*</span></h6>
                             <div class="form-floating">
                                 <input type="file" class="form-control" id="fileInput" placeholder="" disabled>
-                                <label for="fileInput">Upload Noc</label>
+                                <label for="fileInput">Upload DIC Consent Letter</label>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="modal-footer">
                     <button type="button" data-bs-toggle="modal" data-bs-target="#approvedModal" class="btn btn-primary" data-bs-dismiss="modal">Approve</button>
@@ -159,7 +159,7 @@
                 <div class="modal-body">
                      <form [formGroup]="uploadForm">
                           <div class="mb-3">
-                        <label class="fs-md fw-600 mb-1">Upload NOC<span class="text-danger">*</span></label>
+                        <label class="fs-md fw-600 mb-1">Upload DIC Consent Letter<span class="text-danger">*</span></label>
                         <input type="file" formControlName="file"   name ="file" (change)="onFilesSelected($event)" class="form-control form-control-sm">
                     </div>
                      </form>

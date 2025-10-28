@@ -343,7 +343,7 @@
                       (click)="deleteCreditDetail(item,i)"><span class="bi bi-trash"></span></button>
                   </td>
                   <td>{{ item.disbursementDate }}</td>
-                  <td>{{ item.amount | currency:'INR' }}</td>
+                  <td>{{ item.amount | commaSeperation }}</td>
                   <td>{{ item.details }}</td>
                 </tr>
               </tbody>

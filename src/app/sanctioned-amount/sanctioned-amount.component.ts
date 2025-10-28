@@ -19,7 +19,7 @@ export class SanctionedAmountComponent implements OnInit,OnChanges {
      private sanitizer: DomSanitizer,
      private loader:LoaderService
    ) { 
-    //  this.loginsessionDetails = JSON.parse(sessionStorage.getItem('user') || '{}');    
+     this.loginsessionDetails = JSON.parse(sessionStorage.getItem('user') || '{}');    
    }
 
    regId:any;

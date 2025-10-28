@@ -310,7 +310,7 @@
                                <td class="text-start">{{i + 1}}</td>
                                <td>{{ buyer.get('buyerName')?.value }}</td>
                               <!-- <td class="text-start">{{ buyer.get('purchasedQty')?.value }}</td> -->
-                              <td class="text-start">{{ buyer.get('amount')?.value  | number:'1.0-2':'en-IN' }}</td>
+                              <td class="text-start">{{ buyer.get('amount')?.value  | commaSeperation  }}</td>
                                <td>{{ buyer.get('remarks')?.value || '-' }}</td>
                                <td class="text-center">
                                  <button type="button" [ngClass]="{'isDisabled':!(freeze<=4)}"
@@ -369,7 +369,7 @@
                                <td class="text-start">{{i + 1}}</td>
                                <td>{{ supplier.get('sellerName')?.value }}</td>
                                <!-- <td class="text-start">{{ supplier.get('suppliedQty')?.value }}</td> -->
-                               <td class="text-start">{{ supplier.get('amount')?.value   | number:'1.0-2':'en-IN' }}</td>
+                               <td class="text-start">{{ supplier.get('amount')?.value   | commaSeperation  }}</td>
                                <td>{{ supplier.get('remarks')?.value || '-' }}</td>
                                <td class="text-center">
                                  <button type="button" [ngClass]="{'isDisabled':!(freeze<=4)}"
@@ -604,7 +604,7 @@
                                  <td class="text-start">{{i + 1}}</td>
                                  <td>{{ receivable.get('toBeReceivedFrom')?.value }}</td>
                                  <!-- <td>{{ formatDate(receivable.get('receivableDate')?.value) }}</td> -->
-                                 <td>{{ receivable.get('receivableAmount')?.value  | number:'1.0-2':'en-IN' }}</td>
+                                 <td>{{ receivable.get('receivableAmount')?.value  | commaSeperation  }}</td>
                                  <td class="text-center">
                                    <button type="button" [ngClass]="{'isDisabled':!(freeze<=4)}"
                                      (click)="openReceivableModal(i)" class="btn btn-default text-primary btn-sm">
@@ -672,7 +672,7 @@
                                  <td class="text-start">{{i + 1}}</td>
                                  <td>{{ payable.get('toBePaidTo')?.value }}</td>
                                  <!-- <td>{{ formatDate(payable.get('payableDate')?.value) }}</td> -->
-                                 <td>{{ payable.get('payableAmount')?.value  | number:'1.0-2':'en-IN' }}</td>
+                                 <td>{{ payable.get('payableAmount')?.value  | commaSeperation  }}</td>
                                  <td class="text-center">
                                    <button type="button" [ngClass]="{'isDisabled':!(freeze<=4)}"
                                      (click)="openPayableModal(i)" class="btn btn-default text-primary btn-sm">
@@ -994,7 +994,7 @@
                                  <td>{{i + 1}}</td>
                                  <!-- <td>{{position.get('dateOfOrder')?.value | date:'dd-MM-yyyy'}}</td> -->
                                  <td>{{position.get('nameOfTheBuyer')?.value}}</td>
-                                 <td>{{position.get('orderValue')?.value  | number:'1.0-2':'en-IN'}}</td>
+                                 <td>{{position.get('orderValue')?.value  | commaSeperation }}</td>
                                  <td>{{position.get('remarks')?.value}}</td>
                                  <td class="text-center">
                                    <button type="button" [ngClass]="{'isDisabled':!(freeze<=4)}"
@@ -1069,7 +1069,7 @@
                                      <tr *ngFor="let loan of unsecuredLoans.controls; let i = index">
                                        <td class="text-start">{{i + 1}}</td>
                                        <td>{{loan.get('source')?.value}}</td>
-                                       <td class="text-start">{{loan.get('loanAmount')?.value | number}}</td>
+                                       <td class="text-start">{{loan.get('loanAmount')?.value | commaSeperation }}</td>
                                        <td class="text-start">{{loan.get('sinceWhen')?.value | date:'dd-MM-yyyy'}}</td>
                                        <td>{{loan.get('tenor')?.value || '-'}}</td>
                                        <td class="text-center">
