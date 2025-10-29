@@ -24,7 +24,7 @@
                   <th>Nature Of Activity</th>
                   <th>Factory Location</th>
                   <th>Source of Application</th>
-                  <th>Ramp Program Name</th>
+                  <th *ngIf="registrationDetails?.sourceOfApplication=='Awareness programme'" >Ramp Program Name</th>
                 </tr>
               </thead>
               <tbody>
@@ -35,7 +35,7 @@
                   <td>{{ registrationDetails?.natureOfActivity }}</td>
                   <td>{{ registrationDetails?.address || 'N/A' }}</td>
                   <td>{{ registrationDetails?.sourceOfApplication || 'N/A' }}</td>
-                  <td>{{ registrationDetails?.rampProgramName || 'N/A' }}</td>
+                  <td *ngIf="registrationDetails?.sourceOfApplication=='Awareness programme'">{{ registrationDetails?.rampProgramName || 'N/A' }}</td>
                 </tr>
               </tbody>
             </table>
@@ -71,7 +71,15 @@
             </div>
             <div class="text-end">
               <span class="fw-bold">Total Risk Score:</span>
-              <span class="badge bg-primary fs-6 ms-2">{{ registrationDetails?.riskCategoryScore }}</span>
+              <span class="badge bg-primary fs-6 ms-2">
+                <!-- Stress Score {{ registrationDetails?.riskCategoryScore }} -->
+                <span *ngIf="registrationDetails?.riskCategoryScore > 30 && registrationDetails?.riskCategoryScore < 80">
+                  {{ registrationDetails?.riskCategoryScore }}
+                </span>
+                <span class="ms-2 text-white" *ngIf="registrationDetails?.riskCategoryScore <= 30 || registrationDetails?.riskCategoryScore >= 80">
+                  Not Applicable
+                </span>
+              </span>
             </div>
           </div>
         </div>
