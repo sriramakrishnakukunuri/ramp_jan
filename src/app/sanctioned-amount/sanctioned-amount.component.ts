@@ -79,6 +79,7 @@ activeTab:any='APPLICATIONS_RECEIVED';
 
     }else if(activeTab=='DISBURSEMENT_DETAILS') {
   this.getdisburseList()
+  this.getSanctionList();
 
     }
   }
@@ -530,6 +531,12 @@ viewDIcFile(path: string) {
 this._commonService.openFile(path);
 
 }
+ viewFile(path:string){
+    if(path){
+    this._commonService.openFile(path)
+    }
+
+  }
 
 
 }

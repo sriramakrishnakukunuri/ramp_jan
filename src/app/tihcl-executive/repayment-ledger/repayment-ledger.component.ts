@@ -26,6 +26,7 @@ export class RepaymentLedgerComponent implements OnInit {
   
   // Modal instance
   private modalInstance: any;
+  private modalInstancePaymnets: any;
 
   constructor(
     private fb: FormBuilder,
@@ -38,11 +39,12 @@ export class RepaymentLedgerComponent implements OnInit {
   ngOnInit(): void {
     this.loadEnterpriseList();
     this.initializeModal();
+    this.initializeModalPayments();
   }
 
   createLedgerForm(): FormGroup {
     return this.fb.group({
-      ledgerDataId: [0],
+      // ledgerDataId: [0],
       transactionDate: ['', Validators.required],
       chargesNarration: ['', Validators.required],
       chargesAmount: [0, [Validators.required, Validators.min(0)]],
@@ -65,7 +67,18 @@ export class RepaymentLedgerComponent implements OnInit {
       });
     }
   }
-
+  initializeModalPayments(): void {
+    const modalElement = document.getElementById('ledgerPayablesModal');
+    if (modalElement) {
+      this.modalInstancePaymnets = new bootstrap.Modal(modalElement);
+      
+      // Reset form when modal is hidden
+      modalElement.addEventListener('hidden.bs.modal', () => {
+        this.resetForm();
+        this.isSubmitting = false;
+      });
+    }
+  }
   loadEnterpriseList(): void {
     // Replace with your actual API call to load enterprise list
     this._commonService.getDataByUrl(APIS.sanctionedAmount.getNewAppStatus).subscribe({
@@ -123,7 +136,7 @@ export class RepaymentLedgerComponent implements OnInit {
     
     const payload = {
       ...this.ledgerForm.value,
-      ledgerDataId: this.loanApplicationNo || 0,
+      // ledgerDataId: this.loanApplicationNo || 0,
       applicationNo: this.loanApplicationNo,
       registrationId: this.selectedApplicationData?.registrationId || this.selectedApplicationData?.registrationUsageId
     };
@@ -143,6 +156,7 @@ export class RepaymentLedgerComponent implements OnInit {
         this.resetForm();
       },
       error: (error:any) => {
+        
         this.isSubmitting = false;
         this.toastrService.error(error?.error?.message || "Failed to save receivable");
         console.error('Error saving receivable:', error);
@@ -165,7 +179,7 @@ export class RepaymentLedgerComponent implements OnInit {
     
     const payload = {
       ...this.ledgerForm.value,
-      ledgerDataId: this.loanApplicationNo || 0,
+      // ledgerDataId: this.loanApplicationNo || 0,
       applicationNo: this.loanApplicationNo,
       registrationId: this.selectedApplicationData?.registrationId || this.selectedApplicationData?.registrationUsageId
     };
@@ -176,7 +190,7 @@ export class RepaymentLedgerComponent implements OnInit {
         this.toastrService.success("payments saved successfully");
         
         // Close modal
-        this.modalInstance.hide();
+        this.modalInstancePaymnets.hide();
         
         // Refresh the repayment data
         this.loadRepaymentData(this.loanApplicationNo);
@@ -194,7 +208,7 @@ export class RepaymentLedgerComponent implements OnInit {
   resetForm(): void {
     this.ledgerForm.reset();
     this.ledgerForm.patchValue({
-      ledgerDataId: 0,
+      // ledgerDataId: 0,
       chargesAmount: 0,
       interestAmount: 0,
       principalAmount: 0,
