@@ -91,18 +91,29 @@ export class CaptureOutcomeDynamicComponent implements OnInit {
     })
   }
   getDynamicFormBasedOnOutCome(Outcome:any){
+    const outcomeTableName = this.ListOfOutCome.find(
+        (item: any) => (item.outcomeTableDisplayName === Outcome) )?.outcomeTableName;
     this.formData={}
     this.OutComeForm=new FormGroup({outcomesName:new FormControl('',[Validators.required])})
     this.OutComeForm.patchValue({outcomesName:Outcome})
     let type:any=''
-    console.log(Outcome.includes('ZEDCertification'),Outcome)
-    if(Outcome.includes('ZEDCertification')){
-      type=Outcome.split('-')
+    console.log(Outcome.includes('ZED'),Outcome)
+    if(Outcome.includes('ZED')){
+      // console.log('Outcome Table Display Name:', outcomeTableDisplayName);
+      type=Outcome.split(' ')[2]
       console.log(type)
-      Outcome=type[0]+'?type='+type[1]
+      Outcome=outcomeTableName+'?type='+type
     }
+    console.log(outcomeTableName.includes('ZEDCertification'))
     if(this.ParticipantData?.participantId || this.ParticipantData?.influencedId ){
-      this._commonService.getDataByUrl(APIS.captureOutcome.getDynamicFormDataBasedOnOutCome+(this.ParticipantData?.influencedId?this.ParticipantData?.influencedId:this.ParticipantData?.participantId)+'/'+Outcome+'?isInfluenced='+(this.ParticipantData?.influencedId?true:false)).subscribe({
+      let url:any =APIS.captureOutcome.getDynamicFormDataBasedOnOutCome+(this.ParticipantData?.influencedId?this.ParticipantData?.influencedId:this.ParticipantData?.participantId)+'/'+outcomeTableName+'?isInfluenced='+(this.ParticipantData?.influencedId?true:false)
+      if(outcomeTableName.includes('ZED')){
+        url =APIS.captureOutcome.getDynamicFormDataBasedOnOutCome+(this.ParticipantData?.influencedId?this.ParticipantData?.influencedId:this.ParticipantData?.participantId)+'/'+Outcome+'&isInfluenced='+(this.ParticipantData?.influencedId?true:false)
+      }
+      else{
+         url =APIS.captureOutcome.getDynamicFormDataBasedOnOutCome+(this.ParticipantData?.influencedId?this.ParticipantData?.influencedId:this.ParticipantData?.participantId)+'/'+outcomeTableName+'?isInfluenced='+(this.ParticipantData?.influencedId?true:false)
+      }
+      this._commonService.getDataByUrl(url).subscribe({
         next: (res: any) => {
           if(res.status==200){
           let object:any
@@ -149,9 +160,10 @@ export class CaptureOutcomeDynamicComponent implements OnInit {
       }
       
     })
-        if(this.OutComeForm.value?.outcomesName.includes('ZEDCertification')){
-           payload['zedCertificationType']=this.OutComeForm.value?.outcomesName.split('-')?.[1]
-      this.OutComeForm.value['outcomesName']=this.OutComeForm.value?.outcomesName.split('-')?.[0]
+        if(this.OutComeForm.value?.outcomesName.includes('ZED')){
+           payload['zedCertificationType']=this.OutComeForm.value?.outcomesName.split(' ')?.[2]
+      this.OutComeForm.value['outcomesName']= this.ListOfOutCome.find(
+        (item: any) => (item.outcomeTableDisplayName === this.OutComeForm.value?.outcomesName) )?.outcomeTableName;
      
     }
     formData.set("data", JSON.stringify({...payload,
