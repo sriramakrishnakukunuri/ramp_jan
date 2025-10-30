@@ -276,5 +276,6 @@ export const APIS = {
         getMSMEByMonth: API_BASE_URL + '/momsme/report/by-month',
         saveMonth: API_BASE_URL + '/momsme/submitted-save',
         getCuulativebyIntervention: API_BASE_URL + '/momsme/report/by-cumulative',
+        pushToMoMSME: API_BASE_URL + '/momsme/push-to-momsme'
     }
 }
