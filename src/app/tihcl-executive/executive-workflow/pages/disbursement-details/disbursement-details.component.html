@@ -399,9 +399,11 @@
               </div>
             </div>
             <div class="col-12 col-sm-6 col-md-6 col-lg-6">
+              <app-indian-rupees-input formControlName="amount" label="Amount" [required]="true"
+                               placeholder="Enter Amount"></app-indian-rupees-input>
               <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="amt1" formControlName="amount" placeholder="">
-                <label for="amt1">Amount <span class="text-danger">*</span></label>
+                <!-- <input type="text" class="form-control" id="amt1" formControlName="amount" placeholder="">
+                <label for="amt1">Amount <span class="text-danger">*</span></label> -->
                 <div *ngIf="af.amount.invalid && (af['amount']?.dirty || af['amount']?.touched)" class="text-danger">
                   <small *ngIf="af['amount']?.errors?.required">Amount is required</small>
                   <small *ngIf="af['amount']?.errors?.pattern">Please enter a valid amount</small>
