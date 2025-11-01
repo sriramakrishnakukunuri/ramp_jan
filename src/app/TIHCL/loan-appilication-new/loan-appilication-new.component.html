@@ -719,6 +719,7 @@
                           <div class="show-hide2" id="investmentYes" *ngIf="investmentBorrower === true">
                             <div class="row">
                               <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                                <!-- <app-indian-rupees-input  formControlName="overdueAmount" label="Overdue Amount (In Rs)" placeholder="Enter Amount" (valueChange)="ChangeAmount($event)"></app-indian-rupees-input> -->
                                 <div class="form-floating mb-3">
                                   <input type="number" class="form-control" id="sanctioned"
                                     (input)="ChangeAmount(this.applicationForm.get('amountReleased')?.value ,$any($event.target).value)"

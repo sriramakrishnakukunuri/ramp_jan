@@ -133,7 +133,7 @@
           <button [ngClass]="{ 'active':activeTab==='APPLICATIONS_NOT_CONSIDERED'}"
             *ngIf="loginsessionDetails?.userRole !='DIC'" (click)="onTabChange('APPLICATIONS_NOT_CONSIDERED')"
             class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#APPLICATIONS_RECEIVED"
-            type="button" role="tab" aria-controls="nav-home" aria-selected="true"> Ramp Checklist & Credit Appraisal
+            type="button" role="tab" aria-controls="nav-home" aria-selected="true"> RAMP Checklist
           </button>
           <button [ngClass]="{ 'active':activeTab==='PRIMARY_LENDER_NOC'}" *ngIf="loginsessionDetails?.userRole !='DIC'"
             (click)="onTabChange('PRIMARY_LENDER_NOC')" class="nav-link" id="nav-primary-lender-noc-tab"
@@ -292,10 +292,11 @@
                     available</span>
                 </div>
                 <div class="mb-2">
-                    <div *ngIf="DiagnosticDetails[0]?.unitVisitPhotos?.length > 0">
+                    <div>
                          <h6 class="fw-bold mb-2">
                     <i class="bi bi-file-earmark-pdf text-danger me-2"></i>Uploaded Unit Visit Photos</h6>
-                         <div *ngFor="let file of DiagnosticDetails[0]?.unitVisitPhotos; let i = index" class="mb-1 d-flex align-items-center gap-2">
+                    <ng-container  *ngIf="DiagnosticDetails[0]?.unitVisitPhotos?.length > 0">
+                            <div *ngFor="let file of DiagnosticDetails[0]?.unitVisitPhotos; let i = index" class="mb-1 d-flex align-items-center gap-2">
                      <div class="flex-grow-1">
                        <div class="d-flex align-items-center gap-2">
                          <i class="bi bi-file-earmark text-primary"></i>
@@ -307,8 +308,10 @@
                        <i class="bi bi-eye"></i>
                      </button>
                    </div>
+                    </ng-container >
+                     
                     </div>
-                      <span *ngIf="!DiagnosticDetails[0]?.unitVisitPhotos" class="text-muted ms-2">File not
+                      <span *ngIf="!DiagnosticDetails[0]?.unitVisitPhotos || DiagnosticDetails[0]?.unitVisitPhotos==0" class="text-muted ms-2">Files not
                     available</span>
                 </div>
                 
@@ -359,11 +362,11 @@
         <div *ngIf="activeTab === 'APPLICATIONS_NOT_CONSIDERED'">
 
 
-          <!-- Ramp Checklist & Credit Appraisal View -->
+          <!-- RAMP Checklist & Credit Appraisal View -->
           <div class="ms-3 me-2 my-4">
             <div class="card shadow-sm border-0">
               <div class="card-header bg-primary text-white">
-                <h5 class="mb-0 fw-bold">Ramp Checklist & Credit Appraisal</h5>
+                <h5 class="mb-0 fw-bold">RAMP Checklist</h5>
               </div>
               <div class="card-body">
                 <div class="row">
@@ -610,7 +613,7 @@
                   </div>
                 </div>
                 <!-- Credit Appraisal File Preview -->
-                <div class="mt-4">
+                <!--      
                   <h6 class="fw-bold">Credit Appraisal Document</h6>
                   <div
                     *ngIf="rampCheckLIst?.creditApprasialPath && rampCheckLIst.creditApprasialPath.trim().length > 0; else noCreditFile">
@@ -625,7 +628,7 @@
                   <ng-template #noCreditFile>
                     <p class="text-muted mb-0">File not available</p>
                   </ng-template>
-                </div>
+                </div> -->
               </div>
             </div>
           </div>
@@ -777,7 +780,7 @@
             <div class="card-header bg-primary text-white">
               <h5 class="mb-0">Disbursement Details</h5>
             </div>
-            <div class="card-body">
+            <div class="card-body " hidden>
               <!-- Summary Section -->
               <div class="row mb-4">
                 <div class="col-md-4 mb-2">
@@ -889,6 +892,34 @@
                   </tr>
                 </tbody>
               </table>
+            </div>
+             <div class="card-body">
+              <!-- Summary Section -->
+              <div class="row mb-4">
+                <!-- <div class="col-md-4 mb-2">
+                  <label class="fw-bold">Total Sanctioned Amount:</label>
+                  <div>{{ (disburseList?.totalSanctionedAmount | commaSeperation ) || 'N/A' }}</div>
+                </div> -->
+                <div class="col-md-4 mb-2">
+                  <label class="fw-bold">Type Of Loan:</label>
+                  <!-- <div>{{ (disburseList?.totalDisbursedAmount | commaSeperation ) ?? 'N/A' }}</div> -->
+                </div>
+                <div class="col-md-4 mb-2">
+                  <label class="fw-bold">Total Disbursed Amount:</label>
+                  <div>{{ (disburseList?.totalDisbursedAmount | commaSeperation ) ?? 'N/A' }}</div>
+                </div>
+                <div class="col-md-4 mb-2">
+                  <label class="fw-bold">Disbursement Date:</label>
+                  <div>{{ disburseList?.collectionDate | date:'dd/MM/yyyy' }}</div>
+                </div>
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3" >
+                  <label class="fw-bold">ROI (%):</label>
+                  <div>{{ sanctionList?.roi !== null && sanctionList?.roi !== undefined ?
+                                        sanctionList.roi : 'N/A' }}</div>
+                </div>
+               
+              </div>
+
             </div>
           </div>
         </div>

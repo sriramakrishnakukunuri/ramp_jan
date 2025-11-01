@@ -9,10 +9,13 @@ import { LoaderService } from '@app/common_components/loader-service.service';
   styleUrls: ['./sa-preliminary.component.css']
 })
 export class SAPreliminaryComponent implements OnInit,OnChanges {
+  loginsessionDetails:any
 @Input() selectedEnterprise=""
   constructor(private _commonService:CommonServiceService,
     private loaderService:LoaderService
-  ) { }
+  ) { 
+     this.loginsessionDetails = JSON.parse(sessionStorage.getItem('user') || '{}');  
+  }
 
   ngOnInit(): void {
     this.getData()

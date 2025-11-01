@@ -755,13 +755,13 @@
 
             <!-- Raw material -->
             <div class="col-12 col-sm-6 col-md-4 col-lg-4">
-              <div class="form-floating mb-3">
+              <app-indian-rupees-input formControlName="rawMaterials" label="Raw material(In Rs)" (valueChange)="OnchangeValue()" placeholder="Enter Amount"></app-indian-rupees-input>
+              <!-- <div class="form-floating mb-3">
                 <input type="number" class="form-control" id="stocks4" name="rawMaterials" placeholder=""
                   formControlName="rawMaterials" min="0" (input)="OnchangeValue()">
-                <!-- <input type="text" class="form-control" id="stocks4" name="rawMaterials" placeholder="" -->
-                <!-- formControlName="rawMaterials"> -->
+               
                 <label for="stocks4">Raw material(In Rs) <span class="text-danger"> *</span></label>
-              </div>
+              </div> -->
               <div
                 *ngIf="unitVisitForm.get('rawMaterials')?.errors?.['required'] && (unitVisitForm.get('rawMaterials')?.dirty || unitVisitForm.get('rawMaterials')?.touched)"
                 class="text-danger">
@@ -774,13 +774,13 @@
 
             <!-- Work in Progress -->
             <div class="col-12 col-sm-6 col-md-4 col-lg-4">
-              <div class="form-floating mb-3">
+               <app-indian-rupees-input formControlName="workInProgress" label="Work in Progress(In Rs)" (valueChange)="OnchangeValue()" placeholder="Enter Amount"></app-indian-rupees-input>
+              <!-- <div class="form-floating mb-3">
                 <input type="number" class="form-control" id="stocks5" name="workInProgress" placeholder=""
                   formControlName="workInProgress" min="0" (input)="OnchangeValue()">
-                <!-- <input type="text" class="form-control" id="stocks5" name="workInProgress" placeholder="" -->
-                <!-- formControlName="workInProgress"> -->
+               
                 <label for="stocks5">Work in Progress(In Rs) <span class="text-danger"> *</span></label>
-              </div>
+              </div> -->
               <div
                 *ngIf="unitVisitForm.get('workInProgress')?.errors?.['required'] && (unitVisitForm.get('workInProgress')?.dirty || unitVisitForm.get('workInProgress')?.touched)"
                 class="text-danger">
@@ -793,13 +793,14 @@
 
             <!-- Finished Goods -->
             <div class="col-12 col-sm-6 col-md-4 col-lg-4">
-              <div class="form-floating mb-3">
+              <app-indian-rupees-input formControlName="finishedGoods" label="Finished Goods(In Rs)" (valueChange)="OnchangeValue()" placeholder="Enter Amount"></app-indian-rupees-input>
+              
+              <!-- <div class="form-floating mb-3">
                 <input type="number" class="form-control" id="stocks6" name="finishedGoods" placeholder=""
                   formControlName="finishedGoods" min="0" (input)="OnchangeValue()">
-                <!-- <input type="text" class="form-control" id="stocks6" name="finishedGoods" placeholder="" -->
-                <!-- formControlName="finishedGoods"> -->
+               
                 <label for="stocks6">Finished Goods(In Rs) <span class="text-danger"> *</span></label>
-              </div>
+              </div> -->
               <div
                 *ngIf="unitVisitForm.get('finishedGoods')?.errors?.['required'] && (unitVisitForm.get('finishedGoods')?.dirty || unitVisitForm.get('finishedGoods')?.touched)"
                 class="text-danger">
@@ -811,10 +812,12 @@
             </div>
             <!-- Value of the stock -->
             <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+              <app-indian-rupees-input formControlName="valueOfTheStock" label="Value of the stock as(In Rs)"  placeholder="Enter Amount"></app-indian-rupees-input>
+              
               <div class="form-floating mb-3">
-                <input type="number" class="form-control" id="stocks3" name="valueOfTheStock" placeholder=""
+                <!-- <input type="number" class="form-control" id="stocks3" name="valueOfTheStock" placeholder=""
                   formControlName="valueOfTheStock" min="0">
-                <label for="stocks3">Value of the stock as(In Rs) <span class="text-danger"> *</span></label>
+                <label for="stocks3">Value of the stock as(In Rs) <span class="text-danger"> *</span></label> -->
                 <div
                   *ngIf="unitVisitForm.get('valueOfTheStock')?.errors?.['required'] && (unitVisitForm.get('valueOfTheStock')?.dirty || unitVisitForm.get('valueOfTheStock')?.touched)"
                   class="text-danger">
@@ -1075,10 +1078,12 @@
               </div>
             </div>
             <div class="col-12 col-sm-6 col-md-6 col-lg-6">
+              <app-indian-rupees-input formControlName="costOfMachinePurchased" label="Cost of machine purchased" [required]="true"  placeholder="Enter Amount"></app-indian-rupees-input>
+              
               <div class="form-floating mb-3">
-                <input type="number" class="form-control" id="machineCost" name="costOfMachinePurchased"
+                <!-- <input type="number" class="form-control" id="machineCost" name="costOfMachinePurchased"
                   formControlName="costOfMachinePurchased" placeholder="" min="0">
-                <label for="machineCost">Cost of machine purchased <span class="text-danger"> *</span></label>
+                <label for="machineCost">Cost of machine purchased <span class="text-danger"> *</span></label> -->
                 <div
                   *ngIf="machineForm.get('costOfMachinePurchased')?.errors?.['required'] && 
                         (machineForm.get('costOfMachinePurchased')?.dirty || machineForm.get('costOfMachinePurchased')?.touched)"
@@ -1103,10 +1108,12 @@
               </div>
             </div>
             <div class="col-12 col-sm-6 col-md-6 col-lg-6">
+              <app-indian-rupees-input formControlName="valueOfMachinery" label="Current value of machinery" [required]="true"  placeholder="Enter Amount"></app-indian-rupees-input>
+              
               <div class="form-floating mb-3">
-                <input type="number" class="form-control" id="valueMachinary" name="valueOfMachinery"
+                <!-- <input type="number" class="form-control" id="valueMachinary" name="valueOfMachinery"
                   formControlName="valueOfMachinery" placeholder="" min="0">
-                <label for="valueMachinary">Current value of machinery <span class="text-danger"> *</span></label>
+                <label for="valueMachinary">Current value of machinery <span class="text-danger"> *</span></label> -->
                 <div *ngIf="machineForm.get('valueOfMachinery')?.errors?.['required'] && 
                         (machineForm.get('valueOfMachinery')?.dirty || machineForm.get('valueOfMachinery')?.touched)"
                   class="text-danger">

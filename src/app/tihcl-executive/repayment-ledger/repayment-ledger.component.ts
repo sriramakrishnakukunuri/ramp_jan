@@ -19,7 +19,7 @@ export class RepaymentLedgerComponent implements OnInit {
   repaymentLedgerList: any = [];
   loanApplicationNo: string = '';
   selectedApplicationData: any = null;
-  
+   today:any= this._commonService.getDate();
   // Form properties
   ledgerForm: FormGroup;
   isSubmitting: boolean = false;
@@ -46,11 +46,11 @@ export class RepaymentLedgerComponent implements OnInit {
     return this.fb.group({
       // ledgerDataId: [0],
       transactionDate: ['', Validators.required],
-      chargesNarration: ['', Validators.required],
+      chargesNarration: ['', ],
       chargesAmount: [0, [Validators.required, Validators.min(0)]],
-      interestNarration: ['', Validators.required],
+      interestNarration: ['', ],
       interestAmount: [0, [Validators.required, Validators.min(0)]],
-      principalNarration: ['', Validators.required],
+      principalNarration: ['', ],
       principalAmount: [0, [Validators.required, Validators.min(0)]]
     });
   }

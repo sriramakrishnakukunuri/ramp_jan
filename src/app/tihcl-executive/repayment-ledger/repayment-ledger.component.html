@@ -30,7 +30,12 @@
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-lg-8"></div>
+                        <div class="col-lg-8">
+                            <div class="alert alert-info">
+                                <strong>Application No : </strong> <span>{{ loanApplicationNo }}</span> &nbsp; | &nbsp;
+                                <strong>Enterprise Name : </strong><span>{{ selectedApplicationData?.enterpriseName }}</span> 
+                            </div>
+                        </div>
                         <div class="col-lg-4">
                             <mat-form-field appearance="outline" class="w-100">
                                 <mat-label>Select Application No</mat-label>
@@ -99,7 +104,7 @@
 
 <!-- Ledger Receivables Modal -->
 <div class="modal fade" id="ledgerReceivablesModal" #ledgerReceivablesModal tabindex="-1" aria-labelledby="ledgerReceivablesModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-xl">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header py-2 bg-theme">
                 <h6 class="modal-title text-white" id="ledgerReceivablesModalLabel">
@@ -113,14 +118,15 @@
             <div class="modal-body">
                 <form [formGroup]="ledgerForm" (ngSubmit)="onSubmit()">
                     <div class="row mb-3">
-                        <div class="col-12">
+                       <div class="col-12">
                             <div class="alert alert-info">
-                                <strong>Application No:</strong> {{ loanApplicationNo }}
+                                <strong>Application No : </strong> <span>{{ loanApplicationNo }}</span> &nbsp; | &nbsp;
+                                <strong>Enterprise Name : </strong><span>{{ selectedApplicationData?.enterpriseName }}</span> 
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-12 col-md-6 col-lg-4 mb-3">
+                        <div class="row">
+                        <div class="col-12 col-md-4 col-lg-4 mb-3">
                             <div class="form-floating">
                                 <input type="date" class="form-control" id="transactionDateModal" formControlName="transactionDate" placeholder="">
                                 <label for="transactionDateModal">Transaction Date <span class="text-danger">*</span></label>
@@ -131,7 +137,7 @@
                         </div>
                         </div>
                         <div class="row">
-                        <div class="col-12 col-md-6 mb-3">
+                        <div class="col-12 col-md-4 col-lg-4 mb-3">
                             <div class="form-floating">
                                 <input type="number" class="form-control" id="chargesAmountModal" formControlName="chargesAmount" placeholder="0.00" min="0" step="0.01">
                                 <label for="chargesAmountModal">Charges Amount <span class="text-danger">*</span></label>
@@ -140,16 +146,18 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12 col-md-6 mb-3">
+                        <div class="col-12 col-md-4 col-lg-4 mb-3">
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="chargesNarrationModal" formControlName="chargesNarration" placeholder="">
-                                <label for="chargesNarrationModal">Charges Narration <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="chargesNarrationModal" formControlName="chargesNarration" placeholder="" [required]="f['chargesAmount'].value > 0">
+                                <label for="chargesNarrationModal">Charges Narration <span *ngIf="f['chargesAmount'].value > 0" class="text-danger">*</span></label>
                                 <div *ngIf="f['chargesNarration'].invalid && f['chargesNarration'].touched" class="text-danger">
                                     Charges narration is required
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12 col-md-6 mb-3">
+                        </div>
+                        <div class="row">
+                        <div class="col-12 col-md-4 col-lg-4 mb-3">
                             <div class="form-floating">
                                 <input type="number" class="form-control" id="interestAmountModal" formControlName="interestAmount" placeholder="0.00" min="0" step="0.01">
                                 <label for="interestAmountModal">Interest Amount <span class="text-danger">*</span></label>
@@ -158,16 +166,18 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12 col-md-6 mb-3">
+                        <div class="col-12 col-md-4 col-lg-4 mb-3">
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="interestNarrationModal" formControlName="interestNarration" placeholder="">
-                                <label for="interestNarrationModal">Interest Narration <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="interestNarrationModal" formControlName="interestNarration" placeholder="" [required]="f['interestAmount'].value > 0">
+                                <label for="interestNarrationModal">Interest Narration <span *ngIf="f['interestAmount'].value > 0" class="text-danger">*</span></label>
                                 <div *ngIf="f['interestNarration'].invalid && f['interestNarration'].touched" class="text-danger">
                                     Interest narration is required
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12 col-md-6 mb-3">
+                        </div>
+                        <div class="row">
+                        <div class="col-12 col-md-4 col-lg-4 mb-3">
                             <div class="form-floating">
                                 <input type="number" class="form-control" id="principalAmountModal" formControlName="principalAmount" placeholder="0.00" min="0" step="0.01">
                                 <label for="principalAmountModal">Principal Amount <span class="text-danger">*</span></label>
@@ -176,16 +186,16 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12 col-md-6 mb-3">
+                        <div class="col-12 col-md-4 col-lg-4 mb-3">
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="principalNarrationModal" formControlName="principalNarration" placeholder="">
-                                <label for="principalNarrationModal">Principal Narration <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="principalNarrationModal" formControlName="principalNarration" placeholder="" [required]="f['principalAmount'].value > 0">
+                                <label for="principalNarrationModal">Principal Narration <span *ngIf="f['principalAmount'].value > 0" class="text-danger">*</span></label>
                                 <div *ngIf="f['principalNarration'].invalid && f['principalNarration'].touched" class="text-danger">
                                     Principal narration is required
                                 </div>
                             </div>
                         </div>
-                    </div>
+                        </div>
                     <div class="text-end">
                         <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal"><i class="bi bi-x-circle me-1"></i>Close</button>
                         <button type="submit" class="btn btn-primary me-2" [disabled]="ledgerForm.invalid || isSubmitting">
@@ -200,7 +210,7 @@
     </div>
 </div>
 <div class="modal fade" id="ledgerPayablesModal" #ledgerPayablesModal tabindex="-1" aria-labelledby="ledgerPayablesModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-xl">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header py-2 bg-theme">
                 <h6 class="modal-title text-white" id="ledgerPayablesModalLabel">
@@ -216,14 +226,15 @@
                     <div class="row mb-3">
                         <div class="col-12">
                             <div class="alert alert-info">
-                                <strong>Application No:</strong> {{ loanApplicationNo }}
+                                <strong>Application No : </strong> <span>{{ loanApplicationNo }}</span> &nbsp; | &nbsp;
+                                <strong>Enterprise Name : </strong><span>{{ selectedApplicationData?.enterpriseName }}</span> 
                             </div>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-12 col-md-6 col-lg-4 mb-3">
+                        <div class="col-12 col-md-4 col-lg-4 mb-3">
                             <div class="form-floating">
-                                <input type="date" class="form-control" id="transactionDateModal" formControlName="transactionDate" placeholder="">
+                                <input type="date" class="form-control" id="transactionDateModal" max="{{ today | date:'yyyy-MM-dd' }}" formControlName="transactionDate" placeholder="">
                                 <label for="transactionDateModal">Transaction Date <span class="text-danger">*</span></label>
                                 <div *ngIf="f['transactionDate'].invalid && f['transactionDate'].touched" class="text-danger">
                                     Transaction date is required
@@ -232,7 +243,7 @@
                         </div>
                         </div>
                         <div class="row">
-                        <div class="col-12 col-md-6 mb-3">
+                        <div class="col-12 col-md-4 col-lg-4 mb-3">
                             <div class="form-floating">
                                 <input type="number" class="form-control" id="chargesAmountModal" formControlName="chargesAmount" placeholder="0.00" min="0" step="0.01">
                                 <label for="chargesAmountModal">Charges Amount <span class="text-danger">*</span></label>
@@ -241,16 +252,18 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12 col-md-6 mb-3">
+                        <div class="col-12 col-md-4 col-lg-4 mb-3">
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="chargesNarrationModal" formControlName="chargesNarration" placeholder="">
-                                <label for="chargesNarrationModal">Charges Narration <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="chargesNarrationModal" formControlName="chargesNarration" placeholder="" [required]="ledgerForm.get('chargesAmount')?.value > 0">
+                                <label for="chargesNarrationModal">Charges Narration <span *ngIf="f['chargesAmount'].value > 0" class="text-danger">*</span></label>
                                 <div *ngIf="f['chargesNarration'].invalid && f['chargesNarration'].touched" class="text-danger">
                                     Charges narration is required
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12 col-md-6 mb-3">
+                        </div>
+                        <div class="row">
+                        <div class="col-12 col-md-4 col-lg-4 mb-3">
                             <div class="form-floating">
                                 <input type="number" class="form-control" id="interestAmountModal" formControlName="interestAmount" placeholder="0.00" min="0" step="0.01">
                                 <label for="interestAmountModal">Interest Amount <span class="text-danger">*</span></label>
@@ -259,16 +272,18 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12 col-md-6 mb-3">
+                        <div class="col-12 col-md-4 col-lg-4 mb-3">
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="interestNarrationModal" formControlName="interestNarration" placeholder="">
-                                <label for="interestNarrationModal">Interest Narration <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="interestNarrationModal" formControlName="interestNarration" placeholder="" [required]="f['interestAmount'].value > 0">
+                                <label for="interestNarrationModal">Interest Narration <span *ngIf="f['interestAmount'].value > 0"  class="text-danger">*</span></label>
                                 <div *ngIf="f['interestNarration'].invalid && f['interestNarration'].touched" class="text-danger">
                                     Interest narration is required
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12 col-md-6 mb-3">
+                        </div>
+                        <div class="row">
+                        <div class="col-12 col-md-4 col-lg-4 mb-3">
                             <div class="form-floating">
                                 <input type="number" class="form-control" id="principalAmountModal" formControlName="principalAmount" placeholder="0.00" min="0" step="0.01">
                                 <label for="principalAmountModal">Principal Amount <span class="text-danger">*</span></label>
@@ -277,16 +292,17 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12 col-md-6 mb-3">
+                        <div class="col-12 col-md-4 col-lg-4 mb-3">
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="principalNarrationModal" formControlName="principalNarration" placeholder="">
-                                <label for="principalNarrationModal">Principal Narration <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="principalNarrationModal" formControlName="principalNarration" placeholder="" [required]="f['principalAmount'].value > 0">
+                                <label for="principalNarrationModal">Principal Narration <span *ngIf="f['principalAmount'].value > 0" class="text-danger">*</span></label>
                                 <div *ngIf="f['principalNarration'].invalid && f['principalNarration'].touched" class="text-danger">
                                     Principal narration is required
                                 </div>
                             </div>
                         </div>
-                    </div>
+                        </div>
+                    
                     <div class="text-end">
                         <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal"><i class="bi bi-x-circle me-1"></i>Close</button>
                         <button type="submit" class="btn btn-primary me-2" [disabled]="ledgerForm.invalid || isSubmitting">

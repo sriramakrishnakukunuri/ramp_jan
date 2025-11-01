@@ -24,7 +24,7 @@
                   <th>Nature Of Activity</th>
                   <th>Factory Location</th>
                   <th>Source of Application</th>
-                  <th *ngIf="registrationDetails?.sourceOfApplication=='Awareness programme'" >Ramp Program Name</th>
+                  <th *ngIf="registrationDetails?.sourceOfApplication=='Awareness programme'" >RAMP Program Name</th>
                 </tr>
               </thead>
               <tbody>
@@ -49,9 +49,9 @@
             <h5 class="fw-bold mb-3"><i class="bi bi-exclamation-triangle me-2 text-danger"></i>Problems Faced by the Unit</h5>
             <div class="ps-2 text-muted fs-6">{{ registrationDetails?.problemsFaced || 'N/A' }}</div>
           </div>
-          <div>
+          <div >
             <h5 class="fw-bold mb-3"><i class="bi bi-bar-chart-line me-2 text-success"></i>Stress Score</h5>
-            <div class="table-responsive mb-3">
+            <div class="table-responsive mb-3" *ngIf="loginsessionDetails?.userRole !='DIC'">
               <table class="table align-middle">
               <thead class="bg-theme text-white">
                 <tr>
@@ -69,10 +69,20 @@
               </tbody>
               </table>
             </div>
+             <div class="d-flex justify-content-between mb-3">
+            <div>
+               <p class="badge bg-warning rounded-pill fs-md mb-0">
+                Note :<span class="ms-2">(Score ≤ 30 and ≥80  : Not Applicable)</span>
+            </p>
+            </div>
             <div class="text-end">
+            <p class="badge bg-dark rounded-pill fs-md mb-0">Total Risk Score: <span>  {{ registrationDetails?.riskCategoryScore }}%</span></p>
+          </div>
+            
+          </div>
+            <!-- <div class="text-end">
               <span class="fw-bold">Total Risk Score:</span>
               <span class="badge bg-primary fs-6 ms-2">
-                <!-- Stress Score {{ registrationDetails?.riskCategoryScore }} -->
                 <span *ngIf="registrationDetails?.riskCategoryScore > 30 && registrationDetails?.riskCategoryScore < 80">
                   {{ registrationDetails?.riskCategoryScore }}
                 </span>
@@ -80,7 +90,7 @@
                   Not Applicable
                 </span>
               </span>
-            </div>
+            </div> -->
           </div>
         </div>
       

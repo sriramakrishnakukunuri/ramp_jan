@@ -204,7 +204,7 @@ const routes: Routes = [
         path: 'sanctioned-amount',
         component: SanctionedAmountComponent,
         canActivate: [AuthGuard],
-        data: { roles: [Role.TIHCL_COI,Role.TIHCL_DIC] }
+        data: { roles: [Role.TIHCL_COI,Role.TIHCL_DIC,Role.TIHCL_MANAGER,Role.TIHCL_EXECUTOR] }
     },
     {
         path: 'pending-application',
@@ -222,7 +222,7 @@ const routes: Routes = [
         path: 'view-application',
         component: ViewApplicationsComponent,
         canActivate: [AuthGuard],
-        data: { roles: [Role.TIHCL_COI,Role.TIHCL_DIC] }
+        data: { roles: [Role.TIHCL_COI,Role.TIHCL_DIC,Role.TIHCL_MANAGER,Role.TIHCL_EXECUTOR] }
     },
       {
         path: 'DIC-NOC',

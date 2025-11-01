@@ -309,8 +309,8 @@
                              <tr *ngFor="let buyer of buyers.controls; let i = index" [formGroupName]="i">
                                <td class="text-start">{{i + 1}}</td>
                                <td>{{ buyer.get('buyerName')?.value }}</td>
-                              <!-- <td class="text-start">{{ buyer.get('purchasedQty')?.value }}</td> -->
-                              <td class="text-start">{{ buyer.get('amount')?.value  | commaSeperation  }}</td>
+                               <!-- <td class="text-start">{{ buyer.get('purchasedQty')?.value }}</td> -->
+                               <td class="text-start">{{ buyer.get('amount')?.value  | commaSeperation  }}</td>
                                <td>{{ buyer.get('remarks')?.value || '-' }}</td>
                                <td class="text-center">
                                  <button type="button" [ngClass]="{'isDisabled':!(freeze<=4)}"
@@ -453,10 +453,12 @@
                              </div>
                            </div> -->
                            <div class="col-12 col-sm-6 col-md-6 col-lg-6">
+                             <app-indian-rupees-input formControlName="amount" label="Amount (In Rs)" [required]="true"
+                               placeholder="Enter Amount"></app-indian-rupees-input>
                              <div class="form-floating mb-3">
-                               <input type="number" class="form-control" id="amt" placeholder=""
+                               <!-- <input type="number" class="form-control" id="amt" placeholder=""
                                  formControlName="amount" min="0">
-                               <label for="amt">Amount <span class="text-danger">*</span></label>
+                               <label for="amt">Amount <span class="text-danger">*</span></label> -->
                                <div
                                  *ngIf="buyerForm.get('amount')?.invalid && (buyerForm.get('amount')?.dirty || buyerForm.get('amount')?.touched)"
                                  class="text-danger small">
@@ -526,10 +528,12 @@
                              </div>
                            </div> -->
                            <div class="col-12 col-sm-6 col-md-6 col-lg-6">
+                             <app-indian-rupees-input formControlName="amount" label="Amount (In Rs)" [required]="true"
+                               placeholder="Enter Amount"></app-indian-rupees-input>
                              <div class="form-floating mb-3">
-                               <input type="number" class="form-control" id="amtSeller" placeholder=""
+                               <!-- <input type="number" class="form-control" id="amtSeller" placeholder=""
                                  formControlName="amount" min="0">
-                               <label for="amtSeller">Amount <span class="text-danger">*</span></label>
+                               <label for="amtSeller">Amount <span class="text-danger">*</span></label> -->
                                <div
                                  *ngIf="supplierForm.get('amount')?.invalid && (supplierForm.get('amount')?.dirty || supplierForm.get('amount')?.touched)"
                                  class="text-danger small">
@@ -626,7 +630,7 @@
 
                                  <td></td>
                                  <td>Total</td>
-                                 <td>{{ getTotalReceivables() }}</td>
+                                 <td>{{ getTotalReceivables() | commaSeperation}}</td>
                                  <td></td>
                                </tr>
                              </tfoot>
@@ -694,7 +698,7 @@
 
                                  <td></td>
                                  <td>Total</td>
-                                 <td>{{ getTotalPayables() }}</td>
+                                 <td>{{ getTotalPayables() | commaSeperation}}</td>
                                  <td></td>
                                </tr>
                              </tfoot>
@@ -766,11 +770,13 @@
                              </div>
                            </div> -->
                            <div class="col-12">
+                             <app-indian-rupees-input formControlName="receivableAmount" label="Receivable Amount"
+                               [required]="true" placeholder="Enter Amount"></app-indian-rupees-input>
                              <div class="form-floating mb-3">
-                               <input type="number" class="form-control" id="receivableAmount" placeholder=""
+                               <!-- <input type="number" class="form-control" id="receivableAmount" placeholder=""
                                  formControlName="receivableAmount" min="0">
                                <label for="receivableAmount">Receivable Amount <span
-                                   class="text-danger">*</span></label>
+                                   class="text-danger">*</span></label> -->
                                <div
                                  *ngIf="receivableForm.get('receivableAmount')?.invalid && (receivableForm.get('receivableAmount')?.dirty || receivableForm.get('receivableAmount')?.touched)"
                                  class="text-danger small">
@@ -834,10 +840,13 @@
                              </div>
                            </div> -->
                            <div class="col-12">
+                             <app-indian-rupees-input formControlName="payableAmount" label="Payable Amount"
+                               [required]="true" placeholder="Enter Amount"></app-indian-rupees-input>
+
                              <div class="form-floating mb-3">
-                               <input type="number" class="form-control" id="payablesAmount" placeholder=""
+                               <!-- <input type="number" class="form-control" id="payablesAmount" placeholder=""
                                  formControlName="payableAmount" min="0">
-                               <label for="payablesAmount">Payable Amount <span class="text-danger">*</span></label>
+                               <label for="payablesAmount">Payable Amount <span class="text-danger">*</span></label> -->
                                <div
                                  *ngIf="payableForm.get('payableAmount')?.invalid && (payableForm.get('payableAmount')?.dirty || payableForm.get('payableAmount')?.touched)"
                                  class="text-danger small">
@@ -1015,7 +1024,7 @@
                              <tfoot *ngIf="orderBookPositions.length > 0">
                                <tr>
                                  <td colspan="2" class="text-end fw-bold">Total Order Value:</td>
-                                 <td class="fw-bold">{{getTotalOrderValue() | number}}</td>
+                                 <td class="fw-bold">{{getTotalOrderValue() | commaSeperation}}</td>
                                  <td colspan="2"></td>
                                </tr>
                              </tfoot>
@@ -1102,9 +1111,11 @@
                              <label class="fs-md fw-600">How much loan is required</label>
                            </div>
                            <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                             <app-indian-rupees-input formControlName="requiredLoanAmount" placeholder="Enter Amount">
+                             </app-indian-rupees-input>
                              <!-- <input type="text" class="form-control form-control-sm" placeholder="Loan"> -->
-                             <input type="number" class="form-control" placeholder=""
-                               formControlName="requiredLoanAmount" min="0">
+                             <!-- <input type="number" class="form-control" placeholder=""
+                               formControlName="requiredLoanAmount" min="0"> -->
                            </div>
                          </div>
                        </div>
@@ -1164,8 +1175,10 @@
                                <label class="fs-md fw-600">Subsidy Amount Pending</label>
                              </div>
                              <div class="col-12 col-sm-6 col-md-4 col-lg-4">
-                               <input type="number" class="form-control" id="modalSubsidyAmount"
-                                 formControlName="subsidyAmountPending" min="0">
+                               <app-indian-rupees-input formControlName="subsidyAmountPending"
+                                 placeholder="Enter Amount"></app-indian-rupees-input>
+                               <!-- <input type="number" class="form-control" id="modalSubsidyAmount"
+                                 formControlName="subsidyAmountPending" min="0"> -->
                              </div>
                            </div>
                          </div>
@@ -1251,11 +1264,13 @@
 
                          <div class="row mb-3">
                            <div class="col-md-12">
-                             <div class="form-floating">
+                             <app-indian-rupees-input formControlName="orderValue" label="Order Value" [required]="true"
+                               placeholder="Enter Amount"></app-indian-rupees-input>
+                             <!-- <div class="form-floating">
                                <input type="number" class="form-control" id="modalOrderValue"
                                  formControlName="orderValue" min="0">
                                <label for="modalOrderValue">Order Value <span class="text-danger">*</span></label>
-                             </div>
+                             </div> -->
                            </div>
                          </div>
 
@@ -1307,10 +1322,14 @@
 
                          <div class="row mb-3">
                            <div class="col-md-12">
+                             <app-indian-rupees-input formControlName="loanAmount" label="Loan Amount" [required]="true"
+                               placeholder="Enter Amount"></app-indian-rupees-input>
+
                              <div class="form-floating">
-                               <input type="number" class="form-control" id="modalLoanAmount"
+
+                               <!-- <input type="number" class="form-control" id="modalLoanAmount"
                                  formControlName="loanAmount" min="0">
-                               <label for="modalLoanAmount">Loan Amount <span class="text-danger">*</span></label>
+                               <label for="modalLoanAmount">Loan Amount <span class="text-danger">*</span></label> -->
                              </div>
                            </div>
                          </div>
@@ -1566,11 +1585,14 @@
 
                            <!-- Turnover As Per Bank Statement -->
                            <div class="col-12 col-md-6 mb-3">
-                             <div class="form-floating">
+                             <app-indian-rupees-input formControlName="turnoverAsPerBankStatement"
+                               label="Turnover (Bank Statement)" placeholder="Enter Amount"></app-indian-rupees-input>
+
+                             <!-- <div class="form-floating">
                                <input type="number" class="form-control" id="turnoverAsPerBankStatement"
                                  formControlName="turnoverAsPerBankStatement" min="0">
                                <label for="turnoverAsPerBankStatement">Turnover (Bank Statement)</label>
-                             </div>
+                             </div> -->
                              <div *ngIf="balanceSheetsForm.get('turnoverAsPerBankStatement')?.invalid"
                                class="text-danger small">
                                Must be a positive number
@@ -1656,10 +1678,13 @@
 
                            <!-- TOL -->
                            <div class="col-12 col-md-6 mb-3">
-                             <div class="form-floating">
+                             <app-indian-rupees-input formControlName="tol" label="Total Outside Liabilities (TOL)"
+                               placeholder="Enter Amount"></app-indian-rupees-input>
+
+                             <!-- <div class="form-floating">
                                <input type="number" class="form-control" id="tol" formControlName="tol" min="0">
                                <label for="tol">Total Outside Liabilities (TOL)</label>
-                             </div>
+                             </div> -->
                              <div *ngIf="balanceSheetsForm.get('tol')?.invalid" class="text-danger small">
                                Must be a positive number
                              </div>
@@ -1667,10 +1692,12 @@
 
                            <!-- TNW -->
                            <div class="col-12 col-md-6 mb-3">
-                             <div class="form-floating">
+                             <app-indian-rupees-input formControlName="tnw" label="Tangible Net Worth (TNW)"
+                               placeholder="Enter Amount"></app-indian-rupees-input>
+                             <!-- <div class="form-floating">
                                <input type="number" class="form-control" id="tnw" formControlName="tnw" min="0">
                                <label for="tnw">Tangible Net Worth (TNW)</label>
-                             </div>
+                             </div> -->
                              <div *ngIf="balanceSheetsForm.get('tnw')?.invalid" class="text-danger small">
                                Must be a positive number
                              </div>
@@ -1690,23 +1717,29 @@
 
                            <!-- Current Assets -->
                            <div class="col-12 col-md-6 mb-3">
-                             <div class="form-floating">
+                             <app-indian-rupees-input formControlName="currentAssets" label="Current Assets"
+                               placeholder="Enter Amount"></app-indian-rupees-input>
+
+                             <!-- <div class="form-floating">
                                <input type="number" class="form-control" id="currentAssets"
                                  formControlName="currentAssets" min="0">
                                <label for="currentAssets">Current Assets</label>
-                             </div>
+                             </div> -->
                              <div *ngIf="balanceSheetsForm.get('currentAssets')?.invalid" class="text-danger small">
                                Must be a positive number
                              </div>
                            </div>
-
-                           <!-- Current Liabilities -->
                            <div class="col-12 col-md-6 mb-3">
-                             <div class="form-floating">
-                               <input type="number" class="form-control" id="currentLiabilities"
-                                 formControlName="currentLiabilities" min="0">
-                               <label for="currentLiabilities">Current Liabilities</label>
-                             </div>
+                             <!-- Current Liabilities -->
+                             <!--
+                           <div class="form-floating">
+                             <input type="number" class="form-control" id="currentLiabilities"
+                             formControlName="currentLiabilities" min="0">
+                             <label for="currentLiabilities">Current Liabilities</label>
+                           </div>
+                           -->
+                             <app-indian-rupees-input formControlName="currentLiabilities" label="Current Liabilities"
+                               placeholder="Enter Amount"></app-indian-rupees-input>
                              <div *ngIf="balanceSheetsForm.get('currentLiabilities')?.invalid"
                                class="text-danger small">
                                Must be a positive number

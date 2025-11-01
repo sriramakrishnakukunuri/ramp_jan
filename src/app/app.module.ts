@@ -71,6 +71,7 @@ import { SAPreliminaryComponent } from './PIA/sa-preliminary/sa-preliminary.comp
 import { CommonFileViewerComponent } from './common_components/common-file-viewer/common-file-viewer.component';
 import { CommaSeperationPipe } from './common_components/comma-seperation.pipe';
 import { RepaymentLedgerComponent } from './tihcl-executive/repayment-ledger/repayment-ledger.component';
+import { IndianRupeesInputComponent } from './common_components/indian-rupees-input/indian-rupees-input.component';
 @NgModule({
     imports: [
         MatSelectModule,
@@ -129,6 +130,7 @@ import { RepaymentLedgerComponent } from './tihcl-executive/repayment-ledger/rep
         CommonFileViewerComponent,
         CommaSeperationPipe,
         RepaymentLedgerComponent,
+        IndianRupeesInputComponent,
     ],
     exports:[
         LoaderComponent

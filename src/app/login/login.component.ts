@@ -81,13 +81,13 @@ export class LoginComponent implements OnInit {
                         if(res.userRole === Role.Admin){
                             this.router.navigateByUrl('/veiw-program-creation');
                         }else if(res.userRole === Role.TIHCL_MANAGER ){
-                            this.router.navigateByUrl('/Manager-approval-1');
+                             this.router.navigateByUrl('/view-application');
                         }  
                         else if(res.userRole === Role.TIHCL_EXECUTOR){
                             this.router.navigateByUrl('/new-application');
                         }
                          else if(res.userRole === Role.TIHCL_DIC){
-                            this.router.navigateByUrl('/DIC-NOC');
+                             this.router.navigateByUrl('/view-application');
                         }
                          else if(res.userRole === Role.TIHCL_COI){
                             this.router.navigateByUrl('/view-application');

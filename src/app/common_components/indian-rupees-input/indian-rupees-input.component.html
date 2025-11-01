@@ -1,0 +1,16 @@
+<div class="form-floating indian-rupees-input mb-2">
+  <input 
+    type="text"
+    class="form-control"
+    [id]="'rupees-input-' + random"
+    [placeholder]="placeholder"
+    [value]="displayValue"
+    [disabled]="disabled"
+    [readonly]="readonly"
+    [required]="required"
+    (input)="onInput($event)"
+    (blur)="onBlur()"
+    autocomplete="off">
+  <label [for]="'rupees-input-' + random">{{label}}<span *ngIf="required" class="text-danger">*</span></label>
+  <div class="currency-symbol">₹</div>
+</div>
