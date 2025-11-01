@@ -22,7 +22,7 @@
       <div class="card mb-3">
         <div class="card-header bg-theme text-white">
           <div class="d-flex justify-content-between align-items-center">
-            <span class="mb-0 fw-600">Application Status</span>
+            <span class="mb-0 fw-600">Application Status : {{apllictaionDataGlobal?.applicationStatus}}</span>
             <div class="d-flex align-items-center ms-auto">
               <span class="mb-0 fw-600 me-4">Application No :
                 {{apllictaionDataGlobal?.applicationNo}}</span>
@@ -114,36 +114,36 @@
       <nav>
         <div class="nav nav-tabs mb-3" id="nav-tab" role="tablist">
 
-          <button [ngClass]="{ 'active':activeTab==='APPLICATIONS_RECEIVED'}"
+          <button [ngClass]="{ 'active':activeTab==='APPLICATIONS_RECEIVED'}" *ngIf="getModuleAccess('PRELIMINARY_ASSESSMENT')"
             (click)="onTabChange('APPLICATIONS_RECEIVED')" class="nav-link active" id="nav-home-tab"
             data-bs-toggle="tab" data-bs-target="#APPLICATIONS_RECEIVED" type="button" role="tab"
             aria-controls="nav-home" aria-selected="true"> Preliminary Assessment </button>
-          <button [ngClass]="{ 'active':activeTab==='APPLICATIONS_UNDER_PROCESS'}"
+          <button [ngClass]="{ 'active':activeTab==='APPLICATIONS_UNDER_PROCESS'}" *ngIf="getModuleAccess('UNIT_VISIT')"
             (click)="onTabChange('APPLICATIONS_UNDER_PROCESS')" class="nav-link" id="nav-profile-tab"
             data-bs-toggle="tab" data-bs-target="#APPLICATIONS_RECEIVED" type="button" role="tab"
             aria-controls="nav-profile" aria-selected="false"> Unit Visit Details </button>
-          <button [ngClass]="{ 'active':activeTab==='APPLICATIONS_WITH_DIC'}"
+          <button [ngClass]="{ 'active':activeTab==='APPLICATIONS_WITH_DIC'}" *ngIf="getModuleAccess('DIAGNOSTIC_REPORT')"
             (click)="onTabChange('APPLICATIONS_WITH_DIC')" class="nav-link" id="nav-profile-tab" data-bs-toggle="tab"
             data-bs-target="#APPLICATIONS_RECEIVED" type="button" role="tab" aria-controls="nav-profile"
             aria-selected="false"> Diagnostic Report </button>
-          <button [ngClass]="{ 'active':activeTab==='APPLICATIONS_SANCTIONED'}"
+          <button [ngClass]="{ 'active':activeTab==='APPLICATIONS_SANCTIONED'}" *ngIf="getModuleAccess('DIC_CONSENT_LETTER')"
             (click)="onTabChange('APPLICATIONS_SANCTIONED')" class="nav-link" id="nav-profile-tab" data-bs-toggle="tab"
             data-bs-target="#APPLICATIONS_RECEIVED" type="button" role="tab" aria-controls="nav-profile"
             aria-selected="false"> DIC Consent letter</button>
-          <button [ngClass]="{ 'active':activeTab==='APPLICATIONS_NOT_CONSIDERED'}"
-            *ngIf="loginsessionDetails?.userRole !='DIC'" (click)="onTabChange('APPLICATIONS_NOT_CONSIDERED')"
+          <button [ngClass]="{ 'active':activeTab==='APPLICATIONS_NOT_CONSIDERED'}" *ngIf="loginsessionDetails?.userRole !='DIC' && getModuleAccess('CREDIT_APPRAISAL')"
+            (click)="onTabChange('APPLICATIONS_NOT_CONSIDERED')"
             class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#APPLICATIONS_RECEIVED"
             type="button" role="tab" aria-controls="nav-home" aria-selected="true"> RAMP Checklist
           </button>
-          <button [ngClass]="{ 'active':activeTab==='PRIMARY_LENDER_NOC'}" *ngIf="loginsessionDetails?.userRole !='DIC'"
+          <button [ngClass]="{ 'active':activeTab==='PRIMARY_LENDER_NOC'}" *ngIf="loginsessionDetails?.userRole !='DIC' && getModuleAccess('PRIMARY_LENDER_NOC')"
             (click)="onTabChange('PRIMARY_LENDER_NOC')" class="nav-link" id="nav-primary-lender-noc-tab"
             data-bs-toggle="tab" data-bs-target="#PRIMARY_LENDER_NOC" type="button" role="tab"
             aria-controls="nav-primary-lender-noc" aria-selected="false">Primary Lender NOC</button>
-          <button [ngClass]="{ 'active':activeTab==='SANCTIONED_DETAILS'}" *ngIf="loginsessionDetails?.userRole !='DIC'"
+          <button [ngClass]="{ 'active':activeTab==='SANCTIONED_DETAILS'}" *ngIf="loginsessionDetails?.userRole !='DIC' && getModuleAccess('SANCTIONED_DETAILS')"
             (click)="onTabChange('SANCTIONED_DETAILS')" class="nav-link" id="nav-sanctioned-details-tab"
             data-bs-toggle="tab" data-bs-target="#SANCTIONED_DETAILS" type="button" role="tab"
             aria-controls="nav-sanctioned-details" aria-selected="false">Sanctioned Details</button>
-          <button [ngClass]="{ 'active':activeTab==='DISBURSEMENT_DETAILS'}"
+          <button [ngClass]="{ 'active':activeTab==='DISBURSEMENT_DETAILS'}" *ngIf="getModuleAccess('DISBURSEMENT_DETAILS')"
             (click)="onTabChange('DISBURSEMENT_DETAILS')" class="nav-link" id="nav-disbursement-details-tab"
             data-bs-toggle="tab" data-bs-target="#DISBURSEMENT_DETAILS" type="button" role="tab"
             aria-controls="nav-disbursement-details" aria-selected="false">Disbursement Details</button>

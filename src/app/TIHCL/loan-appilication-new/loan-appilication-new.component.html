@@ -719,14 +719,14 @@
                           <div class="show-hide2" id="investmentYes" *ngIf="investmentBorrower === true">
                             <div class="row">
                               <div class="col-12 col-sm-6 col-md-4 col-lg-4">
-                                <!-- <app-indian-rupees-input  formControlName="overdueAmount" label="Overdue Amount (In Rs)" placeholder="Enter Amount" (valueChange)="ChangeAmount($event)"></app-indian-rupees-input> -->
-                                <div class="form-floating mb-3">
+                                <app-indian-rupees-input  formControlName="totalAmountSanctioned" label="Total Amount Sanctioned" placeholder="Enter Amount" (valueChange)="ChangeAmount(this.applicationForm.get('amountReleased')?.value ,$event)"></app-indian-rupees-input>
+                                <!-- <div class="form-floating mb-3">
                                   <input type="number" class="form-control" id="sanctioned"
                                     (input)="ChangeAmount(this.applicationForm.get('amountReleased')?.value ,$any($event.target).value)"
                                     formControlName="totalAmountSanctioned" placeholder="" min="0">
                                   <label for="sanctioned">Total Amount Sanctioned<span
                                       class="text-danger">*</span></label>
-                                </div>
+                                </div> -->
                                 <div
                                   *ngIf="applicationForm.get('totalAmountSanctioned')?.invalid && (applicationForm.get('totalAmountSanctioned')?.dirty || applicationForm.get('totalAmountSanctioned')?.touched)"
                                   class="text-danger small">
@@ -734,12 +734,14 @@
                                 </div>
                               </div>
                               <div class="col-12 col-sm-6 col-md-4 col-lg-4">
-                                <div class="form-floating mb-3">
+                                 <app-indian-rupees-input formControlName="amountReleased" label="Amount Released"  [required]="true"
+                               placeholder="Enter Amount" (valueChange)="ChangeAmount($event,this.applicationForm.get('totalAmountSanctioned')?.value)"></app-indian-rupees-input>
+                                <!-- <div class="form-floating mb-3">
                                   <input type="number" class="form-control" id="amount"
                                     (input)="ChangeAmount($any($event.target).value,this.applicationForm.get('totalAmountSanctioned')?.value)"
                                     formControlName="amountReleased" placeholder="" min="0">
                                   <label for="amount">Amount Released<span class="text-danger">*</span></label>
-                                </div>
+                                </div> -->
                                 <div
                                   *ngIf="this.applicationForm.get('amountReleased')?.value > this.applicationForm.get('totalAmountSanctioned')?.value"
                                   class="text-danger">
@@ -751,11 +753,13 @@
                                   Must be postive Value</div>
                               </div>
                               <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                                <app-indian-rupees-input formControlName="amountToBeReleased" label="Amount to be Released"  [required]="true"
+                               placeholder="Enter Amount"></app-indian-rupees-input>
                                 <div class="form-floating mb-3">
-                                  <input type="number" class="form-control" id="amountToBeReleased"
+                                  <!-- <input type="number" class="form-control" id="amountToBeReleased"
                                     formControlName="amountToBeReleased" placeholder="" min="0">
                                   <label for="amountToBeReleased">Amount to be Released<span
-                                      class="text-danger">*</span></label>
+                                      class="text-danger">*</span></label> -->
                                 </div>
                               </div>
                             </div>
@@ -966,10 +970,12 @@
               </div> -->
             </div>
             <div class="col-12">
+               <app-indian-rupees-input formControlName="limitSanctioned" label="Limit Sanctioned (In Rs)"  [required]="true"
+                               placeholder="Enter Amount"></app-indian-rupees-input>
               <div class="form-floating mb-3">
-                <input type="number" class="form-control" id="limitSanctioned" placeholder="Limit Sanctioned"
+                <!-- <input type="number" class="form-control" id="limitSanctioned" placeholder="Limit Sanctioned"
                   formControlName="limitSanctioned" min="0">
-                <label for="limitSanctioned">Limit Sanctioned (In Rs)<span class="text-danger">*</span></label>
+                <label for="limitSanctioned">Limit Sanctioned (In Rs)<span class="text-danger">*</span></label> -->
                 <div *ngIf="creditDetailsForm.get('limitSanctioned')?.invalid && 
                                            (creditDetailsForm.get('limitSanctioned')?.dirty || 
                                            creditDetailsForm.get('limitSanctioned')?.touched)" class="text-danger">
@@ -983,10 +989,12 @@
               </div>
             </div>
             <div class="col-12">
+              <app-indian-rupees-input formControlName="outstandingAmount" label="Outstanding Amount (In Rs)"  [required]="true"
+                               placeholder="Enter Amount"></app-indian-rupees-input>
               <div class="form-floating mb-3">
-                <input type="number" class="form-control" id="outstandingAmount" placeholder="Outstanding Amount"
+                <!-- <input type="number" class="form-control" id="outstandingAmount" placeholder="Outstanding Amount"
                   formControlName="outstandingAmount" min="0">
-                <label for="outstandingAmount">Outstanding Amount (In Rs)<span class="text-danger">*</span></label>
+                <label for="outstandingAmount">Outstanding Amount (In Rs)<span class="text-danger">*</span></label> -->
                 <div *ngIf="creditDetailsForm.get('outstandingAmount')?.invalid && 
                                            (creditDetailsForm.get('outstandingAmount')?.dirty || 
                                            creditDetailsForm.get('outstandingAmount')?.touched)" class="text-danger">
@@ -1000,10 +1008,12 @@
               </div>
             </div>
             <div class="col-12">
+              <app-indian-rupees-input formControlName="overdueAmount" label="Overdue Amount (In Rs)" 
+                               placeholder="Enter Amount"></app-indian-rupees-input>
               <div class="form-floating mb-3">
-                <input type="number" class="form-control" id="overdueAmount" placeholder="Overdue Amount"
+                <!-- <input type="number" class="form-control" id="overdueAmount" placeholder="Overdue Amount"
                   formControlName="overdueAmount" min="0">
-                <label for="overdueAmount">Overdue Amount (In Rs)</label>
+                <label for="overdueAmount">Overdue Amount (In Rs)</label> -->
                 <div *ngIf="creditDetailsForm.get('overdueAmount')?.invalid && 
                                            (creditDetailsForm.get('overdueAmount')?.dirty || 
                                            creditDetailsForm.get('overdueAmount')?.touched)" class="text-danger">

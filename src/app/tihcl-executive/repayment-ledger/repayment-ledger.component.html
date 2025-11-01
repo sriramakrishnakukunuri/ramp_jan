@@ -138,9 +138,11 @@
                         </div>
                         <div class="row">
                         <div class="col-12 col-md-4 col-lg-4 mb-3">
+                             <app-indian-rupees-input formControlName="chargesAmount" label="Charges Amount" 
+                               placeholder="Enter Amount"></app-indian-rupees-input>
                             <div class="form-floating">
-                                <input type="number" class="form-control" id="chargesAmountModal" formControlName="chargesAmount" placeholder="0.00" min="0" step="0.01">
-                                <label for="chargesAmountModal">Charges Amount <span class="text-danger">*</span></label>
+                                <!-- <input type="number" class="form-control" id="chargesAmountModal" formControlName="chargesAmount" placeholder="0.00" min="0" step="0.01">
+                                <label for="chargesAmountModal">Charges Amount <span class="text-danger">*</span></label> -->
                                 <div *ngIf="f['chargesAmount'].invalid && f['chargesAmount'].touched" class="text-danger">
                                     Valid charges amount is required
                                 </div>
@@ -158,9 +160,11 @@
                         </div>
                         <div class="row">
                         <div class="col-12 col-md-4 col-lg-4 mb-3">
+                            <app-indian-rupees-input formControlName="interestAmount" label="Interest Amount"  [required]="true"
+                               placeholder="Enter Amount"></app-indian-rupees-input>
                             <div class="form-floating">
-                                <input type="number" class="form-control" id="interestAmountModal" formControlName="interestAmount" placeholder="0.00" min="0" step="0.01">
-                                <label for="interestAmountModal">Interest Amount <span class="text-danger">*</span></label>
+                                <!-- <input type="number" class="form-control" id="interestAmountModal" formControlName="interestAmount" placeholder="0.00" min="0" step="0.01">
+                                <label for="interestAmountModal">Interest Amount <span class="text-danger">*</span></label> -->
                                 <div *ngIf="f['interestAmount'].invalid && f['interestAmount'].touched" class="text-danger">
                                     Valid interest amount is required
                                 </div>
@@ -178,9 +182,11 @@
                         </div>
                         <div class="row">
                         <div class="col-12 col-md-4 col-lg-4 mb-3">
+                            <app-indian-rupees-input formControlName="principalAmount" label="Principal Amount" [required]="true"
+                               placeholder="Enter Amount"></app-indian-rupees-input>
                             <div class="form-floating">
-                                <input type="number" class="form-control" id="principalAmountModal" formControlName="principalAmount" placeholder="0.00" min="0" step="0.01">
-                                <label for="principalAmountModal">Principal Amount <span class="text-danger">*</span></label>
+                                <!-- <input type="number" class="form-control" id="principalAmountModal" formControlName="principalAmount" placeholder="0.00" min="0" step="0.01">
+                                <label for="principalAmountModal">Principal Amount <span class="text-danger">*</span></label> -->
                                 <div *ngIf="f['principalAmount'].invalid && f['principalAmount'].touched" class="text-danger">
                                     Valid principal amount is required
                                 </div>
@@ -244,9 +250,11 @@
                         </div>
                         <div class="row">
                         <div class="col-12 col-md-4 col-lg-4 mb-3">
+                            <app-indian-rupees-input formControlName="chargesAmount" label="Charges Amount"  [required]="true"
+                               placeholder="Enter Amount"></app-indian-rupees-input>
                             <div class="form-floating">
-                                <input type="number" class="form-control" id="chargesAmountModal" formControlName="chargesAmount" placeholder="0.00" min="0" step="0.01">
-                                <label for="chargesAmountModal">Charges Amount <span class="text-danger">*</span></label>
+                                <!-- <input type="number" class="form-control" id="chargesAmountModal" formControlName="chargesAmount" placeholder="0.00" min="0" step="0.01">
+                                <label for="chargesAmountModal">Charges Amount <span class="text-danger">*</span></label> -->
                                 <div *ngIf="f['chargesAmount'].invalid && f['chargesAmount'].touched" class="text-danger">
                                     Valid charges amount is required
                                 </div>
@@ -264,9 +272,11 @@
                         </div>
                         <div class="row">
                         <div class="col-12 col-md-4 col-lg-4 mb-3">
+                            <app-indian-rupees-input formControlName="interestAmount" label="Interest Amount"  [required]="true"
+                               placeholder="Enter Amount"></app-indian-rupees-input>
                             <div class="form-floating">
-                                <input type="number" class="form-control" id="interestAmountModal" formControlName="interestAmount" placeholder="0.00" min="0" step="0.01">
-                                <label for="interestAmountModal">Interest Amount <span class="text-danger">*</span></label>
+                                <!-- <input type="number" class="form-control" id="interestAmountModal" formControlName="interestAmount" placeholder="0.00" min="0" step="0.01">
+                                <label for="interestAmountModal">Interest Amount <span class="text-danger">*</span></label> -->
                                 <div *ngIf="f['interestAmount'].invalid && f['interestAmount'].touched" class="text-danger">
                                     Valid interest amount is required
                                 </div>
@@ -284,9 +294,11 @@
                         </div>
                         <div class="row">
                         <div class="col-12 col-md-4 col-lg-4 mb-3">
+                            <app-indian-rupees-input formControlName="principalAmount" label="Principal Amount"  [required]="true"
+                               placeholder="Enter Amount"></app-indian-rupees-input>
                             <div class="form-floating">
-                                <input type="number" class="form-control" id="principalAmountModal" formControlName="principalAmount" placeholder="0.00" min="0" step="0.01">
-                                <label for="principalAmountModal">Principal Amount <span class="text-danger">*</span></label>
+                                <!-- <input type="number" class="form-control" id="principalAmountModal" formControlName="principalAmount" placeholder="0.00" min="0" step="0.01">
+                                <label for="principalAmountModal">Principal Amount <span class="text-danger">*</span></label> -->
                                 <div *ngIf="f['principalAmount'].invalid && f['principalAmount'].touched" class="text-danger">
                                     Valid principal amount is required
                                 </div>

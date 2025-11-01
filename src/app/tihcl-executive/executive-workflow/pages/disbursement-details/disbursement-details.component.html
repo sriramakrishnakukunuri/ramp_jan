@@ -10,10 +10,12 @@
                    </div>
         <div class="row mb-3">
           <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+             <app-indian-rupees-input formControlName="totalSanctionedAmount" label="Total Sanctioned Amount" [required]="true"
+                               placeholder="Enter Amount"></app-indian-rupees-input>
             <div class="form-floating mb-3">
-              <input type="number" class="form-control" id="totalSanctionedAmount" formControlName="totalSanctionedAmount"
+              <!-- <input type="number" class="form-control" id="totalSanctionedAmount" formControlName="totalSanctionedAmount"
                 placeholder="">
-              <label for="totalSanctionedAmount">Total Sanctioned Amount <span class="text-danger">*</span></label>
+              <label for="totalSanctionedAmount">Total Sanctioned Amount <span class="text-danger">*</span></label> -->
               <div *ngIf="f['totalSanctionedAmount']?.invalid && (f['totalSanctionedAmount']?.dirty || f['totalSanctionedAmount']?.touched)"
                 class="text-danger">
                 <small *ngIf="f['totalSanctionedAmount']?.errors?.required">Total Sanctioned Amount is required</small>
@@ -22,10 +24,12 @@
             </div>
           </div>
           <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+              <app-indian-rupees-input formControlName="totalDisbursedAmount" label="Total Disbursed Amount" [required]="true"
+                               placeholder="Enter Amount"></app-indian-rupees-input>
             <div class="form-floating mb-3">
-              <input type="number" class="form-control" id="totalDisbursedAmount" formControlName="totalDisbursedAmount"
+              <!-- <input type="number" class="form-control" id="totalDisbursedAmount" formControlName="totalDisbursedAmount"
                 placeholder="">
-              <label for="totalDisbursedAmount">Total Disbursed Amount <span class="text-danger">*</span></label>
+              <label for="totalDisbursedAmount">Total Disbursed Amount <span class="text-danger">*</span></label> -->
               <div *ngIf="f['totalDisbursedAmount']?.invalid && (f['totalDisbursedAmount']?.dirty || f['totalDisbursedAmount']?.touched) && !f['totalDisbursedAmount']?.value > f['totalSanctionedAmount']?.value"
                 class="text-danger">
                 <small *ngIf="f['totalDisbursedAmount']?.errors?.required">Total Disbursed Amount is required</small>
@@ -215,9 +219,11 @@
         <div class="row">
           
           <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+             <app-indian-rupees-input formControlName="processingFeeAmount" label="Processing Fee  Amount" [required]="true"
+                               placeholder="Enter Amount"></app-indian-rupees-input>
             <div class="form-floating mb-3">
-              <input type="number" class="form-control" id="processingFeeAmount" formControlName="processingFeeAmount" placeholder="" (input)="ChangeAmount($any($event.target).value,f['processingFeeGSTAmount'].value)">
-              <label for="processingFeeAmount">Processing Fee  Amount <span class="text-danger">*</span></label>
+              <!-- <input type="number" class="form-control" id="processingFeeAmount" formControlName="processingFeeAmount" placeholder="" (input)="ChangeAmount($any($event.target).value,f['processingFeeGSTAmount'].value)">
+              <label for="processingFeeAmount">Processing Fee  Amount <span class="text-danger">*</span></label> -->
               <div *ngIf="f['processingFeeAmount']?.invalid && (f['processingFeeAmount']?.dirty || f['processingFeeAmount']?.touched)"
                 class="text-danger">
                 <small *ngIf="f['processingFeeAmount']?.errors?.required">Processing Fee Amount is required</small>
@@ -226,9 +232,11 @@
             </div>
           </div>
            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+            <app-indian-rupees-input formControlName="processingFeeGSTAmount" label="Processing GST Amount" [required]="true"
+                               placeholder="Enter Amount"></app-indian-rupees-input>
             <div class="form-floating mb-3">
-              <input type="number" class="form-control" id="processingFeeGSTAmount" formControlName="processingFeeGSTAmount" placeholder="" (input)="ChangeAmount(f['processingFeeAmount'].value,$any($event.target).value)">
-              <label for="processingFeeGSTAmount">Processing GST Amount <span class="text-danger">*</span></label>
+              <!-- <input type="number" class="form-control" id="processingFeeGSTAmount" formControlName="processingFeeGSTAmount" placeholder="" (input)="ChangeAmount(f['processingFeeAmount'].value,$any($event.target).value)">
+              <label for="processingFeeGSTAmount">Processing GST Amount <span class="text-danger">*</span></label> -->
               <div *ngIf="f['processingFeeGSTAmount']?.invalid && (f['processingFeeGSTAmount']?.dirty || f['processingFeeGSTAmount']?.touched)"
                 class="text-danger">
                 <small *ngIf="f['processingFeeGSTAmount']?.errors?.required">Processing GST Amount is required</small>
@@ -237,9 +245,11 @@
             </div>
           </div>
            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+            <app-indian-rupees-input formControlName="processingFeeCollectedAmount" label="Processing Fee Collected" [required]="true"
+                               placeholder="Enter Amount"></app-indian-rupees-input>
             <div class="form-floating mb-3">
-              <input type="number" class="form-control" id="processingFeeCollectedAmount" readonly formControlName="processingFeeCollectedAmount" placeholder="">
-              <label for="processingFeeCollectedAmount">Processing Fee Collected <span class="text-danger">*</span></label>
+              <!-- <input type="number" class="form-control" id="processingFeeCollectedAmount" readonly formControlName="processingFeeCollectedAmount" placeholder="">
+              <label for="processingFeeCollectedAmount">Processing Fee Collected <span class="text-danger">*</span></label> -->
               <div *ngIf="f['processingFeeCollectedAmount']?.invalid && (f['processingFeeCollectedAmount']?.dirty || f['processingFeeCollectedAmount']?.touched)"
                 class="text-danger">
                 <small *ngIf="f['processingFeeCollectedAmount']?.errors?.required">Processing Fee Collected is required</small>

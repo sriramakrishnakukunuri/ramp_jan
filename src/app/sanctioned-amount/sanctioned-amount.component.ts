@@ -155,6 +155,7 @@ onEnterpriseChange(selectedId: any) {
   // this.getprimaryNoc();
   // this.getSanctionList();
   // this.getdisburseList()
+  this.activeTab='APPLICATIONS_RECEIVED'
   this.onTabChange(this.activeTab)
 
   console.log('Selected Enterprise:', this.apllictaionDataGlobal);
@@ -536,6 +537,40 @@ this._commonService.openFile(path);
     this._commonService.openFile(path)
     }
 
+  }
+  rejectstatus:any=['REJECTED_MANAGER_APPROVAL_1', 'REJECTED_MANAGER_APPROVAL_2', 'REJECTED_MANAGER_APPROVAL_3',]
+  status:any=['APPLICATION_SUBMITTED', 'PRELIMINARY_ASSESSMENT', 'MANAGER_APPROVAL_1', 'UNIT_VISIT', 'DIAGNOSTIC_REPORT', 'MANAGER_APPROVAL_2','DIC_CONSENT_APPROVAL', 'CREDIT_APPRAISAL','DIC_APPROVAL', 'PRIMARY_LENDER_NOC', 'SANCTION_LETTER_UPLOAD', 'MANAGER_APPROVAL_3', 'LOAN_SANCTIONED', 'DISBURSEMENT_PARTIAL', 'DISBURSEMENT_COMPLETED', 'DIC_REJECT', ]
+  getModuleAccess(moduleName:string){
+      if(moduleName=='PRELIMINARY_ASSESSMENT' && this.status.indexOf(this.apllictaionDataGlobal?.applicationStatus)>=1){
+        return true;
+      }
+      if(moduleName=='UNIT_VISIT'  && this.status.indexOf(this.apllictaionDataGlobal?.applicationStatus)>=3 && this.apllictaionDataGlobal?.applicationStatus!='REJECTED_MANAGER_APPROVAL_1'){
+        return true;
+      }
+      if(moduleName=='DIAGNOSTIC_REPORT' && this.status.indexOf(this.apllictaionDataGlobal?.applicationStatus)>=4 ){
+        return true;
+      }
+      if(moduleName=='DIC_CONSENT_APPROVAL' && this.status.indexOf(this.apllictaionDataGlobal?.applicationStatus)>=6 && this.apllictaionDataGlobal?.applicationStatus!='REJECTED_MANAGER_APPROVAL_2'){
+        return true;
+      }
+      if(moduleName=='CREDIT_APPRAISAL' && this.status.indexOf(this.apllictaionDataGlobal?.applicationStatus)>=7){
+        return true;
+      }
+       if(moduleName=='PRIMARY_LENDER_NOC' && this.status.indexOf(this.apllictaionDataGlobal?.applicationStatus)>=9 ){
+        return true;
+      }
+      if(moduleName=='SANCTIONED_DETAILS' && this.status.indexOf(this.apllictaionDataGlobal?.applicationStatus)>=11 && this.apllictaionDataGlobal?.applicationStatus!='REJECTED_MANAGER_APPROVAL_3'){
+        return true;
+      }
+
+      if(moduleName=='DISBURSEMENT_DETAILS' && this.status.indexOf(this.apllictaionDataGlobal?.applicationStatus)>=13){
+        return true;
+      }
+     
+      if(moduleName=='APPLICATIONS_NOT_CONSIDERED' && (this.status.indexOf(this.apllictaionDataGlobal?.applicationStatus)==14 || this.status.indexOf(this.apllictaionDataGlobal?.applicationStatus)==13 || this.status.indexOf(this.apllictaionDataGlobal?.applicationStatus)==14)){
+        return true;
+      }
+      return false;
   }
 
 
