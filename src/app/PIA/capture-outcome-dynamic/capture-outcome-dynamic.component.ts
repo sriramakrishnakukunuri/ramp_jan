@@ -162,10 +162,14 @@ export class CaptureOutcomeDynamicComponent implements OnInit {
     })
         if(this.OutComeForm.value?.outcomesName.includes('ZED')){
            payload['zedCertificationType']=this.OutComeForm.value?.outcomesName.split(' ')?.[2]
-      this.OutComeForm.value['outcomesName']= this.ListOfOutCome.find(
-        (item: any) => (item.outcomeTableDisplayName === this.OutComeForm.value?.outcomesName) )?.outcomeTableName;
+        this.OutComeForm.value['outcomesName']= this.ListOfOutCome.find(
+          (item: any) => (item.outcomeTableDisplayName === this.OutComeForm.value?.outcomesName) )?.outcomeTableName;
      
-    }
+      }
+      else{
+        this.OutComeForm.value['outcomesName']= this.ListOfOutCome.find(
+          (item: any) => (item.outcomeTableDisplayName === this.OutComeForm.value?.outcomesName) )?.outcomeTableName;
+      }
     formData.set("data", JSON.stringify({...payload,
       participantId:this.ParticipantData?.participantId,
       influencedId:this.ParticipantData?.influencedId,
