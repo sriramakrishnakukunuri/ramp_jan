@@ -1580,7 +1580,7 @@ openModelTechnologyAdoption(mode: string, item?: any): void {
       adoptionStatus: item?.adoptionStatus || false,
       technologyAdopted: item?.technologyAdopted || '',
       envCompCert: item?.envCompCert || false,
-      dateOfCert: item?.dateOfCert || ''
+      dateOfCert: item.dateOfCert?this.convertToISOFormat(item?.dateOfCert) :''
     });
   }
   const modal1 = new bootstrap.Modal(document.getElementById('addTechnologyAdoption'));

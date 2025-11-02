@@ -477,19 +477,17 @@
         <tr *ngFor="let tech of technologyAdoptionData; let i = index">
           <td>{{ i + 1 }}</td>
           <td>{{ tech?.organizationName || 'N/A' }}</td>
-           <td>{{ tech?.adoptionStatus || 'N/A' }}</td>
-           <td>{{ tech?.envCompCert || 'N/A' }}</td>
-          <!-- <td>
+          <td>
             <span class="badge" [ngClass]="tech?.adoptionStatus ? 'bg-success' : 'bg-danger'">
               {{ tech?.adoptionStatus ? 'Adopted' : 'Not Adopted' }}
             </span>
-          </td> -->
+          </td>
           <td>{{ tech?.technologyAdopted }}</td>
-          <!-- <td>
+          <td>
             <span class="badge" [ngClass]="tech?.envCompCert ? 'bg-success' : 'bg-danger'">
               {{ tech?.envCompCert ? 'Certified' : 'Not Certified' }}
             </span>
-          </td> -->
+          </td>
           <td>{{ tech?.dateOfCert || 'N/A' }}</td>
           <td class="text-center">
             <button type="button" class="btn btn-default text-lime-green btn-sm" (click)="openModelTechnologyAdoption('edit', tech)">
