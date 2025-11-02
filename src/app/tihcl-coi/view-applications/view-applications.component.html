@@ -113,7 +113,7 @@
                       <td>
                         <ng-container
                           *ngIf="activeTab === 'APPLICATIONS_SANCTIONED' || activeTab === 'APPLICATIONS_UNDER_PROCESS' || activeTab === 'APPLICATIONS_NOT_CONSIDERED'; else plainText">
-                          <a (click)="onRowClick(item)" [ngClass]="{'isDisabled':(loginsessionDetails?.userId!=item?.userId)}"
+                          <a (click)="onRowClick(item)" [ngClass]="{'isDisabled':(loginsessionDetails?.userRole=='EXECUTIVE_MANAGER' && loginsessionDetails?.userId!=item?.userId)}"
                             style="color: #0d6efd; text-decoration: underline; cursor: pointer;">
                             {{ item?.enterpriseName }} 
                           </a>
