@@ -128,7 +128,7 @@
                         <div class="row">
                         <div class="col-12 col-md-4 col-lg-4 mb-3">
                             <div class="form-floating">
-                                <input type="date" class="form-control" id="transactionDateModal" formControlName="transactionDate" placeholder="" max="{{ today | date:'yyyy-MM-dd' }}">
+                                <input type="date" class="form-control" id="transactionDateModal" formControlName="transactionDate" placeholder="" >
                                 <label for="transactionDateModal">Transaction Date <span class="text-danger">*</span></label>
                                 <div *ngIf="f['transactionDate'].invalid && f['transactionDate'].touched" class="text-danger">
                                     Transaction date is required

@@ -21,7 +21,7 @@ loginsessionDetails:any
 activeTab:any='APPLICATIONS_RECEIVED';
 districtName:any='district'
   ngOnInit(): void {
-    if(this.loginsessionDetails.userRole=='DIC' || this.loginsessionDetails.userRole=='EXECUTIVE_MANAGER'){
+    if(this.loginsessionDetails.userRole=='DIC'){
       this.districtName=this.loginsessionDetails.district
     }
     else{
