@@ -64,7 +64,7 @@ export class NonTrainingRich6aComponent implements OnInit {
            // this.toastrService.error(error.message);
          });
        }
-   selectedBudgetHead: string = '26';
+   selectedBudgetHead: string = '125';
    physicalTargetAchievement: any = '';
    physicalTarget: any = 0;
    financialTarget: any = 0;
@@ -87,14 +87,14 @@ export class NonTrainingRich6aComponent implements OnInit {
            this.physicalTargetAchievement = this.TargetDetails?.physicalTargetAchievement || 0;
            this.financialTargetAchievement = this.TargetDetails?.financialTargetAchievement || 0;
            console.log('TargetDetails:', this.TargetDetails);
-           if( this.selectedBudgetHead=='125' || this.selectedBudgetHead=='28'){
+           if( this.selectedBudgetHead=='27' || this.selectedBudgetHead=='28'){
              this.getPreliminaryDataById()
  
            }
            else if(this.selectedBudgetHead=='19'){
              this.getTravelDataBySubActive()
            }
-           else if(this.selectedBudgetHead=='26'){
+           else if(this.selectedBudgetHead=='125'){
              this.getResourceList()
              this.getContingencyDataById()
              this.getPaymentsDataById()
@@ -102,7 +102,7 @@ export class NonTrainingRich6aComponent implements OnInit {
  
            
          }, (error) => {
-                     if(this.selectedBudgetHead=='26' || this.selectedBudgetHead=='125' || this.selectedBudgetHead=='28'){
+                     if(this.selectedBudgetHead=='125' || this.selectedBudgetHead=='27' || this.selectedBudgetHead=='28'){
                   this.getPreliminaryDataById()
  
            }
@@ -110,7 +110,7 @@ export class NonTrainingRich6aComponent implements OnInit {
             else if(this.selectedBudgetHead=='19'){
              this.getTravelDataBySubActive()
            }
-           else if(this.selectedBudgetHead=='26'){
+           else if(this.selectedBudgetHead=='125'){
              this.getResourceList()
              this.getContingencyDataById()
              this.getPaymentsDataById()
