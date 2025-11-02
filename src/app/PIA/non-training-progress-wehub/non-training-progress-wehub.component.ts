@@ -26,6 +26,15 @@ export class NonTrainingProgressWehubComponent implements OnInit {
   loginsessionDetails: any;
   selectedAgencyId: any;
    OrganizationData: any = []
+   // Add these properties to the component class
+technologyAdoptionForm!: FormGroup;
+technologyAdoptionData: any = [];
+iseditModeTechnology = false;
+technologyAdoptionID: any;
+deleteTechnologyAdoptionID: any;
+
+// Add in constructor after other form creations
+
   getOrganizationData() {
     this._commonService.getDataByUrl(APIS.participantdata.getOrgnizationData).subscribe({
       next: (res: any) => {
@@ -48,6 +57,7 @@ export class NonTrainingProgressWehubComponent implements OnInit {
         this.contingencyForm = this.createFormContingency();
         this.paymentForm = this.createFormPayment();
         this.candidateForm = this.createFormCandidate();
+        this.technologyAdoptionForm = this.createFormTechnologyAdoption();
 
   }
 
@@ -105,6 +115,7 @@ export class NonTrainingProgressWehubComponent implements OnInit {
             if (
             this.selectedBudgetHead == '1' ||
             this.selectedBudgetHead == '64' ||
+            this.selectedBudgetHead == '60' ||
              this.selectedBudgetHead == '65' ||
             this.selectedBudgetHead == '63' ||
             this.selectedBudgetHead == '29' ||
@@ -113,6 +124,9 @@ export class NonTrainingProgressWehubComponent implements OnInit {
             this.selectedBudgetHead == '39' ||
             this.selectedBudgetHead == '40'
             ) {
+              if(this.selectedBudgetHead == '60'){
+                this.getTechnologyAdoptionData();
+              }
             this.getPreliminaryDataById();
             }
             else if (this.selectedBudgetHead == '19') {
@@ -1516,6 +1530,143 @@ createFormCandidate(): FormGroup {
         this.candidateForm.get('ifscCode')?.updateValueAndValidity();
       }
     }
+
+
+// Add these methods to the component class
+
+// Technology Adoption CRUD Operations
+createFormTechnologyAdoption(): FormGroup {
+  return this.fb.group({
+    organizationId: [0, Validators.required],
+    nonTrainingSubActivityId: [0],
+    adoptionStatus: [false, Validators.required],
+    technologyAdopted: ['', Validators.required],
+    envCompCert: [false, Validators.required],
+    dateOfCert: ['', Validators.required]
+  });
+}
+
+get fTechnologyAdoption() {
+  return this.technologyAdoptionForm.controls;
+}
+
+getTechnologyAdoptionData() {
+  this.technologyAdoptionData = [];
+  this._commonService.getDataByUrl(APIS.nontrainingtargets.getTechnologyAdoption + this.selectedBudgetHead).subscribe((res: any) => {
+    this.technologyAdoptionData = res?.data || [];
+  }, (error) => {
+    // this.toastrService.error(error.message);
+  });
+}
+
+openModelTechnologyAdoption(mode: string, item?: any): void {
+  if (mode === 'add') {
+    this.iseditModeTechnology = false;
+    this.technologyAdoptionID = '';
+    this.technologyAdoptionForm.reset();
+    this.technologyAdoptionForm.patchValue({
+      organizationId: 0,
+      nonTrainingSubActivityId: Number(this.selectedBudgetHead),
+      adoptionStatus: false,
+      envCompCert: false
+    });
+  }
+  if (mode === 'edit') {
+    this.iseditModeTechnology = true;
+    this.technologyAdoptionID = item?.eeHubSDGId;
+    this.technologyAdoptionForm.patchValue({
+      organizationId: item?.organizationId || 0,
+      nonTrainingSubActivityId: Number(this.selectedBudgetHead),
+      adoptionStatus: item?.adoptionStatus || false,
+      technologyAdopted: item?.technologyAdopted || '',
+      envCompCert: item?.envCompCert || false,
+      dateOfCert: item.dateOfCert?this.convertToISOFormat(item?.dateOfCert) :''
+    });
+  }
+  const modal1 = new bootstrap.Modal(document.getElementById('addTechnologyAdoption'));
+  modal1.show();
+}
+
+onSubmitTechnologyAdoption(): void {
+  this.isSubmitted = true;
+  if (this.technologyAdoptionForm.valid) {
+    const formData = {
+      ...this.technologyAdoptionForm.value,
+      nonTrainingSubActivityId: Number(this.selectedBudgetHead),
+      organizationId: Number(this.technologyAdoptionForm.value.organizationId),
+      dateOfCert: this.technologyAdoptionForm.value.dateOfCert ? 
+        moment(this.technologyAdoptionForm.value.dateOfCert).format('DD-MM-YYYY') : null
+    };
+
+    if (this.iseditModeTechnology) {
+      this._commonService.update(
+        APIS.nontrainingtargets.updateTechnologyAdoption,
+        formData,
+        this.technologyAdoptionID
+      ).subscribe((res: any) => {
+        this.toastrService.success('Technology adoption updated successfully');
+        this.resetFormTechnologyAdoption();
+        this.getTechnologyAdoptionData();
+        this.getDeatilOfTargets();
+      }, (error) => {
+        this.toastrService.error(error.message);
+      });
+    } else {
+      this._commonService.add(APIS.nontrainingtargets.saveTechnologyAdoption, formData).subscribe((res: any) => {
+        this.toastrService.success('Technology adoption added successfully');
+        this.resetFormTechnologyAdoption();
+        this.getTechnologyAdoptionData();
+        this.getDeatilOfTargets();
+      }, (error) => {
+        this.toastrService.error(error.message);
+      });
+    }
+  }
+}
+
+deleteTechnologyAdoption(id: any): void {
+  this.deleteTechnologyAdoptionID = id;
+  const previewModal = document.getElementById('exampleModalDeleteTechnologyAdoption');
+  if (previewModal) {
+    const modalInstance = new bootstrap.Modal(previewModal);
+    modalInstance.show();
+  }
+}
+
+ConfirmDeleteTechnologyAdoption(item: any) {
+  this._commonService
+    .deleteId(APIS.nontrainingtargets.deleteTechnologyAdoption, item).subscribe({
+      next: (data: any) => {
+        this.toastrService.success('Technology adoption deleted successfully');
+        this.closeModalDeleteTechnologyAdoption();
+        this.getTechnologyAdoptionData();
+        this.getDeatilOfTargets();
+      },
+      error: (err) => {
+        this.toastrService.error(err.message, "Delete Error!");
+        new Error(err);
+      },
+    });
+}
+
+closeModalDeleteTechnologyAdoption(): void {
+  const editSessionModal = document.getElementById('exampleModalDeleteTechnologyAdoption');
+  if (editSessionModal) {
+    const modalInstance = bootstrap.Modal.getInstance(editSessionModal);
+    modalInstance?.hide();
+  }
+}
+
+resetFormTechnologyAdoption(): void {
+  const modalElement = document.getElementById('addTechnologyAdoption');
+  const modal1 = modalElement ? bootstrap.Modal.getInstance(modalElement) : null;
+  if (modal1) {
+    modal1.hide();
+  }
+  this.isSubmitted = false;
+  this.technologyAdoptionForm.reset();
+}
+
 
 }
 

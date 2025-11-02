@@ -33,6 +33,9 @@ export class OutputProgressComponent implements OnInit {
           this.getOutcomes()
         }
         else{
+          this.selectedAgencyId=this.agencyId
+          this.getAgenciesList()
+          this.getOutcomes()
           // this.getProgramsByAgency()
         }
         setTimeout(() => {
@@ -49,15 +52,28 @@ export class OutputProgressComponent implements OnInit {
       this._commonService.getDataByUrl(APIS.masterList.agencyList).subscribe((res: any) => {
         this.agencyList = res.data;
         this.agencyListFiltered = this.agencyList;
-         if(Number(sessionStorage.getItem('selectAgecytoOutpuAchievements'))){
+        if(this.loginsessionDetails.userRole == 'ADMIN'){
+           if(Number(sessionStorage.getItem('selectAgecytoOutpuAchievements'))){
           this.selectedAgencyId=Number(sessionStorage.getItem('selectAgecytoOutpuAchievements'))
           this.selectedAgencyId=this.selectedAgencyId==-1?'-1':this.selectedAgencyId
          }
         else{
          this.selectedAgencyId = '-1'
         }
+      }
+        else{
+          this.selectedAgencyId=this.agencyId
+        }
+        //  if(Number(sessionStorage.getItem('selectAgecytoOutpuAchievements'))){
+        //   this.selectedAgencyId=Number(sessionStorage.getItem('selectAgecytoOutpuAchievements'))
+        //   this.selectedAgencyId=this.selectedAgencyId==-1?'-1':this.selectedAgencyId
+        //  }
+        // else{
+        //  this.selectedAgencyId = '-1'
+        // }
         
         // this.getProgramsByAgencyAdmin(this.selectedAgencyId)
+
       }, (error) => {
         this.toastrService.error(error.error.message);
       });

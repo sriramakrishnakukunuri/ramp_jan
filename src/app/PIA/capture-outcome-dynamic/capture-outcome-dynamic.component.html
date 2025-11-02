@@ -110,7 +110,7 @@
                                 <select class="form-select" id="coverage"  name="outcomesName" formControlName="outcomesName" (change)="getDynamicFormBasedOnOutCome($any($event.target).value)">
                                     <option value="">Select OutCome</option>
                                     <!-- <option value="ONDCRegistration">ONDCRegistration</option> -->
-                                  <option *ngFor="let val of ListOfOutCome" value="{{val?.outcomeTableName}}">{{val?.outcomeTableDisplayName}}</option>
+                                <option *ngFor="let val of ListOfOutCome" [value]="val?.outcomeTableDisplayName">{{val?.outcomeTableDisplayName}}</option>
                                 </select>
                                 <!-- <label for="coverage">OutCome</label> -->
                             </div>

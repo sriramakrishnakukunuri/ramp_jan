@@ -43,24 +43,22 @@
                     </div>
                 </div>
 
-                <!-- begin:: Preliminary survey for selection of potential SHGs  selectedBudgetHead=='2'  || selectedBudgetHead=='10' || selectedBudgetHead=='10' || selectedBudgetHead=='8'   || selectedBudgetHead=='11' selectedBudgetHead=='93'
-|| selectedBudgetHead=='11'-->
-                <div class="card budgets mb-3 " *ngIf="selectedBudgetHead=='6' || selectedBudgetHead=='4' || selectedBudgetHead=='12' || selectedBudgetHead=='90'   ">
+                <!-- begin:: Preliminary survey for selection of potential SHGs -->
+                <div class="card budgets mb-3 " *ngIf="selectedBudgetHead=='26' || selectedBudgetHead=='110' || selectedBudgetHead=='28'">
 
-                    <div class="card-header bg-transparent">
-                       <h6 class="fw-600 mb-2 mb-sm-3 mb-md-0"> {{getSubactivities(selectedBudgetHead)}} </h6>
-                        <!-- <h6 class="fw-600 mb-2 mb-sm-3 mb-md-0" *ngIf="selectedBudgetHead=='1'" >IT Infrastructure Setup</h6>
-                        <h6 class="fw-600 mb-2 mb-sm-3 mb-md-0" *ngIf="selectedBudgetHead=='12' || selectedBudgetHead=='13' || selectedBudgetHead=='14' || selectedBudgetHead=='15' || selectedBudgetHead=='16' || selectedBudgetHead=='17'" >Staff</h6>
-                         <h6 class="fw-600 mb-2 mb-sm-3 mb-md-0"  *ngIf="selectedBudgetHead=='12'" >Consumables </h6> -->
-                          <!-- <h6 class="fw-600 mb-2 mb-sm-3 mb-md-0"  *ngIf="selectedBudgetHead=='19'" >   Travel and Transport </h6> -->
-                    <div class="text-end">
+                    <div class="card-header bg-transparent d-flex justify-content-between">
+                         <h6 class="fw-600 mb-2 mb-sm-3 mb-md-0"> {{getSubactivities(selectedBudgetHead)}} </h6>
+                      <!-- <h6 class="fw-600 mb-2 mb-sm-3 mb-md-0" *ngIf="selectedActivity == 16">Project team</h6>
+                      <h6 class="fw-600 mb-2 mb-sm-3 mb-md-0" *ngIf="selectedActivity == 17">Technology Platform</h6>
+                      <h6 class="fw-600 mb-2 mb-sm-3 mb-md-0" *ngIf="selectedActivity == 18">Call Center</h6> -->
+                      
+                      <div class="text-end">
                             <button type="button" class="btn btn-sm btn-lime-green" (click)="onFinalSubmit()">Save</button>
                         </div>
-                        </div>
+                      </div>
                     <div class="card-body">
-                      <!-- || selectedBudgetHead=='13' || selectedBudgetHead=='93'|| selectedBudgetHead=='8' selectedBudgetHead=='2'  -->
-                        <div class="row" *ngIf="selectedBudgetHead=='6'|| selectedBudgetHead=='4'   || selectedBudgetHead=='12' || selectedBudgetHead=='90'   " >
-                             <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                        <div class="row" *ngIf="selectedBudgetHead=='26' || selectedBudgetHead=='110' || selectedBudgetHead=='28' || selectedBudgetHead=='13' || selectedBudgetHead=='14' || selectedBudgetHead=='15' || selectedBudgetHead=='16' || selectedBudgetHead=='17' || selectedBudgetHead=='19'" >
+                            <div class="col-12 col-sm-12 col-md-6 col-lg-6">
                                 <fieldset class="mb-3" style="border: 1px solid #e0e0e0; border-radius: 8px; padding-left: 18px; ">
                                     <legend class="text-lime-green" style="padding: 0 8px;">Physical</legend>
                                     <div class="row mb-2">
@@ -71,7 +69,7 @@
                                             </div>
                                         </div>
                                         <div class="col-12 col-sm-6 col-md-6 col-lg-6" *ngIf="physicalTarget<=1">
-                                            <div class="form-floating mb-3 mb-sm-3 mb-md-0 px-2 pe-2">
+                                            <div class="form-floating mb-3 mb-sm-3 mb-md-0 px-2">
                                                 <select class="form-select" id="pt1" [(ngModel)]="physicalTargetAchievement">
                                                     <option value="">Select Physical Achievement</option>
                                                     <option value="Not Initiated">Not Initiated</option>
@@ -82,7 +80,7 @@
                                             </div>
                                         </div>
                                         <div class="col-12 col-sm-6 col-md-6 col-lg-6 px-2" *ngIf="physicalTarget>1">
-                                            <div class="form-floating mb-3 mb-sm-3 mb-md-0 pe-2">
+                                            <div class="form-floating mb-3 mb-sm-3 mb-md-0 px-2">
                                                 <input type="text" class="form-control" placeholder="" id="physicalTargetAchievement" [(ngModel)]="physicalTargetAchievement">
                                                 <label for="physicalTargetAchievement">Physical Achievement</label>
                                             </div>
@@ -115,7 +113,7 @@
                   
 
                        
-                        <div class="card" *ngIf="selectedBudgetHead=='12' || selectedBudgetHead=='4'">
+                        <div class="card" *ngIf="selectedBudgetHead=='28'">
                             <div class="card-header bg-transparent">
                                 <div class="row align-items-center">
                                     <div class="col-8 col-sm-8 col-md-9 col-lg-10">
@@ -128,13 +126,14 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="card-body">                                
+                            <div class="card-body">      
+                                 <div class="table-scroll-container">                    
                                <table id="view-Priliminary" class="table table-bordered nowrap w-100 trainingTable">
                                 <thead class="bg-lime-green text-white">
                                   <tr>
                                     <th>S.No</th>
                                     <!-- <th>Name of the Agency</th> -->
-                                    <th>Date of Expenditure</th>
+                                    <th>Payment Date</th>
                                     <th>Expenditure Amount</th>
                                     <th>Bill No.</th>
                                     <th>Bill Date</th>
@@ -144,8 +143,10 @@
                                     <th>Bank Name</th>
                                     <th>IFSC Code</th>
                                     <th>Transaction Id</th>
-                                    <th>Purpose</th>
-                                    <th>Bill Invoice</th>
+                                    <th>Cheque Number</th>
+                                    <th>Cheque Date</th>
+                                    <!-- <th>Purpose</th> -->
+                                    <!-- <th>Bill Invoice</th> -->
                                     <th class="text-center">Edit / Delete</th>
                                   </tr>
                                 </thead>
@@ -156,27 +157,29 @@
                                   <tr *ngFor="let preliminary of getPreliminaryData; let i = index">
                                     <td>{{ i + 1 }}</td>
                                     <!-- <td>{{ preliminary?.category }}</td> -->
-                                    <td>{{ preliminary?.paymentDate }}</td>
+                                    <td class="noWrap">{{ preliminary?.paymentDate }}</td>
                                     <td>{{ preliminary?.expenditureAmount }}</td>
                                     <td>{{ preliminary?.billNo }}</td>
-                                    <td>{{ preliminary?.billDate }}</td>
+                                    <td class="noWrap">{{ preliminary?.billDate }}</td>
                                     <td>{{ preliminary?.modeOfPayment }}</td>
                                     <td>{{ preliminary?.payeeName }}</td>
                                     <td>{{ preliminary?.accountNumber }}</td>
                                     <td>{{ preliminary?.bankName }}</td>
                                     <td>{{ preliminary?.ifscCode }}</td>
                                     <td>{{ preliminary?.transactionId }}</td>
-                                    <td>{{ preliminary?.purpose }}</td>
-                                    <td class="text-center">
+                                    <td>{{preliminary?.checkNo }}</td>
+                                    <td class="noWrap">{{preliminary?.checkDate }}</td>
+                                    <!-- <td>{{ preliminary?.purpose }}</td> -->
+                                    <!-- <td class="text-center">
                                       <a href="#" class="btn btn-default text-primary btn-sm" *ngIf="preliminary?.uploadBillUrl">
                                         <span class="bi bi-eye"></span>
                                       </a>
-                                    </td>
+                                    </td> -->
                                     <td class="text-center">
                                       <button type="button" class="btn btn-default text-lime-green btn-sm" (click)="openModel('edit', preliminary)">
                                         <span class="bi bi-pencil"></span>
                                       </button>
-                                      <button type="button" class="btn btn-default text-danger btn-sm" (click)="deletePreliminary(preliminary?.id)">
+                                      <button type="button" class="btn btn-default text-danger btn-sm" (click)="deleteTravel(preliminary?.id)">
                                         <span class="bi bi-trash"></span>
                                       </button>
                                     </td>
@@ -184,13 +187,15 @@
                                 </tbody>
                               </table>
                             </div>
+                            </div>
+
                         </div>
 
 
 
 
-<!-- selectedBudgetHead=='13' || selectedBudgetHead=='93' -->
-                         <div class="card" *ngIf="selectedBudgetHead=='90'">
+
+                         <div class="card" *ngIf="selectedBudgetHead=='110'">
                             <div class="card-header bg-transparent">
                                 <div class="row align-items-center">
                                     <div class="col-8 col-sm-8 col-md-9 col-lg-10">
@@ -204,13 +209,14 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="card-body">                                
+                            <div class="card-body">    
+                                  <div class="table-scroll-container">                            
                               <table id="view-Priliminary" class="table table-bordered nowrap w-100 trainingTable">
                                 <thead class="bg-lime-green text-white">
                                   <tr>
                                     <th>S.No</th>
                                     <!-- <th>Name of the Agency</th> -->
-                                    <th>Date of Expenditure</th>
+                                    <th>Payment Date</th>
                                     <th>Expenditure Amount</th>
                                     <th>Bill No.</th>
                                     <th>Bill Date</th>
@@ -220,8 +226,10 @@
                                     <th>Bank Name</th>
                                     <th>IFSC Code</th>
                                     <th>Transaction Id</th>
-                                    <th>Purpose</th>
-                                    <th>Bill Invoice</th>
+                                    <th>Cheque Number</th>
+                                    <th>Cheque Date</th>
+                                    <th>Description</th>
+                                    <!-- <th>Bill Invoice</th> -->
                                     <th class="text-center">Edit / Delete</th>
                                   </tr>
                                 </thead>
@@ -232,27 +240,29 @@
                                   <tr *ngFor="let preliminary of getPreliminaryData; let i = index">
                                     <td>{{ i + 1 }}</td>
                                     <!-- <td>{{ preliminary?.category }}</td> -->
-                                    <td>{{ preliminary?.paymentDate }}</td>
+                                    <td class="noWrap">{{ preliminary?.paymentDate }}</td>
                                     <td>{{ preliminary?.expenditureAmount }}</td>
                                     <td>{{ preliminary?.billNo }}</td>
-                                    <td>{{ preliminary?.billDate }}</td>
+                                    <td class="noWrap">{{ preliminary?.billDate }}</td>
                                     <td>{{ preliminary?.modeOfPayment }}</td>
                                     <td>{{ preliminary?.payeeName }}</td>
                                     <td>{{ preliminary?.accountNumber }}</td>
                                     <td>{{ preliminary?.bankName }}</td>
                                     <td>{{ preliminary?.ifscCode }}</td>
                                     <td>{{ preliminary?.transactionId }}</td>
+                                    <td>{{preliminary?.checkNo }}</td>
+                                    <td class="noWrap">{{preliminary?.checkDate }}</td>
                                     <td>{{ preliminary?.purpose }}</td>
-                                    <td class="text-center">
+                                    <!-- <td class="text-center">
                                       <a href="#" class="btn btn-default text-primary btn-sm" *ngIf="preliminary?.uploadBillUrl">
                                         <span class="bi bi-eye"></span>
                                       </a>
-                                    </td>
+                                    </td> -->
                                     <td class="text-center">
                                       <button type="button" class="btn btn-default text-lime-green btn-sm" (click)="openModel('edit', preliminary)">
                                         <span class="bi bi-pencil"></span>
                                       </button>
-                                      <button type="button" class="btn btn-default text-danger btn-sm" (click)="deletePreliminary(preliminary?.id)">
+                                      <button type="button" class="btn btn-default text-danger btn-sm" (click)="deleteTravel(preliminary?.id)">
                                         <span class="bi bi-trash"></span>
                                       </button>
                                     </td>
@@ -260,10 +270,12 @@
                                 </tbody>
                               </table>
                             </div>
+
+                            </div>
                         </div>
 
-<!--  || selectedBudgetHead=='11' -->
-                      <div class="card" *ngIf="selectedBudgetHead=='6'">
+
+                      <div class="card" *ngIf="selectedBudgetHead=='26'">
                             <div class="card-header bg-transparent">
                                 <div class="row align-items-center">
                                     <div class="col-8 col-sm-8 col-md-8 col-lg-8">
@@ -279,17 +291,19 @@
                             </div>
                             <div class="card-body mb-3">
                                 <h6 class="fw-600 mb-2 mb-sm-3 mb-md-0">View Resource Details</h6>
+                                  <div class="table-scroll-container">
                                 <table id="view-Priliminary" class="table table-bordered nowrap w-100 trainingTable">
                                   <thead class="bg-lime-green text-white">
                                     <tr>
                                       <th>S.No</th>
-                                      <th>Name of the Employee</th>
+                                      <th>Name of the Staff</th>
                                       <th>Designation</th>
                                       <th>Relevant Experience (Years)</th>
                                       <th>Educational Qualifications</th>
                                       <th>Date of Joining</th>
                                       <th>Remuneration (in Rs.)</th>
-                                      <th>Bank Name / IFSC Code</th>
+                                      <th>Bank Name </th>
+                                      <th> IFSC Code</th>
                                       <th class="text-center">Edit / Delete</th>
                                     </tr>
                                   </thead>
@@ -306,14 +320,16 @@
                                       <td>{{ preliminary?.dateOfJoining }}</td>
                                       <td>{{ preliminary?.monthlySal }}</td>
                                       <td>
-                                        {{ preliminary?.bankName }}<br/>
+                                        {{ preliminary?.bankName }}
+                                      </td>
+                                      <td>
                                         {{ preliminary?.ifscCode }}
                                       </td>
                                       <td class="text-center">
                                         <button type="button" class="btn btn-default text-lime-green btn-sm" (click)="openModelContingency('edit',preliminary)">
                                           <span class="bi bi-pencil"></span>
                                         </button>
-                                        <button type="button" class="btn btn-default text-danger btn-sm" (click)="deletePreliminary(preliminary?.id)">
+                                        <button type="button" class="btn btn-default text-danger btn-sm" (click)="deletePreliminary(preliminary?.resourceId)">
                                           <span class="bi bi-trash"></span>
                                         </button>
                                       </td>
@@ -321,8 +337,11 @@
                                   </tbody>
                                 </table>
                             </div>
+
+                            </div>
                              <div class="card-body mb-3">
                                 <h6 class="fw-600 mb-2 mb-sm-3 mb-md-0">View Payment Details</h6>
+                                  <div class="table-scroll-container">
                                 <table id="view-Payments" class="table table-bordered nowrap w-100 trainingTable">
                                     <thead class="bg-lime-green text-white">
                                         <tr>
@@ -356,6 +375,8 @@
                                     </tbody>
                                 </table>
                             </div>
+
+                            </div>
                         </div>
 
 
@@ -373,7 +394,7 @@
   <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-xl">
     <div class="modal-content">
       <div class="modal-header py-2">
-        <h6 class="modal-title text-white" id="addSurveyLabel">{{iseditMode?'Update' :'Add'}} Financial Target</h6>
+        <h6 class="modal-title text-white" id="addSurveyLabel">{{iseditMode?'Update' :'Add'}} Expenditure</h6>
         <button type="button" class="btn-close me-1" data-bs-dismiss="modal" aria-label="Close" (click)="resetForm()" ></button>
       </div>
       <div class="modal-body">
@@ -398,11 +419,11 @@
             <!-- Payment Date -->
             <div class="col-12 col-sm-6 col-md-4 col-lg-4">
               <div class="form-floating mb-3">
-                <input type="date" class="form-control" formControlName="paymentDate"  appDisableFutureDates
+                <input type="date" class="form-control" formControlName="paymentDate" appDisableFutureDates
                        [class.is-invalid]="isSubmitted && f['paymentDate'].invalid">
-                <label for="paymentDate">Date of Expenditure</label>
+                <label for="paymentDate">Payment Date</label>
                 <div *ngIf="isSubmitted && f['paymentDate'].invalid" class="invalid-feedback">
-                  Date of Expenditure is required
+                  Payment Date is required
                 </div>
               </div>
             </div>
@@ -428,9 +449,9 @@
                             <div class="col-12 col-sm-6 col-md-4 col-lg-4">
                                 <div class="form-floating mb-3">
                                     <input type="text" class="form-control" id="itemDetails" placeholder="" formControlName="purpose" >
-                                    <label for="itemDetails">Item Details</label>
+                                    <label for="itemDetails">Description</label>
                                        <div *ngIf="isSubmitted && f['purpose'].invalid" class="invalid-feedback">
-                                         Item Details is required
+                                         Description is required
                                     </div>
                                 </div>
                             </div>
@@ -501,7 +522,7 @@
             </div>
 
             <!-- Account Number -->
-            <div class="col-12 col-sm-6 col-md-4 col-lg-4" *ngIf="f['modeOfPayment']?.value === 'BANK_TRANSFER' || f['modeOfPayment']?.value === 'CHEQUE'">
+            <div class="col-12 col-sm-6 col-md-4 col-lg-4" *ngIf="f['modeOfPayment']?.value === 'BANK_TRANSFER'">
                 <div class="form-floating mb-3">
                     <input type="text" class="form-control" formControlName="accountNumber" 
                                  [class.is-invalid]="isSubmitted && f['accountNumber'].invalid"  minlength="9" maxlength="18">
@@ -539,9 +560,32 @@
                 </div>
               </div>
             </div>
+   <!-- Cheque No -->
+            <div class="col-12 col-sm-6 col-md-4 col-lg-4" *ngIf="f['modeOfPayment']?.value === 'CHEQUE'">
+              <div class="form-floating mb-3">
+                <input type="text" class="form-control" formControlName="checkNo" 
+                       [class.is-invalid]="isSubmitted && f['checkNo'].invalid">
+                <label for="checkNo">Cheque No</label>
+                <div *ngIf="isSubmitted && f['checkNo'].invalid" class="invalid-feedback">
+                  Cheque number is required
+                </div>
+              </div>
+            </div>
+
+            <!-- Cheque Date -->
+            <div class="col-12 col-sm-6 col-md-4 col-lg-4" *ngIf="f['modeOfPayment']?.value === 'CHEQUE'">
+              <div class="form-floating mb-3">
+                <input type="date" class="form-control" formControlName="checkDate" appDisableFutureDates
+                       [class.is-invalid]="isSubmitted && f['checkDate'].invalid">
+                <label for="checkDate">Cheque Date</label>
+                <div *ngIf="isSubmitted && f['checkDate'].invalid" class="invalid-feedback">
+                  Cheque date is required
+                </div>
+              </div>
+            </div>
 
             <!-- IFSC Code -->
-            <div class="col-12 col-sm-6 col-md-4 col-lg-4" *ngIf="f['modeOfPayment']?.value === 'BANK_TRANSFER' || f['modeOfPayment']?.value === 'CHEQUE'">
+            <div class="col-12 col-sm-6 col-md-4 col-lg-4" *ngIf="f['modeOfPayment']?.value === 'BANK_TRANSFER'">
               <div class="form-floating mb-3">
                 <input type="text" class="form-control" formControlName="ifscCode" 
                        [class.is-invalid]="isSubmitted && f['ifscCode'].invalid">
@@ -567,7 +611,7 @@
             <!-- Upload Bill -->
             <div class="col-12 col-sm-6 col-md-4 col-lg-4">
               <div class="form-floating mb-3">
-                <input type="file" class="form-control" (change)="onFileSelected($event)">
+                <input type="file" class="form-control" formControlName="uploadBillUrl" (change)="onFileSelected($event)">
                 <label for="uploadBill">Upload Bill Invoice</label>
               </div>
             </div>
@@ -865,6 +909,7 @@ aria-hidden="true">
                     <button type="button" class="btn-close me-1" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+                  <div class="table-scroll-container">                    
                      <table class="table table-bordered nowrap w-100 trainingTable">
                                     <thead class="bg-lime-green text-white">
                                         <tr>
@@ -889,6 +934,7 @@ aria-hidden="true">
                                         </tr>
                                     </tbody>
                                 </table>
+                  </div>
 
                     <div class="text-end mt-3">
                         <button type="button" class="btn btn-lime-green" data-bs-dismiss="modal">Cancel</button>
@@ -974,7 +1020,7 @@ aria-hidden="true">
             <div class="col-12 col-sm-6 col-md-4 col-lg-4">
               <div class="form-floating mb-3">
                 <!-- <app-monthly-range (monthChangeValue)="onChangeDate($event)" [paymentForMonth]="paymentForMonth" ></app-monthly-range> -->
-                <app-monthly-range [paymentForMonth]="paymentForMonth" (monthChangeValue)="onChangeDate($event)"></app-monthly-range>
+                <app-monthly-range [paymentForMonth]="paymentForMonth" [disableFuture]="true" (monthChangeValue)="onChangeDate($event)"></app-monthly-range>
                                 <!-- <mat-form-field appearance="outline">
                     <mat-label>Payment For Month</mat-label>
                     <input matInput [matDatepicker]="dp1" [formControl]="date1"
@@ -1002,7 +1048,7 @@ aria-hidden="true">
             </div>
              <div class="col-12 col-sm-6 col-md-4 col-lg-4">
               <div class="form-floating mb-3">
-                <input type="file" class="form-control" (change)="onFileSelectedPayment($event)">
+                <input type="file" class="form-control" formControlName="uploadBillUrl" (change)="onFileSelectedPayment($event)">
                 <label for="uploadBill">Upload Bill Invoice</label>
               </div>
             </div>
@@ -1091,7 +1137,7 @@ aria-hidden="true">
 
            <div class="col-12 col-sm-6 col-md-4 col-lg-4">
                                 <div class="form-floating mb-3">
-                                    <input type="date" class="form-control" id="dateOfTravel" formControlName="dateOfTravel" name="dateOfTravel" appDisableFutureDates placeholder="">
+                                    <input type="date" class="form-control" id="dateOfTravel" formControlName="dateOfTravel" name="dateOfTravel" placeholder="">
                                     <label for="travelDate">Date Of Travel</label>
                                 </div>
                             </div>
@@ -1156,7 +1202,7 @@ aria-hidden="true">
             <!-- Bill Date -->
             <div class="col-12 col-sm-6 col-md-4 col-lg-4">
               <div class="form-floating mb-3">
-                <input type="date" class="form-control" formControlName="billDate"  appDisableFutureDates
+                <input type="date" class="form-control" formControlName="billDate" appDisableFutureDates
                        [class.is-invalid]="isSubmitted && fTravel['billDate'].invalid">
                 <label for="billDate">Bill Date</label>
                 <div *ngIf="isSubmitted && fTravel['billDate'].invalid" class="invalid-feedback">
@@ -1254,7 +1300,7 @@ aria-hidden="true">
             <!-- Upload Bill -->
             <div class="col-12 col-sm-6 col-md-4 col-lg-4">
               <div class="form-floating mb-3">
-                <input type="file" class="form-control" (change)="onFileSelectedTravel($event)">
+                <input type="file" class="form-control"  formControlName="billInvoicePath" (change)="onFileSelectedTravel($event)">
                 <label for="uploadBill">Upload Bill Invoice</label>
               </div>
             </div>

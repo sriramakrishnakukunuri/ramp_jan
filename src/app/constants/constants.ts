@@ -154,6 +154,7 @@ export const APIS = {
         deleteNonTrainingtargetsCandidate: API_BASE_URL + '/',
         saveNonTrainingtargetsCandidate: API_BASE_URL + '/save',
         getNonTrainingtargetsCandidate: API_BASE_URL + '/by-subactivity?subActivityId=',
+
         tihcl:{
             getCorpusList: API_BASE_URL + '/corpusDebitFinancing',
             getTihclData: API_BASE_URL + '/listing-on-nse/sub-activity/',
@@ -170,7 +171,11 @@ export const APIS = {
             savedataVendor_doc: API_BASE_URL + '/vendors/save',
             deletedataVendor_doc: API_BASE_URL + '/vendors/',
             updatedataVendor_doc: API_BASE_URL + '/vendors/',
-        }
+        },
+        updateTechnologyAdoption: API_BASE_URL + '/wehub_sdg/update',
+        saveTechnologyAdoption: API_BASE_URL + '/wehub_sdg/save',
+        getTechnologyAdoption: API_BASE_URL + '/wehub_sdg/sub-activity/',
+        deleteTechnologyAdoption: API_BASE_URL + '/wehub_sdg/',
        
     },
     progressMonitoring:{
@@ -276,5 +281,6 @@ export const APIS = {
         getMSMEByMonth: API_BASE_URL + '/momsme/report/by-month',
         saveMonth: API_BASE_URL + '/momsme/submitted-save',
         getCuulativebyIntervention: API_BASE_URL + '/momsme/report/by-cumulative',
+        pushToMoMSME: API_BASE_URL + '/momsme/push-to-momsme'
     }
 }

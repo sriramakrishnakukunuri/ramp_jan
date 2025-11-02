@@ -507,11 +507,11 @@
                       <li><a class="dropdown-item isDisabled" routerLink="/shg-training"  routerLinkActive="active">SHG Training Status</a></li>
                     </ul>
                   </li>
-                  <!-- <ng-container *ngIf="this.user?.agencyName=='ALEAP' || this.user.agencyId==9">
+                  <ng-container *ngIf="this.user?.agencyName=='ALEAP' || this.user.agencyId==9">
                      <li *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]" >
                     <a class="dropdown-item" routerLink="/non-training-targets" routerLinkActive="active">Non Training Progress</a>
                   </li>
-                  </ng-container> -->
+                  </ng-container>
                    <ng-container *ngIf="this.user?.agencyName=='CoDe_IITH' || this.user.agencyId==2">
                      <li *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]" >
                     <a class="dropdown-item" routerLink="/non-training-progress" routerLinkActive="active">Non Training Progress</a>
@@ -527,7 +527,7 @@
                     <a class="dropdown-item" routerLink="/non-training-progress-coi" routerLinkActive="active">Non Training Progress</a>
                   </li>
                   </ng-container>
-                   <!-- <ng-container *ngIf="this.user?.agencyName=='WeHub' || this.user.agencyId==7">
+                   <ng-container *ngIf="this.user?.agencyName=='WeHub' || this.user.agencyId==7">
                      <li *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]" >
                     <a class="dropdown-item" routerLink="/non-training-progress-wehub" routerLinkActive="active">Non Training Progress</a>
                   </li>
@@ -536,17 +536,32 @@
                      <li *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]" >
                     <a class="dropdown-item" routerLink="/non-training-progress-cipet" routerLinkActive="active">Non Training Progress</a>
                   </li>
-                  </ng-container>  -->
+                  </ng-container> 
                    <ng-container *ngIf="this.user?.agencyName=='TiHCL_05' || this.user.agencyId==1">
                      <li *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]" >
                     <a class="dropdown-item" routerLink="/non-training-progress-tihcl" routerLinkActive="active">Non Training Progress</a>
                   </li>
                   </ng-container>
-                   <!-- <ng-container *ngIf="this.user?.agencyName=='CITD_11' || this.user.agencyId==5">
+                   <ng-container *ngIf="this.user?.agencyName=='CITD_11' || this.user.agencyId==5">
                      <li *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]" >
                     <a class="dropdown-item" routerLink="/non-training-progress-cipet" routerLinkActive="active">Non Training Progress</a>
                   </li>
-                  </ng-container> -->
+                  </ng-container>
+                    <ng-container *ngIf="this.user?.agencyName=='TGTPC-4' || this.user.agencyId==10">
+                     <li *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]" >
+                    <a class="dropdown-item" routerLink="/non-training-progress-tgtpc4" routerLinkActive="active">Non Training Progress</a>
+                  </li>
+                  </ng-container>
+                    <ng-container *ngIf="this.user?.agencyName=='TGTPC-10' || this.user.agencyId==11">
+                     <li *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]" >
+                    <a class="dropdown-item" routerLink="/non-training-progress-tgtpc10" routerLinkActive="active">Non Training Progress</a>
+                  </li>
+                  </ng-container>
+                   <ng-container *ngIf="this.user?.agencyName=='RICH_6A' || this.user.agencyId==3">
+                     <li *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]" >
+                    <a class="dropdown-item" routerLink="/non-training-progress-rich6a" routerLinkActive="active">Non Training Progress</a>
+                  </li>
+                  </ng-container>
                   
                  <!-- Masters List (Agency)  -->
                   <li *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]">
@@ -576,6 +591,7 @@
                     </a>
                     <ul class="dropdown-menu show shadow" *ngIf="openSubMenus['reportsAgency']"
                       style="position:static; background: #dfebeb;min-width:180px;">
+                       <li><a class="dropdown-item" routerLink="/output-progress" routerLinkActive="active">Output Progress</a></li>
                       <li><a class="dropdown-item" routerLink="/program-summary" routerLinkActive="active">Program Summary</a></li>
                       <li><a class="dropdown-item" routerLink="/collage-home" routerLinkActive="active">Create Collage</a></li>
                       <li>

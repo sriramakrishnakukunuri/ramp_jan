@@ -105,6 +105,9 @@ import { ProgramMonitoringReportApprovalComponent } from './PIA/program-monitori
 import { AddNonParticipantsDataComponent } from './PIA/add-non-participants-data/add-non-participants-data.component';
 import { OutputProgressComponent } from './PIA/output-progress/output-progress.component';
 import { TrainigNontrainingTargetsComponent } from './PIA/trainig-nontraining-targets/trainig-nontraining-targets.component';
+import { NonTrainingTgtpc4Component } from './PIA/non-training-tgtpc4/non-training-tgtpc4.component';
+import { NonTrainingTgtpc10Component } from './PIA/non-training-tgtpc10/non-training-tgtpc10.component';
+import { NonTrainingRich6aComponent } from './PIA/non-training-rich6a/non-training-rich6a.component';
 @NgModule({
     imports: [
         MaterialModule,
@@ -213,7 +216,10 @@ import { TrainigNontrainingTargetsComponent } from './PIA/trainig-nontraining-ta
         ProgramMonitoringReportApprovalComponent,
         AddNonParticipantsDataComponent,
         OutputProgressComponent,
-        TrainigNontrainingTargetsComponent
+        TrainigNontrainingTargetsComponent,
+        NonTrainingTgtpc4Component,
+        NonTrainingTgtpc10Component,
+        NonTrainingRich6aComponent
 
     ],
     exports:[MaterialModule,

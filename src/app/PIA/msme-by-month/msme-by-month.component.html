@@ -120,9 +120,15 @@
                   <tr  *ngFor="let row of getTableData ; let i = index" >
                          <ng-container *ngIf="!isAddingRow">
                       <td class="text-center sticky-col-1">
-                        <button class="btn btn-default text-lime-green btn-sm" (click)="editRow()" aria-label="Edit Row">
+                         <div class="d-flex justify-content-center align-items-center gap-2">
+                           <button class="btn btn-default text-lime-green btn-sm" (click)="editRow()" aria-label="Edit Row">
                           <i class="bi bi-pencil-square fw-bold"></i>
                         </button>
+                         <button class="btn btn-default text-lime-green btn-sm" [ngClass]="{'disabled':checkValidation(row)}" (click)="confirmationForPush(row)" aria-label="Push to MoMSME" title="Push to MoMSME">
+                         <i class="bi bi-send" alt="Push to MoMSME"></i>
+                        </button>
+                         </div>
+                       
                       </td>
                      </ng-container>
                      <ng-container *ngIf="isAddingRow">
@@ -303,6 +309,25 @@
                 </tr>
             </tbody>
         </table>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="exampleModalDeleteProgram" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalDeleteLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalDeleteLabel">Push To MOMSE</h5>
+        <button type="button" class="btn-close" (click)="closeModalDelete()" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to Push To MOMSE?.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeModalDelete()">No</button>
+        <button type="button" class="btn btn-lime-green"
+          (click)="pushtoMomse(pushedDataOfMomse)">Yes</button>
       </div>
     </div>
   </div>
