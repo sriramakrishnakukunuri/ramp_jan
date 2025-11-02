@@ -38,14 +38,14 @@
                         </div>
                         <div class="col-lg-4">
                             <mat-form-field appearance="outline" class="w-100">
-                                <mat-label>Select Application No</mat-label>
+                                <mat-label>Select Enterprise Name </mat-label>
                                 <mat-select [(ngModel)]="loanApplicationNo" (selectionChange)="onApplicationNoChange($event.value)">
-                                    <mat-select-filter [array]="enterpriseList" [displayMember]="'applicationNo'"
+                                    <mat-select-filter [array]="enterpriseList" [displayMember]="'enterpriseName'" 
                                         (filteredReturn)="filteredEnterprise = $event">
                                     </mat-select-filter>
                                     <mat-option *ngFor="let question of filteredEnterprise"
                                         [value]="question.applicationNo">
-                                        {{ question?.applicationNo }}
+                                        {{ question?.enterpriseName }}
                                     </mat-option>
                                 </mat-select>
                             </mat-form-field>
@@ -128,7 +128,7 @@
                         <div class="row">
                         <div class="col-12 col-md-4 col-lg-4 mb-3">
                             <div class="form-floating">
-                                <input type="date" class="form-control" id="transactionDateModal" formControlName="transactionDate" placeholder="">
+                                <input type="date" class="form-control" id="transactionDateModal" formControlName="transactionDate" placeholder="" max="{{ today | date:'yyyy-MM-dd' }}">
                                 <label for="transactionDateModal">Transaction Date <span class="text-danger">*</span></label>
                                 <div *ngIf="f['transactionDate'].invalid && f['transactionDate'].touched" class="text-danger">
                                     Transaction date is required
@@ -148,7 +148,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12 col-md-4 col-lg-4 mb-3">
+                        <div class="col-12 col-md-8 col-lg-8 mb-3">
                             <div class="form-floating">
                                 <input type="text" class="form-control" id="chargesNarrationModal" formControlName="chargesNarration" placeholder="" [required]="f['chargesAmount'].value > 0">
                                 <label for="chargesNarrationModal">Charges Narration <span *ngIf="f['chargesAmount'].value > 0" class="text-danger">*</span></label>
@@ -170,7 +170,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12 col-md-4 col-lg-4 mb-3">
+                        <div class="col-12 col-md-8 col-lg-8 mb-3">
                             <div class="form-floating">
                                 <input type="text" class="form-control" id="interestNarrationModal" formControlName="interestNarration" placeholder="" [required]="f['interestAmount'].value > 0">
                                 <label for="interestNarrationModal">Interest Narration <span *ngIf="f['interestAmount'].value > 0" class="text-danger">*</span></label>
@@ -192,7 +192,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12 col-md-4 col-lg-4 mb-3">
+                        <div class="col-12 col-md-8 col-lg-8 mb-3">
                             <div class="form-floating">
                                 <input type="text" class="form-control" id="principalNarrationModal" formControlName="principalNarration" placeholder="" [required]="f['principalAmount'].value > 0">
                                 <label for="principalNarrationModal">Principal Narration <span *ngIf="f['principalAmount'].value > 0" class="text-danger">*</span></label>
@@ -260,7 +260,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12 col-md-4 col-lg-4 mb-3">
+                        <div class="col-12 col-md-8 col-lg-8 mb-3">
                             <div class="form-floating">
                                 <input type="text" class="form-control" id="chargesNarrationModal" formControlName="chargesNarration" placeholder="" [required]="ledgerForm.get('chargesAmount')?.value > 0">
                                 <label for="chargesNarrationModal">Charges Narration <span *ngIf="f['chargesAmount'].value > 0" class="text-danger">*</span></label>
@@ -282,7 +282,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12 col-md-4 col-lg-4 mb-3">
+                        <div class="col-12 col-md-8 col-lg-8 mb-3">
                             <div class="form-floating">
                                 <input type="text" class="form-control" id="interestNarrationModal" formControlName="interestNarration" placeholder="" [required]="f['interestAmount'].value > 0">
                                 <label for="interestNarrationModal">Interest Narration <span *ngIf="f['interestAmount'].value > 0"  class="text-danger">*</span></label>
@@ -304,7 +304,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12 col-md-4 col-lg-4 mb-3">
+                        <div class="col-12 col-md-8 col-lg-8 mb-3">
                             <div class="form-floating">
                                 <input type="text" class="form-control" id="principalNarrationModal" formControlName="principalNarration" placeholder="" [required]="f['principalAmount'].value > 0">
                                 <label for="principalNarrationModal">Principal Narration <span *ngIf="f['principalAmount'].value > 0" class="text-danger">*</span></label>

@@ -93,6 +93,8 @@ export const APIS = {
         getDisbursementRid:API_BASE_URL+'/disbursement/details/registration/id/',
         saveLedgerReceivables: API_BASE_URL + '/ledger/receivables',
         saveLedgerpayments: API_BASE_URL + '/ledger/payments',
+        getRepaymentDataById:API_BASE_URL+'/ledger/get/applications/status/DISBURSEMENT_PARTIAL%2CDISBURSEMENT_COMPLETED',
+
         deleteDiagnostics:{
         deleteShareholding:API_BASE_URL+'/diagnostic-reports/Shareholding/delete/',
         deleteBalanceSheet:API_BASE_URL+'/diagnostic-reports/balance-sheet/',
@@ -102,7 +104,7 @@ export const APIS = {
         deleteseller:API_BASE_URL+'/diagnostic-reports/seller/delete/',
         deleteunsecured:API_BASE_URL+'/diagnostic-reports/unsecured-loans/',
         deleteorderBookPosition:API_BASE_URL+'/diagnostic-reports/orderBookPosition/delete/',
-        
+       
         
         
         }

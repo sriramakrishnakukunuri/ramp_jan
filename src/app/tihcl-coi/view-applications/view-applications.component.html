@@ -8,7 +8,7 @@
           </div>
           <!-- *ngIf="loginsessionDetails?.userRole != 'ADMIN'" -->
           <div class="col-12 col-sm-3 col-md-3 col-lg-3 "></div>
-          <ng-container *ngIf="loginsessionDetails?.userRole !='DIC'">
+          <ng-container *ngIf="loginsessionDetails?.userRole !='DIC' && loginsessionDetails?.userRole !='EXECUTIVE_MANAGER'">
             <div class="col-12 col-sm-3 col-md-3 col-lg-3 ">
               <label for="Agencies" style="font-weight: 600;">List Of District</label>
               <select class="form-select" [(ngModel)]="districtName" (change)="dropdownDistrictList($event)">
@@ -113,9 +113,9 @@
                       <td>
                         <ng-container
                           *ngIf="activeTab === 'APPLICATIONS_SANCTIONED' || activeTab === 'APPLICATIONS_UNDER_PROCESS' || activeTab === 'APPLICATIONS_NOT_CONSIDERED'; else plainText">
-                          <a (click)="onRowClick(item)"
+                          <a (click)="onRowClick(item)" [ngClass]="{'isDisabled':(loginsessionDetails?.userRole =='EXECUTIVE_MANAGER' && loginsessionDetails?.userId!=item?.userId)}"
                             style="color: #0d6efd; text-decoration: underline; cursor: pointer;">
-                            {{ item?.enterpriseName }}
+                            {{ item?.enterpriseName }} 
                           </a>
                         </ng-container>
                         <ng-template #plainText>

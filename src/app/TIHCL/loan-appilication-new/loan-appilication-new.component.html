@@ -682,12 +682,13 @@
                           <div class="show-hide1" id="creditNo" *ngIf="existingStatus === false">
                             <div class="row">
                               <div class="col-12 col-sm-6 col-md-4 col-lg-4">
-                                <div class="form-floating mb-3">
+                                <app-indian-rupees-input  formControlName="requiredCreditLimit" label="Any requirement for credit limits ?" [required]="true" placeholder="Enter Amount" ></app-indian-rupees-input>
+                                <!-- <div class="form-floating mb-3">
                                   <input type="number" class="form-control" id="limits" min="0"
                                     formControlName="requiredCreditLimit" placeholder="">
                                   <label for="limits">Any requirement for credit limits ?<span
                                       class="text-danger">*</span></label>
-                                </div>
+                                </div> -->
                                 <div
                                   *ngIf="applicationForm.get('requiredCreditLimit')?.invalid && (applicationForm.get('requiredCreditLimit')?.dirty || applicationForm.get('requiredCreditLimit')?.touched)"
                                   class="text-danger small">

@@ -31,7 +31,7 @@ export class IndianRupeesInputComponent implements OnInit, ControlValueAccessor 
 
   // Format number with Indian comma separation
   private formatIndianNumber(num: number): string {
-    if (!num || num === 0) return '';
+    if (!num || num === 0) return '0';
     
     const numStr = num.toString();
     const lastThree = numStr.substring(numStr.length - 3);

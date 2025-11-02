@@ -81,7 +81,7 @@ export class RepaymentLedgerComponent implements OnInit {
   }
   loadEnterpriseList(): void {
     // Replace with your actual API call to load enterprise list
-    this._commonService.getDataByUrl(APIS.sanctionedAmount.getNewAppStatus).subscribe({
+    this._commonService.getDataByUrl(APIS.tihclExecutive.getRepaymentDataById).subscribe({
       next: (response:any) => {
         this.enterpriseList = response?.data || [];
         this.filteredEnterprise = [...this.enterpriseList];

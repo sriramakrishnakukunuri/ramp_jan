@@ -572,6 +572,8 @@ this._commonService.openFile(path);
       }
       return false;
   }
-
+goBack(){
+  this.router.navigate(['/view-application']);
+}
 
 }
