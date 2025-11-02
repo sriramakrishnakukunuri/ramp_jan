@@ -296,7 +296,7 @@
                                   <thead class="bg-lime-green text-white">
                                     <tr>
                                       <th>S.No</th>
-                                      <th>Name of the Staff</th>
+                                      <th>Name of the Vendor</th>
                                       <th>Designation</th>
                                       <th>Relevant Experience (Years)</th>
                                       <th>Educational Qualifications</th>
@@ -666,7 +666,7 @@ aria-hidden="true">
                        formControlName="name"
                        [class.is-invalid]="isSubmitted && fContingency['name'].invalid"
                        placeholder="Enter employee name">
-                <label for="employeeName">Name Of The Employee</label>
+                <label for="employeeName">Name Of The Vendor</label>
                 <div *ngIf="isSubmitted && fContingency['name'].invalid" class="invalid-feedback">
                   <span *ngIf="fContingency['name'].errors?.['required']">Name is required</span>
                   <span *ngIf="fContingency['name'].errors?.['minlength']">Name must be at least 2 characters</span>
