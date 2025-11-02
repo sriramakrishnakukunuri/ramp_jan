@@ -84,7 +84,7 @@ export class LoginComponent implements OnInit {
                              this.router.navigateByUrl('/view-application');
                         }  
                         else if(res.userRole === Role.TIHCL_EXECUTOR){
-                            this.router.navigateByUrl('/new-application');
+                            this.router.navigateByUrl('/view-application');
                         }
                          else if(res.userRole === Role.TIHCL_DIC){
                              this.router.navigateByUrl('/view-application');
