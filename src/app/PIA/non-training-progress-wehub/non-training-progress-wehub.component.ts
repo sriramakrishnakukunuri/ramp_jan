@@ -17,7 +17,7 @@ import { MonthlyRangeComponent } from '../monthly-range/monthly-range.component'
   styleUrls: ['./non-training-progress-wehub.component.css']
 })
 export class NonTrainingProgressWehubComponent implements OnInit {
-
+  vendorForm!: FormGroup;
   financialForm!: FormGroup;
   travelForm!: FormGroup;
   paymentForm!: FormGroup;
@@ -58,11 +58,12 @@ deleteTechnologyAdoptionID: any;
         this.paymentForm = this.createFormPayment();
         this.candidateForm = this.createFormCandidate();
         this.technologyAdoptionForm = this.createFormTechnologyAdoption();
+        this.initializeVendorForm();
 
   }
 
   ngOnInit(): void {
-    this.getOrganizationData()
+    // this.getOrganizationData()
      this.getBudgetHeadList()
     
   }
@@ -127,6 +128,7 @@ deleteTechnologyAdoptionID: any;
               if(this.selectedBudgetHead == '60'){
                 this.getTechnologyAdoptionData();
               }
+              this.loadVendorData()
             this.getPreliminaryDataById();
             }
             else if (this.selectedBudgetHead == '19') {
@@ -1666,8 +1668,218 @@ resetFormTechnologyAdoption(): void {
   this.isSubmitted = false;
   this.technologyAdoptionForm.reset();
 }
+// vendor related code 
+// Initialize Vendor Form
+initializeVendorForm() {
+  this.vendorForm = this.fb.group({
+    vendorId: [0],
+    vendorCompanyName: ['', [Validators.required, Validators.minLength(2)]],
+    dateOfOrder: ['', Validators.required],
+    orderDetails: ['', [Validators.required, Validators.minLength(10)]],
+    orderUpload: [''],
+    DummyorderUpload: [''],
+    subActivityId: [0]
+  });
+}
+isEditModeVendor = false;
+getVendorData: any[] = [];
+deleteVendorID: any = null;
+uploadedFilesVendor: any;
+// Getter for vendor form controls
+get fVendor() {
+  return this.vendorForm.controls;
+}
+// Open Vendor Modal
+openVendorModal(mode: string, data?: any) {
+  this.uploadedFilesVendor = '';
+  this.isEditModeVendor = mode === 'edit';
+  this.isSubmitted = false;
+  
+  if (mode === 'edit' && data) {
+    this.vendorForm.patchValue({
+      vendorId: data.vendorId,
+      vendorCompanyName: data.vendorCompanyName,
+      dateOfOrder: data.dateOfOrder ? new Date(data.dateOfOrder).toISOString().split('T')[0] : '',
+      orderDetails: data.orderDetails,
+      subActivityId: data.subActivityId,
+      orderUpload: data.orderUpload,
+      DummyorderUpload: '',
+    });
+  } else {
+    this.resetVendorForm();
+  }
 
+  // Open modal using Bootstrap
+  const modalElement = document.getElementById('addVendor');
+  if (modalElement) {
+    const modal = new (window as any).bootstrap.Modal(modalElement);
+    modal.show();
+  }
+}
+// Submit Vendor Form
+onSubmitVendor() {
+  this.isSubmitted = true;
+  
+  if (this.vendorForm.invalid) {
+    console.log('Vendor form is invalid');
+    return;
+  }
 
+  const vendorData = { ...this.vendorForm.value };
+  
+  // Set subActivityId to current selected budget head
+  vendorData.subActivityId = parseInt(this.selectedBudgetHead);
+  
+  // Convert date to ISO string
+  if (vendorData.dateOfOrder) {
+    vendorData.dateOfOrder = new Date(vendorData.dateOfOrder).toISOString();
+  }
+
+  if (this.isEditModeVendor) {
+    this.updateVendor(vendorData);
+  } else {
+    this.createVendor(vendorData);
+  }
+}
+onOrderUploadSelected(event: any): void {
+  this.uploadedFilesVendor = '';
+  const file = event.target.files[0];
+  if (file) {
+    this.uploadedFilesVendor = file;
+    // Handle file upload logic here
+    // You might want to upload the file and then set the URL
+    this.vendorForm.patchValue({
+      DummyorderUpload: file.name // This would be the uploaded file URL
+    });
+  }
+}
+// Create Vendor
+createVendor(vendorData: any) {
+  let formdata = new FormData();
+  formdata.append("file", this.uploadedFilesVendor);
+  delete vendorData.DummyorderUpload;
+  formdata.append("vendorDetailsDto", JSON.stringify(vendorData));
+  
+  this._commonService.add(APIS.nontrainingtargets.nimsme.savedataVendor_doc, formdata).subscribe({
+    next: (response) => {
+      this.uploadedFilesVendor = '';
+      this.toastrService.success('Vendor details created successfully', 'Non Training Progress Data Success!');
+      this.loadVendorData();
+      this.closeVendorModal();
+    },
+    error: (error) => {
+      this.uploadedFilesVendor = '';
+      this.toastrService.error('Failed to create vendor details', 'Non Training Progress Data Error!');
+      console.error('Create vendor error:', error);
+      this.closeVendorModal();
+    }
+  });
+  this.getDeatilOfTargets();
+}
+// Update Vendor
+updateVendor(vendorData: any) {
+  this._commonService.update(APIS.nontrainingtargets.nimsme.updatedataVendor_doc, vendorData, vendorData.vendorId).subscribe({
+    next: (response) => {
+      this.toastrService.success('Vendor details updated successfully', 'Non Training Progress Data Success!');
+      this.loadVendorData();
+      this.closeVendorModal();
+    },
+    error: (error) => {
+      this.toastrService.error('Failed to update vendor details', 'Non Training Progress Data Error!');
+      console.error('Update vendor error:', error);
+      this.closeVendorModal();
+    }
+  });
+  this.getDeatilOfTargets();
+}
+// Load Vendor Data
+loadVendorData() {
+  // Only load vendor data for selectedBudgetHead 79, 80, 81
+
+  this._commonService.getDataByUrl(APIS.nontrainingtargets.nimsme.getdataVendor_doc + this.selectedBudgetHead).subscribe({
+    next: (response) => {
+      this.getVendorData = response.data || [];
+    },
+    error: (error) => {
+      this.toastrService.error('Failed to load vendor details', 'Non Training Progress Data Error!');
+      console.error('Load vendor data error:', error);
+    }
+  });
+}
+// Delete Vendor
+deleteVendor(id: any) {
+  this.deleteVendorID = id;
+  const modalElement = document.getElementById('exampleModalDeleteVendor');
+  if (modalElement) {
+    const modal = new (window as any).bootstrap.Modal(modalElement);
+    modal.show();
+  }
+}
+
+// Confirm Delete Vendor
+confirmDeleteVendor(id: any) {
+  this._commonService.deleteId(APIS.nontrainingtargets.nimsme.deletedataMedia_doc, id).subscribe({
+    next: (response) => {
+      this.toastrService.success('Vendor details deleted successfully', 'Non Training Progress Data Success!');
+      this.loadVendorData();
+      this.closeVendorDeleteModal();
+    },
+    error: (error) => {
+      this.toastrService.error('Failed to delete vendor details', 'Non Training Progress Data Error!');
+      this.loadVendorData();
+      this.closeVendorDeleteModal();
+      console.error('Delete vendor data error:', error);
+    }
+  });
+  this.getDeatilOfTargets();
+}
+// Reset Vendor Form
+resetVendorForm() {
+  this.uploadedFilesVendor = '';
+  this.vendorForm.reset();
+  this.isSubmitted = false;
+  this.isEditModeVendor = false;
+  
+  // Reset form with default values
+  this.vendorForm.patchValue({
+    vendorId: 0,
+    vendorCompanyName: '',
+    dateOfOrder: '',
+    orderDetails: '',
+    subActivityId: parseInt(this.selectedBudgetHead || '0')
+  });
+  
+  // Reset form validation
+  Object.keys(this.fVendor).forEach(key => {
+    this.fVendor[key].markAsUntouched();
+    this.fVendor[key].markAsPristine();
+  });
+}
+
+// Close Vendor Modal
+closeVendorModal() {
+  const modalElement = document.getElementById('addVendor');
+  if (modalElement) {
+    const modal = (window as any).bootstrap.Modal.getInstance(modalElement);
+    modal?.hide();
+  }
+  this.resetVendorForm();
+}
+
+// Close Vendor Delete Modal
+closeVendorDeleteModal(): void {
+  document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+  const deleteVendorModal = document.getElementById('exampleModalDeleteVendor');
+  if (deleteVendorModal) {
+    const modalInstance = bootstrap.Modal.getInstance(deleteVendorModal);
+    modalInstance.hide();
+  }
+}
+
+// Check if current budget head supports vendor management
+isVendorBudgetHead(): boolean {
+  return ['79', '80', '81'].includes(this.selectedBudgetHead);
+}
 }
 
 
