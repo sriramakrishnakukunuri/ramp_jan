@@ -38,7 +38,7 @@ export class HelpSupportComponent implements OnInit {
       status: ['OPEN', [Validators.required]],
       type: ['BUG', [Validators.required]],
       assigneeId: ['', [Validators.required]],
-      assigneeName: ['', [Validators.required]]
+      assigneeName: ['',]
     });
   }
 
