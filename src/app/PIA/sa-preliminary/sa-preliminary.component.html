@@ -72,11 +72,12 @@
              <div class="d-flex justify-content-between mb-3">
             <div>
                <p class="badge bg-warning rounded-pill fs-md mb-0">
+                Total Risk Score: {{ registrationDetails?.riskCategoryScore }}%
                 <!-- Note :<span class="ms-2">(Score ≤ 30 and ≥80  : Not Applicable)</span> -->
             </p>
             </div>
             <div class="text-end">
-            <p class="badge bg-dark rounded-pill fs-md mb-0">Total Risk Score: <span>  {{ registrationDetails?.riskCategoryScore }}%. Score ≤ 30 and ≥80 “Not Applicable"</span></p>
+            <p class="badge bg-dark rounded-pill fs-md mb-0"> <span> Score ≤ 30 and ≥80 “Not Applicable"</span></p>
           </div>
             
           </div>
