@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CommonServiceService } from '../../_services/common-service.service';
 import { Ticket } from '../../_models/ticket.model';
 import { APIS } from '../../constants/constants';
+import { ToastrService } from 'ngx-toastr';
 
 declare var bootstrap: any;
 
@@ -17,7 +18,7 @@ export class HelpSupportComponent implements OnInit {
   selectedTicket: Ticket | null = null;
   isEditMode = false;
   loading = false;
-  selectedFiles: File[] = [];
+  selectedFiles: any = [];
   message = '';
   messageType: 'success' | 'error' = 'success';
   deleteTicketId: string = '';
@@ -29,8 +30,10 @@ export class HelpSupportComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private commonService: CommonServiceService
+    private commonService: CommonServiceService,
+     private toastrService: ToastrService,
   ) {
+    this.getAssigneeName()
     this.ticketForm = this.formBuilder.group({
       title: ['', [Validators.required, Validators.minLength(3)]],
       description: ['', [Validators.required, Validators.minLength(10)]],
@@ -45,7 +48,26 @@ export class HelpSupportComponent implements OnInit {
   ngOnInit(): void {
     this.loadTickets();
   }
+getAssineeData:any=[]
+  getAssigneeName() {
+    this.getAssineeData=[];
+     this.commonService.getDataByUrl(APIS.tickets.getAllAssineeId).subscribe({
+      next: (response) => {
+        if (response && response.data?.length > 0) {
+           this.getAssineeData = response.data;
+        }  else {
+          this.getAssineeData = [];
+        }
+        this.loading = false;
+      },
+      error: (error) => {
+        console.error('Error loading tickets:', error);
+        this.showMessage('Error loading tickets', 'error');
+        this.loading = false;
+      }
+    });
 
+  }
   // Load all tickets
   loadTickets(): void {
     this.loading = true;
@@ -61,8 +83,7 @@ export class HelpSupportComponent implements OnInit {
         this.loading = false;
       },
       error: (error) => {
-        console.error('Error loading tickets:', error);
-        this.showMessage('Error loading tickets', 'error');
+       
         this.loading = false;
       }
     });
@@ -71,42 +92,48 @@ export class HelpSupportComponent implements OnInit {
   // Create or update ticket
   onSubmit(): void {
     this.isSubmitted = true;
-    
+    console.log('Form Values:', this.ticketForm.value);
     if (this.ticketForm.invalid) {
       this.markFormGroupTouched(this.ticketForm);
       return;
     }
 
     this.loading = true;
-    const ticketData: Ticket = this.ticketForm.value;
+    const ticketData: any = this.ticketForm.value;
 
     if (this.isEditMode && this.selectedTicket?.id) {
       // Update existing ticket
       if (this.selectedFiles.length > 0) {
-        const formData = new FormData();
-        formData.append('ticket', JSON.stringify(ticketData));
-        this.selectedFiles.forEach((file) => {
-          formData.append('files', file);
-        });
-        
+        // const formData = new FormData();
+        // formData.append('ticket', JSON.stringify(ticketData));
+        // this.selectedFiles.forEach((file) => {
+        //   formData.append('files', file);
+        // });
+       let formData={...ticketData,attachments:this.selectedFiles}
         this.commonService.updatedata(APIS.tickets.update + this.selectedTicket.id, formData).subscribe({
           next: (response) => {
-            this.handleSuccess('Ticket updated successfully!');
+           
+            this.toastrService.success('Ticket updated successfully!');
+            // this.handleSuccess('Ticket updated successfully!');
           },
           error: (error) => {
             console.error('Error updating ticket:', error);
-            this.showMessage('Error updating ticket', 'error');
+            this.toastrService.error('Error updating ticket');
+            // this.showMessage('Error updating ticket', 'error');
             this.loading = false;
           }
         });
       } else {
         this.commonService.updatedata(APIS.tickets.update + this.selectedTicket.id, ticketData).subscribe({
           next: (response) => {
-            this.handleSuccess('Ticket updated successfully!');
+             
+             this.toastrService.success('Ticket updated successfully!');
           },
           error: (error) => {
+            
             console.error('Error updating ticket:', error);
-            this.showMessage('Error updating ticket', 'error');
+            // this.showMessage('Error updating ticket', 'error');
+            this.toastrService.error('Error updating ticket');
             this.loading = false;
           }
         });
@@ -116,40 +143,51 @@ export class HelpSupportComponent implements OnInit {
       if (this.selectedFiles.length > 0) {
         const formData = new FormData();
         formData.append('ticket', JSON.stringify(ticketData));
-        this.selectedFiles.forEach((file) => {
+        this.selectedFiles.forEach((file:any) => {
           formData.append('files', file);
         });
         
         this.commonService.add(APIS.tickets.save, formData).subscribe({
-          next: (response) => {
-            this.handleSuccess('Ticket created successfully!');
+          next: (response:any) => {
+             
+            this.toastrService.success('Ticket created successfully!');
           },
-          error: (error) => {
+          error: (error:any) => {
+            
             console.error('Error creating ticket:', error);
-            this.showMessage('Error creating ticket', 'error');
+            this.toastrService.error('Error creating ticket');
+            // this.showMessage('Error creating ticket', 'error');
             this.loading = false;
           }
         });
       } else {
-        this.commonService.add(APIS.tickets.save, ticketData).subscribe({
-          next: (response) => {
-            this.handleSuccess('Ticket created successfully!');
+         const formData = new FormData();
+        formData.append('ticket', JSON.stringify(ticketData));
+        this.commonService.add(APIS.tickets.save, formData).subscribe({
+          next: (response:any) => {
+           
+            this.toastrService.success('Ticket created successfully!');
+            // this.handleSuccess('Ticket created successfully!');
           },
-          error: (error) => {
+          error: (error:any) => {
+             
             console.error('Error creating ticket:', error);
-            this.showMessage('Error creating ticket', 'error');
+            this.toastrService.error('Error creating ticket');
+            // this.showMessage('Error creating ticket', 'error');
             this.loading = false;
           }
         });
       }
     }
+    this.handleSuccess()
   }
 
   // Handle success response
-  handleSuccess(message: string): void {
-    this.showMessage(message, 'success');
+  handleSuccess(): void {
+    // this.showMessage(message, 'success');
     this.resetForm();
-    this.loadTickets();
+    setTimeout(() => {this.loadTickets();},500)
+    
     this.loading = false;
     
     // Close modal
@@ -161,12 +199,13 @@ export class HelpSupportComponent implements OnInit {
   }
 
   // Open ticket modal
-  openTicketModal(mode: string, ticket?: Ticket): void {
+  openTicketModal(mode: string, ticket?: any): void {
     this.isEditMode = mode === 'edit';
     this.isSubmitted = false;
     
     if (mode === 'edit' && ticket) {
       this.selectedTicket = ticket;
+      this.selectedFiles=ticket.attachments || [];
       this.ticketForm.patchValue({
         title: ticket.title,
         description: ticket.description,
@@ -177,11 +216,19 @@ export class HelpSupportComponent implements OnInit {
         assigneeName: ticket.assigneeName
       });
     } else {
+      this.selectedFiles = [];
       this.resetForm();
     }
     
-    this.selectedFiles = [];
     
+    
+
+    setTimeout(() => {
+    const fileInput = document.getElementById('files') as HTMLInputElement;
+    if (fileInput) {
+      fileInput.value = '';
+    }
+  }, 100);
     // Open modal using Bootstrap
     const modalElement = document.getElementById('addTicketModal');
     if (modalElement) {
@@ -205,6 +252,7 @@ export class HelpSupportComponent implements OnInit {
     this.loading = true;
     this.commonService.deleteId(APIS.tickets.delete, ticketId).subscribe({
       next: (response) => {
+
         this.showMessage('Ticket deleted successfully!', 'success');
         this.loadTickets();
         this.loading = false;
@@ -236,12 +284,17 @@ export class HelpSupportComponent implements OnInit {
 
   // Reset form
   resetForm(): void {
+
     this.ticketForm.reset({
       priority: 'MEDIUM',
       status: 'OPEN',
       type: 'BUG'
     });
     this.selectedTicket = null;
+     const fileInput = document.getElementById('files') as HTMLInputElement;
+  if (fileInput) {
+    fileInput.value = '';
+  }
     this.isEditMode = false;
     this.selectedFiles = [];
   }

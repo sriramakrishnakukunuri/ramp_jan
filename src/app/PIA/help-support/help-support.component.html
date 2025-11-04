@@ -42,6 +42,7 @@
                 <tr>
                   <th scope="col">S.No</th>
                   <th scope="col">Title</th>
+                  <th scope="col">Description</th>
                   <th scope="col">Type</th>
                   <th scope="col">Priority</th>
                   <th scope="col">Status</th>
@@ -55,6 +56,9 @@
                   <td>{{ i + 1 }}</td>
                   <td>
                     <div class="fw-600">{{ ticket.title }}</div>
+                    
+                  </td>
+                  <td>
                     <small class="text-muted">{{ ticket.description | slice:0:50 }}{{ ticket.description && ticket.description.length > 50 ? '...' : '' }}</small>
                   </td>
                   <td>
@@ -71,8 +75,8 @@
                     <small class="text-muted">{{ ticket.assigneeId }}</small>
                   </td>
                   <td>
-                    <span *ngIf="ticket.createdDate">{{ ticket.createdDate | date:'dd/MM/yyyy' }}</span>
-                    <span *ngIf="!ticket.createdDate" class="text-muted">-</span>
+                    <span *ngIf="ticket?.createdAt">{{ ticket?.createdAt }}</span>
+                    <span *ngIf="!ticket?.createdAt" class="text-muted">-</span>
                   </td>
                   <td>
                     <div class="btn-group" role="group">
@@ -206,17 +210,20 @@
           <div class="row">
             <div class="col-md-6">
               <div class="form-group mb-3">
-                <label for="assigneeId" class="form-label">Assignee ID *</label>
-                <input 
-                  type="text" 
-                  id="assigneeId" 
-                  formControlName="assigneeId"  
-                  class="form-control"
-                  [class.is-invalid]="f['assigneeId'].invalid && (f['assigneeId'].dirty || f['assigneeId'].touched)"
-                  placeholder="Enter assignee ID">
-                <div *ngIf="f['assigneeId'].invalid && (f['assigneeId'].dirty || f['assigneeId'].touched)" class="invalid-feedback">
-                  <div *ngIf="f['assigneeId'].errors?.['required']">Assignee ID is required</div>
-                </div>
+              <label for="assigneeId" class="form-label">Assignee *</label>
+              <select
+                id="assigneeId"
+                formControlName="assigneeId"
+                class="form-select"
+                [class.is-invalid]="f['assigneeId'].invalid && (f['assigneeId'].dirty || f['assigneeId'].touched)">
+                <option value="">Select Assignee</option>
+                <option *ngFor="let assignee of getAssineeData" [value]="assignee.userId">
+                {{ assignee.userId }}
+                </option>
+              </select>
+              <div *ngIf="f['assigneeId'].invalid && (f['assigneeId'].dirty || f['assigneeId'].touched)" class="invalid-feedback">
+                <div *ngIf="f['assigneeId'].errors?.['required']">Assignee is required</div>
+              </div>
               </div>
             </div>
 
@@ -240,7 +247,7 @@
           <div class="row">
             <div class="col-12">
               <div class="form-group mb-3">
-                <label for="files" class="form-label">Attach Files (Optional)</label>
+                <label for="files" class="form-label">Attach Files</label>
                 <input 
                   type="file" 
                   id="files" 
@@ -253,7 +260,8 @@
                 <div *ngIf="selectedFiles.length > 0" class="selected-files mt-2">
                   <h6 class="text-muted">Selected Files:</h6>
                   <div *ngFor="let file of selectedFiles; let i = index" class="file-item d-flex justify-content-between align-items-center p-2 border rounded mb-1">
-                    <span><i class="fas fa-file me-2"></i>{{ file.name }}</span>
+                    <span><i class="fas fa-file me-2" *ngIf="isEditMode"></i>{{ file.fileName }}</span>
+                    <span><i class="fas fa-file me-2" *ngIf="!isEditMode"></i>{{ file?.name }}</span>
                     <button type="button" class="btn btn-outline-danger btn-sm" (click)="removeFile(i)">
                       <i class="fas fa-times"></i>
                     </button>

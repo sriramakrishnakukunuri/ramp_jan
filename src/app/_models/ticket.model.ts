@@ -7,9 +7,9 @@ export interface Ticket {
   type: 'BUG' | 'FEATURE' | 'ENHANCEMENT' | 'SUPPORT';
   assigneeId: string;
   assigneeName: string;
-  createdDate?: Date;
+  createdAt?: Date;
   updatedDate?: Date;
-  files?: File[];
+  attachments?: File[];
 }
 
 export interface TicketResponse {

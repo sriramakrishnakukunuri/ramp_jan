@@ -288,6 +288,7 @@ export const APIS = {
         save: API_BASE_URL + '/tickets',
         getAll: API_BASE_URL + '/tickets',
         update: API_BASE_URL + '/tickets/',
-        delete: API_BASE_URL + '/tickets/delete/'
+        delete: API_BASE_URL + '/tickets/delete/',
+         getAllAssineeId: API_BASE_URL + '/tickets/specific-users',
     }
 }

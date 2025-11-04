@@ -41,10 +41,10 @@
 }
 
 .table th {
-  background-color: #f8f9fa;
+  background-color: limegreen;
   border-top: none;
   font-weight: 600;
-  color: #495057;
+  color: #ffffff;
   padding: 12px;
 }
 
@@ -72,7 +72,7 @@
 
 /* Modal and form styles */
 .modal-header {
-  background-color: #343a40;
+  background-color: limegreen;
 }
 
 .modal-title {
@@ -134,7 +134,7 @@
 }
 
 /* Type Badges */
-.type-bug { 
+.type-bug,.type-issue { 
   background-color: #dc3545; 
   color: white; 
 }

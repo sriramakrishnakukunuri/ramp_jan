@@ -36,6 +36,11 @@ export class CommonServiceService {
   public add(URL: any, payload: any): Observable<any> {
     return this.http.post(URL, payload).pipe(catchError(this.formatErrors));
   }
+    public addsave(URL: any, formData: any): Observable<any> {
+       const headers = new HttpHeaders({ 'Content-Type': 'multipart/form-data',});
+      return this.http.post(URL, formData,{headers}).pipe(catchError(this.formatErrors));
+    }
+    
   public updateChangedata(URL: any, payload: any,): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'

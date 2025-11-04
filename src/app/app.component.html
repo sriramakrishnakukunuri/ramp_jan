@@ -640,6 +640,9 @@
                       <li><a class="dropdown-item" routerLink="/assessment" routerLinkActive="active">Startups Assessments</a></li>
                     </ul>
                   </li>
+                    <li *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR,Role.CALL_CENTER,Role.Admin]">
+                    <a class="dropdown-item" routerLink="//help-support" routerLinkActive="active">Help Support</a>
+                  </li>
                 </ul>
               </li>
               <!-- new tab code ends here -->
@@ -671,8 +674,8 @@
                       class="bi bi-person fs-5 me-2"></span> My Profile</a></li>
                 <li><a class="dropdown-item" routerLink="/password-settings" routerLinkActive="active"><span
                       class="bi bi-key fs-5 me-2"></span> Change Password</a></li>
-                       <li><a class="dropdown-item" routerLink="/help-support" routerLinkActive="active"><span
-                      class="bi bi-key fs-5 me-2"></span> Help Support</a></li>
+                       <!-- <li><a class="dropdown-item" routerLink="/help-support" routerLinkActive="active"><span
+                      class="bi bi-key fs-5 me-2"></span> Help Support</a></li> -->
                 <li *appHasRole="[Role.Admin,Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR,Role.CALL_CENTER]"><a class="dropdown-item" routerLink="/user-registration" 
                     routerLinkActive="active"><span class="bi bi-person-circle fs-5 me-2"></span> Register User</a></li>
                 <li><a class="dropdown-item" (click)="logout()"><span class="bi bi-box-arrow-right fs-5 me-2"></span>
