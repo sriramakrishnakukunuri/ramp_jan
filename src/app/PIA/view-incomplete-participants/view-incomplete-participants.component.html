@@ -1,219 +1,302 @@
 <main class="mt-4">
-    <section>
-        <div class="card mb-3">
-            <div class="card-header bg-transparent">
-                <div class="row align-items-center mb-3">
-                    <div class="col-12 col-sm-6 col-md-6 col-lg-6">
-                        <h6 class="fw-600 mb-2 mb-sm-0">View Program Participants</h6>
-                    </div>
-                    <ng-container *ngIf="loginsessionDetails?.userRole == 'ADMIN'">
-                        <div class="col-12 col-sm-3 col-md-3 col-lg-3">
-                            <!-- <label for="Agencies" style="font-weight: 600;">List Of Agencies</label>
+  <section>
+    <div class="card mb-3">
+      <div class="card-header bg-transparent">
+        <div class="row align-items-center mb-3">
+          <div class="col-12 col-sm-6 col-md-6 col-lg-6">
+            <h6 class="fw-600 mb-2 mb-sm-0">View Program Participants</h6>
+          </div>
+          <ng-container *ngIf="loginsessionDetails?.userRole == 'ADMIN'">
+            <div class="col-12 col-sm-3 col-md-3 col-lg-3">
+              <!-- <label for="Agencies" style="font-weight: 600;">List Of Agencies</label>
                             <select class="form-select" [(ngModel)]="selectedAgencyId" (change)="getProgramsByAgencyAdmin($any($event.target).value)">                                    
                                 <option *ngFor="let list of agencyList" value="{{list.agencyId}}">{{list.agencyName}}</option>
                             </select> -->
-                              <mat-form-field appearance="outline" class="w-100">
-                            <mat-label>List Of Agencies</mat-label>
-                                <mat-select [(ngModel)]="selectedAgencyId" (selectionChange)="getProgramsByAgencyAdmin($any($event).value)">
-                                <mat-select-filter [array]="agencyList" [displayMember]="'agencyName'" (filteredReturn)="agencyListFiltered = $event">
-                                </mat-select-filter>
-                                <mat-option value="" disabled>Select Agency</mat-option>
-                                <mat-option *ngFor="let list of agencyListFiltered" [value]="list.agencyId">
-                                {{ list.agencyName }}
-                                </mat-option>
-                            </mat-select>
-                            </mat-form-field>
-                        </div>
-                        <div class="col-12 col-sm-3 col-md-3 col-lg-3">
-                            <!-- <label for="Agencies" style="font-weight: 600;">List Of Programs</label>
-                            <select class="form-select" [(ngModel)]="programIds" (change)="dropdownProgramsList($event,'table')">
-                                <option value="">Select Program</option>
-                            <option *ngFor="let list of agencyProgramList" value="{{list.programId}}">{{list.programTitle}}</option>
-                            </select> -->
-                            <mat-form-field appearance="outline" class="w-100">
-                            <mat-label>List Of Program</mat-label>
-                                <mat-select [(ngModel)]="programIds" (selectionChange)="dropdownProgramsList($event,'table')">
-                                <mat-select-filter [array]="agencyProgramList" [displayMember]="'programTitle'" (filteredReturn)="agencyProgramListFiltered = $event">
-                                </mat-select-filter>
-                                <mat-option value="" disabled>Select Program</mat-option>
-                                <mat-option *ngFor="let list of agencyProgramListFiltered" [value]="list.programId">
-                                {{ list.programTitle }}
-                                </mat-option>
-                            </mat-select>
-                            </mat-form-field>
-                        </div>
-                    </ng-container>   
-                    <ng-container *ngIf="loginsessionDetails?.userRole != 'ADMIN'">
-                        <div class="col-lg-3 col-sm-6 col-md-6 ">
-                            <!-- <label for="Agencies" style="font-weight: 600;">List Of Programs</label>
-                            <select class="form-select" [(ngModel)]="programIds" (change)="dropdownProgramsList($event,'table')">
-                                <option value="">Select Program</option>
-                            <option *ngFor="let list of agencyProgramList" value="{{list.programId}}">{{list.programTitle}}</option>
-                            </select> -->
-                             <mat-form-field appearance="outline" class="w-100">
-                            <mat-label>List Of Program</mat-label>
-                                <mat-select [(ngModel)]="programIds" (selectionChange)="dropdownProgramsList($event,'table')">
-                                <mat-select-filter [array]="agencyProgramList" [displayMember]="'programTitle'" (filteredReturn)="agencyProgramListFiltered = $event">
-                                </mat-select-filter>
-                                <mat-option value="" disabled>Select Program</mat-option>
-                                <mat-option *ngFor="let list of agencyProgramListFiltered" [value]="list.programId">
-                                {{ list.programTitle }}
-                                </mat-option>
-                            </mat-select>
-                            </mat-form-field>
-                        </div>
-                    </ng-container>
-                   
-                </div>
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>List Of Agencies</mat-label>
+                <mat-select [(ngModel)]="selectedAgencyId"
+                  (selectionChange)="getProgramsByAgencyAdmin($any($event).value)">
+                  <mat-select-filter [array]="agencyList" [displayMember]="'agencyName'"
+                    (filteredReturn)="agencyListFiltered = $event">
+                  </mat-select-filter>
+                  <mat-option value="" disabled>Select Agency</mat-option>
+                  <mat-option *ngFor="let list of agencyListFiltered" [value]="list.agencyId">
+                    {{ list.agencyName }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
             </div>
-            <div class="card-body">
-                <div class="row">
-                    <!-- <div class="col-12 col-sm-6 col-md-6 col-lg-6">
-                        <button type="button" [ngClass]="{'disabled': !programIds}" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModalDeleteConfirm">Final Submission</button>
-                    </div> -->
-                    <!-- <div class="col-12 col-12 col-sm-6 col-md-6 col-lg-6 text-end">
-                         <div class="btn-group">
-                                <button [ngClass]="{'disabled': !programIds}" type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Download Participants
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <a class="dropdown-item" (click)="downloadParticipant('excel')" href="javascript:void(0)">
-                                            Excel
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" (click)="downloadParticipant('pdf')" href="javascript:void(0)">
-                                            PDF
-                                        </a>
-                                    </li>
-                                </ul>
+            <div class="col-12 col-sm-3 col-md-3 col-lg-3">
+              <!-- <label for="Agencies" style="font-weight: 600;">List Of Programs</label>
+                            <select class="form-select" [(ngModel)]="programIds" (change)="dropdownProgramsList($event,'table')">
+                                <option value="">Select Program</option>
+                            <option *ngFor="let list of agencyProgramList" value="{{list.programId}}">{{list.programTitle}}</option>
+                            </select> -->
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>List Of Program</mat-label>
+                <mat-select [(ngModel)]="programIds" (selectionChange)="dropdownProgramsList($event,'table')">
+                  <mat-select-filter [array]="agencyProgramList" [displayMember]="'programTitle'"
+                    (filteredReturn)="agencyProgramListFiltered = $event">
+                  </mat-select-filter>
+                  <mat-option value="" disabled>Select Program</mat-option>
+                  <mat-option *ngFor="let list of agencyProgramListFiltered" [value]="list.programId">
+                    {{ list.programTitle }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="loginsessionDetails?.userRole != 'ADMIN'">
+            <div class="col-lg-3 col-sm-6 col-md-6 ">
+              <!-- <label for="Agencies" style="font-weight: 600;">List Of Programs</label>
+                            <select class="form-select" [(ngModel)]="programIds" (change)="dropdownProgramsList($event,'table')">
+                                <option value="">Select Program</option>
+                            <option *ngFor="let list of agencyProgramList" value="{{list.programId}}">{{list.programTitle}}</option>
+                            </select> -->
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>List Of Program</mat-label>
+                <mat-select [(ngModel)]="programIds" (selectionChange)="dropdownProgramsList($event,'table')">
+                  <mat-select-filter [array]="agencyProgramList" [displayMember]="'programTitle'"
+                    (filteredReturn)="agencyProgramListFiltered = $event">
+                  </mat-select-filter>
+                  <mat-option value="" disabled>Select Program</mat-option>
+                  <mat-option *ngFor="let list of agencyProgramListFiltered" [value]="list.programId">
+                    {{ list.programTitle }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </ng-container>
+
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="row align-items-center mb-2">
+          <div class="col-12 col-md-12 mb-2 mb-md-0">
+            <div *ngIf="getSelectedProgramDeatils" class="program-details-container">
+              <div class="card border-0 shadow-sm">
+                <div class="card-body p-2">
+                  <div class="row align-items-center">
+                    <div class="col-12 col-lg-12">
+                      <div class="program-info">
+                       
+
+                        <div class="row g-3">
+                            <div class="col-md-3">
+                            <div class="info-item">
+                              <div class="d-flex align-items-center">
+                                 <i class="fas fa-graduation-cap text-lime-green fs-3 me-2"></i>
+                                <div>
+                                  <small class="text-muted d-block" style="font-size: 0.75rem;">Program Title</small>
+                                  <span class="fw-semibold">{{ getSelectedProgramDeatils.programTitle }}</span>
+                                </div>
+                              </div>
                             </div>
-                        &nbsp;&nbsp;
-                        <button type="button" [ngClass]="{'disabled': !programIds}" (click)="openFileUploadModal()" class="btn btn-lime-green" >Upload Participants</button>
-                    </div> -->
+                          </div>
+                          <div class="col-md-3">
+                            <div class="info-item">
+                              <div class="d-flex align-items-center">
+                                <i class="fas fa-calendar-alt text-success me-2"></i>
+                                <div>
+                                  <small class="text-muted d-block" style="font-size: 0.75rem;">Start Date</small>
+                                  <span class="fw-semibold">{{ getSelectedProgramDeatils.startDate }}</span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="col-md-3">
+                            <div class="info-item">
+                              <div class="d-flex align-items-center">
+                                <i class="fas fa-calendar-check text-warning me-2"></i>
+                                <div>
+                                <small class="text-muted d-block" style="font-size: 0.75rem;">End Date</small>
+                                  <span class="fw-semibold">{{ getSelectedProgramDeatils.endDate }}</span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="col-md-3">
+                            <div class="info-item">
+                              <div class="d-flex align-items-center">
+                                <i class="fas fa-info-circle me-2"
+                                  [ngClass]="getSelectedProgramDeatils.status === 'Active' ? 'text-success' : 
+                                                             getSelectedProgramDeatils.status === 'Completed' ? 'text-primary' : 'text-secondary'"></i>
+                                <div>
+                                  <small class="text-muted d-block " style="font-size: 0.75rem;">Status</small>
+                                  <span class="badge"
+                                    [ngClass]="getSelectedProgramDeatils.status === 'Active' ? 'bg-success' : 
+                                                                    getSelectedProgramDeatils.status === 'Completed' ? 'bg-primary' : 'bg-primary'">
+                                    {{ getSelectedProgramDeatils.status }}
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+
+                  </div>
                 </div>
-                <br>
-                <table id="view-table-participant1" class="table table-borderless table-striped nowrap">
-                    <thead class="bg-lime-green text-white">
-                        <tr>
-                            <th>S.No</th>
-                            <!-- <th class="text-center">Edit / Delete</th> -->
-                            <th>IsAspirant</th>
-                            <th>Oragnization Name</th>
-                            <th>Name of the Participant</th>
-                            <th>Gender</th>
-                            <th>Disability</th>
-                            <th>Aadhar No.</th>
-                            <th>Category</th>
-                            <th>Mobile No.</th>
-                            <th>Email</th>
-                            <th>Designation/Current Trade</th>
-                            <th>Previous Participant</th>
-                            <th>Pre-Training Assessment</th>
-                            <th>Post Training Assessment</th>
-                            <th>Certificate Issue Date</th>
-                            <th>Issue Date</th>
-                            <th>Methodology Used for Needs Assessment</th>
-                          
-                        </tr>
-                    </thead>
-                    <tbody *ngIf="submitedData">
-                        <tr  *ngFor="let item of submitedData; let i=index">
-                            <td class="text-start">{{i+1}}</td>
-                            <!-- <td class="text-center">
+              </div>
+            </div>
+
+          </div>
+          <!-- Uncomment and adjust the below as needed for actions on the same line -->
+          <!--
+                    <div class="col-12 col-md-6 text-md-end mt-2 mt-md-0 d-flex justify-content-md-end align-items-center gap-2">
+                        <div class="btn-group">
+                            <button [ngClass]="{'disabled': !programIds}" type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                Download Participants
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item" (click)="downloadParticipant('excel')" href="javascript:void(0)">
+                                        Excel
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" (click)="downloadParticipant('pdf')" href="javascript:void(0)">
+                                        PDF
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <button type="button" [ngClass]="{'disabled': !programIds}" (click)="openFileUploadModal()" class="btn btn-lime-green">
+                            Upload Participants
+                        </button>
+                        <button type="button" [ngClass]="{'disabled': !programIds}" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModalDeleteConfirm">
+                            Final Submission
+                        </button>
+                    </div>
+                    -->
+        </div>
+        <br>
+        <table id="view-table-participant1" class="table table-borderless table-striped nowrap">
+          <thead class="bg-lime-green text-white">
+            <tr>
+              <th>S.No</th>
+              <!-- <th class="text-center">Edit / Delete</th> -->
+              <th>IsAspirant</th>
+              <th>Oragnization Name</th>
+              <th>Name of the Participant</th>
+              <th>Gender</th>
+              <th>Disability</th>
+              <th>Aadhar No.</th>
+              <th>Category</th>
+              <th>Mobile No.</th>
+              <th>Email</th>
+              <th>Designation/Current Trade</th>
+              <th>Previous Participant</th>
+              <th>Pre-Training Assessment</th>
+              <th>Post Training Assessment</th>
+              <th>Certificate Issue Date</th>
+              <th>Issue Date</th>
+              <th>Methodology Used for Needs Assessment</th>
+
+            </tr>
+          </thead>
+          <tbody *ngIf="submitedData">
+            <tr *ngFor="let item of submitedData; let i=index">
+              <td class="text-start">{{i+1}}</td>
+              <!-- <td class="text-center">
                                 <button type="button" class="btn btn-default text-lime-green btn-sm" (click)="editRow(item)"><span class="bi bi-pencil"></span></button>
                                 <button type="button" class="btn btn-default text-danger btn-sm" (click)="deleteRow(item)"><span class="bi bi-trash"></span></button>
                             </td> -->
-                            <td>{{item?.organizationName?'No':'Yes'}}</td>
-                            <td >{{item?.isAspirant=='Aspirant'?'':item?.organizationName}}</td>
-                            <td>{{item?.participantName}}</td>
-                            <td>{{item?.gender}}</td>
-                            <td>{{item?.disability}}</td>
-                            <td>{{item?.aadharNo}}</td>
-                            <td>{{item?.category}}</td>
-                            <td>{{item?.mobileNo}}</td>
-                            <td>{{item?.email}}</td>
-                            <td>{{item?.designation}}</td>
-                            <td>{{item?.isParticipatedBefore}}</td>
-                            <td>{{item?.preTrainingAssessmentConducted}}</td>
-                            <td>{{item?.postTrainingAssessmentConducted}}</td>
-                            <td>{{item?.isCertificateIssued=='Y'?'Yes':'No'}}</td>
-                            <td>{{item?.isCertificateIssued=='Y'?item?.certificateIssueDate:''}}</td>
-                            <td>{{item?.needAssessmentMethodology}}</td>
-                          
-                        </tr>
-                    </tbody>
-                </table>                
-            </div>
-            
-        </div>
-    </section>
+              <td>{{item?.organizationName?'No':'Yes'}}</td>
+              <td>{{item?.isAspirant=='Aspirant'?'':item?.organizationName}}</td>
+              <td>{{item?.participantName}}</td>
+              <td>{{item?.gender}}</td>
+              <td>{{item?.disability}}</td>
+              <td>{{item?.aadharNo}}</td>
+              <td>{{item?.category}}</td>
+              <td>{{item?.mobileNo}}</td>
+              <td>{{item?.email}}</td>
+              <td>{{item?.designation}}</td>
+              <td>{{item?.isParticipatedBefore}}</td>
+              <td>{{item?.preTrainingAssessmentConducted}}</td>
+              <td>{{item?.postTrainingAssessmentConducted}}</td>
+              <td>{{item?.isCertificateIssued=='Y'?'Yes':'No'}}</td>
+              <td>{{item?.isCertificateIssued=='Y'?item?.certificateIssueDate:''}}</td>
+              <td>{{item?.needAssessmentMethodology}}</td>
+
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </section>
 </main>
 
 
 <!-- upload form -->
-<div class="modal fade" id="addDocumentModel" tabindex="-1" aria-labelledby="addDocumentLabel" aria-hidden="true" data-keyboard="false" data-bs-backdrop="static" >
-    <div class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h6 class="modal-title" id="addDocumentLabel">Upload  Document</h6>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+<div class="modal fade" id="addDocumentModel" tabindex="-1" aria-labelledby="addDocumentLabel" aria-hidden="true"
+  data-keyboard="false" data-bs-backdrop="static">
+  <div class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h6 class="modal-title" id="addDocumentLabel">Upload Document</h6>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <span *ngIf="fileErrorMsg" style="color: red;">{{fileErrorMsg}}</span>
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="attachment" *ngIf="!file">
+              <input class="attachment" style="opacity: 0" #fileInput type="file" accept=".xls, .xlsx,"
+                (change)="onFilesSelected($event)" />
+              <span class="drop-zone__prompt">Drop file here <br> or <br> click to upload</span>
             </div>
-            <div class="modal-body">
-                <span *ngIf="fileErrorMsg" style="color: red;">{{fileErrorMsg}}</span>
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="attachment" *ngIf="!file">
-                            <input class="attachment" style="opacity: 0" #fileInput type="file" 
-                                accept=".xls, .xlsx,"
-                                (change)="onFilesSelected($event)" />
-                            <span class="drop-zone__prompt">Drop file here <br> or <br> click to upload</span>
-                        </div>
-                        <div *ngIf="file">
-                            file Name : {{ selectedfiles.name}} <br> <button class="btn btn-sm btn-primary" 
-                                (click)="file=undefined"> clear file</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-12">
-                        <ng-container *ngIf="selectedfiles">
-                            <div class="row" *ngFor="let item of selectedfiles" style="font-size: 10px;">
-                                <div class="col-sm-6 word-wrap">{{item.name}}</div>
-                                <!-- <div class="col-sm-2">{{item.size}}</div>
-                                <div class="col-sm-4 word-wrap">{{item.type}}</div> -->
-                            </div>
-                        </ng-container>
-                    </div>
-                </div>
-                <div class="d-grid">
-                    <ng-container >
-                        <button type="button"  class="btn btn-lime-green" data-bs-dismiss="modal" (click)="uploadManualFiles()" [ngClass]="{'disabled': !selectedfiles.length}">Upload</button>
-                    </ng-container>
-                  
-                    
-                </div>
+            <div *ngIf="file">
+              file Name : {{ selectedfiles.name}} <br> <button class="btn btn-sm btn-primary" (click)="file=undefined">
+                clear file</button>
             </div>
+          </div>
         </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <ng-container *ngIf="selectedfiles">
+              <div class="row" *ngFor="let item of selectedfiles" style="font-size: 10px;">
+                <div class="col-sm-6 word-wrap">{{item.name}}</div>
+                <!-- <div class="col-sm-2">{{item.size}}</div>
+                                <div class="col-sm-4 word-wrap">{{item.type}}</div> -->
+              </div>
+            </ng-container>
+          </div>
+        </div>
+        <div class="d-grid">
+          <ng-container>
+            <button type="button" class="btn btn-lime-green" data-bs-dismiss="modal" (click)="uploadManualFiles()"
+              [ngClass]="{'disabled': !selectedfiles.length}">Upload</button>
+          </ng-container>
+
+
+        </div>
+      </div>
     </div>
+  </div>
 </div>
 
-<div class="modal fade" id="exampleModalDeleteConfirm" tabindex="-1" role="dialog" aria-labelledby="exampleModalDeleteConfirmLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalDeleteConfirmLabel">Final Participant Submission</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                Are you sure you want to submit these participants for the current program? You cannot add any more Participatants once submitted!”
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-lime-green" (click)="sessionSubmissionFinal()">Confirm</button>
-            </div>
-        </div>
+<div class="modal fade" id="exampleModalDeleteConfirm" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalDeleteConfirmLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalDeleteConfirmLabel">Final Participant Submission</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to submit these participants for the current program? You cannot add any more
+        Participatants once submitted!”
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-lime-green" (click)="sessionSubmissionFinal()">Confirm</button>
+      </div>
     </div>
+  </div>
 </div>

@@ -58,6 +58,7 @@ export class ViewIncompleteParticipantsComponent implements OnInit {
           this.agencyProgramList = res?.data
           this.agencyProgramListFiltered = this.agencyProgramList
           this.programIds = this.agencyProgramList[0].programId
+           this.getSelectedProgramDeatils=this.agencyProgramList[0]
           this.submitedData = ''
           this.getData()
         },
@@ -69,11 +70,12 @@ export class ViewIncompleteParticipantsComponent implements OnInit {
     getProgramsByAgency() {
      
 
-      this._commonService.getDataByUrl(`${APIS.programCreation.getProgramsListBySession + (this.loginsessionDetails.agencyId?this.loginsessionDetails.agencyId:this.agencyId)}?status=Sessions Created`).subscribe({
+      this._commonService.getDataByUrl(`${APIS.programCreation.getIncompletProgramsListByAgency + (this.loginsessionDetails.agencyId?this.loginsessionDetails.agencyId:this.agencyId)}`).subscribe({
         next: (res: any) => {
           this.agencyProgramList = res?.data
           this.agencyProgramListFiltered= this.agencyProgramList
           this.programIds = this.agencyProgramList[0].programId
+          this.getSelectedProgramDeatils=this.agencyProgramList[0]
           this.getData()
         },
         error: (err) => {
@@ -81,9 +83,12 @@ export class ViewIncompleteParticipantsComponent implements OnInit {
         }
       })
     }
+    getSelectedProgramDeatils:any={}
     dropdownProgramsList(event: any, type: any) {
       this.submitedData = ''
       this.programIds = event.value
+      this.getSelectedProgramDeatils = this.agencyProgramList.find((program: any) => program.programId === this.programIds)
+      console.log(this.getSelectedProgramDeatils)
       if (type == 'table' && event.value) {
         this.getData()
       }
