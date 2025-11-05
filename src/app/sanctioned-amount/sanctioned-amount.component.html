@@ -677,8 +677,7 @@
               <div class="row">
                 <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
                   <label class="fw-bold">Sanctioned Date:</label>
-                  <div>{{ sanctionList?.sanctionedDate ? (sanctionList.sanctionedDate |
-                                        date:'mediumDate') : 'N/A' }}</div>
+                  <div>{{ sanctionList?.sanctionedDate ? sanctionList.sanctionedDate : 'N/A' }}</div>
                 </div>
                 <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
                   <label class="fw-bold">Sanctioned Amount:</label>
@@ -904,7 +903,7 @@
                 </div> -->
                 <div class="col-md-4 mb-2">
                   <label class="fw-bold">Type Of Loan:</label>
-                  <div>{{ (disburseList?.processType ) ?? 'N/A' }}</div>
+                  <div>{{ (registrationDetails?.processType ) ?? 'N/A' }}</div>
                 </div>
                 <div class="col-md-4 mb-2">
                   <label class="fw-bold">Total Disbursed Amount:</label>
