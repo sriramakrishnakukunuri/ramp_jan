@@ -28,75 +28,24 @@
             <p class="mt-2 text-muted">Loading tickets...</p>
           </div>
 
-          <!-- No tickets message -->
-          <div *ngIf="tickets.length === 0 && !loading" class="text-center py-5">
-            <i class="fas fa-ticket-alt fa-3x text-muted mb-3"></i>
-            <h5 class="text-muted">No tickets found</h5>
-            <p class="text-muted">Create your first support ticket using the button above.</p>
-          </div>
-
-          <!-- Tickets Table -->
-          <div *ngIf="tickets.length > 0" class="table-responsive">
-            <table class="table table-striped table-hover">
-              <thead class="table-lime-green text-white">
+          <!-- Tickets DataTable -->
+          <div class="table-responsive">
+            <table id="tickets-table" class="table table-borderless table-striped nowrap">
+              <thead class="bg-lime-green text-white">
                 <tr>
-                  <th scope="col">S.No</th>
-                  <th scope="col">Title</th>
-                  <th scope="col">Description</th>
-                  <th scope="col">Type</th>
-                  <th scope="col">Priority</th>
-                  <th scope="col">Status</th>
-                  <th scope="col">Assignee</th>
-                  <th scope="col">Created Date</th>
-                  <th scope="col">Actions</th>
+                  <th>S.No</th>
+                  <th>Title</th>
+                  <th>Description</th>
+                  <th>Type</th>
+                  <th>Priority</th>
+                  <th>Status</th>
+                  <th>Assignee</th>
+                  <th>Created Date</th>
+                  <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let ticket of tickets; let i = index">
-                  <td>{{ i + 1 }}</td>
-                  <td>
-                    <div class="fw-600">{{ ticket.title }}</div>
-                    
-                  </td>
-                  <td>
-                    <small class="text-muted">{{ ticket.description | slice:0:50 }}{{ ticket.description && ticket.description.length > 50 ? '...' : '' }}</small>
-                  </td>
-                  <td>
-                    <span class="badge type-{{ ticket.type.toLowerCase() }}">{{ ticket.type }}</span>
-                  </td>
-                  <td>
-                    <span class="badge priority-{{ ticket.priority.toLowerCase() }}">{{ ticket.priority }}</span>
-                  </td>
-                  <td>
-                    <span class="badge status-{{ ticket.status.toLowerCase().replace('_', '-') }}">{{ ticket.status.replace('_', ' ') }}</span>
-                  </td>
-                  <td>
-                    <!-- <div class="fw-600">{{ ticket.assigneeName }}</div> -->
-                    <small class="text-muted">{{ ticket.assigneeId }}</small>
-                  </td>
-                  <td>
-                    <span *ngIf="ticket?.createdAt">{{ ticket?.createdAt }}</span>
-                    <span *ngIf="!ticket?.createdAt" class="text-muted">-</span>
-                  </td>
-                  <td>
-                    <div class="btn-group" role="group">
-                      <button 
-                        type="button" 
-                        class="btn btn-outline-primary btn-sm" 
-                        (click)="openTicketModal('edit', ticket)"
-                        [disabled]="loading">
-                        <i class="fas fa-edit"></i>
-                      </button>
-                      <!-- <button 
-                        type="button" 
-                        class="btn btn-outline-danger btn-sm" 
-                        (click)="deleteTicket(ticket.id!)"
-                        [disabled]="loading">
-                        <i class="fas fa-trash"></i>
-                      </button> -->
-                    </div>
-                  </td>
-                </tr>
+                <!-- DataTable will populate this -->
               </tbody>
             </table>
           </div>
@@ -226,22 +175,6 @@
               </div>
               </div>
             </div>
-
-            <!-- <div class="col-md-6">
-              <div class="form-group mb-3">
-                <label for="assigneeName" class="form-label">Assignee Name *</label>
-                <input 
-                  type="text" 
-                  id="assigneeName" 
-                  formControlName="assigneeName" 
-                  class="form-control"
-                  [class.is-invalid]="f['assigneeName'].invalid && (f['assigneeName'].dirty || f['assigneeName'].touched)"
-                  placeholder="Enter assignee name">
-                <div *ngIf="f['assigneeName'].invalid && (f['assigneeName'].dirty || f['assigneeName'].touched)" class="invalid-feedback">
-                  <div *ngIf="f['assigneeName'].errors?.['required']">Assignee name is required</div>
-                </div>
-              </div>
-            </div> -->
           </div>
 
           <div class="row">
@@ -260,8 +193,8 @@
                 <div *ngIf="selectedFiles.length > 0" class="selected-files mt-2">
                   <h6 class="text-muted">Selected Files:</h6>
                   <div *ngFor="let file of selectedFiles; let i = index" class="file-item d-flex justify-content-between align-items-center p-2 border rounded mb-1">
-                    <span><i class="fas fa-file me-2" *ngIf="isEditMode"></i>{{ file.fileName }}</span>
-                    <span><i class="fas fa-file me-2" *ngIf="!isEditMode"></i>{{ file?.name }}</span>
+                    <span *ngIf="isEditMode"><i class="fas fa-file me-2"></i>{{ file.fileName }}</span>
+                    <span *ngIf="!isEditMode"><i class="fas fa-file me-2"></i>{{ file?.name }}</span>
                     <button type="button" class="btn btn-outline-danger btn-sm" (click)="removeFile(i)">
                       <i class="fas fa-times"></i>
                     </button>
@@ -306,6 +239,166 @@
           <span *ngIf="loading" class="spinner-border spinner-border-sm me-2" role="status"></span>
           Delete
         </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- File Preview Modal -->
+<!-- File Preview Modal -->
+<div class="modal fade" id="filePreviewModal" tabindex="-1" aria-labelledby="filePreviewModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-xl">
+    <div class="modal-content">
+      <div class="modal-header py-2">
+        <h6 class="modal-title text-white" id="filePreviewModalLabel">Ticket Attachments</h6>
+        <button type="button" class="btn-close me-1" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body p-3">
+        <!-- Show all files when multiple files exist -->
+        <div *ngIf="currentTicketFiles && currentTicketFiles.length > 0" class="files-preview">
+          <div *ngFor="let file of currentTicketFiles; let i = index" class="file-preview-item mb-4 border rounded p-3">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <div class="file-info d-flex align-items-center">
+                <i [class]="getFileIcon(file.fileName || file.name)" class="me-3 fa-lg"></i>
+                <div>
+                  <h6 class="mb-1">{{ file.fileName || file.name }}</h6>
+                  <small class="text-muted" *ngIf="file.fileSize">Size: {{ formatFileSize(file.fileSize) }}</small>
+                </div>
+              </div>
+              <div class="file-actions">
+                <a 
+                  [href]="getFileDownloadUrl(file)" 
+                  target="_blank" 
+                  class="btn btn-lime-green btn-sm"
+                  title="Download File">
+                  <i class="fas fa-download"></i> Download
+                </a>
+              </div>
+            </div>
+            
+            <!-- Image Preview -->
+            <ng-container *ngIf="getFileType(file.fileName || file.name) === 'image'">
+              <img [src]="getFileDownloadUrl(file)" alt="Image Preview" class="img-fluid w-100 rounded" style="max-height: 400px; object-fit: contain;">
+            </ng-container>
+            
+            <!-- PDF Preview -->
+            <ng-container *ngIf="getFileType(file.fileName || file.name) === 'pdf'">
+              <div class="pdf-container rounded" style="height: 400px;">
+                <iframe 
+                  [src]="getSafeUrl(getFileDownloadUrl(file))" 
+                  width="100%" 
+                  height="100%" 
+                  frameborder="0"
+                  class="rounded">
+                  <p>Your browser does not support PDFs. 
+                    <a [href]="getFileDownloadUrl(file)" target="_blank">Download the PDF</a>.
+                  </p>
+                </iframe>
+              </div>
+            </ng-container>
+            
+            <!-- Generic File Preview for documents -->
+            <ng-container *ngIf="getFileType(file.fileName || file.name) === 'document'">
+              <div class="text-center p-4 bg-light rounded">
+                <i [class]="getFileIcon(file.fileName || file.name)" class="fa-3x mb-3"></i>
+                <p class="text-muted mb-0">This file type cannot be previewed. Click download to view the file.</p>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+
+        <!-- Single file preview (existing functionality) -->
+        <div *ngIf="(!currentTicketFiles || currentTicketFiles.length <= 1) && filePreviewUrl" class="single-file-preview">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h6 class="mb-0">{{ selectedFileName }}</h6>
+            <a [href]="filePreviewUrl" target="_blank" class="btn btn-lime-green btn-sm">
+              <i class="fas fa-download"></i> Download
+            </a>
+          </div>
+          
+          <!-- Image Preview -->
+          <ng-container *ngIf="filePreviewType === 'image'">
+            <img [src]="filePreviewUrl" alt="Image Preview" class="img-fluid w-100 rounded" style="max-height: 70vh; object-fit: contain;">
+          </ng-container>
+          
+          <!-- PDF Preview -->
+          <ng-container *ngIf="filePreviewType === 'pdf'">
+            <div class="pdf-container rounded" style="height: 70vh;">
+              <iframe 
+                [src]="getSafeUrl(filePreviewUrl)" 
+                width="100%" 
+                height="100%" 
+                frameborder="0"
+                class="rounded">
+                <p>Your browser does not support PDFs. 
+                  <a [href]="filePreviewUrl" target="_blank">Download the PDF</a>.
+                </p>
+              </iframe>
+            </div>
+          </ng-container>
+          
+          <!-- Generic File Preview for documents -->
+          <ng-container *ngIf="filePreviewType === 'document'">
+            <div class="text-center p-4 bg-light rounded">
+              <i class="fas fa-file fa-5x mb-3 text-muted"></i>
+              <h5>{{ selectedFileName }}</h5>
+              <p class="text-muted">This file type cannot be previewed. Click download to view the file.</p>
+            </div>
+          </ng-container>
+        </div>
+
+        <!-- No files available -->
+        <div *ngIf="(!currentTicketFiles || currentTicketFiles.length === 0) && !filePreviewUrl" class="text-center p-4">
+          <i class="fas fa-folder-open fa-3x mb-3 text-muted"></i>
+          <p class="text-muted">No attachments found for this ticket.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- View All Files Modal -->
+<div class="modal fade" id="viewAllFilesModal" tabindex="-1" aria-labelledby="viewAllFilesModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header py-2">
+        <h6 class="modal-title text-white" id="viewAllFilesModalLabel">Ticket Attachments</h6>
+        <button type="button" class="btn-close me-1" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div *ngIf="currentTicketFiles && currentTicketFiles.length > 0" class="files-list">
+          <div *ngFor="let file of currentTicketFiles; let i = index" 
+               class="file-item d-flex justify-content-between align-items-center p-3 border rounded mb-2">
+            <div class="file-info d-flex align-items-center">
+              <i [class]="getFileIcon(file.fileName || file.name)" class="me-3 fa-2x"></i>
+              <div>
+                <h6 class="mb-1">{{ file.fileName || file.name }}</h6>
+                <small class="text-muted" *ngIf="file.fileSize">Size: {{ formatFileSize(file.fileSize) }}</small>
+              </div>
+            </div>
+            <div class="file-actions">
+              <button 
+                type="button" 
+                class="btn btn-outline-primary btn-sm me-2" 
+                (click)="previewFile(file, i)"
+                title="Preview File">
+                <i class="fas fa-eye"></i>
+              </button>
+              <a 
+                [href]="getFileDownloadUrl(file)" 
+                target="_blank" 
+                class="btn btn-outline-success btn-sm"
+                title="Download File">
+                <i class="fas fa-download"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+        
+        <div *ngIf="!currentTicketFiles || currentTicketFiles.length === 0" class="text-center p-4">
+          <i class="fas fa-folder-open fa-3x mb-3 text-muted"></i>
+          <p class="text-muted">No attachments found for this ticket.</p>
+        </div>
       </div>
     </div>
   </div>

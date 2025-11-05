@@ -78,7 +78,10 @@
 .modal-title {
   color: white !important;
 }
-
+.badge-type-bug{
+   background-color: #dc3545 !important;
+  color: white !important; 
+}
 /* Badge styles */
 .badge {
   padding: 4px 8px;
@@ -114,8 +117,8 @@
 
 /* Status Badges */
 .status-open { 
-  background-color: #17a2b8; 
-  color: white; 
+  background-color: #17a2b8 !important; 
+  color: white !important; 
 }
 
 .status-in-progress { 
@@ -129,15 +132,16 @@
 }
 
 .status-closed { 
-  background-color: #6c757d; 
+  background-color: #6c757d ; 
   color: white; 
 }
 
 /* Type Badges */
 .type-bug,.type-issue { 
-  background-color: #dc3545; 
-  color: white; 
+  background-color: #dc3545 !important;
+  color: white !important; 
 }
+
 
 .type-feature { 
   background-color: #28a745; 
