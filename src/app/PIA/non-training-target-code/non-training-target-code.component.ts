@@ -447,7 +447,9 @@ createForm(): FormGroup {
           modal1.hide();
           this.toastrService.error(error.message,"Non Training Progress Data Error!");
         });
-        this.getDeatilOfTargets()
+        setTimeout(() => {
+           this.getDeatilOfTargets()
+        }, 200);
     }
     else{
       console.log('Form Submitted:', this.financialForm.value);
@@ -478,7 +480,9 @@ createForm(): FormGroup {
           modal1.hide();
           this.toastrService.error(error.message);
         });
-        this.getDeatilOfTargets()
+        setTimeout(() => {
+           this.getDeatilOfTargets()
+        }, 200);
     }
    
     }
@@ -528,7 +532,9 @@ createForm(): FormGroup {
         const modalInstance = bootstrap.Modal.getInstance(editSessionModal);
         modalInstance.hide();
       }
-      this.getDeatilOfTargets()
+       setTimeout(() => {
+           this.getDeatilOfTargets()
+        }, 200);
     } 
     uploadedFiles: any ;
   onFileSelected(event: any): void {
@@ -661,7 +667,9 @@ createForm(): FormGroup {
           this.toastrService.error(error.message);
         });
     }
-   this.getDeatilOfTargets()
+    setTimeout(() => {
+           this.getDeatilOfTargets()
+        }, 200);
       }
 
   }
@@ -699,7 +707,9 @@ createForm(): FormGroup {
           new Error(err);
         },
       });
-      this.getDeatilOfTargets()
+      setTimeout(() => {
+           this.getDeatilOfTargets()
+        }, 200);
 
     }
   closeModalDeleteContinuty(): void {
@@ -860,7 +870,9 @@ resetForm(): void {
         });
     }
    
-      this.getDeatilOfTargets()
+      setTimeout(() => {
+           this.getDeatilOfTargets()
+        }, 200);
       // console.log('Form Data:', formData);
       // Call your API service here
       // this.paymentService.createPayment(formData).subscribe(...);

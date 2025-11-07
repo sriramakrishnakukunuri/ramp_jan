@@ -83,6 +83,7 @@ export const APIS = {
         getDataUploadedByProgramBYDeatisl: API_BASE_URL + '/participants/temp/',
         saveOrgnization: API_BASE_URL + '/organization/save',
         getOrgnizationData: API_BASE_URL + '/organization/list',
+        getOrgnizationDataOnlyId: API_BASE_URL + '/organization-names',
         getParticipantList: API_BASE_URL + '/participants',
         getParticipantListByAgency: API_BASE_URL + '/agency/participants/',
         getParticipantDetailsById: API_BASE_URL + '/getParticipantById/',

@@ -36,7 +36,7 @@ deleteTechnologyAdoptionID: any;
 // Add in constructor after other form creations
 
   getOrganizationData() {
-    this._commonService.getDataByUrl(APIS.participantdata.getOrgnizationData).subscribe({
+    this._commonService.getDataByUrl(APIS.participantdata.getOrgnizationDataOnlyId).subscribe({
       next: (res: any) => {
         this.OrganizationData = res?.data || [];
       },
