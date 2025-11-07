@@ -15,6 +15,7 @@ export const APIS = {
         addResource: API_BASE_URL + '/resource/save',
         getProgramsList: API_BASE_URL + '/programs',
         getProgramsListByAgency: API_BASE_URL + '/agency/programs/dropdown/',
+        getIncompletProgramsListByAgency: API_BASE_URL + '/programs/with-participants/',
         getNewProgramListByAgency: API_BASE_URL + '/programs/status/status-list/',
         getProgramsListByAgencyStatus: API_BASE_URL + '/programs/status',
         getProgramsListByAgencyDetails: API_BASE_URL + '/agency/programs/',
@@ -82,6 +83,7 @@ export const APIS = {
         getDataUploadedByProgramBYDeatisl: API_BASE_URL + '/participants/temp/',
         saveOrgnization: API_BASE_URL + '/organization/save',
         getOrgnizationData: API_BASE_URL + '/organization/list',
+        getOrgnizationDataOnlyId: API_BASE_URL + '/organization-names',
         getParticipantList: API_BASE_URL + '/participants',
         getParticipantListByAgency: API_BASE_URL + '/agency/participants/',
         getParticipantDetailsById: API_BASE_URL + '/getParticipantById/',
@@ -282,5 +284,12 @@ export const APIS = {
         saveMonth: API_BASE_URL + '/momsme/submitted-save',
         getCuulativebyIntervention: API_BASE_URL + '/momsme/report/by-cumulative',
         pushToMoMSME: API_BASE_URL + '/momsme/push-to-momsme'
+    },
+    tickets: {
+        save: API_BASE_URL + '/tickets',
+        getAll: API_BASE_URL + '/tickets',
+        update: API_BASE_URL + '/tickets/',
+        delete: API_BASE_URL + '/tickets/delete/',
+         getAllAssineeId: API_BASE_URL + '/tickets/specific-users',
     }
 }

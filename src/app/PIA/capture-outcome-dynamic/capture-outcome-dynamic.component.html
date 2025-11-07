@@ -28,14 +28,31 @@
                         </div>
                         <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                             <div class="form-floating mb-3 mb-sm-3 mb-md-0">
-                                <input type="text" class="form-control" id="" placeholder="Mobile No"   [(ngModel)]="MobileNumber">
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="MobileNumber"
+                                    placeholder="Mobile No"
+                                    [(ngModel)]="MobileNumber"
+                                    name="MobileNumber"
+                                    pattern="^[6-9]\d{9}$"
+                                    maxlength="10"
+                                    minlength="10"
+                                    required
+                                    #mobileInput="ngModel"
+                                >
                                 <!-- <label for="MobileNumber">Mobile No</label> -->
+                                <div *ngIf="mobileInput.invalid && (mobileInput.dirty || mobileInput.touched)" class="error">
+                                    <div *ngIf="mobileInput.errors?.required">Mobile Number is required.</div>
+                                    <div *ngIf="mobileInput.errors?.pattern">Mobile number must be 10 digits and start with 6, 7, 8, or 9.</div>
+                                    <!-- <div *ngIf="mobileInput.errors?.minlength || mobileInput.errors?.maxlength">Mobile Number must be 10 digits.</div> -->
+                                </div>
                             </div>
                         </div>
                         <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                            <button type="button" class="btn btn-lime-green mt-1" (click)="Search()" >Search</button>
+                            <button type="button" class="btn btn-lime-green mt-1" [ngClass]="{'disabled':mobileInput.invalid}"  (click)="Search()" >Search</button>
                         </div>
-                         <div class="col-12 col-sm-6 col-md-4 col-lg-3" *ngIf="enableButtoneTrue">
+                         <div class="col-12 col-sm-6 col-md-4 col-lg-3" *ngIf="enableButtoneTrue && mobileInput.valid">
                             <button type="button" class="btn btn-lime-green mt-1" (click)="addParticipant()" >Add Non Participant Data</button>
                         </div>
                         <!-- <div class="col-12 col-sm-6 col-md-4 col-lg-3">
@@ -66,7 +83,7 @@
                                 <th>Organization Name</th>
                                 <th>Mobile Number</th>
                                 <th>Program Dates</th>
-                                <th>Name Of SHG</th>
+                                <!-- <th>Name Of SHG</th> -->
                                 <th>Designation</th>
                             </tr>
                         </thead>
@@ -76,7 +93,7 @@
                                 <td>{{ParticipantData?.organizationName}}</td>
                                 <td>{{ParticipantData?.mobileNo}}</td>
                                 <td>{{ParticipantData?.programDates}}</td>
-                                <td>{{ParticipantData?.nameOfTheSHG}}</td>
+                                <!-- <td>{{ParticipantData?.nameOfTheSHG}}</td> -->
                                 <td>{{ParticipantData?.designation}}</td>
                             </tr>
                           

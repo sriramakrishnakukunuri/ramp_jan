@@ -75,6 +75,8 @@ import { TrainigNontrainingTargetsComponent } from './PIA/trainig-nontraining-ta
 import { NonTrainingTgtpc10Component } from './PIA/non-training-tgtpc10/non-training-tgtpc10.component';
 import { NonTrainingTgtpc4Component } from './PIA/non-training-tgtpc4/non-training-tgtpc4.component';
 import { NonTrainingRich6aComponent } from './PIA/non-training-rich6a/non-training-rich6a.component';
+import { HelpSupportComponent } from './PIA/help-support/help-support.component';
+import { ViewIncompleteParticipantsComponent } from './PIA/view-incomplete-participants/view-incomplete-participants.component';
 const routes: Routes = [
     {
         path: '',
@@ -506,6 +508,18 @@ const routes: Routes = [
         component: TrainigNontrainingTargetsComponent,
         canActivate: [AuthGuard],
         data: { roles: [Role.Admin,Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
+    },
+    {
+        path: 'help-support',
+        component: HelpSupportComponent,
+        canActivate: [AuthGuard],
+        data: { roles: [Role.Admin,Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR,Role.CALL_CENTER] }
+    },
+     {
+        path: 'view-participants-incomplete-programs',
+        component: ViewIncompleteParticipantsComponent,
+        canActivate: [AuthGuard],
+        data: { roles: [Role.Admin,Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR,Role.CALL_CENTER] }
     },
     {
         path: 'login',

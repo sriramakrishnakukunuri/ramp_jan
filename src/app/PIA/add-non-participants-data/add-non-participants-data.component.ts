@@ -685,7 +685,7 @@ export class AddNonParticipantsDataComponent implements OnInit {
   }
   OrganizationData: any = []
   getOrganizationData(Orgvalue?:any) {
-    this._commonService.getDataByUrl(APIS.participantdata.getOrgnizationData).subscribe({
+    this._commonService.getDataByUrl(APIS.participantdata.getOrgnizationDataOnlyId).subscribe({
       next: (res: any) => {
         this.OrganizationData = res?.data
 

@@ -363,6 +363,7 @@
                       <li><a class="dropdown-item" routerLink="/veiw-program" routerLinkActive="active">View Programs</a></li>
                       <li><a class="dropdown-item" routerLink="/view-Completed-data" routerLinkActive="active">View Participants</a>
                       </li>
+                       
                       <li><a class="dropdown-item" routerLink="/view-Completed-program-related" routerLinkActive="active">View
                           Completed programs</a></li>
                     </ul>
@@ -414,6 +415,7 @@
                       <li>
                         <a class="dropdown-item" routerLink="/reshedule-programs" routerLinkActive="active">Reschedule Programs</a>
                       </li>
+                      <li><a class="dropdown-item" routerLink="/view-participants-incomplete-programs" routerLinkActive="active">View Program Participants</a></li>
                       <li><a class="dropdown-item" routerLink="/progress-monitoring-report" routerLinkActive="active">Program Monitoring Report</a></li>
                        <li><a class="dropdown-item" routerLink="/progress-monitoring-report-approval" routerLinkActive="active">Program Monitoring Report Approval</a></li>
                         <li><a class="dropdown-item" routerLink="/download-excel-pdf" routerLinkActive="active">Download Excel/PDF</a></li>
@@ -452,8 +454,10 @@
                       <li><a class="dropdown-item" routerLink="/add-participant-data" routerLinkActive="active">Add Participant</a>
                       </li>
                       <li><a class="dropdown-item" routerLink="/view-participant-data" routerLinkActive="active">View Participant</a>
+                     
                         <!-- <li><a class="dropdown-item" routerLink="/upload-program-participate" routerLinkActive="active">Upload Participant</a> -->
                       </li>
+                       
                     </ul>
                   </li>
                   <!-- Program Execution (Agency) -->
@@ -594,6 +598,7 @@
                        <li><a class="dropdown-item" routerLink="/output-progress" routerLinkActive="active">Output Progress</a></li>
                       <li><a class="dropdown-item" routerLink="/program-summary" routerLinkActive="active">Program Summary</a></li>
                       <li><a class="dropdown-item" routerLink="/collage-home" routerLinkActive="active">Create Collage</a></li>
+                      <li><a class="dropdown-item" routerLink="/view-participants-incomplete-programs" routerLinkActive="active">View Program Participants</a></li>
                       <li>
                         <a class="dropdown-item" routerLink="/reshedule-programs" routerLinkActive="active">Reschedule Programs</a>
                       </li>
@@ -635,6 +640,9 @@
                       <li><a class="dropdown-item" routerLink="/assessment" routerLinkActive="active">Startups Assessments</a></li>
                     </ul>
                   </li>
+                    <li *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR,Role.CALL_CENTER,Role.Admin]">
+                    <a class="dropdown-item" routerLink="/help-support" routerLinkActive="active">Help Support</a>
+                  </li>
                 </ul>
               </li>
               <!-- new tab code ends here -->
@@ -666,7 +674,9 @@
                       class="bi bi-person fs-5 me-2"></span> My Profile</a></li>
                 <li><a class="dropdown-item" routerLink="/password-settings" routerLinkActive="active"><span
                       class="bi bi-key fs-5 me-2"></span> Change Password</a></li>
-                <li *appHasRole="[Role.Admin]"><a class="dropdown-item" routerLink="/user-registration" 
+                       <!-- <li><a class="dropdown-item" routerLink="/help-support" routerLinkActive="active"><span
+                      class="bi bi-key fs-5 me-2"></span> Help Support</a></li> -->
+                <li *appHasRole="[Role.Admin,Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR,Role.CALL_CENTER]"><a class="dropdown-item" routerLink="/user-registration" 
                     routerLinkActive="active"><span class="bi bi-person-circle fs-5 me-2"></span> Register User</a></li>
                 <li><a class="dropdown-item" (click)="logout()"><span class="bi bi-box-arrow-right fs-5 me-2"></span>
                     Logout</a></li>
