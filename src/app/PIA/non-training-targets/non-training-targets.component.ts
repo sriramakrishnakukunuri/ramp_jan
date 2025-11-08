@@ -735,10 +735,12 @@ if (file) {
       this.iseditModePayment = false;
       this.paymentForm.reset();
       this.isSubmitted = false;
-      this.paymentForMonth = ''; // Clear the payment month for add mode
+      this.paymentForMonth = null; // Clear the payment month for add mode
        setTimeout(() => {
-       this.monthlyRange.setValue('08-2025');
-      }, 0);
+            if (this.monthlyRange) {
+                this.monthlyRange.clearValue();
+            }
+        }, 100);
     }
     if (mode === 'edit') {
 
@@ -748,11 +750,15 @@ if (file) {
       this.paymentForMonth = item?.paymentForMonth || '';
       
       // Use setTimeout to ensure the monthly-range component is available
-      setTimeout(() => {
-        if (this.monthlyRange && item?.paymentForMonth) {
-          this.monthlyRange.setValue(item.paymentForMonth);
-        }
-      }, 0);
+    setTimeout(() => {
+            if (this.monthlyRange) {
+                if (item?.paymentForMonth) {
+                    this.monthlyRange.setValue(item.paymentForMonth);
+                } else {
+                    this.monthlyRange.clearValue();
+                }
+            }
+        }, 100);
       
       this.paymentForm.patchValue({
         amount: item?.amount || 0,
@@ -784,7 +790,7 @@ if (file) {
     createFormPayment(): FormGroup {
     return this.fb.group({
       amount: [0, [Validators.required, Validators.min(0), Validators.max(10000000)]],
-      paymentForMonth: ['08-2025',],
+      paymentForMonth: ['',],
       dateOfPayment: ['', Validators.required],
       resourceId: [0, [Validators.required,]],
       bankName: ['',],
@@ -796,12 +802,15 @@ if (file) {
   get fPayment() {
     return this.paymentForm.controls;
   }
-  paymentForMonth: any = "08-2025";
+  paymentForMonth: any = "";
   onChangeDate(event:any){
     console.log(event,event.value,moment(event.value).format('MM-YYYY'));
     this.paymentForm.patchValue({paymentForMonth: moment(event.value).format('MM-YYYY')
     });
    this.paymentForMonth= event.value ? moment(event.value).format('MM-YYYY') : '';
+    setTimeout(() => {
+        this.monthlyRange.setValue( this.paymentForMonth);
+      }, 0);
   }
   onSubmitPayment(): void {
       this.isSubmitted = true;

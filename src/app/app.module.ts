@@ -110,6 +110,10 @@ import { NonTrainingTgtpc10Component } from './PIA/non-training-tgtpc10/non-trai
 import { NonTrainingRich6aComponent } from './PIA/non-training-rich6a/non-training-rich6a.component';
 import { HelpSupportComponent } from './PIA/help-support/help-support.component';
 import { ViewIncompleteParticipantsComponent } from './PIA/view-incomplete-participants/view-incomplete-participants.component';
+import { MasterListComponent } from './master-list/master-list.component';
+import { ViewLocationComponent } from './master-list/pages/view-location/view-location.component';
+import { ViewOrganizationListComponent } from './master-list/pages/view-organization-list/view-organization-list.component';
+import { ViewResourceListComponent } from './master-list/pages/view-resource-list/view-resource-list.component';
 @NgModule({
     imports: [
         MaterialModule,
@@ -223,7 +227,11 @@ import { ViewIncompleteParticipantsComponent } from './PIA/view-incomplete-parti
         NonTrainingTgtpc10Component,
         NonTrainingRich6aComponent,
         HelpSupportComponent,
-        ViewIncompleteParticipantsComponent
+        ViewIncompleteParticipantsComponent,
+        MasterListComponent,
+        ViewLocationComponent,
+        ViewOrganizationListComponent,
+        ViewResourceListComponent
 
     ],
     exports:[MaterialModule,

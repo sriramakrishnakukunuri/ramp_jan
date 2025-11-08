@@ -1,0 +1,70 @@
+<main class="mt-4">
+    <section>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12 col-sm-6 col-md-4 col-lg-2">
+                    <a href="javascript:;" (click)="getDataByCategory('Location')">
+                        <div class="card HoverBox text-center p-3 mb-4">
+                            <div class="d-flex align-items-center" >
+                                <div class="symbol me-3">
+                                    <div class="symbol-label bg-light-info">
+                                        <span class="bi bi-geo-alt text-icon1 fs-4"></span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <!-- <h4 class="text-dark fw-bold mb-1">100</h4> -->
+                                    <h6 class="text-muted fs-md fw-500 mb-0"> <a > Locations </a></h6>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-12 col-sm-6 col-md-4 col-lg-2">
+                    <a href="javascript:;" (click)="getDataByCategory('Resources')">
+                        <div class="card HoverBox text-center p-3 mb-4">
+                            <div class="d-flex align-items-center" >
+                                <div class="symbol me-3">
+                                    <div class="symbol-label bg-light-danger">
+                                        <span class="bi bi-gear text-danger fs-4"></span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <!-- <h4 class="text-dark fw-bold mb-1">100</h4> -->
+                                    <h6 class="text-muted fs-md fw-500 mb-0"> <a>Resources </a> </h6>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-12 col-sm-6 col-md-4 col-lg-2">
+                    <a href="javascript:;"  (click)="getDataByCategory('Organizations')">
+                        <div class="card  HoverBox text-center p-3 mb-4">
+                            <div class="d-flex align-items-center">
+                                <div class="symbol me-3">
+                                    <div class="symbol-label bg-light-success">
+                                        <span class="bi bi-people text-success fs-4"></span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <!-- <h4 class="text-dark fw-bold mb-1">100</h4> -->
+                                    <h6 class="text-muted fs-md fw-500 mb-0"> <a >Organisations </a></h6>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="card mb-4" *ngIf="SelectedCategory=='Location'">
+                <app-view-location></app-view-location>
+            </div>         
+             
+            <div class="card mb-4" *ngIf="SelectedCategory=='Resources'">     
+                <app-view-resource-list></app-view-resource-list>           
+              
+            </div>
+            <div class="card mb-4" *ngIf="SelectedCategory=='Organizations'">                
+                 <app-view-organization-list></app-view-organization-list>
+            </div>            
+        </div>
+    </section>
+</main>

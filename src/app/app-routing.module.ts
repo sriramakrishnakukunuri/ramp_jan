@@ -77,6 +77,9 @@ import { NonTrainingTgtpc4Component } from './PIA/non-training-tgtpc4/non-traini
 import { NonTrainingRich6aComponent } from './PIA/non-training-rich6a/non-training-rich6a.component';
 import { HelpSupportComponent } from './PIA/help-support/help-support.component';
 import { ViewIncompleteParticipantsComponent } from './PIA/view-incomplete-participants/view-incomplete-participants.component';
+
+import { ViewResourceListComponent } from './master-list/pages/view-resource-list/view-resource-list.component';
+import { MasterListComponent } from './master-list/master-list.component';
 const routes: Routes = [
     {
         path: '',
@@ -193,7 +196,7 @@ const routes: Routes = [
     },
     {
         path: 'view-table-organization',
-        component: OrganizationsListComponent,
+        component: MasterListComponent,
         canActivate: [AuthGuard],
         data: { roles: [Role.Admin,Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR] }
     },

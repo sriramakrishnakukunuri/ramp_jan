@@ -558,8 +558,8 @@ createForm(): FormGroup {
     { value: 'CEO', label: 'CEO' },
     { value: 'Project Manager', label: 'Project Manager' },
     { value: 'Designer', label: 'Designer' },
-    { value: 'Developer', label: 'Developer' },
-    { value: 'Analyst', label: 'Analyst' }
+    { value: 'R&D', label: 'R&D' },
+    { value: 'Interns for certifications', label: 'Interns for certifications' }
   ];
    contingencyForm!: FormGroup;
      createFormContingency(): FormGroup {
@@ -605,6 +605,26 @@ createForm(): FormGroup {
       this.iseditModeContingency = false;
       this.resetFormContingency();
       this.contingencyForm.reset();
+      if(this.selectedBudgetHead=='14'){
+        this.contingencyForm.patchValue({designation:'CEO'})
+      }
+      else if(this.selectedBudgetHead=='17'){
+        this.contingencyForm.patchValue({designation:'Project Manager'})
+
+      }
+      else if(this.selectedBudgetHead=='16' || this.selectedBudgetHead=='15'){
+        this.contingencyForm.patchValue({designation:'Designer'})
+
+      }
+      else if(this.selectedBudgetHead=='74'){
+        this.contingencyForm.patchValue({designation:'Interns for certifications'})
+
+      }
+      else if(this.selectedBudgetHead=='75'){
+        this.contingencyForm.patchValue({designation:'R&D'})
+
+      }
+      
     }
     if (mode === 'edit') {
       item['uploadBillUrl']=''
