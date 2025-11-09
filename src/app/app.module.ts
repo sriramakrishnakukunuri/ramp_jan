@@ -114,6 +114,7 @@ import { MasterListComponent } from './master-list/master-list.component';
 import { ViewLocationComponent } from './master-list/pages/view-location/view-location.component';
 import { ViewOrganizationListComponent } from './master-list/pages/view-organization-list/view-organization-list.component';
 import { ViewResourceListComponent } from './master-list/pages/view-resource-list/view-resource-list.component';
+import { CommonFileViewerComponent } from './common_components/common-file-viewer/common-file-viewer.component';
 @NgModule({
     imports: [
         MaterialModule,
@@ -231,7 +232,8 @@ import { ViewResourceListComponent } from './master-list/pages/view-resource-lis
         MasterListComponent,
         ViewLocationComponent,
         ViewOrganizationListComponent,
-        ViewResourceListComponent
+        ViewResourceListComponent,
+        CommonFileViewerComponent
 
     ],
     exports:[MaterialModule,

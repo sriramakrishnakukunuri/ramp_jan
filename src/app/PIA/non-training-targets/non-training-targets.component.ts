@@ -202,6 +202,14 @@ export class NonTrainingTargetsComponent implements OnInit {
     });
   }
 
+  // addd by upendranath reddy for common file preview
+  showFileViewer(filePath: string) {
+    console.log('File path to open:', filePath);
+
+    this._commonService.openFile(filePath);
+
+  }
+
    modeOfPayment(val:any){
       if(val=='CASH'){
         this.financialForm.get('bank')?.setValidators(null);
