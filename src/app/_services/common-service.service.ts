@@ -33,9 +33,25 @@ export class CommonServiceService {
     return this.http.put<any>(url, { headers: headers },{}).pipe(catchError(this.formatErrors));
    
 }
+
+
+// file viewer data passing between components
+  private fileSubject = new Subject<string>();
+  file$ = this.fileSubject.asObservable();
+
+  openFile(filePath: string) {
+    this.fileSubject.next(filePath);
+  }
+
+  
   public add(URL: any, payload: any): Observable<any> {
     return this.http.post(URL, payload).pipe(catchError(this.formatErrors));
   }
+    public addsave(URL: any, formData: any): Observable<any> {
+       const headers = new HttpHeaders({ 'Content-Type': 'multipart/form-data',});
+      return this.http.post(URL, formData,{headers}).pipe(catchError(this.formatErrors));
+    }
+    
   public updateChangedata(URL: any, payload: any,): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'

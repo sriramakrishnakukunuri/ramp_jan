@@ -15,6 +15,7 @@ export const APIS = {
         addResource: API_BASE_URL + '/resource/save',
         getProgramsList: API_BASE_URL + '/programs',
         getProgramsListByAgency: API_BASE_URL + '/agency/programs/dropdown/',
+        getIncompletProgramsListByAgency: API_BASE_URL + '/programs/with-participants/',
         getNewProgramListByAgency: API_BASE_URL + '/programs/status/status-list/',
         getProgramsListByAgencyStatus: API_BASE_URL + '/programs/status',
         getProgramsListByAgencyDetails: API_BASE_URL + '/agency/programs/',
@@ -82,6 +83,7 @@ export const APIS = {
         getDataUploadedByProgramBYDeatisl: API_BASE_URL + '/participants/temp/',
         saveOrgnization: API_BASE_URL + '/organization/save',
         getOrgnizationData: API_BASE_URL + '/organization/list',
+        getOrgnizationDataOnlyId: API_BASE_URL + '/organization-names',
         getParticipantList: API_BASE_URL + '/participants',
         getParticipantListByAgency: API_BASE_URL + '/agency/participants/',
         getParticipantDetailsById: API_BASE_URL + '/getParticipantById/',
@@ -112,8 +114,10 @@ export const APIS = {
         agencyList: API_BASE_URL + '/agencies',
         getUserBasedOnAgency:API_BASE_URL+'/new/program/monitoring-dropdown/',
         locationList: API_BASE_URL + '/locations',
+        locationDetailsById: API_BASE_URL + '/agency/locationdetails/',
         getUserList: API_BASE_URL + '/login/allusrs',
         getresources: API_BASE_URL + '/resources',
+        getResourceDetailsById: API_BASE_URL + '/agency/resources/',
         getDistricts: API_BASE_URL + '/getAllDistricts',
         getSectors: API_BASE_URL + '/getallsectors',
         getMandal: API_BASE_URL + '/getAllmandalsOfDistrictsById/',
@@ -121,6 +125,11 @@ export const APIS = {
         resourceDownload: API_BASE_URL + '/resource/excel/',
         locationDownload: API_BASE_URL + '/location/excel/',
         organizationDownload: API_BASE_URL + '/organization/excel',
+        updateLocationStatus: API_BASE_URL + '/locations/update/',
+        deleteLocation: API_BASE_URL + '/locations/delete/',
+        updateResourceStatus: API_BASE_URL + '/resource/update/',
+        deleteResource: API_BASE_URL + '/resource/delete/',
+        getOrgnizationDetailsById: API_BASE_URL + '/organization/list',
     },
     trainingtargets:{
         getTrainingtargets: API_BASE_URL + '/targets/financial/year/summary',
@@ -154,6 +163,7 @@ export const APIS = {
         deleteNonTrainingtargetsCandidate: API_BASE_URL + '/',
         saveNonTrainingtargetsCandidate: API_BASE_URL + '/save',
         getNonTrainingtargetsCandidate: API_BASE_URL + '/by-subactivity?subActivityId=',
+
         tihcl:{
             getCorpusList: API_BASE_URL + '/corpusDebitFinancing',
             getTihclData: API_BASE_URL + '/listing-on-nse/sub-activity/',
@@ -170,7 +180,11 @@ export const APIS = {
             savedataVendor_doc: API_BASE_URL + '/vendors/save',
             deletedataVendor_doc: API_BASE_URL + '/vendors/',
             updatedataVendor_doc: API_BASE_URL + '/vendors/',
-        }
+        },
+        updateTechnologyAdoption: API_BASE_URL + '/wehub_sdg/update',
+        saveTechnologyAdoption: API_BASE_URL + '/wehub_sdg/save',
+        getTechnologyAdoption: API_BASE_URL + '/wehub_sdg/sub-activity/',
+        deleteTechnologyAdoption: API_BASE_URL + '/wehub_sdg/',
        
     },
     progressMonitoring:{
@@ -276,5 +290,13 @@ export const APIS = {
         getMSMEByMonth: API_BASE_URL + '/momsme/report/by-month',
         saveMonth: API_BASE_URL + '/momsme/submitted-save',
         getCuulativebyIntervention: API_BASE_URL + '/momsme/report/by-cumulative',
+        pushToMoMSME: API_BASE_URL + '/momsme/push-to-momsme'
+    },
+    tickets: {
+        save: API_BASE_URL + '/tickets',
+        getAll: API_BASE_URL + '/tickets',
+        update: API_BASE_URL + '/tickets/',
+        delete: API_BASE_URL + '/tickets/delete/',
+         getAllAssineeId: API_BASE_URL + '/tickets/specific-users',
     }
 }

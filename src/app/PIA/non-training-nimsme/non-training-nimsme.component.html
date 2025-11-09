@@ -53,13 +53,14 @@
           <h6 class="fw-600 mb-2 mb-sm-3 mb-md-0"> {{getSubactivities(selectedBudgetHead)}} </h6>
 
 
-          <div class="text-end">
+          <div class="text-end" *ngIf="selectedBudgetHead!='83'">
             <button type="button" class="btn btn-sm btn-lime-green" (click)="onFinalSubmit()">Save</button>
           </div>
         </div>
         <div class="card-body">
+          <!-- selectedBudgetHead=='83' -->
           <div class="row"
-            *ngIf="selectedBudgetHead=='77' || selectedBudgetHead=='78' || selectedBudgetHead=='79' || selectedBudgetHead=='80' || selectedBudgetHead=='81' || selectedBudgetHead=='82' || selectedBudgetHead=='84' || selectedBudgetHead=='83' || selectedBudgetHead=='19'">
+            *ngIf="selectedBudgetHead=='77' || selectedBudgetHead=='78' || selectedBudgetHead=='79' || selectedBudgetHead=='80' || selectedBudgetHead=='81' || selectedBudgetHead=='82' || selectedBudgetHead=='84'  || selectedBudgetHead=='19'">
             <div class="col-12 col-sm-12 col-md-6 col-lg-6">
               <fieldset class="mb-3" style="border: 1px solid #e0e0e0; border-radius: 8px; padding-left: 18px; ">
                 <legend class="text-lime-green" style="padding: 0 8px;">Physical</legend>
@@ -123,7 +124,7 @@
                 <div class="col-4 col-sm-4 col-md-3 col-lg-2">
                   <div class="text-end">
                     <button type="button" class="btn btn-sm btn-lime-green" (click)="openUploadModal('add')"><span
-                        class="bi bi-plus-lg"></span> Add</button>
+                        class="bi bi-plus-lg"></span> Add {{getSubactivities(selectedBudgetHead)}}</button>
                   </div>
                 </div>
               </div>
@@ -242,7 +243,7 @@
                     </div>
                     <div class="col-4 col-sm-4 col-md-3 col-lg-2">
                         <div class="text-end">
-                            <button type="button" class="btn btn-sm btn-lime-green" (click)="openModel('add')"><span class="bi bi-plus-lg"></span> Add</button>
+                            <button type="button" class="btn btn-sm btn-lime-green" (click)="openModel('add')"><span class="bi bi-plus-lg"></span> Add </button>
                         </div>
                     </div>
                 </div>
