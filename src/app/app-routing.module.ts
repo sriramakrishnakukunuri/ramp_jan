@@ -80,6 +80,7 @@ import { ViewIncompleteParticipantsComponent } from './PIA/view-incomplete-parti
 
 import { ViewResourceListComponent } from './master-list/pages/view-resource-list/view-resource-list.component';
 import { MasterListComponent } from './master-list/master-list.component';
+import { ViewOutcomesComponent } from './PIA/view-outcomes/view-outcomes.component';
 const routes: Routes = [
     {
         path: '',
@@ -197,6 +198,12 @@ const routes: Routes = [
     {
         path: 'view-table-organization',
         component: MasterListComponent,
+        canActivate: [AuthGuard],
+        data: { roles: [Role.Admin,Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR] }
+    },
+    {
+        path: 'view-Outcomes',
+        component: ViewOutcomesComponent,
         canActivate: [AuthGuard],
         data: { roles: [Role.Admin,Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR] }
     },

@@ -115,6 +115,7 @@ import { ViewLocationComponent } from './master-list/pages/view-location/view-lo
 import { ViewOrganizationListComponent } from './master-list/pages/view-organization-list/view-organization-list.component';
 import { ViewResourceListComponent } from './master-list/pages/view-resource-list/view-resource-list.component';
 import { CommonFileViewerComponent } from './common_components/common-file-viewer/common-file-viewer.component';
+import { ViewOutcomesComponent } from './PIA/view-outcomes/view-outcomes.component';
 @NgModule({
     imports: [
         MaterialModule,
@@ -233,7 +234,8 @@ import { CommonFileViewerComponent } from './common_components/common-file-viewe
         ViewLocationComponent,
         ViewOrganizationListComponent,
         ViewResourceListComponent,
-        CommonFileViewerComponent
+        CommonFileViewerComponent,
+        ViewOutcomesComponent
 
     ],
     exports:[MaterialModule,

@@ -272,9 +272,9 @@ onUpdateLocation() {
       }
       
       // Add agency filter
-      if (self.agencyId && self.agencyId !== -1) {
-        params += `&agencyId=${self.agencyId}`;
-      }
+      // if (self.agencyId && self.agencyId !== -1) {
+      //   params += `&agencyId=${self.agencyId}`;
+      // }
       let apiurl = '';
       if(self.agencyId == -1){
         apiurl=APIS.masterList.locationList

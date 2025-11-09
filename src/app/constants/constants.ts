@@ -117,7 +117,7 @@ export const APIS = {
         locationDetailsById: API_BASE_URL + '/agency/locationdetails/',
         getUserList: API_BASE_URL + '/login/allusrs',
         getresources: API_BASE_URL + '/resources',
-        getResourceDetailsById: API_BASE_URL + '/agency/resources/',
+        getResourceDetailsById: API_BASE_URL + '/agency/resources',
         getDistricts: API_BASE_URL + '/getAllDistricts',
         getSectors: API_BASE_URL + '/getallsectors',
         getMandal: API_BASE_URL + '/getAllmandalsOfDistrictsById/',
@@ -200,6 +200,7 @@ export const APIS = {
         getDynamicFormDataBasedOnOutCome: API_BASE_URL + '/program/outcome/details/',
         saveOutComes:API_BASE_URL + '/program/outcome/save/',
         getOutputProgressData:API_BASE_URL + '/get/outcome-targets/',
+        viewOutcomelistData: API_BASE_URL + '/fetch/outcome-data',
     },
     callCenter:{
         getParticipantVerificationById:API_BASE_URL + `/program/participant-verification`,

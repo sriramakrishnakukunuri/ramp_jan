@@ -225,15 +225,16 @@ export class ViewOrganizationListComponent implements OnInit, OnDestroy {
         }
         
         // Add agency filter
-        if (self.agencyId && self.agencyId !== -1) {
-          params += `&agencyId=${self.agencyId}`;
-        }
+        // if (self.agencyId && self.agencyId !== -1) {
+        //   params += `&agencyId=${self.agencyId}`;
+        // }
         
         let apiurl = '';
         if (self.agencyId == -1) {
           apiurl = APIS.masterList.getOrgnizationDetailsById;
         } else {
-          apiurl = APIS.masterList.getOrgnizationDetailsById + '/' + self.agencyId;
+          //  + '/' + self.agencyId;
+          apiurl = APIS.masterList.getOrgnizationDetailsById
         }
         
         // Call the API with pagination parameters
@@ -344,6 +345,9 @@ export class ViewOrganizationListComponent implements OnInit, OnDestroy {
           }
         }
       ],
+       headerCallback: function(thead: any, data: any, start: any, end: any, display: any) {
+      $(thead).addClass('bg-lime-green text-white');
+    },
       initComplete: function() {
         // Add green background to table headers
         $('#view-table-organization thead th').addClass('bg-success text-white');
