@@ -67,6 +67,15 @@ deleteTechnologyAdoptionID: any;
      this.getBudgetHeadList()
     
   }
+
+    // addd by upendranath reddy for common file preview
+  showFileViewer(filePath: string) {
+    console.log('File path to open:', filePath);
+
+    this._commonService.openFile(filePath);
+
+  }
+  
     budgetHeadList: any;
     getBudgetHeadList() {
         this._commonService.getDataByUrl(APIS.nontrainingtargets.getBudgetHeadList+this.selectedAgencyId).subscribe((res: any) => {

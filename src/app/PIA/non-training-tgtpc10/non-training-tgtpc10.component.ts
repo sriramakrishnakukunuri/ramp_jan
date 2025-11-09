@@ -118,6 +118,16 @@ export class NonTrainingTgtpc10Component implements OnInit {
            // this.toastrService.error(error.message);
          });
        }
+
+
+        // addd by upendranath reddy for common file preview
+  showFileViewer(filePath: string) {
+    console.log('File path to open:', filePath);
+
+    this._commonService.openFile(filePath);
+
+  }
+
  
  
   convertToISOFormat(date: string): string {   

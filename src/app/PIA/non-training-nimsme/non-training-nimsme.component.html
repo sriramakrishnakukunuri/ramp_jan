@@ -207,6 +207,7 @@
                     <th>Vendor Company Name</th>
                     <th>Date of Order</th>
                     <th>Order Details</th>
+                    <th>View Order Document</th>
                     <th class="text-center">Edit / Delete</th>
                   </tr>
                 </thead>
@@ -219,6 +220,13 @@
                     <td>{{ vendor?.vendorCompanyName }}</td>
                     <td>{{ vendor?.dateOfOrder | date: 'dd-MM-yyyy' }}</td>
                     <td>{{ vendor?.orderDetails }}</td>
+                      <td class="text-center">
+                        <a *ngIf="vendor?.orderUpload"  class="btn btn-default text-primary btn-sm"
+                           (click)="showFileViewer(vendor.orderUpload)">
+                          <span class="bi bi-eye"></span>
+                        </a>
+                        <span *ngIf="!vendor?.orderUpload" class="text-muted">No file</span>
+                      </td>
                     <td class="text-center">
                       <button type="button" class="btn btn-default text-lime-green btn-sm"
                         (click)="openVendorModal('edit', vendor)">
@@ -267,6 +275,7 @@
                                 <th>Transaction Id</th>
                                 <th>Cheque Number</th>
                                 <th>Cheque Date</th>
+                                <th>View Bill Invoice</th>
                                 <th class="text-center">Edit / Delete</th>
                             </tr>
                         </thead>
@@ -289,6 +298,13 @@
                                 <td>{{ preliminary?.transactionId }}</td>
                                 <td>{{preliminary?.checkNo }}</td>
                                 <td class="noWrap">{{preliminary?.checkDate }}</td>
+                                 <td class="text-center">
+                                <a *ngIf="preliminary?.uploadBillUrl"  class="btn btn-default text-primary btn-sm"
+                                  (click)="showFileViewer(preliminary.uploadBillUrl)">
+                                  <span class="bi bi-eye"></span>
+                                </a>
+                                <span *ngIf="!preliminary?.uploadBillUrl" class="text-muted">No file</span>
+                              </td>
                                 <td class="text-center">
                                     <button type="button" class="btn btn-default text-lime-green btn-sm" (click)="openModel('edit', preliminary)">
                                         <span class="bi bi-pencil"></span>
@@ -379,6 +395,7 @@
                                             <th>Payment For Month</th>
                                             <th>Date of Payment</th>
                                             <th>Employee Name</th>
+                                            <th>View Bill Invoice</th>
                                             <th class="text-center">Edit / Delete</th>
                                         </tr>
                                     </thead>
@@ -392,6 +409,13 @@
                                             <td>{{ payment?.paymentForMonth }}</td>
                                             <td>{{ payment?.dateOfPayment }}</td>
                                             <td>{{ payment?.resourceName }}</td>
+                                              <td class="text-center">
+                                          <a *ngIf="payment?.uploadBillUrl"  class="btn btn-default text-primary btn-sm"
+                                            (click)="showFileViewer(payment.uploadBillUrl)">
+                                            <span class="bi bi-eye"></span>
+                                          </a>
+                                          <span *ngIf="!payment?.uploadBillUrl" class="text-muted">No file</span>
+                                        </td>
                                             <td class="text-center">
                                                 <button type="button" class="btn btn-default text-lime-green btn-sm" (click)="openModelPayment('edit', payment)">
                                                     <span class="bi bi-pencil"></span>

@@ -130,6 +130,15 @@ export class NonTrainingTgtpc4Component implements OnInit {
   
  }
  
+
+  // addd by upendranath reddy for common file preview
+  showFileViewer(filePath: string) {
+    console.log('File path to open:', filePath);
+
+    this._commonService.openFile(filePath);
+
+  }
+
  
  
   getPreliminaryDataById(){
