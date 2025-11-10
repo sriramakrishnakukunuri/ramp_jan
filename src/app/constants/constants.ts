@@ -294,8 +294,11 @@ export const APIS = {
         pushToMoMSME: API_BASE_URL + '/momsme/push-to-momsme'
     },
     tickets: {
+        getAllUser: API_BASE_URL + '/login/allusrs',
         save: API_BASE_URL + '/tickets',
         getAll: API_BASE_URL + '/tickets',
+        getAllById: API_BASE_URL + '/tickets/',
+        getDataByReportId: API_BASE_URL + '/tickets/report/',
         update: API_BASE_URL + '/tickets/',
         delete: API_BASE_URL + '/tickets/delete/',
          getAllAssineeId: API_BASE_URL + '/tickets/specific-users',

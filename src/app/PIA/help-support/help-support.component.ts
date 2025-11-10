@@ -5,6 +5,7 @@ import { Ticket } from '../../_models/ticket.model';
 import { APIS, API_BASE_URL } from '../../constants/constants';
 import { ToastrService } from 'ngx-toastr';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { tick } from '@angular/core/testing';
 
 declare var bootstrap: any;
 declare var $: any;
@@ -17,7 +18,7 @@ declare var $: any;
 export class HelpSupportComponent implements OnInit {
   ticketForm: FormGroup;
   tickets: Ticket[] = [];
-  selectedTicket: Ticket | null = null;
+  selectedTicket: any | null = null;
   isEditMode = false;
   loading = false;
   selectedFiles: any = [];
@@ -41,9 +42,20 @@ export class HelpSupportComponent implements OnInit {
   totalPages = 0;
 
   priorities = ['LOW', 'MEDIUM', 'HIGH', 'CRITICAL'];
-  statuses = ['OPEN', 'IN_PROGRESS', 'RESOLVED', 'CLOSED'];
+  statuses = [
+    'CREATED',
+    'UNDER_REVIEW',
+    'IN_PROGRESS',
+    'UPDATED_WITH_INFO',
+    'APPROVED',
+    'RESOLVED',
+    'CLOSED',
+    'ADDITIONAL_INFO_NEEDED'
+  ];
   types = ['BUG', 'FEATURE', 'ENHANCEMENT', 'SUPPORT'];
-
+  loginsessionDetails:any
+  selectedAgencyId:any
+  adminAssigneeData:any=[]
   constructor(
     private formBuilder: FormBuilder,
     private commonService: CommonServiceService,
@@ -51,13 +63,18 @@ export class HelpSupportComponent implements OnInit {
     private sanitizer: DomSanitizer
   ) {
     this.getAssigneeName()
+     this.loginsessionDetails = JSON.parse(sessionStorage.getItem('user') || '{}');    
+     this.selectedAgencyId = this.loginsessionDetails.agencyId;
+
     this.ticketForm = this.formBuilder.group({
       title: ['', [Validators.required, Validators.minLength(3)]],
       description: ['', [Validators.required, Validators.minLength(10)]],
       priority: ['MEDIUM', [Validators.required]],
-      status: ['OPEN', [Validators.required]],
-      type: ['BUG', [Validators.required]],
-      assigneeId: ['', [Validators.required]],
+      status: ['CREATED', [Validators.required]],
+      type: ['ISSUE', [Validators.required]],
+      message:[''],
+      assigneeId: [this.loginsessionDetails?.userRole == 'ADMIN'?'dev@gmail.com':'spiu@gmail.com',],
+      reporterId:[this.loginsessionDetails.userId],
       assigneeName: ['',]
     });
   }
@@ -65,14 +82,16 @@ export class HelpSupportComponent implements OnInit {
   ngOnInit(): void {
     this.loadTickets();
   }
-
   getAssineeData: any = []
-  getAssigneeName() {
+ getAssigneeName() {
     this.getAssineeData = [];
-    this.commonService.getDataByUrl(APIS.tickets.getAllAssineeId).subscribe({
+    this.commonService.getDataByUrl(APIS.tickets.getAllUser).subscribe({
       next: (response) => {
         if (response && response.data?.length > 0) {
-          this.getAssineeData = response.data;
+            // Only keep users that have an agencyId property and get only userId
+            this.getAssineeData = response.data
+              .filter((user: any) => user.hasOwnProperty('agencyId'))
+              .map((user: any) => user.userId);
         } else {
           this.getAssineeData = [];
         }
@@ -84,29 +103,25 @@ export class HelpSupportComponent implements OnInit {
     });
   }
 
-  // Load all tickets - Modified to work with DataTable
+  // Load all tickets with updated structure
   loadTickets(): void {
     this.loading = true;
-    this.commonService.getDataByUrl(APIS.tickets.getAll).subscribe({
+    let url:any=this.loginsessionDetails?.userRole=='ADMIN'?APIS.tickets.getAll:APIS.tickets.getDataByReportId+this.loginsessionDetails.userId
+    this.commonService.getDataByUrl(url).subscribe({
       next: (response) => {
         console.log('Load tickets response:', response);
-        if (response && Array.isArray(response)) {
+        if (response && response.status === 200 && response.data) {
+          this.tickets = response.data;
+          this.totalElements = response.totalElements || response.data.length;
+          this.totalPages = response.totalPages || Math.ceil(this.totalElements / this.pageSize);
+        } else if (response && Array.isArray(response)) {
           this.tickets = response;
           this.totalElements = response.length;
-        } else if (response && response.data) {
-          if (Array.isArray(response.data)) {
-            this.tickets = response.data;
-            this.totalElements = response.totalElements || response.data.length;
-          } else {
-            this.tickets = [response.data];
-            this.totalElements = 1;
-          }
         } else {
           this.tickets = [];
           this.totalElements = 0;
         }
         
-        this.totalPages = Math.ceil(this.totalElements / this.pageSize);
         this.loading = false;
         this.reinitializeDataTable();
       },
@@ -129,9 +144,9 @@ export class HelpSupportComponent implements OnInit {
       this.initServerSideDataTable();
     }, 100);
   }
- 
 
-  // Server-side DataTable (when API supports pagination)
+  // Updated DataTable configuration for the new response structure
+ 
   initServerSideDataTable() {
     const self = this;
     
@@ -151,38 +166,25 @@ export class HelpSupportComponent implements OnInit {
       ajax: (data: any, callback: any, settings: any) => {
         const page = data.start / data.length;
         const size = data.length;
-        const sortColumn = data.order[0]?.column;
-        const sortDirection = data.order[0]?.dir || 'asc';
-        
-        // Map column index to field name
-        const columnMapping = ['', 'title', 'description', 'type', 'priority', 'status', 'assigneeId', 'createdAt', ''];
-        const sortField = columnMapping[sortColumn] || 'createdAt';
         
         let params = `?page=${page}&size=${size}`;
         
-        if (sortField && sortField !== '') {
-          params += `&sort=${sortField},${sortDirection}`;
-        }
+        console.log('API Call:', `${APIS.tickets.getDataByReportId+this.loginsessionDetails.userId}${params}`);
+        let url:any=this.loginsessionDetails?.userRole=='ADMIN'?APIS.tickets.getAll:APIS.tickets.getDataByReportId+this.loginsessionDetails.userId
         
-        if (data.search.value) {
-          params += `&search=${encodeURIComponent(data.search.value)}`;
-        }
-        
-        console.log('API Call:', `${APIS.tickets.getAll}${params}`);
-        
-        this.commonService.getDataByUrl(`${APIS.tickets.getAll}${params}`)
+        this.commonService.getDataByUrl(`${url}${params}`)
           .subscribe({
             next: (res: any) => {
               console.log('Server response:', res);
               let responseData = [];
               let totalElements = 0;
               
-              if (res && Array.isArray(res)) {
+              if (res && res.status === 200 && res.data) {
+                responseData = res.data;
+                totalElements = res.totalElements || res.data.length;
+              } else if (res && Array.isArray(res)) {
                 responseData = res;
                 totalElements = res.length;
-              } else if (res && res.data) {
-                responseData = Array.isArray(res.data) ? res.data : [res.data];
-                totalElements = res.totalElements || res.totalRecords || responseData.length;
               }
               
               self.tickets = responseData;
@@ -211,7 +213,7 @@ export class HelpSupportComponent implements OnInit {
         { 
           title: 'S.No',
           render: function(data: any, type: any, row: any, meta: any) {
-            return meta.settings._iDisplayStart + meta.row + 1;
+        return meta.settings._iDisplayStart + meta.row + 1;
           },
           className: 'text-center',
           orderable: false,
@@ -220,202 +222,183 @@ export class HelpSupportComponent implements OnInit {
         { 
           data: 'title',
           title: 'Title',
+          className: 'text-start fw-bold',
+          width: '20%',
+          render: function(data: any, type: any, row: any) {
+        return `<span class="text-primary cursor-pointer" title="Click for details">${data || '-'}</span>`;
+          }
+        },
+        { 
+          data: 'ticketId',
+          title: 'Ticket Id',
+          className: 'text-start fw-bold',
+          width: '20%',
+          render: function(data: any, type: any, row: any) {
+        return `<span class="text-primary cursor-pointer" title="Click for details">${data || '-'}</span>`;
+        }
+          },
+          { 
+        data: 'status',
+        title: 'Status',
+        render: function(data: any, _type: any, _row: any) {
+        if (!data) return '-';
+        const statusText = data.replace(/_/g, ' ');
+        let style = '';
+        switch (data) {
+          case 'CREATED':
+          style = 'background-color: #007bff; color: #fff;';
+          break;
+          case 'UNDER_REVIEW':
+          style = 'background-color: #ffc107; color: #212529;';
+          break;
+          case 'IN_PROGRESS':
+          style = 'background-color: #fd7e14; color: #fff;';
+          break;
+          case 'RESOLVED':
+          style = 'background-color: #28a745; color: #fff;';
+          break;
+          case 'CLOSED':
+          style = 'background-color: #6c757d; color: #fff;';
+          break;
+          case 'ADDITIONAL_INFO_NEEDED':
+          style = 'background-color: #dc3545; color: #fff;';
+          break;
+          case 'APPROVED':
+          style = 'background-color: #198754; color: #fff;';
+          break;
+          case 'UPDATED_WITH_INFO':
+          style = 'background-color: #0dcaf0; color: #212529;';
+          break;
+          default:
+          style = 'background-color: #adb5bd; color: #fff;';
+        }
+        return `<span class="badge" style="${style}">${statusText}</span>`;
+        },
+        className: 'text-center',
+        width: '12%'
+          },
+          {
+        data: 'assigneeId',
+        title: 'Assignee Id ',
+        render: function(data: any, _type: any, row: any) {
+        return data || row.assigneeId || 'unassigned';
+          },
           className: 'text-start',
           width: '15%'
         },
         { 
-          data: 'description',
-          title: 'Description',
-          render: function(data: any, type: any, row: any) {
-            return data ? (data.length > 50 ? data.slice(0, 50) + '...' : data) : '-';
-            },
-            className: 'text-start',
-            width: '20%'
-            },
-            { 
-            data: 'type',
-            title: 'Type',
-            render: function(data: any, _type: any, _row: any) {
-              if (!data) return '-';
-              // Assign color based on type
-              let style = '';
-              switch (data) {
-              case 'BUG':
-                style = 'background-color: #dc3545; color: #fff;'; // red
-                break;
-              case 'FEATURE':
-                style = 'background-color: #28a745; color: #fff;'; // green
-                break;
-              case 'ENHANCEMENT':
-                style = 'background-color: #17a2b8; color: #fff;'; // blue
-                break;
-              case 'SUPPORT':
-                style = 'background-color: #007bff; color: #fff;'; // primary blue
-                break;
-              default:
-                style = 'background-color: #6c757d; color: #fff;'; // secondary
-              }
-              return `<span class="badge" style="${style}">${data}</span>`;
-            },
-            className: 'text-center',
-            width: '10%'
-            },
-        // { 
-        //   data: 'priority',
-        //   title: 'Priority',
-        //   render: function(data: any, type: any, row: any) {
-        //     if (!data) return '-';
-        //     let badgeClass = 'badge-secondary';
-        //     switch(data) {
-        //       case 'LOW': badgeClass = 'badge-info'; break;
-        //       case 'MEDIUM': badgeClass = 'badge-warning'; break;
-        //       case 'HIGH': badgeClass = 'badge-danger'; break;
-        //       case 'CRITICAL': badgeClass = 'badge-dark'; break;
-        //     }
-        //     return `<span class="badge ${badgeClass}">${data}</span>`;
-        //   },
-        //   className: 'text-center',
-        //   width: '8%'
-        // },
-        // { 
-        //   data: 'status',
-        //   title: 'Status',
-        //   render: function(data: any, type: any, row: any) {
-        //     if (!data) return '-';
-        //     const statusText = data.replace('_', ' ');
-        //     let badgeClass = 'badge-secondary';
-        //     switch(data) {
-        //       case 'OPEN': badgeClass = 'badge-primary'; break;
-        //       case 'IN_PROGRESS': badgeClass = 'badge-warning'; break;
-        //       case 'RESOLVED': badgeClass = 'badge-success'; break;
-        //       case 'CLOSED': badgeClass = 'badge-secondary'; break;
-        //     }
-        //     return `<span class="badge ${badgeClass}">${statusText}</span>`;
-        //   },
-        //   className: 'text-center',
-        //   width: '10%'
-        // },
-        //   { 
-        //   data: 'type',
-        //   title: 'Type',
-        //   className: 'text-start',
-        //   width: '12%'
-        // },
-          {
-            data: 'priority',
-            title: 'Priority',
-            render: function(data: any, _type: any, _row: any) {
-              if (!data) return '-';
-              let style = '';
-              switch (data) {
-                case 'LOW':
-                  style = 'background-color: #17a2b8; color: #fff;'; // blue
-                  break;
-                case 'MEDIUM':
-                  style = 'background-color: #ffc107; color: #212529;'; // yellow
-                  break;
-                case 'HIGH':
-                  style = 'background-color: #fd7e14; color: #fff;'; // orange
-                  break;
-                case 'CRITICAL':
-                  style = 'background-color: #dc3545; color: #fff;'; // red
-                  break;
-                default:
-                  style = 'background-color: #6c757d; color: #fff;'; // secondary
-              }
-              return `<span class="badge" style="${style}">${data}</span>`;
-            },
-            className: 'text-center',
-            width: '10%'
-          },
-          {
-            data: 'status',
-            title: 'Status',
-            render: function(data: any, _type: any, _row: any) {
-              if (!data) return '-';
-              const statusText = data.replace('_', ' ');
-              let style = '';
-              switch (data) {
-                case 'OPEN':
-                  style = 'background-color: #007bff; color: #fff;'; // blue
-                  break;
-                case 'IN_PROGRESS':
-                  style = 'background-color: #ffc107; color: #212529;'; // yellow
-                  break;
-                case 'RESOLVED':
-                  style = 'background-color: #28a745; color: #fff;'; // green
-                  break;
-                case 'CLOSED':
-                  style = 'background-color: #6c757d; color: #fff;'; // gray
-                  break;
-                default:
-                  style = 'background-color: #adb5bd; color: #fff;'; // light gray
-              }
-              return `<span class="badge" style="${style}">${statusText}</span>`;
-            },
-            className: 'text-center',
-            width: '10%'
-          },
-          {
-            data: 'assigneeId',
-            title: 'Assignee',
-            render: function(data: any, _type: any, row: any) {
-              // Show assigneeName if available, else show assigneeId
-              return row.assigneeName || data || '-';
-            },
-            className: 'text-start',
-            width: '12%'
-          },
-          {
-            data: 'createdAt',
-            title: 'Created Date',
-            render: function(data: any, type: any, row: any) {
-            if (data) {
-              try {
-                const date = new Date(data);
-                return date.toLocaleDateString('en-GB');
-              } catch (e) {
-                return data;
-              }
-            }
-            return '-';
+          data: 'type',
+          title: 'Type',
+          render: function(data: any, _type: any, _row: any) {
+        if (!data) return '-';
+        let style = '';
+        switch (data) {
+          case 'BUG':
+          case 'ISSUE':
+            style = 'background-color: #dc3545; color: #fff;';
+            break;
+          case 'FEATURE':
+            style = 'background-color: #28a745; color: #fff;';
+            break;
+          case 'ENHANCEMENT':
+            style = 'background-color: #17a2b8; color: #fff;';
+            break;
+          case 'SUPPORT':
+            style = 'background-color: #007bff; color: #fff;';
+            break;
+          default:
+            style = 'background-color: #6c757d; color: #fff;';
+        }
+        return `<span class="badge" style="${style}">${data}</span>`;
           },
           className: 'text-center',
           width: '10%'
         },
-        { 
-          data: null,
-          title: 'Actions',
-          render: function(data: any, type: any, row: any, meta: any) {
-            let actions = `
-              <div class="btn-group" role="group">
-                <button type="button" class="btn btn-lime-green btn-sm edit-btn" data-row='${JSON.stringify(row).replace(/'/g, "&#39;")}' title="Edit Ticket">
-                  <i class="fas fa-edit"></i>
-                </button>
-            `;
-            
-            if (row.attachments && row.attachments.length > 0) {
-              actions += `
-                <button type="button" class="btn btn-lime-green btn-sm view-files-btn ms-3" data-row='${JSON.stringify(row).replace(/'/g, "&#39;")}' title="View Files">
-                  <i class="fas fa-paperclip"></i>
-                </button>
-              `;
-            }
-            
-            // actions += `
-            //     <button type="button" class="btn btn-outline-danger btn-sm delete-btn" data-row='${JSON.stringify(row).replace(/'/g, "&#39;")}' title="Delete Ticket">
-            //       <i class="fas fa-trash"></i>
-            //     </button>
-            //   </div>
-            // `;
-            return actions;
+        {
+          data: 'priority',
+          title: 'Priority',
+          render: function(data: any, _type: any, _row: any) {
+        if (!data) return '-';
+        let style = '';
+        switch (data) {
+          case 'LOW':
+            style = 'background-color: #17a2b8; color: #fff;';
+            break;
+          case 'MEDIUM':
+            style = 'background-color: #ffc107; color: #212529;';
+            break;
+          case 'HIGH':
+            style = 'background-color: #fd7e14; color: #fff;';
+            break;
+          case 'CRITICAL':
+            style = 'background-color: #dc3545; color: #fff;';
+            break;
+          default:
+            style = 'background-color: #6c757d; color: #fff;';
+        }
+        return `<span class="badge" style="${style}">${data}</span>`;
           },
           className: 'text-center',
-          orderable: false,
           width: '10%'
+        },
+        {
+          data: 'createdAt',
+          title: 'Created On',
+          render: function(data: any, type: any, row: any) {
+        if (data) {
+          try {
+            // Handle dd-mm-yyyy format
+            if (data.includes('-') && data.split('-').length === 3) {
+          return data;
+            }
+            const date = new Date(data);
+            return date.toLocaleDateString('en-GB');
+          } catch (e) {
+            return data;
+          }
         }
-      ],
-      initComplete: function() {
+        return '-';
+            },
+            className: 'text-center',
+            width: '12%'
+          },
+          { 
+            data: null,
+            title: 'Actions',
+            name: 'actions',
+            render: (data: any, type: any, row: any, meta: any) => {
+            const hasAttachments = row.attachments && row.attachments.length > 0;
+            const hasComments = row.comments && row.comments.length > 0;
+
+            let actions = `
+              <div class="btn-group" role="group">
+              <button type="button" class="btn btn-lime-green btn-sm view-details-btn" 
+                data-row='${JSON.stringify(row).replace(/'/g, "&#39;")}' 
+                title="View Details">
+                <i class="fas fa-eye"></i> Details
+              </button>
+            `;
+
+            // Only show edit button if not admin
+            if (this.loginsessionDetails?.userId === row.reporterId) {
+              actions += `
+              <button type="button" class="btn btn-lime-green btn-sm edit-btn ms-1" 
+                data-row='${JSON.stringify(row).replace(/'/g, "&#39;")}' 
+                title="Edit Ticket">
+                <i class="fas fa-edit"></i>
+              </button>
+              `;
+            }
+
+            actions += `</div>`;
+            return actions;
+            },
+            className: 'text-center',
+            orderable: false,
+            width: '16%'
+          }
+          ],
+          initComplete: function() {
         console.log('Server-side DataTable initialization complete');
         self.attachEventHandlers();
       },
@@ -425,73 +408,48 @@ export class HelpSupportComponent implements OnInit {
     });
   }
 
-  // Attach event handlers for action buttons
+  // Updated event handlers
   attachEventHandlers() {
     const self = this;
     
     // Remove existing event handlers to prevent duplicates
-    $('#tickets-table').off('click', '.edit-btn');
-    $('#tickets-table').off('click', '.view-files-btn');
-    $('#tickets-table').off('click', '.delete-btn');
+    $('#tickets-table').off('click', '.edit-btn, .view-files-btn, .view-details-btn, .view-comments-btn, td:first-child + td');
     
-    // Add event listeners for action buttons
+    // Title click for details
+    $('#tickets-table').on('click', 'td:first-child + td span', function(this: HTMLElement) {
+      const rowData = self.dataTable.row($(this).closest('tr')).data();
+      self.viewTicketDetails(rowData);
+    });
+
+    // View details button
+    $('#tickets-table').on('click', '.view-details-btn', function(this: HTMLElement) {
+      const rowData = JSON.parse($(this).attr('data-row') || '{}');
+      self.viewTicketDetails(rowData);
+    });
+
+    // Edit button
     $('#tickets-table').on('click', '.edit-btn', function(this: HTMLElement) {
-      let rowData;
-      if ($(this).data('index') !== undefined) {
-        // Client-side mode
-        const index = $(this).data('index');
-        rowData = self.tickets[index];
-      } else {
-        // Server-side mode
-        rowData = JSON.parse($(this).attr('data-row') || '{}');
-      }
+      const rowData = JSON.parse($(this).attr('data-row') || '{}');
       console.log('Edit button clicked for:', rowData);
       self.openTicketModal('edit', rowData);
     });
 
+    // View files button
     $('#tickets-table').on('click', '.view-files-btn', function(this: HTMLElement) {
-      let rowData;
-      if ($(this).data('index') !== undefined) {
-        const index = $(this).data('index');
-        rowData = self.tickets[index];
-      } else {
-        rowData = JSON.parse($(this).attr('data-row') || '{}');
-      }
+      const rowData = JSON.parse($(this).attr('data-row') || '{}');
       console.log('View files button clicked for:', rowData);
       self.viewTicketFiles(rowData);
     });
 
-    $('#tickets-table').on('click', '.delete-btn', function(this: HTMLElement) {
-      let rowData;
-      if ($(this).data('index') !== undefined) {
-        const index = $(this).data('index');
-        rowData = self.tickets[index];
-      } else {
-        rowData = JSON.parse($(this).attr('data-row') || '{}');
-      }
-      console.log('Delete button clicked for:', rowData);
-      self.deleteTicket(rowData.id);
+    // View comments button
+    $('#tickets-table').on('click', '.view-comments-btn', function(this: HTMLElement) {
+      const rowData = JSON.parse($(this).attr('data-row') || '{}');
+      console.log('View comments button clicked for:', rowData);
+      self.viewTicketComments(rowData);
     });
   }
 
-  // File viewing methods
- // Update the viewTicketFiles method
-viewTicketFiles(ticket: any): void {
-  this.currentTicketFiles = ticket.attachments || [];
-  
-  // Clear single file preview data when showing multiple files
-  if (this.currentTicketFiles.length > 1) {
-    this.filePreviewUrl = '';
-    this.filePreviewType = 'document';
-    this.selectedFileName = '';
-  }
-  
-  const modalElement = document.getElementById('filePreviewModal');
-  if (modalElement) {
-    const modal = new bootstrap.Modal(modalElement);
-    modal.show();
-  }
-}
+
 
 // Update the previewFile method to work with the new modal
 previewFile(file: any, index: number): void {
@@ -499,34 +457,15 @@ previewFile(file: any, index: number): void {
   this.filePreviewUrl = this.getFileDownloadUrl(file);
   this.filePreviewType = this.getFileType(this.selectedFileName);
   this.currentTicketFiles = [file]; // Show only single file
-  
+  this.closeAllModel()
   const modalElement = document.getElementById('filePreviewModal');
   if (modalElement) {
     const modal = new bootstrap.Modal(modalElement);
     modal.show();
   }
+  this.openFileInNewTab(file);
 }
-  getFileDownloadUrl(file: any): string {
-    if (file.fileUrl) {
-      return file.fileUrl;
-    } else if (file.fileName) {
-      return `${API_BASE_URL}/tickets/files/download/${file.fileName}`;
-    } else {
-      return `${API_BASE_URL}/tickets/files/download/${file.name}`;
-    }
-  }
 
-  getFileType(fileName: string): 'image' | 'pdf' | 'document' {
-    const ext = fileName.split('.').pop()?.toLowerCase();
-    
-    if (['jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp'].includes(ext || '')) {
-      return 'image';
-    } else if (ext === 'pdf') {
-      return 'pdf';
-    } else {
-      return 'document';
-    }
-  }
 
   getFileIcon(fileName: string): string {
     const ext = fileName.split('.').pop()?.toLowerCase();
@@ -586,12 +525,13 @@ previewFile(file: any, index: number): void {
 
     this.loading = true;
     const ticketData: any = this.ticketForm.value;
-
-    if (this.isEditMode && this.selectedTicket?.id) {
+    let comments:any=[{message:ticketData?.message,authorId:this.loginsessionDetails.userId}]
+    delete ticketData.message;
+    if (this.isEditMode && this.selectedTicket?.ticketId) {
       // Update existing ticket
       if (this.selectedFiles.length > 0) {
-        let formData = { ...ticketData, attachments: this.selectedFiles }
-        this.commonService.updatedata(APIS.tickets.update + this.selectedTicket.id, formData).subscribe({
+        let formData = { ...ticketData, attachments: this.selectedFiles,comments:comments, }
+        this.commonService.updatedata(APIS.tickets.update + this.selectedTicket.ticketId, formData).subscribe({
           next: (response) => {
             this.toastrService.success('Ticket updated successfully!');
             this.handleSuccess();
@@ -603,7 +543,7 @@ previewFile(file: any, index: number): void {
           }
         });
       } else {
-        this.commonService.updatedata(APIS.tickets.update + this.selectedTicket.id, {...ticketData,attachments:this.selectedFiles}).subscribe({
+        this.commonService.updatedata(APIS.tickets.update + this.selectedTicket.ticketId, {...ticketData,comments:comments,attachments:this.selectedFiles}).subscribe({
           next: (response) => {
             this.toastrService.success('Ticket updated successfully!');
             this.handleSuccess();
@@ -619,7 +559,7 @@ previewFile(file: any, index: number): void {
       // Create new ticket
       if (this.selectedFiles.length > 0) {
         const formData = new FormData();
-        formData.append('ticket', JSON.stringify(ticketData));
+        formData.append('ticket', JSON.stringify({...ticketData, comments:comments, assigneeId: this.loginsessionDetails?.userRole == 'ADMIN'?ticketData?.assigneeId:'spiu@gmail.com',reporterId:this.loginsessionDetails.userId}));
         this.selectedFiles.forEach((file: any) => {
           formData.append('files', file);
         });
@@ -637,7 +577,7 @@ previewFile(file: any, index: number): void {
         });
       } else {
         const formData = new FormData();
-        formData.append('ticket', JSON.stringify(ticketData));
+        formData.append('ticket', JSON.stringify({...ticketData, comments:comments, assigneeId: this.loginsessionDetails?.userRole == 'ADMIN'?ticketData?.assigneeId:'spiu@gmail.com',reporterId:this.loginsessionDetails.userId}));
         this.commonService.add(APIS.tickets.save, formData).subscribe({
           next: (response: any) => {
             this.toastrService.success('Ticket created successfully!');
@@ -655,7 +595,11 @@ previewFile(file: any, index: number): void {
 
   // Handle success response
   handleSuccess(): void {
+    this.adminAssigneeId=''
+    this.adminComment=''
+    this.adminStatus=''
     this.resetForm();
+    this.closeAllModel()
     this.loading = false;
     
     // Refresh the table
@@ -671,6 +615,129 @@ previewFile(file: any, index: number): void {
     }
   }
 
+ 
+
+  // Modal for ticket details
+  showTicketDetailModal = false;
+  selectedTicketForDetails: any = null;
+
+ 
+
+  // New method for viewing ticket details
+  viewTicketDetails(ticket: Ticket): void {
+    this.adminAssigneeData=[]
+    this.selectedTicketForDetails = ticket;
+    this.showTicketDetailModal = true;
+    
+    
+     this.closeAllModel()
+     if( this.loginsessionDetails?.userRole != 'ADMIN'){
+      const modalElement = document.getElementById('ticketDetailModal');
+    if (modalElement) {
+      const modal = new bootstrap.Modal(modalElement);
+      modal.show();
+    }
+     }
+     else{
+       this.adminAssigneeId=this.selectedTicketForDetails?.assigneeId
+      this.adminStatus=this.selectedTicketForDetails?.status
+      this.adminAssigneeData=['dev@gmail.com',ticket.reporterId]
+      const modalElement = document.getElementById('ticketDetailModalAdmin');
+    if (modalElement) {
+      const modal = new bootstrap.Modal(modalElement);
+      modal.show();
+    }
+     }
+    
+  }
+
+  // View comments method
+  viewTicketComments(ticket: Ticket): void {
+    this.selectedTicketForDetails = ticket;
+     this.closeAllModel()
+    const modalElement = document.getElementById('commentsModal');
+    if (modalElement) {
+      const modal = new bootstrap.Modal(modalElement);
+      modal.show();
+    }
+  }
+
+  // Updated file viewing method
+  viewTicketFiles(ticket: any): void {
+    this.currentTicketFiles = ticket.attachments || [];
+    this.selectedTicketForDetails = ticket;
+     this.closeAllModel()
+    const modalElement = document.getElementById('filePreviewModal');
+    if (modalElement) {
+      const modal = new bootstrap.Modal(modalElement);
+      modal.show();
+    }
+  }
+
+  // Helper methods
+  getStatusBadgeClass(status: string): string {
+    const statusClasses: { [key: string]: string } = {
+      'CREATED': 'bg-primary',
+      'UNDER_REVIEW': 'bg-warning text-dark',
+      'IN_PROGRESS': 'bg-info',
+      'RESOLVED': 'bg-success',
+      'CLOSED': 'bg-secondary',
+      'ADDITIONAL_INFO_NEEDED': 'bg-danger'
+    };
+    return statusClasses[status] || 'bg-secondary';
+  }
+
+  getPriorityBadgeClass(priority: string): string {
+    const priorityClasses: { [key: string]: string } = {
+      'LOW': 'bg-info',
+      'MEDIUM': 'bg-warning text-dark',
+      'HIGH': 'bg-orange',
+      'CRITICAL': 'bg-danger'
+    };
+    return priorityClasses[priority] || 'bg-secondary';
+  }
+
+  getTypeBadgeClass(type: string): string {
+    const typeClasses: { [key: string]: string } = {
+      'BUG': 'bg-danger',
+      'ISSUE': 'bg-danger',
+      'FEATURE': 'bg-success',
+      'ENHANCEMENT': 'bg-info',
+      'SUPPORT': 'bg-primary'
+    };
+    return typeClasses[type] || 'bg-secondary';
+  }
+ readonly BASE_URL = 'https://metaverseedu.in/';
+  // File download URL method
+  getFileDownloadUrl(file: any): string {
+    
+
+    if (file.filePath) {
+      // Convert Windows path to URL format
+      let urlPath = file.filePath.replace(/\\/g, '/');
+      // Remove the local path prefix and add API base URL
+      if (urlPath.includes('public_html')) {
+        urlPath = urlPath.substring(urlPath.indexOf('public_html') + 11);
+      }
+      console.log('Generated file download URL:', `${this.BASE_URL}${urlPath}`);
+      return `${this.BASE_URL}${urlPath}`;
+    }
+    return '';
+  }
+// getFileDownloadUrl(path: any): string {
+//   const trimmed = path.filePath?.split('public_html/')?.[1];
+//   return trimmed ? `${API_BASE_URL}${trimmed}` : '';
+// }
+  // File type detection
+  getFileType(fileName: string): 'image' | 'pdf' | 'document' {
+    const extension = fileName.toLowerCase().split('.').pop();
+    if (['jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp'].includes(extension || '')) {
+      return 'image';
+    } else if (extension === 'pdf') {
+      return 'pdf';
+    }
+    return 'document';
+  }
   // Open ticket modal
   openTicketModal(mode: string, ticket?: any): void {
     this.isEditMode = mode === 'edit';
@@ -699,7 +766,7 @@ previewFile(file: any, index: number): void {
         fileInput.value = '';
       }
     }, 100);
-
+ this.closeAllModel()
     const modalElement = document.getElementById('addTicketModal');
     if (modalElement) {
       const modal = new bootstrap.Modal(modalElement);
@@ -710,6 +777,7 @@ previewFile(file: any, index: number): void {
   // Delete ticket (show confirmation modal)
   deleteTicket(ticketId: string): void {
     this.deleteTicketId = ticketId;
+     this.closeAllModel()
     const deleteModal = document.getElementById('deleteConfirmModal');
     if (deleteModal) {
       const modal = new bootstrap.Modal(deleteModal);
@@ -756,7 +824,7 @@ previewFile(file: any, index: number): void {
   resetForm(): void {
     this.ticketForm.reset({
       priority: 'MEDIUM',
-      status: 'OPEN',
+      status: 'CREATED',
       type: 'BUG'
     });
     this.selectedTicket = null;
@@ -792,4 +860,138 @@ previewFile(file: any, index: number): void {
 
   // Get form control for validation
   get f() { return this.ticketForm.controls; }
+ closeAllModel(): void {
+  // Hide Angular-controlled modal flags
+  this.showTicketDetailModal = false;
+
+  // Clear file preview data
+  this.filePreviewUrl = '';
+  this.selectedFileName = '';
+  this.currentTicketFiles = [];
+
+  // List of modal IDs used in this component
+  const modalIds = [
+    'ticketDetailModal',
+    'filePreviewModal', 
+    'commentsModal',
+    'addTicketModal',
+    'deleteConfirmModal',
+    'ticketDetailModalAdmin'
+
+  ];
+
+  // Hide each modal if open with proper error handling
+  modalIds.forEach(id => {
+    try {
+      const modalElement = document.getElementById(id);
+      if (modalElement) {
+        const modalInstance = bootstrap.Modal.getInstance(modalElement);
+        if (modalInstance) {
+          modalInstance.hide();
+        }
+        // Remove any remaining backdrop
+        const backdrop = document.querySelector('.modal-backdrop');
+        if (backdrop) {
+          backdrop.remove();
+        }
+        // Reset body styles
+        document.body.classList.remove('modal-open');
+        document.body.style.overflow = '';
+        document.body.style.paddingRight = '';
+      }
+    } catch (error) {
+      console.error(`Error closing modal ${id}:`, error);
+    }
+  });
 }
+
+
+// Helper method to get file type name for display
+getFileTypeName(fileName: string): string {
+  const extension = fileName.toLowerCase().split('.').pop();
+  const typeMap: { [key: string]: string } = {
+    'doc': 'Word Document',
+    'docx': 'Word Document',
+    'xls': 'Excel Spreadsheet',
+    'xlsx': 'Excel Spreadsheet',
+    'ppt': 'PowerPoint Presentation',
+    'pptx': 'PowerPoint Presentation',
+    'txt': 'Text Document',
+    'zip': 'Archive',
+    'rar': 'Archive',
+    '7z': 'Archive',
+    'csv': 'CSV File',
+    'json': 'JSON File',
+    'xml': 'XML File'
+  };
+  return typeMap[extension || ''] || 'Document';
+}
+
+// Handle image loading errors
+onImageError(event: any, file: any): void {
+  console.error('Failed to load image:', file.fileName);
+  event.target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjE1MCIgdmlld0JveD0iMCAwIDIwMCAxNTAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMTUwIiBmaWxsPSIjRjNGNEY2Ii8+CjxwYXRoIGQ9Ik04NS42IDY1LjRMMTA3LjQgOTBMMTI4LjYgNjVIMTQyVjEwNUg1OFY2NUg4NS42WiIgZmlsbD0iIzlDQTNBRiIvPgo8Y2lyY2xlIGN4PSI3OCIgY3k9IjQ4IiByPSI4IiBmaWxsPSIjOUNBM0FGIi8+Cjx0ZXh0IHg9IjEwMCIgeT0iMTI1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjNjg3Mjg4IiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMiI+SW1hZ2UgTm90IEZvdW5kPC90ZXh0Pgo8L3N2Zz4K';
+  event.target.style.height = '200px';
+  event.target.style.objectFit = 'contain';
+}
+
+// Handle successful image loading
+onImageLoad(event: any, file: any): void {
+  console.log('Image loaded successfully:', file.fileName);
+}
+
+// Open file in new tab
+openFileInNewTab(file: any): void {
+  const url = this.getFileDownloadUrl(file);
+  if (url) {
+    window.open(url, '_blank');
+  } else {
+    this.toastrService.error('Unable to open file');
+  }
+}
+// admin related comments
+adminAssigneeId:any=''
+adminComment:any=''
+adminStatus:any=''
+onAdminCommentSubmit(){
+  console.log('Admin Comment:', this.adminComment,this.selectedTicketForDetails);
+  let ticketData: any = {};
+  let comments:any=[{message:this.adminComment,authorId:this.loginsessionDetails.userId}]
+  ticketData = {
+    assigneeId: this.adminAssigneeId,
+    status: this.adminStatus?this.adminStatus:this.selectedTicketForDetails.status,
+    
+  };
+    this.loading = true;
+   if (this.selectedFiles.length > 0) {
+        let formData = { ...ticketData, attachments: this.selectedFiles,comments:comments, }
+        this.commonService.updatedata(APIS.tickets.update + this.selectedTicketForDetails?.ticketId, formData).subscribe({
+          next: (response) => {
+            this.toastrService.success('Ticket updated successfully!');
+            this.handleSuccess();
+          },
+          error: (error) => {
+            console.error('Error updating ticket:', error);
+            this.toastrService.error('Error updating ticket');
+            this.loading = false;
+              this.handleSuccess();
+          }
+        });
+      } else {
+        this.commonService.updatedata(APIS.tickets.update + this.selectedTicketForDetails?.ticketId, {...ticketData,comments:comments,attachments:this.selectedFiles}).subscribe({
+          next: (response) => {
+            this.toastrService.success('Ticket updated successfully!');
+            this.handleSuccess();
+          },
+          error: (error) => {
+            console.error('Error updating ticket:', error);
+            this.toastrService.error('Error updating ticket');
+            this.loading = false;
+              this.handleSuccess();
+          }
+        });
+      }
+}
+// Update the previewFile method to be simpler since we're showing previews inlin
+}
+

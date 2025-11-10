@@ -5,7 +5,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class CommaSeperationIndiaPipe implements PipeTransform {
 
-  transform(value: number | string | null | undefined, symbol: string = '₹', showDecimals: boolean = true): string {
+  transform(value: number | string | null | undefined, symbol: string = '₹'): string {
     if (value === null || value === undefined || value === '') {
       return 'N/A';
     }
@@ -17,19 +17,20 @@ export class CommaSeperationIndiaPipe implements PipeTransform {
     }
 
     // Format number with Indian numbering system
-    const formattedAmount = this.formatIndianNumber(numValue, showDecimals);
+    const formattedAmount = this.formatIndianNumber(numValue);
     
     return `${symbol} ${formattedAmount}`;
   }
 
-  private formatIndianNumber(num: number, showDecimals: boolean): string {
+  private formatIndianNumber(num: number): string {
     const isNegative = num < 0;
     const absNum = Math.abs(num);
-    
-    // Split into integer and decimal parts
-    const parts = absNum.toFixed(showDecimals ? 2 : 0).split('.');
+
+    // Check if number has decimals
+    const hasDecimals = absNum % 1 !== 0;
+    const parts = absNum.toString().split('.');
     let integerPart = parts[0];
-    const decimalPart = showDecimals && parts[1] ? `.${parts[1]}` : '';
+    const decimalPart = hasDecimals ? `.${parts[1]}` : '';
     
     // Apply Indian numbering system (lakhs, crores)
     if (integerPart.length > 3) {
@@ -47,5 +48,3 @@ export class CommaSeperationIndiaPipe implements PipeTransform {
     return isNegative ? `-${result}` : result;
   }
 }
-
-
