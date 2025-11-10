@@ -224,10 +224,11 @@ export class ViewResourceListComponent implements OnInit, OnDestroy {
 
   // Refresh resources list
   refreshResourcesList() {
-    if (this.loginsessionDetails?.userRole == 'ADMIN') {
-      this.agencyId = -1;
+    if (this.loginsessionDetails?.agencyId || this.agencyId) {
+      this.agencyId = this.agencyId?this.agencyId:this.loginsessionDetails?.agencyId;
+      
     } else {
-      this.agencyId = this.loginsessionDetails?.agencyId;
+        this.agencyId = -1;
     }
     this.reinitializeDataTableResources();
   }
@@ -436,7 +437,7 @@ export class ViewResourceListComponent implements OnInit, OnDestroy {
           data: 'isVIP',
           title: 'VIP Status',
           render: function(data: any) {
-            return data ? '<span class="badge bg-success">VIP</span>' : '<span class="badge bg-secondary">Regular</span>';
+            return data ? 'Yes' : 'No';
           }
         }
       ],
