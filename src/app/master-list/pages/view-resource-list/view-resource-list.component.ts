@@ -149,7 +149,7 @@ export class ViewResourceListComponent implements OnInit, OnDestroy {
       organizationName: resource.organizationName,
       qualification: resource.qualification,
       designation: resource.designation,
-      isVIP: resource.isVIP,
+      isVIP: resource.isVIP?resource.isVIP:false,
       specialization: resource.specialization,
       briefDescription: resource.briefDescription,
       gender: resource.gender,
@@ -164,7 +164,7 @@ export class ViewResourceListComponent implements OnInit, OnDestroy {
   onUpdateResource() {
     if (this.editResourceForm.valid) {
       this.updateLoading = true;
-      let formData = { ...this.editResourceForm.value };
+      let formData = { ...this.editResourceForm.value,"agencyIds": [Number(this.agencyId)], };
       
       this._commonService.updatedata(APIS.masterList.updateResourceStatus + formData.resourceId, formData).subscribe({
         next: (response: any) => {
@@ -193,7 +193,7 @@ export class ViewResourceListComponent implements OnInit, OnDestroy {
     if (this.selectedResource && this.selectedResource.resourceId) {
       this.deleteLoading = true;
       
-      this._commonService.deleteById(APIS.masterList.deleteResource, this.selectedResource.resourceId).subscribe({
+      this._commonService.deleteId(APIS.masterList.deleteResource, this.selectedResource.resourceId).subscribe({
         next: (response: any) => {
           this.deleteLoading = false;
           this.toastrService.success('Resource deleted successfully!', 'Success');
@@ -431,6 +431,7 @@ export class ViewResourceListComponent implements OnInit, OnDestroy {
             return data || 'N/A';
           }
         },
+           
         {
           data: 'isVIP',
           title: 'VIP Status',

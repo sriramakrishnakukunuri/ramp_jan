@@ -942,7 +942,7 @@ aria-hidden="true">
                                             <th>Payment For Month</th>
                                             <th>Date of Payment</th>
                                             <th>Resource Name</th>
-                                            <th>View Bill Invoice</th>
+                                            <!-- <th>View Bill Invoice</th> -->
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -955,13 +955,13 @@ aria-hidden="true">
                                             <td>{{ payment?.paymentForMonth }}</td>
                                             <td>{{ payment?.dateOfPayment }}</td>
                                             <td>{{ payment?.resourceName }}</td>
-                                            <td class="text-center">
+                                            <!-- <td class="text-center">
                                             <a *ngIf="payment?.uploadBillUrl"  class="btn btn-default text-primary btn-sm"
                                               (click)="showFileViewer(payment.uploadBillUrl)">
                                               <span class="bi bi-eye"></span>
                                             </a>
                                             <span *ngIf="!payment?.uploadBillUrl" class="text-muted">No file</span>
-                                          </td>
+                                          </td> -->
                                           
                                         </tr>
                                     </tbody>

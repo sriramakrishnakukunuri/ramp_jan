@@ -174,7 +174,7 @@ onUpdateLocation() {
     if (this.selectedLocation && this.selectedLocation.locationId) {
       this.deleteLoading = true;
       
-      this._commonService.deleteById(APIS.masterList.deleteLocation ,this.selectedLocation.locationId).subscribe({
+      this._commonService.deleteId(APIS.masterList.deleteLocation ,this.selectedLocation.locationId).subscribe({
         next: (response: any) => {
           this.deleteLoading = false;
           this.toastrService.success('Location deleted successfully!', 'Success');
@@ -392,6 +392,20 @@ columns: [
     }
   },
   { 
+          data: 'district',
+          title: 'District',
+          render: function(data: any, type: any, row: any) {
+            return data || 'N/A';
+          }
+        },
+        { 
+          data: 'mandal',
+          title: 'Mandal',
+          render: function(data: any, type: any, row: any) {
+            return data || 'N/A';
+          }
+        },
+  { 
     data: 'googleMapUrl',
     title: 'Google Map Url',
     render: function(data: any, type: any, row: any) {
@@ -404,7 +418,8 @@ columns: [
       $(thead).addClass('bg-lime-green text-white');
     },
     initComplete: function() {
-      const self = this;
+      // const self = this;
+        $('#view-table-resource thead th').addClass('bg-success text-white');
       // Add event listeners for edit/delete buttons
       $('#view-table-location').off('click', '.edit-location-btn').on('click', '.edit-location-btn', function(this: any) {
         const rowData = self.dataTableLocations.row($(this).parents('tr')).data();
