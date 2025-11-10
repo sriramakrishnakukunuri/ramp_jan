@@ -40,10 +40,13 @@
             <div class="card-body">
               
                 <div class="row mb-3">
-                    <div class="col-12 col-sm-6 col-md-3 col-lg-6" *ngIf="!(outcomeIds==-1 && selectedAgencyId==-1)">
-                        <h6 class="fw-600 mb-2 mb-sm-0 text-primary" *ngIf="outcomeIds==-1">Agency Name:{{getagencynamebyid(selectedAgencyId)}}</h6>
+                    <div class="col-12 col-sm-6 col-md-3 col-lg-6" >
+                        <ng-container *ngIf="!(outcomeIds==-1 && selectedAgencyId==-1)">
+                             <h6 class="fw-600 mb-2 mb-sm-0 text-primary" *ngIf="outcomeIds==-1">Agency Name:{{getagencynamebyid(selectedAgencyId)}}</h6>
                          <h6 class="fw-600 mb-2 mb-sm-0 text-primary" *ngIf="selectedAgencyId==-1">Outcome Name:{{getoutcomenamebyid(outcomeIds)}}
                         </h6>
+                        </ng-container>
+                       
                     </div>
                     <div class="col-12 col-sm-6 col-md-3 col-lg-6">
                           <div class="text-end mb-3">

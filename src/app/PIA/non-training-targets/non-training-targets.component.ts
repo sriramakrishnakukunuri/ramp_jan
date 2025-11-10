@@ -884,8 +884,10 @@ if (file) {
             this.toastrService.error(error.message);
           });
       }
-     
+     setTimeout(() => {
         this.getDeatilOfTargets()
+     }, 500);
+      
         // console.log('Form Data:', formData);
         // Call your API service here
         // this.paymentService.createPayment(formData).subscribe(...);

@@ -70,9 +70,9 @@
                             <div class="form-floating mb-3">
                                 <select class="form-select" id="gender" formControlName="gender">
                                     <option value="">Select Gender</option>
-                                    <option value="Male">Male</option>
-                                    <option value="Female">Female</option>
-                                    <option value="Other">Other</option>
+                                    <option value="M">Male</option>
+                                    <option value="F">Female</option>
+                                    <option value="T">Trans-Gender</option>
                                 </select>
                                 <label for="gender">Gender <span class="text-danger">*</span></label>
                                 <div *ngIf="fEditResource['gender'].invalid && fEditResource['gender'].touched" 
@@ -192,7 +192,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" (click)="closeDeleteResourceModal()">Cancel</button>
-                <button type="button" class="btn btn-danger" [disabled]="deleteLoading" (click)="confirmDeleteResource()">
+                <button type="button" class="btn btn-lime-green" [disabled]="deleteLoading" (click)="confirmDeleteResource()">
                     <span *ngIf="deleteLoading" class="spinner-border spinner-border-sm me-1"></span>
                     Delete Resource
                 </button>

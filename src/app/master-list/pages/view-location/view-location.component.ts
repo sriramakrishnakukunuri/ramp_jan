@@ -183,8 +183,10 @@ onUpdateLocation() {
         },
         error: (error: any) => {
           this.deleteLoading = false;
-          this.toastrService.error('Failed to delete location', 'Error');
+          this.toastrService.error(error, 'Error');
           console.error('Error deleting location:', error);
+            this.closeDeleteModal();
+          this.refreshLocationsList();
         }
       });
     }

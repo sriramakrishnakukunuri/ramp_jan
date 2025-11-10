@@ -139,9 +139,9 @@
                                             <td>{{ item?.createdOn }}</td>
                                             <td>{{ item?.riskCategoryScore }} %</td>
                                             <td>{{ item?.sanctionedDate }}</td>
-                                            <td>{{ item?.sanctionedAmount | number:'1.0-0' }}</td>
+                                            <td>{{ item?.sanctionedAmount | commaSeperationIndia }}</td>
                                             <td>{{ item?.collectionDate }}</td>
-                                            <td>{{ item?.totalDisbursedAmount | number:'1.0-0' }}</td>
+                                            <td>{{ item?.totalDisbursedAmount | commaSeperationIndia }}</td>
                                            
                                            
                                             
@@ -188,7 +188,7 @@
                                             <td>{{ i + 1 }}</td>
                                             <td>{{ item?.nameOfTheMsmeIdentified }}</td>
                                             <td>{{ item?.dateOfIdentification }}</td>
-                                            <td>{{ item?.amountOfLoanProvided | number:'1.0-0' }}</td>
+                                            <td>{{ item?.amountOfLoanProvided | commaSeperationIndia }}</td>
                                             <td>{{ item?.purpose }}</td>
                                             <td>{{ item?.dateOfLoan }}</td>
                                             <td>{{ item?.dateOfListing }}</td>
