@@ -174,17 +174,29 @@ onUpdateLocation() {
     if (this.selectedLocation && this.selectedLocation.locationId) {
       this.deleteLoading = true;
       
-      this._commonService.deleteById(APIS.masterList.deleteLocation ,this.selectedLocation.locationId).subscribe({
+      this._commonService.deleteId(APIS.masterList.deleteLocation ,this.selectedLocation.locationId).subscribe({
         next: (response: any) => {
-          this.deleteLoading = false;
+          if(response.status === 200) {
+              this.deleteLoading = false;
           this.toastrService.success('Location deleted successfully!', 'Success');
           this.closeDeleteModal();
           this.refreshLocationsList();
+          }
+          else{
+            this.deleteLoading = false;
+            this.toastrService.error(response.message, 'Error');
+            console.error('Error deleting location:', response);
+            this.closeDeleteModal();
+            this.refreshLocationsList();
+          }
+        
         },
         error: (error: any) => {
           this.deleteLoading = false;
-          this.toastrService.error('Failed to delete location', 'Error');
+          this.toastrService.error(error, 'Error');
           console.error('Error deleting location:', error);
+            this.closeDeleteModal();
+          this.refreshLocationsList();
         }
       });
     }
@@ -272,9 +284,9 @@ onUpdateLocation() {
       }
       
       // Add agency filter
-      if (self.agencyId && self.agencyId !== -1) {
-        params += `&agencyId=${self.agencyId}`;
-      }
+      // if (self.agencyId && self.agencyId !== -1) {
+      //   params += `&agencyId=${self.agencyId}`;
+      // }
       let apiurl = '';
       if(self.agencyId == -1){
         apiurl=APIS.masterList.locationList
@@ -392,6 +404,20 @@ columns: [
     }
   },
   { 
+          data: 'district',
+          title: 'District',
+          render: function(data: any, type: any, row: any) {
+            return data || 'N/A';
+          }
+        },
+        { 
+          data: 'mandal',
+          title: 'Mandal',
+          render: function(data: any, type: any, row: any) {
+            return data || 'N/A';
+          }
+        },
+  { 
     data: 'googleMapUrl',
     title: 'Google Map Url',
     render: function(data: any, type: any, row: any) {
@@ -400,133 +426,12 @@ columns: [
   },
   
 ],
-// columns: [
-//   { 
-//     title: 'S.No',
-//     data: null,
-//     render: function(data: any, type: any, row: any, meta: any) {
-//       return meta.settings?._iDisplayStart + meta.row + 1;
-//     },
-//     className: 'text-start',
-//     orderable: false,
-//     width: '60px'
-//   },
-//   { 
-//     data: null,
-//     title: 'Actions',
-//     render: (data: any, type: any, row: any, meta: any) => {
-//       if (this.loginsessionDetails?.userRole == 'AGENCY_MANAGER' || 
-//           this.loginsessionDetails?.userRole == 'AGENCY_EXECUTOR' || 
-//           this.loginsessionDetails?.userRole == 'ADMIN') {
-//         return `   
-//           <button type="button" class="btn btn-default text-lime-green btn-sm edit-location-btn" data-index="${meta.row}">
-//             <span class="bi bi-pencil"></span>
-//           </button>
-//           <button type="button" class="btn btn-default text-danger btn-sm delete-location-btn" data-index="${meta.row}">
-//             <span class="bi bi-trash"></span>
-//           </button>
-//         `;
-//       } else {
-//         return '';
-//       }
-//     },
-//     className: 'text-center',
-//     orderable: false,
-//     width: '120px'
-//   },
-//   ...(this.loginsessionDetails?.userRole === 'ADMIN' ? [{
-//     data: 'agencyName',
-//     title: 'Agency',
-//     render: function(data: any, type: any, row: any) {
-//       return data || 'N/A';
-//     }
-//   }] : []),
-//   { 
-//     data: 'locationName',
-//     title: 'Program Location',
-//     render: function(data: any, type: any, row: any) {
-//       return data || 'N/A';
-//     }
-//   },
-//   { 
-//     data: 'district',
-//     title: 'District',
-//     render: function(data: any, type: any, row: any) {
-//       return data || 'N/A';
-//     }
-//   },
-//   { 
-//     data: 'mandal',
-//     title: 'Mandal',
-//     render: function(data: any, type: any, row: any) {
-//       return data || 'N/A';
-//     }
-//   },
-//   { 
-//     data: 'typeOfVenue',
-//     title: 'Type Of Venue',
-//     render: function(data: any, type: any, row: any) {
-//       return data || 'N/A';
-//     }
-//   },
-//   { 
-//     data: 'capacity',
-//     title: 'Max Capacity',
-//     render: function(data: any, type: any, row: any) {
-//       return data || 'N/A';
-//     }
-//   },
-//   { 
-//     data: 'ownershipType',
-//     title: 'Type Of Ownership',
-//     render: function(data: any, type: any, row: any) {
-//       return data || 'N/A';
-//     }
-//   },
-//   { 
-//     data: 'createdDate',
-//     title: 'Date',
-//     render: function(data: any, type: any, row: any) {
-//       if (data) {
-//         // Format date as DD-MM-YYYY if it exists
-//         const date = new Date(data);
-//         return date.toLocaleDateString('en-GB');
-//       }
-//       return 'N/A';
-//     }
-//   },
-//   { 
-//     data: 'latitude',
-//     title: 'Latitude',
-//     render: function(data: any, type: any, row: any) {
-//       return data || 'N/A';
-//     }
-//   },
-//   { 
-//     data: 'longitude',
-//     title: 'Longitude',
-//     render: function(data: any, type: any, row: any) {
-//       return data || 'N/A';
-//     }
-//   },
-//   { 
-//     data: 'googleMapUrl',
-//     title: 'Google Map Url',
-//      render: function(data: any, type: any, row: any) {
-//       return data || 'N/A';
-//     }
-//     render: function(data: any, type: any, row: any) {
-//       if (data && data.trim() !== '') {
-//         return `<a href="${data}" target="_blank" class="text-primary">View Map</a>`;
-//       }
-//       return 'N/A';
-//     }
-//   }
-// ],
+    headerCallback: function(thead: any, data: any, start: any, end: any, display: any) {
+      $(thead).addClass('bg-lime-green text-white');
+    },
     initComplete: function() {
-      // Add green background to table headers
-      $('#view-table-location thead th').addClass('bg-success text-white');
-      
+      // const self = this;
+        $('#view-table-resource thead th').addClass('bg-success text-white');
       // Add event listeners for edit/delete buttons
       $('#view-table-location').off('click', '.edit-location-btn').on('click', '.edit-location-btn', function(this: any) {
         const rowData = self.dataTableLocations.row($(this).parents('tr')).data();

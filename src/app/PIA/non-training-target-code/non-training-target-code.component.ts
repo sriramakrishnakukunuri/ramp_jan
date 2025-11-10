@@ -129,7 +129,12 @@ export class NonTrainingTargetCodeComponent implements OnInit {
  
 }
 
+ // addd by upendranath reddy for common file preview
+  showFileViewer(filePath: string) {
+    console.log(filePath,"in file")
+    this._commonService.openFile(filePath);
 
+  }
 
  getPreliminaryDataById(){
         https://metaverseedu.in/workflow/non-training/all/expenditures?nonTrainingActivityId=1

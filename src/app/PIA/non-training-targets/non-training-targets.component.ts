@@ -202,6 +202,14 @@ export class NonTrainingTargetsComponent implements OnInit {
     });
   }
 
+  // addd by upendranath reddy for common file preview
+  showFileViewer(filePath: string) {
+    console.log('File path to open:', filePath);
+
+    this._commonService.openFile(filePath);
+
+  }
+
    modeOfPayment(val:any){
       if(val=='CASH'){
         this.financialForm.get('bank')?.setValidators(null);
@@ -795,7 +803,8 @@ if (file) {
       resourceId: [0, [Validators.required,]],
       bankName: ['',],
       ifscCode: ['', ],
-      accountNo: ['', ]
+      accountNo: ['', ],
+      uploadBillUrl: ['', ]
     });
   }
 
@@ -855,7 +864,7 @@ if (file) {
           dateOfPayment: this.paymentForm.value.dateOfPayment,
           resourceId: Number(this.paymentForm.value.resourceId)}));
   
-            if (this.paymentForm.value.billInvoicePath) {
+            if (this.paymentForm.value.uploadBillUrl) {
               formData.append("file", this.uploadedFiles);
               }
           this._commonService.add(APIS.nontrainingtargets.saveNonTrainingtargetsAleapContingencyPayment,formData).subscribe((res: any) => {
@@ -875,8 +884,10 @@ if (file) {
             this.toastrService.error(error.message);
           });
       }
-     
+     setTimeout(() => {
         this.getDeatilOfTargets()
+     }, 500);
+      
         // console.log('Form Data:', formData);
         // Call your API service here
         // this.paymentService.createPayment(formData).subscribe(...);

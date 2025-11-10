@@ -42,6 +42,15 @@ export class NonTrainingNimsmeComponent implements OnInit {
      this.getBudgetHeadList()
     
   }
+
+
+    // addd by upendranath reddy for common file preview
+  showFileViewer(filePath: string) {
+    console.log('File path to open:', filePath);
+
+    this._commonService.openFile(filePath);
+
+  }
   getSubactivities(event:any){
         return this.SubActivityList?.find((item:any)=>item?.subActivityId==event)?.subActivityName || ''
       }

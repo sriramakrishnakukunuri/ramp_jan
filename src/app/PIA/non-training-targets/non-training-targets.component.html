@@ -153,13 +153,13 @@
                      <td>{{ vendor.vendorCompanyName }}</td>
                      <td>{{ vendor.dateOfOrder | date:'dd-MM-yyyy' }}</td>
                      <td>{{ vendor.orderDetails }}</td>
-                     <td>
-                       <a *ngIf="vendor.orderUpload" [href]="vendor.orderUpload" target="_blank"
-                         class="btn btn-sm btn-primary">
-                         View File
-                       </a>
-                       <span *ngIf="!vendor.orderUpload" class="text-muted">No file</span>
-                     </td>
+                      <td class="text-center">
+                        <a *ngIf="vendor?.orderUpload"  class="btn btn-default text-primary btn-sm"
+                           (click)="showFileViewer(vendor?.orderUpload)">
+                          <span class="bi bi-eye"></span>
+                        </a>
+                        <span *ngIf="!vendor?.orderUpload" class="text-muted">No file</span>
+                      </td>
                      <td class="text-center">
                          <button type="button" class="btn btn-default text-lime-green btn-sm"
                           (click)="openVendorModal('edit', vendor)"><span class="bi bi-pencil"></span></button>
@@ -208,7 +208,7 @@
                        <th>Bank</th>
                        <th>IFSC Code</th>
                        <th>Purpose</th>
-                       <!-- <th>Bill Invoice</th> -->
+                       <th>Bill Invoice</th>
                        <th class="text-center">Edit / Delete</th>
                      </tr>
                    </thead>
@@ -229,10 +229,14 @@
                        <td>{{ preliminary?.transactionId }}</td>
                        <td>{{ preliminary?.bankName }}</td>
                        <td>{{ preliminary?.ifscCode }}</td>
-                       <td>{{ preliminary?.purpose }}</td>
-                       <!-- <td class="text-center">
-                                                <a href="#" class="btn btn-default text-primary btn-sm"><span class="bi bi-eye"></span></a>
-                                            </td> -->
+                      <td>{{ preliminary?.purpose }}</td>
+                      <td class="text-center">
+                        <a *ngIf="preliminary?.uploadBillUrl"  class="btn btn-default text-primary btn-sm"
+                           (click)="showFileViewer(preliminary.uploadBillUrl)">
+                          <span class="bi bi-eye"></span>
+                        </a>
+                        <span *ngIf="!preliminary?.uploadBillUrl" class="text-muted">No file</span>
+                      </td>
                        <td class="text-center">
                          <button type="button" class="btn btn-default text-lime-green btn-sm"
                            (click)="openModel('edit',preliminary)"><span class="bi bi-pencil"></span></button>
@@ -332,6 +336,7 @@
                        <th>Payment For Month</th>
                        <th>Date of Payment</th>
                        <th>Resource Name</th>
+                       <th>View Bill Invoice</th>
                        <th class="text-center">Edit / Delete</th>
                      </tr>
                    </thead>
@@ -345,6 +350,13 @@
                        <td>{{ payment?.paymentForMonth }}</td>
                        <td>{{ payment?.dateOfPayment }}</td>
                        <td>{{ payment?.resourceName }}</td>
+                        <td class="text-center">
+                        <a *ngIf="payment?.uploadBillUrl"  class="btn btn-default text-primary btn-sm"
+                           (click)="showFileViewer(payment.uploadBillUrl)">
+                          <span class="bi bi-eye"></span>
+                        </a>
+                        <span *ngIf="!payment?.uploadBillUrl" class="text-muted">No file</span>
+                      </td>
                        <td class="text-center">
                          <button type="button" class="btn btn-default text-lime-green btn-sm"
                            (click)="openModelPayment('edit', payment)">

@@ -149,7 +149,7 @@ export class ViewResourceListComponent implements OnInit, OnDestroy {
       organizationName: resource.organizationName,
       qualification: resource.qualification,
       designation: resource.designation,
-      isVIP: resource.isVIP,
+      isVIP: resource.isVIP?resource.isVIP:false,
       specialization: resource.specialization,
       briefDescription: resource.briefDescription,
       gender: resource.gender,
@@ -164,7 +164,7 @@ export class ViewResourceListComponent implements OnInit, OnDestroy {
   onUpdateResource() {
     if (this.editResourceForm.valid) {
       this.updateLoading = true;
-      let formData = { ...this.editResourceForm.value };
+      let formData = { ...this.editResourceForm.value,"agencyIds": [Number(this.agencyId)], };
       
       this._commonService.updatedata(APIS.masterList.updateResourceStatus + formData.resourceId, formData).subscribe({
         next: (response: any) => {
@@ -193,16 +193,26 @@ export class ViewResourceListComponent implements OnInit, OnDestroy {
     if (this.selectedResource && this.selectedResource.resourceId) {
       this.deleteLoading = true;
       
-      this._commonService.deleteById(APIS.masterList.deleteResource, this.selectedResource.resourceId).subscribe({
+      this._commonService.deleteId(APIS.masterList.deleteResource, this.selectedResource.resourceId).subscribe({
         next: (response: any) => {
-          this.deleteLoading = false;
+          if(response.status==200){
+            this.deleteLoading = false;
           this.toastrService.success('Resource deleted successfully!', 'Success');
           this.closeDeleteResourceModal();
           this.refreshResourcesList();
+          }
+          else{
+            this.deleteLoading = false;
+            this.toastrService.error(response.message, 'Error');
+            console.error('Error deleting resource:', response);
+              this.closeDeleteResourceModal();
+          this.refreshResourcesList();
+          }
+          
         },
         error: (error: any) => {
           this.deleteLoading = false;
-          this.toastrService.error('Failed to delete resource', 'Error');
+          this.toastrService.error(error, 'Error');
           console.error('Error deleting resource:', error);
         }
       });
@@ -224,10 +234,11 @@ export class ViewResourceListComponent implements OnInit, OnDestroy {
 
   // Refresh resources list
   refreshResourcesList() {
-    if (this.loginsessionDetails?.userRole == 'ADMIN') {
-      this.agencyId = -1;
+    if (this.loginsessionDetails?.agencyId || this.agencyId) {
+      this.agencyId = this.agencyId?this.agencyId:this.loginsessionDetails?.agencyId;
+      
     } else {
-      this.agencyId = this.loginsessionDetails?.agencyId;
+        this.agencyId = -1;
     }
     this.reinitializeDataTableResources();
   }
@@ -291,9 +302,9 @@ export class ViewResourceListComponent implements OnInit, OnDestroy {
         }
         
         // Add agency filter
-        if (self.agencyId && self.agencyId !== -1) {
-          params += `&agencyId=${self.agencyId}`;
-        }
+        // if (self.agencyId && self.agencyId !== -1) {
+        //   params += `&agencyId=${self.agencyId}`;
+        // }
         
         let apiurl = '';
         if (self.agencyId == -1) {
@@ -431,14 +442,18 @@ export class ViewResourceListComponent implements OnInit, OnDestroy {
             return data || 'N/A';
           }
         },
+           
         {
           data: 'isVIP',
           title: 'VIP Status',
           render: function(data: any) {
-            return data ? '<span class="badge bg-success">VIP</span>' : '<span class="badge bg-secondary">Regular</span>';
+            return data ? 'Yes' : 'No';
           }
         }
       ],
+       headerCallback: function(thead: any, data: any, start: any, end: any, display: any) {
+      $(thead).addClass('bg-lime-green text-white');
+    },
       initComplete: function() {
         // Add green background to table headers
         $('#view-table-resource thead th').addClass('bg-success text-white');
