@@ -176,10 +176,20 @@ onUpdateLocation() {
       
       this._commonService.deleteId(APIS.masterList.deleteLocation ,this.selectedLocation.locationId).subscribe({
         next: (response: any) => {
-          this.deleteLoading = false;
+          if(response.status === 200) {
+              this.deleteLoading = false;
           this.toastrService.success('Location deleted successfully!', 'Success');
           this.closeDeleteModal();
           this.refreshLocationsList();
+          }
+          else{
+            this.deleteLoading = false;
+            this.toastrService.error(response.message, 'Error');
+            console.error('Error deleting location:', response);
+            this.closeDeleteModal();
+            this.refreshLocationsList();
+          }
+        
         },
         error: (error: any) => {
           this.deleteLoading = false;

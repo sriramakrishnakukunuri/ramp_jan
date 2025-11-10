@@ -195,14 +195,24 @@ export class ViewResourceListComponent implements OnInit, OnDestroy {
       
       this._commonService.deleteId(APIS.masterList.deleteResource, this.selectedResource.resourceId).subscribe({
         next: (response: any) => {
-          this.deleteLoading = false;
+          if(response.status==200){
+            this.deleteLoading = false;
           this.toastrService.success('Resource deleted successfully!', 'Success');
           this.closeDeleteResourceModal();
           this.refreshResourcesList();
+          }
+          else{
+            this.deleteLoading = false;
+            this.toastrService.error(response.message, 'Error');
+            console.error('Error deleting resource:', response);
+              this.closeDeleteResourceModal();
+          this.refreshResourcesList();
+          }
+          
         },
         error: (error: any) => {
           this.deleteLoading = false;
-          this.toastrService.error('Failed to delete resource', 'Error');
+          this.toastrService.error(error, 'Error');
           console.error('Error deleting resource:', error);
         }
       });
