@@ -99,13 +99,13 @@
                   <div class="col-12 col-sm-6 col-md-6 col-lg-6 p-2">
                     <div class="mb-3">
                       <label class="fs-md fw-600 mb-1 d-block">Financial Target</label>
-                      <label class="fs-md fw-600">{{financialTarget}}</label>
+                      <label class="fs-md fw-600">{{financialTarget | commaSeperationIndia}}</label>
                     </div>
                   </div>
                   <div class="col-12 col-sm-6 col-md-6 col-lg-6 p-2">
                     <div class="mb-3">
                       <label class="fs-md fw-600 mb-1 d-block">Financial Achievement</label>
-                      <label class="fs-md fw-600">{{financialTargetAchievement}}</label>
+                      <label class="fs-md fw-600">{{financialTargetAchievement | commaSeperationIndia}}</label>
                     </div>
                   </div>
                 </div>
@@ -287,7 +287,7 @@
                                 <td>{{ i + 1 }}</td>
                                 <td *ngIf="selectedBudgetHead=='77' || selectedBudgetHead=='78'" class="noWrap">{{ preliminary?.paymentDate }}</td>
                                 <td *ngIf="selectedBudgetHead=='79' || selectedBudgetHead=='80' || selectedBudgetHead=='81'">{{ preliminary?.category }}</td>
-                                <td>{{ preliminary?.expenditureAmount }}</td>
+                                <td>{{ preliminary?.expenditureAmount | commaSeperationIndia }}</td>
                                 <td>{{ preliminary?.billNo }}</td>
                                 <td class="noWrap">{{ preliminary?.billDate }}</td>
                                 <td>{{ preliminary?.modeOfPayment }}</td>
@@ -363,7 +363,7 @@
                                       <td>{{ preliminary?.relevantExperience }}</td>
                                       <td>{{ preliminary?.educationalQualification }}</td>
                                       <td>{{ preliminary?.dateOfJoining }}</td>
-                                      <td>{{ preliminary?.monthlySal }}</td>
+                                      <td>{{ preliminary?.monthlySal | commaSeperationIndia }}</td>
                                       <td>
                                         {{ preliminary?.bankName }}
                                       </td>
@@ -405,7 +405,7 @@
                                     </tr>
                                         <tr *ngFor="let payment of getPaymentsData; let i = index">
                                             <td>{{ i + 1 }}</td>
-                                            <td>{{ payment?.amount }}</td>
+                                            <td>{{ payment?.amount | commaSeperationIndia}}</td>
                                             <td>{{ payment?.paymentForMonth }}</td>
                                             <td>{{ payment?.dateOfPayment }}</td>
                                             <td>{{ payment?.resourceName }}</td>
@@ -905,7 +905,7 @@ aria-hidden="true">
                                     </tr>
                                         <tr *ngFor="let payment of viewPaymentData; let i = index">
                                             <td>{{ i + 1 }}</td>
-                                            <td>{{ payment?.amount }}</td>
+                                            <td>{{ payment?.amount | commaSeperationIndia}}</td>
                                             <td>{{ payment?.paymentForMonth }}</td>
                                             <td>{{ payment?.dateOfPayment }}</td>
                                             <td>{{ payment?.resourceName }}</td>

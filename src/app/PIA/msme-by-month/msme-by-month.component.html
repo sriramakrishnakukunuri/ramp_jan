@@ -149,11 +149,11 @@
                     
                       <td class="text-center">{{ row?.physicalTarget ?? 0 }}</td>
                       <td class="text-center">{{ row?.physicalAchievement ?? 0 }}</td>
-                      <td class="text-center">{{ row?.financialTarget ?? 0 }}</td>
-                      <td class="text-center">{{ row?.financialAchievement ?? 0 }}</td>
+                      <td class="text-center">{{ (row?.financialTarget ?? 0)  | commaSeperationIndia }}</td>
+                      <td class="text-center">{{ (row?.financialAchievement ?? 0)   | commaSeperationIndia }}</td>
                       <ng-container *ngIf="!isAddingRow">
                         <td class="text-center">{{ row?.currentPhysicalAchievement ?? 0 }}</td>
-                        <td class="text-center">{{ row?.currentFinancialAchievement ?? 0 }}</td>
+                        <td class="text-center">{{ (row?.currentFinancialAchievement ?? 0)   | commaSeperationIndia }}</td>
                       </ng-container>
                       <ng-container *ngIf="isAddingRow">
                         <td class="text-center"><input class="form-control form-control-sm" style="width: fit-content;" type="number" [(ngModel)]="newRow.currentPhysicalAchievement"></td>
@@ -298,8 +298,8 @@
                 <tr *ngFor="let data of viewRowData ; let i = index" >
                   <td>{{data?.cumulativeMoMSMEBenefitedDto?.physicalTarget}}</td>
                   <td>{{data?.cumulativeMoMSMEBenefitedDto?.physicalAchievement}}</td>
-                  <td>{{data?.cumulativeMoMSMEBenefitedDto?.financialTarget}}</td>
-                  <td>{{data?.cumulativeMoMSMEBenefitedDto?.financialAchievement}}</td>
+                  <td>{{data?.cumulativeMoMSMEBenefitedDto?.financialTarget   | commaSeperationIndia}}</td>
+                  <td>{{data?.cumulativeMoMSMEBenefitedDto?.financialAchievement   | commaSeperationIndia}}</td>
                   <td>{{data?.cumulativeMoMSMEBenefitedDto?.total}}</td>
                   <td>{{data?.cumulativeMoMSMEBenefitedDto?.women}}</td>
                   <td>{{data?.cumulativeMoMSMEBenefitedDto?.sc}}</td>
