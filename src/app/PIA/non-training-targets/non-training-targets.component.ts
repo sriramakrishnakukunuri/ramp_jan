@@ -167,7 +167,7 @@ export class NonTrainingTargetsComponent implements OnInit {
       onFinalSubmit(){
         let payload={
           "nonTrainingAchievementId": this.TargetDetails?.nonTrainingAchievementId,
-          "nonTrainingActivityId": Number(this.selectedBudgetHead),
+          "nonTrainingSubActivityId": Number(this.selectedBudgetHead),
           "physicalTarget": Number(this.physicalTarget),
           "physicalTargetAchievement": this.physicalTargetAchievement,
           "financialTarget": Number(this.financialTarget),
