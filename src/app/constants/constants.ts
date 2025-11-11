@@ -12,6 +12,7 @@ export const APIS = {
         getProgramType: API_BASE_URL + '/program/types/agency/id/',
         getLocationByAgency: API_BASE_URL + '/agency/locationdetails',
         getResource: API_BASE_URL + '/agency/resources',
+        getAllResource: API_BASE_URL + '/agency/resources/dropdown',
         addResource: API_BASE_URL + '/resource/save',
         getProgramsList: API_BASE_URL + '/programs',
         getProgramsListByAgency: API_BASE_URL + '/agency/programs/dropdown/',
