@@ -52,7 +52,7 @@ export class HelpSupportComponent implements OnInit {
     'CLOSED',
     'ADDITIONAL_INFO_NEEDED'
   ];
-  types = ['BUG', 'FEATURE', 'ENHANCEMENT', 'SUPPORT'];
+  types = ['BUG', 'FEATURE', 'NEW ENHANCEMENT', 'SUPPORT'];
   loginsessionDetails:any
   selectedAgencyId:any
   adminAssigneeData:any=[]
@@ -69,9 +69,9 @@ export class HelpSupportComponent implements OnInit {
     this.ticketForm = this.formBuilder.group({
       title: ['', [Validators.required, Validators.minLength(3)]],
       description: ['', [Validators.required, Validators.minLength(10)]],
-      priority: ['MEDIUM', [Validators.required]],
+      priority: ['LOW', [Validators.required]],
       status: ['CREATED', [Validators.required]],
-      type: ['ISSUE', [Validators.required]],
+      type: ['SUPPORT', [Validators.required]],
       message:[''],
       assigneeId: [this.loginsessionDetails?.userRole == 'ADMIN'?'dev@gmail.com':'spiu@gmail.com',],
       reporterId:[this.loginsessionDetails.userId],
@@ -300,7 +300,7 @@ export class HelpSupportComponent implements OnInit {
           case 'FEATURE':
             style = 'background-color: #28a745; color: #fff;';
             break;
-          case 'ENHANCEMENT':
+          case 'NEW ENHANCEMENT':
             style = 'background-color: #17a2b8; color: #fff;';
             break;
           case 'SUPPORT':
@@ -629,9 +629,8 @@ previewFile(file: any, index: number): void {
     this.selectedTicketForDetails = ticket;
     this.showTicketDetailModal = true;
     
-    
      this.closeAllModel()
-     if( this.loginsessionDetails?.userRole != 'ADMIN'){
+     if( this.loginsessionDetails?.userRole != 'ADMIN' && this.loginsessionDetails?.userRole!='DEVELOPER'){
       const modalElement = document.getElementById('ticketDetailModal');
     if (modalElement) {
       const modal = new bootstrap.Modal(modalElement);
@@ -639,9 +638,11 @@ previewFile(file: any, index: number): void {
     }
      }
      else{
+      console.log(this.loginsessionDetails?.userId)
        this.adminAssigneeId=this.selectedTicketForDetails?.assigneeId
       this.adminStatus=this.selectedTicketForDetails?.status
-      this.adminAssigneeData=['dev@gmail.com',ticket.reporterId]
+      this.loginsessionDetails?.userId=='DEVELOPER'? this.adminAssigneeData=['spiu@gmail.com']: this.adminAssigneeData=['dev@gmail.com',ticket.reporterId]
+     
       const modalElement = document.getElementById('ticketDetailModalAdmin');
     if (modalElement) {
       const modal = new bootstrap.Modal(modalElement);
@@ -702,7 +703,7 @@ previewFile(file: any, index: number): void {
       'BUG': 'bg-danger',
       'ISSUE': 'bg-danger',
       'FEATURE': 'bg-success',
-      'ENHANCEMENT': 'bg-info',
+      'NEW ENHANCEMENT': 'bg-info',
       'SUPPORT': 'bg-primary'
     };
     return typeClasses[type] || 'bg-secondary';
@@ -823,9 +824,9 @@ previewFile(file: any, index: number): void {
   // Reset form
   resetForm(): void {
     this.ticketForm.reset({
-      priority: 'MEDIUM',
+      priority: 'LOW',
       status: 'CREATED',
-      type: 'BUG'
+      type: 'SUPPORT'
     });
     this.selectedTicket = null;
     const fileInput = document.getElementById('files') as HTMLInputElement;

@@ -68,6 +68,9 @@ export class LoginComponent implements OnInit {
                         ) {
                             this.router.navigateByUrl('/participant-details');
                         }
+                         else if(res?.data.userRole === Role.DEVELOPER) {
+                            this.router.navigateByUrl('/help-support');
+                        }
                         else{
                             this.router.navigateByUrl('/global-dashboard');
                         }

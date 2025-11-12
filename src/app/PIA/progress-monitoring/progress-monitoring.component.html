@@ -34,7 +34,7 @@
           <!-- Training Programs Table -->
             <div class="row mb-4" *ngIf="tableListTraining && tableListTraining?.length > 0">
             <div class="col-12">
-              <h6 class="fw-600 mb-3 text-primary">Training Programs</h6>
+              <h6 class="fw-600 mb-3 text-primary">Training Programs : {{selectedAgencyId}}</h6>
               <div class="scrollable-table">
                 <div class="table-scroll-container">
                 <div class="table-scroll-container">
@@ -83,7 +83,7 @@
             <!-- Non-Training Programs Table -->
             <div class="row mb-4" *ngIf="tableList && tableList?.length > 0">
             <div class="col-12">
-              <h6 class="fw-600 mb-3 text-success">Non-Training Programs</h6>
+              <h6 class="fw-600 mb-3 text-success">Non-Training Programs : {{selectedAgencyId}}</h6>
               <div class="scrollable-table">
               <table class="table table-striped table-bordered">
                 <thead class="bg-lime-green text-white">
@@ -94,7 +94,7 @@
                   <th scope="col" class="text-center">Physical Target</th>
                   <th scope="col" class="text-center">Physical Achievement</th>
                   <th scope="col" class="text-center">Percentage(%)</th>
-                  <th scope="col" class="text-center">Financial Target (₹)</th>
+                  <th scope="col" class="text-center">Budget Allocated (₹)</th>
                   <th scope="col" class="text-center">Financial Expenditure (₹)</th>
                   <th scope="col" class="text-center">Percentage(%)</th>
                 </tr>

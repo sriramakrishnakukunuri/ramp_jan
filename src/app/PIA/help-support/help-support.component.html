@@ -30,7 +30,7 @@
 
           <!-- Tickets DataTable -->
           <div class="table-responsive">
-            <table id="tickets-table" class="table table-borderless table-striped nowrap">
+            <table id="tickets-table" class="table table-borderless table-striped nowrap display ">
               <thead class="bg-lime-green text-white">
                 <!-- <tr>
                   <th>S.No</th>
@@ -55,326 +55,7 @@
 </main>
 
 <!-- Ticket Details Modal -->
-<div class="modal fade" id="ticketDetailModal" tabindex="-1" aria-labelledby="ticketDetailModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-xl">
-    <div class="modal-content">
-      <div class="modal-header bg-lime-green text-white py-2">
-        <h6 class="modal-title" id="ticketDetailModalLabel">
-          <i class="fas fa-ticket-alt me-2"></i>Ticket Details
-        </h6>
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" (click)="closeAllModel()"></button>
-      </div>
-      <div class="modal-body p-0" *ngIf="selectedTicketForDetails">
-        <!-- Ticket Header -->
-        <div class="p-4 bg-light border-bottom">
-          <div class="row align-items-start">
-            <div class="col-md-8">
-              <h5 class="mb-2 fw-bold text-primary">{{ selectedTicketForDetails?.title }}</h5>
-              <p class="text-muted mb-3">{{ selectedTicketForDetails?.description }}</p>
-            </div>
-            <div class="col-md-4 text-end">
-              <div class="mb-2">
-                <span class="badge fs-6" [ngClass]="getStatusBadgeClass(selectedTicketForDetails?.status)">
-                  {{ selectedTicketForDetails?.status?.replace('_', ' ') }}
-                </span>
-              </div>
-              <div class="mb-2">
-                <span class="badge fs-6" [ngClass]="getPriorityBadgeClass(selectedTicketForDetails?.priority)">
-                  {{ selectedTicketForDetails?.priority }}
-                </span>
-              </div>
-              <div>
-                <span class="badge fs-6" [ngClass]="getTypeBadgeClass(selectedTicketForDetails?.type)">
-                  {{ selectedTicketForDetails?.type }}
-                </span>
-              </div>
-            </div>
-          </div>
-          
-          <!-- Ticket Meta Information -->
-          <div class="row mt-3">
-            <div class="col-md-6">
-              <div class="d-flex mb-2">
-                <strong class="text-muted me-2">Ticket Id:</strong>
-                <span>#{{ selectedTicketForDetails?.ticketId }}</span>
-              </div>
-              <div class="d-flex mb-2">
-                <strong class="text-muted me-2">Assignee:</strong>
-                <span>{{ selectedTicketForDetails?.assigneeName || selectedTicketForDetails?.assigneeId || 'Unassigned' }}</span>
-              </div>
-              <div class="d-flex mb-2" *ngIf="selectedTicketForDetails?.reporterName">
-                <strong class="text-muted me-2">Reporter:</strong>
-                <span>{{ selectedTicketForDetails?.reporterName }}</span>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="d-flex mb-2">
-                <strong class="text-muted me-2">Created:</strong>
-                <span>{{ selectedTicketForDetails?.createdAt }}</span>
-              </div>
-              <div class="d-flex mb-2">
-                <strong class="text-muted me-2">Updated:</strong>
-                <span>{{ selectedTicketForDetails?.updatedAt }}</span>
-              </div>
-              <div class="d-flex mb-2" *ngIf="selectedTicketForDetails?.closedDate">
-                <strong class="text-muted me-2">Closed:</strong>
-                <span>{{ selectedTicketForDetails?.closedDate }}</span>
-              </div>
-            </div>
-          </div>
-        </div>
 
-        <!-- Tabs for different sections -->
-        <div class="p-4">
-          <ul class="nav nav-tabs" id="ticketDetailTabs" role="tablist">
-            <li class="nav-item" role="presentation">
-              <button class="nav-link active" id="attachments-tab" data-bs-toggle="tab" data-bs-target="#attachments" 
-                type="button" role="tab" aria-controls="attachments" aria-selected="true">
-                <i class="fas fa-paperclip me-2"></i>Attachments 
-                <span class="badge bg-secondary ms-1" *ngIf="selectedTicketForDetails?.attachments?.length">
-                  {{ selectedTicketForDetails?.attachments?.length }}
-                </span>
-              </button>
-            </li>
-            <li class="nav-item" role="presentation">
-              <button class="nav-link" id="comments-tab" data-bs-toggle="tab" data-bs-target="#comments" 
-                type="button" role="tab" aria-controls="comments" aria-selected="false">
-                <i class="fas fa-comments me-2"></i>Comments 
-                <span class="badge bg-secondary ms-1" *ngIf="selectedTicketForDetails?.comments?.length">
-                  {{ selectedTicketForDetails?.comments?.length }}
-                </span>
-              </button>
-            </li>
-            <li class="nav-item" role="presentation">
-              <button class="nav-link" id="history-tab" data-bs-toggle="tab" data-bs-target="#history" 
-                type="button" role="tab" aria-controls="history" aria-selected="false">
-                <i class="fas fa-history me-2"></i>History 
-                <span class="badge bg-secondary ms-1" *ngIf="selectedTicketForDetails?.history?.length">
-                  {{ selectedTicketForDetails?.history?.length }}
-                </span>
-              </button>
-            </li>
-          </ul>
-          
-          <div class="tab-content mt-3" id="ticketDetailTabsContent">
-            <!-- Attachments Tab -->
-            <!-- Attachments Tab -->
-            <div class="tab-pane fade show active" id="attachments" role="tabpanel" aria-labelledby="attachments-tab">
-              <div *ngIf="selectedTicketForDetails?.attachments && selectedTicketForDetails?.attachments?.length > 0; else noAttachments">
-                
-                <!-- File Grid Layout for Attachments -->
-                <div class="row">
-                  <div class="col-lg-4 col-md-12 mb-4" *ngFor="let attachment of selectedTicketForDetails?.attachments; let i = index">
-                    <div class="card border shadow-sm h-100">
-                      
-                      <!-- File Header with Info and Download -->
-                      <div class="card-header bg-light p-3">
-                        <div class="d-flex justify-content-between align-items-center">
-                          <div class="file-info d-flex align-items-center">
-                            <i [class]="getFileIcon(attachment.filePath)" class="me-2 fa-lg text-primary"></i>
-                            <div>
-                              <h6 class="mb-0 fw-bold">{{ attachment.filePath }}</h6>
-                              <small class="text-muted">{{ attachment.contentType }}</small>
-                              <small class="text-muted ms-2" *ngIf="attachment.fileSize">
-                                ({{ formatFileSize(attachment.fileSize) }})
-                              </small>
-                            </div>
-                          </div>
-                          <!-- <div class="file-actions">
-                            <a [href]="getFileDownloadUrl(attachment)" 
-                               target="_blank" 
-                               class="btn btn-lime-green btn-sm"
-                               title="Download {{ attachment.filePath }}">
-                              <i class="fas fa-download"></i>
-                            </a>
-                          </div> -->
-                        </div>
-                      </div>
-
-                      <!-- File Preview Content -->
-                      <div class="card-body p-0 position-relative">
-                        
-                        <!-- Image Preview -->
-                        <ng-container *ngIf="getFileType(attachment.filePath) === 'image'">
-                          <div class="position-relative image-preview-container">
-                            <img [src]="getFileDownloadUrl(attachment)" 
-                                 alt="{{ attachment.filePath }}" 
-                                 class="img-fluid w-100" 
-                                 style="max-height: 300px; object-fit: contain; background: #f8f9fa;"
-                                 (error)="onImageError($event, attachment)"
-                                 (load)="onImageLoad($event, attachment)">
-                            
-                            <!-- Floating Download Button for Images -->
-                            <div class="position-absolute top-0 end-0 m-2">
-                              <a [href]="getFileDownloadUrl(attachment)" 
-                                 target="_blank" 
-                                 class="btn btn-dark btn-sm opacity-75 rounded-circle"
-                                 title="Download {{ attachment.filePath }}"
-                                 style="backdrop-filter: blur(10px);">
-                                <i class="fas fa-download"></i>
-                              </a>
-                            </div>
-                          </div>
-                        </ng-container>
-
-                        <!-- PDF Preview -->
-                        <ng-container *ngIf="getFileType(attachment.filePath) === 'pdf'">
-                          <div class="pdf-preview-container" style="height: 300px; background: #f8f9fa;">
-                            <iframe [src]="getSafeUrl(getFileDownloadUrl(attachment))" 
-                                    width="100%" 
-                                    height="100%" 
-                                    frameborder="0"
-                                    style="border-radius: 0;">
-                              <div class="text-center p-4">
-                                <i class="fas fa-file-pdf fa-3x text-danger mb-3"></i>
-                                <p class="text-muted">Your browser does not support PDF preview.</p>
-                                <a [href]="getFileDownloadUrl(attachment)" 
-                                   target="_blank" 
-                                   class="btn btn-lime-green btn-sm">
-                                  <i class="fas fa-download me-2"></i>Download PDF
-                                </a>
-                              </div>
-                            </iframe>
-                          </div>
-                        </ng-container>
-
-                        <!-- Document/Other Files Preview -->
-                        <ng-container *ngIf="getFileType(attachment.filePath) === 'document'">
-                          <div class="text-center p-4" style="min-height: 200px; display: flex; flex-direction: column; justify-content: center; background: #f8f9fa;">
-                            <i [class]="getFileIcon(attachment.filePath)" class="fa-4x mb-3 text-muted"></i>
-                            <h6 class="text-muted mb-2">{{ getFileTypeName(attachment.filePath) }} File</h6>
-                            <p class="text-muted mb-3 small">This file type cannot be previewed inline.</p>
-                            <div>
-                              <a [href]="getFileDownloadUrl(attachment)" 
-                                 target="_blank" 
-                                 class="btn btn-lime-green btn-sm">
-                                <i class="fas fa-download me-2"></i>Download to View
-                              </a>
-                            </div>
-                          </div>
-                        </ng-container>
-
-                      </div>
-
-                      <!-- File Footer with Additional Actions -->
-                      <div class="card-footer bg-white border-top-0 p-2" *ngIf="getFileType(attachment.filePath) !== 'document'">
-                        <div class="d-flex justify-content-between align-items-center">
-                          <small class="text-muted">
-                            <i class="fas fa-eye me-1"></i>Click image to expand
-                          </small>
-                          <button class="btn btn-outline-primary btn-xs" 
-                                  (click)="openFileInNewTab(attachment)"
-                                  title="Open in new tab">
-                            <i class="fas fa-external-link-alt"></i>
-                          </button>
-                        </div>
-                      </div>
-
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-              <ng-template #noAttachments>
-                <div class="text-center py-5">
-                  <i class="fas fa-paperclip fa-4x text-muted mb-3"></i>
-                  <h5 class="text-muted">No Attachments</h5>
-                  <p class="text-muted">This ticket doesn't have any attachments.</p>
-                </div>
-              </ng-template>
-            </div>
-
-            <!-- Comments Tab -->
-            <div class="tab-pane fade" id="comments" role="tabpanel" aria-labelledby="comments-tab">
-              <div *ngIf="selectedTicketForDetails?.comments && selectedTicketForDetails?.comments?.length > 0; else noComments">
-                <div class="comment-list" style="max-height: 400px; overflow-y: auto;">
-                  <div class="card mb-3" *ngFor="let comment of selectedTicketForDetails?.comments">
-                    <div class="card-body p-3">
-                      <div class="d-flex align-items-start">
-                        <div class="avatar-circle bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-3" 
-                             style="width: 40px; height: 40px; min-width: 40px;">
-                          {{ comment.authorName?.charAt(0)?.toUpperCase() }}
-                        </div>
-                        <div class="flex-grow-1">
-                          <div class="d-flex justify-content-between align-items-center mb-2">
-                            <h6 class="mb-0 fw-bold">{{ comment.authorName }}</h6>
-                            <small class="text-muted">{{ comment.createdAt }}</small>
-                          </div>
-                          <p class="mb-0">{{ comment.message }}</p>
-                          <small class="text-muted">{{ comment.authorId }}</small>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <ng-template #noComments>
-                <div class="text-center py-4">
-                  <i class="fas fa-comments fa-3x text-muted"></i>
-                  <p class="mt-3 text-muted">No comments found for this ticket.</p>
-                </div>
-              </ng-template>
-            </div>
-
-            <!-- History Tab -->
-            <div class="tab-pane fade" id="history" role="tabpanel" aria-labelledby="history-tab">
-              <div *ngIf="selectedTicketForDetails?.history && selectedTicketForDetails?.history?.length > 0; else noHistory">
-                <div class="timeline" style="max-height: 400px; overflow-y: auto;">
-                  <div class="timeline-item d-flex mb-3" *ngFor="let item of selectedTicketForDetails?.history; let last = last">
-                    <div class="timeline-marker bg-primary rounded-circle d-flex align-items-center justify-content-center text-white me-3" 
-                         style="width: 30px; height: 30px; min-width: 30px;">
-                      <i class="fas fa-history fa-sm"></i>
-                    </div>
-                    <div class="timeline-content flex-grow-1">
-                      <div class="card border-start border-4 border-primary">
-                        <div class="card-body p-3">
-                          <div class="d-flex justify-content-between align-items-center mb-2">
-                            <h6 class="mb-0 fw-bold">{{ item.action }}</h6>
-                            <small class="text-muted">{{ item.createdAt }}</small>
-                          </div>
-                          <p class="mb-1">{{ item.remarks }}</p>
-                          <div class="d-flex justify-content-between">
-                            <div *ngIf="item.fromStatus && item.toStatus">
-                              <small class="text-muted">
-                                Status: 
-                                <span class="badge bg-secondary">{{ item.fromStatus?.replace('_', ' ') }}</span>
-                                <i class="fas fa-arrow-right mx-1"></i>
-                                <span class="badge bg-primary">{{ item.toStatus?.replace('_', ' ') }}</span>
-                              </small>
-                            </div>
-                            <div *ngIf="item.userName">
-                              <small class="text-muted">by {{ item.userName }}</small>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="timeline-line bg-light" 
-                         *ngIf="!last" 
-                         style="width: 2px; margin-left: 14px; margin-top: 10px; height: 20px;">
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <ng-template #noHistory>
-                <div class="text-center py-4">
-                  <i class="fas fa-history fa-3x text-muted"></i>
-                  <p class="mt-3 text-muted">No history found for this ticket.</p>
-                </div>
-              </ng-template>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <!-- <button type="button" class="btn btn-outline-primary" (click)="openTicketModal('edit', selectedTicketForDetails)">
-          <i class="fas fa-edit me-2"></i>Edit Ticket
-        </button> -->
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="closeAllModel()">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
 
 
 <!-- Add/Edit Ticket Modal -->
@@ -404,7 +85,6 @@
                 </div>
               </div>
             </div>
-
             <div class="col-md-6">
               <div class="form-group mb-3">
                 <label class="form-label d-block mb-2">Type *</label>
@@ -445,25 +125,7 @@
             </div>
           </div>
 
-          <div class="row">
-            <div class="col-12">
-              <div class="form-group mb-3">
-                <label for="description" class="form-label">Description *</label>
-                <textarea 
-                  id="description" 
-                  formControlName="description" 
-                  class="form-control"
-                  rows="4"
-                  [class.is-invalid]="f['description'].invalid && (f['description'].dirty || f['description'].touched)"
-                  placeholder="Describe the issue or request in detail"></textarea>
-                <div *ngIf="f['description'].invalid && (f['description'].dirty || f['description'].touched)" class="invalid-feedback">
-                  <div *ngIf="f['description'].errors?.['required']">Description is required</div>
-                  <div *ngIf="f['description'].errors?.['minlength']">Description must be at least 10 characters</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
+  
           <div class="row">
             <div class="col-md-6">
               <div class="form-group mb-3">
@@ -483,7 +145,6 @@
                 </div>
               </div>
             </div>
-
             <div class="col-md-6" [hidden]="!isEditMode">
               <div class="form-group mb-3">
                 <label for="status" class="form-label">Status *</label>
@@ -500,10 +161,7 @@
                 </div>
               </div>
             </div>
-          </div>
-
-          <div class="row">
-            <div class="col-md-6" *ngIf="loginsessionDetails?.userRole == 'ADMIN'">
+             <div class="col-md-6" *ngIf="loginsessionDetails?.userRole == 'ADMIN' || loginsessionDetails?.userRole=='DEVELOPER'">
               <div class="form-group mb-3">
               <label for="assigneeId" class="form-label">Assignee *</label>
               <select
@@ -511,17 +169,41 @@
                 formControlName="assigneeId"
                 class="form-select"
                 [class.is-invalid]="f['assigneeId'].invalid && (f['assigneeId'].dirty || f['assigneeId'].touched)">
-                <option value="">Select Assignee</option>
-                <option *ngFor="let assignee of getAssineeData" [value]="assignee">
+                <option value="" selected>Select Assignee</option>
+                <option  *ngFor="let assignee of getAssineeData" [value]="assignee">
                 {{ assignee }}
                 </option>
-                <option value="dev@gmail.com">dev@gmail.com</option>
+                <option *ngIf="loginsessionDetails?.userRole == 'ADMIN'" value="dev@gmail.com">dev@gmail.com</option>
+                <option *ngIf="loginsessionDetails?.userRole=='DEVELOPER'" value="spiu@gmail.com">spiu@gmail.com</option>
               </select>
               <div *ngIf="f['assigneeId'].invalid && (f['assigneeId'].dirty || f['assigneeId'].touched)" class="invalid-feedback">
                 <div *ngIf="f['assigneeId'].errors?.['required']">Assignee is required</div>
               </div>
               </div>
             </div>
+          </div>
+
+        
+           <div class="row">
+            <div class="col-12">
+              <div class="form-group mb-3">
+                <label for="description" class="form-label">Description *</label>
+                <textarea 
+                  id="description" 
+                  formControlName="description" 
+                  class="form-control"
+                  rows="4"
+                  [class.is-invalid]="f['description'].invalid && (f['description'].dirty || f['description'].touched)"
+                  placeholder="Describe the issue or request in detail"></textarea>
+                <div *ngIf="f['description'].invalid && (f['description'].dirty || f['description'].touched)" class="invalid-feedback">
+                  <div *ngIf="f['description'].errors?.['required']">Description is required</div>
+                  <div *ngIf="f['description'].errors?.['minlength']">Description must be at least 10 characters</div>
+                </div>
+              </div>
+            </div>
+          </div>
+            <div class="row">
+           
             <div class="col-12" *ngIf="isEditMode">
               <div class="form-group mb-3">
                 <label for="message" class="form-label">Comments</label>
@@ -539,7 +221,6 @@
               </div>
             </div>
           </div>
-
           <div class="row">
             <div class="col-12">
               <div class="form-group mb-3">
@@ -766,37 +447,36 @@
     </div>
   </div>
 </div>
-
-<div class="modal fade" id="ticketDetailModalAdmin" tabindex="-1" aria-labelledby="ticketDetailModalAdminLabel" aria-hidden="true">
+<div class="modal fade" id="ticketDetailModal" tabindex="-1" aria-labelledby="ticketDetailModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-xl">
-    <div class="modal-content">
+    <div class="modal-content" style="font-size:12px !important">
       <div class="modal-header bg-lime-green text-white py-2">
-        <h6 class="modal-title" id="ticketDetailModalAdminLabel">
+        <h6 class="modal-title" id="ticketDetailModalLabel">
           <i class="fas fa-ticket-alt me-2"></i>Ticket Details
         </h6>
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" (click)="closeAllModel()"></button>
       </div>
       <div class="modal-body p-0" *ngIf="selectedTicketForDetails">
         <!-- Ticket Header -->
-        <div class="p-4 bg-light border-bottom">
+        <div class="pt-2 pb-2 pe-3 ps-3 bg-light border-bottom">
           <div class="row align-items-start">
             <div class="col-md-8">
-              <h5 class="mb-2 fw-bold text-primary">{{ selectedTicketForDetails?.title }}</h5>
-              <p class="text-muted mb-3">{{ selectedTicketForDetails?.description }}</p>
+              <h5 class="mb-2 fw-bold text-primary fs-8">{{ selectedTicketForDetails?.title }}</h5>
+              <p class="text-muted mb-1">{{ selectedTicketForDetails?.description }}</p>
             </div>
             <div class="col-md-4 text-end">
               <div class="mb-2">
-                <span class="badge fs-6" [ngClass]="getStatusBadgeClass(selectedTicketForDetails?.status)">
+                <span class="badge fs-8" [ngClass]="getStatusBadgeClass(selectedTicketForDetails?.status)">
                   {{ selectedTicketForDetails?.status?.replace('_', ' ') }}
                 </span>
               </div>
               <div class="mb-2">
-                <span class="badge fs-6" [ngClass]="getPriorityBadgeClass(selectedTicketForDetails?.priority)">
+                <span class="badge fs-8" [ngClass]="getPriorityBadgeClass(selectedTicketForDetails?.priority)">
                   {{ selectedTicketForDetails?.priority }}
                 </span>
               </div>
               <div>
-                <span class="badge fs-6" [ngClass]="getTypeBadgeClass(selectedTicketForDetails?.type)">
+                <span class="badge fs-8" [ngClass]="getTypeBadgeClass(selectedTicketForDetails?.type)">
                   {{ selectedTicketForDetails?.type }}
                 </span>
               </div>
@@ -804,9 +484,9 @@
           </div>
           
           <!-- Ticket Meta Information -->
-          <div class="row mt-3">
+          <div class="row mt-1">
             <div class="col-md-6">
-              <div class="d-flex mb-2">
+              <div class="d-flex mb-1">
                 <strong class="text-muted me-2">Ticket Id:</strong>
                 <span>#{{ selectedTicketForDetails?.ticketId }}</span>
               </div>
@@ -835,9 +515,373 @@
             </div>
           </div>
         </div>
-
+       
         <!-- Tabs for different sections -->
-        <div class="p-4">
+        <div class="p-2">
+          <ul class="nav nav-tabs" id="ticketDetailTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button class="nav-link active" id="attachments-tab" data-bs-toggle="tab" data-bs-target="#attachments" 
+                type="button" role="tab" aria-controls="attachments" aria-selected="true">
+                <i class="fas fa-paperclip me-2"></i>Attachments 
+                <span class="badge bg-secondary ms-1" *ngIf="selectedTicketForDetails?.attachments?.length">
+                  {{ selectedTicketForDetails?.attachments?.length }}
+                </span>
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="comments-tab" data-bs-toggle="tab" data-bs-target="#comments" 
+                type="button" role="tab" aria-controls="comments" aria-selected="false">
+                <i class="fas fa-comments me-2"></i>Comments 
+                <span class="badge bg-secondary ms-1" *ngIf="selectedTicketForDetails?.comments?.length">
+                  {{ selectedTicketForDetails?.comments?.length }}
+                </span>
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="history-tab" data-bs-toggle="tab" data-bs-target="#history" 
+                type="button" role="tab" aria-controls="history" aria-selected="false">
+                <i class="fas fa-history me-2"></i>History 
+                <span class="badge bg-secondary ms-1" *ngIf="selectedTicketForDetails?.history?.length">
+                  {{ selectedTicketForDetails?.history?.length }}
+                </span>
+              </button>
+            </li>
+          </ul>
+          
+          <div class="tab-content mt-3" id="ticketDetailTabsContent">
+            <!-- Attachments Tab -->
+            <!-- Attachments Tab -->
+            <div class="tab-pane fade show active" id="attachments" role="tabpanel" aria-labelledby="attachments-tab">
+              <div *ngIf="selectedTicketForDetails?.attachments && selectedTicketForDetails?.attachments?.length > 0; else noAttachments">
+                
+                <!-- File Grid Layout for Attachments -->
+                <div class="row">
+                  <div class="col-lg-4 col-md-12 mb-4" *ngFor="let attachment of selectedTicketForDetails?.attachments; let i = index">
+                    <div class="card border shadow-sm h-80">
+                      
+                      <!-- File Header with Info and Download -->
+                      <div class="card-header bg-light p-3">
+                        <div class="d-flex justify-content-between align-items-center">
+                          <div class="file-info d-flex align-items-center">
+                            <i [class]="getFileIcon(attachment.filePath)" class="me-2 fa-lg text-primary"></i>
+                            <div>
+                              <h6 class="mb-0 fw-bold">{{ attachment.filePath }}</h6>
+                              <small class="text-muted">{{ attachment.contentType }}</small>
+                              <small class="text-muted ms-2" *ngIf="attachment.fileSize">
+                                ({{ formatFileSize(attachment.fileSize) }})
+                              </small>
+                            </div>
+                          </div>
+                          <!-- <div class="file-actions">
+                            <a [href]="getFileDownloadUrl(attachment)" 
+                               target="_blank" 
+                               class="btn btn-lime-green btn-sm"
+                               title="Download {{ attachment.filePath }}">
+                              <i class="fas fa-download"></i>
+                            </a>
+                          </div> -->
+                        </div>
+                      </div>
+
+                      <!-- File Preview Content -->
+                      <div class="card-body p-0 position-relative">
+                        
+                        <!-- Image Preview -->
+                        <ng-container *ngIf="getFileType(attachment.filePath) === 'image'">
+                          <div class="position-relative image-preview-container">
+                            <img [src]="getFileDownloadUrl(attachment)" 
+                                 alt="{{ attachment.filePath }}" 
+                                 class="img-fluid w-100" 
+                                 style="max-height: 300px; object-fit: contain; background: #f8f9fa;"
+                                 (error)="onImageError($event, attachment)"
+                                 (load)="onImageLoad($event, attachment)">
+                            
+                            <!-- Floating Download Button for Images -->
+                            <div class="position-absolute top-0 end-0 m-2">
+                              <a [href]="getFileDownloadUrl(attachment)" 
+                                 target="_blank" 
+                                 class="btn btn-dark btn-sm opacity-75 rounded-circle"
+                                 title="Download {{ attachment.filePath }}"
+                                 style="backdrop-filter: blur(10px);">
+                                <i class="fas fa-download"></i>
+                              </a>
+                            </div>
+                          </div>
+                        </ng-container>
+
+                        <!-- PDF Preview -->
+                        <ng-container *ngIf="getFileType(attachment.filePath) === 'pdf'">
+                          <div class="pdf-preview-container" style="height: 300px; background: #f8f9fa;">
+                            <iframe [src]="getSafeUrl(getFileDownloadUrl(attachment))" 
+                                    width="100%" 
+                                    height="100%" 
+                                    frameborder="0"
+                                    style="border-radius: 0;">
+                              <div class="text-center p-4">
+                                <i class="fas fa-file-pdf fa-3x text-danger mb-3"></i>
+                                <p class="text-muted">Your browser does not support PDF preview.</p>
+                                <a [href]="getFileDownloadUrl(attachment)" 
+                                   target="_blank" 
+                                   class="btn btn-lime-green btn-sm">
+                                  <i class="fas fa-download me-2"></i>Download PDF
+                                </a>
+                              </div>
+                            </iframe>
+                          </div>
+                        </ng-container>
+
+                        <!-- Document/Other Files Preview -->
+                        <ng-container *ngIf="getFileType(attachment.filePath) === 'document'">
+                          <div class="text-center p-4" style="min-height: 200px; display: flex; flex-direction: column; justify-content: center; background: #f8f9fa;">
+                            <i [class]="getFileIcon(attachment.filePath)" class="fa-4x mb-3 text-muted"></i>
+                            <h6 class="text-muted mb-2">{{ getFileTypeName(attachment.filePath) }} File</h6>
+                            <p class="text-muted mb-3 small">This file type cannot be previewed inline.</p>
+                            <div>
+                              <a [href]="getFileDownloadUrl(attachment)" 
+                                 target="_blank" 
+                                 class="btn btn-lime-green btn-sm">
+                                <i class="fas fa-download me-2"></i>Download to View
+                              </a>
+                            </div>
+                          </div>
+                        </ng-container>
+
+                      </div>
+
+                      <!-- File Footer with Additional Actions -->
+                      <div class="card-footer bg-white border-top-0 p-2" *ngIf="getFileType(attachment.filePath) !== 'document'">
+                        <div class="d-flex justify-content-between align-items-center">
+                          <small class="text-muted">
+                            <i class="fas fa-eye me-1"></i>Click image to expand
+                          </small>
+                          <button class="btn btn-outline-primary btn-xs" 
+                                  (click)="openFileInNewTab(attachment)"
+                                  title="Open in new tab">
+                            <i class="fas fa-external-link-alt"></i>
+                          </button>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+              <ng-template #noAttachments>
+                <div class="text-center py-4">
+                  <i class="fas fa-paperclip fa-4x text-muted mb-3"></i>
+                  <h5 class="text-muted">No Attachments</h5>
+                  <p class="text-muted">This ticket doesn't have any attachments.</p>
+                </div>
+              </ng-template>
+            </div>
+
+            <!-- Comments Tab -->
+            <div class="tab-pane fade" id="comments" role="tabpanel" aria-labelledby="comments-tab">
+              <div *ngIf="selectedTicketForDetails?.comments && selectedTicketForDetails?.comments?.length > 0; else noComments">
+                <div class="comment-list" style="max-height: 400px; overflow-y: auto;">
+                  <div class="card mb-3" *ngFor="let comment of selectedTicketForDetails?.comments">
+                    <div class="card-body p-3">
+                      <div class="d-flex align-items-start">
+                        <div class="avatar-circle bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-3" 
+                             style="width: 40px; height: 40px; min-width: 40px;">
+                          {{ comment.authorName?.charAt(0)?.toUpperCase() }}
+                        </div>
+                        <div class="flex-grow-1">
+                          <div class="d-flex justify-content-between align-items-center mb-2">
+                            <h6 class="mb-0 fw-bold">{{ comment.authorName }}</h6>
+                            <small class="text-muted">{{ comment.createdAt }}</small>
+                          </div>
+                          <p class="mb-0">{{ comment.message }}</p>
+                          <small class="text-muted">{{ comment.authorId }}</small>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <ng-template #noComments>
+                <div class="text-center py-3">
+                  <i class="fas fa-comments fa-3x text-muted"></i>
+                  <p class="mt-3 text-muted">No comments found for this ticket.</p>
+                </div>
+              </ng-template>
+            </div>
+
+            <!-- History Tab -->
+            <div class="tab-pane fade" id="history" role="tabpanel" aria-labelledby="history-tab">
+              <div *ngIf="selectedTicketForDetails?.history && selectedTicketForDetails?.history?.length > 0; else noHistory">
+                <div class="timeline" style="max-height: 400px; overflow-y: auto;">
+                  <div class="timeline-item d-flex mb-3" *ngFor="let item of selectedTicketForDetails?.history; let last = last">
+                    <div class="timeline-marker bg-primary rounded-circle d-flex align-items-center justify-content-center text-white me-3" 
+                         style="width: 30px; height: 30px; min-width: 30px;">
+                      <i class="fas fa-history fa-sm"></i>
+                    </div>
+                    <div class="timeline-content flex-grow-1">
+                      <div class="card border-start border-4 border-primary">
+                        <div class="card-body p-3">
+                          <div class="d-flex justify-content-between align-items-center mb-2">
+                            <h6 class="mb-0 fw-bold">{{ item.action }}</h6>
+                            <small class="text-muted">{{ item.createdAt }}</small>
+                          </div>
+                          <p class="mb-1">{{ item.remarks }}</p>
+                          <div class="d-flex justify-content-between">
+                            <div *ngIf="item.fromStatus && item.toStatus">
+                              <small class="text-muted">
+                                Status: 
+                                <span class="badge bg-secondary">{{ item.fromStatus?.replace('_', ' ') }}</span>
+                                <i class="fas fa-arrow-right mx-1"></i>
+                                <span class="badge bg-primary">{{ item.toStatus?.replace('_', ' ') }}</span>
+                              </small>
+                            </div>
+                            <div *ngIf="item.userName">
+                              <small class="text-muted">by {{ item.userName }}</small>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="timeline-line bg-light" 
+                         *ngIf="!last" 
+                         style="width: 2px; margin-left: 14px; margin-top: 10px; height: 20px;">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <ng-template #noHistory>
+                <div class="text-center py-3">
+                  <i class="fas fa-history fa-3x text-muted"></i>
+                  <p class="mt-3 text-muted">No history found for this ticket.</p>
+                </div>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+       
+      </div>
+
+      <div class="modal-footer">
+         
+        <!-- <button type="button" class="btn btn-outline-primary" (click)="openTicketModal('edit', selectedTicketForDetails)">
+          <i class="fas fa-edit me-2"></i>Edit Ticket
+        </button> -->
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="closeAllModel()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="ticketDetailModalAdmin" tabindex="-1" aria-labelledby="ticketDetailModalAdminLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-xl">
+    <div class="modal-content" style="font-size:12px !important">
+      <div class="modal-header bg-lime-green text-white py-2">
+        <h6 class="modal-title" id="ticketDetailModalAdminLabel">
+          <i class="fas fa-ticket-alt me-2"></i>Ticket Details
+        </h6>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" (click)="closeAllModel()"></button>
+      </div>
+      <div class="modal-body p-0" *ngIf="selectedTicketForDetails">
+        <!-- Ticket Header -->
+        <div class="pt-2 pb-2 pe-3 ps-3 bg-light border-bottom">
+          <div class="row align-items-start">
+            <div class="col-md-8">
+              <h5 class="mb-2 fw-bold text-primary fs-8">{{ selectedTicketForDetails?.title }}</h5>
+              <p class="text-muted mb-1">{{ selectedTicketForDetails?.description }}</p>
+            </div>
+            <div class="col-md-4 text-end">
+              <div class="mb-2">
+                <span class="badge fs-8" [ngClass]="getStatusBadgeClass(selectedTicketForDetails?.status)">
+                  {{ selectedTicketForDetails?.status?.replace('_', ' ') }}
+                </span>
+              </div>
+              <div class="mb-2">
+                <span class="badge fs-8" [ngClass]="getPriorityBadgeClass(selectedTicketForDetails?.priority)">
+                  {{ selectedTicketForDetails?.priority }}
+                </span>
+              </div>
+              <div>
+                <span class="badge fs-8" [ngClass]="getTypeBadgeClass(selectedTicketForDetails?.type)">
+                  {{ selectedTicketForDetails?.type }}
+                </span>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Ticket Meta Information -->
+          <div class="row mt-1">
+            <div class="col-md-6">
+              <div class="d-flex mb-1">
+                <strong class="text-muted me-2">Ticket Id:</strong>
+                <span>#{{ selectedTicketForDetails?.ticketId }}</span>
+              </div>
+              <div class="d-flex mb-2">
+                <strong class="text-muted me-2">Assignee:</strong>
+                <span>{{ selectedTicketForDetails?.assigneeName || selectedTicketForDetails?.assigneeId || 'Unassigned' }}</span>
+              </div>
+              <div class="d-flex mb-2" *ngIf="selectedTicketForDetails?.reporterName">
+                <strong class="text-muted me-2">Reporter:</strong>
+                <span>{{ selectedTicketForDetails?.reporterName }}</span>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="d-flex mb-2">
+                <strong class="text-muted me-2">Created:</strong>
+                <span>{{ selectedTicketForDetails?.createdAt }}</span>
+              </div>
+              <div class="d-flex mb-2">
+                <strong class="text-muted me-2">Updated:</strong>
+                <span>{{ selectedTicketForDetails?.updatedAt }}</span>
+              </div>
+              <div class="d-flex mb-2" *ngIf="selectedTicketForDetails?.closedDate">
+                <strong class="text-muted me-2">Closed:</strong>
+                <span>{{ selectedTicketForDetails?.closedDate }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+         <div class="p-2 border-top">
+          <form>
+            <div class="row">
+              <div class="col-md-6 mb-1">
+                <label for="adminAssigneeId" class="form-label">Assignee</label>
+                <select
+                  id="adminAssigneeId"
+                  [(ngModel)]="adminAssigneeId"
+                  name="adminAssigneeId"
+                  class="form-select">
+                  <option value="">Select Assignee</option>
+                  <option *ngFor="let assignee of adminAssigneeData" [value]="assignee">
+                    {{ assignee }}
+                  </option>
+                </select>
+              </div>
+              <div class="col-md-6 mb-1">
+                <label for="adminComment" class="form-label">Comments</label>
+                <textarea
+                  id="adminComment"
+                  [(ngModel)]="adminComment"
+                  name="adminComment"
+                  class="form-control"
+                  rows="2"
+                  placeholder="Enter comments"></textarea>
+              </div>
+            </div>
+            <div class="row"> 
+              <div class="col-md-6 mb-1">
+                <label for="adminAssigneeId" class="form-label">Status</label>
+                <select
+                  id="adminAssigneeId"
+                  [(ngModel)]="adminStatus"
+                  name="adminAssigneeId"
+                  class="form-select">
+                  <option value="">Select Status</option>
+                  <option *ngFor="let status of statuses" [value]="status">{{ status.replace('_', ' ') }}</option>
+                </select>
+              </div>
+            </div>
+          </form>
+        </div>
+        <!-- Tabs for different sections -->
+        <div class="p-2">
           <ul class="nav nav-tabs" id="ticketDetailTabs" role="tablist">
             <li class="nav-item" role="presentation">
               <button class="nav-link active" id="attachments-tab" data-bs-toggle="tab" data-bs-target="#attachments1" 
@@ -1077,48 +1121,7 @@
             </div>
           </div>
         </div>
-        <div class="p-4 border-top">
-          <form>
-            <div class="row">
-              <div class="col-md-6 mb-3">
-                <label for="adminAssigneeId" class="form-label">Assignee</label>
-                <select
-                  id="adminAssigneeId"
-                  [(ngModel)]="adminAssigneeId"
-                  name="adminAssigneeId"
-                  class="form-select">
-                  <option value="">Select Assignee</option>
-                  <option *ngFor="let assignee of adminAssigneeData" [value]="assignee">
-                    {{ assignee }}
-                  </option>
-                </select>
-              </div>
-              <div class="col-md-6 mb-3">
-                <label for="adminComment" class="form-label">Comments</label>
-                <textarea
-                  id="adminComment"
-                  [(ngModel)]="adminComment"
-                  name="adminComment"
-                  class="form-control"
-                  rows="2"
-                  placeholder="Enter comments"></textarea>
-              </div>
-            </div>
-            <div class="row"> 
-              <div class="col-md-6 mb-3">
-                <label for="adminAssigneeId" class="form-label">Status</label>
-                <select
-                  id="adminAssigneeId"
-                  [(ngModel)]="adminStatus"
-                  name="adminAssigneeId"
-                  class="form-select">
-                  <option value="">Select Status</option>
-                  <option *ngFor="let status of statuses" [value]="status">{{ status.replace('_', ' ') }}</option>
-                </select>
-              </div>
-            </div>
-          </form>
-        </div>
+       
       </div>
 
       <div class="modal-footer">

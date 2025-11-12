@@ -97,13 +97,13 @@ const routes: Routes = [
         path: 'profile',
         component: ProfileComponent,
         canActivate: [AuthGuard],
-        data: { roles: [Role.Admin,Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR,Role.CALL_CENTER] }
+        data: { roles: [Role.Admin,Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR,Role.CALL_CENTER,Role.DEVELOPER] }
     },
     {
         path: 'password-settings',
         component: PasswordSettingsComponent,
         canActivate: [AuthGuard],
-        data: { roles: [Role.Admin,Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR,Role.CALL_CENTER] }
+        data: { roles: [Role.Admin,Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR,Role.CALL_CENTER,,Role.DEVELOPER] }
     },
     {
         path: 'user-registration',
@@ -523,7 +523,7 @@ const routes: Routes = [
         path: 'help-support',
         component: HelpSupportComponent,
         canActivate: [AuthGuard],
-        data: { roles: [Role.Admin,Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR,Role.CALL_CENTER] }
+        data: { roles: [Role.Admin,Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR,Role.CALL_CENTER,Role.DEVELOPER] }
     },
      {
         path: 'view-participants-incomplete-programs',
