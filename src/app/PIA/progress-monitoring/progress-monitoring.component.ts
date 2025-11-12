@@ -52,6 +52,9 @@ localStorageData: any;
         // this.toastrService.error(error.message);
       });
     }
+    getAgencyName(val:any){
+      return this.agencyList.find((item:any)=>item.agencyId==val)?.agencyName || '';
+    }
     tableheaderList:any
         GetProgramsByAgency(value?: any) {
           this.tableList = []

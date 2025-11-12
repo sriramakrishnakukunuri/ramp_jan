@@ -65,6 +65,9 @@ export class TrainigNontrainingTargetsComponent implements OnInit {
          // this.toastrService.error(error.message);
        });
      }
+     getAgencyName(val:any){
+      return this.agencyList.find((item:any)=>item.agencyId==val)?.agencyName || '';
+    }
      goBack(){
         this.router.navigate(['/progress-monitoring'])
      }
