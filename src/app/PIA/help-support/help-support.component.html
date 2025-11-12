@@ -684,7 +684,7 @@
                     <div class="card-body p-3">
                       <div class="d-flex align-items-start">
                         <div class="avatar-circle bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-3" 
-                             style="width: 40px; height: 40px; min-width: 40px;">
+                             style="width: 30px; height: 30px; min-width: 30px;">
                           {{ comment.authorName?.charAt(0)?.toUpperCase() }}
                         </div>
                         <div class="flex-grow-1">
@@ -848,7 +848,7 @@
                   [(ngModel)]="adminAssigneeId"
                   name="adminAssigneeId"
                   class="form-select">
-                  <option value="">Select Assignee</option>
+                  <option value="" selected>Select Assignee</option>
                   <option *ngFor="let assignee of adminAssigneeData" [value]="assignee">
                     {{ assignee }}
                   </option>
