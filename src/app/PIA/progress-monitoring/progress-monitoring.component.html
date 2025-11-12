@@ -34,7 +34,7 @@
           <!-- Training Programs Table -->
             <div class="row mb-4" *ngIf="tableListTraining && tableListTraining?.length > 0">
             <div class="col-12">
-              <h6 class="fw-600 mb-3 text-primary">Training Programs : getAgencyName(selectedAgencyId)</h6>
+              <h6 class="fw-600 mb-3 text-primary">Training Programs : {{getAgencyName(selectedAgencyId)}}</h6>
               <div class="scrollable-table">
                 <div class="table-scroll-container">
                 <div class="table-scroll-container">
@@ -83,7 +83,7 @@
             <!-- Non-Training Programs Table -->
             <div class="row mb-4" *ngIf="tableList && tableList?.length > 0">
             <div class="col-12">
-              <h6 class="fw-600 mb-3 text-success">Non-Training Programs : getAgencyName(selectedAgencyId)</h6>
+              <h6 class="fw-600 mb-3 text-success">Non-Training Programs : {{getAgencyName(selectedAgencyId)}}</h6>
               <div class="scrollable-table">
               <table class="table table-striped table-bordered">
                 <thead class="bg-lime-green text-white">
