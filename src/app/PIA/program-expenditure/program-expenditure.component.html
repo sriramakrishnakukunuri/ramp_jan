@@ -110,7 +110,7 @@
                                     <td class="text-start">{{i+1}}</td>
                                     <td>{{item?.expenditureType}}</td>
                                     <td>{{item?.headOfExpense}}</td>
-                                    <td>{{(item?.cost?item?.cost:item?.allocatedCost) | number:'1.0-1'}}</td>
+                                    <td>{{(item?.cost?item?.cost:item?.allocatedCost) | commaSeperationIndia}}</td>
                                     <td>{{item?.billNo}}</td>
                                     <td>{{item?.billDate}}</td>
                                      <td>{{item?.checkNo}}</td>
@@ -157,7 +157,7 @@
                                     <td></td>
                                     <td></td>
                                     <td>Total</td>
-                                    <td>{{TotalAmount | number:'1.0-1'}}</td>
+                                    <td>{{TotalAmount | commaSeperationIndia}}</td>
                                     <td></td>
                                     
                                     <td></td>

@@ -438,7 +438,7 @@ export class ProgramSessionsComponent implements OnInit {
     this.resourcekeyidData={}
     this.getSessionResourceData =[]
     this._commonService
-      .getById(APIS.programCreation.getResource+'/', this.agencyId)
+      .getById(APIS.programCreation.getAllResource+'/', this.agencyId)
       .subscribe({
         next: (data: any) => {
           this.getSessionResourceData = data.data;

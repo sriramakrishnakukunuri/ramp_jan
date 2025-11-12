@@ -393,7 +393,7 @@ export class HelpSupportComponent implements OnInit {
             actions += `</div>`;
             return actions;
             },
-            className: 'text-center',
+            // className: 'text-center',
             orderable: false,
             width: '16%'
           }

@@ -407,16 +407,38 @@
 
             <div class="col-md-6">
               <div class="form-group mb-3">
-                <label for="type" class="form-label">Type *</label>
-                <select 
-                  id="type" 
-                  formControlName="type" 
-                  class="form-select"
-                  [class.is-invalid]="f['type'].invalid && (f['type'].dirty || f['type'].touched)">
-                  <option value="">Select Type</option>
-                  <option *ngFor="let type of types" [value]="type">{{ type }}</option>
-                </select>
-                <div *ngIf="f['type'].invalid && (f['type'].dirty || f['type'].touched)" class="invalid-feedback">
+                <label class="form-label d-block mb-2">Type *</label>
+                <div class="form-check form-check-inline">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    id="type-support"
+                    formControlName="type"
+                    value="SUPPORT"
+                    [checked]="ticketForm.get('type')?.value === 'SUPPORT'">
+                  <label class="form-check-label" for="type-support">SUPPORT</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    id="type-bug"
+                    formControlName="type"
+                    value="BUG"
+                    [checked]="ticketForm.get('type')?.value === 'BUG'">
+                  <label class="form-check-label" for="type-bug">BUG</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    id="type-enhancement"
+                    formControlName="type"
+                    value="NEW ENHANCEMENT"
+                    [checked]="ticketForm.get('type')?.value === 'NEW ENHANCEMENT'">
+                  <label class="form-check-label" for="type-enhancement">NEW ENHANCEMENT</label>
+                </div>
+                <div *ngIf="f['type'].invalid && (f['type'].dirty || f['type'].touched)" class="invalid-feedback d-block">
                   <div *ngIf="f['type'].errors?.['required']">Type is required</div>
                 </div>
               </div>
@@ -445,22 +467,24 @@
           <div class="row">
             <div class="col-md-6">
               <div class="form-group mb-3">
-                <label for="priority" class="form-label">Priority *</label>
-                <select 
-                  id="priority" 
-                  formControlName="priority" 
-                  class="form-select"
-                  [class.is-invalid]="f['priority'].invalid && (f['priority'].dirty || f['priority'].touched)">
-                  <option value="">Select Priority</option>
-                  <option *ngFor="let priority of priorities" [value]="priority">{{ priority }}</option>
-                </select>
-                <div *ngIf="f['priority'].invalid && (f['priority'].dirty || f['priority'].touched)" class="invalid-feedback">
+                <label class="form-label d-block mb-2">Priority *</label>
+                <div class="form-check form-check-inline" *ngFor="let priority of priorities">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    [id]="'priority-' + priority"
+                    formControlName="priority"
+                    [value]="priority"
+                    [checked]="ticketForm.get('priority')?.value === priority">
+                  <label class="form-check-label" [for]="'priority-' + priority">{{ priority }}</label>
+                </div>
+                <div *ngIf="f['priority'].invalid && (f['priority'].dirty || f['priority'].touched)" class="invalid-feedback d-block">
                   <div *ngIf="f['priority'].errors?.['required']">Priority is required</div>
                 </div>
               </div>
             </div>
 
-            <div class="col-md-6">
+            <div class="col-md-6" [hidden]="!isEditMode">
               <div class="form-group mb-3">
                 <label for="status" class="form-label">Status *</label>
                 <select 
@@ -498,7 +522,7 @@
               </div>
               </div>
             </div>
-            <div class="col-12">
+            <div class="col-12" *ngIf="isEditMode">
               <div class="form-group mb-3">
                 <label for="message" class="form-label">Comments</label>
                 <textarea 

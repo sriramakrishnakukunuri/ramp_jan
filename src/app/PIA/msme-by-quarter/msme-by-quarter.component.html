@@ -121,8 +121,8 @@
                       <!-- Cumulative (1-Apr-2024-Till date) Targets v/s Achievements -->
                       <td class="text-center">{{ row.cumulativeMoMSMEBenefitedDto?.physicalTarget ?? 0 }}</td>
                       <td class="text-center">{{ row.cumulativeMoMSMEBenefitedDto?.physicalAchievement ?? 0 }}</td>
-                      <td class="text-center">{{ row.cumulativeMoMSMEBenefitedDto?.financialTarget ?? 0 }}</td>
-                      <td class="text-center">{{ row.cumulativeMoMSMEBenefitedDto?.financialAchievement ?? 0 }}</td>
+                      <td class="text-center">{{ (row.cumulativeMoMSMEBenefitedDto?.financialTarget ?? 0)   | commaSeperationIndia }}</td>
+                      <td class="text-center">{{ (row.cumulativeMoMSMEBenefitedDto?.financialAchievement ?? 0) | commaSeperationIndia }}</td>
                       <td class="text-center">{{ row.cumulativeMoMSMEBenefitedDto?.total ?? 0 }}</td>
                       <!-- Cumulative MSME's Benefitted -->
                       <td class="text-center">{{ row.cumulativeMoMSMEBenefitedDto?.women ?? 0 }}</td>
@@ -132,8 +132,8 @@
                       <!-- Current Quarter Targets v/s Achievements -->
                       <td class="text-center">{{ row.physicalTarget ?? 0 }}</td>
                       <td class="text-center">{{ row.physicalAchievement ?? 0 }}</td>
-                      <td class="text-center">{{ row.financialTarget ?? 0 }}</td>
-                      <td class="text-center">{{ row.financialAchievement ?? 0 }}</td>
+                      <td class="text-center">{{ (row.financialTarget ?? 0 )    | commaSeperationIndia }}</td>
+                      <td class="text-center">{{ (row.financialAchievement ?? 0) | commaSeperationIndia }}</td>
                       <td class="text-center">{{ row.currentQuarterMoMSMEBenefitedDto?.total ?? 0 }}</td>
                       <!-- Current Quarter MSME's Benefitted -->
                       <td class="text-center">{{ row.currentQuarterMoMSMEBenefitedDto?.women ?? 0 }}</td>
