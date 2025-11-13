@@ -246,7 +246,9 @@ export const APIS = {
         deleteBulkExpenditure:API_BASE_URL +`/bulk/expenditure/delete/`,
         downloadExpeditureData:API_BASE_URL +`/export-program-expenditure`,
         saveRemarks:API_BASE_URL +`/save/remarks`,
-        saveRemarksBulk:API_BASE_URL +`/save/remarks/transaction`
+        saveRemarksBulk:API_BASE_URL +`/save/remarks/transaction`,
+        getExpenditureNonTraining:API_BASE_URL +`/non-training/all/expenditures`,
+        saveRemarksNonTraining:API_BASE_URL +`/non-training/save/remarks`,
     },
     programSummary:{
         getProramData:API_BASE_URL +`/program/summary/`,

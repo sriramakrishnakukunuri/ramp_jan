@@ -117,6 +117,7 @@ import { ViewResourceListComponent } from './master-list/pages/view-resource-lis
 import { CommonFileViewerComponent } from './common_components/common-file-viewer/common-file-viewer.component';
 import { ViewOutcomesComponent } from './PIA/view-outcomes/view-outcomes.component';
 import { CommaSeperationIndiaPipe } from './common_components/comma-seperation-india.pipe';
+import { NonTrainingExpendituresComponent } from './PIA/non-training-expenditures/non-training-expenditures.component';
 @NgModule({
     imports: [
         MaterialModule,
@@ -237,7 +238,8 @@ import { CommaSeperationIndiaPipe } from './common_components/comma-seperation-i
         ViewResourceListComponent,
         CommonFileViewerComponent,
         ViewOutcomesComponent,
-        CommaSeperationIndiaPipe
+        CommaSeperationIndiaPipe,
+        NonTrainingExpendituresComponent
 
     ],
     exports:[MaterialModule,
