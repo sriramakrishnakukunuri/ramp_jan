@@ -81,6 +81,7 @@ import { ViewIncompleteParticipantsComponent } from './PIA/view-incomplete-parti
 import { ViewResourceListComponent } from './master-list/pages/view-resource-list/view-resource-list.component';
 import { MasterListComponent } from './master-list/master-list.component';
 import { ViewOutcomesComponent } from './PIA/view-outcomes/view-outcomes.component';
+import { NonTrainingExpendituresComponent } from './PIA/non-training-expenditures/non-training-expenditures.component';
 const routes: Routes = [
     {
         path: '',
@@ -138,6 +139,12 @@ const routes: Routes = [
      {
         path: 'expenditure-verification',
         component: FinanceExpenditureComponent,
+        canActivate: [AuthGuard],
+        data: { roles: [Role.Admin,Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
+    },
+     {
+        path: 'Non-training-Expenditure',
+        component: NonTrainingExpendituresComponent,
         canActivate: [AuthGuard],
         data: { roles: [Role.Admin,Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
     },
