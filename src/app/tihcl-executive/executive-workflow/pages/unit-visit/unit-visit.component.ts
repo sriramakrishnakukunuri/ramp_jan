@@ -613,7 +613,7 @@ saveworkshift(): void {
     if (this.visitForm.valid) {
       const visitDetailsArray = this.unitVisitForm.get('visitorsDetailsRequests') as FormArray;
      
-    const index = visitDetailsArray.controls.findIndex(control => control.value === this.visitForm.value);
+    const index = visitDetailsArray.controls.findIndex(control => control.value.visitorId === this.visitForm.value.visitorId);
     if (index !== -1) {
       visitDetailsArray.removeAt(index);
     }
