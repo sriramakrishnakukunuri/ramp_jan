@@ -154,7 +154,7 @@ export class UnitVisitComponent implements OnInit {
 createForm(): void {
     this.machineForm = this.fb.group({
       typesOfMachine: ['', Validators.required],
-      id:[null],
+      machineId:[null],
       purpose: ['', Validators.required],
       noOfMachines: ['', [Validators.required, Validators.min(1)]],
       costOfMachinePurchased: ['', [Validators.required, Validators.min(0)]],
@@ -166,7 +166,7 @@ createForm(): void {
     this.visitForm = this.fb.group({
       visitedBy: ['', Validators.required],
       visitedPersonDesignation:['',Validators.required],
-      id:[null],
+      visitorId:[null],
       // nameOfThePerson: ['', Validators.required],
       // metPersonEmail: ['', [Validators.required, Validators.email]],
       // contactNumber: ['', [Validators.pattern(/^[6789]\d{9}$/)]],
@@ -178,7 +178,7 @@ createForm(): void {
     this.resorcePersonForm = this.fb.group({
       // visitedBy: ['', Validators.required],
       // visitedPersonDesignation:['',Validators.required],
-      id:[null],
+      metPersonId:[null],
       nameOfThePerson: ['', Validators.required],
       // metPersonEmail: ['', [Validators.required, Validators.email]],
       contactNumber: ['', [Validators.pattern(/^[6789]\d{9}$/)]],
@@ -287,7 +287,7 @@ createForm(): void {
     const visitGroup = this.fb.group({
       visitedBy: [visit ? visit.visitedBy : '', Validators.required],
       visitedPersonDesignation:[visit ? visit.visitedPersonDesignation : '',Validators.required],
-      id:[visit?visit.id:null],
+      visitorId:[visit.visitorId?visit.visitorId:null],
       // nameOfThePerson: [visit ? visit.nameOfThePerson : '', Validators.required],
       // metPersonEmail: [visit ? visit.metPersonEmail : '', [Validators.required, Validators.email]],
       // contactNumber: [visit ? visit.contactNumber : '', [Validators.required,Validators.pattern(/^[6789]\d{9}$/)]],
@@ -300,7 +300,7 @@ createForm(): void {
     const visitGroup = this.fb.group({
       // visitedBy: [visit ? visit.visitedBy : '', Validators.required],
       // visitedPersonDesignation:[visit ? visit.visitedPersonDesignation : '',Validators.required],
-      id:[visit?visit.id:null],
+      metPersonId:[visit.metPersonId?visit.metPersonId:null],
       nameOfThePerson: [visit ? visit.nameOfThePerson : '', Validators.required],
       // metPersonEmail: [visit ? visit.metPersonEmail : '', [Validators.required, Validators.email]],
       contactNumber: [visit ? visit.contactNumber : '', [Validators.required,Validators.pattern(/^[6789]\d{9}$/)]],
@@ -317,7 +317,7 @@ createForm(): void {
       costOfMachinePurchased: [machine ? machine.costOfMachinePurchased : ''],
       currentCondition: [machine ? machine.currentCondition : ''],
       valueOfMachinery: [machine ? machine.valueOfMachinery : ''],
-      id:[machine?machine.id:null]
+      machineId:[machine?machine.machineId:null]
     });
     this.factoryDetailsArray.push(machineGroup);
   }
@@ -542,6 +542,10 @@ saveworkshift(): void {
     if (this.machineForm.valid ) {
       console.log(this.machineForm?.value)
        const factoryDetailsArray = this.unitVisitForm.get('machineryDetailsRequest') as FormArray;
+        const index = factoryDetailsArray.controls.findIndex(control => control.value.machineId === this.machineForm.value.machineId);
+        if (index !== -1) {
+          factoryDetailsArray.removeAt(index);
+        }
     // Push the new form group
         factoryDetailsArray.push(this.fb.group(this.machineForm.value));
         this.toastrService.success('Machinery Details Added Successfully');
@@ -568,26 +572,22 @@ saveworkshift(): void {
    editCreditDetails(item: any) {
      this.machineForm = this.fb.group({
       typesOfMachine: [item?.typesOfMachine, Validators.required],
-       id:[item?.id?item.id:null],
+       machineId:[item?.machineId?item.machineId:null],
       purpose: [item?.purpose, Validators.required],
       noOfMachines: [item?.noOfMachines, [Validators.required, Validators.min(1)]],
       costOfMachinePurchased: [item?.costOfMachinePurchased, [Validators.required, Validators.min(0)]],
       currentCondition: [item?.currentCondition, Validators.required],
       valueOfMachinery: [item?.valueOfMachinery, [Validators.required, Validators.min(0)]]
     });
-        const deliveryDetailsArray = this.unitVisitForm.get('machineryDetailsRequest') as FormArray;
-        const index = deliveryDetailsArray.controls.findIndex(control => control.value === item);
-        if (index !== -1) {
-          deliveryDetailsArray.removeAt(index);
-        }
+        
          const modal = new bootstrap.Modal(this.addmachinary.nativeElement);
          modal.show(); 
     }
   // machineryDetailsRequest
     deleteCreditDetail(item:any,index: number) {
       console.log(item)
-      if(item?.id){
-         this._commonService.deleteById(APIS.tihclExecutive.getUnitVisitDelete,item?.id).subscribe({
+      if(item?.machineId){
+         this._commonService.deleteById(APIS.tihclExecutive.getUnitVisitDelete,item?.machineId).subscribe({
              next: (response) => {
                 // this.progressBarStatusUpdate.emit({"update":true})
              },
@@ -612,6 +612,11 @@ saveworkshift(): void {
   onSubmitModelVisit(): void {
     if (this.visitForm.valid) {
       const visitDetailsArray = this.unitVisitForm.get('visitorsDetailsRequests') as FormArray;
+     
+    const index = visitDetailsArray.controls.findIndex(control => control.value === this.visitForm.value);
+    if (index !== -1) {
+      visitDetailsArray.removeAt(index);
+    }
       visitDetailsArray.push(this.fb.group(this.visitForm.value));
       this.toastrService.success('Visitor Details Added Successfully');
       this.onCloseVisit();
@@ -638,19 +643,10 @@ saveworkshift(): void {
 
   editCreditDetailsVisit(item: any) {
     this.visitForm = this.fb.group({
-      visitedBy: [item?.visitedBy, Validators.required],
-      id: [item?.id ? item.id : null],
-      nameOfThePerson: [item?.nameOfThePerson, Validators.required],
-      // metPersonEmail: [item?.metPersonEmail, [Validators.required, Validators.email]],
-      contactNumber: [item?.contactNumber, [Validators.pattern(/^[6789]\d{9}$/)]],
-      visitedPersonDesignation:[item?.visitedPersonDesignation,Validators.required],
-      designation: [item?.designation, [Validators.required]],
+      visitedBy: [item?.visitedBy ? item.visitedBy : null,Validators.required],
+      visitedPersonDesignation: [item?.visitedPersonDesignation, Validators.required],
+      visitorId:[item?.visitorId ? item.visitorId : null],
     });
-    const visitDetailsArray = this.unitVisitForm.get('visitorsDetailsRequests') as FormArray;
-    const index = visitDetailsArray.controls.findIndex(control => control.value === item);
-    if (index !== -1) {
-      visitDetailsArray.removeAt(index);
-    }
     const modal = new bootstrap.Modal(this.addvisit.nativeElement);
     modal.show();
   }
@@ -671,8 +667,14 @@ saveworkshift(): void {
     this.visitForm.reset();
   }
   onSubmitModelResourcePerson(): void {
+   
     if (this.resorcePersonForm.valid) {
       const resorcePersonArray = this.unitVisitForm.get('metPersonDetailsDtos') as FormArray;
+       console.log(this.resorcePersonForm.value,resorcePersonArray)
+       const index = resorcePersonArray.controls.findIndex(control => control.value.metPersonId === this.resorcePersonForm.value.metPersonId);
+    if (index !== -1) {
+      resorcePersonArray.removeAt(index);
+    }
       resorcePersonArray.push(this.fb.group(this.resorcePersonForm.value));
       this.toastrService.success('Resource Details Added Successfully');
       this.onCloseResourcePerson();
@@ -699,17 +701,12 @@ saveworkshift(): void {
 
   editCreditDetailsResourcePerson(item: any) {
     this.resorcePersonForm = this.fb.group({
-      id: [item?.id ? item.id : null],
+      metPersonId: [item?.metPersonId ? item.metPersonId : null],
       nameOfThePerson: [item?.nameOfThePerson, Validators.required],
       // metPersonEmail: [item?.metPersonEmail, [Validators.required, Validators.email]],
       contactNumber: [item?.contactNumber, [Validators.pattern(/^[6789]\d{9}$/)]],
       designation: [item?.designation, [Validators.required]],
     });
-    const visitDetailsArray = this.unitVisitForm.get('metPersonDetailsDtos') as FormArray;
-    const index = visitDetailsArray.controls.findIndex(control => control.value === item);
-    if (index !== -1) {
-      visitDetailsArray.removeAt(index);
-    }
     const modal = new bootstrap.Modal(this.addResourcePerson.nativeElement);
     modal.show();
   }
