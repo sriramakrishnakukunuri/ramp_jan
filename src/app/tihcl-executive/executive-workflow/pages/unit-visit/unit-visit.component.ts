@@ -401,7 +401,7 @@ saveworkshift(): void {
     this.workShiftsDto.removeAt(index);
   }
   onSubmit(): void {
-    
+      console.log(this.unitVisitForm.valid,this.unitVisitForm.value?.machineryDetailsRequest?.length,Object.keys( this.ExistingunitVisit).length,this.ExistingunitVisit?.id,this.unitVisitForm.valid && this.unitVisitForm.value?.machineryDetailsRequest?.length && Object.keys( this.ExistingunitVisit).length && this.ExistingunitVisit?.id,'Valid')
     if(this.unitVisitForm.valid && this.unitVisitForm.value?.machineryDetailsRequest?.length && Object.keys( this.ExistingunitVisit).length && this.ExistingunitVisit?.id){
       this.loaderService.show()  
       let payload:any={...this.unitVisitForm.value, "applicationNo": this.applicationData?.applicationNo,"applicationStatus": "UNIT_VISIT"}
@@ -449,7 +449,9 @@ saveworkshift(): void {
       this.loaderService.hide()
       Object.keys(this.unitVisitForm.controls).forEach(field => {
         const control = this.unitVisitForm.get(field);
+        console.log(control)
         control?.markAsTouched({ onlySelf: true });
+        console.log(control, control?.markAsTouched({ onlySelf: true }))
       });
       console.log('Form is invalid');
       this.toastrService.error('Please fill all the required Fields','Unit Visit');
