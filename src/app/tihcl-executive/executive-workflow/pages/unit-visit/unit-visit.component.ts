@@ -181,7 +181,7 @@ createForm(): void {
       metPersonId:[null],
       nameOfThePerson: ['', Validators.required],
       // metPersonEmail: ['', [Validators.required, Validators.email]],
-      contactNumber: ['', [Validators.pattern(/^[6789]\d{9}$/)]],
+      contactNumber: ['', [ Validators.required,Validators.pattern(/^[6789]\d{9}$/)]],
 
       designation: ['', [Validators.required]],
     });
