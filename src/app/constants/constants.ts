@@ -79,6 +79,7 @@ export const APIS = {
         updateUnitVisit:API_BASE_URL+`/unitvisit/update/`,
         getUnitVisit:API_BASE_URL+`/unitvisit/fetch/`,
         getUnitVisitDelete:API_BASE_URL+`/unitvisit/delete/`,
+        deleteMechaninery:API_BASE_URL+`/unitvisit/delete/machinery/`,
         getUnitVisitById:API_BASE_URL+`/unitvisit/fetch/registration/`,
         getSentiondataById:API_BASE_URL+`/sanction/details/registration/id/`,
         saveRampCheckList:  API_BASE_URL+`/rampchecklist/save`,

@@ -589,8 +589,9 @@ saveworkshift(): void {
     deleteCreditDetail(item:any,index: number) {
       console.log(item)
       if(item?.machineId){
-         this._commonService.deleteById(APIS.tihclExecutive.getUnitVisitDelete,item?.machineId).subscribe({
+         this._commonService.deleteById(APIS.tihclExecutive.deleteMechaninery,item?.machineId).subscribe({
              next: (response) => {
+              
                 // this.progressBarStatusUpdate.emit({"update":true})
              },
              error: (error) => {
