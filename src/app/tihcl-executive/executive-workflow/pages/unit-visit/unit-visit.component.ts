@@ -706,7 +706,7 @@ saveworkshift(): void {
       metPersonId: [item?.metPersonId ? item.metPersonId : null],
       nameOfThePerson: [item?.nameOfThePerson, Validators.required],
       // metPersonEmail: [item?.metPersonEmail, [Validators.required, Validators.email]],
-      contactNumber: [item?.contactNumber, [Validators.pattern(/^[6789]\d{9}$/)]],
+      contactNumber: [item?.contactNumber, [Validators.required,Validators.pattern(/^[6789]\d{9}$/)]],
       designation: [item?.designation, [Validators.required]],
     });
     const modal = new bootstrap.Modal(this.addResourcePerson.nativeElement);
