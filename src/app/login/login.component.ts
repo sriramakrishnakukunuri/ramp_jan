@@ -44,7 +44,19 @@ export class LoginComponent implements OnInit {
         if (this.loginForm.invalid) {
             return;
         }
-
+         const bypassLogin = true; // Set to false when you want normal API login
+    
+    if(bypassLogin) {
+        // Mock user data for session storage if needed
+        const mockUser = {
+            userId: this.f.username.value,
+            userRole: Role.DEVELOPER // or any role you need
+        };
+        sessionStorage.setItem('user', JSON.stringify(mockUser));
+        window.location.href = '/sample-screen-ui';
+        return;
+    }
+        
         this.loading = true;
         this.authenticationService.login(this.f.username.value, this.f.password.value)
             .pipe(first())
@@ -73,6 +85,7 @@ export class LoginComponent implements OnInit {
                          else if(res?.data.userRole === Role.DEVELOPER) {
                               if(res.data.userId=='sample@gmail.com'){
                                 this.router.navigateByUrl('/sample-screen-ui');
+                                
                                 return;
                             }
                             this.router.navigateByUrl('/help-support');

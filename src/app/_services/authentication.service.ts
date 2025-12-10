@@ -43,7 +43,7 @@ export class AuthenticationService {
         //         this.userSubject.next(user.data);
         //         return user;
         //     }));
-        return this.http.post<any>(`${environment.apiUrl}/auth/login`, { email:username,password:password})
+        return this.http.post<any>(`https://metaverseedu.in/workflow/auth/login`, { email:username,password:password})
             .pipe(map(user => {
                 // store user details and jwt token in local storage to keep user logged in between page refreshes
                 sessionStorage.setItem('user', JSON.stringify(user?.data));
