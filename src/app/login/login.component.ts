@@ -53,7 +53,8 @@ export class LoginComponent implements OnInit {
             userRole: Role.DEVELOPER // or any role you need
         };
         sessionStorage.setItem('user', JSON.stringify(mockUser));
-        window.location.href = '/sample-screen-ui';
+        // window.location.href = '/sample-screen-ui';
+         this.router.navigateByUrl('/sample-screen-ui');
         return;
     }
         
