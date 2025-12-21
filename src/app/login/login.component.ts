@@ -54,7 +54,10 @@ export class LoginComponent implements OnInit {
         };
         sessionStorage.setItem('user', JSON.stringify(mockUser));
         // window.location.href = '/sample-screen-ui';
-         this.router.navigateByUrl('/sample-screen-ui');
+        //    this.authenticationService.userSubject.next(mockUser);
+    
+            this.router.navigateByUrl('/sample-screen-ui');
+        //  this.router.navigateByUrl('/sample-screen-ui');
         return;
     }
         
