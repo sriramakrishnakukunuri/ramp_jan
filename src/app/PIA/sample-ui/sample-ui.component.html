@@ -17,7 +17,7 @@
               <mat-select-filter [array]="districts" [displayMember]="'districtName'" (filteredReturn)="onDistrictsFiltered($event)">
               </mat-select-filter>
               <mat-option value="">Select District</mat-option>
-              <mat-option *ngFor="let district of districtsFiltered" [value]="district.districtName">
+              <mat-option *ngFor="let district of districtsFiltered" [value]="district.districtId">
                 {{ district.districtName }}
               </mat-option>
             </mat-select>
