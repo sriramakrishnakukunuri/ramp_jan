@@ -5,7 +5,7 @@
 export const environment = {
     production: false,
     // apiUrl: 'http://localhost:8080'
-    apiUrl: 'http://16.171.148.27:8083/',
+    apiUrl: 'https://metaverseedu.in/MSME/',
     // apiUrl:'https://metaverseedu.in/workflow'
 };
 

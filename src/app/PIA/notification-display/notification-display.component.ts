@@ -21,12 +21,12 @@ export class NotificationDisplayComponent implements OnInit {
   ngOnInit(): void {
     this.userDetails = JSON.parse(sessionStorage.getItem('user') || '{}');
     console.log(this.userDetails);
-    if (this.userDetails && this.userDetails.userId) {
-      this.getNotifications();
-    }
-    setInterval(() => {
-      this.getNotifications();
-    }, 100000); // Refresh every 5 minutes
+    // if (this.userDetails && this.userDetails.userId) {
+    //   this.getNotifications();
+    // }
+    // setInterval(() => {
+    //   this.getNotifications();
+    // }, 100000); // Refresh every 5 minutes
   }
 
 togglePanel() {
