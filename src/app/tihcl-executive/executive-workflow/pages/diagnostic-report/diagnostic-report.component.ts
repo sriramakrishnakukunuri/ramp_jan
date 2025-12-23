@@ -1410,7 +1410,7 @@ saveStatusUpdate(): void {
 Approved(){
   this.loader.show()
 
-  let payload:any={...this.diagnosticForm.value,"currentScreenStatus": "STATUS_UPDATE",
+   let payload:any={...this.diagnosticForm.value,"currentScreenStatus": "STATUS_UPDATE",unitVisitPhotos:this.uploadedFiles.map(file => file.filePath),
         "applicationNo": this.applicationData.applicationNo, id:this.getDataOfDiagnostic?.id,
         "applicationStatus": "DIAGNOSTIC_REPORT"}
 

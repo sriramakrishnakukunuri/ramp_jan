@@ -616,10 +616,12 @@ saveworkshift(): void {
     if (this.visitForm.valid) {
       const visitDetailsArray = this.unitVisitForm.get('visitorsDetailsRequests') as FormArray;
      
-    const index = visitDetailsArray.controls.findIndex(control => control.value.visitorId === this.visitForm.value.visitorId);
-    if (index !== -1) {
-      visitDetailsArray.removeAt(index);
-    }
+      const index = visitDetailsArray.controls.findIndex(control => control.value.visitorId === this.visitForm.value.visitorId);
+      console.log(index,'index')
+      // Only remove if editing (visitorId exists and is found)
+      if (index !== -1 && this.visitForm.value.visitorId) {
+        visitDetailsArray.removeAt(index);
+      }
       visitDetailsArray.push(this.fb.group(this.visitForm.value));
       this.toastrService.success('Visitor Details Added Successfully');
       this.onCloseVisit();
@@ -675,9 +677,12 @@ saveworkshift(): void {
       const resorcePersonArray = this.unitVisitForm.get('metPersonDetailsDtos') as FormArray;
        console.log(this.resorcePersonForm.value,resorcePersonArray)
        const index = resorcePersonArray.controls.findIndex(control => control.value.metPersonId === this.resorcePersonForm.value.metPersonId);
-    if (index !== -1) {
-      resorcePersonArray.removeAt(index);
-    }
+    // if (index !== -1) {
+    //   resorcePersonArray.removeAt(index);
+    // }
+    if (index !== -1 && this.resorcePersonForm.value.metPersonId) {
+        resorcePersonArray.removeAt(index);
+      }
       resorcePersonArray.push(this.fb.group(this.resorcePersonForm.value));
       this.toastrService.success('Resource Details Added Successfully');
       this.onCloseResourcePerson();
