@@ -18,7 +18,7 @@ export class ExecutiveWorkflowComponent implements OnInit {
          
       }
 statusList: any = [
-        'APPLICATION_SUBMITTED', 'PRELIMINARY_ASSESSMENT', 'MANAGER_APPROVAL_1', 'UNIT_VISIT', 'DIAGNOSTIC_REPORT', 'MANAGER_APPROVAL_2', 'DIC_CONSENT_APPROVAL', 'CREDIT_APPRAISAL', 'PRIMARY_LENDER_NOC', 'SANCTION_LETTER_UPLOAD', 'MANAGER_APPROVAL_3', 'SANCTION_LETTER_UPLOAD', 'DISBURSEMENT_PARTIAL', 'DISBURSEMENT_COMPLETED', 'LOAN_REPAYMENT_REGULAR', 'LOAN_REPAYMENT_DUE', 'LOAN_REPAYMENT_COMPLETED', 'REJECTED_MANAGER_APPROVAL_1', 'REJECTED_MANAGER_APPROVAL_2', 'REJECTED_MANAGER_APPROVAL_3'
+        'APPLICATION_SUBMITTED', 'PRELIMINARY_ASSESSMENT','PENDING_MANAGER_APPROVAL_1','PENDING_MANAGER_APPROVAL_2','PENDING_MANAGER_APPROVAL_3', 'MANAGER_APPROVAL_1', 'UNIT_VISIT', 'DIAGNOSTIC_REPORT', 'MANAGER_APPROVAL_2', 'DIC_CONSENT_APPROVAL', 'CREDIT_APPRAISAL', 'PRIMARY_LENDER_NOC', 'SANCTION_LETTER_UPLOAD', 'MANAGER_APPROVAL_3', 'SANCTION_LETTER_UPLOAD', 'DISBURSEMENT_PARTIAL', 'DISBURSEMENT_COMPLETED', 'LOAN_REPAYMENT_REGULAR', 'LOAN_REPAYMENT_DUE', 'LOAN_REPAYMENT_COMPLETED', 'REJECTED_MANAGER_APPROVAL_1', 'REJECTED_MANAGER_APPROVAL_2', 'REJECTED_MANAGER_APPROVAL_3'
       ];
 
 currentStep:any = 1;
@@ -66,10 +66,16 @@ currentStep:any = 1;
         this.freezeValue=1
         // sessionStorage.setItem('ApplicationData', JSON.stringify(applicationData));
      }else if(applicationData.status === 'PRELIMINARY_ASSESSMENT' || applicationData.applicationStatus === 'PRELIMINARY_ASSESSMENT'){
+     this._commonService.setCurrentStep(1)
+      this.currentStep=1
+       this.freezeValue=1
+     }
+     else if(applicationData.status === 'PENDING_MANAGER_APPROVAL_1' || applicationData.applicationStatus === 'PENDING_MANAGER_APPROVAL_1'){
      this._commonService.setCurrentStep(2)
       this.currentStep=2
        this.freezeValue=2
      }
+
       else if(applicationData.status === 'MANAGER_REVERIFY_1' || applicationData.applicationStatus === 'MANAGER_REVERIFY_1'){
      this._commonService.setCurrentStep(1)
       this.currentStep=1
@@ -81,9 +87,9 @@ currentStep:any = 1;
        this.freezeValue=2
      }
      else if(applicationData.status === 'MANAGER_APPROVAL_1' || applicationData.applicationStatus === 'MANAGER_APPROVAL_1'){
-     this._commonService.setCurrentStep(3)
-      this.currentStep=3
-       this.freezeValue=3
+     this._commonService.setCurrentStep(2)
+      this.currentStep=2
+       this.freezeValue=2
      }
       else if(applicationData.status === 'MANAGER_REVERIFY_2' || applicationData.applicationStatus === 'MANAGER_REVERIFY_2'){
      this._commonService.setCurrentStep(3)
@@ -91,57 +97,73 @@ currentStep:any = 1;
        this.freezeValue=3
      }
       else if(applicationData.status === 'UNIT_VISIT' || applicationData.applicationStatus === 'UNIT_VISIT'){
-     this._commonService.setCurrentStep(4)
-      this.currentStep=4
-       this.freezeValue=4
+     this._commonService.setCurrentStep(3)
+      this.currentStep=3
+       this.freezeValue=3
      }
       else if(applicationData.status === 'DIAGNOSTIC_REPORT' || applicationData.applicationStatus === 'DIAGNOSTIC_REPORT'){
+     this._commonService.setCurrentStep(4)
+      this.currentStep=4
+      this.freezeValue=4
+     }
+      else if(applicationData.status === 'MANAGER_APPROVAL_2' || applicationData.applicationStatus === 'MANAGER_APPROVAL_2'){
      this._commonService.setCurrentStep(5)
       this.currentStep=5
       this.freezeValue=5
-     }
-      else if(applicationData.status === 'MANAGER_APPROVAL_2' || applicationData.applicationStatus === 'MANAGER_APPROVAL_2'){
-     this._commonService.setCurrentStep(6)
-      this.currentStep=6
-      this.freezeValue=6
      }
      else if(applicationData.status === 'REJECTED_MANAGER_APPROVAL_2' || applicationData.applicationStatus === 'REJECTED_MANAGER_APPROVAL_2'){
      this._commonService.setCurrentStep(5)
       this.currentStep=5
       this.freezeValue=5
      }
+      else if(applicationData.status === 'PENDING_MANAGER_APPROVAL_2' || applicationData.applicationStatus === 'PENDING_MANAGER_APPROVAL_2'){
+     this._commonService.setCurrentStep(5)
+      this.currentStep=5
+      this.freezeValue=5
+     }
+     
       else if(applicationData.status === 'DIC_APPROVAL' || applicationData.applicationStatus === 'DIC_APPROVAL'){
      this._commonService.setCurrentStep(6)
       this.currentStep=6
       this.freezeValue=6
      }
+      else if(applicationData.status === 'PENDING_DIC_CONSENT_APPROVAL' || applicationData.applicationStatus === 'PENDING_DIC_CONSENT_APPROVAL'){
+     this._commonService.setCurrentStep(6)
+      this.currentStep=6
+      this.freezeValue=6
+     }
       else if(applicationData.status === 'DIC_CONSENT_APPROVAL' || applicationData.applicationStatus === 'DIC_CONSENT_APPROVAL'){
+     this._commonService.setCurrentStep(6)
+      this.currentStep=6
+      this.freezeValue=6
+     }
+      else if(applicationData.status === 'CREDIT_APPRAISAL' || applicationData.applicationStatus === 'CREDIT_APPRAISAL'){
      this._commonService.setCurrentStep(7)
       this.currentStep=7
       this.freezeValue=7
      }
-      else if(applicationData.status === 'CREDIT_APPRAISAL' || applicationData.applicationStatus === 'CREDIT_APPRAISAL'){
+      else if(applicationData.status === 'PRIMARY_LENDER_NOC' || applicationData.applicationStatus === 'PRIMARY_LENDER_NOC'){
      this._commonService.setCurrentStep(8)
       this.currentStep=8
       this.freezeValue=8
      }
-      else if(applicationData.status === 'PRIMARY_LENDER_NOC' || applicationData.applicationStatus === 'PRIMARY_LENDER_NOC'){
+     else if(applicationData.status === 'SANCTION_LETTER_UPLOAD' || applicationData.applicationStatus === 'SANCTION_LETTER_UPLOAD'){
      this._commonService.setCurrentStep(9)
       this.currentStep=9
       this.freezeValue=9
      }
-     else if(applicationData.status === 'SANCTION_LETTER_UPLOAD' || applicationData.applicationStatus === 'SANCTION_LETTER_UPLOAD'){
+      else if(applicationData.status === 'MANAGER_APPROVAL_3' || applicationData.applicationStatus === 'MANAGER_APPROVAL_3'){
      this._commonService.setCurrentStep(10)
       this.currentStep=10
       this.freezeValue=10
      }
-      else if(applicationData.status === 'MANAGER_APPROVAL_3' || applicationData.applicationStatus === 'MANAGER_APPROVAL_3'){
-     this._commonService.setCurrentStep(11)
-      this.currentStep=11
-      this.freezeValue=11
-     }
       else if(applicationData.status === 'REJECTED_MANAGER_APPROVAL_3' || applicationData.applicationStatus === 'REJECTED_MANAGER_APPROVAL_3'){
     this._commonService.setCurrentStep(10)
+      this.currentStep=10
+      this.freezeValue=10
+     }
+      else if(applicationData.status === 'PENDING_MANAGER_APPROVAL_3' || applicationData.applicationStatus === 'PENDING_MANAGER_APPROVAL_3'){
+     this._commonService.setCurrentStep(10)
       this.currentStep=10
       this.freezeValue=10
      }
