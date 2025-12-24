@@ -558,8 +558,8 @@ onSubmit() {
     console.log(this.assessmentForm?.value,this.applicationData)
      if (this.assessmentForm.valid) {
         const riskAssessment = this.generateRiskResponse();
-        const totalScore=this.calculateScore1()
-        console.log(riskAssessment)
+    const totalScore=this.calculateScore1()
+  console.log(riskAssessment)
   
 
 // Remove all stressScore controls from the form
@@ -573,6 +573,8 @@ onSubmit() {
      const creditFacilityDetails: any = this.assessmentForm.get('creditFacilityDetails')?.value? this.assessmentForm.get('creditFacilityDetails')?.value : [];
     this.calculateScore();
       // Calculate final score
+     
+      
       // Prepare data for submission
       const formData = {
         ...this.assessmentForm.value,
@@ -583,7 +585,7 @@ onSubmit() {
         
 
       };
-      this.LoaderService.show();
+  this.LoaderService.show();
 
       this.assessmentForm.removeControl('stressScore');
      this._commonService.add(APIS.tihclExecutive.submitPrimilinary+ this.applicationData?.applicationNo, formData).subscribe({
@@ -607,7 +609,6 @@ onSubmit() {
       // Reset form if needed
       // this.assessmentForm.reset();
     } else {
-       this.LoaderService.hide();
       // Mark all fields as touched to show validation messages
       this.markFormGroupTouched(this.assessmentForm);
     }
@@ -621,6 +622,60 @@ onSubmit() {
         const riskAssessment = this.generateRiskResponse();
     const totalScore=this.calculateScore1()
   console.log(riskAssessment)
+  
+
+// Remove all stressScore controls from the form
+      for (let i = 1; i <= 10; i++) {
+        this.assessmentForm.removeControl(`stressScore_${i}`);
+        this.assessmentForm.removeControl(`stressScoreJustification_${i}`);
+}
+
+  // If you want to remove a control named 'stressScore' from the form, use:
+    
+     const creditFacilityDetails: any = this.assessmentForm.get('creditFacilityDetails')?.value? this.assessmentForm.get('creditFacilityDetails')?.value : [];
+    this.calculateScore();
+      // Calculate final score
+     
+      
+      // Prepare data for submission
+      const formData = {
+        ...this.assessmentForm.value,
+        riskCategoryScore:totalScore,
+        riskCategories:riskAssessment,
+        applicationStatus: Object.keys(this.getApplicationData).length ?this.getApplicationData?.applicationStatus:"PRELIMINARY_ASSESSMENT",
+        executive:this.loginsessionDetails?.firstName+this.loginsessionDetails?.lastName
+        
+
+      };
+      this.assessmentForm.removeControl('stressScore');
+     this._commonService.add(APIS.tihclExecutive.submitPrimilinary+ this.applicationData?.applicationNo, formData).subscribe({
+      next: (response) => {
+        console.log()
+         this.progressBarStatusUpdate.emit({"update":true})
+
+      },
+      error: (error) => {
+        console.error('Error submitting form:', error);
+      }
+    });
+      // Here you would typically send the data to your backend
+      console.log('Form submitted:', formData);
+      
+      // Reset form if needed
+      // this.assessmentForm.reset();
+    } else {
+      // Mark all fields as touched to show validation messages
+      this.markFormGroupTouched(this.assessmentForm);
+    }
+  }
+   onUpdateByPopup() {
+  
+  
+    console.log(this.assessmentForm?.value,this.applicationData)
+     if (this.assessmentForm.valid) {
+        const riskAssessment = this.generateRiskResponse();
+      const totalScore=this.calculateScore1()
+     console.log(riskAssessment)
   
 
 // Remove all stressScore controls from the form

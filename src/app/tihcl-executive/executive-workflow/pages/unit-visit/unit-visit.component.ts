@@ -380,7 +380,7 @@ saveworkshift(): void {
     } else {
       this.workShiftsDto.push(this.fb.group(this.workShiftsDtoForm.value));
     }
-
+    this.saveExistingDataPopup()
     this.closePartnershipModal();
   }
   
@@ -540,6 +540,51 @@ saveworkshift(): void {
         });
       }
   }
+  saveExistingDataPopup(){
+    this.loaderService.show()
+    console.log(this.ExistingunitVisit)
+   
+       if(Object.keys(this.ExistingunitVisit).length && this.ExistingunitVisit?.id){
+
+         let payload:any={...this.unitVisitForm.value, "applicationNo": this.applicationData?.applicationNo,"applicationStatus": "MANAGER_APPROVAL_1"}
+         this._commonService.update(APIS.tihclExecutive.updateUnitVisit,payload,this.ExistingunitVisit?.id).subscribe({
+          next: (response) => {
+            this.loaderService.hide()
+
+           this.getDataById(response?.data?.id)
+           this.progressBarStatusUpdate.emit({"update":true})
+            // this.toastrService.success('Unit Visit Data Updated Successfully','Unit Visit');
+
+            //  this.progressBarStatusUpdate.emit({"update":true})
+    
+          },
+          error: (error) => {
+            this.loaderService.hide()
+            // this.toastrService.error('Error while updating the data','Unit Visit');
+            console.error('Error submitting form:', error);
+          }
+        });
+      }
+      else{
+          console.log(this.applicationData,this.unitVisitForm.value)
+        let payload:any={...this.unitVisitForm.value, "applicationNo": this.applicationData?.applicationNo,"applicationStatus": "MANAGER_APPROVAL_1"}
+         this._commonService.add(APIS.tihclExecutive.saveUnitVisit,payload).subscribe({
+          next: (response) => {
+            this.loaderService.hide()
+           this.getDataById(response?.data?.id)
+           this.progressBarStatusUpdate.emit({"update":true})
+            // this.toastrService.success('Unit Visit Data Saved Successfully','Unit Visit');
+
+            //  this.progressBarStatusUpdate.emit({"update":true})
+    
+          },
+          error: (error) => {
+            this.loaderService.hide()
+            // console.error('Error submitting form:', error);
+          }
+        });
+      }
+  }
   onSubmitModel(): void {
     if (this.machineForm.valid ) {
       console.log(this.machineForm?.value)
@@ -551,7 +596,8 @@ saveworkshift(): void {
     // Push the new form group
         factoryDetailsArray.push(this.fb.group(this.machineForm.value));
         this.toastrService.success('Machinery Details Added Successfully');
-      this.onClose()
+        this.saveExistingDataPopup()
+         this.onClose()
     } else {
       this.markFormGroupTouched(this.unitVisitForm);
     }
@@ -624,6 +670,7 @@ saveworkshift(): void {
       }
       visitDetailsArray.push(this.fb.group(this.visitForm.value));
       this.toastrService.success('Visitor Details Added Successfully');
+      this.saveExistingDataPopup()
       this.onCloseVisit();
     } else {
       this.markFormGroupTouchedVisit(this.visitForm);
@@ -688,6 +735,7 @@ saveworkshift(): void {
       }
       resorcePersonArray.push(this.fb.group(this.resorcePersonForm.value));
       this.toastrService.success('Resource Details Added Successfully');
+      this.saveExistingDataPopup()
       this.onCloseResourcePerson();
     } else {
       this.markFormGroupTouchedResourcePerson(this.resorcePersonForm);
