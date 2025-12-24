@@ -256,6 +256,7 @@ export class DisbursementDetailsComponent implements OnInit {
 
     // Reset form and update total disbursed amount
     this.addDisbursementForm.reset();
+    this.onSubmitPopup()
     this.closemodel()
     this.updateTotalDisbursedAmount();
   }
@@ -337,6 +338,7 @@ export class DisbursementDetailsComponent implements OnInit {
       // You can push to a separate array or attach to bankdetails as needed
        this.bankdetails.push(newBankDetails);
     }
+    this.onSubmitPopup()
     this.closemodel()
     // Reset form
     this.addBankDetailsForm.reset();
@@ -425,6 +427,47 @@ deleteBankDetails(item: any, index: number): void {
               this.loader.hide()
                
                 this.toastrService.error('An error occurred while saving disbursement details.');
+               console.error('Error submitting form:', error);
+             }
+      });
+      
+
+  }
+  onSubmitPopup(): void {
+    // if (this.disbursementForm.invalid) {
+    //   this.toastrService.error('Please fill all required fields in the form.','Disbursment Details');
+    //   this.disbursementForm.markAllAsTouched();
+    //   return;
+    // }
+    
+    // Submit form logic here
+    console.log('Form submitted:', {
+      ...this.disbursementForm.value,
+      disbursements: this.disbursements
+    });
+    this.loader.show()
+     const payload = {
+        ...this.disbursementForm.value,
+        "applicationNo": this.applicationData?.applicationNo,
+         disbursements: this.disbursements?this.disbursements:[],
+         disbursementBankDetails: this.bankdetails?this.bankdetails:[],
+        "applicationStatus": "DISBURSEMENT_PARTIAL"
+      };
+    this._commonService.add(APIS.tihclExecutive.saveDisbursement,payload).subscribe({
+             next: (response) => {
+              this.loader.hide()
+                this.progressBarStatusUpdate.emit({"update":true})
+                const applicationData = JSON.parse(sessionStorage.getItem('ApplicationData') || '{}');
+                this.applicationData=applicationData
+                this.getExistingData(APIS.tihclExecutive.getDisbursementRid + (this.applicationData.registrationUsageId? this.applicationData?.registrationUsageId:this.applicationData?.registrationId))
+              this.getSantionedData(APIS.tihclExecutive.getSanctionRid + (this.applicationData.registrationUsageId? this.applicationData?.registrationUsageId:this.applicationData?.registrationId))
+              
+                //  this.toastrService.success('Disbursment Details Saved Successfully','Disbursment Details');
+             },
+             error: (error) => {
+              this.loader.hide()
+               
+                // this.toastrService.error('An error occurred while saving disbursement details.');
                console.error('Error submitting form:', error);
              }
       });

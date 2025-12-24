@@ -630,7 +630,7 @@ savePartnership(): void {
     } else {
       this.buyers.push(this.fb.group(this.buyerForm.value));
     }
-
+     this.saveBuyersDetailsPopup()
     this.closeModalBuyer();
     this.saveSuccess.buyers = true;
     setTimeout(() => this.saveSuccess.buyers = false, 3000);
@@ -646,6 +646,7 @@ savePartnership(): void {
     } else {
       this.suppliers.push(this.fb.group(this.supplierForm.value));
     }
+    this.saveBuyersDetailsPopup()
 
     this.closeModalBuyer();
     this.saveSuccess.suppliers = true;
@@ -681,6 +682,31 @@ savePartnership(): void {
     this.editIndex = null;
     this.editType = null;
   }
+  saveBuyersDetailsPopup(): void {
+    this.loader.show()
+    console.log(this.diagnosticForm.value)
+   
+      // Save logic here
+      let payload:any={topBuyers:this.diagnosticForm.value?.topBuyers,topSellers:this.diagnosticForm.value?.topSellers,"currentScreenStatus": "TOP_5_BUYERS",
+        "applicationNo": this.applicationData.applicationNo, id:this.getDataOfDiagnostic?.id,
+        "applicationStatus": "UNIT_VISIT"}
+
+      this._commonService.add(APIS.tihclExecutive.saveDiagnostic,payload).subscribe(
+        (res:any)=>{
+          this.loader.hide()
+          // this.toastrService.success('Buyers and Suppliers details saved successfully');
+          console.log(res)
+         
+          this.loadDiagnosticData()
+      },
+      (error:any)=>{
+        this.loader.hide()
+        // this.toastrService.error('Error saving Buyers and Suppliers details');
+
+    })
+      this.saveSuccess.basic = true;
+      setTimeout(() => this.saveSuccess.basic = false, 3000);
+    }
   saveBuyersDetails(): void {
     this.loader.show()
     console.log(this.diagnosticForm.value)
@@ -782,7 +808,7 @@ savePartnership(): void {
     } else {
       this.receivables.push(this.fb.group(this.receivableForm.value));
     }
-
+     this.saveReceivaablesDetailsPopup()
     this.closeModalReceivalbale();
     this.saveSuccess.receivables = true;
     setTimeout(() => this.saveSuccess.receivables = false, 3000);
@@ -798,7 +824,7 @@ savePartnership(): void {
     } else {
       this.payables.push(this.fb.group(this.payableForm.value));
     }
-
+    this.saveReceivaablesDetailsPopup()
     this.closeModalReceivalbale();
     this.saveSuccess.payables = true;
     setTimeout(() => this.saveSuccess.payables = false, 3000);
@@ -853,6 +879,29 @@ savePartnership(): void {
     const date = new Date(dateString);
     return date.toLocaleDateString('en-GB'); // Formats as dd/mm/yyyy
   }
+   saveReceivaablesDetailsPopup(): void {
+    this.loader.show()
+    console.log(this.diagnosticForm.value)
+    
+      // Save logic here
+      let payload:any={receivables:this.diagnosticForm.value?.receivables,payables:this.diagnosticForm.value?.payables,"currentScreenStatus": "RECEIVABLES_PAYABLES",
+        "applicationNo": this.applicationData.applicationNo, id:this.getDataOfDiagnostic?.id,
+        "applicationStatus": "UNIT_VISIT"}
+
+      this._commonService.add(APIS.tihclExecutive.saveDiagnostic,payload).subscribe(
+        (res:any)=>{
+          this.loader.hide()
+         
+          this.loadDiagnosticData()
+      },
+      (error:any)=>{
+        this.loader.hide()
+        this.toastrService.error('Error saving Receivables and Payables details');
+
+    })
+      this.saveSuccess.basic = true;
+      setTimeout(() => this.saveSuccess.basic = false, 3000);
+    }
    saveReceivaablesDetails(): void {
     this.loader.show()
     console.log(this.diagnosticForm.value)
@@ -1015,7 +1064,7 @@ orderBookPositionsModal = false;
     } else {
       this.orderBookPositions.push(this.fb.group(positionData));
     }
-    
+    this.saveOperationalStatusPopup()
     this.closeOperationalModals()
   }
 
@@ -1060,7 +1109,7 @@ orderBookPositionsModal = false;
     } else {
       this.unsecuredLoans.push(this.fb.group(loanData));
     }
-    
+    this.saveOperationalStatusPopup()
     this.closeOperationalModals()
   }
 
@@ -1083,7 +1132,32 @@ closeOperationalModals(){
     this.isEditingOrderBook = false;
   this.currentOrderBookIndex = -1;
 }
- 
+ saveOperationalStatusPopup() {
+    // if (this.operationalStatus.invalid) return;
+    
+    // Save logic here
+    this.loader.show()
+    console.log('Form data:', this.operationalStatus.value);
+     let payload:any={operationalStatus:this.diagnosticForm.value?.operationalStatus,"currentScreenStatus": "OPERATIONAL_STATUS",
+        "applicationNo": this.applicationData.applicationNo, id:this.getDataOfDiagnostic?.id,
+        "applicationStatus": "UNIT_VISIT"}
+
+      this._commonService.add(APIS.tihclExecutive.saveDiagnostic,payload).subscribe(
+        (res:any)=>{
+          this.loader.hide()
+          // this.toastrService.success('Operational status saved successfully');
+          // console.log(res)
+          // this.currentTab='REASONS_FOR_STRESS'
+          this.loadDiagnosticData()
+      },
+      (error:any)=>{
+        this.loader.hide()
+        // this.toastrService.error('Error saving operational status', "Operational Status");
+
+    })
+    this.saveSuccess.operational = true;
+    setTimeout(() => this.saveSuccess.operational = false, 3000);
+  }
   saveOperationalStatus() {
     if (this.operationalStatus.invalid) return;
     
