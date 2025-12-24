@@ -619,7 +619,7 @@ saveworkshift(): void {
       const index = visitDetailsArray.controls.findIndex(control => control.value.visitorId === this.visitForm.value.visitorId);
       console.log(index,'index')
       // Only remove if editing (visitorId exists and is found)
-      if (index !== -1 && this.visitForm.value.visitorId) {
+      if ( this.iseditVisit) {
         visitDetailsArray.removeAt(index);
       }
       visitDetailsArray.push(this.fb.group(this.visitForm.value));
@@ -639,14 +639,17 @@ saveworkshift(): void {
       }
     });
   }
-
+  iseditVisit:any
   openModelVisit() {
+    
+    this.iseditVisit=false
     this.visitForm.reset();
-    const modal = new bootstrap.Modal(this.addvisit.nativeElement);
-    modal.show();
+    // const modal = new bootstrap.Modal(this.addvisit.nativeElement);
+    // modal.show();
   }
 
   editCreditDetailsVisit(item: any) {
+    this.iseditVisit=true
     this.visitForm = this.fb.group({
       visitedBy: [item?.visitedBy ? item.visitedBy : null,Validators.required],
       visitedPersonDesignation: [item?.visitedPersonDesignation, Validators.required],
@@ -680,7 +683,7 @@ saveworkshift(): void {
     // if (index !== -1) {
     //   resorcePersonArray.removeAt(index);
     // }
-    if (index !== -1 && this.resorcePersonForm.value.metPersonId) {
+    if (this.iseditVisit) {
         resorcePersonArray.removeAt(index);
       }
       resorcePersonArray.push(this.fb.group(this.resorcePersonForm.value));
@@ -702,12 +705,14 @@ saveworkshift(): void {
   }
 
   openModelResourcePerson() {
+     this.iseditVisit=false
     this.resorcePersonForm.reset();
-    const modal = new bootstrap.Modal(this.addResourcePerson.nativeElement);
-    modal.show();
+    // const modal = new bootstrap.Modal(this.addResourcePerson.nativeElement);
+    // modal.show();
   }
 
   editCreditDetailsResourcePerson(item: any) {
+     this.iseditVisit=true
     this.resorcePersonForm = this.fb.group({
       metPersonId: [item?.metPersonId ? item.metPersonId : null],
       nameOfThePerson: [item?.nameOfThePerson, Validators.required],

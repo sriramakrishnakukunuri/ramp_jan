@@ -11,7 +11,7 @@
               <h6 class="fw-600">Visit Person Details</h6>
             </div>
             <div *ngIf="freeze<=3">
-              <button type="button" data-bs-toggle="modal" data-bs-target="#addvisit" class="btn btn-primary btn-sm">
+              <button type="button" data-bs-toggle="modal" data-bs-target="#addvisit" (click)="openModelVisit()" class="btn btn-primary btn-sm">
                 <span class="bi bi-plus-lg"></span> Add
               </button>
             </div>
@@ -58,7 +58,7 @@
               <h6 class="fw-600">Resource Person Details</h6>
             </div>
             <div *ngIf="freeze<=3">
-              <button type="button" data-bs-toggle="modal" data-bs-target="#addResourcePerson" class="btn btn-primary btn-sm">
+              <button type="button" data-bs-toggle="modal" (click)="openModelResourcePerson()" data-bs-target="#addResourcePerson" class="btn btn-primary btn-sm">
                 <span class="bi bi-plus-lg"></span> Add
               </button>
             </div>
