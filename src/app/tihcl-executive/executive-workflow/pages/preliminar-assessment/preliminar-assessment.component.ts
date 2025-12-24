@@ -558,8 +558,8 @@ onSubmit() {
     console.log(this.assessmentForm?.value,this.applicationData)
      if (this.assessmentForm.valid) {
         const riskAssessment = this.generateRiskResponse();
-    const totalScore=this.calculateScore1()
-  console.log(riskAssessment)
+        const totalScore=this.calculateScore1()
+        console.log(riskAssessment)
   
 
 // Remove all stressScore controls from the form
@@ -573,8 +573,6 @@ onSubmit() {
      const creditFacilityDetails: any = this.assessmentForm.get('creditFacilityDetails')?.value? this.assessmentForm.get('creditFacilityDetails')?.value : [];
     this.calculateScore();
       // Calculate final score
-     
-      
       // Prepare data for submission
       const formData = {
         ...this.assessmentForm.value,
@@ -585,7 +583,7 @@ onSubmit() {
         
 
       };
-  this.LoaderService.show();
+      this.LoaderService.show();
 
       this.assessmentForm.removeControl('stressScore');
      this._commonService.add(APIS.tihclExecutive.submitPrimilinary+ this.applicationData?.applicationNo, formData).subscribe({
@@ -609,6 +607,7 @@ onSubmit() {
       // Reset form if needed
       // this.assessmentForm.reset();
     } else {
+       this.LoaderService.hide();
       // Mark all fields as touched to show validation messages
       this.markFormGroupTouched(this.assessmentForm);
     }
