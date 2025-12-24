@@ -30,18 +30,14 @@
             <div class="row"
               *ngIf="this.managrData?.applicationStatus=='DIC_APPROVAL' || this.managrData?.applicationStatus=='DIC_CONSENT_APPROVAL' || freeze>currentStep ">
               <div class="col-12 col-sm-12 col-md-4 offset-md-4">
-                <div class="d-grid">
-                  <button type="button" (click)="DownloadDic()" class="btn btn-primary">Download NOC</button>
-                </div>
-              </div>
+                <div class="d-flex gap-2">
+                  <button type="button" (click)="DownloadDic()" class="btn btn-primary flex-grow-1">Download NOC</button>
+                  <button *ngIf="this.managrData?.dicNocFilePath" (click)="openCreditPreviewModal()" class="btn btn-outline-primary">
+                    <i class="fa fa-eye"></i>
+                  </button>
+                </div>  </div>
             </div>
-            <!-- Sanction Letter Upload -->
-            <div class="card border rounded-2 shadow-none mb-3 mt-3"  *ngIf="freeze<=6">
-              <div class="card-header bg-theme text-white">
-                <h6 class="mb-0">Upload DIC Consent Letter</h6>
-              </div>
-              <div class="card-body">
-                <div class="row">
+            <div class="row mt-3" *ngIf="freeze<=6">
                   <div class="col-12 col-sm-8 offset-sm-2 col-md-8 offset-md-3 col-lg-8 offset-lg-4">
                     <div>
                       <label for="uploadSanctionLetter" class="form-label text-center fw-600">Upload DIC Consent Letter
@@ -59,8 +55,15 @@
                     </div>
                   </div>
                 </div>
+            <!-- Sanction Letter Upload -->
+            <!-- <div class="card border rounded-2 shadow-none mb-3 mt-3"  *ngIf="freeze<=6">
+              <div class="card-header bg-theme text-white">
+                <h6 class="mb-0">Upload DIC Consent Letter</h6>
               </div>
-            </div>
+              <div class="card-body">
+                
+              </div>
+            </div> -->
           </div>
         </div>
       </div>
