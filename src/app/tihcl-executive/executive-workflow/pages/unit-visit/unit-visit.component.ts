@@ -216,7 +216,7 @@ createForm(): void {
       this.GetMandalByDistrict(data?.district);
        this.unitVisitForm.patchValue({
       // visitedBy: data?.visitedBy,
-      dateOfVisit: data?.dateOfVisit,
+      dateOfVisit: data.dateOfVisit?data.dateOfVisit:null,
       timeOfVisit: data?.timeOfVisit,
       // nameOfThePerson: data?.nameOfThePerson,
       // designation: data?.designation,
@@ -501,7 +501,7 @@ saveworkshift(): void {
     //   else 
        if(Object.keys(this.ExistingunitVisit).length && this.ExistingunitVisit?.id){
 
-         let payload:any={...this.unitVisitForm.value, "applicationNo": this.applicationData?.applicationNo,"applicationStatus": "MANAGER_APPROVAL_1"}
+         let payload:any={...this.unitVisitForm.value,"applicationNo": this.applicationData?.applicationNo,"applicationStatus": "MANAGER_APPROVAL_1",dateOfVisit:this.unitVisitForm.value.dateOfVisit?this.unitVisitForm.value.dateOfVisit:null, }
          this._commonService.update(APIS.tihclExecutive.updateUnitVisit,payload,this.ExistingunitVisit?.id).subscribe({
           next: (response) => {
             this.loaderService.hide()
@@ -522,7 +522,7 @@ saveworkshift(): void {
       }
       else{
           console.log(this.applicationData,this.unitVisitForm.value)
-        let payload:any={...this.unitVisitForm.value, "applicationNo": this.applicationData?.applicationNo,"applicationStatus": "MANAGER_APPROVAL_1"}
+        let payload:any={...this.unitVisitForm.value,"applicationNo": this.applicationData?.applicationNo,"applicationStatus": "MANAGER_APPROVAL_1",dateOfVisit:this.unitVisitForm.value.dateOfVisit?this.unitVisitForm.value.dateOfVisit:null, }
          this._commonService.add(APIS.tihclExecutive.saveUnitVisit,payload).subscribe({
           next: (response) => {
             this.loaderService.hide()
@@ -543,10 +543,9 @@ saveworkshift(): void {
   saveExistingDataPopup(){
     this.loaderService.show()
     console.log(this.ExistingunitVisit)
-   
        if(Object.keys(this.ExistingunitVisit).length && this.ExistingunitVisit?.id){
 
-         let payload:any={...this.unitVisitForm.value, "applicationNo": this.applicationData?.applicationNo,"applicationStatus": "MANAGER_APPROVAL_1"}
+         let payload:any={...this.unitVisitForm.value,"applicationNo": this.applicationData?.applicationNo,"applicationStatus": "MANAGER_APPROVAL_1",dateOfVisit:this.unitVisitForm.value.dateOfVisit?this.unitVisitForm.value.dateOfVisit:null, }
          this._commonService.update(APIS.tihclExecutive.updateUnitVisit,payload,this.ExistingunitVisit?.id).subscribe({
           next: (response) => {
             this.loaderService.hide()
@@ -567,7 +566,7 @@ saveworkshift(): void {
       }
       else{
           console.log(this.applicationData,this.unitVisitForm.value)
-        let payload:any={...this.unitVisitForm.value, "applicationNo": this.applicationData?.applicationNo,"applicationStatus": "MANAGER_APPROVAL_1"}
+        let payload:any={...this.unitVisitForm.value,"applicationNo": this.applicationData?.applicationNo,"applicationStatus": "MANAGER_APPROVAL_1",dateOfVisit:this.unitVisitForm.value.dateOfVisit?this.unitVisitForm.value.dateOfVisit:null}
          this._commonService.add(APIS.tihclExecutive.saveUnitVisit,payload).subscribe({
           next: (response) => {
             this.loaderService.hide()

@@ -307,6 +307,7 @@ export class DisbursementDetailsComponent implements OnInit {
 
 
    saveBankDetailsForm(): void {
+    console.log(this.addBankDetailsForm.value,this.addBankDetailsForm.invalid)
     if (this.addBankDetailsForm.invalid) {
       this.addBankDetailsForm.markAllAsTouched();
       return;
