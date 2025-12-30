@@ -1548,7 +1548,15 @@ Approved(){
    * Handle file selection for multi-file upload
    */
   onMultiFileSelected(event: any): void {
-    const file: File = event.target.files[0];
+    console.log(event.target.files)
+    if (event.target.files.length > this.maxFiles) {
+      this.toastrService.warning(`Maximum ${this.maxFiles} files allowed`);
+      event.target.value = '';
+      return;
+    }
+    for (let i = 0; i < event.target.files.length; i++) {
+      console.log(i,event.target.files[i])
+      const file: File = event.target.files[0];
     
     if (!file) {
       return;
@@ -1592,7 +1600,10 @@ Approved(){
     this.uploadFileToServer(file);
     
     // Clear the input
+    
+    }
     event.target.value = '';
+    
   }
 removeUploadedFile(index: number): void {
    const removedFile = this.uploadedFiles.splice(index, 1)[0];
