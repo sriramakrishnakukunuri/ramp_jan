@@ -1556,7 +1556,7 @@ Approved(){
     }
     for (let i = 0; i < event.target.files.length; i++) {
       console.log(i,event.target.files[i])
-      const file: File = event.target.files[0];
+      const file: File = event.target.files[i];
     
     if (!file) {
       return;
