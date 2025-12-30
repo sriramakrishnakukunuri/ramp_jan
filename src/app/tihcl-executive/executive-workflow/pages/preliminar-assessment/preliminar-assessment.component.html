@@ -229,7 +229,7 @@
                     <button type="button" class="btn btn-default text-danger btn-sm" [ngClass]="{'isDisabled':freeze>1}"
                       (click)="editCreditDetails(item)"><span class="bi bi-pencil"></span></button>
                     <button type="button" class="btn btn-default text-danger btn-sm" [ngClass]="{'isDisabled':freeze>1}"
-                      (click)="deleteCreditDetail(i)"><span class="bi bi-trash"></span></button>
+                      (click)="deleteCreditDetail(item,i)"><span class="bi bi-trash"></span></button>
                   </td>
                   <td>{{item?.bankName}}</td>
                   <td>{{item?.natureOfLoan}}</td>
@@ -560,12 +560,12 @@
 
 
 <div class="modal fade" id="addDelivery" #addDelivery tabindex="-1" aria-labelledby="addResourceLabel"
-  aria-hidden="true">
+  aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header  bg-theme">
         <h5 class="modal-title" id="myModalLabel">Add Credit Details:</h5>
-        <button type="button" class="btn-close me-1" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button type="button" class="btn-close me-1" data-bs-dismiss="modal" (click)="close()" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <form [formGroup]="creditDetailsForm">
@@ -675,11 +675,12 @@
 
             </div>
             <div class="col-12">
-              <div class="text-end">
+                <div class="text-end">
+                <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal" (click)="close()">Cancel</button>
                 <button type="button" class="btn btn-primary"
                   [disabled]="!creditDetailsForm.valid || creditDetailsForm.get('overdueAmount')?.value > creditDetailsForm.get('outstandingAmount')?.value"
                   data-bs-dismiss="modal" (click)="submitCreditDetails()">Submit</button>
-              </div>
+                </div>
             </div>
           </div>
         </form>

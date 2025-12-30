@@ -279,13 +279,20 @@ export class DisbursementDetailsComponent implements OnInit {
   }
 
   deleteCreditDetail(item:any,index: number): void {
-    if (confirm('Are you sure you want to delete this disbursement?')) {
-      this.disbursements.splice(index, 1);
+    // if (confirm('Are you sure you want to delete this disbursement?')) {
+    //   this.disbursements.splice(index, 1);
       
-      // Update IDs to maintain sequence
-      if(item?.id){
+    //   // Update IDs to maintain sequence
+      
+      
+     
+    // }
+    if(item?.id){
          this._commonService.deleteById(APIS.tihclExecutive.getdisbursementDelete,item?.id).subscribe({
              next: (response) => {
+                this.getExistingData(APIS.tihclExecutive.getDisbursementRid + (this.applicationData.registrationUsageId? this.applicationData?.registrationUsageId:this.applicationData?.registrationId))
+              this.getSantionedData(APIS.tihclExecutive.getSanctionRid + (this.applicationData.registrationUsageId? this.applicationData?.registrationUsageId:this.applicationData?.registrationId))
+              
                 // this.progressBarStatusUpdate.emit({"update":true})
              },
              error: (error) => {
@@ -293,9 +300,7 @@ export class DisbursementDetailsComponent implements OnInit {
              }
            });
       }
-      
-      this.updateTotalDisbursedAmount();
-    }
+       this.updateTotalDisbursedAmount();
   }
 
   private updateTotalDisbursedAmount(): void {
@@ -378,16 +383,19 @@ deleteBankDetails(item: any, index: number): void {
     //   }
 
     //   // If you have an id and want to delete from backend
-    //   // if (item?.id) {
-    //   //   this._commonService.deleteById(APIS.tihclExecutive.getBankDetailsDelete, item.id).subscribe({
-    //   //     next: (response) => {
-    //   //       // Optionally emit progress or refresh UI
-    //   //     },
-    //   //     error: (error) => {
-    //   //       console.error('Error deleting bank details:', error);
-    //   //     }
-    //   //   });
-    //   // }
+      if (item?.id) {
+        this._commonService.deleteById(APIS.tihclExecutive.disbursementBankDetailsIdDelete, item.id).subscribe({
+          next: (response) => {
+                this.getExistingData(APIS.tihclExecutive.getDisbursementRid + (this.applicationData.registrationUsageId? this.applicationData?.registrationUsageId:this.applicationData?.registrationId))
+              this.getSantionedData(APIS.tihclExecutive.getSanctionRid + (this.applicationData.registrationUsageId? this.applicationData?.registrationUsageId:this.applicationData?.registrationId))
+              
+            // Optionally emit progress or refresh UI
+          },
+          error: (error) => {
+            console.error('Error deleting bank details:', error);
+          }
+        });
+      }
     // }
     this.bankdetails.splice(index, 1);
 

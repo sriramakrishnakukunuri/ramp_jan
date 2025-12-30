@@ -189,12 +189,15 @@ safePreviewUrl: any;
 openCreditPreviewModal() {
   const path = this.sanctionForm.get('sanctionLetterPath')?.value;
 
-  if (path) {
-    // only create SafeResourceUrl once
-    this.safePreviewUrl = this.sanitizer.bypassSecurityTrustResourceUrl(path);
-  }
+  // if (path) {
+  //   // only create SafeResourceUrl once
+  //   this.safePreviewUrl = this.sanitizer.bypassSecurityTrustResourceUrl(path);
+  // }
 
-  this.showCreditPreviewModal = true;
+  // this.showCreditPreviewModal = true;
+   if(path){
+    this._commonService.openFile(path)
+    }
 }
 
 closeCreditPreviewModal() {

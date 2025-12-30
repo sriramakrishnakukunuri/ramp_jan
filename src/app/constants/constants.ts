@@ -75,6 +75,8 @@ export const APIS = {
         getPendingApplications:API_BASE_URL+`/registrations/under-processing`,
         registerData: API_BASE_URL + '/registrations/usage/id/',
         submitPrimilinary:API_BASE_URL+`/registrations/preliminary/save/`,
+         submitPrimilinaryTable:API_BASE_URL+`/registrations/credit-facility-details/save`,
+         deleteUpdatePrimilinaryTable:API_BASE_URL+`/registrations/credit-facility-details/`,
         saveUnitVisit:API_BASE_URL+`/unitvisit/save`,
         updateUnitVisit:API_BASE_URL+`/unitvisit/update/`,
         getUnitVisit:API_BASE_URL+`/unitvisit/fetch/`,
@@ -87,6 +89,7 @@ export const APIS = {
         saveSanction:  API_BASE_URL+`/sanction/details/save`,
         saveDisbursement:  API_BASE_URL+`/disbursement/details/save`,
         getdisbursementDelete:API_BASE_URL+`/disbursement/details/disbursement/id/`,
+        disbursementBankDetailsIdDelete:API_BASE_URL+`/disbursement/details/disbursementBankDetails/delete/`,
         getDiagnostic:API_BASE_URL+'/diagnostic-reports/getBy/usage/',
         getRepaymentData:API_BASE_URL+'/ledger/report/',
         saveDiagnostic:API_BASE_URL+'/diagnostic-reports/save',
@@ -96,6 +99,9 @@ export const APIS = {
         saveLedgerpayments: API_BASE_URL + '/ledger/payments',
         getRepaymentDataById:API_BASE_URL+'/ledger/get/applications/status/DISBURSEMENT_PARTIAL%2CDISBURSEMENT_COMPLETED',
 
+        deleteUnitVisitor:API_BASE_URL+'/unitvisit/delete/visitor/',
+        deletemetPerson:API_BASE_URL+'/unitvisit/delete/metPerson/',
+        deleteworkShiftsId:API_BASE_URL+'/unitvisit/delete/workShift/',
         deleteDiagnostics:{
         deleteShareholding:API_BASE_URL+'/diagnostic-reports/Shareholding/delete/',
         deleteBalanceSheet:API_BASE_URL+'/diagnostic-reports/balance-sheet/',
@@ -105,6 +111,7 @@ export const APIS = {
         deleteseller:API_BASE_URL+'/diagnostic-reports/seller/delete/',
         deleteunsecured:API_BASE_URL+'/diagnostic-reports/unsecured-loans/',
         deleteorderBookPosition:API_BASE_URL+'/diagnostic-reports/orderBookPosition/delete/',
+        deleteCreditAppriasal:API_BASE_URL+'/registrations/credit-facility-details/',
        
         
         

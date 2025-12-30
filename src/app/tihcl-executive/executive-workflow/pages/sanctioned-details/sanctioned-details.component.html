@@ -244,7 +244,7 @@
             <!-- <input class="form-control" id="uploadSanctionLetter" type="file" (change)="onSanctionLetterSelected($event)"> -->
             <input type="file" class="form-control" id="letterUpload" 
                      (change)="onFileChange($event)">
-            <span *ngIf="sanctionForm.get('sanctionLetterPath')?.value" (click)="openCreditPreviewModal()">
+            <span *ngIf="sanctionForm.get('sanctionLetterPath')?.value" (click)="openCreditPreviewModal()" >
                                             <i class="fa fa-eye"></i>
             </span>
           </div>
@@ -269,7 +269,7 @@
   <div class="modal-dialog modal-lg modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Credit Appraisal Preview</h5>
+        <h5 class="modal-title">Sanction Details Preview</h5>
         <button type="button" class="btn-close" (click)="closeCreditPreviewModal()"></button>
       </div>
       <div class="modal-body text-center">
@@ -277,7 +277,7 @@
      [src]="sanctionForm.get('sanctionLetterPath')?.value"
      alt="Preview" style="max-width:100%;max-height:400px;">
 
-<iframe [hidden]="isImageFile(sanctionForm.get('sanctionLetterPath')?.value)" 
+       <iframe [hidden]="isImageFile(sanctionForm.get('sanctionLetterPath')?.value)" 
         [src]="safePreviewUrl" 
         style="width:100%;height:400px;" frameborder="0"></iframe>
 

@@ -177,6 +177,7 @@ get fassessmentForm(){
 ];
  createCreditDetail(item?: any): void {
     this.creditDetailsForm=this.fb.group({
+      creditFacilityDetailsId: [item?.creditFacilityDetailsId || null],
       bankName: ['', Validators.required],
       natureOfLoan: ['', Validators.required],
       limitSanctioned: ['', Validators.required],
@@ -191,25 +192,70 @@ get fassessmentForm(){
     const deliveryDetailsArray = this.assessmentForm.get('creditFacilityDetails') as FormArray;
     // Push the new form group
     deliveryDetailsArray.push(this.fb.group(this.creditDetailsForm.value));
-
+     let paymload:any={
+        registrationUsageId:this.applicationData?.registrationUsageId?this.applicationData?.registrationUsageId:this.applicationData?.registrationId,
+        ...this.creditDetailsForm.value
+      }
+      if(this.iseditCreditDetails){
+           this._commonService.update(APIS.tihclExecutive.deleteUpdatePrimilinaryTable ,paymload,this.creditDetailsForm.value?.creditFacilityDetailsId).subscribe({
+      next: (response) => {
+        this.progressBarStatusUpdate.emit({"update":true})
+        this.initializeForm()
+        this.getDtataByUrl(APIS.tihclExecutive.registerData + (this.applicationData.registrationUsageId?this.applicationData.registrationUsageId:this.applicationData.registrationId));
+      },
+      error: (error) => {
+        console.error('Error submitting form:', error);
+      }
+    });
+      }
+      else{
+           this._commonService.add(APIS.tihclExecutive.submitPrimilinaryTable ,paymload).subscribe({
+      next: (response) => {
+        this.progressBarStatusUpdate.emit({"update":true})
+        this.initializeForm()
+        this.getDtataByUrl(APIS.tihclExecutive.registerData + (this.applicationData.registrationUsageId?this.applicationData.registrationUsageId:this.applicationData.registrationId));
+      },
+      error: (error) => {
+        console.error('Error submitting form:', error);
+      }
+    });
+      }
+ 
     this.creditDetailsForm.reset();
       const modal = new bootstrap.Modal(this.addDelivery.nativeElement);
       modal.hide(); 
+      
+      // http://localhost:8081/tihcl/api/registrations/credit-facility-details/save
+
   }
+  iseditCreditDetails:boolean=false
   addCreditDetail(): void {
+    this.iseditCreditDetails=false
     this.createCreditDetail();
     const modal = new bootstrap.Modal(this.addDelivery.nativeElement);
     modal.show();
   }
+   private formatDateForInput(dateStr: string): string | null {
+    // Assumes input format is "DD-MM-YYYY"
+    if (!dateStr) return null;
+    const parts = dateStr.split('-');
+    if (parts.length === 3) {
+      return `${parts[2]}-${parts[1].padStart(2, '0')}-${parts[0].padStart(2, '0')}`;
+    }
+    return null;
+  }
   editCreditDetails(item: any) {
     this.creditDetailsForm = this.fb.group({
+      creditFacilityDetailsId: [item?.creditFacilityDetailsId || null],
       bankName: [item.bankName, Validators.required],
       natureOfLoan: [item.natureOfLoan, Validators.required],
       limitSanctioned: [item.limitSanctioned, Validators.required],
       outstandingAmount: [item.outstandingAmount],
       overdueAmount: [item.overdueAmount],
-      overdueDate: [item.overdueDate]
+      // overdueDate: [item.overdueDate]
+      overdueDate: [item?.overdueDate ? this.formatDateForInput(item.overdueDate) : null],
     });
+     this.iseditCreditDetails=true
       const deliveryDetailsArray = this.assessmentForm.get('creditFacilityDetails') as FormArray;
       const index = deliveryDetailsArray.controls.findIndex(control => control.value === item);
       if (index !== -1) {
@@ -219,7 +265,17 @@ get fassessmentForm(){
        modal.show(); 
   }
 
-  deleteCreditDetail(index: number) {
+  deleteCreditDetail(item:any,index: number) {
+      this._commonService.deleteById(APIS.tihclExecutive.deleteUpdatePrimilinaryTable,item?.creditFacilityDetailsId).subscribe(
+        (res:any)=>{
+          this.progressBarStatusUpdate.emit({"update":true})
+          this.initializeForm()
+          this.getDtataByUrl(APIS.tihclExecutive.registerData + (this.applicationData.registrationUsageId?this.applicationData.registrationUsageId:this.applicationData.registrationId));
+          
+      },
+      (error:any)=>{
+
+    })
     const deliveryDetailsArray = this.assessmentForm.get('creditFacilityDetails') as FormArray;
     deliveryDetailsArray.removeAt(index);
   }
@@ -250,7 +306,7 @@ loginsessionDetails:any
   getDtataByUrl(url: string) {
     this._commonService.getDataByUrl(url).subscribe({
       next: (dataList: any) => {
-       
+        
          this.assessmentForm.patchValue({...dataList.data,howDidYouKnowAboutTihcl:dataList.data.sourceOfApplication});
         
          this.getApplicationData=dataList.data
@@ -460,7 +516,11 @@ loginsessionDetails:any
     });
    }
   }
-
+  close(){
+    this.progressBarStatusUpdate.emit({"update":true})
+     this.initializeForm();
+     this.getDtataByUrl(APIS.tihclExecutive.registerData + (this.applicationData.registrationUsageId?this.applicationData.registrationUsageId:this.applicationData.registrationId));
+  }
   // Calculate total stress score
   calculateScore() {
     this.totalScore = 0;

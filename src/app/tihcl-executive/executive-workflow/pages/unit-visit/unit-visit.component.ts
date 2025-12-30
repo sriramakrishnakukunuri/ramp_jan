@@ -398,6 +398,17 @@ saveworkshift(): void {
     //   (error:any)=>{
 
     // })
+     if(id){
+         this._commonService.deleteById(APIS.tihclExecutive.deleteworkShiftsId,id).subscribe({
+             next: (response) => {
+              
+                // this.progressBarStatusUpdate.emit({"update":true})
+             },
+             error: (error) => {
+               console.error('Error submitting form:', error);
+             }
+           });
+      }
     this.workShiftsDto.removeAt(index);
   }
   onSubmit(): void {
@@ -707,6 +718,17 @@ saveworkshift(): void {
 
   deleteCreditDetailVisit(item: any, index: number) {
     // If you want to call delete API for visit, add here
+     if(item?.visitorId){
+         this._commonService.deleteById(APIS.tihclExecutive.deleteUnitVisitor,item?.visitorId).subscribe({
+             next: (response) => {
+              
+                // this.progressBarStatusUpdate.emit({"update":true})
+             },
+             error: (error) => {
+               console.error('Error submitting form:', error);
+             }
+           });
+      }
     const visitDetailsArray = this.unitVisitForm.get('visitorsDetailsRequests') as FormArray;
     visitDetailsArray.removeAt(index);
   }
@@ -773,6 +795,17 @@ saveworkshift(): void {
 
   deleteCreditDetailResourcePerson(item: any, index: number) {
     // If you want to call delete API for visit, add here
+     if(item?.metPersonId){
+         this._commonService.deleteById(APIS.tihclExecutive.deletemetPerson,item?.metPersonId).subscribe({
+             next: (response) => {
+              
+                // this.progressBarStatusUpdate.emit({"update":true})
+             },
+             error: (error) => {
+               console.error('Error submitting form:', error);
+             }
+           });
+      }
     const visitDetailsArray = this.unitVisitForm.get('metPersonDetailsDtos') as FormArray;
     visitDetailsArray.removeAt(index);
   }
