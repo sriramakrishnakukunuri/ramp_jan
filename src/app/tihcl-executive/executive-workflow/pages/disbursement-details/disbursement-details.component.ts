@@ -89,7 +89,12 @@ export class DisbursementDetailsComponent implements OnInit {
        }
           });
   }
-  today: any=this._commonService.getDate()
+  getDate(){
+  const today1 = new Date();
+  today1.setDate(today1.getDate());
+  return today1.toISOString().split('T')[0];
+}
+today: any=this.getDate()
 
   private formatDateForInput(dateStr: string): string | null {
     // Assumes input format is "DD-MM-YYYY"

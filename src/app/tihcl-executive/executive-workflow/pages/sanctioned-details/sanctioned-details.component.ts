@@ -16,7 +16,13 @@ export class SanctionedDetailsComponent implements OnInit {
 @Input() freeze:any
   sanctionForm!: FormGroup ;
   showSecurityFields = false;
-   today: any=this._commonService.getDate()
+  getDate(){
+  const today1 = new Date();
+  today1.setDate(today1.getDate());
+  return today1.toISOString().split('T')[0];
+}
+   today: any=this.getDate()
+
  @Output() progressBarStatusUpdate:any = new EventEmitter();
     applicationData:any
       constructor(private fb: FormBuilder, private toastrService: ToastrService,
