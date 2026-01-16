@@ -92,7 +92,7 @@ export class NonTrainingCipetComponent implements OnInit {
           else if(this.selectedBudgetHead=='19'){
             this.getTravelDataBySubActive()
           }
-          else if(this.selectedBudgetHead=='12' || this.selectedBudgetHead=='4'){
+          else if(this.selectedBudgetHead=='12' || this.selectedBudgetHead=='13' || this.selectedBudgetHead=='90' || this.selectedBudgetHead=='93' || this.selectedBudgetHead=='4'){
              this.getPreliminaryDataById()
             
           }
@@ -116,7 +116,9 @@ export class NonTrainingCipetComponent implements OnInit {
         });
       }
 
-
+getSubactivities(event:any){
+        return this.SubActivityList?.find((item:any)=>item?.subActivityId==event)?.subActivityName || ''
+      }
  convertToISOFormat(date: string): string {   
   if(date) {
     const [day, month, year] = date.split('-');
@@ -127,6 +129,14 @@ export class NonTrainingCipetComponent implements OnInit {
   }
  
 }
+
+ // addd by upendranath reddy for common file preview
+  showFileViewer(filePath: string) {
+    console.log('File path to open:', filePath);
+
+    this._commonService.openFile(filePath);
+
+  }
 
 
 

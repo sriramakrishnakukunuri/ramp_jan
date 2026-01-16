@@ -393,7 +393,7 @@ export class ProgramExpenditureComponent implements OnInit {
       this.modeOfPayment(item?.modeOfPayment)
       this.PrePostExpenditureForm.patchValue({...item,headOfExpenseId:this.getExpenseIdByName(item?.headOfExpense),billDate:this.convertToISOFormat(item?.billDate),checkDate:this.convertToISOFormat(item?.checkDate)})
       // this.PrePostExpenditureForm.get('uploadBillUrl')?.setValue(item?.uploadBillUrl)
-  
+      item['uploadBillUrl']=this.editUploadUrl
       console.log(item)
       
       

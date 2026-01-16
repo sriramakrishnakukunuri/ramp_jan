@@ -42,7 +42,7 @@ export const MY_FORMATS1 = {
     ],
 })
 export class MonthlyRangeComponent implements OnInit, OnChanges {
-    date1 = new FormControl(moment());
+    date1 = new FormControl();
     dateRange!: any;
     @Output() monthChangeValue = new EventEmitter<any>();
     @Input() paymentForMonth: any;
@@ -55,55 +55,58 @@ export class MonthlyRangeComponent implements OnInit, OnChanges {
         this.maxDate = moment();
     }
     
-    ngOnInit(): void {
-      console.log(this.paymentForMonth)
-        this.initializeValue();
-        this.setupValueChangeSubscription();
-    }
+//     ngOnInit(): void {
+//       console.log(this.paymentForMonth)
+//         this.initializeValue();
+//         this.setupValueChangeSubscription();
+//     }
 
-    ngOnChanges(changes: SimpleChanges): void {
-        if (changes['paymentForMonth'] && !changes['paymentForMonth'].firstChange) {
-            this.initializeValue();
-        }
-    }
+//     ngOnChanges(changes: SimpleChanges): void {
+//         if (changes['paymentForMonth'] && !changes['paymentForMonth'].firstChange) {
+//             this.initializeValue();
+//         }
+//     }
 
-    private initializeValue(): void {
-        if (this.paymentForMonth) {
-            this.date1.setValue(moment(this.paymentForMonth, 'MM-YYYY'));
-        }
-    }
+//    private initializeValue(): void {
+//     if (this.paymentForMonth && this.paymentForMonth.trim() !== '') {
+//         this.date1.setValue(moment(this.paymentForMonth, 'MM-YYYY'));
+//     } else {
+//         // Explicitly clear the FormControl when no value is provided
+//         this.date1.setValue(null);
+//     }
+// }
 
-    private setupValueChangeSubscription(): void {
-        // Subscribe to value changes to emit data whenever FormControl value changes
-        this.date1.valueChanges.subscribe(value => {
-            if (value) {
-                const formattedDate = value.format('MM-YYYY');
-                this.monthChangeValue.emit({
-                    formControl: this.date1,
-                    value: value,
-                    formattedValue: formattedDate,
-                    month: value.month() + 1, // month() returns 0-based index
-                    year: value.year()
-                });
-            }
-        });
-    }
+//     private setupValueChangeSubscription(): void {
+//         // Subscribe to value changes to emit data whenever FormControl value changes
+//         this.date1.valueChanges.subscribe(value => {
+//             if (value) {
+//                 const formattedDate = value.format('MM-YYYY');
+//                 this.monthChangeValue.emit({
+//                     formControl: this.date1,
+//                     value: value,
+//                     formattedValue: formattedDate,
+//                     month: value.month() + 1, // month() returns 0-based index
+//                     year: value.year()
+//                 });
+//             }
+//         });
+//     }
     
 
-    setMonthAndYear(normalizedMonthAndYear: Moment, datepicker: MatDatepicker<Moment>) {
-        const ctrlValue = this.date1.value!;
-        ctrlValue.month(normalizedMonthAndYear.month());
-        ctrlValue.year(normalizedMonthAndYear.year());
-        this.date1.setValue(ctrlValue);
-        datepicker.close();
-        // The valueChanges subscription will automatically emit the new value
-    }
+//     setMonthAndYear(normalizedMonthAndYear: Moment, datepicker: MatDatepicker<Moment>) {
+//         const ctrlValue = this.date1.value!;
+//         ctrlValue.month(normalizedMonthAndYear.month());
+//         ctrlValue.year(normalizedMonthAndYear.year());
+//         this.date1.setValue(ctrlValue);
+//         datepicker.close();
+//         // The valueChanges subscription will automatically emit the new value
+//     }
 
-    onYearSelected(normalizedYear: Moment) {
-        const ctrlValue = this.date1.value!;
-        ctrlValue.year(normalizedYear.year());
-        this.date1.setValue(ctrlValue);
-    }
+//     onYearSelected(normalizedYear: Moment) {
+//         const ctrlValue = this.date1.value!;
+//         ctrlValue.year(normalizedYear.year());
+//         this.date1.setValue(ctrlValue);
+//     }
 
     // Method to get current FormControl value
     getCurrentValue() {
@@ -116,11 +119,112 @@ export class MonthlyRangeComponent implements OnInit, OnChanges {
     }
 
     // Method to set value programmatically
-    setValue(date: any) {
-        if (typeof date === 'string') {
-            this.date1.setValue(moment(date, 'MM-YYYY'));
-        } else {
-            this.date1.setValue(moment(date));
+    // setValue(date: any) {
+    //     if (typeof date === 'string') {
+    //         this.date1.setValue(moment(date, 'MM-YYYY'));
+    //     } else {
+    //         this.date1.setValue(moment(date));
+    //     }
+    // }
+    ngOnInit(): void {
+    console.log(this.paymentForMonth);
+    this.initializeValue();
+    this.setupValueChangeSubscription();
+}
+
+ngOnChanges(changes: SimpleChanges): void {
+    if (changes['paymentForMonth']) {
+        this.initializeValue();
+    }
+}
+
+private initializeValue(): void {
+    // Clear any existing value first
+    this.date1.setValue(null, { emitEvent: false });
+    
+    if (this.paymentForMonth && this.paymentForMonth.trim() !== '') {
+        try {
+            const momentDate = moment(this.paymentForMonth, 'MM-YYYY');
+            if (momentDate.isValid()) {
+                this.date1.setValue(momentDate, { emitEvent: false });
+            }
+        } catch (error) {
+            console.warn('Invalid date format for paymentForMonth:', this.paymentForMonth);
+            this.date1.setValue(null, { emitEvent: false });
         }
     }
+}
+
+private setupValueChangeSubscription(): void {
+    // Subscribe to value changes to emit data whenever FormControl value changes
+    this.date1.valueChanges.subscribe(value => {
+        if (value && moment.isMoment(value) && value.isValid()) {
+            const formattedDate = value.format('MM-YYYY');
+            this.monthChangeValue.emit({
+                formControl: this.date1,
+                value: value,
+                formattedValue: formattedDate,
+                month: value.month() + 1, // month() returns 0-based index
+                year: value.year()
+            });
+        } else if (value === null || value === undefined) {
+            // Emit null/empty value when cleared
+            this.monthChangeValue.emit({
+                formControl: this.date1,
+                value: null,
+                formattedValue: '',
+                month: null,
+                year: null
+            });
+        }
+    });
+}
+
+setMonthAndYear(normalizedMonthAndYear: Moment, datepicker: MatDatepicker<Moment>) {
+    if (!normalizedMonthAndYear || !normalizedMonthAndYear.isValid()) {
+        return;
+    }
+    
+    const ctrlValue = this.date1.value || moment();
+    ctrlValue.month(normalizedMonthAndYear.month());
+    ctrlValue.year(normalizedMonthAndYear.year());
+    this.date1.setValue(ctrlValue);
+    datepicker.close();
+}
+
+onYearSelected(normalizedYear: Moment) {
+    if (!normalizedYear || !normalizedYear.isValid()) {
+        return;
+    }
+    
+    const ctrlValue = this.date1.value || moment();
+    ctrlValue.year(normalizedYear.year());
+    this.date1.setValue(ctrlValue);
+}
+
+// Method to set value programmatically
+setValue(date: any) {
+    if (!date) {
+        this.date1.setValue(null);
+        return;
+    }
+    
+    if (typeof date === 'string') {
+        const momentDate = moment(date, 'MM-YYYY');
+        if (momentDate.isValid()) {
+            this.date1.setValue(momentDate);
+        } else {
+            this.date1.setValue(null);
+        }
+    } else if (moment.isMoment(date) && date.isValid()) {
+        this.date1.setValue(date);
+    } else {
+        this.date1.setValue(null);
+    }
+}
+
+// Method to clear value
+clearValue() {
+    this.date1.setValue(null);
+}
 }

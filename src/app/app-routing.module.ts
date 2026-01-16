@@ -72,6 +72,14 @@ import { ProgramMonitoringReportApprovalComponent } from './PIA/program-monitori
 import { AddNonParticipantsDataComponent } from './PIA/add-non-participants-data/add-non-participants-data.component';
 import { OutputProgressComponent } from './PIA/output-progress/output-progress.component';
 import { TrainigNontrainingTargetsComponent } from './PIA/trainig-nontraining-targets/trainig-nontraining-targets.component';
+import { NonTrainingTgtpc10Component } from './PIA/non-training-tgtpc10/non-training-tgtpc10.component';
+import { NonTrainingTgtpc4Component } from './PIA/non-training-tgtpc4/non-training-tgtpc4.component';
+import { NonTrainingRich6aComponent } from './PIA/non-training-rich6a/non-training-rich6a.component';
+import { HelpSupportComponent } from './PIA/help-support/help-support.component';
+import { ViewIncompleteParticipantsComponent } from './PIA/view-incomplete-participants/view-incomplete-participants.component';
+
+import { ViewResourceListComponent } from './master-list/pages/view-resource-list/view-resource-list.component';
+import { MasterListComponent } from './master-list/master-list.component';
 const routes: Routes = [
     {
         path: '',
@@ -188,7 +196,7 @@ const routes: Routes = [
     },
     {
         path: 'view-table-organization',
-        component: OrganizationsListComponent,
+        component: MasterListComponent,
         canActivate: [AuthGuard],
         data: { roles: [Role.Admin,Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR] }
     },
@@ -426,6 +434,24 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         data: { roles: [Role.Admin,Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
     },
+     {
+        path: 'non-training-progress-tgtpc4',
+        component: NonTrainingTgtpc4Component,
+        canActivate: [AuthGuard],
+        data: { roles: [Role.Admin,Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
+    },
+     {
+        path: 'non-training-progress-rich6a',
+        component: NonTrainingRich6aComponent,
+        canActivate: [AuthGuard],
+        data: { roles: [Role.Admin,Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
+    },
+     {
+        path: 'non-training-progress-tgtpc10',
+        component: NonTrainingTgtpc10Component,
+        canActivate: [AuthGuard],
+        data: { roles: [Role.Admin,Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
+    },
     {
         path: 'non-training-progress-tihcl',
         component: NonTrainingTihclComponent,
@@ -485,6 +511,18 @@ const routes: Routes = [
         component: TrainigNontrainingTargetsComponent,
         canActivate: [AuthGuard],
         data: { roles: [Role.Admin,Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
+    },
+    {
+        path: 'help-support',
+        component: HelpSupportComponent,
+        canActivate: [AuthGuard],
+        data: { roles: [Role.Admin,Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR,Role.CALL_CENTER] }
+    },
+     {
+        path: 'view-participants-incomplete-programs',
+        component: ViewIncompleteParticipantsComponent,
+        canActivate: [AuthGuard],
+        data: { roles: [Role.Admin,Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR,Role.CALL_CENTER] }
     },
     {
         path: 'login',

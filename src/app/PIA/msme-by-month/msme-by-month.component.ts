@@ -7,6 +7,9 @@ import { LoaderService } from '@app/common_components/loader-service.service';
 import { DateAdapter } from '@angular/material/core';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { FormControl } from '@angular/forms';
+declare var bootstrap: any;
+declare var $: any;
+
 @Component({
   selector: 'app-msme-by-month',
   templateUrl: './msme-by-month.component.html',
@@ -214,6 +217,83 @@ viewRow(row?: any) {
        },
        error: (err) => {
          this.toastrService.error(err.error.message);
+       },
+     });
+}
+checkValidation(row:any){
+  if((!row.currentPhysicalAchievement || row.currentPhysicalAchievement==0) && (!row.currentFinancialAchievement || row.currentFinancialAchievement==0) && (!row.currentMonthMoMSMEBenefitedDto || (row.currentMonthMoMSMEBenefitedDto && Object.keys(row.currentMonthMoMSMEBenefitedDto).length && (!row.currentMonthMoMSMEBenefitedDto.total || row.currentMonthMoMSMEBenefitedDto.total==0) && (!row.currentMonthMoMSMEBenefitedDto.women || row.currentMonthMoMSMEBenefitedDto.women==0) && (!row.currentMonthMoMSMEBenefitedDto.sc || row.currentMonthMoMSMEBenefitedDto.sc==0) && (!row.currentMonthMoMSMEBenefitedDto.st || row.currentMonthMoMSMEBenefitedDto.st==0) && (!row.currentMonthMoMSMEBenefitedDto.obc || row.currentMonthMoMSMEBenefitedDto.obc==0)))){
+    return true
+  }
+  else{
+    return false
+  } 
+}
+    pushedDataOfMomse:any ={}
+   confirmationForPush(item: any) {
+    this.pushedDataOfMomse = item;
+    console.log(this.pushedDataOfMomse, 'deletePhysicalId');
+    document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+    const myModal = new bootstrap.Modal(document.getElementById('exampleModalDeleteProgram'));
+    myModal.show();
+     
+ }
+
+ closeModalDelete(): void {
+    document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+    const editSessionModal = document.getElementById('exampleModalDeleteProgram');
+  if (editSessionModal) {
+    const modalInstance = bootstrap.Modal.getInstance(editSessionModal);
+    modalInstance.hide();
+  }
+  // this.GetProgramsByAgency(this.selectedAgencyId);
+   } 
+pushtoMomse(row?: any) {
+  let url=APIS.msmeQueaterly.pushToMoMSME
+  // Find the quarter based on the selected month
+  const monthIndex = this.monthsList.indexOf(this.selectedMonthName); // 0-based index
+  const quarter = monthIndex >= 0 ? Math.ceil((monthIndex + 1) / 3) : null;
+
+  // Determine the correct year based on selectedFinancialYear and selectedMonthName
+  let yearParts = this.selectedFinancialYear.split('-');
+  let year = parseInt(yearParts[0], 10);
+  // If month is Jan/Feb/Mar (index 0,1,2), use the second year part
+  if (monthIndex >= 0 && monthIndex < 3) {
+    year = parseInt(yearParts[1], 10);
+  }
+
+  let payloadVal = {
+    "StateRAMPDashbrdData": [
+      {
+        "Intervention": row?.intervention,
+        "Component": row?.component,
+        "Activity": row?.activity,
+        "Year": year,
+        "Quarter": 'Q'+quarter,
+        "PhysicalTarget": row?.physicalTarget || 0,
+        "PhysicalAchieved": row?.physicalAchievement || 0,
+        "FinancialTarget": row?.financialTarget || 0,
+        "FinancialAchieved": row?.financialAchievement || 0,  
+        "MSMEsBenefittedTotal": row?.currentMonthMoMSMEBenefitedDto?.total || 0,
+        "MSMEsBenefittedWoman": row?.currentMonthMoMSMEBenefitedDto?.women || 0,
+        "MSMEsBenefittedSC": row?.currentMonthMoMSMEBenefitedDto?.sc || 0,
+        "MSMEsBenefittedST": row?.currentMonthMoMSMEBenefitedDto?.st || 0,
+        "MSMEsBenefittedOBC": row?.currentMonthMoMSMEBenefitedDto?.obc || 0 
+      }
+    ]
+  }
+ 
+  this._commonService.add(url,payloadVal).subscribe({
+       next: (res: any) => {
+        this.pushedDataOfMomse={}
+        this.getBasedOnQuarterSelection()
+        this.closeModalDelete()
+         this.toastrService.success(res?.message || 'Pushed to MoMSME successfully.');
+       },
+       error: (err) => {
+        this.pushedDataOfMomse={}
+        this.getBasedOnQuarterSelection()
+        this.closeModalDelete()
+         this.toastrService.error(err.error.message || 'Error pushing to MoMSME.');
        },
      });
 }

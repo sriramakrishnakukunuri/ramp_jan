@@ -363,6 +363,7 @@
                       <li><a class="dropdown-item" routerLink="/veiw-program" routerLinkActive="active">View Programs</a></li>
                       <li><a class="dropdown-item" routerLink="/view-Completed-data" routerLinkActive="active">View Participants</a>
                       </li>
+                       
                       <li><a class="dropdown-item" routerLink="/view-Completed-program-related" routerLinkActive="active">View
                           Completed programs</a></li>
                     </ul>
@@ -414,6 +415,7 @@
                       <li>
                         <a class="dropdown-item" routerLink="/reshedule-programs" routerLinkActive="active">Reschedule Programs</a>
                       </li>
+                      <li><a class="dropdown-item" routerLink="/view-participants-incomplete-programs" routerLinkActive="active">View Program Participants</a></li>
                       <li><a class="dropdown-item" routerLink="/progress-monitoring-report" routerLinkActive="active">Program Monitoring Report</a></li>
                        <li><a class="dropdown-item" routerLink="/progress-monitoring-report-approval" routerLinkActive="active">Program Monitoring Report Approval</a></li>
                         <li><a class="dropdown-item" routerLink="/download-excel-pdf" routerLinkActive="active">Download Excel/PDF</a></li>
@@ -452,8 +454,10 @@
                       <li><a class="dropdown-item" routerLink="/add-participant-data" routerLinkActive="active">Add Participant</a>
                       </li>
                       <li><a class="dropdown-item" routerLink="/view-participant-data" routerLinkActive="active">View Participant</a>
+                     
                         <!-- <li><a class="dropdown-item" routerLink="/upload-program-participate" routerLinkActive="active">Upload Participant</a> -->
                       </li>
+                       
                     </ul>
                   </li>
                   <!-- Program Execution (Agency) -->
@@ -503,15 +507,15 @@
                     </a>
                     <ul class="dropdown-menu show shadow" *ngIf="openSubMenus['updateOutcomes']"
                       style="position:static; background: #dfebeb;min-width:180px;">
-                      <li><a class="dropdown-item" (click)="clearOutcomes()" routerLink="/capture-outcome" routerLinkActive="active">Capture Outcome</a></li>
-                      <li><a class="dropdown-item" routerLink="/shg-training"  routerLinkActive="active">SHG Training Status</a></li>
+                      <li><a class="dropdown-item" routerLink="/capture-outcome" routerLinkActive="active">Capture Outcome</a></li>
+                      <li><a class="dropdown-item " routerLink="/shg-training"  routerLinkActive="active">SHG Training Status</a></li>
                     </ul>
                   </li>
-                  <!-- <ng-container *ngIf="this.user?.agencyName=='ALEAP' || this.user.agencyId==9">
+                  <ng-container *ngIf="this.user?.agencyName=='ALEAP' || this.user.agencyId==9">
                      <li *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]" >
                     <a class="dropdown-item" routerLink="/non-training-targets" routerLinkActive="active">Non Training Progress</a>
                   </li>
-                  </ng-container> -->
+                  </ng-container>
                    <ng-container *ngIf="this.user?.agencyName=='CoDe_IITH' || this.user.agencyId==2">
                      <li *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]" >
                     <a class="dropdown-item" routerLink="/non-training-progress" routerLinkActive="active">Non Training Progress</a>
@@ -527,7 +531,7 @@
                     <a class="dropdown-item" routerLink="/non-training-progress-coi" routerLinkActive="active">Non Training Progress</a>
                   </li>
                   </ng-container>
-                   <!-- <ng-container *ngIf="this.user?.agencyName=='WeHub' || this.user.agencyId==7">
+                   <ng-container *ngIf="this.user?.agencyName=='WeHub' || this.user.agencyId==7">
                      <li *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]" >
                     <a class="dropdown-item" routerLink="/non-training-progress-wehub" routerLinkActive="active">Non Training Progress</a>
                   </li>
@@ -536,24 +540,39 @@
                      <li *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]" >
                     <a class="dropdown-item" routerLink="/non-training-progress-cipet" routerLinkActive="active">Non Training Progress</a>
                   </li>
-                  </ng-container>  -->
+                  </ng-container> 
                    <ng-container *ngIf="this.user?.agencyName=='TiHCL_05' || this.user.agencyId==1">
                      <li *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]" >
                     <a class="dropdown-item" routerLink="/non-training-progress-tihcl" routerLinkActive="active">Non Training Progress</a>
                   </li>
                   </ng-container>
-                   <!-- <ng-container *ngIf="this.user?.agencyName=='CITD_11' || this.user.agencyId==5">
+                   <ng-container *ngIf="this.user?.agencyName=='CITD_11' || this.user.agencyId==5">
                      <li *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]" >
                     <a class="dropdown-item" routerLink="/non-training-progress-cipet" routerLinkActive="active">Non Training Progress</a>
                   </li>
-                  </ng-container> -->
+                  </ng-container>
+                    <ng-container *ngIf="this.user?.agencyName=='TGTPC-4' || this.user.agencyId==10">
+                     <li *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]" >
+                    <a class="dropdown-item" routerLink="/non-training-progress-tgtpc4" routerLinkActive="active">Non Training Progress</a>
+                  </li>
+                  </ng-container>
+                    <ng-container *ngIf="this.user?.agencyName=='TGTPC-10' || this.user.agencyId==11">
+                     <li *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]" >
+                    <a class="dropdown-item" routerLink="/non-training-progress-tgtpc10" routerLinkActive="active">Non Training Progress</a>
+                  </li>
+                  </ng-container>
+                   <ng-container *ngIf="this.user?.agencyName=='RICH_6A' || this.user.agencyId==3">
+                     <li *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]" >
+                    <a class="dropdown-item" routerLink="/non-training-progress-rich6a" routerLinkActive="active">Non Training Progress</a>
+                  </li>
+                  </ng-container>
                   
                  <!-- Masters List (Agency)  -->
                   <li *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]">
                     <a class="dropdown-item" routerLink="/view-table-organization" routerLinkActive="active">Masters List</a>
                   </li>
                   <!-- ESPD Training (Agency) -->
-                  <li *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]" class="dropdown-submenu"  style="position:relative;">
+                  <li *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]" class="dropdown-submenu "  style="position:relative;">
                     <a class="dropdown-item d-flex justify-content-between align-items-center" href="#"
                       (click)="toggleSubMenu('esdpTraining', $event)">
                       <span>ESDP Training</span>
@@ -576,8 +595,10 @@
                     </a>
                     <ul class="dropdown-menu show shadow" *ngIf="openSubMenus['reportsAgency']"
                       style="position:static; background: #dfebeb;min-width:180px;">
+                       <li><a class="dropdown-item" routerLink="/output-progress" routerLinkActive="active">Output Progress</a></li>
                       <li><a class="dropdown-item" routerLink="/program-summary" routerLinkActive="active">Program Summary</a></li>
                       <li><a class="dropdown-item" routerLink="/collage-home" routerLinkActive="active">Create Collage</a></li>
+                      <li><a class="dropdown-item" routerLink="/view-participants-incomplete-programs" routerLinkActive="active">View Program Participants</a></li>
                       <li>
                         <a class="dropdown-item" routerLink="/reshedule-programs" routerLinkActive="active">Reschedule Programs</a>
                       </li>
@@ -587,7 +608,7 @@
                     </ul>
                   </li>
                   <!-- Counsellor (Agency) -->
-                  <li *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]" class="dropdown-submenu" style="position:relative;">
+                  <li *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]" class="dropdown-submenu " style="position:relative;">
                     <a class="dropdown-item d-flex justify-content-between align-items-center" href="#"
                       (click)="toggleSubMenu('counsellor', $event)">
                       <span>Counsellor</span>
@@ -605,7 +626,7 @@
                     </ul>
                   </li>
                   <!-- Others (Agency) -->
-                  <li *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]" class="dropdown-submenu" style="position:relative;">
+                  <li *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR]" class="dropdown-submenu " style="position:relative;">
                     <a class="dropdown-item d-flex justify-content-between align-items-center" href="#"
                       (click)="toggleSubMenu('others', $event)">
                       <span>Others</span>
@@ -619,6 +640,9 @@
                       <li><a class="dropdown-item" routerLink="/assessment" routerLinkActive="active">Startups Assessments</a></li>
                     </ul>
                   </li>
+                    <!-- <li *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR,Role.CALL_CENTER,Role.Admin]">
+                    <a class="dropdown-item" routerLink="/help-support" routerLinkActive="active">Help Support</a>
+                  </li> -->
                 </ul>
               </li>
               <!-- new tab code ends here -->
@@ -650,7 +674,9 @@
                       class="bi bi-person fs-5 me-2"></span> My Profile</a></li>
                 <li><a class="dropdown-item" routerLink="/password-settings" routerLinkActive="active"><span
                       class="bi bi-key fs-5 me-2"></span> Change Password</a></li>
-                <li *appHasRole="[Role.Admin]"><a class="dropdown-item" routerLink="/user-registration" 
+                       <!-- <li><a class="dropdown-item" routerLink="/help-support" routerLinkActive="active"><span
+                      class="bi bi-key fs-5 me-2"></span> Help Support</a></li> -->
+                <li *appHasRole="[Role.Admin,Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR,Role.CALL_CENTER]"><a class="dropdown-item" routerLink="/user-registration" 
                     routerLinkActive="active"><span class="bi bi-person-circle fs-5 me-2"></span> Register User</a></li>
                 <li><a class="dropdown-item" (click)="logout()"><span class="bi bi-box-arrow-right fs-5 me-2"></span>
                     Logout</a></li>
@@ -678,6 +704,7 @@
 <div style="min-height: calc(100vh - 68px); padding-bottom: 60px;">
   <router-outlet></router-outlet>
    <app-loader></app-loader>
+   <app-common-file-viewer></app-common-file-viewer>
 </div>
 
 <!-- credits / footer -->

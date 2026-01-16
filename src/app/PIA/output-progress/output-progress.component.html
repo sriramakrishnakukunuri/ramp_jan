@@ -6,10 +6,10 @@
                     <div class="col-12 col-sm-6 col-md-6 col-lg-6">
                         <h6 class="fw-600 mb-2 mb-sm-0">View Output Progress</h6>
                     </div>
-                    <ng-container *ngIf="loginsessionDetails?.userRole == 'ADMIN'">
-                        <div class="col-12 col-sm-3 col-md-3 col-lg-3">
+                    <ng-container >
+                        <div class="col-12 col-sm-3 col-md-3 col-lg-3" >
                            
-                            <mat-form-field appearance="outline" class="w-100">
+                            <mat-form-field appearance="outline" class="w-100" *ngIf="loginsessionDetails?.userRole == 'ADMIN'">
                             <mat-label>List Of Agencies</mat-label>
                                 <mat-select [(ngModel)]="selectedAgencyId" (selectionChange)="getDataBasedOnAgencyOutcome()">
                                 <mat-select-filter [array]="agencyList" [displayMember]="'agencyName'" (filteredReturn)="agencyListFiltered = $event">
@@ -35,23 +35,28 @@
                             </mat-form-field>
                         </div>
                     </ng-container>   
-                    <!-- <ng-container *ngIf="loginsessionDetails?.userRole != 'ADMIN'">
-                        <div class="col-12 col-sm-3 col-md-3 col-lg-3">
-                            <label for="Agencies" style="font-weight: 600;">List Of Programs</label>
-                            <select class="form-select" [(ngModel)]="outcomeIds" (change)="dropdownProgramsList($event,'table')">
-                                <option value="">Select Program</option>
-                            <option *ngFor="let list of agencyProgramList" value="{{list.programId}}">{{list.programTitle}}</option>
-                            </select>
-                        </div>
-                    </ng-container> -->
-                   
                 </div>
             </div>
             <div class="card-body">
-                  <div class="text-end mb-3">
-            <button (click)="redirectAchievements()" class="btn btn-lime-green me-2">Quarterly Wise Output Achievements</button>
-            <!-- <button (click)="redirectPrograms()" class="btn btn-lime-green">View Programs</button> -->
-          </div>
+                <div class="text-end mb-3">
+                    <button (click)="redirectAchievements()" class="btn btn-lime-green me-2">Quarterly Wise Output Achievements</button>
+                    
+                    <!-- Add download buttons -->
+                    <!-- <div class="btn-group me-2" role="group">
+                        <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-download"></i> Download
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="javascript:void(0)" (click)="downloadTableAsPDF()">
+                                <i class="fas fa-file-pdf text-danger"></i> Download as PDF
+                            </a></li>
+                            <li><a class="dropdown-item" href="javascript:void(0)" (click)="downloadTableAsImage()">
+                                <i class="fas fa-image text-success"></i> Download as PNG
+                            </a></li>
+                           
+                        </ul>
+                    </div> -->
+                </div>
                 <div class="row mb-3">
                     <div class="col-12 col-sm-6 col-md-3 col-lg-3" *ngIf="!(outcomeIds==-1 && selectedAgencyId==-1)">
                         <h6 class="fw-600 mb-2 mb-sm-0 text-primary" *ngIf="outcomeIds==-1">Agency Name:{{getagencynamebyid(selectedAgencyId)}}</h6>
@@ -59,13 +64,14 @@
                         </h6>
                     </div>
                  </div>
-                 <div class="table-container">
+                 
+                 <!-- Add template reference to the table container -->
+                 <div class="table-container" #tableContainer>
                     <!-- all agency and all outcomes -->
                       <table class="table table-bordered table-striped" *ngIf="outcomeIds==-1 && selectedAgencyId==-1">
                     <thead class="bg-lime-green text-white">
                         <tr>
                             <th class="text-center" rowspan="2">S.No</th>
-                            <!-- <th rowspan="2" >Agency Name</th> -->
                             <th rowspan="2" class=" text-center sticky-col-1 " >Outcome Name</th>
                               <ng-container *ngFor="let key of headers ">
                                     <th class="text-center" colspan="5">{{key.agencyName}}</th>
@@ -78,15 +84,12 @@
                                 <th class="text-center">Influencer Achievement</th>
                                 <th class="text-center">Total</th>
                                 <th class="text-center">% Achievement</th>
-                                
                             </ng-container>
-                               
                         </tr>
                     </thead>
                     <tbody *ngIf="allagencyOutcomedata && allagencyOutcomedata.length">
                         <tr *ngFor="let key of allagencyOutcomedata; let i = index">
                             <td>{{ i + 1 }}</td>
-                            <!-- <td *ngIf="selectedAgencyId==-1 || outcomeIds!=-1">{{ item.agencyName }}</td> -->
                             <td  class="sticky-col-1">{{ key }}</td>
                             <ng-container *ngFor="let item of getDataByAgencyOutcome[key]">
                             <td>{{ item.outComeTarget }}</td>
@@ -97,8 +100,6 @@
                             {{ item.outComeTarget ? ((((item.outComeParticipantAchievement || 0) + (item.outComeInfluencerAchievement || 0)) / item.outComeTarget * 100) | number:'1.0-2') + '%' : '0%' }}
                             </td>
                             </ng-container>
-                            
-                           
                         </tr>
                     </tbody>
                     <tbody *ngIf="!allagencyOutcomedata || !allagencyOutcomedata.length">
@@ -142,10 +143,7 @@
                     </tbody>
                 </table>
                  </div>
-                
-               
             </div>
-            
         </div>
     </section>
 </main>

@@ -860,6 +860,17 @@ resetForm(): void {
 
     }
   }
+
+
+  // addd by upendranath reddy for common file preview
+  showFileViewer(filePath: string) {
+    console.log('File path to open:', filePath);
+
+    this._commonService.openFile(filePath);
+
+  }
+
+  
   ConfirmdeletePayment(item:any){
       this._commonService
       .deleteId(APIS.nontrainingtargets.deleteNonTrainingtargetsAleapContingencyPayment,item).subscribe({

@@ -105,6 +105,16 @@ import { ProgramMonitoringReportApprovalComponent } from './PIA/program-monitori
 import { AddNonParticipantsDataComponent } from './PIA/add-non-participants-data/add-non-participants-data.component';
 import { OutputProgressComponent } from './PIA/output-progress/output-progress.component';
 import { TrainigNontrainingTargetsComponent } from './PIA/trainig-nontraining-targets/trainig-nontraining-targets.component';
+import { NonTrainingTgtpc4Component } from './PIA/non-training-tgtpc4/non-training-tgtpc4.component';
+import { NonTrainingTgtpc10Component } from './PIA/non-training-tgtpc10/non-training-tgtpc10.component';
+import { NonTrainingRich6aComponent } from './PIA/non-training-rich6a/non-training-rich6a.component';
+import { HelpSupportComponent } from './PIA/help-support/help-support.component';
+import { ViewIncompleteParticipantsComponent } from './PIA/view-incomplete-participants/view-incomplete-participants.component';
+import { MasterListComponent } from './master-list/master-list.component';
+import { ViewLocationComponent } from './master-list/pages/view-location/view-location.component';
+import { ViewOrganizationListComponent } from './master-list/pages/view-organization-list/view-organization-list.component';
+import { ViewResourceListComponent } from './master-list/pages/view-resource-list/view-resource-list.component';
+import { CommonFileViewerComponent } from './common_components/common-file-viewer/common-file-viewer.component';
 @NgModule({
     imports: [
         MaterialModule,
@@ -213,7 +223,17 @@ import { TrainigNontrainingTargetsComponent } from './PIA/trainig-nontraining-ta
         ProgramMonitoringReportApprovalComponent,
         AddNonParticipantsDataComponent,
         OutputProgressComponent,
-        TrainigNontrainingTargetsComponent
+        TrainigNontrainingTargetsComponent,
+        NonTrainingTgtpc4Component,
+        NonTrainingTgtpc10Component,
+        NonTrainingRich6aComponent,
+        HelpSupportComponent,
+        ViewIncompleteParticipantsComponent,
+        MasterListComponent,
+        ViewLocationComponent,
+        ViewOrganizationListComponent,
+        ViewResourceListComponent,
+        CommonFileViewerComponent
 
     ],
     exports:[MaterialModule,

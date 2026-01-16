@@ -42,6 +42,15 @@ export class NonTrainingNimsmeComponent implements OnInit {
      this.getBudgetHeadList()
     
   }
+
+
+    // addd by upendranath reddy for common file preview
+  showFileViewer(filePath: string) {
+    console.log('File path to open:', filePath);
+
+    this._commonService.openFile(filePath);
+
+  }
   getSubactivities(event:any){
         return this.SubActivityList?.find((item:any)=>item?.subActivityId==event)?.subActivityName || ''
       }
@@ -347,6 +356,7 @@ createForm(): FormGroup {
               }
           this._commonService.add(APIS.nontrainingtargets.saveNonTrainingtargetsCodeIT,formData).subscribe((res: any) => {
             this.toastrService.success('Data saved successfully','Non Training Progress Data Success!');
+
             // this.getPreliminaryData.push(res.data)
             this.resetForm();
             this.isSubmitted = false;
@@ -762,6 +772,7 @@ closeModalDelete(): void {
         this.uploadedFilesVendor=''
         this.toastrService.success('Vendor details created successfully', 'Non Training Progress Data Success!');
         this.loadVendorData();
+
         this.closeVendorModal();
       },
       error: (error) => {
@@ -771,6 +782,7 @@ closeModalDelete(): void {
         this.closeVendorModal();
       }
     });
+    this.getDeatilOfTargets()
   }
 
   // Update Vendor
@@ -788,7 +800,9 @@ closeModalDelete(): void {
         this.closeVendorModal();
       }
     });
+    this.getDeatilOfTargets()
   }
+
 
   // Load Vendor Data
   loadVendorData() {
@@ -834,6 +848,7 @@ closeModalDelete(): void {
         console.error('Delete vendor data error:', error);
       }
     });
+    this.getDeatilOfTargets()
   }
 
   // Close Vendor Delete Modal

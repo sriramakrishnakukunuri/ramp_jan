@@ -129,7 +129,12 @@ export class NonTrainingTargetCodeComponent implements OnInit {
  
 }
 
+ // addd by upendranath reddy for common file preview
+  showFileViewer(filePath: string) {
+    console.log(filePath,"in file")
+    this._commonService.openFile(filePath);
 
+  }
 
  getPreliminaryDataById(){
         https://metaverseedu.in/workflow/non-training/all/expenditures?nonTrainingActivityId=1
@@ -447,7 +452,9 @@ createForm(): FormGroup {
           modal1.hide();
           this.toastrService.error(error.message,"Non Training Progress Data Error!");
         });
-        this.getDeatilOfTargets()
+        setTimeout(() => {
+           this.getDeatilOfTargets()
+        }, 200);
     }
     else{
       console.log('Form Submitted:', this.financialForm.value);
@@ -478,7 +485,9 @@ createForm(): FormGroup {
           modal1.hide();
           this.toastrService.error(error.message);
         });
-        this.getDeatilOfTargets()
+        setTimeout(() => {
+           this.getDeatilOfTargets()
+        }, 200);
     }
    
     }
@@ -528,7 +537,9 @@ createForm(): FormGroup {
         const modalInstance = bootstrap.Modal.getInstance(editSessionModal);
         modalInstance.hide();
       }
-      this.getDeatilOfTargets()
+       setTimeout(() => {
+           this.getDeatilOfTargets()
+        }, 200);
     } 
     uploadedFiles: any ;
   onFileSelected(event: any): void {
@@ -552,8 +563,8 @@ createForm(): FormGroup {
     { value: 'CEO', label: 'CEO' },
     { value: 'Project Manager', label: 'Project Manager' },
     { value: 'Designer', label: 'Designer' },
-    { value: 'Developer', label: 'Developer' },
-    { value: 'Analyst', label: 'Analyst' }
+    { value: 'R&D', label: 'R&D' },
+    { value: 'Interns for certifications', label: 'Interns for certifications' }
   ];
    contingencyForm!: FormGroup;
      createFormContingency(): FormGroup {
@@ -599,6 +610,26 @@ createForm(): FormGroup {
       this.iseditModeContingency = false;
       this.resetFormContingency();
       this.contingencyForm.reset();
+      if(this.selectedBudgetHead=='14'){
+        this.contingencyForm.patchValue({designation:'CEO'})
+      }
+      else if(this.selectedBudgetHead=='17'){
+        this.contingencyForm.patchValue({designation:'Project Manager'})
+
+      }
+      else if(this.selectedBudgetHead=='16' || this.selectedBudgetHead=='15'){
+        this.contingencyForm.patchValue({designation:'Designer'})
+
+      }
+      else if(this.selectedBudgetHead=='74'){
+        this.contingencyForm.patchValue({designation:'Interns for certifications'})
+
+      }
+      else if(this.selectedBudgetHead=='75'){
+        this.contingencyForm.patchValue({designation:'R&D'})
+
+      }
+      
     }
     if (mode === 'edit') {
       item['uploadBillUrl']=''
@@ -661,7 +692,9 @@ createForm(): FormGroup {
           this.toastrService.error(error.message);
         });
     }
-   this.getDeatilOfTargets()
+    setTimeout(() => {
+           this.getDeatilOfTargets()
+        }, 200);
       }
 
   }
@@ -699,7 +732,9 @@ createForm(): FormGroup {
           new Error(err);
         },
       });
-      this.getDeatilOfTargets()
+      setTimeout(() => {
+           this.getDeatilOfTargets()
+        }, 200);
 
     }
   closeModalDeleteContinuty(): void {
@@ -860,7 +895,9 @@ resetForm(): void {
         });
     }
    
-      this.getDeatilOfTargets()
+      setTimeout(() => {
+           this.getDeatilOfTargets()
+        }, 200);
       // console.log('Form Data:', formData);
       // Call your API service here
       // this.paymentService.createPayment(formData).subscribe(...);

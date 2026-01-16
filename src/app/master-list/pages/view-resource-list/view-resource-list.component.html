@@ -1,0 +1,202 @@
+<main class="mt-4">
+    <section>
+        <div class="container-fluid">
+            <div class="card mb-4">                
+                <div class="card-header bg-transparent">                    
+                    <div class="row align-items-center">
+                        <div class="col-12 col-sm-7 col-md-8 col-lg-9">
+                            <h6 class="fw-600 mb-2 mb-sm-0 text-green">View Resources</h6>
+                        </div>
+                        <div class="col-12 col-sm-5 col-md-4 col-lg-3 text-end">
+                            <button type="button" (click)="downloadProgramApi('resource')" class="btn btn-secondary">Download Resources</button>
+                        </div>
+                        <ng-container *ngIf="loginsessionDetails?.userRole == 'ADMIN'">
+                            <div class="col-12 col-sm-5 col-md-4 col-lg-3">
+                                <label for="Agencies" style="font-weight: 600;">List Of Agencies</label>
+                                <select class="form-select" (change)="getResourcesByAgency($any($event.target).value)">
+                                    <option value="All Agency" selected>All Agencies</option>
+                                    <option *ngFor="let list of agencyList" value="{{list.agencyId}}">{{list.agencyName}}</option>
+                                </select>
+                            </div>
+                        </ng-container>                        
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="dtable-container">                        
+                        <table id="view-table-resource" class="display table table-striped" style="width:100%">
+                            <!-- Table headers will be created by DataTables -->
+                        </table>
+                    </div>
+                </div>
+            </div>            
+        </div>
+    </section>
+</main>
+
+<!-- Edit Resource Modal -->
+<div class="modal fade" id="editResourceModal" tabindex="-1" aria-labelledby="editResourceLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+        <form [formGroup]="editResourceForm" (ngSubmit)="onUpdateResource()">
+            <div class="modal-content">
+                <div class="modal-header py-2">
+                    <h6 class="modal-title" id="editResourceLabel">Edit Resource Person</h6>
+                    <button type="button" class="btn-close me-1" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12 mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="isVIP" 
+                                       formControlName="isVIP" (change)="changeResourceStatus($event)">
+                                <label class="form-check-label" for="isVIP">
+                                    VIP Resource Person
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-sm-6">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="name" 
+                                       formControlName="name" placeholder="Resource Name">
+                                <label for="name">Resource Name <span class="text-danger">*</span></label>
+                                <div *ngIf="fEditResource['name'].invalid && fEditResource['name'].touched" 
+                                     class="text-danger small">
+                                    Resource name is required and should contain only letters
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <div class="form-floating mb-3">
+                                <select class="form-select" id="gender" formControlName="gender">
+                                    <option value="">Select Gender</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                                <label for="gender">Gender <span class="text-danger">*</span></label>
+                                <div *ngIf="fEditResource['gender'].invalid && fEditResource['gender'].touched" 
+                                     class="text-danger small">
+                                    Gender is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-sm-6">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="mobileNo" 
+                                       formControlName="mobileNo" placeholder="Mobile Number">
+                                <label for="mobileNo">Mobile Number <span class="text-danger">*</span></label>
+                                <div *ngIf="fEditResource['mobileNo'].invalid && fEditResource['mobileNo'].touched" 
+                                     class="text-danger small">
+                                    Valid mobile number is required (10 digits starting with 6-9)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <div class="form-floating mb-3">
+                                <input type="email" class="form-control" id="email" 
+                                       formControlName="email" placeholder="Email">
+                                <label for="email">Email <span class="text-danger">*</span></label>
+                                <div *ngIf="fEditResource['email'].invalid && fEditResource['email'].touched" 
+                                     class="text-danger small">
+                                    Valid email address is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-sm-6">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="organizationName" 
+                                       formControlName="organizationName" placeholder="Organization Name">
+                                <label for="organizationName">Organization Name <span class="text-danger">*</span></label>
+                                <div *ngIf="fEditResource['organizationName'].invalid && fEditResource['organizationName'].touched" 
+                                     class="text-danger small">
+                                    Organization name is required
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="qualification" 
+                                       formControlName="qualification" placeholder="Qualification">
+                                <label for="qualification">Qualification <span class="text-danger">*</span></label>
+                                <div *ngIf="fEditResource['qualification'].invalid && fEditResource['qualification'].touched" 
+                                     class="text-danger small">
+                                    Qualification is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-sm-6">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="designation" 
+                                       formControlName="designation" placeholder="Designation">
+                                <label for="designation">Designation <span class="text-danger">*</span></label>
+                                <div *ngIf="fEditResource['designation'].invalid && fEditResource['designation'].touched" 
+                                     class="text-danger small">
+                                    Designation is required
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="specialization" 
+                                       formControlName="specialization" placeholder="Specialization">
+                                <label for="specialization">Specialization <span class="text-danger">*</span></label>
+                                <div *ngIf="fEditResource['specialization'].invalid && fEditResource['specialization'].touched" 
+                                     class="text-danger small">
+                                    Specialization is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-floating mb-3">
+                            <textarea class="form-control" id="briefDescription" 
+                                      formControlName="briefDescription" placeholder="Brief Description" style="height: 80px"></textarea>
+                            <label for="briefDescription">Brief Description <span class="text-danger">*</span></label>
+                            <div *ngIf="fEditResource['briefDescription'].invalid && fEditResource['briefDescription'].touched" 
+                                 class="text-danger small">
+                                Brief description is required
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" (click)="closeEditResourceModal()">Close</button>
+                    <button type="submit" class="btn btn-lime-green" [ngClass]="{'disabled': editResourceForm.invalid || updateLoading}"
+                            [disabled]="editResourceForm.invalid || updateLoading">
+                        <span *ngIf="updateLoading" class="spinner-border spinner-border-sm me-1"></span>
+                        Update Resource
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Delete Resource Modal -->
+<div class="modal fade" id="deleteResourceModal" tabindex="-1" role="dialog" aria-labelledby="deleteResourceModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteResourceModalLabel">Delete Resource</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete this resource person "<strong>{{selectedResource?.name}}</strong>"?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="closeDeleteResourceModal()">Cancel</button>
+                <button type="button" class="btn btn-danger" [disabled]="deleteLoading" (click)="confirmDeleteResource()">
+                    <span *ngIf="deleteLoading" class="spinner-border spinner-border-sm me-1"></span>
+                    Delete Resource
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

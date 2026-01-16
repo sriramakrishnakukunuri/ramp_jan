@@ -695,7 +695,7 @@ EditProgramId:any=false
   }
    OrganizationData: any = []
   getOrganizationData() {
-    this._commonService.getDataByUrl(APIS.participantdata.getOrgnizationData).subscribe({
+    this._commonService.getDataByUrl(APIS.participantdata.getOrgnizationDataOnlyId).subscribe({
       next: (res: any) => {
         this.OrganizationData = res?.data
         this.assignFluidData1Org()
