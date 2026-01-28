@@ -57,6 +57,7 @@ managrData:any
     this.sanctionForm = this.fb.group({
       sanctionedDate: ['', Validators.required],
       sanctionedAmount: [0, [Validators.required, Validators.min(0)]],
+      toBeDisbursedAmount: [0, [Validators.required, Validators.min(0)]],
       roi: [0, [Validators.required, Validators.min(0)]],
       tenor: [0, [Validators.required, Validators.min(1)]],
       moratoriumPeriod: [0, [Validators.required, Validators.min(0)]],
@@ -87,6 +88,7 @@ managrData:any
            this.sanctionForm.patchValue({
         sanctionedDate: dataList?.sanctionedDate?this.formatDateForInput(dataList?.sanctionedDate) :null,
         sanctionedAmount: dataList?.sanctionedAmount || 0,
+        toBeDisbursedAmount: dataList?.toBeDisbursedAmount || 0,
         roi: dataList?.roi || 0,
         tenor: dataList?.tenor || 0,
         moratoriumPeriod: dataList?.moratoriumPeriod || 0,

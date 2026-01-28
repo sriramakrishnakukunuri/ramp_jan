@@ -64,7 +64,7 @@ export class GlobalDashboardComponent implements OnInit {
            'https://lookerstudio.google.com/embed/reporting/643d2038-ec80-40f8-afee-704cd8e3a1e1/page/p_p68byoxbvd'
         );
         break;
-                 case 'c7c4df33-38c4-43a0-86a3-b12baf093640':
+        case 'c7c4df33-38c4-43a0-86a3-b12baf093640':
         this.url = this.sanitizer.bypassSecurityTrustResourceUrl(
            'https://lookerstudio.google.com/embed/reporting/b966437e-860b-4080-8a8d-c213cf9329ee/page/p_p68byoxbvd'
         );
@@ -79,6 +79,19 @@ export class GlobalDashboardComponent implements OnInit {
            'https://lookerstudio.google.com/embed/reporting/643d2038-ec80-40f8-afee-704cd8e3a1e1/page/p_p68byoxbvd'
         );
         break;
+        // DIC  login ---Jan 28th 2026
+         case 'f2b8f2aa-9259-467c-926d-b296504401ea':
+        this.url = this.sanitizer.bypassSecurityTrustResourceUrl(
+           'https://lookerstudio.google.com/embed/reporting/52581a80-1cbb-4ef1-bb4c-6aa2900243ae/page/KkgmF'
+        );
+        break;
+        // COI Login  ---Jan 28th 2026
+        case '173440de-f39a-4d13-b6bd-dd23d5ab1ea6':
+        this.url = this.sanitizer.bypassSecurityTrustResourceUrl(
+           'https://lookerstudio.google.com/embed/reporting/d5ce2fe0-2a54-48d2-b30e-21371b1d8af4/page/VgMUF'
+        );
+        break;
+
       default:
         this.url = this.sanitizer.bypassSecurityTrustResourceUrl(
            'https://lookerstudio.google.com/embed/reporting/7b94d358-96f5-499d-8187-8291038cc449/page/p_p68byoxbvd'
