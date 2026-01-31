@@ -32,6 +32,18 @@ export class ReportsComponent implements OnInit {
       fileName = 'Status_Report.xlsx';
       url = `${API_BASE_URL}${APIS.tihclReports.EXECUTIVE_DOWNLOAD_PARTICIPANT_STATUS_REPORT_EXCEL}`;
     }
+    else if( reportType === 'Stress Score Excel') {
+      fileName = 'Stress_Score_Report.xlsx';
+      url = `${API_BASE_URL}${APIS.tihclReports.EXECUTIVE_STRESS_SCORE_REPORT_EXCEL}`;
+    }
+    else if( reportType === 'Sanctioned Details Excel') {
+      fileName = 'Sanctioned_Details_Report.xlsx';
+      url = `${API_BASE_URL}${APIS.tihclReports.EXECUTIVE_STRESS_SANCTIONED_DETAILS_REPORT_EXCEL}`;
+    }
+    else if( reportType === 'Fee Collection Details Excel') {
+      fileName = 'Fee_Collection_Details_Report.xlsx';
+      url = `${API_BASE_URL}${APIS.tihclReports.EXECUTIVE_STRESS_FEE_COLLECTION_DETAILS_REPORT_EXCEL}`;
+    }
     
     this.downloadFile(url, fileName);
   }

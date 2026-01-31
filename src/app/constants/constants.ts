@@ -176,5 +176,8 @@ export const APIS = {
     tihclReports:{
         EXECUTIVE_DOWNLOAD_OVERVIEW_REPORT_EXCEL: '/applications-overview/excel',
         EXECUTIVE_DOWNLOAD_PARTICIPANT_STATUS_REPORT_EXCEL: '/application-status/excel',
+        EXECUTIVE_STRESS_SCORE_REPORT_EXCEL: '/stress-report/excel',
+        EXECUTIVE_STRESS_SANCTIONED_DETAILS_REPORT_EXCEL: '/sanction-disbursement/excel',
+        EXECUTIVE_STRESS_FEE_COLLECTION_DETAILS_REPORT_EXCEL: '/fee-collection/excel',
     }
 }

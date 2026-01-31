@@ -30,17 +30,25 @@
                            
                         </div>
                         <!-- Download Expenditure Button -->
-                        <!-- <div>
-                            <button type="button" class="btn" style="background-color: limegreen;" matTooltip="Download as Excel or PDF" [matMenuTriggerFor]="downloadExpenditureMenu">
-                                <i class="bi bi-currency-dollar me-2"></i>Expenditure
+                        <div>
+                            <button type="button" class="btn" style="background-color: #0082f1;color:white;" (click)="DownloadExcelOverView('Stress Score Excel')">
+                                <i class="bi bi-people me-2"></i> Stress Score Reports
                             </button>
-                            <mat-menu #downloadExpenditureMenu="matMenu">
-                                <button mat-menu-item (click)="downloadSessionsExcel('3')">
-                                    <i class="bi bi-file-earmark-excel me-2"></i>Excel
-                                </button>
-                              
-                            </mat-menu>
-                        </div> -->
+                            
+                        </div>
+                        <!-- Sanctioned Details -->
+                        <div>
+                            <button type="button" class="btn" style="background-color: #0082f1;color:white;" (click)="DownloadExcelOverView('Sanctioned Details Excel')">
+                                <i class="bi bi-file-earmark-lock2 me-2"></i> Sanctioned Deatils Reports
+                            </button>
+                            
+                        </div>
+                        <!-- Fee Collection Details -->
+                        <div>
+                            <button type="button" class="btn" style="background-color: #0082f1;color:white;" (click)="DownloadExcelOverView('Fee Collection Details Excel')">
+                                <i class="bi bi-currency-dollar me-2"></i> Fee Collection Details Reports
+                            </button>   
+                        </div>
                     </div>
                 </div>
 
