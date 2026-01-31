@@ -72,6 +72,7 @@ import { CommonFileViewerComponent } from './common_components/common-file-viewe
 import { CommaSeperationPipe } from './common_components/comma-seperation.pipe';
 import { RepaymentLedgerComponent } from './tihcl-executive/repayment-ledger/repayment-ledger.component';
 import { IndianRupeesInputComponent } from './common_components/indian-rupees-input/indian-rupees-input.component';
+import { ReportsComponent } from './tihcl-executive/reports/reports.component';
 @NgModule({
     imports: [
         MatSelectModule,
@@ -131,6 +132,7 @@ import { IndianRupeesInputComponent } from './common_components/indian-rupees-in
         CommaSeperationPipe,
         RepaymentLedgerComponent,
         IndianRupeesInputComponent,
+        ReportsComponent,
     ],
     exports:[
         LoaderComponent

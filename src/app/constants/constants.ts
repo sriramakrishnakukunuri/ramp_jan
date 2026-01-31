@@ -172,6 +172,9 @@ export const APIS = {
         disbursementDetails:{
             getData: API_BASE_URL + '/disbursement/details/registration/id/'
         }
+    },
+    tihclReports:{
+        EXECUTIVE_DOWNLOAD_OVERVIEW_REPORT_EXCEL: '/applications-overview/excel',
+        EXECUTIVE_DOWNLOAD_PARTICIPANT_STATUS_REPORT_EXCEL: '/application-status/excel',
     }
-
 }

@@ -124,4 +124,9 @@ getSelectedRegistrationId() {
     // Observable.forkJoin (RxJS 5) changes to just forkJoin() in RxJS 6
     return forkJoin([response1, response2]);
   }
+    public downloadFileExcelOrPdf(url: string): Observable<Blob> {
+    return this.http.get(url, {
+      responseType: 'blob'
+    });
+  }
 }

@@ -1,0 +1,65 @@
+<main class="mt-4">
+    <section>
+        <div class="card mb-3">
+            <div class="card-header bg-transparent">
+                <div class="row align-items-center">
+                    <div class="col-12 col-sm-8 col-md-8 col-lg-8">
+                        <h6 class="fw-600 mb-2 mb-sm-0">Download Reports</h6>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="card-body">
+
+                <div class="row mb-4">
+                    <div class="col-12 col-sm-6 col-md-8 col-lg-8 d-flex flex-wrap gap-2">
+                        <!-- Download Sessions Button -->
+                        <div>
+                            <button type="button" class="btn" style="background-color: #0082f1;color:white;" (click)="DownloadExcelOverView('Overview Excel')">
+                                <i class="bi bi-calendar-event me-2"></i>Application OverView Reports
+                            </button>
+                          
+                        </div>
+                        <!-- Download Participants Button -->
+                        <div>
+                            <!-- matTooltip="Download as Excel or PDF" [matMenuTriggerFor]="downloadParticipantsMenu" -->
+                            <button type="button" class="btn" style="background-color: #0082f1; color:white;" (click)="DownloadExcelOverView('Status Excel')">
+                                <i class="bi bi-person-lines-fill me-2"></i>Application Status Reports
+                            </button>
+                           
+                        </div>
+                        <!-- Download Expenditure Button -->
+                        <!-- <div>
+                            <button type="button" class="btn" style="background-color: limegreen;" matTooltip="Download as Excel or PDF" [matMenuTriggerFor]="downloadExpenditureMenu">
+                                <i class="bi bi-currency-dollar me-2"></i>Expenditure
+                            </button>
+                            <mat-menu #downloadExpenditureMenu="matMenu">
+                                <button mat-menu-item (click)="downloadSessionsExcel('3')">
+                                    <i class="bi bi-file-earmark-excel me-2"></i>Excel
+                                </button>
+                              
+                            </mat-menu>
+                        </div> -->
+                    </div>
+                </div>
+
+                </div>
+        </div>
+    </section>
+</main>
+
+<!-- Loading Modal -->
+<div class="modal fade" id="downloadingModal" tabindex="-1" aria-labelledby="downloadingModalLabel" aria-hidden="true" data-keyboard="false" data-bs-backdrop="static">
+    <div class="modal-dialog modal-sm modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <div class="spinner-border text-primary mb-3" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <h6>Preparing your download...</h6>
+                <p class="text-muted mb-0">Please wait while we generate your file</p>
+            </div>
+        </div>
+    </div>
+</div>

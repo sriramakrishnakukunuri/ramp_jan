@@ -36,6 +36,7 @@ import { DicApprovalComponent } from './tihcl-dic/dic-approval/dic-approval.comp
 import { ViewApplicationsComponent } from './tihcl-coi/view-applications/view-applications.component';
 import { SanctionedAmountComponent } from './sanctioned-amount/sanctioned-amount.component';
 import { RepaymentLedgerComponent } from './tihcl-executive/repayment-ledger/repayment-ledger.component';
+import { ReportsComponent } from './tihcl-executive/reports/reports.component';
 
 const routes: Routes = [
     {
@@ -233,6 +234,12 @@ const routes: Routes = [
     {
         path: 'repayment-ledger',
         component: RepaymentLedgerComponent,
+        canActivate: [AuthGuard],
+        data: { roles: [Role.TIHCL_MANAGER,Role.TIHCL_DIC,Role.TIHCL_COI,Role.TIHCL_EXECUTOR] }
+    },
+     {
+        path: 'reports',
+        component: ReportsComponent,
         canActivate: [AuthGuard],
         data: { roles: [Role.TIHCL_MANAGER,Role.TIHCL_DIC,Role.TIHCL_COI,Role.TIHCL_EXECUTOR] }
     },
