@@ -162,7 +162,7 @@ export class ReportsComponent implements OnInit {
         parameter=`&userId=${this.executiveName}&district=${this.districtName}`
     }
     else if( this.category && this.districtName){
-        parameter=`&enterpriseCategory=${this.category}&districtName=${this.districtName}`
+        parameter=`&enterpriseCategory=${this.category}&district=${this.districtName}`
     }
     else if(this.executiveName){
         parameter=`&userId=${this.executiveName}`
