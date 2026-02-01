@@ -1,73 +1,206 @@
 <main class="mt-4">
-    <section>
-        <div class="card mb-3">
-            <div class="card-header bg-transparent">
-                <div class="row align-items-center">
-                    <div class="col-12 col-sm-8 col-md-8 col-lg-8">
-                        <h6 class="fw-600 mb-2 mb-sm-0">Download Reports</h6>
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="card-body">
-
-                <div class="row mb-4">
-                    <div class="col-12 col-sm-6 col-md-8 col-lg-8 d-flex flex-wrap gap-2">
-                        <!-- Download Sessions Button -->
-                        <div>
-                            <button type="button" class="btn" style="background-color: #0082f1;color:white;" (click)="DownloadExcelOverView('Overview Excel')">
-                                <i class="bi bi-calendar-event me-2"></i>Application OverView Reports
-                            </button>
-                          
-                        </div>
-                        <!-- Download Participants Button -->
-                        <div>
-                            <!-- matTooltip="Download as Excel or PDF" [matMenuTriggerFor]="downloadParticipantsMenu" -->
-                            <button type="button" class="btn" style="background-color: #0082f1; color:white;" (click)="DownloadExcelOverView('Status Excel')">
-                                <i class="bi bi-person-lines-fill me-2"></i>Application Status Reports
-                            </button>
-                           
-                        </div>
-                        <!-- Download Expenditure Button -->
-                        <div>
-                            <button type="button" class="btn" style="background-color: #0082f1;color:white;" (click)="DownloadExcelOverView('Stress Score Excel')">
-                                <i class="bi bi-people me-2"></i> Stress Score Reports
-                            </button>
-                            
-                        </div>
-                        <!-- Sanctioned Details -->
-                        <div>
-                            <button type="button" class="btn" style="background-color: #0082f1;color:white;" (click)="DownloadExcelOverView('Sanctioned Details Excel')">
-                                <i class="bi bi-file-earmark-lock2 me-2"></i> Sanctioned Deatils Reports
-                            </button>
-                            
-                        </div>
-                        <!-- Fee Collection Details -->
-                        <div>
-                            <button type="button" class="btn" style="background-color: #0082f1;color:white;" (click)="DownloadExcelOverView('Fee Collection Details Excel')">
-                                <i class="bi bi-currency-dollar me-2"></i> Fee Collection Details Reports
-                            </button>   
-                        </div>
-                    </div>
-                </div>
-
-                </div>
+  <section>
+    <div class="card mb-3">
+      <div class="card-header bg-theme text-white" style="cursor: pointer;" (click)="toggleReportSection()">
+        <div class="d-flex justify-content-between align-items-center">
+          <h6 class="mb-0 fw-600">Download Reports</h6>
+          <i class="bi" [ngClass]="{'bi-chevron-down': !showReportSection, 'bi-chevron-up': showReportSection}"></i>
         </div>
-    </section>
+      </div>
+      <div class="card-body" *ngIf="showReportSection">
+        <div class="row g-3">
+          <div class="col-12">
+            <div class="row g-3">
+                <div class="col-md-2">  </div>
+              <div class="col-md-4">
+                <label class="form-label mb-2">Application Overview</label>
+              
+              </div>
+                <div class="col-md-4">
+                
+                <button type="button" class="btn btn-primary w-100 py-2 d-flex align-items-center justify-content-center gap-2"
+                  (click)="DownloadExcelOverView('Overview Excel')">
+                  <i class="bi bi-file-earmark-spreadsheet"></i>
+                  <span>Download</span>
+                </button>
+              </div>
+              <div class="col-md-2">  </div>
+               <div class="col-md-2">  </div>
+              <div class="col-md-4">
+               <label class="form-label mb-2">Application Status</label>
+              
+              </div>
+                <div class="col-md-4">
+                
+                <button type="button" class="btn btn-primary w-100 py-2 d-flex align-items-center justify-content-center gap-2"
+                  (click)="DownloadExcelOverView('Status Excel')">
+                  <i class="bi bi-clipboard-check"></i>
+                  <span>Download</span>
+                </button>
+              </div>
+              <div class="col-md-2">  </div>
+              <div class="col-md-2">  </div>
+               <div class="col-md-4">
+               <label class="form-label mb-2">Stress Score</label>
+              
+              </div>
+               
+                <div class="col-md-4">
+                  <button type="button" class="btn btn-primary w-100 py-2 d-flex align-items-center justify-content-center gap-2"
+                  (click)="DownloadExcelOverView('Stress Score Excel')">
+                  <i class="bi bi-graph-up"></i>
+                  <span>Download</span>
+                </button>
+              </div>
+              <div class="col-md-2">  </div>
+              <!-- <div class="col-md-6">
+                <label class="form-label mb-2">Stress Score</label>
+                <button type="button" class="btn btn-primary w-100 py-2 d-flex align-items-center justify-content-center gap-2"
+                  (click)="DownloadExcelOverView('Stress Score Excel')">
+                  <i class="bi bi-graph-up"></i>
+                  <span>Download</span>
+                </button>
+              </div> -->
+               <div class="col-md-2">  </div>
+              <div class="col-md-4">
+               <label class="form-label mb-2">Sanctioned Details</label>
+              
+              </div>
+                <div class="col-md-4">
+                
+               <button type="button" class="btn btn-primary w-100 py-2 d-flex align-items-center justify-content-center gap-2"
+                  (click)="DownloadExcelOverView('Sanctioned Details Excel')">
+                  <i class="bi bi-shield-check"></i>
+                  <span>Download</span>
+                </button>
+              </div>
+              <div class="col-md-2">  </div>
+              <div class="col-md-2">  </div>
+              
+               <div class="col-md-4">
+               <label class="form-label mb-2">Fee Collection</label>
+              
+              </div>
+                <div class="col-md-4">
+                
+                <button type="button" class="btn btn-primary w-100 py-2 d-flex align-items-center justify-content-center gap-2"
+                  (click)="DownloadExcelOverView('Fee Collection Details Excel')">
+                  <i class="bi bi-wallet2"></i>
+                  <span>Download</span>
+                </button>
+              </div>
+              <div class="col-md-2">  </div>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid">
+      <div class="card">
+        <div class="card-header bg-theme text-white">
+          <h6 class="mb-0 ">Download Application Reports</h6>
+        </div>
+        <div class="card-body">
+          <div class="row mb-3">
+            <div class="col-md-12 d-flex justify-content-end align-items-center">
+            
+              <div class="me-2" style="width: 180px;">
+                <!-- (ngModelChange)="onEnterpriseChange($event)" -->
+                <mat-form-field appearance="outline" class="w-100" >
+              <mat-label>Select District</mat-label>
+              <mat-select [(ngModel)]="districtName" (ngModelChange)="GetDataByFilter($event)" >
+                <mat-select-filter [array]="allDistricts" [displayMember]="'districtName'"
+                  (filteredReturn)="filterallDistricts = $event">
+                </mat-select-filter>
+                <mat-option value="">Select District</mat-option>  
+                <mat-option *ngFor="let question of filterallDistricts" [value]="question.districtName">
+                  {{ question?.districtName }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+              
+              </div>
+             
+              <div class="me-2" style="width: 180px;">
+                   <mat-form-field appearance="outline" class="w-100" >
+              <mat-label>Select Executive</mat-label>
+              <mat-select [(ngModel)]="executiveName" (ngModelChange)="GetDataByFilter($event)">
+                <mat-select-filter [array]="allExecutives" [displayMember]="'executiveName'"
+                  (filteredReturn)="filterallExecutives = $event">
+                </mat-select-filter>
+                <mat-option value="">Select executiveName</mat-option>  
+                <mat-option *ngFor="let question of filterallExecutives" [value]="question.userId">
+                  {{ question?.executiveName }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+              </div>
+               <div class="me-2" style="width: 180px;">
+                  <mat-form-field appearance="outline" class="w-100" >
+              <mat-label>Select Category</mat-label>
+              <mat-select [(ngModel)]="category" (ngModelChange)="GetDataByFilter($event)">
+                <mat-option value="">Select Category</mat-option>  
+                <mat-option  value="Manufacturing">Manufacturing</mat-option>
+                <mat-option  value="Services">Services</mat-option>
+                <mat-option  value="Trading">Trading</mat-option>
+              </mat-select>
+            </mat-form-field>
+              </div>
+
+            </div>
+          </div>
+          <table id="pending_table" class="table nowrap display w-100 fs-md mt-0">
+            <thead>
+              <tr>
+                <th class="text-start">S.No</th>
+
+
+
+                <th>Name Of Unit</th>
+                <th>Promoter Name</th>
+                <th>Application No</th>
+                <th>Download</th>
+                <!-- <th>Sector</th> -->
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of tableList; let i = index">
+                <td class="text-start">{{ i + 1 }}</td>
+
+                <td>{{ item.enterpriseName }}</td>
+                <td>{{ item.promoterName }}</td>
+                <td>{{ item.applicationNo }}</td>
+                <td><a  style="color:#0082f1;font-size: larger;" (click)="DownloadApplicationReport(item?.registrationId)"><span class="bi bi-download"></span></a></td>
+                <!-- <td>{{ item.sector }}</td> -->
+              </tr>
+
+            </tbody>
+          </table>
+          <div *ngIf="tableList?.length === 0" class="text-center py-3 text-muted">
+            Data Not Available
+          </div>
+          <app-pagination [currentPage]="currentPage" [totalItems]="totalItems" [pageSize]="pageSize" [key]="activeTab"
+            (pageChange)="onPageChange($event)">
+          </app-pagination>
+        </div>
+      </div>
+    </div>
+  </section>
 </main>
 
 <!-- Loading Modal -->
-<div class="modal fade" id="downloadingModal" tabindex="-1" aria-labelledby="downloadingModalLabel" aria-hidden="true" data-keyboard="false" data-bs-backdrop="static">
-    <div class="modal-dialog modal-sm modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-body text-center">
-                <div class="spinner-border text-primary mb-3" role="status">
-                    <span class="visually-hidden">Loading...</span>
-                </div>
-                <h6>Preparing your download...</h6>
-                <p class="text-muted mb-0">Please wait while we generate your file</p>
-            </div>
+<div class="modal fade" id="downloadingModal" tabindex="-1" aria-labelledby="downloadingModalLabel" aria-hidden="true"
+  data-keyboard="false" data-bs-backdrop="static">
+  <div class="modal-dialog modal-sm modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body text-center">
+        <div class="spinner-border text-primary mb-3" role="status">
+          <span class="visually-hidden">Loading...</span>
         </div>
+        <h6>Preparing your download...</h6>
+        <p class="text-muted mb-0">Please wait while we generate your file</p>
+      </div>
     </div>
+  </div>
 </div>
