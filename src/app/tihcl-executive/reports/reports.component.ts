@@ -91,7 +91,7 @@ export class ReportsComponent implements OnInit {
     this._commonService.getDataByUrl(APIS.masterList.getDistricts).subscribe({
       next: (data: any) => {
         this.allDistricts = data.data;
-        this.districtName=data.data[0]?.districtName
+        // this.districtName=data.data[0]?.districtName
         this.filterallDistricts=this.allDistricts.slice()
       },
       error: (err: any) => {
@@ -108,7 +108,7 @@ export class ReportsComponent implements OnInit {
     this._commonService.getDataByUrl(APIS.masterList.getExecutivesList+this.loginsessionDetails?.userRole).subscribe({
       next: (data: any) => {
         this.allExecutives = data.data;
-         this.executiveName=data.data[0]?.userId
+        //  this.executiveName=data.data[0]?.userId
         this.filterallExecutives=this.allExecutives.slice()
       },
       error: (err: any) => {
