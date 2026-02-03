@@ -83,7 +83,7 @@ export class ReportsComponent implements OnInit {
       },
     });
   }
-  districtName:any=''
+  districtName:any=[]
    allDistricts:any=[]
    filterallDistricts:any=[]
   getAllDistricts(){
@@ -100,7 +100,7 @@ export class ReportsComponent implements OnInit {
     })
   }
    allExecutives:any=''
-   executiveName:any=''
+   executiveName:any=[]
    filterallExecutives:any=[]
   getallExecutives(){
     this.allExecutives = []
@@ -117,7 +117,7 @@ export class ReportsComponent implements OnInit {
     })
   }
    allCategory:any=''
-   category:any='Manufacturing'
+  category:any = ['Manufacturing', 'Services', 'Trading'];
   // getallCategory(){
   //   this.allCategory = []
   //   this._commonService.getDataByUrl(APIS.masterList.getDistricts).subscribe({
@@ -147,35 +147,80 @@ export class ReportsComponent implements OnInit {
     this.pageSize=10
     this.getDataBasedOnFilters(this.currentPage,  this.pageSize);
   }
-  tableList:any
+allSelectedDistrict: boolean = false;
+toggleAllDistrict(){
+    // this.allSelectedDistrict=!this.allSelectedDistrict;
+    if (this.allSelectedDistrict) {
+      this.districtName = this.allDistricts.map((dist: any) => dist.districtName);
+    } else {
+      this.districtName = [];
+    }
+     this.currentPage=1
+    this.pageSize=10
+    this.getDataBasedOnFilters(this.currentPage,  this.pageSize);
+}
+
+  allSelectedExecutive: boolean = false;
+  toggleAllExecutive(){
+    console.log(this.allExecutives,this.allSelectedExecutive)
+    // this.allSelectedExecutive=!this.allSelectedExecutive;
+    if (this.allSelectedExecutive) {
+      console.log(this.allExecutives,this.allSelectedExecutive)
+      this.executiveName = this.allExecutives.map((exec: any) => exec.userId);
+    } else {
+      this.executiveName = [];
+    }
+     this.currentPage=1
+    this.pageSize=10
+    this.getDataBasedOnFilters(this.currentPage,  this.pageSize);
+  }
+  allSelectedCategory: boolean = true;
+   toggleAllCategory() {
+    // this.allSelectedCategory=!this.allSelectedCategory;
+    if (this.allSelectedCategory) {
+      this.category = ['Manufacturing', 'Services', 'Trading'];
+    } else {
+      this.category = [];
+    }
+     this.currentPage=1
+    this.pageSize=10
+    this.getDataBasedOnFilters(this.currentPage,  this.pageSize);
+  }
+  tableList:any=[]
   getDataBasedOnFilters(pageNo:any,PageSize:any): any {
 
     // Implement data fetching logic based on filters here
     let parameter:any=''
-    if(this.executiveName && this.category && this.districtName){
-        parameter=`&userId=${this.executiveName}&enterpriseCategory=${this.category}&district=${this.districtName}`
+    // if(this.executiveName && this.category && this.districtName){
+    //     parameter=`&userId=${this.executiveName}&enterpriseCategory=${this.category}&district=${this.districtName}`
+    // }
+    // else if(this.executiveName && this.category){
+    //     parameter=`&userId=${this.executiveName}&enterpriseCategory=${this.category}`
+    // }
+    // else if(this.executiveName && this.districtName){
+    //     parameter=`&userId=${this.executiveName}&district=${this.districtName}`
+    // }
+    // else if( this.category && this.districtName){
+    //     parameter=`&enterpriseCategory=${this.category}&district=${this.districtName}`
+    // }
+    // else if(this.executiveName){
+    //     parameter=`&userId=${this.executiveName}`
+    // }
+    // else if(this.category){
+    //     parameter=`&enterpriseCategory=${this.category}`
+    // }
+    // else if(this.districtName){
+    //     parameter=`&district=${this.districtName}`
+    // }
+    let Payload={
+      districts:this.districtName,
+      userIds:this.executiveName,
+      natureOfActivities:this.category
     }
-    else if(this.executiveName && this.category){
-        parameter=`&userId=${this.executiveName}&enterpriseCategory=${this.category}`
-    }
-    else if(this.executiveName && this.districtName){
-        parameter=`&userId=${this.executiveName}&district=${this.districtName}`
-    }
-    else if( this.category && this.districtName){
-        parameter=`&enterpriseCategory=${this.category}&district=${this.districtName}`
-    }
-    else if(this.executiveName){
-        parameter=`&userId=${this.executiveName}`
-    }
-    else if(this.category){
-        parameter=`&enterpriseCategory=${this.category}`
-    }
-    else if(this.districtName){
-        parameter=`&district=${this.districtName}`
-    }
+
     this.loaderService.show();
-    this.tableList = '';
-     this._commonService.getDataByUrl(APIS.tihclReports.getData+'?page=' + (pageNo-1) + '&size=' + PageSize+parameter).subscribe({
+    this.tableList = [];
+     this._commonService.updatedata(APIS.tihclReports.getData+'?page=' + (pageNo-1) + '&size=' + PageSize,Payload).subscribe({
         next: (dataList: any) => {
           this.loaderService.hide()
           this.tableList = dataList?.data;

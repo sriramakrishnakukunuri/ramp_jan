@@ -2,3 +2,8 @@
     font-weight: 600;
     color:rgb(97, 81, 240)
 }
+
+.select-all,
+.update-btn {
+  margin: 5px 17px;
+}

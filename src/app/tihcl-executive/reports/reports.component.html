@@ -105,15 +105,24 @@
           <div class="row mb-3">
             <div class="col-md-12 d-flex justify-content-end align-items-center">
             
-              <div class="me-2" style="width: 180px;">
+              <div class="me-2" style="width: 200px;">
                 <!-- (ngModelChange)="onEnterpriseChange($event)" -->
                 <mat-form-field appearance="outline" class="w-100" >
               <mat-label>Select District</mat-label>
-              <mat-select [(ngModel)]="districtName" (ngModelChange)="GetDataByFilter($event)" >
+              <mat-select [(ngModel)]="districtName" (ngModelChange)="GetDataByFilter($event)" multiple>
                 <mat-select-filter [array]="allDistricts" [displayMember]="'districtName'"
                   (filteredReturn)="filterallDistricts = $event">
                 </mat-select-filter>
-                <mat-option value="">Select District</mat-option>  
+                 <div class="select-all">
+                    <mat-checkbox
+                      (click)="$event.stopPropagation()"
+                      [ngModelOptions]="{ standalone: true }"
+                      [(ngModel)]="allSelectedDistrict"
+                      (change)="toggleAllDistrict()"
+                      >{{!allSelectedDistrict?'Select All':'Unselect All'}}</mat-checkbox
+                    >
+                  </div>
+                <!-- <mat-option value="">Select District</mat-option>   -->
                 <mat-option *ngFor="let question of filterallDistricts" [value]="question.districtName">
                   {{ question?.districtName }}
                 </mat-option>
@@ -122,25 +131,43 @@
               
               </div>
              
-              <div class="me-2" style="width: 180px;">
+              <div class="me-2" style="width: 200px;">
                    <mat-form-field appearance="outline" class="w-100" >
               <mat-label>Select Executive</mat-label>
-              <mat-select [(ngModel)]="executiveName" (ngModelChange)="GetDataByFilter($event)">
+              <mat-select [(ngModel)]="executiveName" (ngModelChange)="GetDataByFilter($event)" multiple>
                 <mat-select-filter [array]="allExecutives" [displayMember]="'executiveName'"
                   (filteredReturn)="filterallExecutives = $event">
                 </mat-select-filter>
-                <mat-option value="">Select Executive Name</mat-option>  
+                <div class="select-all">
+                                        <mat-checkbox
+                      (click)="$event.stopPropagation()"
+                      [ngModelOptions]="{ standalone: true }"
+                      [(ngModel)]="allSelectedExecutive"
+                      (change)="toggleAllExecutive()"
+                      >{{!allSelectedExecutive?'Select All':'Unselect All'}}</mat-checkbox>
+                  </div>
+
+                <!-- <mat-option value="">Select Executive Name</mat-option>   -->
                 <mat-option *ngFor="let question of filterallExecutives" [value]="question.userId">
                   {{ question?.executiveName }}
                 </mat-option>
               </mat-select>
             </mat-form-field>
               </div>
-               <div class="me-2" style="width: 180px;">
+               <div class="me-2" style="width: 200px;">
                   <mat-form-field appearance="outline" class="w-100" >
               <mat-label>Select Category</mat-label>
-              <mat-select [(ngModel)]="category" (ngModelChange)="GetDataByFilter($event)">
-                <mat-option value="">Select Category</mat-option>  
+              <mat-select [(ngModel)]="category" (ngModelChange)="GetDataByFilter($event)" multiple>
+                 <div class="select-all">
+                    <mat-checkbox
+                      (click)="$event.stopPropagation()"
+                      [ngModelOptions]="{ standalone: true }"
+                      [(ngModel)]="allSelectedCategory"
+                      (change)="toggleAllCategory()"
+                      >{{!allSelectedCategory?'Select All':'Unselect All'}}</mat-checkbox
+                    >
+                  </div>
+                <!-- <mat-option value="">Select </mat-option>   -->
                 <mat-option  value="Manufacturing">Manufacturing</mat-option>
                 <mat-option  value="Services">Services</mat-option>
                 <mat-option  value="Trading">Trading</mat-option>
