@@ -100,7 +100,7 @@
                                         <th>S.No</th>
                                         <th>Visitor ID</th>
                                         <th>Visited By</th>
-                                        <th>Person Met</th>
+                                        <!-- <th>Person Met</th> -->
                                         <th>Designation</th>
                                     </tr>
                                 </thead>
@@ -109,8 +109,8 @@
                                         <td>{{i + 1}}</td>
                                         <td>{{visitor?.visitorId || 'N/A'}}</td>
                                         <td>{{visitor?.visitedBy || 'N/A'}}</td>
-                                        <td>{{visitor?.nameOfThePersonMet || 'N/A'}}</td>
-                                        <td>{{visitor?.designation || 'N/A'}}</td>
+                                        <!-- <td>{{visitor?.nameOfThePersonMet || 'N/A'}}</td> -->
+                                        <td>{{visitor?.visitedPersonDesignation || 'N/A'}}</td>
                                     </tr>
                                     <tr *ngIf="!ExistingunitVisit?.visitorsDetailsRequests?.length">
                                         <td colspan="5" class="text-center">No visitor details available</td>

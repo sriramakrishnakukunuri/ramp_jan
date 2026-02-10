@@ -148,9 +148,14 @@ currentStep:any = 1;
       this.freezeValue=8
      }
      else if(applicationData.status === 'SANCTION_LETTER_UPLOAD' || applicationData.applicationStatus === 'SANCTION_LETTER_UPLOAD'){
-     this._commonService.setCurrentStep(9)
+      this._commonService.setCurrentStep(9)
       this.currentStep=9
       this.freezeValue=9
+     }
+     else if(applicationData.status === 'MANAGER_REVERIFY_3' || applicationData.applicationStatus === 'MANAGER_REVERIFY_3'){
+     this._commonService.setCurrentStep(9)
+      this.currentStep=9
+       this.freezeValue=9
      }
       else if(applicationData.status === 'MANAGER_APPROVAL_3' || applicationData.applicationStatus === 'MANAGER_APPROVAL_3'){
      this._commonService.setCurrentStep(10)

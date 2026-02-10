@@ -28,7 +28,14 @@ export class GlobalDashboardComponent implements OnInit {
 
 
   setDashboardUrl(): void {
-    switch (this.loginsessionDetails.userId) {      
+    if(this.loginsessionDetails && this.loginsessionDetails.userRole=='"EXECUTIVE_MANAGER"') {
+      this.url = this.sanitizer.bypassSecurityTrustResourceUrl(
+        'https://lookerstudio.google.com/embed/reporting/52880037-9096-4a97-9068-aeefbb359054/page/PAGE_7_ID?params=%7B%22id%22%3A%22'+this.loginsessionDetails.userId+'5%22%7D'
+      );
+    }
+    else{
+        switch (this.loginsessionDetails.userId) {   
+        //  Manager Login --- Feb 10th 2026
       case 'b3ca0091-d2e6-4716-9c72-f4f3889d36ca':
         this.url = this.sanitizer.bypassSecurityTrustResourceUrl(
           'https://lookerstudio.google.com/embed/reporting/c3cfbbe8-992b-43a0-9e29-6a0e34c81dd2/page/VgMUF'
@@ -39,6 +46,7 @@ export class GlobalDashboardComponent implements OnInit {
           'https://lookerstudio.google.com/embed/reporting/480e6275-7aac-4c37-856f-a6f5fcde3f21/page/VgMUF'
         );
         break;
+        // Executive Login --- Feb 10th 2026
          case '1145be0e-fbbb-47d2-b67d-030c95d1f369':
         this.url = this.sanitizer.bypassSecurityTrustResourceUrl(
           'https://lookerstudio.google.com/embed/reporting/8f3200a9-5c2f-425f-b89e-71a880d1550a/page/p_p68byoxbvd'
@@ -69,7 +77,7 @@ export class GlobalDashboardComponent implements OnInit {
            'https://lookerstudio.google.com/embed/reporting/b966437e-860b-4080-8a8d-c213cf9329ee/page/p_p68byoxbvd'
         );
         break;
-                 case 'cc071924-5d3a-4cd3-9287-37da92485855':
+        case 'cc071924-5d3a-4cd3-9287-37da92485855':
         this.url = this.sanitizer.bypassSecurityTrustResourceUrl(
            'https://lookerstudio.google.com/embed/reporting/7b94d358-96f5-499d-8187-8291038cc449/page/p_p68byoxbvd'
         );
@@ -97,6 +105,8 @@ export class GlobalDashboardComponent implements OnInit {
            'https://lookerstudio.google.com/embed/reporting/7b94d358-96f5-499d-8187-8291038cc449/page/p_p68byoxbvd'
         );
     }
+    }
+  
   }
 
 }
