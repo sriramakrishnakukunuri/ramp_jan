@@ -28,7 +28,7 @@ export class GlobalDashboardComponent implements OnInit {
 
 
   setDashboardUrl(): void {
-    if(this.loginsessionDetails && this.loginsessionDetails.userRole=='"EXECUTIVE_MANAGER"') {
+    if(this.loginsessionDetails && this.loginsessionDetails.userRole=='EXECUTIVE_MANAGER') {
       this.url = this.sanitizer.bypassSecurityTrustResourceUrl(
         'https://lookerstudio.google.com/embed/reporting/52880037-9096-4a97-9068-aeefbb359054/page/PAGE_7_ID?params=%7B%22id%22%3A%22'+this.loginsessionDetails.userId+'5%22%7D'
       );

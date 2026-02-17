@@ -4,6 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { API_BASE_URL, APIS } from '@app/constants/constants';
 import { Role } from '@app/_models';
 import { LoaderService } from '@app/common_components/loader-service.service';
+import { DomSanitizer,SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-reports',
@@ -13,10 +14,16 @@ import { LoaderService } from '@app/common_components/loader-service.service';
 export class ReportsComponent implements OnInit {
   loginsessionDetails:any
   activeTab:any='pendingApplications';
+
+  // Date Range Properties
+  fromDate: Date | null = null;
+  toDate: Date | null = null;
+  maxDate: Date = new Date();
    constructor(
     private _commonService: CommonServiceService,
     private toastrService: ToastrService,
-    private loaderService: LoaderService
+    private loaderService: LoaderService,
+    private sanitizer: DomSanitizer
   ) {
      this.loginsessionDetails = JSON.parse(sessionStorage.getItem('user') || '{}');
   }
@@ -30,31 +37,144 @@ export class ReportsComponent implements OnInit {
   toggleReportSection(){
     this.showReportSection = !this.showReportSection;
   }
+
+  clearDateRange(): void {
+    this.fromDate = null;
+    this.toDate = null;
+  }
   DownloadExcelOverView(reportType: string) {
+    //  if (!this.fromDate || !this.toDate) {
+    //   this.toastrService.warning('Please select date range before downloading');
+    //   return;
+    // }
+
     let url = '';
     let fileName = '';
+     const dateParams = this.getDateRangeParams();
+
     if (reportType === '1' || reportType === 'Overview Excel') {
-      url = `${API_BASE_URL}${APIS.tihclReports.EXECUTIVE_DOWNLOAD_OVERVIEW_REPORT_EXCEL}`;
+      url = `${API_BASE_URL}${APIS.tihclReports.EXECUTIVE_DOWNLOAD_OVERVIEW_REPORT_EXCEL}${dateParams}`;
       fileName = 'OverView_Report.xlsx';
     } 
     else if( reportType === '2' || reportType === 'Status Excel') {
       fileName = 'Status_Report.xlsx';
-      url = `${API_BASE_URL}${APIS.tihclReports.EXECUTIVE_DOWNLOAD_PARTICIPANT_STATUS_REPORT_EXCEL}`;
+      url = `${API_BASE_URL}${APIS.tihclReports.EXECUTIVE_DOWNLOAD_PARTICIPANT_STATUS_REPORT_EXCEL}${dateParams}`;
     }
     else if( reportType === 'Stress Score Excel') {
       fileName = 'Stress_Score_Report.xlsx';
-      url = `${API_BASE_URL}${APIS.tihclReports.EXECUTIVE_STRESS_SCORE_REPORT_EXCEL}`;
+      url = `${API_BASE_URL}${APIS.tihclReports.EXECUTIVE_STRESS_SCORE_REPORT_EXCEL}${dateParams}`;
     }
     else if( reportType === 'Sanctioned Details Excel') {
       fileName = 'Sanctioned_Details_Report.xlsx';
-      url = `${API_BASE_URL}${APIS.tihclReports.EXECUTIVE_STRESS_SANCTIONED_DETAILS_REPORT_EXCEL}`;
+      url = `${API_BASE_URL}${APIS.tihclReports.EXECUTIVE_STRESS_SANCTIONED_DETAILS_REPORT_EXCEL}${dateParams}`;
     }
     else if( reportType === 'Fee Collection Details Excel') {
       fileName = 'Fee_Collection_Details_Report.xlsx';
-      url = `${API_BASE_URL}${APIS.tihclReports.EXECUTIVE_STRESS_FEE_COLLECTION_DETAILS_REPORT_EXCEL}`;
+      url = `${API_BASE_URL}${APIS.tihclReports.EXECUTIVE_STRESS_FEE_COLLECTION_DETAILS_REPORT_EXCEL}${dateParams}`;
+    }
+    this.downloadFile(url, fileName);
+  // this.previewFile(url, fileName,true);
+  }
+  DownloadPDFOverView(reportType: string){
+     let url = '';
+    let fileName = '';
+     const dateParams = this.getDateRangeParams();
+      if (reportType === '1' || reportType === 'Overview PDF') {
+      url = `${API_BASE_URL}${APIS.tihclReports.EXECUTIVE_DOWNLOAD_OVERVIEW_REPORT_EXCEL}${dateParams}`;
+      fileName = 'OverView_Report.pdf';
+    } 
+    else if( reportType === '2' || reportType === 'Status PDF') {
+      fileName = 'Status_Report.pdf';
+      url = `${API_BASE_URL}${APIS.tihclReports.EXECUTIVE_DOWNLOAD_PARTICIPANT_STATUS_REPORT_PDF}${dateParams}`;
+    }
+    else if( reportType === 'Stress Score PDF') {
+      fileName = 'Stress_Score_Report.pdf';
+      url = `${API_BASE_URL}${APIS.tihclReports.EXECUTIVE_STRESS_SCORE_REPORT_EXCEL}${dateParams}`;
+    }
+    else if( reportType === 'Sanctioned Details PDF') {
+      fileName = 'Sanctioned_Details_Report.pdf';
+      url = `${API_BASE_URL}${APIS.tihclReports.EXECUTIVE_STRESS_SANCTIONED_DETAILS_REPORT_EXCEL}${dateParams}`;
+    }
+    else if( reportType === 'Fee Collection Details PDF') {
+      fileName = 'Fee_Collection_Details_Report.pdf';
+      url = `${API_BASE_URL}${APIS.tihclReports.EXECUTIVE_STRESS_FEE_COLLECTION_DETAILS_REPORT_EXCEL}${dateParams}`;
+    }
+      this.downloadFile(url, fileName);
+      // this.previewFile(url, fileName,false);
+  }
+ // Preview Modal Properties
+  // Preview Modal Properties
+  showPreviewModal: boolean = false;
+  previewUrl: SafeResourceUrl | null = null;
+  previewFileName: string = '';
+  currentDownloadUrl: string = '';
+  isExcelFile: boolean = false;
+previewFile(url: string, fileName: string, isExcel: boolean = false) {
+    this.loaderService.show('Loading preview...');
+    this.currentDownloadUrl = url;
+    this.previewFileName = fileName;
+    this.isExcelFile = isExcel;
+    
+    this._commonService.downloadFileExcelOrPdf(url).subscribe({
+      next: (response: Blob) => {
+        this.loaderService.hide();
+        const objectUrl = URL.createObjectURL(response);
+        
+        if (isExcel) {
+          // For Excel files, use Google Docs Viewer
+          const encodedUrl = encodeURIComponent(url);
+          this.previewUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
+            `https://view.officeapps.live.com/op/embed.aspx?src=${encodedUrl}`
+          );
+        } else {
+          // For PDF files, use blob URL
+          this.previewUrl = this.sanitizer.bypassSecurityTrustResourceUrl(objectUrl);
+        }
+        
+        this.showPreviewModal = true;
+      },
+      error: (err) => {
+        this.loaderService.hide();
+        this.toastrService.error(err.error?.message || 'Failed to load preview.');
+      },
+    });
+  }
+
+  closePreview() {
+    this.showPreviewModal = false;
+    if (this.previewUrl) {
+      const url = (this.previewUrl as any).changingThisBreaksApplicationSecurity;
+      if (url) {
+        URL.revokeObjectURL(url);
+      }
+    }
+    this.previewUrl = null;
+    this.currentDownloadUrl = '';
+    this.previewFileName = '';
+  }
+
+  downloadFromPreview() {
+    if (this.currentDownloadUrl && this.previewFileName) {
+      this.downloadFile(this.currentDownloadUrl, this.previewFileName);
+      this.closePreview();
+    }
+  }
+  getDateRangeParams(): string {
+    if (!this.fromDate || !this.toDate) {
+      return '';
     }
     
-    this.downloadFile(url, fileName);
+    const fromDateStr = this.formatDate(this.fromDate);
+    const toDateStr = this.formatDate(this.toDate);
+    
+    return `?fromDate=${fromDateStr}&toDate=${toDateStr}`;
+  }
+  
+   formatDate(date: Date): string {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
   }
 
    isDownloading: boolean = false;

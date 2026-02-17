@@ -8,6 +8,26 @@
         </div>
       </div>
       <div class="card-body" *ngIf="showReportSection">
+        <div class="row mb-4" style=" border-bottom: 1px solid;">
+          <div class="col-12 d-flex justify-content-end">
+            <div class="d-flex align-items-center gap-3" style="max-width: 600px;">
+              <mat-form-field appearance="outline" class="flex-grow-1 mb-0">
+          <mat-label>Select date range</mat-label>
+          <mat-date-range-input [rangePicker]="picker" [max]="maxDate">
+            <input matStartDate [(ngModel)]="fromDate" placeholder="Start date">
+            <input matEndDate [(ngModel)]="toDate" placeholder="End date">
+          </mat-date-range-input>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-date-range-picker #picker></mat-date-range-picker>
+              </mat-form-field>
+              <button type="button" class="btn btn-primary py-2" style="height: 56px;margin-top: -22px;" (click)="clearDateRange()" 
+                [disabled]="!fromDate && !toDate">
+          <i class="bi bi-x-circle"></i> Clear
+              </button>
+            </div>
+          </div>
+        </div>
+       
         <div class="row g-3">
           <div class="col-12">
             <div class="row g-3">
@@ -31,12 +51,18 @@
               
               </div>
                 <div class="col-md-4">
-                
-                <button type="button" class="btn btn-primary w-100 py-2 d-flex align-items-center justify-content-center gap-2"
-                  (click)="DownloadExcelOverView('Status Excel')">
-                  <i class="bi bi-clipboard-check"></i>
-                  <span>Download</span>
-                </button>
+                <div class="d-flex gap-2">
+                  <button type="button" class="btn btn-primary flex-fill py-2 d-flex align-items-center justify-content-center gap-2"
+                    (click)="DownloadExcelOverView('Status Excel')">
+                    <i class="bi bi-file-earmark-spreadsheet"></i>
+                    <span>Excel</span>
+                  </button>
+                  <button type="button" class="btn btn-primary flex-fill py-2 d-flex align-items-center justify-content-center gap-2"
+                    (click)="DownloadPDFOverView('Status PDF')">
+                    <i class="bi bi-file-earmark-pdf"></i>
+                    <span>PDF</span>
+                  </button>
+                </div>
               </div>
               <div class="col-md-2">  </div>
               <div class="col-md-2">  </div>
@@ -231,3 +257,71 @@
     </div>
   </div>
 </div>
+
+<!-- ...existing code... -->
+
+<!-- Preview Modal -->
+<div class="modal fade" [class.show]="showPreviewModal" [style.display]="showPreviewModal ? 'block' : 'none'" 
+     tabindex="-1" role="dialog" (click)="closePreview()">
+  <div class="modal-dialog modal-xl modal-dialog-centered" role="document" (click)="$event.stopPropagation()">
+    <div class="modal-content" style="height: 90vh;">
+      <div class="modal-header bg-theme text-white">
+        <h5 class="modal-title">
+          <i class="bi bi-file-earmark-pdf me-2"></i>
+          {{ previewFileName }}
+        </h5>
+        <button type="button" class="btn-close btn-close-white" (click)="closePreview()"></button>
+      </div>
+      <div class="modal-body p-0" style="height: calc(90vh - 120px);">
+        <iframe *ngIf="previewUrl" [src]="previewUrl" 
+                style="width: 100%; height: 100%; border: none;">
+        </iframe>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closePreview()">
+          <i class="bi bi-x-circle me-1"></i> Close
+        </button>
+        <button type="button" class="btn btn-primary" (click)="downloadFromPreview()">
+          <i class="bi bi-download me-1"></i> Download
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-backdrop fade" [class.show]="showPreviewModal" *ngIf="showPreviewModal"></div>
+
+<!-- ...existing code... -->
+
+<!-- Excel download preview -->
+<!-- <div class="modal fade" [class.show]="showPreviewModal" [style.display]="showPreviewModal ? 'block' : 'none'" 
+     tabindex="-1" role="dialog" (click)="closePreview()">
+  <div class="modal-dialog modal-xl modal-dialog-centered" role="document" (click)="$event.stopPropagation()">
+    <div class="modal-content" style="height: 90vh;">
+      <div class="modal-header bg-theme text-white">
+        <h5 class="modal-title">
+          <i class="bi" [ngClass]="isExcelFile ? 'bi-file-earmark-spreadsheet' : 'bi-file-earmark-pdf'" class="me-2"></i>
+          {{ previewFileName }}
+        </h5>
+        <button type="button" class="btn-close btn-close-white" (click)="closePreview()"></button>
+      </div>
+      <div class="modal-body p-0" style="height: calc(90vh - 120px);">
+        <div *ngIf="isExcelFile" class="alert alert-info m-3">
+          <i class="bi bi-info-circle me-2"></i>
+          Excel preview is loading using Microsoft Office Online Viewer. If preview doesn't load, please download the file directly.
+        </div>
+        <iframe *ngIf="previewUrl" [src]="previewUrl" 
+                style="width: 100%; height: 100%; border: none;">
+        </iframe>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closePreview()">
+          <i class="bi bi-x-circle me-1"></i> Close
+        </button>
+        <button type="button" class="btn btn-primary" (click)="downloadFromPreview()">
+          <i class="bi bi-download me-1"></i> Download
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-backdrop fade" [class.show]="showPreviewModal" *ngIf="showPreviewModal"></div> -->

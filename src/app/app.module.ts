@@ -67,6 +67,8 @@ import { MatSelectFilterModule } from 'mat-select-filter';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { SAPreliminaryComponent } from './PIA/sa-preliminary/sa-preliminary.component';
 import { CommonFileViewerComponent } from './common_components/common-file-viewer/common-file-viewer.component';
@@ -96,6 +98,8 @@ import { ReportsComponent } from './tihcl-executive/reports/reports.component';
         MatTableModule,
         MatPaginatorModule,
         MatSortModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
     ],
     declarations: [
         AppComponent,
