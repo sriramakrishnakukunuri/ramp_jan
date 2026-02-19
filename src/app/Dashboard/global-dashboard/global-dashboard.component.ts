@@ -29,9 +29,9 @@ export class GlobalDashboardComponent implements OnInit {
 
   setDashboardUrl(): void {
    
-    console.log('EXECUTIVE_MANAGER','https://lookerstudio.google.com/embed/u/0/reporting/52880037-9096-4a97-9068-aeefbb359054/page/CQfUF?params=%7B%22id%22:%22'+this.loginsessionDetails.userId+'%22%7D');
+    
     if(this.loginsessionDetails && this.loginsessionDetails.userRole=='EXECUTIVE_MANAGER') {
-       
+        console.log('EXECUTIVE_MANAGER','https://lookerstudio.google.com/embed/u/0/reporting/52880037-9096-4a97-9068-aeefbb359054/page/CQfUF?params=%7B%22id%22:%22'+this.loginsessionDetails.userId+'%22%7D');
       this.url = this.sanitizer.bypassSecurityTrustResourceUrl(
         'https://lookerstudio.google.com/embed/u/0/reporting/52880037-9096-4a97-9068-aeefbb359054/page/CQfUF?params=%7B%22id%22:%22'+this.loginsessionDetails.userId+'%22%7D'
         // 'https://lookerstudio.google.com/embed/reporting/52880037-9096-4a97-9068-aeefbb359054/page/PAGE_7_ID?params=%7B%22id%22%3A%22'+this.loginsessionDetails.userId+'%22%7D'
