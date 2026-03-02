@@ -183,5 +183,9 @@ export const APIS = {
         EXECUTIVE_STRESS_FEE_COLLECTION_DETAILS_REPORT_EXCEL: '/fee-collection/excel',
         DownloadPdfBasedId: API_BASE_URL + '/registrations/pdf/',
         EXECUTIVE_DOWNLOAD_PARTICIPANT_STATUS_REPORT_PDF: '/application-status/pdf',
+        EXECUTIVE_DOWNLOAD_OVERVIEW_REPORT_PDF: '/applications-overview/pdf',
+        EXECUTIVE_STRESS_SCORE_REPORT_PDF: '/stress-report/pdf',
+        EXECUTIVE_STRESS_SANCTIONED_DETAILS_REPORT_PDF: '/sanction-disbursement/pdf',
+        EXECUTIVE_STRESS_FEE_COLLECTION_DETAILS_REPORT_PDF: '/fee-collection/pdf',
     }
 }

@@ -80,7 +80,7 @@ export class ReportsComponent implements OnInit {
     let fileName = '';
      const dateParams = this.getDateRangeParams();
       if (reportType === '1' || reportType === 'Overview PDF') {
-      url = `${API_BASE_URL}${APIS.tihclReports.EXECUTIVE_DOWNLOAD_OVERVIEW_REPORT_EXCEL}${dateParams}`;
+      url = `${API_BASE_URL}${APIS.tihclReports.EXECUTIVE_DOWNLOAD_OVERVIEW_REPORT_PDF}${dateParams}`;
       fileName = 'OverView_Report.pdf';
     } 
     else if( reportType === '2' || reportType === 'Status PDF') {
@@ -89,15 +89,15 @@ export class ReportsComponent implements OnInit {
     }
     else if( reportType === 'Stress Score PDF') {
       fileName = 'Stress_Score_Report.pdf';
-      url = `${API_BASE_URL}${APIS.tihclReports.EXECUTIVE_STRESS_SCORE_REPORT_EXCEL}${dateParams}`;
+      url = `${API_BASE_URL}${APIS.tihclReports.EXECUTIVE_STRESS_SCORE_REPORT_PDF}${dateParams}`;
     }
     else if( reportType === 'Sanctioned Details PDF') {
       fileName = 'Sanctioned_Details_Report.pdf';
-      url = `${API_BASE_URL}${APIS.tihclReports.EXECUTIVE_STRESS_SANCTIONED_DETAILS_REPORT_EXCEL}${dateParams}`;
+      url = `${API_BASE_URL}${APIS.tihclReports.EXECUTIVE_STRESS_SANCTIONED_DETAILS_REPORT_PDF}${dateParams}`;
     }
     else if( reportType === 'Fee Collection Details PDF') {
       fileName = 'Fee_Collection_Details_Report.pdf';
-      url = `${API_BASE_URL}${APIS.tihclReports.EXECUTIVE_STRESS_FEE_COLLECTION_DETAILS_REPORT_EXCEL}${dateParams}`;
+      url = `${API_BASE_URL}${APIS.tihclReports.EXECUTIVE_STRESS_FEE_COLLECTION_DETAILS_REPORT_PDF}${dateParams}`;
     }
       this.downloadFile(url, fileName);
       // this.previewFile(url, fileName,false);
