@@ -37,6 +37,7 @@ import { ViewApplicationsComponent } from './tihcl-coi/view-applications/view-ap
 import { SanctionedAmountComponent } from './sanctioned-amount/sanctioned-amount.component';
 import { RepaymentLedgerComponent } from './tihcl-executive/repayment-ledger/repayment-ledger.component';
 import { ReportsComponent } from './tihcl-executive/reports/reports.component';
+import { ReassignApplicationsComponent } from './tihcl-manager/reassign-applications/reassign-applications.component';
 
 const routes: Routes = [
     {
@@ -164,6 +165,12 @@ const routes: Routes = [
         component: ProgramSessionsComponent,
         canActivate: [AuthGuard],
         data: { roles: [Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR] }
+    },
+    {
+        path:'Reassign-applications',
+        component: ReassignApplicationsComponent,
+        canActivate: [AuthGuard],
+        data: { roles: [Role.TIHCL_MANAGER] }
     },
     {
         path: 'login',

@@ -76,6 +76,7 @@ import { CommaSeperationPipe } from './common_components/comma-seperation.pipe';
 import { RepaymentLedgerComponent } from './tihcl-executive/repayment-ledger/repayment-ledger.component';
 import { IndianRupeesInputComponent } from './common_components/indian-rupees-input/indian-rupees-input.component';
 import { ReportsComponent } from './tihcl-executive/reports/reports.component';
+import { ReassignApplicationsComponent } from './tihcl-manager/reassign-applications/reassign-applications.component';
 @NgModule({
     imports: [
         MatSelectModule,
@@ -139,6 +140,7 @@ import { ReportsComponent } from './tihcl-executive/reports/reports.component';
         RepaymentLedgerComponent,
         IndianRupeesInputComponent,
         ReportsComponent,
+        ReassignApplicationsComponent,
     ],
     exports:[
         LoaderComponent

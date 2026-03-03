@@ -129,7 +129,8 @@ export const APIS = {
         approveLevelThree: API_BASE_URL + '/programs/level3/approve/',
         rejectLevelOne: API_BASE_URL + '/programs/level1/reject/',
         rejectLevelTwo: API_BASE_URL + '/programs/level2/reject/',
-        rejectLevelThree: API_BASE_URL + '/programs/level3/reject/',    
+        rejectLevelThree: API_BASE_URL + '/programs/level3/reject/',
+        reassignApplication:API_BASE_URL + '/manager/file/bulk-transfer-to-executive',    
     },
       tihclDIC:{
         getLevelDICData: API_BASE_URL + '/registrations/status?status=MANAGER_APPROVAL_2',

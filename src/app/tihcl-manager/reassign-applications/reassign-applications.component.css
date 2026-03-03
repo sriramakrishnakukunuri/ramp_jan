@@ -1,0 +1,50 @@
+
+.table {
+  border-collapse: separate;
+  border-spacing: 0;
+  width: 100%;
+  background: #fff;
+}
+.table th, .table td {
+  padding: 0.75rem;
+  border-top: 1px solid #dee2e6;
+}
+.table thead th {
+  background: #f8f9fa;
+  font-weight: 600;
+}
+.table tr {
+  transition: background 0.2s;
+}
+.table tr:hover {
+  background: #f1f1f1;
+}
+.popup-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+.popup-content.card {
+  min-width: 350px;
+  max-width: 400px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.15);
+  border-radius: 8px;
+  padding: 0;
+}
+.card-header.bg-theme {
+  background: #007bff;
+  color: #fff;
+  border-radius: 8px 8px 0 0;
+  padding: 1rem;
+}
+.card-body {
+  padding: 1.5rem;
+}
+.btn {
+  min-width: 100px;
+}
+
