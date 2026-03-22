@@ -237,6 +237,7 @@ export class ProgramCreationComponent implements OnInit, AfterViewInit {
     maindata['agencyId'] = Number(this.agencyId)
     maindata['activityId'] = Number(this.programCreationMain.value?.activityId)
     maindata['subActivityId'] = Number(this.programCreationMain.value?.subActivityId)
+    maindata['userId'] = JSON.parse(sessionStorage.getItem('user') || '{}').userId
     this.loading = true;
     if(this.programId) {
       maindata['programId'] = Number(this.programId)
