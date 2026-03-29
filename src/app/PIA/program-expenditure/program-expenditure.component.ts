@@ -877,7 +877,7 @@ export class ProgramExpenditureComponent implements OnInit {
               link.click();
               link.remove();
             }
- imageUrlDownloadPath = `https://metaverseedu.in/`;
+ imageUrlDownloadPath =  APIS.fileBaseUrl;
   imagePreviewUrl: any
    type:any=''
     showImagePreview(url: any, value: string,type:any) {

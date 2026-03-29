@@ -517,7 +517,7 @@ getAgenciesList() {
     }
    
   }
-  imageUrlDownloadPath = `https://metaverseedu.in/`;
+  imageUrlDownloadPath =  APIS.fileBaseUrl;
   imagePreviewUrl: any
    type:any=''
     showImagePreview(url: any, value: string,type:any) {
@@ -624,7 +624,7 @@ openRemarks(item:any){
 
             }
   downloadPDF(url:any){
-    let linkUrl = 'https://metaverseedu.in/'+url
+    let linkUrl =  APIS.fileBaseUrl+url
     const link = document.createElement("a");
     link.setAttribute("download", linkUrl);
     link.setAttribute("target", "_blank");
@@ -634,7 +634,7 @@ openRemarks(item:any){
     link.remove();
   }
   downloadImage(url:any) {
-  const imageUrl = 'https://metaverseedu.in/'+url;
+  const imageUrl =  APIS.fileBaseUrl+url;
 
   // const fileName = 'ProgramScreenshot.png'; // Optional: rename the file
 

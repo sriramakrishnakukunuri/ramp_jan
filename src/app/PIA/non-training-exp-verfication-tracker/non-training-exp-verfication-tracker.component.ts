@@ -573,7 +573,7 @@ export class NonTrainingExpVerficationTrackerComponent implements OnInit {
      }
     
    }
-   imageUrlDownloadPath = `https://metaverseedu.in/`;
+   imageUrlDownloadPath =  APIS.fileBaseUrl;
    imagePreviewUrl: any
     type:any=''
      showImagePreview(url: any, value: string,type:any) {
@@ -683,7 +683,7 @@ export class NonTrainingExpVerficationTrackerComponent implements OnInit {
  
              }
    downloadPDF(url:any){
-     let linkUrl = 'https://metaverseedu.in/'+url
+     let linkUrl =  APIS.fileBaseUrl+url
      const link = document.createElement("a");
      link.setAttribute("download", linkUrl);
      link.setAttribute("target", "_blank");
@@ -693,7 +693,7 @@ export class NonTrainingExpVerficationTrackerComponent implements OnInit {
      link.remove();
    }
    downloadImage(url:any) {
-   const imageUrl = 'https://metaverseedu.in/'+url;
+   const imageUrl =  APIS.fileBaseUrl+url;
  
    // const fileName = 'ProgramScreenshot.png'; // Optional: rename the file
  

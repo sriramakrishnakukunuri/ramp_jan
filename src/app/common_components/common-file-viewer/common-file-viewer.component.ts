@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { CommonServiceService } from '@app/_services/common-service.service';
+import { APIS } from '@app/constants/constants';
 import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-common-file-viewer',
@@ -19,7 +20,7 @@ export class CommonFileViewerComponent implements OnInit {
     private toastr:ToastrService) {}
 
 
-    readonly BASE_URL = 'https://metaverseedu.in/';
+    readonly BASE_URL =  APIS.fileBaseUrl;
 
 getFullFileUrl(path: string): string {
   const trimmed = path?.split('public_html/')?.[1];

@@ -27,7 +27,7 @@ export class ToPngService {
     const formData = new FormData();
     formData.append('programId', programId.toString()); // ensure string
     formData.append('image', blob, fileName);
-    
+    console.log('FormData prepared for upload:', formData,fileName,programId);
      this.imageService.saveImages(`${APIS.collageCreation.UPLOAD_COLLAGE}`,formData).subscribe((res)=>{
       console.log('Image uploaded successfully via ImageService:', res);
       return res.json();

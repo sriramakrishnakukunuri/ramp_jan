@@ -763,7 +763,7 @@ previewFile(file: any, index: number): void {
     };
     return typeClasses[type] || 'bg-secondary';
   }
- readonly BASE_URL = 'https://metaverseedu.in/';
+ readonly BASE_URL =  APIS.fileBaseUrl;
   // File download URL method
   getFileDownloadUrl(file: any): string {
     if (file.filePath) {

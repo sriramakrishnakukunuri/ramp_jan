@@ -204,7 +204,6 @@ export class CollageCreationComponent implements OnInit {
           new Error(err);
         },
       });
-
       // window.location.href="/collage-home"
       this.router.navigate(['/collage-home'])
 
