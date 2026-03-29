@@ -2,11 +2,15 @@
 // `ng build` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+// export const environment = {
+//     production: false,
+//     // apiUrl: 'http://localhost:8080'
+//     //apiUrl: 'http://192.168.30.150:8086/api'
+//     apiUrl:'https://metaverseedu.in/workflow'
+// };
 export const environment = {
     production: false,
-    // apiUrl: 'http://localhost:8080'
-    //apiUrl: 'http://192.168.30.150:8086/api'
-    apiUrl:'https://metaverseedu.in/workflow'
+    apiUrl: 'http://10.3.38.49:8081/workflow'
 };
 
 /*
