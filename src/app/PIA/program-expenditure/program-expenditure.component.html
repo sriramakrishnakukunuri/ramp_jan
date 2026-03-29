@@ -106,7 +106,7 @@
                                 </tr>
                             </thead>
                             <tbody *ngIf="getExpenditureDataBoth?.length">
-                                <tr  *ngFor="let item of getExpenditureDataBoth; let i=index">
+                                <tr  *ngFor="let item of getExpenditureDataBoth; let i=index; trackBy: trackByExpenditure">
                                     <td class="text-start">{{i+1}}</td>
                                     <td>{{item?.expenditureType}}</td>
                                     <td>{{item?.headOfExpense}}</td>
@@ -132,18 +132,18 @@
                                     <!-- <td>{{item?.purpose}}</td> -->
                                     <!-- <td>{{item?.uploadBillUrl}}</td> -->
                                       <td *ngIf="item?.uploadBillUrl?.split('.')[1]!='pdf'">
-                                                 <ng-container *ngIf="item?.uploadBillUrl?.split('public_html/')?.[1]">
-                                                       <a (click)="showImagePreview(imageUrlDownloadPath,item?.uploadBillUrl?.split('public_html/')?.[1],'img')" rel="noopener noreferrer">
-                                                        <img src="{{imageUrlDownloadPath}}{{item?.uploadBillUrl?.split('public_html/')?.[1]}}" alt="Image 2" class="img-fluid" style="width: 50px; height: 50px;">
+                                                 <ng-container *ngIf="item?.uploadBillUrl">
+                                                       <a (click)="showImagePreview(imageUrlDownloadPath,item?.uploadBillUrl,'img')" rel="noopener noreferrer">
+                                                          <img [src]="imageSrcMap[item?.uploadBillUrl] || ''" alt="Image 2" class="img-fluid" style="width: 50px; height: 50px;">
                                                         </a>
                                                   </ng-container>
-                                                <ng-container *ngIf="!item?.uploadBillUrl?.split('public_html/')?.[1]">
+                                                <ng-container *ngIf="!item?.uploadBillUrl">
                                                     <span class="text-danger">No File</span>
                                                 </ng-container>
                                          </td>
                                          <td *ngIf="item?.uploadBillUrl?.split('.')[1]=='pdf'">
                                             <ng-container >
-                                               <a (click)="showImagePreview(imageUrlDownloadPath,item?.uploadBillUrl?.split('public_html/')?.[1],'pdf')"> <i class="fas fa-file-pdf"></i></a>
+                                               <a (click)="showImagePreview(imageUrlDownloadPath,item?.uploadBillUrl,'pdf')"> <i class="fas fa-file-pdf"></i></a>
                                             </ng-container>
                                          </td>
                                     <td class="text-center">

@@ -8,6 +8,7 @@ import {
 export const API_BASE_URL = environment.apiUrl;
 export const APIS = {
   fileBaseUrl: 'http://10.3.38.49:8081/',
+  fileBaseUrlGet:`http://10.3.38.49/workflowfiles/`,
   programCreation: {
     addprogram: API_BASE_URL + '/program/create',
     addSessions: API_BASE_URL + '/program/session/create',

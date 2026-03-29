@@ -184,8 +184,15 @@ private options: { [key: string]: any } = {};
   updatebyPatch(URL: any, payload: any): Observable<any> {
     return this.http.patch(URL, payload).pipe(catchError(this.formatErrors));
   }
-  
-  
+  imageUrl!: string;
+
+getImage(url: string): Observable<Blob> {
+  const token = JSON.parse(sessionStorage.getItem('user') || '{}').token;
+  return this.http.get(url, {
+    headers: { Authorization: `Bearer ${token}` },
+    responseType: 'blob'
+  });
+}
 }
 
 

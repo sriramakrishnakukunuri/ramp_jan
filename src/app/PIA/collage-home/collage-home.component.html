@@ -70,7 +70,7 @@
     >
       <ng-container *ngIf="(filteredImages ?? []).length > 0; else noImages">
   <div 
-    *ngFor="let image of filteredImages" 
+    *ngFor="let image of filteredImages; trackBy: trackByCollage" 
     class="card shadow-sm border border-light-subtle rounded-1 overflow-hidden p-1 position-relative" 
     style="width: 350px; transition: transform 0.3s ease, box-shadow 0.3s ease;"
     onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 8px 16px rgba(0,0,0,0.1)'"
@@ -87,7 +87,7 @@
     </button>
 
     <img 
-      [src]="getImageSrc(image.fileUrl)" 
+      [src]="imageSrcMap[image.fileUrl] || ''" 
       class="card-img-top"
       (error)="image.error = true"
       *ngIf="!image.error"

@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { CommonServiceService } from '@app/_services/common-service.service';
 import { API_BASE_URL, APIS } from '@app/constants/constants';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
@@ -14,11 +14,13 @@ declare var window: any;
   templateUrl: './program-expenditure.component.html',
   styleUrls: ['./program-expenditure.component.css']
 })
-export class ProgramExpenditureComponent implements OnInit {
+export class ProgramExpenditureComponent implements OnInit, OnDestroy {
   formModel:any
   agencyId: any
   expenditureType:any='PRE'
   Role :any='';
+  imageSrcMap: Record<string, string> = {};
+  private loadingImageSet = new Set<string>();
   constructor(
     private _commonService: CommonServiceService,
     private toastrService: ToastrService,
@@ -570,6 +572,7 @@ export class ProgramExpenditureComponent implements OnInit {
   TotalAmount:any=0
   getExpenditure(){
     this.uploadedFiles=[]
+    this.clearImageCache();
     this.getExpenditureData=[]
     this.getExpenditureDataBoth=[]
     if(this.f2['programId'].value){ 
@@ -579,6 +582,7 @@ export class ProgramExpenditureComponent implements OnInit {
            if(data?.data){
             this.getExpenditureData=data?.data
             this.getExpenditureDataBoth=[...this.getExpenditureDataBoth,...data?.data]
+            this.preloadImagesForRows(data?.data);
             // this.getExpenditure()
             this.getPost()
             this.reinitializeDataTable();
@@ -608,6 +612,7 @@ export class ProgramExpenditureComponent implements OnInit {
            if(data?.data){
             this.getExpenditureData=data?.data
             this.getExpenditureDataBoth=[...this.getExpenditureDataBoth,...data?.data]
+            this.preloadImagesForRows(data?.data);
             this.getBulkExpenditure()
             this.reinitializeDataTable();
             this.getExpenditureData?.map((item:any)=>{
@@ -712,6 +717,7 @@ export class ProgramExpenditureComponent implements OnInit {
         next: (data: any) => {
           if(data?.data){
             this.getExpenditureDataBoth=[...this.getExpenditureDataBoth,...data?.data]
+            this.preloadImagesForRows(data?.data);
              console.log( this.getExpenditureData,data?.data,this.getExpenditureDataBoth)
             this.getBulkExpenditureData=data?.data
             this.reinitializeDataTableBulk();
@@ -877,6 +883,56 @@ export class ProgramExpenditureComponent implements OnInit {
               link.click();
               link.remove();
             }
+
+  trackByExpenditure(index: number, item: any): any {
+    return item?.programExpenditureId || item?.bulkExpenditureTransactionId || item?.uploadBillUrl || index;
+  }
+
+  private preloadImagesForRows(rows: any[]): void {
+    (rows || []).forEach((row: any) => {
+      const fileUrl = row?.uploadBillUrl;
+      if (!fileUrl) {
+        return;
+      }
+
+      const ext = fileUrl.split('.').pop()?.toLowerCase();
+      if (ext === 'pdf') {
+        return;
+      }
+
+      this.ensureImageSrc(fileUrl);
+    });
+  }
+
+  private ensureImageSrc(fileUrl: string): void {
+    if (!fileUrl || this.imageSrcMap[fileUrl] || this.loadingImageSet.has(fileUrl)) {
+      return;
+    }
+
+    this.loadingImageSet.add(fileUrl);
+    this._commonService.getImage(APIS.fileBaseUrlGet + fileUrl).subscribe({
+      next: (blob: Blob) => {
+        this.imageSrcMap[fileUrl] = URL.createObjectURL(blob);
+        this.loadingImageSet.delete(fileUrl);
+      },
+      error: () => {
+        this.imageSrcMap[fileUrl] = '';
+        this.loadingImageSet.delete(fileUrl);
+      }
+    });
+  }
+
+  private clearImageCache(): void {
+    Object.values(this.imageSrcMap).forEach((url) => {
+      if (url) {
+        URL.revokeObjectURL(url);
+      }
+    });
+
+    this.imageSrcMap = {};
+    this.loadingImageSet.clear();
+  }
+    
  imageUrlDownloadPath =  APIS.fileBaseUrl;
   imagePreviewUrl: any
    type:any=''
@@ -891,5 +947,10 @@ export class ProgramExpenditureComponent implements OnInit {
       modalInstance.show();
     }
   }
-          
+       
+  ngOnDestroy(): void {
+    this.clearImageCache();
+  }
+
+
 }

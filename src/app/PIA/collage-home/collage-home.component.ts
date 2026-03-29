@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ImageService } from '../../_services/image.service';
 import { faDownload } from '@fortawesome/free-solid-svg-icons';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
@@ -6,13 +6,14 @@ import { Image } from '../../_models/image.model';
 import { Agency } from '../../_models/agencies.model';
 import { Program } from '../../_models/program.model';
 import { Router} from '@angular/router';
+import { APIS } from '@app/constants/constants';
 
 @Component({
   selector: 'app-collage-home',
   templateUrl: './collage-home.component.html',
   styleUrls: ['./collage-home.component.css']
 })
-export class CollageHomeComponent implements OnInit {
+export class CollageHomeComponent implements OnInit, OnDestroy {
   faDownload = faDownload;
   collageImages: any[]=[];
   images: any[] = [];  
@@ -27,6 +28,8 @@ export class CollageHomeComponent implements OnInit {
 
   agencyId: any;
   loginsessionDetails:any
+  imageSrcMap: Record<string, string> = {};
+  private loadingImageSet = new Set<string>();
   constructor(
     private imageService: ImageService,
     private library: FaIconLibrary,
@@ -49,6 +52,7 @@ export class CollageHomeComponent implements OnInit {
           fileob.fileUrl?.match(/\.(jpeg|jpg|png|gif|png)$/i)
         );
         this.filteredImages = [...this.collageImages]; // Default show all
+        this.preloadImagesForRows(this.collageImages);
       },
       (err) => {
         console.error('Error fetching collage images:', err);
@@ -68,8 +72,8 @@ export class CollageHomeComponent implements OnInit {
           fileob.fileUrl?.match(/\.(jpeg|jpg|png|gif|png)$/i)
         );
         this.filteredImages = [...this.collageImages]; // Default show all
-         this.onAgencyChange(this.selectedAgencyId)
-        
+        this.preloadImagesForRows(this.collageImages);
+        this.onAgencyChange(this.selectedAgencyId);
       },
       (err) => {
         console.error('Error fetching collage images:', err);
@@ -79,11 +83,46 @@ export class CollageHomeComponent implements OnInit {
   }
 
   getFileName(fileUrl: string): string {
-    return fileUrl.split('/').pop() || 'Unknown File';
+    return fileUrl?.split('/').pop() || 'Unknown File';
   }
 
-  getImageSrc(fileUrl: string): string {
-    return fileUrl;
+  trackByCollage(index: number, image: any): any {
+    return image?.fileUrl || index;
+  }
+
+  private preloadImagesForRows(rows: any[]): void {
+    (rows || []).forEach((row: any) => {
+      const fileUrl = row?.fileUrl;
+      if (!fileUrl) return;
+      this.ensureImageSrc(fileUrl);
+    });
+  }
+
+  private ensureImageSrc(fileUrl: string): void {
+    if (!fileUrl || this.imageSrcMap[fileUrl] || this.loadingImageSet.has(fileUrl)) return;
+    this.loadingImageSet.add(fileUrl);
+    this.imageService.getImage(APIS.fileBaseUrlGet + fileUrl).subscribe({
+      next: (blob: Blob) => {
+        this.imageSrcMap[fileUrl] = URL.createObjectURL(blob);
+        this.loadingImageSet.delete(fileUrl);
+      },
+      error: () => {
+        this.imageSrcMap[fileUrl] = '';
+        this.loadingImageSet.delete(fileUrl);
+      }
+    });
+  }
+
+  private clearImageCache(): void {
+    Object.values(this.imageSrcMap).forEach((url) => {
+      if (url) URL.revokeObjectURL(url);
+    });
+    this.imageSrcMap = {};
+    this.loadingImageSet.clear();
+  }
+
+  ngOnDestroy(): void {
+    this.clearImageCache();
   }
 
   onAgencyChange(event: any): void {
@@ -137,18 +176,19 @@ export class CollageHomeComponent implements OnInit {
     this.router.navigate(['/collage-creation'])
   }
   getDownloadUrl(fileUrl: string): void {
-    // const link = document.createElement("a");
-    // link.setAttribute("download", fileUrl);
-    // link.setAttribute("target", "_blank");
-    // link.setAttribute("href", fileUrl);
-    // document.body.appendChild(link);
-    // link.click();
-    // link.remove();
-    const link = document.createElement('a');
-    link.href = fileUrl;
-    link.download = this.getFileName(fileUrl);
-
-    link.click();
+    this.imageService.getImage(APIS.fileBaseUrlGet + fileUrl).subscribe({
+      next: (blob: Blob) => {
+        const objectUrl = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = objectUrl;
+        link.download = this.getFileName(fileUrl);
+        link.click();
+        URL.revokeObjectURL(objectUrl);
+      },
+      error: () => {
+        console.error('Download failed for:', fileUrl);
+      }
+    });
   }
 
   getAgencies(): void {

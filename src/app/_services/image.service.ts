@@ -34,4 +34,12 @@ export class ImageService {
   deleteImage(imageId: any): Observable<any> {
     return this.http.delete<any>(`${APIS.collageCreation.DELETE_IMAGE}${imageId?.programId}&fileId=${imageId.fileId}`);
   }
+ 
+getImage(url: string): Observable<Blob> {
+  const token = JSON.parse(sessionStorage.getItem('user') || '{}').token;
+  return this.http.get(url, {
+    headers: { Authorization: `Bearer ${token}` },
+    responseType: 'blob'
+  });
+}
 }
