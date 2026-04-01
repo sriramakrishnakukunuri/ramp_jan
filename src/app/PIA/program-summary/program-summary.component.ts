@@ -139,6 +139,8 @@ export class ProgramSummaryComponent implements OnInit {
           this.PrigramSummaryData['noOfStartupsPercentage'] = this.CalculateOragnizationPercentage(this.PrigramSummaryData, this.PrigramSummaryData['noOfStartups'])
           this.PrigramSummaryData['noOfAspirantsPercentage'] = this.CalculateOragnizationPercentage(this.PrigramSummaryData, this.PrigramSummaryData['noOfAspirants'])
           this.PrigramSummaryData['disabilityPercentage']= ((this.PrigramSummaryData['physicallyChallenge'] / this.PrigramSummaryData['participant']) * 100).toFixed(2);
+          this.programNote=this.PrigramSummaryData?.executiveSummary;
+          this.programNoteCollege=this.PrigramSummaryData?.collegeDetails
             
           },
           error: (err) => {
@@ -171,7 +173,7 @@ export class ProgramSummaryComponent implements OnInit {
 DownloadPdfFromBEApi() {
     this.isDownloading = true;
     this.loaderService.show('Downloading file...');
-    this._commonService.downloadFile(`${APIS.programSummary.downloadPDF}${this.programIds}`).subscribe({
+    this._commonService.downloadFile(`${APIS.programSummary.downloadPdfByProgram}${this.programIds}`).subscribe({
       next: (response: Blob) => {
         console.log(response)
         this.loaderService.hide();
@@ -592,4 +594,84 @@ onRatingChange(rating: number) {
           this.updatePaginatedPosts();
         }
       }
+
+      programNote = '';
+programNoteError = '';
+
+onProgramNoteChange(value: string) {
+  if (value?.length > 150) {
+    this.programNoteError = 'Maximum 150 characters allowed.';
+  } else {
+    this.programNoteError = '';
+  }
+}
+
+saveProgramNote() {
+  const trimmed = (this.programNote || '').trim();
+  if (trimmed.length > 150) {
+    this.programNoteError = 'Maximum 150 characters allowed.';
+    return;
+  }
+  if (trimmed.length === 0) {
+    this.programNoteError = 'Please add a note before saving.';
+    return;
+  }
+  this.programNoteError = '';
+  this._commonService.add(APIS.programSummary.saveProgramNote, {
+    programId: this.programIds,
+    executiveSummary: trimmed,
+  }).subscribe({
+    next: (res: any) => {
+       this.getProgramsByAgency(this.agencyId)
+      this.toastrService.success('Program Summary saved successfully');
+      console.log('Program Summary  saved:', trimmed);
+    },
+    error: (err) => {
+       this.getProgramsByAgency(this.agencyId)
+      this.toastrService.error(err.error?.message || 'Failed to save Program Summary ');
+      console.error('Error saving Program Summary :', err);
+    }
+  });
+  // TODO: call service / save to backend as needed
+  console.log('Program Summary  saved:', trimmed);
+}
+ programNoteCollege = '';
+programCollegeError = '';
+onProgramNoteChangeCollege(value: string) {
+  if (value?.length > 600) {
+    this.programCollegeError = 'Maximum 600 characters allowed.';
+  } else {
+    this.programCollegeError = '';
+  }
+}
+
+saveProgramNoteCollege() {
+  const trimmed = (this.programNoteCollege || '').trim();
+  if (trimmed.length > 600) {
+    this.programCollegeError = 'Maximum 600 characters allowed.';
+    return;
+  }
+  if (trimmed.length === 0) {
+    this.programCollegeError = 'Please add college details before saving.';
+    return;
+  }
+  this.programCollegeError = '';
+  this._commonService.add(APIS.programSummary.saveProgramNote, {
+    programId: this.programIds,
+    collegeDetails: trimmed
+  }).subscribe({
+    next: (res: any) => {
+      this.getProgramsByAgency(this.agencyId)
+      this.toastrService.success('College details saved successfully');
+      console.log('College details saved:', trimmed);
+    },
+    error: (err) => {
+       this.getProgramsByAgency(this.agencyId)
+      this.toastrService.error(err.error?.message || 'Failed to save college details');
+      console.error('Error saving college details:', err);
+    }
+  });
+  // TODO: call service / save to backend as needed
+  console.log('College details saved:', trimmed);
+}
 }
