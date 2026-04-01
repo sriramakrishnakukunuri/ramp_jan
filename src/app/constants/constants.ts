@@ -329,6 +329,8 @@ tgtpc10: {
     getProramData: API_BASE_URL + `/program/summary/`,
     getParticipantsBYProgram: API_BASE_URL + `/program/participants/dropdown/`,
     downloadPDF: API_BASE_URL + `/program/summary/pdf/`,
+    downloadPdfByProgram: API_BASE_URL + `/program/summary/pdf?programId=`,
+    saveProgramNote: API_BASE_URL + `/program-summary`,
   },
   programExecutions: {
     saveMediaCoverage: API_BASE_URL + `/program/execution/media-coverage`,
