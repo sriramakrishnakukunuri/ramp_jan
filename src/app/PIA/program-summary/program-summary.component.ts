@@ -84,6 +84,7 @@ export class ProgramSummaryComponent implements OnInit {
               this.getParticipantsByProgramID(this.programIds)
               this.setProgramCollageImage(this.programIds);
               this.getData()
+              this.getCollegeAndNoteByProgramID(this.programIds)
             console.log('Filtered programs:', this.agencyProgramList);
           },
           (err) => {
@@ -113,6 +114,7 @@ export class ProgramSummaryComponent implements OnInit {
         this.programIds = event.value;
         this.getParticipantsByProgramID(this.programIds);
         this.setProgramCollageImage(this.programIds);
+        this.getCollegeAndNoteByProgramID(this.programIds)
         console.log("program id:",this.programIds);
         if (type == 'table' && event.value) {
           this.getData()
@@ -139,8 +141,6 @@ export class ProgramSummaryComponent implements OnInit {
           this.PrigramSummaryData['noOfStartupsPercentage'] = this.CalculateOragnizationPercentage(this.PrigramSummaryData, this.PrigramSummaryData['noOfStartups'])
           this.PrigramSummaryData['noOfAspirantsPercentage'] = this.CalculateOragnizationPercentage(this.PrigramSummaryData, this.PrigramSummaryData['noOfAspirants'])
           this.PrigramSummaryData['disabilityPercentage']= ((this.PrigramSummaryData['physicallyChallenge'] / this.PrigramSummaryData['participant']) * 100).toFixed(2);
-          this.programNote=this.PrigramSummaryData?.executiveSummary;
-          this.programNoteCollege=this.PrigramSummaryData?.collegeDetails
             
           },
           error: (err) => {
@@ -149,6 +149,20 @@ export class ProgramSummaryComponent implements OnInit {
           },
         });
         // console.log(this.ParticipantAttentance)
+      }
+      getCollegeAndNoteByProgramID(programId:any) {
+        this._commonService.getById(APIS.programSummary.getProgramNote, programId).subscribe({
+          next: (res: any) => {          
+            this.programNote = res?.executiveSummary || '';
+            this.programNoteCollege = res?.collegeDetails || '';
+          },
+          error: (err) => {
+             this.programNote = '';
+            this.programNoteCollege =  '';
+            // this.toastrService.error('Data Not Available', "Program Note Error!");
+            new Error(err);
+          },
+        });
       }
       CalculatePercentage(Data: any,val:any) {
         let total = Data.sc + Data.st + Data.bc + Data.oc + Data.minorities;
@@ -595,7 +609,7 @@ onRatingChange(rating: number) {
         }
       }
 
-      programNote = '';
+programNote = '';
 programNoteError = '';
 
 onProgramNoteChange(value: string) {
@@ -620,6 +634,7 @@ saveProgramNote() {
   this._commonService.add(APIS.programSummary.saveProgramNote, {
     programId: this.programIds,
     executiveSummary: trimmed,
+    collegeDetails: this.programNoteCollege
   }).subscribe({
     next: (res: any) => {
        this.getProgramsByAgency(this.agencyId)
@@ -657,6 +672,7 @@ saveProgramNoteCollege() {
   }
   this.programCollegeError = '';
   this._commonService.add(APIS.programSummary.saveProgramNote, {
+    executiveSummary: this.programNote,
     programId: this.programIds,
     collegeDetails: trimmed
   }).subscribe({
