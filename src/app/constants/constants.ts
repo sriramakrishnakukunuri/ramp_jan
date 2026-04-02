@@ -331,6 +331,7 @@ tgtpc10: {
     downloadPDF: API_BASE_URL + `/program/summary/pdf/`,
     downloadPdfByProgram: API_BASE_URL + `/program/summary/pdf?programId=`,
     saveProgramNote: API_BASE_URL + `/program-summary`,
+    getProgramNote: API_BASE_URL + `/program-summary/`,
   },
   programExecutions: {
     saveMediaCoverage: API_BASE_URL + `/program/execution/media-coverage`,
