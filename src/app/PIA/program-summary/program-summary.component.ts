@@ -613,8 +613,8 @@ programNote = '';
 programNoteError = '';
 
 onProgramNoteChange(value: string) {
-  if (value?.length > 150) {
-    this.programNoteError = 'Maximum 150 characters allowed.';
+  if (value?.length > 600) {
+    this.programNoteError = 'Maximum 600 characters allowed.';
   } else {
     this.programNoteError = '';
   }
@@ -622,8 +622,8 @@ onProgramNoteChange(value: string) {
 
 saveProgramNote() {
   const trimmed = (this.programNote || '').trim();
-  if (trimmed.length > 150) {
-    this.programNoteError = 'Maximum 150 characters allowed.';
+  if (trimmed.length > 600) {
+    this.programNoteError = 'Maximum 600 characters allowed.';
     return;
   }
   if (trimmed.length === 0) {
@@ -653,8 +653,8 @@ saveProgramNote() {
  programNoteCollege = '';
 programCollegeError = '';
 onProgramNoteChangeCollege(value: string) {
-  if (value?.length > 600) {
-    this.programCollegeError = 'Maximum 600 characters allowed.';
+  if (value?.length > 150) {
+    this.programCollegeError = 'Maximum 150 characters allowed.';
   } else {
     this.programCollegeError = '';
   }
@@ -662,8 +662,8 @@ onProgramNoteChangeCollege(value: string) {
 
 saveProgramNoteCollege() {
   const trimmed = (this.programNoteCollege || '').trim();
-  if (trimmed.length > 600) {
-    this.programCollegeError = 'Maximum 600 characters allowed.';
+  if (trimmed.length > 150) {
+    this.programCollegeError = 'Maximum 150 characters allowed.';
     return;
   }
   if (trimmed.length === 0) {

@@ -286,11 +286,11 @@
       rows="2"
       [(ngModel)]="programNote"
       (ngModelChange)="onProgramNoteChange($event)"
-      maxlength="150"
-      placeholder="Enter Program Summary up to 150 characters">
+      maxlength="600"
+      placeholder="Enter Program Summary up to 600 characters">
     </textarea>
     <div class="d-flex justify-content-between mt-1">
-      <small class="text-muted">{{ programNote?.length || 0 }}/150</small>
+      <small class="text-muted">{{ programNote?.length || 0 }}/600</small>
       <small *ngIf="programNoteError" class="text-danger">{{ programNoteError }}</small>
     </div>
   </div>
@@ -314,11 +314,11 @@
       rows="3"
       [(ngModel)]="programNoteCollege"
       (ngModelChange)="onProgramNoteChangeCollege($event)"
-      maxlength="600"
-      placeholder="Enter College Details up to 600 characters">
+      maxlength="150"
+      placeholder="Enter College Details up to 150 characters">
     </textarea>
     <div class="d-flex justify-content-between mt-1">
-      <small class="text-muted">{{ programNoteCollege?.length || 0 }}/600</small>
+      <small class="text-muted">{{ programNoteCollege?.length || 0 }}/150</small>
       <small *ngIf="programCollegeError" class="text-danger">{{ programCollegeError }}</small>
     </div>
   </div>
