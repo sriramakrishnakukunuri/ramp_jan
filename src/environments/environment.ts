@@ -10,8 +10,8 @@
 // };
 export const environment = {
   production: false,
-  apiUrl: 'http://10.3.38.49:8081/workflow',
-  fileUrl: 'http://10.3.38.49/workflowfiles'
+  apiUrl: 'http://ramp.telangana.gov.in/workflow',
+  fileUrl: 'http://ramp.telangana.gov.in/workflowfiles'
 };
 
 /*

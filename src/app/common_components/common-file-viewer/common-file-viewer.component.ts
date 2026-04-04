@@ -20,7 +20,7 @@ export class CommonFileViewerComponent implements OnInit {
     private toastr:ToastrService) {}
 
 
-    readonly BASE_URL =  APIS.fileBaseUrl;
+    readonly BASE_URL =  APIS.fileBaseUrlGet;
 
 getFullFileUrl(path: string): string {
   const trimmed = path?.split('public_html/')?.[1];

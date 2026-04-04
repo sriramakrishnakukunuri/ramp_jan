@@ -7,8 +7,8 @@ import {
 
 export const API_BASE_URL = environment.apiUrl;
 export const APIS = {
-  fileBaseUrl: 'http://10.3.38.49:8081/',
-  fileBaseUrlGet:`http://10.3.38.49/workflowfiles/`,
+  fileBaseUrl: 'http://ramp.telangana.gov.in/workflowfiles/',
+  fileBaseUrlGet:`http://ramp.telangana.gov.in/workflowfiles/`,
   programCreation: {
     addprogram: API_BASE_URL + '/program/create',
     addSessions: API_BASE_URL + '/program/session/create',

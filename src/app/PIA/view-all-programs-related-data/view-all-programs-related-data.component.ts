@@ -645,7 +645,7 @@ getAgenciesList() {
     }
    
   }
-  imageUrlDownloadPath = `${APIS.fileBaseUrl}`;
+  imageUrlDownloadPath = `${APIS.fileBaseUrlGet}`;
   imagePreviewUrl: any
   type:any=''
     showImagePreview(url: any, value: string,type:any) {
@@ -741,7 +741,7 @@ openRemarks(item:any){
             }
   
   downloadPDF(url:any){
-    let linkUrl =  APIS.fileBaseUrl+url
+    let linkUrl =  APIS.fileBaseUrlGet+url
     const link = document.createElement("a");
     link.setAttribute("download", linkUrl);
     link.setAttribute("target", "_blank");
@@ -751,7 +751,7 @@ openRemarks(item:any){
     link.remove();
   }
   downloadImage(url:any) {
-  const imageUrl =  APIS.fileBaseUrl+url;
+  const imageUrl =  APIS.fileBaseUrlGet+url;
 
   // const fileName = 'ProgramScreenshot.png'; // Optional: rename the file
 
