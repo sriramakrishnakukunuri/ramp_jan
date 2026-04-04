@@ -1,82 +1,84 @@
 <main class="mt-4">
-    <section id="pdf-download-section">
-        <div class="container-fluid" id="program-summary-container">
-            <div class="card mb-3">
-                <div class="card-header bg-transparent">
-                    <div class="row align-items-center mb-3">
-                        <div class="col-12 col-sm-4 col-md-6 col-lg-6">
-                            <h6 class="fw-600 mb-2 mb-sm-0 mb-md-0">Program Summary</h6>
-                        </div>
-                        <ng-container *ngIf="loginsessionDetails?.userRole == 'ADMIN' || loginsessionDetails?.userRole == 'SPIU'">
-                            <div class="col-12 col-sm-4 col-md-3 col-lg-3" >
-                                <!-- <label for="Agencies" style="font-weight: 600;">List Of Agencies</label>
+  <section id="pdf-download-section">
+    <div class="container-fluid" id="program-summary-container">
+      <div class="card mb-3">
+        <div class="card-header bg-transparent">
+          <div class="row align-items-center mb-3">
+            <div class="col-12 col-sm-4 col-md-6 col-lg-6">
+              <h6 class="fw-600 mb-2 mb-sm-0 mb-md-0">Program Summary</h6>
+            </div>
+            <ng-container *ngIf="loginsessionDetails?.userRole == 'ADMIN' || loginsessionDetails?.userRole == 'SPIU'">
+              <div class="col-12 col-sm-4 col-md-3 col-lg-3">
+                <!-- <label for="Agencies" style="font-weight: 600;">List Of Agencies</label>
                                 <select class="form-select" id="Agencies" (change)="getProgramsByAgency($any($event.target).value)">
                                     <option *ngFor="let list of agencyList" value="{{list.agencyId}}">{{list.agencyName}}</option>
                                 </select> -->
-                                  <mat-form-field appearance="outline" class="w-100">
-                            <mat-label>List Of Agencies</mat-label>
-                                <mat-select  (selectionChange)="getProgramsByAgency($event.value)">
-                                <mat-select-filter [array]="agencyList" [displayMember]="'agencyName'" (filteredReturn)="agencyListFiltered = $event">
-                                </mat-select-filter>
-                                <!-- <mat-option value="" disabled>Select Program</mat-option> -->
-                                <mat-option *ngFor="let list of agencyListFiltered" [value]="list.agencyId">
-                                {{ list.agencyName }}
-                                </mat-option>
-                            </mat-select>
-                            </mat-form-field>
-                                
-                            </div>
-                        </ng-container>   
-                        <div class="col-12 col-sm-4 col-md-3 col-lg-3">
-                            <div>
-                                <!-- <label for="Agencies" style="font-weight: 600;">List Of Programs</label>
+                <mat-form-field appearance="outline" class="w-100">
+                  <mat-label>List Of Agencies</mat-label>
+                  <mat-select (selectionChange)="getProgramsByAgency($event.value)">
+                    <mat-select-filter [array]="agencyList" [displayMember]="'agencyName'"
+                      (filteredReturn)="agencyListFiltered = $event">
+                    </mat-select-filter>
+                    <!-- <mat-option value="" disabled>Select Program</mat-option> -->
+                    <mat-option *ngFor="let list of agencyListFiltered" [value]="list.agencyId">
+                      {{ list.agencyName }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+
+              </div>
+            </ng-container>
+            <div class="col-12 col-sm-4 col-md-3 col-lg-3">
+              <div>
+                <!-- <label for="Agencies" style="font-weight: 600;">List Of Programs</label>
                                 <select class="form-select" [(ngModel)]="programIds" (change)="dropdownProgramsList($event,'table')">
                                     <option value="">Select Program</option>
                                     <option *ngFor="let list of agencyProgramList" value="{{list.programId}}">{{list.programTitle}}</option>
                                 </select> -->
-                                  <mat-form-field appearance="outline" class="w-100">
-                            <mat-label>List Of Program</mat-label>
-                                <mat-select [(ngModel)]="programIds" (selectionChange)="dropdownProgramsList($event,'table')">
-                                <mat-select-filter [array]="agencyProgramList" [displayMember]="'programTitle'" (filteredReturn)="agencyProgramListFiltered = $event">
-                                </mat-select-filter>
-                                <mat-option value="" >Select Program</mat-option>
-                                <mat-option *ngFor="let list of agencyProgramListFiltered" [value]="list.programId">
-                                {{ list.programTitle }}
-                                </mat-option>
-                            </mat-select>
-                            </mat-form-field>
-                            </div>
-                        </div>
+                <mat-form-field appearance="outline" class="w-100">
+                  <mat-label>List Of Program</mat-label>
+                  <mat-select [(ngModel)]="programIds" (selectionChange)="dropdownProgramsList($event,'table')">
+                    <mat-select-filter [array]="agencyProgramList" [displayMember]="'programTitle'"
+                      (filteredReturn)="agencyProgramListFiltered = $event">
+                    </mat-select-filter>
+                    <mat-option value="">Select Program</mat-option>
+                    <mat-option *ngFor="let list of agencyProgramListFiltered" [value]="list.programId">
+                      {{ list.programTitle }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card shadow-none border p-3 mb-3">
+            <div class="row">
+              <div class="col-12 col-sm-12 col-md-8 col-lg-10">
+                <div class="row">
+                  <div class="col-12 col-sm-12 col-md-6 col-lg-7 mb-2">
+                    <div class="row">
+                      <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                        <label class="fw-bold fs-md mb-1">Name of the Program</label>
+                      </div>
+                      <div class="col-12 col-sm-12 col-md-9 col-lg-8">
+                        <label class="fs-md mb-1">{{PrigramSummaryData?.programName}}</label>
+                      </div>
                     </div>
+                  </div>
+                  <div class="col-12 col-sm-12 col-md-6 col-lg-5 mb-2">
+                    <div class="row">
+                      <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                        <label class="fw-bold fs-md mb-1">Agency Name</label>
+                      </div>
+                      <div class="col-12 col-sm-12 col-md-9 col-lg-8">
+                        <label class="fs-md mb-1">{{PrigramSummaryData?.agencyName}}</label>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div class="card-body">   
-                    <div class="card shadow-none border p-3 mb-3">
-                        <div class="row">
-                            <div class="col-12 col-sm-12 col-md-8 col-lg-10">
-                                <div class="row">
-                                    <div class="col-12 col-sm-12 col-md-6 col-lg-7 mb-2">
-                                        <div class="row">
-                                            <div class="col-12 col-sm-12 col-md-4 col-lg-4">
-                                                <label class="fw-bold fs-md mb-1">Name of the Program</label>
-                                            </div>
-                                            <div class="col-12 col-sm-12 col-md-9 col-lg-8">
-                                                <label class="fs-md mb-1">{{PrigramSummaryData?.programName}}</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-sm-12 col-md-6 col-lg-5 mb-2">
-                                        <div class="row">
-                                            <div class="col-12 col-sm-12 col-md-4 col-lg-4">
-                                                <label class="fw-bold fs-md mb-1">Agency Name</label>
-                                            </div>
-                                            <div class="col-12 col-sm-12 col-md-9 col-lg-8">
-                                                <label class="fs-md mb-1">{{PrigramSummaryData?.agencyName}}</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row ">
-                                    <!-- <div class="col-12 col-sm-12 col-md-2 col-lg-2">
+                <div class="row ">
+                  <!-- <div class="col-12 col-sm-12 col-md-2 col-lg-2">
                                          <label class="fw-bold fs-md mb-1 mb-sm-1 mb-md-0">Program Monitoring Rating</label>
 
                                     </div>
@@ -100,150 +102,138 @@
                                          <label class="fs-md mb-0">{{PrigramSummaryData?.endDate}}</label>
 
                                     </div> -->
-                                  
-                                    <div class="col-12 col-sm-12 col-md-4 col-lg-7">
-                                        <div class="row">
-                                            <div class="col-12 col-sm-12 col-md-4 col-lg-4">
-                                                <label class="fw-bold fs-md mb-1 mb-sm-1 mb-md-0">Start Date</label>
-                                                
-                                            </div>
-                                            <div class="col-12 col-sm-12 col-md-9 col-lg-8">
-                                                <label class="fs-md mb-1 mb-sm-1 mb-md-0">{{PrigramSummaryData?.startDate}}</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-sm-12 col-md-4 col-lg-5">
-                                        <div class="row">
-                                            <div class="col-12 col-sm-12 col-md-4 col-lg-4">
-                                                <label class="fw-bold fs-md mb-1 mb-sm-1 mb-md-0">End Date</label>
-                                            </div>
-                                            <div class="col-12 col-sm-12 col-md-9 col-lg-8">
-                                                <label class="fs-md mb-0">{{PrigramSummaryData?.endDate}}</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                </div>
-                                <div class="row mt-3">
-                                      <div class="col-12 col-sm-12 col-md-4 col-lg-7">
-                                        <div class="row">
-                                            <div class="col-12 col-sm-12 col-md-4 col-lg-4">
-                                                <label class="fw-bold fs-md mb-1 mb-sm-1 mb-md-0">Program Monitoring Rating</label>
-                                                
-                                            </div>
-                                            <div class="col-12 col-sm-12 col-md-9 col-lg-8">
-                                               <app-star-rating [percentage]="PrigramSummaryData?.monitoringRating"></app-star-rating>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-sm-12 col-md-4 col-lg-2">
-                                <div class="card bg-primary text-white text-center shadow-none p-2">
-                                    <label>Total Participants</label>
-                                    <p class="fw-bold fs-6 mb-0">{{PrigramSummaryData?.participant}}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>  
-                    <div class="row">
-                        <div class="col-12 col-sm-12 col-md-12 col-lg-6">
-                            <div class="card shadow-none border mb-3">
-                                <div class="card-header bg-transparent">
-                                    <h6 class="fw-bold text-primary mb-0">Social Category</h6>
-                                </div>
-                                <div class="card-body p-0">        
-                                    <div class="table-rsponsive">
-                                        <table class="table mb-0">
-                                            <thead>
-                                                <tr>
-                                                    <th>Category</th>
-                                                    <th>Number</th>
-                                                    <th>%</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>SC</td>
-                                                    <td>{{PrigramSummaryData?.sc}}</td>
-                                                    <td>{{PrigramSummaryData?.scPercentage}}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>ST</td>
-                                                    <td>{{PrigramSummaryData?.st}}</td>
-                                                    <td>{{PrigramSummaryData?.stPercentage}}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Minorities</td>
-                                                    <td>{{PrigramSummaryData?.minorities}}</td>
-                                                    <td>{{PrigramSummaryData?.minoritiesPercentage}}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>BC</td>
-                                                    <td>{{PrigramSummaryData?.bc}}</td>
-                                                    <td>{{PrigramSummaryData?.bcPercentage}}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>OC</td>
-                                                    <td>{{PrigramSummaryData?.oc}}</td>
-                                                    <td>{{PrigramSummaryData?.ocPercentage}}</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div> 
-                        </div>
-                        <div class="col-12 col-sm-12 col-md-12 col-lg-6">
-                            <div class="card shadow-none border mb-3">
-                                <div class="card-header bg-transparent">
-                                    <h6 class="fw-bold text-primary mb-0">Gender</h6>
-                                </div>                                    
-                                <div class="card-body p-0">
-                                    <div class="table-rsponsive">
-                                        <table class="table mb-0">
-                                            <thead>
-                                                <tr>
-                                                    <th>Gender</th>
-                                                    <th>Number</th>
-                                                    <th>%</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>Male</td>
-                                                    <td>{{PrigramSummaryData?.male}}</td>
-                                                    <td>{{PrigramSummaryData?.malePercentage}}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Female</td>
-                                                    <td>{{PrigramSummaryData?.female}}</td>
-                                                    <td>{{PrigramSummaryData?.femalePercentage}}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Transgender</td>
-                                                    <td>{{PrigramSummaryData?.transgender}}</td>
-                                                    <td>{{PrigramSummaryData?.transeGenderPercentage}}</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div> 
 
-                            <div class="card shadow-none bg-secondary p-3 mb-0">
-                                <div class="d-flex align-items-center justify-content-between text-white">
-                                    <div>
-                                        <label class="fw-bold fs-md">Physically Challenged</label>
-                                    </div>
-                                    <p class="text-center mb-0">{{PrigramSummaryData?.physicallyChallenge}}</p>
-                                    <p class="mb-0">{{PrigramSummaryData?.disabilityPercentage}}</p>
-                                </div>
-                            </div>
-                        </div>
+                  <div class="col-12 col-sm-12 col-md-4 col-lg-7">
+                    <div class="row">
+                      <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                        <label class="fw-bold fs-md mb-1 mb-sm-1 mb-md-0">Start Date</label>
+
+                      </div>
+                      <div class="col-12 col-sm-12 col-md-9 col-lg-8">
+                        <label class="fs-md mb-1 mb-sm-1 mb-md-0">{{PrigramSummaryData?.startDate}}</label>
+                      </div>
                     </div>
-                    
-                    <div class="card shadow-none border">
+                  </div>
+                  <div class="col-12 col-sm-12 col-md-4 col-lg-5">
+                    <div class="row">
+                      <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                        <label class="fw-bold fs-md mb-1 mb-sm-1 mb-md-0">End Date</label>
+                      </div>
+                      <div class="col-12 col-sm-12 col-md-9 col-lg-8">
+                        <label class="fs-md mb-0">{{PrigramSummaryData?.endDate}}</label>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="row mt-3">
+                  <div class="col-12 col-sm-12 col-md-4 col-lg-7">
+                    <div class="row">
+                      <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                        <label class="fw-bold fs-md mb-1 mb-sm-1 mb-md-0">Program Monitoring Rating</label>
+
+                      </div>
+                      <div class="col-12 col-sm-12 col-md-9 col-lg-8">
+                        <app-star-rating [percentage]="PrigramSummaryData?.monitoringRating"></app-star-rating>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 col-sm-12 col-md-4 col-lg-2">
+                <div class="card bg-primary text-white text-center shadow-none p-2">
+                  <label>Total Participants</label>
+                  <p class="fw-bold fs-6 mb-0">{{PrigramSummaryData?.participant}}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row align-items-stretch">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-6 d-flex">
+              <div class="card shadow-none border mb-3 flex-fill h-100">
+                <div class="card-header bg-transparent"> <h6 class="fw-bold text-primary mb-0">Social Category</h6> </div>
+                <div class="card-body p-0 h-100"> 
+                    <div class="table-rsponsive">
+                    <table class="table mb-0">
+                      <thead>
+                        <tr>
+                          <th>Category</th>
+                          <th>Number</th>
+                          <th>%</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>SC</td>
+                          <td>{{PrigramSummaryData?.sc}}</td>
+                          <td>{{PrigramSummaryData?.scPercentage}}</td>
+                        </tr>
+                        <tr>
+                          <td>ST</td>
+                          <td>{{PrigramSummaryData?.st}}</td>
+                          <td>{{PrigramSummaryData?.stPercentage}}</td>
+                        </tr>
+                        <tr>
+                          <td>Minorities</td>
+                          <td>{{PrigramSummaryData?.minorities}}</td>
+                          <td>{{PrigramSummaryData?.minoritiesPercentage}}</td>
+                        </tr>
+                        <tr>
+                          <td>BC</td>
+                          <td>{{PrigramSummaryData?.bc}}</td>
+                          <td>{{PrigramSummaryData?.bcPercentage}}</td>
+                        </tr>
+                        <tr>
+                          <td>OC</td>
+                          <td>{{PrigramSummaryData?.oc}}</td>
+                          <td>{{PrigramSummaryData?.ocPercentage}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12 col-sm-12 col-md-12 col-lg-6 d-flex">
+              <div class="card shadow-none border mb-3 flex-fill h-100">
+                <div class="card-header bg-transparent"> <h6 class="fw-bold text-primary mb-0">Gender</h6> </div>
+                <div class="card-body p-0 h-100"> 
+                     <div class="table-rsponsive">
+                    <table class="table mb-0">
+                      <thead>
+                        <tr>
+                          <th>Gender</th>
+                          <th>Number</th>
+                          <th>%</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>Male</td>
+                          <td>{{PrigramSummaryData?.male}}</td>
+                          <td>{{PrigramSummaryData?.malePercentage}}</td>
+                        </tr>
+                        <tr>
+                          <td>Female</td>
+                          <td>{{PrigramSummaryData?.female}}</td>
+                          <td>{{PrigramSummaryData?.femalePercentage}}</td>
+                        </tr>
+                        <tr>
+                          <td>Transgender</td>
+                          <td>{{PrigramSummaryData?.transgender}}</td>
+                          <td>{{PrigramSummaryData?.transeGenderPercentage}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+         
+
+          <!-- <div class="card shadow-none border">
                         <div class="card-header bg-transparent">
                             <h6 class="fw-bold text-primary mb-0">Participants</h6>
                         </div>
@@ -282,24 +272,62 @@
                                 </table>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-            
+                    </div> -->
         </div>
-        <div class="text-center mt-3" id="program-collage-image">
-            <h5>Program Collage Image</h5>
-            <img 
-                *ngIf="programCollageImage"
-                [src]="programCollageImage" 
-                alt="Program Collage" 
-                class="img-fluid" 
-                style="width: 50%; height: auto;" 
-            />
-        </div>
+      </div>
 
-       <!-- ...existing code... -->
-<!-- <div class="card shadow-none" id="participant-details">
+    </div>
+    <div class="row mb-3 align-items-end p-3">
+  <div class="col-lg-10 col-md-9 col-sm-12 p-3">
+    <label for="programNotes" class="form-label fw-bold">Program Summary</label>
+    <textarea
+      id="programNotes"
+      class="form-control"
+      rows="3"
+      [(ngModel)]="programNote"
+      (ngModelChange)="onProgramNoteChange($event)"
+      maxlength="600"
+      placeholder="Enter Program Summary up to 600 characters">
+    </textarea>
+    <div class="d-flex justify-content-between mt-1">
+      <small class="text-muted">{{ programNote?.length || 0 }}/600</small>
+      <small *ngIf="programNoteError" class="text-danger">{{ programNoteError }}</small>
+    </div>
+  </div>
+  <div class="col-lg-2 col-md-3 col-sm-12 d-flex mb-3">
+    <button class="btn btn-lime-green w-100 mb-3" (click)="saveProgramNote()">Save</button>
+  </div>
+</div>
+
+
+    <div class="text-center mt-3" id="program-collage-image">
+      <h5>Program Collage Image</h5>
+      <img *ngIf="programCollageImage" [src]="programCollageImage" alt="Program Collage" class="img-fluid"
+        style="width: 50%; height: auto;" />
+    </div>
+ <div class="row mb-3 align-items-end p-3">
+  <div class="col-lg-10 col-md-9 col-sm-12 p-3">
+    <label for="programNotes" class="form-label fw-bold">Collage Details</label>
+    <textarea
+      id="programNotes"
+      class="form-control"
+      rows="2"
+      [(ngModel)]="programNoteCollege"
+      (ngModelChange)="onProgramNoteChangeCollege($event)"
+      maxlength="150"
+      placeholder="Enter College Details up to 150 characters">
+    </textarea>
+    <div class="d-flex justify-content-between mt-1">
+      <small class="text-muted">{{ programNoteCollege?.length || 0 }}/150</small>
+      <small *ngIf="programCollegeError" class="text-danger">{{ programCollegeError }}</small>
+    </div>
+  </div>
+  <div class="col-lg-2 col-md-3 col-sm-12 d-flex mb-3">
+    <button class="btn btn-lime-green w-100 mb-3" (click)="saveProgramNoteCollege()">Save</button>
+  </div>
+</div>
+    <!-- ...existing code... -->
+    <!-- <div class="card shadow-none" id="participant-details">
     <div class="card-header">
        <h5 class="fw-bold m-4 mb-0">Participant Details</h5>
     </div>
@@ -358,93 +386,95 @@
         </div>
     </div>
 </div> -->
-<div class="card shadow-none" id="participant-details">
-    <h5 class="fw-bold m-4 mb-0">Participant Details</h5>
-    <div class="card-body m-3">
+    <div class="card shadow-none" id="participant-details">
+      <h5 class="fw-bold m-4 mb-0">Participant Details</h5>
+      <div class="card-body m-3">
         <div class="table-responsive shadow-none border mb-3" style="width: 100%; overflow-x: visible;">
-            <table class="table mb-0" style="width: 100%; table-layout: fixed; border-collapse: collapse;">
-                <thead>
-                    <tr>
-                        <th style="width: 6%; text-align: center; padding: 8px; border: 1px solid #ddd;">Sl No</th>
-                        <th style="width: 20%; text-align: center; padding: 8px; border: 1px solid #ddd;">Name of the Participant</th>
-                        <th style="width: 16%; text-align: center; padding: 8px; border: 1px solid #ddd;">Organization Name</th>
-                        <th style="width: 12%; text-align: center; padding: 8px; border: 1px solid #ddd;">District Name</th>
-                        <th style="width: 12%; text-align: center; padding: 8px; border: 1px solid #ddd;">Mandal Name</th>
-                        <th style="width: 8%; text-align: center; padding: 8px; border: 1px solid #ddd;">Caste</th>
-                        <th style="width: 12%; text-align: center; padding: 8px; border: 1px solid #ddd;">Mobile Number</th>
-                        <th style="width: 10%; text-align: center; padding: 8px; border: 1px solid #ddd;">Vo Name</th>
-                        <th style="width: 4%; text-align: center; padding: 8px; border: 1px solid #ddd;">Sector</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let post of paginatedPosts; let i = index">
-                        <td style="text-align: center; padding: 6px; border: 1px solid #ddd;">{{ post.serialNumber || (i + 1) }}</td>
-                        <td style="padding: 6px; border: 1px solid #ddd; word-wrap: break-word;">{{ post.participantName }}</td>
-                        <td style="padding: 6px; border: 1px solid #ddd; word-wrap: break-word;">{{ post.organizationName }}</td>
-                        <td style="padding: 6px; border: 1px solid #ddd; word-wrap: break-word;">{{ post.DistrictName }}</td>
-                        <td style="padding: 6px; border: 1px solid #ddd; word-wrap: break-word;">{{ post.MandalName }}</td>
-                        <td style="text-align: center; padding: 6px; border: 1px solid #ddd;">{{ post.category }}</td>
-                        <td style="text-align: center; padding: 6px; border: 1px solid #ddd;">{{ post.mobileNo }}</td>
-                        <td style="padding: 6px; border: 1px solid #ddd; word-wrap: break-word;">{{ post.voName }}</td>
-                        <td style="text-align: center; padding: 6px; border: 1px solid #ddd; word-wrap: break-word;">{{ post.sectorList?.join(', ') }}</td>
-                    </tr>
-                </tbody>                      
-            </table>
+          <table class="table mb-0" style="width: 100%; table-layout: fixed; border-collapse: collapse;">
+            <thead>
+              <tr>
+                <th style="width: 6%; text-align: center; padding: 8px; border: 1px solid #ddd;">Sl No</th>
+                <th style="width: 20%; text-align: center; padding: 8px; border: 1px solid #ddd;">Name of the
+                  Participant</th>
+                <th style="width: 16%; text-align: center; padding: 8px; border: 1px solid #ddd;">Organization Name</th>
+                <th style="width: 12%; text-align: center; padding: 8px; border: 1px solid #ddd;">District Name</th>
+                <th style="width: 12%; text-align: center; padding: 8px; border: 1px solid #ddd;">Mandal Name</th>
+                <th style="width: 8%; text-align: center; padding: 8px; border: 1px solid #ddd;">Caste</th>
+                <th style="width: 12%; text-align: center; padding: 8px; border: 1px solid #ddd;">Mobile Number</th>
+                <th style="width: 10%; text-align: center; padding: 8px; border: 1px solid #ddd;">Vo Name</th>
+                <th style="width: 4%; text-align: center; padding: 8px; border: 1px solid #ddd;">Sector</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let post of paginatedPosts; let i = index">
+                <td style="text-align: center; padding: 6px; border: 1px solid #ddd;">{{ post.serialNumber || (i + 1) }}
+                </td>
+                <td style="padding: 6px; border: 1px solid #ddd; word-wrap: break-word;">{{ post.participantName }}</td>
+                <td style="padding: 6px; border: 1px solid #ddd; word-wrap: break-word;">{{ post.organizationName }}
+                </td>
+                <td style="padding: 6px; border: 1px solid #ddd; word-wrap: break-word;">{{ post.DistrictName }}</td>
+                <td style="padding: 6px; border: 1px solid #ddd; word-wrap: break-word;">{{ post.MandalName }}</td>
+                <td style="text-align: center; padding: 6px; border: 1px solid #ddd;">{{ post.category }}</td>
+                <td style="text-align: center; padding: 6px; border: 1px solid #ddd;">{{ post.mobileNo }}</td>
+                <td style="padding: 6px; border: 1px solid #ddd; word-wrap: break-word;">{{ post.voName }}</td>
+                <td style="text-align: center; padding: 6px; border: 1px solid #ddd; word-wrap: break-word;">
+                  {{ post.sectorList?.join(', ') }}</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-      
-        <div id="pagination-controls" class="d-flex justify-content-between align-items-center p-2" *ngIf="showPagination">
-            <button class="btn btn-lime-green" (click)="previousPage()" [disabled]="currentPage === 1">Previous</button>
-            <span class="color:black">Page {{ currentPage }} of {{ totalPages }}</span>
-            <button class="btn btn-lime-green" (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button>
+
+        <div id="pagination-controls" class="d-flex justify-content-between align-items-center p-2"
+          *ngIf="showPagination">
+          <button class="btn btn-lime-green" (click)="previousPage()" [disabled]="currentPage === 1">Previous</button>
+          <span class="color:black">Page {{ currentPage }} of {{ totalPages }}</span>
+          <button class="btn btn-lime-green" (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button>
         </div>
-          
+
+      </div>
     </div>
-</div>
 
-<!-- ...existing code... -->
-          
-        <ng-template #loading>
-            <p>Loading posts...</p>
-        </ng-template>
-        <div class="text-end mb-3" style="margin-right:20px;" id="pdf-download-button">
-            <button type="button" class="btn btn-lime-green" (click)="DownloadPdfFromBEApi()">Download</button>
+    <!-- ...existing code... -->
+
+    <ng-template #loading>
+      <p>Loading posts...</p>
+    </ng-template>
+    <div class="text-end mb-3" style="margin-right:20px;" id="pdf-download-button">
+      <button type="button" class="btn btn-lime-green" (click)="DownloadPdfFromBEApi()">Download</button>
+    </div>
+    <!--  FE Handled Download method--handleDownloadPDF -->
+  </section>
+  <!-- Add this loader overlay at the top of your main section -->
+
+
+  <!-- PDF Generation Loader Overlay -->
+  <div *ngIf="isGeneratingPDF" class="pdf-loader-overlay">
+    <div class="pdf-loader-container">
+      <div class="text-center">
+        <div class="spinner-border text-primary mb-3" role="status">
+          <span class="visually-hidden">Loading...</span>
         </div>
-          <!--  FE Handled Download method--handleDownloadPDF -->
-    </section>
-    <!-- Add this loader overlay at the top of your main section -->
+        <h5 class="mb-3">Generating PDF...</h5>
 
-    
-    <!-- PDF Generation Loader Overlay -->
-    <div *ngIf="isGeneratingPDF" class="pdf-loader-overlay">
-        <div class="pdf-loader-container">
-            <div class="text-center">
-                <div class="spinner-border text-primary mb-3" role="status">
-                    <span class="visually-hidden">Loading...</span>
-                </div>
-                <h5 class="mb-3">Generating PDF...</h5>
-                
-                <!-- Progress bar -->
-                <div class="progress mb-3" style="height: 20px;">
-                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-primary" 
-                         role="progressbar" 
-                         [style.width.%]="pdfProgressPercentage"
-                         [attr.aria-valuenow]="pdfProgressPercentage" 
-                         aria-valuemin="0" 
-                         aria-valuemax="100">
-                        {{pdfProgressPercentage}}%
-                    </div>
-                </div>
-                
-                <!-- Progress text -->
-                <!-- <p class="text-muted mb-0">{{pdfProgress}}</p> -->
-                
-                <!-- Additional info -->
-                <!-- <small class="text-muted d-block mt-2">
+        <!-- Progress bar -->
+        <div class="progress mb-3" style="height: 20px;">
+          <div class="progress-bar progress-bar-striped progress-bar-animated bg-primary" role="progressbar"
+            [style.width.%]="pdfProgressPercentage" [attr.aria-valuenow]="pdfProgressPercentage" aria-valuemin="0"
+            aria-valuemax="100">
+            {{pdfProgressPercentage}}%
+          </div>
+        </div>
+
+        <!-- Progress text -->
+        <!-- <p class="text-muted mb-0">{{pdfProgress}}</p> -->
+
+        <!-- Additional info -->
+        <!-- <small class="text-muted d-block mt-2">
                     Please wait while we prepare your PDF...
                 </small> -->
-            </div>
-        </div>
+      </div>
     </div>
+  </div>
 
-  
+
 </main>

@@ -327,10 +327,13 @@ tgtpc10: {
     saveRemarksNonTraining: API_BASE_URL + `/non-training/save/remarks`,
     getExpenditurVerification: API_BASE_URL + `/program/expenditure/status?status=`,
   },
-  programSummary: {
+   programSummary: {
     getProramData: API_BASE_URL + `/program/summary/`,
     getParticipantsBYProgram: API_BASE_URL + `/program/participants/dropdown/`,
     downloadPDF: API_BASE_URL + `/program/summary/pdf/`,
+    downloadPdfByProgram: API_BASE_URL + `/program/summary/pdf?programId=`,
+    saveProgramNote: API_BASE_URL + `/program-summary`,
+    getProgramNote: API_BASE_URL + `/program-summary/`,
   },
   programExecutions: {
     saveMediaCoverage: API_BASE_URL + `/program/execution/media-coverage`,
