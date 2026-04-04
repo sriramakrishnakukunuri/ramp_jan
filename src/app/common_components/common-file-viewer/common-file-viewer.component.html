@@ -7,12 +7,14 @@
       </div>
       <div class="modal-body text-center">
 
+        <div *ngIf="isLoading" class="py-5 text-muted">Loading preview...</div>
+
         <!-- Invalid or error -->
-        <p *ngIf="fileType === 'invalid'" class="text-danger">{{ errorMessage }}</p>
+        <p *ngIf="!isLoading && fileType === 'invalid'" class="text-danger">{{ errorMessage }}</p>
 
         <!-- Image preview -->
-        <div *ngIf="fileType === 'image'" class="zoom-container">
-          <img [src]="filePath"
+        <div *ngIf="!isLoading && fileType === 'image'" class="zoom-container">
+          <img [src]="previewUrl"
                alt="Preview not available"
                (error)="onImageError()"
                [class.zoomed]="isZoomed"
@@ -20,7 +22,7 @@
         </div>
 
         <!-- PDF preview -->
-        <iframe *ngIf="fileType === 'pdf'" 
+        <iframe *ngIf="!isLoading && fileType === 'pdf'" 
                 [src]="safeFileUrl" 
                 style="width:100%; height:500px;" 
                 frameborder="0"></iframe>
@@ -43,6 +45,7 @@
 
       </div>
       <div class="modal-footer">
+        <button type="button" class="btn btn-lime-green" (click)="downloadFile()" [disabled]="isLoading || fileType === 'invalid'">Download</button>
         <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
       </div>
     </div>

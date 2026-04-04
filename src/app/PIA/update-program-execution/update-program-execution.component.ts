@@ -438,14 +438,7 @@ export class UpdateProgramExecutionComponent implements OnInit {
   }
 
   showImagePreview(url: any, value: string) {
-    this.imagePreviewUrl = null; // Reset the image preview URL
-    this.imagePreviewUrl = url + value;
-
-    const editSessionModal = document.getElementById('imagePreview');
-    if (editSessionModal) {
-      const modalInstance = new bootstrap.Modal(editSessionModal);
-      modalInstance.show();
-    }
+    this._commonService.openFile(`${url}${value}`);
   }
 
   validateDate(type: any) {

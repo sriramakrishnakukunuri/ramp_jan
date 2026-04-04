@@ -35,6 +35,8 @@ adminUpdateForm!: FormGroup;
   selectedFileName: string = '';
   currentTicketFiles: any[] = [];
   isDocViewerAvailable = false;
+  filePreviewMap: Record<string, string> = {};
+  private filePreviewLoading = new Set<string>();
 
   // Pagination properties
   currentPage = 0;
@@ -502,9 +504,15 @@ adminUpdateForm!: FormGroup;
 // Update the previewFile method to work with the new modal
 previewFile(file: any, index: number): void {
   this.selectedFileName = file.fileName || file.name;
-  this.filePreviewUrl = this.getFileDownloadUrl(file);
   this.filePreviewType = this.getFileType(this.selectedFileName);
   this.currentTicketFiles = [file]; // Show only single file
+  const resolvedUrl = this.resolveTicketFileUrl(file);
+  if (this.filePreviewType === 'image' || this.filePreviewType === 'pdf') {
+    this.ensureTicketPreview(file);
+    this.filePreviewUrl = this.filePreviewMap[resolvedUrl] || '';
+  } else {
+    this.filePreviewUrl = resolvedUrl;
+  }
   this.closeAllModel()
   const modalElement = document.getElementById('filePreviewModal');
   if (modalElement) {
@@ -560,6 +568,57 @@ previewFile(file: any, index: number): void {
 
   getSafeUrl(url: string): SafeResourceUrl {
     return this.sanitizer.bypassSecurityTrustResourceUrl(url);
+  }
+
+  private resolveTicketFileUrl(file: any): string {
+    return this.commonService.resolveFileUrl(file?.filePath || file?.path || file?.url || '');
+  }
+
+  private getPreviewMimeType(fileName: string): string {
+    const extension = fileName.toLowerCase().split('.').pop();
+
+    switch (extension) {
+      case 'jpg':
+      case 'jpeg':
+        return 'image/jpeg';
+      case 'png':
+        return 'image/png';
+      case 'gif':
+        return 'image/gif';
+      case 'webp':
+        return 'image/webp';
+      case 'bmp':
+        return 'image/bmp';
+      case 'pdf':
+        return 'application/pdf';
+      default:
+        return 'application/octet-stream';
+    }
+  }
+
+  private ensureTicketPreview(file: any): void {
+    const resolvedUrl = this.resolveTicketFileUrl(file);
+    if (!resolvedUrl || this.filePreviewMap[resolvedUrl] || this.filePreviewLoading.has(resolvedUrl)) {
+      return;
+    }
+
+    this.filePreviewLoading.add(resolvedUrl);
+    const fileName = file?.fileName || file?.name || resolvedUrl;
+    this.commonService.getProtectedFile(resolvedUrl).subscribe({
+      next: (blob: Blob) => {
+        const normalizedBlob = blob.type
+          ? blob
+          : new Blob([blob], { type: this.getPreviewMimeType(fileName) });
+        this.filePreviewMap[resolvedUrl] = resolvedUrl;
+        if (this.currentTicketFiles.length === 1 && this.resolveTicketFileUrl(this.currentTicketFiles[0]) === resolvedUrl) {
+          this.filePreviewUrl = this.filePreviewMap[resolvedUrl];
+        }
+        this.filePreviewLoading.delete(resolvedUrl);
+      },
+      error: () => {
+        this.filePreviewLoading.delete(resolvedUrl);
+      }
+    });
   }
 
   // Create or update ticket
@@ -766,17 +825,22 @@ previewFile(file: any, index: number): void {
  readonly BASE_URL =  APIS.fileBaseUrl;
   // File download URL method
   getFileDownloadUrl(file: any): string {
-    if (file.filePath) {
-      // Convert Windows path to URL format
-      let urlPath = file.filePath.replace(/\\/g, '/');
-      // Remove the local path prefix and add API base URL
-      if (urlPath.includes('public_html')) {
-        urlPath = urlPath.substring(urlPath.indexOf('public_html') + 11);
-      }
-      // console.log('Generated file download URL:', `${this.BASE_URL}${urlPath}`);
-      return `${this.BASE_URL}${urlPath}`;
+    return this.resolveTicketFileUrl(file);
+  }
+
+  getFilePreviewUrl(file: any): string {
+    const resolvedUrl = this.resolveTicketFileUrl(file);
+    if (!resolvedUrl) {
+      return '';
     }
-    return '';
+
+    const fileType = this.getFileType(file?.fileName || file?.name || resolvedUrl);
+    if (fileType !== 'image' && fileType !== 'pdf') {
+      return resolvedUrl;
+    }
+
+    this.ensureTicketPreview(file);
+    return this.filePreviewMap[resolvedUrl] || '';
   }
 // getFileDownloadUrl(path: any): string {
 //   const trimmed = path.filePath?.split('public_html/')?.[1];

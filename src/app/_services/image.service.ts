@@ -38,7 +38,7 @@ export class ImageService {
 getImage(url: string): Observable<Blob> {
   const token = JSON.parse(sessionStorage.getItem('user') || '{}').token;
   return this.http.get(url, {
-    headers: { Authorization: `Bearer ${token}` },
+    headers: { Authorization: `Bearer ${token}`,Accept: 'image/png,image/jpeg,image/jpg,image/gif,*/*' },
     responseType: 'blob'
   });
 }

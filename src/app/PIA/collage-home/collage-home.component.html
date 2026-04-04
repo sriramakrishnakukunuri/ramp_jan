@@ -68,7 +68,7 @@
       class="d-flex flex-wrap gap-3 p-3"
       style="max-height: 600px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: #aaa transparent;"
     >
-      <ng-container *ngIf="(filteredImages ?? []).length > 0; else noImages">
+      <ng-container *ngIf="filteredImages.length > 0; else noImages">
   <div 
     *ngFor="let image of filteredImages; trackBy: trackByCollage" 
     class="card shadow-sm border border-light-subtle rounded-1 overflow-hidden p-1 position-relative" 
@@ -85,23 +85,31 @@
     >
       <i class="bi bi-trash" style="font-size: 12px;"></i>
     </button>
+    <ng-container *ngIf="getImageSrc(image.fileUrl); else imageState">
+      <img
+        [src]="getImageSrc(image.fileUrl)"
+        class="card-img-top"
+        (error)="markImageFailed(image.fileUrl)"
+        style="height: 190px; width: 100%; object-fit: cover;"
+      />
+    </ng-container>
 
-    <img 
-      [src]="imageSrcMap[image.fileUrl] || ''" 
-      class="card-img-top"
-      (error)="image.error = true"
-      *ngIf="!image.error"
-      style="height: 190px; width: 100%; object-fit: cover;"
-    />
-
-    <div 
-      *ngIf="image.error"
-      class="d-flex flex-column align-items-center justify-content-center bg-light text-muted"
-      style="height: 190px; width: 100%; font-size: 14px;"
-    >
-      <i class="bi bi-image" style="font-size: 2rem;"></i>
-      <span class="mt-1">Image not found</span>
-    </div>
+    <ng-template #imageState>
+      <div
+        class="d-flex flex-column align-items-center justify-content-center bg-light text-muted"
+        style="height: 190px; width: 100%; font-size: 14px;"
+      >
+        <ng-container *ngIf="isImageLoading(image.fileUrl); else failedState">
+          <span>Loading image...</span>
+        </ng-container>
+        <ng-template #failedState>
+          <ng-container *ngIf="hasImageFailed(image.fileUrl)">
+            <i class="bi bi-image" style="font-size: 2rem;"></i>
+            <span class="mt-1">Image not found</span>
+          </ng-container>
+        </ng-template>
+      </div>
+    </ng-template>
 
     <!-- Footer row: name + download -->
     <div class="d-flex justify-content-between align-items-center px-3 py-2 bg-light border-top">

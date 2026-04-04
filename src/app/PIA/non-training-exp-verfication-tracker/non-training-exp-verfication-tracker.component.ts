@@ -577,15 +577,7 @@ export class NonTrainingExpVerficationTrackerComponent implements OnInit {
    imagePreviewUrl: any
     type:any=''
      showImagePreview(url: any, value: string,type:any) {
-     this.type=type
-     this.imagePreviewUrl = null; // Reset the image preview URL
-     this.imagePreviewUrl = url + value;
- 
-     const editSessionModal = document.getElementById('imagePreview');
-     if (editSessionModal) {
-       const modalInstance = new bootstrap.Modal(editSessionModal);
-       modalInstance.show();
-     }
+     this._commonService.openFile(`${url}${value}`);
    }
    nonTrainingExpenditureId:any
    expenditureType:any
@@ -683,30 +675,10 @@ export class NonTrainingExpVerficationTrackerComponent implements OnInit {
  
              }
    downloadPDF(url:any){
-     let linkUrl =  APIS.fileBaseUrl+url
-     const link = document.createElement("a");
-     link.setAttribute("download", linkUrl);
-     link.setAttribute("target", "_blank");
-     link.setAttribute("href", linkUrl);
-     document.body.appendChild(link);
-     link.click();
-     link.remove();
+     this._commonService.downloadProtectedFile(url);
    }
    downloadImage(url:any) {
-   const imageUrl =  APIS.fileBaseUrl+url;
- 
-   // const fileName = 'ProgramScreenshot.png'; // Optional: rename the file
- 
-   const link = document.createElement('a');
-   link.href = imageUrl;
-   link.download = imageUrl;
- 
-   // Required for cross-origin download support
-   link.target = '_blank';
- 
-   document.body.appendChild(link);
-   link.click();
-   document.body.removeChild(link);
+   this._commonService.downloadProtectedFile(url);
  }
  
  

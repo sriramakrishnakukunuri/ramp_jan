@@ -368,14 +368,7 @@ export class BulkExpenditureComponent implements OnInit {
       imageUrlDownloadPath = `${API_BASE_URL}/program/file/download/`;
 imagePreviewUrl: any
     showImagePreview(url: any, value: string) {
-    this.imagePreviewUrl = null; // Reset the image preview URL
-    this.imagePreviewUrl = url + value;
-
-    const editSessionModal = document.getElementById('imagePreview');
-    if (editSessionModal) {
-      const modalInstance = new bootstrap.Modal(editSessionModal);
-      modalInstance.show();
-    }
+    this._commonService.openFile(`${url}${value}`);
   }
 //date converter
 convertToISOFormat(date: string): string {   

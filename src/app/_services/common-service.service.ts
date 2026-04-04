@@ -106,7 +106,17 @@ export class CommonServiceService {
   }
 
   public downloadFile(url: string): Observable<Blob> {
+    const token = JSON.parse(sessionStorage.getItem('user') || '{}').token;
+    let headers = new HttpHeaders({
+      Accept: '*/*'
+    });
+
+    if (token) {
+      headers = headers.set('Authorization', `Bearer ${token}`);
+    }
+
     return this.http.get(url, {
+      headers,
       responseType: 'blob'
     });
   }
@@ -123,6 +133,49 @@ export class CommonServiceService {
 //   );
 // }
 private options: { [key: string]: any } = {};
+
+  resolveFileUrl(filePath: string): string {
+    if (!filePath) {
+      return '';
+    }
+
+    if (/^(blob:|https?:\/\/)/i.test(filePath)) {
+      return filePath;
+    }
+
+    const trimmed = filePath.split('public_html/')?.[1] || filePath;
+    return `${APIS.fileBaseUrlGet}${trimmed.replace(/^\/+/, '')}`;
+  }
+
+  getFileName(filePath: string): string {
+    const normalizedPath = filePath.split('?')[0];
+    return decodeURIComponent(normalizedPath.split('/').filter(Boolean).pop() || 'file');
+  }
+
+  getProtectedFile(filePath: string): Observable<Blob> {
+    return this.downloadFile(this.resolveFileUrl(filePath));
+  }
+
+  downloadProtectedFile(filePath: string, fileName?: string): void {
+    const resolvedUrl = this.resolveFileUrl(filePath);
+    const resolvedFileName = fileName || this.getFileName(filePath);
+
+    this.downloadFile(resolvedUrl).subscribe({
+      next: (blob: Blob) => {
+        const objectUrl = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = objectUrl;
+        link.download = resolvedFileName;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(objectUrl);
+      },
+      error: (error) => {
+        console.error('File download failed:', resolvedUrl, error);
+      }
+    });
+  }
 
   setOption(key: string, value: any): void {
     this.options[key] = value;
@@ -187,11 +240,7 @@ private options: { [key: string]: any } = {};
   imageUrl!: string;
 
 getImage(url: string): Observable<Blob> {
-  const token = JSON.parse(sessionStorage.getItem('user') || '{}').token;
-  return this.http.get(url, {
-    headers: { Authorization: `Bearer ${token}` },
-    responseType: 'blob'
-  });
+  return this.downloadFile(url);
 }
 }
 

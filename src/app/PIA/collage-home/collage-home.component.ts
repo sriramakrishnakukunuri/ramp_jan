@@ -29,7 +29,8 @@ export class CollageHomeComponent implements OnInit, OnDestroy {
   agencyId: any;
   loginsessionDetails:any
   imageSrcMap: Record<string, string> = {};
-  private loadingImageSet = new Set<string>();
+  failedImageSet = new Set<string>();
+  loadingImageSet = new Set<string>();
   constructor(
     private imageService: ImageService,
     private library: FaIconLibrary,
@@ -98,19 +99,90 @@ export class CollageHomeComponent implements OnInit, OnDestroy {
     });
   }
 
+  getImageSrc(fileUrl: string): string {
+    return this.imageSrcMap[fileUrl] || '';
+  }
+
+  isImageLoading(fileUrl: string): boolean {
+    return this.loadingImageSet.has(fileUrl);
+  }
+
+  hasImageFailed(fileUrl: string): boolean {
+    return this.failedImageSet.has(fileUrl);
+  }
+
+  markImageFailed(fileUrl: string): void {
+    if (!fileUrl) {
+      return;
+    }
+
+    const objectUrl = this.imageSrcMap[fileUrl];
+    if (objectUrl) {
+      URL.revokeObjectURL(objectUrl);
+    }
+
+    delete this.imageSrcMap[fileUrl];
+    this.loadingImageSet.delete(fileUrl);
+    this.failedImageSet.add(fileUrl);
+  }
+
+  private getMimeTypeFromFileUrl(fileUrl: string): string {
+    const extension = fileUrl.split('.').pop()?.toLowerCase();
+
+    switch (extension) {
+      case 'jpg':
+      case 'jpeg':
+        return 'image/jpeg';
+      case 'png':
+        return 'image/png';
+      case 'gif':
+        return 'image/gif';
+      case 'webp':
+        return 'image/webp';
+      case 'bmp':
+        return 'image/bmp';
+      default:
+        return 'image/png';
+    }
+  }
+
+  private normalizeImageBlob(blob: Blob, fileUrl: string): Blob {
+    const inferredMimeType = this.getMimeTypeFromFileUrl(fileUrl);
+    const blobMimeType = blob.type?.toLowerCase();
+
+    if (blobMimeType?.startsWith('image/')) {
+      return blob;
+    }
+
+    return new Blob([blob], { type: inferredMimeType });
+  }
+
   private ensureImageSrc(fileUrl: string): void {
     if (!fileUrl || this.imageSrcMap[fileUrl] || this.loadingImageSet.has(fileUrl)) return;
+    this.failedImageSet.delete(fileUrl);
     this.loadingImageSet.add(fileUrl);
     this.imageService.getImage(APIS.fileBaseUrlGet + fileUrl).subscribe({
       next: (blob: Blob) => {
-        this.imageSrcMap[fileUrl] = URL.createObjectURL(blob);
+        const normalizedBlob = this.normalizeImageBlob(blob, fileUrl);
+        console.log('Collage preview blob:', fileUrl, 'original=', blob.type || 'empty', 'normalized=', normalizedBlob.type, 'size=', normalizedBlob.size);
+
+        if (!normalizedBlob.size) {
+          this.markImageFailed(fileUrl);
+          return;
+        }
+
+        const objectUrl = URL.createObjectURL(normalizedBlob);
+
+        this.imageSrcMap[fileUrl] = APIS.fileBaseUrlGet + fileUrl;
+
         this.loadingImageSet.delete(fileUrl);
       },
-      error: () => {
-        this.imageSrcMap[fileUrl] = '';
-        this.loadingImageSet.delete(fileUrl);
+      error: (error) => {
+        console.error('Error loading collage preview:', fileUrl, error);
+        this.markImageFailed(fileUrl);
       }
     });
+   
   }
 
   private clearImageCache(): void {
@@ -119,6 +191,7 @@ export class CollageHomeComponent implements OnInit, OnDestroy {
     });
     this.imageSrcMap = {};
     this.loadingImageSet.clear();
+    this.failedImageSet.clear();
   }
 
   ngOnDestroy(): void {

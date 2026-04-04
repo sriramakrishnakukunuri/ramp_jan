@@ -912,7 +912,17 @@ export class ProgramExpenditureComponent implements OnInit, OnDestroy {
     this.loadingImageSet.add(fileUrl);
     this._commonService.getImage(APIS.fileBaseUrlGet + fileUrl).subscribe({
       next: (blob: Blob) => {
-        this.imageSrcMap[fileUrl] = URL.createObjectURL(blob);
+        const extension = fileUrl.split('.').pop()?.toLowerCase();
+        const mimeType = extension === 'png'
+          ? 'image/png'
+          : extension === 'gif'
+            ? 'image/gif'
+            : extension === 'webp'
+              ? 'image/webp'
+              : 'image/jpeg';
+        const previewBlob = blob.type?.startsWith('image/') ? blob : new Blob([blob], { type: mimeType });
+
+          this.imageSrcMap[fileUrl] = APIS.fileBaseUrlGet + fileUrl;
         this.loadingImageSet.delete(fileUrl);
       },
       error: () => {
@@ -937,15 +947,7 @@ export class ProgramExpenditureComponent implements OnInit, OnDestroy {
   imagePreviewUrl: any
    type:any=''
     showImagePreview(url: any, value: string,type:any) {
-    this.type=type
-    this.imagePreviewUrl = null; // Reset the image preview URL
-    this.imagePreviewUrl = url + value;
-
-    const editSessionModal = document.getElementById('imagePreview');
-    if (editSessionModal) {
-      const modalInstance = new bootstrap.Modal(editSessionModal);
-      modalInstance.show();
-    }
+    this._commonService.openFile(`${url}${value}`);
   }
        
   ngOnDestroy(): void {

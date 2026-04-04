@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { CommonServiceService } from '@app/_services/common-service.service';
 import { APIS } from '@app/constants/constants';
@@ -8,12 +8,15 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './common-file-viewer.component.html',
   styleUrls: ['./common-file-viewer.component.css']
 })
-export class CommonFileViewerComponent implements OnInit {
+export class CommonFileViewerComponent implements OnInit, OnDestroy {
   showModal = false;
   filePath: string = '';
+  previewUrl: string = '';
   safeFileUrl!: SafeResourceUrl;
   fileType: 'image' | 'pdf' | 'excel' | 'other' | 'invalid' = 'invalid';
   errorMessage: string = '';
+  isLoading = false;
+  private objectUrl: string = '';
 
   constructor(private fileService: CommonServiceService,
      private sanitizer: DomSanitizer,
@@ -35,9 +38,13 @@ getFullFileUrl(path: string): string {
     console.log('Received file path:', path);
 
     // Use the utility to get the full URL
-    this.filePath = this.getFullFileUrl(path);
+    this.revokeObjectUrl();
+    this.filePath = this.fileService.resolveFileUrl(path) || this.getFullFileUrl(path);
+    this.previewUrl = '';
     this.errorMessage = '';
     this.safeFileUrl = null as any;
+    this.isLoading = false;
+    this.isZoomed = false;
 
     // Validate URL
     if (!this.isValidUrl(this.filePath)) {
@@ -48,8 +55,10 @@ getFullFileUrl(path: string): string {
 
       // Only create SafeResourceUrl if PDF
       if (this.fileType === 'pdf') {
-        this.safeFileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.filePath);
-      }else if (this.fileType === 'excel') {
+        this.loadProtectedPreview(this.filePath);
+      } else if (this.fileType === 'image') {
+        this.loadProtectedPreview(this.filePath);
+      } else if (this.fileType === 'excel') {
         const viewerUrl = `https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(this.filePath)}`;
         this.safeFileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(viewerUrl);
       }
@@ -58,6 +67,10 @@ getFullFileUrl(path: string): string {
     this.showModal = true;
   });
 }
+
+ ngOnDestroy(): void {
+  this.revokeObjectUrl();
+ }
 
   isZoomed = false;
 
@@ -68,8 +81,12 @@ toggleZoom() {
 
   closeModal() {
     this.showModal = false;
+    this.revokeObjectUrl();
     this.filePath = '';
+    this.previewUrl = '';
     this.errorMessage = '';
+    this.safeFileUrl = null as any;
+    this.isLoading = false;
   }
 
   getFileType(path: string): 'image' | 'pdf' | 'excel' | 'other' {
@@ -85,8 +102,75 @@ toggleZoom() {
   }
 
   onImageError() {
+    this.revokeObjectUrl();
     this.errorMessage = 'Preview not available';
     this.fileType = 'invalid';
+  }
+
+  private revokeObjectUrl(): void {
+    if (this.objectUrl) {
+      URL.revokeObjectURL(this.objectUrl);
+      this.objectUrl = '';
+    }
+  }
+
+  private getMimeType(path: string): string {
+    const ext = path.split('.').pop()?.toLowerCase();
+
+    switch (ext) {
+      case 'jpg':
+      case 'jpeg':
+        return 'image/jpeg';
+      case 'png':
+        return 'image/png';
+      case 'gif':
+        return 'image/gif';
+      case 'webp':
+        return 'image/webp';
+      case 'bmp':
+        return 'image/bmp';
+      case 'pdf':
+        return 'application/pdf';
+      default:
+        return 'application/octet-stream';
+    }
+  }
+
+  private normalizePreviewBlob(blob: Blob, path: string): Blob {
+    if (blob.type) {
+      if (this.fileType === 'image' && blob.type.startsWith('image/')) {
+        return blob;
+      }
+
+      if (this.fileType === 'pdf' && blob.type === 'application/pdf') {
+        return blob;
+      }
+    }
+
+    return new Blob([blob], { type: this.getMimeType(path) });
+  }
+
+  private loadProtectedPreview(path: string): void {
+    this.isLoading = true;
+    this.fileService.getProtectedFile(path).subscribe({
+      next: (blob: Blob) => {
+        const previewBlob = this.normalizePreviewBlob(blob, path);
+        this.objectUrl = URL.createObjectURL(previewBlob);
+        this.previewUrl = this.objectUrl;
+
+        if (this.fileType === 'pdf') {
+          this.safeFileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.previewUrl);
+        }
+
+        this.isLoading = false;
+      },
+      error: (error) => {
+        console.error('Preview load failed:', path, error);
+        this.errorMessage = 'Preview not available';
+        this.fileType = 'invalid';
+        this.isLoading = false;
+      }
+    });
   }
 
 
@@ -96,25 +180,7 @@ toggleZoom() {
     return;
   }
 
-  const fileUrl = this.filePath;
-  const fileName = fileUrl.split('/').filter(Boolean).pop() || 'file';
-
-  // const link = document.createElement('a');
-  // link.href = fileUrl;
-  // link.download = fileName;   // only filename
-  // // REMOVE target="_blank"
-  
-  // document.body.appendChild(link);
-  // link.click();
-  // document.body.removeChild(link);
-
-  const link = document.createElement('a');
-link.href = fileUrl;
-link.target = '_blank';   // open file in new tab
-document.body.appendChild(link);
-link.click();
-document.body.removeChild(link);
-
+  this.fileService.downloadProtectedFile(this.filePath);
 }
 
 

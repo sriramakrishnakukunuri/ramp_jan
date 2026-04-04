@@ -335,14 +335,14 @@
 
             <!-- Image Preview -->
             <ng-container *ngIf="getFileType(file.fileName || file.name) === 'image'">
-              <img [src]="getFileDownloadUrl(file)" alt="Image Preview" class="img-fluid w-100 rounded"
+              <img [src]="getFilePreviewUrl(file)" alt="Image Preview" class="img-fluid w-100 rounded"
                 style="max-height: 400px; object-fit: contain;">
             </ng-container>
 
             <!-- PDF Preview -->
             <ng-container *ngIf="getFileType(file.fileName || file.name) === 'pdf'">
               <div class="pdf-container rounded" style="height: 400px;">
-                <iframe [src]="getSafeUrl(getFileDownloadUrl(file))" width="100%" height="100%" frameborder="0"
+                <iframe [src]="getSafeUrl(getFilePreviewUrl(file))" width="100%" height="100%" frameborder="0"
                   class="rounded">
                   <p>Your browser does not support PDFs.
                     <a [href]="getFileDownloadUrl(file)" target="_blank">Download the PDF</a>.
@@ -597,7 +597,7 @@
                         <!-- Image Preview -->
                         <ng-container *ngIf="getFileType(attachment.filePath) === 'image'">
                           <div class="position-relative image-preview-container">
-                            <img [src]="getFileDownloadUrl(attachment)" alt="{{ attachment.filePath }}"
+                            <img [src]="getFilePreviewUrl(attachment)" alt="{{ attachment.filePath }}"
                               class="img-fluid w-100"
                               style="max-height: 300px; object-fit: contain; background: #f8f9fa;"
                               (error)="onImageError($event, attachment)" (load)="onImageLoad($event, attachment)">
@@ -616,7 +616,7 @@
                         <!-- PDF Preview -->
                         <ng-container *ngIf="getFileType(attachment.filePath) === 'pdf'">
                           <div class="pdf-preview-container" style="height: 300px; background: #f8f9fa;">
-                            <iframe [src]="getSafeUrl(getFileDownloadUrl(attachment))" width="100%" height="100%"
+                            <iframe [src]="getSafeUrl(getFilePreviewUrl(attachment))" width="100%" height="100%"
                               frameborder="0" style="border-radius: 0;">
                               <div class="text-center p-4">
                                 <i class="fas fa-file-pdf fa-3x text-danger mb-3"></i>
@@ -983,7 +983,7 @@
                         <!-- Image Preview -->
                         <ng-container *ngIf="getFileType(attachment.filePath) === 'image'">
                           <div class="position-relative image-preview-container">
-                            <img [src]="getFileDownloadUrl(attachment)" alt="{{ attachment.filePath }}"
+                            <img [src]="getFilePreviewUrl(attachment)" alt="{{ attachment.filePath }}"
                               class="img-fluid w-100"
                               style="max-height: 300px; object-fit: contain; background: #f8f9fa;"
                               (error)="onImageError($event, attachment)" (load)="onImageLoad($event, attachment)">
@@ -1002,7 +1002,7 @@
                         <!-- PDF Preview -->
                         <ng-container *ngIf="getFileType(attachment.filePath) === 'pdf'">
                           <div class="pdf-preview-container" style="height: 300px; background: #f8f9fa;">
-                            <iframe [src]="getSafeUrl(getFileDownloadUrl(attachment))" width="100%" height="100%"
+                            <iframe [src]="getSafeUrl(getFilePreviewUrl(attachment))" width="100%" height="100%"
                               frameborder="0" style="border-radius: 0;">
                               <div class="text-center p-4">
                                 <i class="fas fa-file-pdf fa-3x text-danger mb-3"></i>
