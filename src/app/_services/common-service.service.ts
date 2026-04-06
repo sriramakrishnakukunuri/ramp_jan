@@ -68,7 +68,7 @@ export class CommonServiceService {
     });
     return this.http.put(URL,payload,{ headers }).pipe(catchError(this.formatErrors));
   }
-  public update(URL: any, payload: any, id: number | string): Observable<any> {
+  public update(URL: any, payload: any, id: any): Observable<any> {
     return this.http.put(URL + id, payload).pipe(catchError(this.formatErrors));
   }
   public updatedata(URL: any, payload: any,): Observable<any> {
@@ -97,6 +97,9 @@ export class CommonServiceService {
 
   deleteById(URL: any, id: any): Observable<any> {
     return this.http.post(URL + id,{},{ responseType: 'text' })
+  }
+  deleteByUrl(URL: any): Observable<any> {
+    return this.http.delete(URL).pipe(catchError(this.formatErrors));
   }
   deleteId(URL: any, id: any): Observable<any> {
     return this.http.delete(URL + id).pipe(catchError(this.formatErrors));
