@@ -1435,7 +1435,7 @@ saveStatusUpdate(): void {
       // dateOfOrder: [data?.dateOfOrder || '', Validators.required],
       nameOfTheBuyer: [data?.nameOfTheBuyer || '', Validators.required],
       orderValue: [data?.orderValue || 0, [Validators.required, Validators.min(0)]],
-      remarks: [data?.remarks || '', Validators.required]
+      remarks: [data?.remarks || '', ]
     });
 
     this.orderBookPositions.push(positionGroup);
