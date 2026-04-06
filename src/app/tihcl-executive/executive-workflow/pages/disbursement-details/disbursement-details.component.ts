@@ -258,12 +258,13 @@ today: any=this.getDate()
       };
       this.disbursements.push(newDisbursement);
     }
-
+     this.updateTotalDisbursedAmount();
     // Reset form and update total disbursed amount
+
     this.addDisbursementForm.reset();
     this.onSubmitPopup()
     this.closemodel()
-    this.updateTotalDisbursedAmount();
+   
   }
 
   editCreditDetails(item: any, index: number): void {
@@ -284,14 +285,6 @@ today: any=this.getDate()
   }
 
   deleteCreditDetail(item:any,index: number): void {
-    // if (confirm('Are you sure you want to delete this disbursement?')) {
-    //   this.disbursements.splice(index, 1);
-      
-    //   // Update IDs to maintain sequence
-      
-      
-     
-    // }
     if(item?.id){
          this._commonService.deleteById(APIS.tihclExecutive.getdisbursementDelete,item?.id).subscribe({
              next: (response) => {
@@ -309,6 +302,7 @@ today: any=this.getDate()
   }
 
   private updateTotalDisbursedAmount(): void {
+    console.log(this.disbursements)
     const totalDisbursed = this.disbursements.reduce((sum, item) => sum + Number(item.amount), 0);
     this.disbursementForm.patchValue({
       totalDisbursedAmount: totalDisbursed
