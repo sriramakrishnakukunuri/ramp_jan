@@ -191,6 +191,7 @@ export class CollageCreationComponent implements OnInit {
         console.error('No program selected!');
         return;
       }
+      console.log('Generated PNG Data URL:', dataUrl,fileName, this.selectedProgram);
       const response = await this.toPngService.uploadImage(dataUrl, fileName, this.selectedProgram);
 
       console.log('Upload success:', response);

@@ -20,13 +20,34 @@ export class ToPngService {
       });
     });
   }
+private sanitizeFileName(name: string, defaultExt: string = 'png'): string {
+  const raw = (name || '').trim();
 
+  // Split base and extension from last dot
+  const lastDot = raw.lastIndexOf('.');
+  const hasExt = lastDot > 0 && lastDot < raw.length - 1;
+
+  const base = (hasExt ? raw.substring(0, lastDot) : raw) || 'collage';
+  const ext = (hasExt ? raw.substring(lastDot + 1) : defaultExt).toLowerCase();
+
+  // Keep only letters, numbers, underscore, hyphen, dot.
+  // This removes / \ and all other special chars.
+  const cleanBase = base
+    .replace(/[^a-zA-Z0-9._-]/g, '_')
+    .replace(/_+/g, '_')
+    .replace(/^[_\. -]+|[_\. -]+$/g, '');
+
+  const cleanExt = ext.replace(/[^a-zA-Z0-9]/g, '') || defaultExt;
+
+  return `${cleanBase || 'collage'}.${cleanExt}`;
+}
   // Upload PNG as FormData
   uploadImage(dataUrl: string, fileName: string, programId: number) {
     const blob = this.dataURItoBlob(dataUrl);
+    const safeFileName = this.sanitizeFileName(fileName, 'png');
     const formData = new FormData();
     formData.append('programId', programId.toString()); // ensure string
-    formData.append('image', blob, fileName);
+    formData.append('image', blob, safeFileName);
     
      this.imageService.saveImages(`${APIS.collageCreation.UPLOAD_COLLAGE}`,formData).subscribe((res)=>{
       console.log('Image uploaded successfully via ImageService:', res);
