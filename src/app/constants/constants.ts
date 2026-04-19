@@ -198,6 +198,9 @@ export const APIS = {
 
     aleap: {
       getHandHoldingData: API_BASE_URL + '/unified-handholding/get',
+      save: API_BASE_URL + '/unified-handholding/save',
+      update: API_BASE_URL + '/unified-handholding/update/',
+      delete: API_BASE_URL + '/unified-handholding/delete/',
     },
     tihcl: {
       getCorpusList: API_BASE_URL + '/corpusDebitFinancing',

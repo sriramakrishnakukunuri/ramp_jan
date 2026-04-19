@@ -85,6 +85,7 @@ isFeasibilityFormVisible: boolean = false;
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
+     private commonService: CommonServiceService,
      private toastrService: ToastrService,
         private _commonService: CommonServiceService,
     private modalService: ModalService
@@ -1693,7 +1694,7 @@ toggleFeasibilityInputForm() {
 
 
   saveHandHolding(formData: FormData): void {
-    this.http.post(`${this.apiUrl}/unified-handholding/save`, formData).subscribe({
+     this.commonService.add(APIS.nontrainingtargets.aleap.save, formData).subscribe({
       next: (response) => {
         console.log('Saved successfully:', response);
         this.toastrService.success('Data saved successfully', 'Save Successful');
@@ -1709,7 +1710,7 @@ toggleFeasibilityInputForm() {
   }
 
   updateHandHolding(formData: FormData): void {
-    this.http.put(`${this.apiUrl}/unified-handholding/update/${this.editingId}`, formData).subscribe({
+    this.commonService.update(APIS.nontrainingtargets.aleap.update, formData, this.editingId).subscribe({
       next: (response) => {
         console.log('Updated successfully:', response);
         this.toastrService.success('Data updated successfully', 'Update Successful');
@@ -1799,7 +1800,7 @@ toggleFeasibilityInputForm() {
       else{
         type=this.handHoldingType
       }
-      this.http.delete(`${this.apiUrl}/unified-handholding/delete/${this.editingId}?type=${type}`).subscribe({
+       this.commonService.deleteByUrl(APIS.nontrainingtargets.aleap.delete+this.editingId+'?type='+type).subscribe({
         next: (response) => {
           console.log('Deleted successfully:', response);
           this.toastrService.success('Data deleted successfully', 'Delete Successful');
