@@ -75,8 +75,8 @@ export class ProgramSummaryComponent implements OnInit {
             this.PrigramSummaryData = {}
             this.agencyProgramList = res.data.filter(
               (program: any) =>
-                program.status === 'Program Execution Updated' ||
-                program.status === 'Program Expenditure Updated'
+                program.status === 'Program Expenditure Approved' ||
+                program.status === 'Program Expenditure Updated' || program.status === 'Collage Added'
             );
             this.agencyProgramListFiltered=this.agencyProgramList
 
