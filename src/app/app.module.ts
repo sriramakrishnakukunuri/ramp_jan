@@ -126,6 +126,8 @@ import { NonTrainingExpVerficationTrackerComponent } from './PIA/non-training-ex
 import { EditProgramStatusViewComponent } from './PIA/edit-program-status-view/edit-program-status-view.component';
 import { SampleUiComponent } from './PIA/sample-ui/sample-ui.component';;
 import { ProgressReportDownloadComponent } from './PIA/progress-report-download/progress-report-download.component';
+import { MisApplicationComponent } from './PIA/mis-application/mis-application.component';
+import { ViewMisApplicationComponent } from './PIA/view-mis-application/view-mis-application.component';
 import { HandHoldingAleapComponent } from './PIA/hand-holding-aleap/hand-holding-aleap.component';
 import { Tgtpc4NtReportComponent } from './PIA/tgtpc4-nt-report/tgtpc4-nt-report.component';
 import { HandHoldingTgtpc10Component } from './PIA/hand-holding-tgtpc10/hand-holding-tgtpc10.component';
@@ -261,6 +263,8 @@ import { Tgtpc10HandholdingComponent } from './PIA/tgtpc10-handholding/tgtpc10-h
         EditProgramStatusViewComponent,
         SampleUiComponent,
         ProgressReportDownloadComponent,
+        MisApplicationComponent,
+        ViewMisApplicationComponent,
         HandHoldingAleapComponent,
         Tgtpc4NtReportComponent,
         HandHoldingTgtpc10Component,

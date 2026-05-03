@@ -1,0 +1,12 @@
+.filters-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+  align-items: center;
+}
+
+.mis-table th,
+.mis-table td {
+  white-space: nowrap;
+  vertical-align: middle;
+}

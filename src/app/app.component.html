@@ -392,6 +392,9 @@
                   <li *appHasRole="[Role.Admin,Role.SPIU]">
                     <a class="dropdown-item" routerLink="/view-table-organization" routerLinkActive="active">Masters List</a>
                   </li>
+                     <li *appHasRole="[Role.Admin,Role.SPIU]">
+                    <a class="dropdown-item" routerLink="/mis-application" routerLinkActive="active">MIS Application</a>
+                  </li>
                    <!-- <li *appHasRole="[Role.Admin]">
                     <a class="dropdown-item" routerLink="/view-Outcomes" routerLinkActive="active">View Outcomes</a>
                   </li> -->
@@ -422,6 +425,7 @@
                       <!-- <li *ngIf="this.user?.userRole=='SPIU'"><a class="dropdown-item" routerLink="/collage-home" routerLinkActive="active">View Collage</a></li> -->
                       <li *ngIf="this.user?.userRole=='ADMIN'"><a class="dropdown-item" routerLink="/collage-home" routerLinkActive="active">Create Collage</a></li>
                       <li><a class="dropdown-item" routerLink="/program-summary" routerLinkActive="active">Program Summary</a></li>
+                       <li > <a class="dropdown-item" routerLink="/view-mis-application" routerLinkActive="active">View MIS Application</a></li>
                       <li><a class="dropdown-item" routerLink="/reshedule-programs" routerLinkActive="active">Reschedule Programs</a></li>
                       <li><a class="dropdown-item" routerLink="/view-participants-incomplete-programs" routerLinkActive="active">View Program Participants</a></li>
                       <li><a class="dropdown-item" routerLink="/progress-monitoring-report" routerLinkActive="active">Program Monitoring Report</a></li>
@@ -617,6 +621,7 @@
                       style="position:static; background: #dfebeb;min-width:180px;">
                        <li><a class="dropdown-item" routerLink="/output-progress" routerLinkActive="active">Output Progress</a></li>
                       <li><a class="dropdown-item" routerLink="/program-summary" routerLinkActive="active">Program Summary</a></li>
+                      <li > <a class="dropdown-item" routerLink="/view-mis-application" routerLinkActive="active">View MIS Application</a></li>
                      
                       <li><a class="dropdown-item" routerLink="/view-participants-incomplete-programs" routerLinkActive="active">View Program Participants</a></li>
                       <li>

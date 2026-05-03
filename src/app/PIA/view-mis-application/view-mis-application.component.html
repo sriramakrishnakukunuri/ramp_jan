@@ -1,0 +1,199 @@
+<main class="mt-4">
+  <section>
+    <div class="card mb-3">
+      <div class="card-header bg-transparent">
+        <div class="row align-items-center mb-3">
+          <div class="col-12 col-sm-7 col-md-8 col-lg-4">
+            <h6 class="fw-600 mb-2 mb-sm-0">{{ selectedHeading }}</h6>
+          </div>
+          <div class="col-12 col-sm-5 col-md-4 col-lg-8">
+            <form [formGroup]="filterForm" class="filters-panel">
+              <mat-form-field *ngIf="isAdminOrSpiu" appearance="outline" class="filter-field agency-field mb-0">
+                <mat-label>List Of Agencies</mat-label>
+                <mat-select [value]="selectedAgencyId" (selectionChange)="onAgencyChange($event.value)">
+                  <mat-select-filter [array]="agencyList" [displayMember]="'agencyName'" (filteredReturn)="agencyListFiltered = $event">
+                  </mat-select-filter>
+                  <mat-option [value]="-1">All Agencies</mat-option>
+                  <mat-option *ngFor="let agency of agencyListFiltered" [value]="agency.agencyId">
+                    {{ agency.agencyName }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <mat-radio-group class="mode-group" [value]="filterMode" (change)="onModeChange($event.value)">
+                <mat-radio-button value="MONTHLY">Monthly</mat-radio-button>
+                <mat-radio-button value="CUSTOMIZED">Customized</mat-radio-button>
+              </mat-radio-group>
+
+              <ng-container *ngIf="filterMode === 'MONTHLY'; else customizedFilter">
+                <mat-form-field appearance="outline" class="filter-field monthly-field mb-0">
+                  <mat-label>Select Year & Month</mat-label>
+                  <input matInput [matDatepicker]="monthlyPicker" formControlName="monthDate" readonly placeholder="Month and Year" />
+                  <mat-datepicker-toggle matSuffix [for]="monthlyPicker"></mat-datepicker-toggle>
+                  <mat-datepicker
+                    #monthlyPicker
+                    startView="multi-year"
+                    (yearSelected)="chosenYearHandler($event)"
+                    (monthSelected)="chosenMonthHandler($event, monthlyPicker)"
+                  >
+                  </mat-datepicker>
+                </mat-form-field>
+              </ng-container>
+
+              <ng-template #customizedFilter>
+                <div class="range-wrap">
+                  <mat-form-field appearance="outline" class="filter-field range-field mb-0">
+                    <mat-label>Select Date Range</mat-label>
+                    <mat-date-range-input [rangePicker]="rangePicker">
+                      <input matStartDate formControlName="startDate" placeholder="Start date" (dateChange)="onCustomDateChange()" />
+                      <input matEndDate formControlName="endDate" placeholder="End date" (dateChange)="onCustomDateChange()" />
+                    </mat-date-range-input>
+                    <mat-datepicker-toggle matSuffix [for]="rangePicker"></mat-datepicker-toggle>
+                    <mat-date-range-picker #rangePicker></mat-date-range-picker>
+                  </mat-form-field>
+                  <button type="button" class="btn btn-default" (click)="clearDateRange()">Clear</button>
+                </div>
+              </ng-template>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-body">
+        <mat-tab-group class="mis-tabs">
+          <mat-tab label="Physical">
+            <div class="table-responsive mt-3">
+              <table class="table table-bordered mis-table physical-table">
+                <thead class="bg-lime-green">
+                  <tr>
+                    <th>S.No</th>
+                    <th>Name of the Agency</th>
+                    <!-- <th>Component</th> -->
+                    <th>Programs scheduled as on Date</th>
+                    <th *ngIf="filterMode === 'MONTHLY'">No. of Programs Conducted as per MPR</th>
+                    <th>No of programs fully uploaded in the portal</th>
+                    <th>Total programs uploaded to portal partially</th>
+                    <th>Total</th>
+                    <th>Programs over due till date</th>
+                    <th>In Progress</th>
+                    <!-- <th>Remarks</th> -->
+                  </tr>
+                </thead>
+                <tbody>
+                  <ng-container *ngIf="physicalRows.length > 0; else noPhysicalData">
+                    <tr *ngFor="let row of physicalRows">
+                      <td>{{ row.sno }}</td>
+                      <td>{{ row.agencyName }}</td>
+                      <!-- <td>{{ row.component }}</td> -->
+                      <td class="text-end">{{ row.programsScheduledAsOnDate }}</td>
+                      <td *ngIf="filterMode === 'MONTHLY'" class="text-end">{{ row.noOfProgramsAsPerMpr }}</td>
+                      <td class="text-end">{{ row.fullyUploadedInPortal }}</td>
+                      <td class="text-end">{{ row.partiallyUploadedInPortal }}</td>
+                      <td class="text-end total-cell">{{ row.totalUploaded }}</td>
+                      <td class="text-end">{{ row.programsOverDueTillDate }}</td>
+                      <td class="text-end">{{ row.inProgress }}</td>
+                      <!-- <td>{{ row.remarks }}</td> -->
+                    </tr>
+                    <!-- <tr class="total-row">
+                      <td colspan="2" class="text-end"><strong>Total</strong></td>
+                      <td class="text-end"><strong>{{ physicalTotalScheduled }}</strong></td>
+                      <td *ngIf="filterMode === 'MONTHLY'" class="text-end"><strong>{{ physicalTotalMpr }}</strong></td>
+                      <td class="text-end"><strong>{{ physicalTotalFullyUploaded }}</strong></td>
+                      <td class="text-end"><strong>{{ physicalTotalPartiallyUploaded }}</strong></td>
+                      <td class="text-end total-cell"><strong>{{ physicalGrandTotal }}</strong></td>
+                      <td class="text-end"><strong>{{ physicalOverDueTotal }}</strong></td>
+                      <td class="text-end"><strong>{{ physicalInProgressTotal }}</strong></td>
+                      <td></td>
+                    </tr> -->
+                  </ng-container>
+                  <ng-template #noPhysicalData>
+                    <tr>
+                      <td [attr.colspan]="filterMode === 'MONTHLY' ? 11 : 10" class="text-center">No Data Found</td>
+                    </tr>
+                  </ng-template>
+                </tbody>
+              </table>
+            </div>
+          </mat-tab>
+
+          <mat-tab label="Financial">
+            <div class="table-responsive mt-3">
+              <table class="table table-bordered mis-table financial-table">
+                <thead class="bg-lime-green">
+                  <tr>
+                    <th>Name of the Agency</th>
+                    <!-- <th>Component</th> -->
+                    <th *ngIf="filterMode === 'MONTHLY'">Released amount (in Crs.)</th>
+                    <th *ngIf="filterMode === 'MONTHLY'">Total Expenditure as per MPR</th>
+                    <th>Total value of Bills uploaded</th>
+                    <th>% of Bills Uploaded</th>
+                    <th>Total Value of Bills uploaded under Training Category</th>
+                    <th>Approved</th>
+                    <th>Rejected</th>
+                    <th>Need Clarification</th>
+                    <th>Total value of Bills verified under Training Activity</th>
+                    <th>Value of Bills Uploaded under Non Training Activity</th>
+                    <th>Approved</th>
+                    <th>Rejected</th>
+                    <th>Need Clarification</th>
+                    <th>Total Value of Bills verified</th>
+                    <th>% Bills Verified by SPIU</th>
+                    <th>Remarks</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <ng-container *ngIf="financialRows.length > 0; else noFinancialData">
+                    <tr *ngFor="let row of financialRows">
+                      <td>{{ row.agencyName }}</td>
+                      <!-- <td>{{ row.component }}</td> -->
+                      <td *ngIf="filterMode === 'MONTHLY'" class="text-end">{{ row.releasedAmount | commaSeperationIndia }}</td>
+                      <td *ngIf="filterMode === 'MONTHLY'" class="text-end">{{ row.totalExpAsPerMpr | commaSeperationIndia }}</td>
+                      <td class="text-end">{{ row.totalBillsUploadedValue | commaSeperationIndia }}</td>
+                      <td class="text-end">{{ row.billsUploadPercent }}%</td>
+                      <td class="text-end">{{ row.trainingBillsUploadedValue | commaSeperationIndia }}</td>
+                      <td class="text-end">{{ row.trainingApprovedValue | commaSeperationIndia }}</td>
+                      <td class="text-end">{{ row.trainingRejectedValue | commaSeperationIndia }}</td>
+                      <td class="text-end">{{ row.trainingNeedClarificationValue | commaSeperationIndia }}</td>
+                      <td class="text-end">{{ row.verifiedTrainingBillsValue | commaSeperationIndia }}</td>
+                      <td class="text-end">{{ row.nonTrainingBillsUploadedValue | commaSeperationIndia }}</td>
+                      <td class="text-end">{{ row.nonTrainingApprovedValue | commaSeperationIndia }}</td>
+                      <td class="text-end">{{ row.nonTrainingRejectedValue | commaSeperationIndia }}</td>
+                      <td class="text-end">{{ row.nonTrainingNeedClarificationValue | commaSeperationIndia }}</td>
+                      <td class="text-end">{{ row.totalBillsVerifiedValue | commaSeperationIndia }}</td>
+                      <td class="text-end">{{ row.billsVerifiedBySpiuPercent }}%</td>
+                      <td>{{ row.remarks }}</td>
+                    </tr>
+                    <!-- <tr class="total-row">
+                      <td colspan="1" class="text-end"><strong>Total</strong></td>
+                      <td *ngIf="filterMode === 'MONTHLY'" class="text-end"><strong>{{ financialTotalReleased | commaSeperationIndia }}</strong></td>
+                      <td *ngIf="filterMode === 'MONTHLY'" class="text-end"><strong>{{ financialTotalExpense | commaSeperationIndia }}</strong></td>
+                      <td class="text-end"><strong>{{ financialTotalBillsUploaded | commaSeperationIndia }}</strong></td>
+                      <td></td>
+                      <td class="text-end"><strong>{{ financialTotalTrainingUploaded | commaSeperationIndia }}</strong></td>
+                      <td class="text-end"><strong>{{ financialTotalTrainingApproved | commaSeperationIndia }}</strong></td>
+                      <td class="text-end"><strong>{{ financialTotalTrainingRejected | commaSeperationIndia }}</strong></td>
+                      <td class="text-end"><strong>{{ financialTotalTrainingClarification | commaSeperationIndia }}</strong></td>
+                      <td class="text-end"><strong>{{ financialTotalVerifiedTraining | commaSeperationIndia }}</strong></td>
+                      <td class="text-end"><strong>{{ financialTotalNonTrainingUploaded | commaSeperationIndia }}</strong></td>
+                      <td class="text-end"><strong>{{ financialTotalNonTrainingApproved | commaSeperationIndia }}</strong></td>
+                      <td class="text-end"><strong>{{ financialTotalNonTrainingRejected | commaSeperationIndia }}</strong></td>
+                      <td class="text-end"><strong>{{ financialTotalNonTrainingClarification | commaSeperationIndia }}</strong></td>
+                      <td class="text-end"><strong>{{ financialTotalBillsVerified | commaSeperationIndia }}</strong></td>
+                      <td class="text-end"><strong>{{ financialVerifiedBySpiuPercent }}%</strong></td>
+                      <td></td>
+                    </tr> -->
+                  </ng-container>
+                  <ng-template #noFinancialData>
+                    <tr>
+                      <td [attr.colspan]="filterMode === 'MONTHLY' ? 18 : 16" class="text-center">No Data Found</td>
+                    </tr>
+                  </ng-template>
+                </tbody>
+              </table>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+    </div>
+  </section>
+</main>

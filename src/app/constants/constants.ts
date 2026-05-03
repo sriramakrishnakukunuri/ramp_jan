@@ -384,6 +384,11 @@ tgtpc10: {
     getActiitiedBasedComp: API_BASE_URL + '/momsme/activities?component=',
 
   },
+  monthlyMpr: {
+    filter: API_BASE_URL + '/monthly-mpr/filter',
+    bulkSave: API_BASE_URL + '/monthly-mpr/bulk',
+    physical: API_BASE_URL + '/mpr/phycals',
+  },
   tickets: {
     getAllUser: API_BASE_URL + '/login/allusrs',
     getAllStatus: API_BASE_URL + '/tickets/roles/',

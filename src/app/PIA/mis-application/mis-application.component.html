@@ -1,0 +1,128 @@
+<main class="mt-4">
+  <section>
+    <div class="card mb-3">
+      <div class="card-header bg-transparent">
+        <div class="row align-items-center mb-3">
+          <div class="col-12 col-sm-7 col-md-8 col-lg-9">
+            <h6 class="fw-600 mb-2 mb-sm-0">{{ selectedMonthYearHeading }}</h6>
+          </div>
+          <div class="col-12 col-sm-5 col-md-4 col-lg-3">
+            <form [formGroup]="filterForm" class="filters-wrap">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Month and Year</mat-label>
+                <input
+                  matInput
+                  [matDatepicker]="dp"
+                  formControlName="date"
+                  readonly
+                  placeholder="Month and Year"
+                />
+                <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+                <mat-datepicker
+                  #dp
+                  startView="multi-year"
+                  (yearSelected)="chosenYearHandler($event)"
+                  (monthSelected)="chosenMonthHandler($event, dp)"
+                >
+                </mat-datepicker>
+              </mat-form-field>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-body">
+        <table class="table table-bordered nowrap mis-table">
+          <thead class="bg-lime-green">
+            <tr>
+              <th>S.No</th>
+              <th>Name of the Agency</th>
+              <!-- <th>Component</th>
+              <th>Programs scheduled as on Date</th> -->
+              <th>No. of Programs Conducted as per MPR</th>
+              <th>Released amount (in Crs.)</th>
+              <th>Total Expenditure as per MPR</th>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-container *ngIf="rows.length > 0; else noData">
+              <tr *ngFor="let row of rows; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{ row.agencyName }}</td>
+                <!-- <td>{{ row.component }}</td> -->
+                <!-- <td class="text-end">{{ row.programsScheduledAsOnDate }}</td> -->
+                <td class="text-end">
+                  <ng-container *ngIf="!isEditAll; else editProgramsTemplate">
+                    {{ row.noOfProgramsAsPerMpr }}
+                  </ng-container>
+                  <ng-template #editProgramsTemplate>
+                    <input
+                      class="form-control form-control-sm text-end"
+                      type="number"
+                      [value]="row.noOfProgramsAsPerMpr"
+                      (input)="onCellChange(row, 'noOfProgramsAsPerMpr', $any($event.target).value)"
+                    />
+                  </ng-template>
+                </td>
+                <td class="text-end">
+                  <ng-container *ngIf="!isEditAll; else editReleasedTemplate">
+                    {{ row.releasedAmount | commaSeperationIndia }}
+                  </ng-container>
+                  <ng-template #editReleasedTemplate>
+                    <input
+                      class="form-control form-control-sm text-end"
+                      type="number"
+                      step="0.01"
+                      [value]="row.releasedAmount"
+                      (input)="onCellChange(row, 'releasedAmount', $any($event.target).value)"
+                    />
+                  </ng-template>
+                </td>
+                <td class="text-end">
+                  <ng-container *ngIf="!isEditAll; else editExpTemplate">
+                    {{ row.totalExpAsPerMpr | commaSeperationIndia  }}
+                  </ng-container>
+                  <ng-template #editExpTemplate>
+                    <input
+                      class="form-control form-control-sm text-end"
+                      type="number"
+                      [value]="row.totalExpAsPerMpr"
+                      (input)="onCellChange(row, 'totalExpAsPerMpr', $any($event.target).value)"
+                    />
+                  </ng-template>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="2" class="text-end"><strong>Total</strong></td>
+                <!-- <td class="text-end"><strong>{{ totalProgramsScheduledAsOnDate }}</strong></td> -->
+                <td class="text-end"><strong>{{ totalNoOfProgramsAsPerMpr }}</strong></td>
+                <td class="text-end"><strong>{{ totalReleasedAmount }}</strong></td>
+                <td class="text-end"><strong>{{ totalExpAsPerMpr }}</strong></td>
+              </tr>
+            </ng-container>
+            <ng-template #noData>
+              <tr>
+                <td colspan="7" class="text-center">No Data Found</td>
+              </tr>
+            </ng-template>
+          </tbody>
+        </table>
+
+        <div class="text-end" style="margin: 5px;">
+          <button
+            class="btn btn-lime-green"
+            [ngClass]="rows.length <= 0 ? 'disabled' : ''"
+            (click)="enableEditAll()"
+            *ngIf="!isEditAll"
+          >
+            Edit All
+          </button>
+          <span *ngIf="isEditAll">
+            <button (click)="isEditAll = false; loadMprData()" class="btn btn-default" style="margin-right: 5px;">Cancel</button>
+            <button class="btn btn-lime-green" (click)="saveAll()">Save All</button>
+          </span>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>

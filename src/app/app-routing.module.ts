@@ -88,6 +88,8 @@ import { NonTrainingExpVerficationTrackerComponent } from './PIA/non-training-ex
 import { EditProgramStatusViewComponent } from './PIA/edit-program-status-view/edit-program-status-view.component';
 import { SampleUiComponent } from './PIA/sample-ui/sample-ui.component';
 import { ProgressReportDownloadComponent } from './PIA/progress-report-download/progress-report-download.component';
+import { MisApplicationComponent } from './PIA/mis-application/mis-application.component';
+import { ViewMisApplicationComponent } from './PIA/view-mis-application/view-mis-application.component';
 const routes: Routes = [
     {
         path: '',
@@ -161,6 +163,18 @@ const routes: Routes = [
         component: EditProgramStatusViewComponent,
         canActivate: [AuthGuard],
         data: { roles: [Role.Admin,Role.SPIU,Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR,Role.DATA_ENTRY,Role.FINANCE,Role.DATA_ENTRY,Role.SERP,Role.MEPMA] }
+    },
+    {
+        path: 'mis-application',
+        component: MisApplicationComponent,
+        canActivate: [AuthGuard],
+        data: { roles: [Role.Admin,Role.SPIU,Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR,Role.DATA_ENTRY,Role.FINANCE,Role.SERP,Role.MEPMA] }
+    },
+    {
+        path: 'view-mis-application',
+        component: ViewMisApplicationComponent,
+        canActivate: [AuthGuard],
+        data: { roles: [Role.Admin,Role.SPIU,Role.AGENCY_MANAGER,Role.AGENCY_EXECUTOR,Role.DATA_ENTRY,Role.FINANCE,Role.SERP,Role.MEPMA] }
     },
      {
         path: 'Non-training-Expenditure-tracker',
