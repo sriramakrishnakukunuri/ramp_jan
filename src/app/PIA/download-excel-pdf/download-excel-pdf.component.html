@@ -248,9 +248,8 @@
             </div>
             <div class="card-body">
                  <div class="summary-download-section mb-4">
-                    <div class="row align-items-end g-2">
-                        
-                        <div class="col-12 col-sm-6 col-md-4 col-lg-4" *ngIf="isAdmin">
+                     <div class="row align-items-end g-2 mb-3">
+                        <div class="col-12 col-sm-6 col-md-12 col-lg-12 mb-3" *ngIf="isAdmin">
                             <mat-form-field appearance="outline" class="w-100">
                                 <mat-label>Select Agency For Summary</mat-label>
                                 <mat-select [(ngModel)]="summarySelectedAgencyId" (selectionChange)="onSummaryAgencySelect($event.value)">
@@ -263,7 +262,11 @@
                                 </mat-select>
                             </mat-form-field>
                         </div>
-                        <div class="col-12 col-sm-6 col-md-8 col-lg-8 d-flex flex-wrap gap-2">
+                     </div>
+                    <div class="row align-items-end g-2 mt-3">
+                        
+                        
+                        <div class="col-12 col-sm-6 col-md-12 col-lg-12 d-flex flex-wrap gap-2">
                             <button
                               type="button"
                               class="btn"
