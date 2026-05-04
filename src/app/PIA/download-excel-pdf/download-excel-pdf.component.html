@@ -64,6 +64,9 @@
                     </div>
                    
                 </div>
+
+               
+
                 <div class="row mb-4" >
                      <div class="col-12 col-sm-6 col-md-8 col-lg-8 d-flex flex-wrap gap-2">
                         <!-- All Participants Button -->
@@ -233,6 +236,55 @@
                         </div>
                     </div>
                 </div> -->
+            </div>
+        </div>
+        <div class="card mb-3">
+             <div class="card-header bg-transparent">
+                <div class="row align-items-center">
+                    <div class="col-12 col-sm-8 col-md-8 col-lg-8">
+                        <h6 class="fw-600 mb-2 mb-sm-0">Summary Download</h6>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                 <div class="summary-download-section mb-4">
+                    <div class="row align-items-end g-2">
+                        
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-4" *ngIf="isAdmin">
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>Select Agency For Summary</mat-label>
+                                <mat-select [(ngModel)]="summarySelectedAgencyId" (selectionChange)="onSummaryAgencySelect($event.value)">
+                                    <mat-select-filter [array]="agencyList" [displayMember]="'agencyName'" (filteredReturn)="summaryAgencyListFiltered = $event">
+                                    </mat-select-filter>
+                                    <mat-option value="" disabled>Select Agency</mat-option>
+                                    <mat-option *ngFor="let agency of summaryAgencyListFiltered" [value]="agency.agencyId">
+                                        {{ agency.agencyName }}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-8 col-lg-8 d-flex flex-wrap gap-2">
+                            <button
+                              type="button"
+                              class="btn"
+                              style="background-color: limegreen;"
+                              [disabled]="isAdmin && !summarySelectedAgencyId"
+                              (click)="downloadSummaryPdfWithParticipants()"
+                            >
+                                <i class="bi bi-file-earmark-pdf me-2"></i>Download PDF With Participants
+                            </button>
+                            <button
+                              type="button"
+                              class="btn"
+                              style="background-color: limegreen;"
+                              [disabled]="isAdmin && !summarySelectedAgencyId"
+                              (click)="downloadSummaryPdfWithoutParticipants()"
+                            >
+                                <i class="bi bi-file-earmark-pdf me-2"></i>Download PDF Without Participants
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>

@@ -20,6 +20,8 @@ export class DownloadExcelPdfComponent implements OnInit {
   programListFiltered: any[] = [];
   selectedAgencyId: any = '';
   selectedProgramId: any = '';
+  summarySelectedAgencyId: any = '';
+  summaryAgencyListFiltered: any[] = [];
   isDownloading: boolean = false;
 
   constructor(
@@ -37,6 +39,7 @@ export class DownloadExcelPdfComponent implements OnInit {
       this.getAgenciesList();
     } else {
       this.selectedAgencyId = this.agencyId;
+      this.summarySelectedAgencyId = this.agencyId;
       this.getProgramsByAgency(this.agencyId);
     }
   }
@@ -46,6 +49,7 @@ export class DownloadExcelPdfComponent implements OnInit {
       next: (res: any) => {
         this.agencyList = res.data;
         this.agencyListFiltered = this.agencyList;
+        this.summaryAgencyListFiltered = this.agencyList;
       },
       error: (err) => {
         this.toastrService.error(err.error.message);
@@ -87,6 +91,38 @@ export class DownloadExcelPdfComponent implements OnInit {
 
   onProgramSelect(programId: any) {
     this.selectedProgramId = programId;
+  }
+
+  onSummaryAgencySelect(agencyId: any) {
+    this.summarySelectedAgencyId = agencyId;
+  }
+
+  getSummaryAgencyId(): any {
+    return this.isAdmin ? this.summarySelectedAgencyId : this.agencyId;
+  }
+
+  downloadSummaryPdfWithParticipants() {
+    const agency = this.getSummaryAgencyId();
+    if (!agency) {
+      this.toastrService.info('Please select an agency for summary download.');
+      return;
+    }
+
+    const url = `${APIS.programSummary.downloadPdfByAgencyWithParticipants}${agency}`;
+    const fileName = `Summary_With_Participants_${agency}.pdf`;
+    this.downloadFile(url, fileName);
+  }
+
+  downloadSummaryPdfWithoutParticipants() {
+    const agency = this.getSummaryAgencyId();
+    if (!agency) {
+      this.toastrService.info('Please select an agency for summary download.');
+      return;
+    }
+
+    const url = `${APIS.programSummary.downloadPdfByAgencyWithoutParticipants}${agency}`;
+    const fileName = `Summary_Without_Participants_${agency}.pdf`;
+    this.downloadFile(url, fileName);
   }
 
 

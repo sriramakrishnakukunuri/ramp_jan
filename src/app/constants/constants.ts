@@ -333,6 +333,8 @@ tgtpc10: {
     getParticipantsBYProgram: API_BASE_URL + `/program/participants/dropdown/`,
     downloadPDF: API_BASE_URL + `/program/summary/pdf/`,
     downloadPdfByProgram: API_BASE_URL + `/program/summary/pdf?programId=`,
+    downloadPdfByAgencyWithParticipants: API_BASE_URL + `/program/summary/pdf?agencyId=`,
+    downloadPdfByAgencyWithoutParticipants: API_BASE_URL + `/program/summary-without-participant/pdf/?agencyId=`,
     saveProgramNote: API_BASE_URL + `/program-summary`,
     getProgramNote: API_BASE_URL + `/program-summary/`,
   },

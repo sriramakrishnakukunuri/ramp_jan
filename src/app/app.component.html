@@ -491,9 +491,9 @@
                       <li><a class="dropdown-item" routerLink="/update-program-execution" routerLinkActive="active">Program
                           Execution</a></li>
                       <li><a class="dropdown-item" routerLink="/collage-home" routerLinkActive="active">Create Collage</a></li>
-                      <li><a class="dropdown-item" routerLink="/program-expenditure" routerLinkActive="active">Program Expenditure</a>
+                      <li *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR,Role.SERP,Role.MEPMA]"  ><a class="dropdown-item" routerLink="/program-expenditure" routerLinkActive="active">Program Expenditure</a>
                       </li>
-                      <li><a class="dropdown-item" routerLink="/bulk-expenditure" routerLinkActive="active">Bulk Expenditure</a></li>
+                      <li *appHasRole="[Role.AGENCY_MANAGER, Role.AGENCY_EXECUTOR,Role.DATA_ENTRY,Role.SERP,Role.MEPMA]" ><a class="dropdown-item" routerLink="/bulk-expenditure" routerLinkActive="active">Bulk Expenditure</a></li>
                       <li><a class="dropdown-item" routerLink="/view-Completed-program-related" routerLinkActive="active">View
                           Completed programs</a></li>
                     </ul>
