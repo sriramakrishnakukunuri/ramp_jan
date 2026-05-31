@@ -182,6 +182,23 @@ currentStep:any = 1;
         this.currentStep=11
         this.freezeValue=11
      }
+     else if(applicationData.status === 'LOAN_SANCTIONED' || applicationData.applicationStatus === 'LOAN_SANCTIONED'){
+     this._commonService.setCurrentStep(10)
+      this.currentStep=10
+      this.freezeValue=10
+     }
+     else if(applicationData.status === 'DISBURSEMENT_PENDING' || applicationData.applicationStatus === 'DISBURSEMENT_PENDING'){
+     this._commonService.setCurrentStep(11)
+      this.currentStep=11
+      this.freezeValue=11
+     }
+     else if(applicationData.status === 'LOAN_REPAYMENT_REGULAR' || applicationData.applicationStatus === 'LOAN_REPAYMENT_REGULAR'
+      || applicationData.status === 'LOAN_REPAYMENT_DUE' || applicationData.applicationStatus === 'LOAN_REPAYMENT_DUE'
+      || applicationData.status === 'LOAN_REPAYMENT_COMPLETED' || applicationData.applicationStatus === 'LOAN_REPAYMENT_COMPLETED'){
+     this._commonService.setCurrentStep(11)
+      this.currentStep=11
+      this.freezeValue=11
+     }
      this.currentStep = this._commonService.getCurrentStep();
      this.freezeValue=this._commonService.getCurrentStep();
     console.log(this.freezeValue)

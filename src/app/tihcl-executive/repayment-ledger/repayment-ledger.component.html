@@ -40,9 +40,9 @@
                             <mat-form-field appearance="outline" class="w-100">
                                 <mat-label>Select Enterprise Name </mat-label>
                                 <mat-select [(ngModel)]="loanApplicationNo" (selectionChange)="onApplicationNoChange($event.value)">
-                                    <mat-select-filter [array]="enterpriseList" [displayMember]="'enterpriseName'" 
+                                    <app-select-search-filter [array]="enterpriseList" [displayMember]="'enterpriseName'"
                                         (filteredReturn)="filteredEnterprise = $event">
-                                    </mat-select-filter>
+                                    </app-select-search-filter>
                                     <mat-option *ngFor="let question of filteredEnterprise"
                                         [value]="question.applicationNo">
                                         {{ question?.enterpriseName }}

@@ -7,7 +7,7 @@ export const environment = {
     // apiUrl: 'http://localhost:8080'
     //apiUrl: 'http://192.168.30.150:8086/api'
     // apiUrl:'https://tihcl.com/tihcl/api',
-    apiUrl:`http://52.4.130.165:8081/tihcl/api`
+    apiUrl:'https://tihcl-dev.metaversedu.in/tihcl/api'
 };
 
 /*

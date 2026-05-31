@@ -63,13 +63,14 @@ import { DicApprovalComponent } from './tihcl-dic/dic-approval/dic-approval.comp
 import { ViewApplicationsComponent } from './tihcl-coi/view-applications/view-applications.component';
 import { LoaderComponent } from './common_components/loader/loader.component';
 import { SanctionedAmountComponent } from './sanctioned-amount/sanctioned-amount.component';
-import { MatSelectFilterModule } from 'mat-select-filter';
+import { SelectSearchFilterComponent } from './common_components/select-search-filter/select-search-filter.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatInputModule } from '@angular/material/input';
 import { SAPreliminaryComponent } from './PIA/sa-preliminary/sa-preliminary.component';
 import { CommonFileViewerComponent } from './common_components/common-file-viewer/common-file-viewer.component';
 import { CommaSeperationPipe } from './common_components/comma-seperation.pipe';
@@ -82,7 +83,8 @@ import { ReassignApplicationsComponent } from './tihcl-manager/reassign-applicat
         MatSelectModule,
     MatOptionModule,
     MatCheckboxModule,
-        MatSelectFilterModule,
+        MatInputModule,
+
         MatFormFieldModule,
         BrowserModule,
         ReactiveFormsModule,
@@ -141,6 +143,7 @@ import { ReassignApplicationsComponent } from './tihcl-manager/reassign-applicat
         IndianRupeesInputComponent,
         ReportsComponent,
         ReassignApplicationsComponent,
+        SelectSearchFilterComponent,
     ],
     exports:[
         LoaderComponent

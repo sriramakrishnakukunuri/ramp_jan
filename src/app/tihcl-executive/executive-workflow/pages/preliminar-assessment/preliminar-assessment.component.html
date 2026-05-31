@@ -318,9 +318,9 @@
           <mat-form-field appearance="outline" class="w-100">
                             <mat-label>RAMP Program Name</mat-label>
                             <mat-select formControlName="rampProgramName"  [ngClass]="{'isDisabled':freeze>1}">
-                                <mat-select-filter [array]="getDatarampProgramName" 
+                                <app-select-search-filter [array]="getDatarampProgramName"
                                     (filteredReturn)="filterrampProgramName = $event">
-                                </mat-select-filter>
+                                </app-select-search-filter>
                                 <mat-option *ngFor="let question of filterrampProgramName" [value]="question">
                                     {{ question }}
                                 </mat-option>

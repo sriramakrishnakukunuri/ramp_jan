@@ -181,9 +181,9 @@
                 <mat-form-field appearance="outline" class="w-100" >
               <mat-label>Select District</mat-label>
               <mat-select [(ngModel)]="districtName" (ngModelChange)="GetDataByFilter($event)" multiple>
-                <mat-select-filter [array]="allDistricts" [displayMember]="'districtName'"
+                <app-select-search-filter [array]="allDistricts" [displayMember]="'districtName'"
                   (filteredReturn)="filterallDistricts = $event">
-                </mat-select-filter>
+                </app-select-search-filter>
                  <div class="select-all">
                     <mat-checkbox
                       (click)="$event.stopPropagation()"
@@ -206,9 +206,9 @@
                    <mat-form-field appearance="outline" class="w-100" >
               <mat-label>Select Executive</mat-label>
               <mat-select [(ngModel)]="executiveName" (ngModelChange)="GetDataByFilter($event)" multiple>
-                <mat-select-filter [array]="allExecutives" [displayMember]="'executiveName'"
+                <app-select-search-filter [array]="allExecutives" [displayMember]="'executiveName'"
                   (filteredReturn)="filterallExecutives = $event">
-                </mat-select-filter>
+                </app-select-search-filter>
                 <div class="select-all">
                                         <mat-checkbox
                       (click)="$event.stopPropagation()"
