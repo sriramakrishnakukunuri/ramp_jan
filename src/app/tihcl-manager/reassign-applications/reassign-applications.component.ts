@@ -98,7 +98,7 @@ export class ReassignApplicationsComponent implements OnInit {
   openAssignPopup() {
     this.showAssignPopup = true;
      this.assignExecutives=[]
-    this._commonService.getDataByUrl(APIS.masterList.getExecutivesList + 'EXECUTIVE_MANAGER')
+    this._commonService.getDataByUrl(APIS.masterList.getExecutivesList + 'EXECUTIVE_MANAGER?isActive=true')
       .subscribe((data) => {
         this.assignExecutives = (data.data || []).filter((exec: any) => exec.userId !== this.selectedExecutiveId);
       });

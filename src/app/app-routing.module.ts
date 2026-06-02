@@ -31,6 +31,7 @@ import { Level3ApprovalComponent } from './tihcl-manager/level3-approval/level3-
 import { LoanAppilicationNewComponent } from './TIHCL/loan-appilication-new/loan-appilication-new.component';
 import { NewApplicationExecutiveComponent } from './tihcl-executive/new-application-executive/new-application-executive.component';
 import { PendingApplicationExecutiveComponent } from './tihcl-executive/pending-application-executive/pending-application-executive.component';
+import { CompletedApplicationExecutiveComponent } from './tihcl-executive/completed-application-executive/completed-application-executive.component';
 import { ExecutiveWorkflowComponent } from './tihcl-executive/executive-workflow/executive-workflow.component';
 import { DicApprovalComponent } from './tihcl-dic/dic-approval/dic-approval.component';
 import { ViewApplicationsComponent } from './tihcl-coi/view-applications/view-applications.component';
@@ -217,6 +218,12 @@ const routes: Routes = [
     {
         path: 'pending-application',
         component: PendingApplicationExecutiveComponent,
+        canActivate: [AuthGuard],
+        data: { roles: [Role.TIHCL_EXECUTOR] }
+    },
+    {
+        path: 'completed-application',
+        component: CompletedApplicationExecutiveComponent,
         canActivate: [AuthGuard],
         data: { roles: [Role.TIHCL_EXECUTOR] }
     },

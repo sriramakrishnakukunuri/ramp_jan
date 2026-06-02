@@ -64,9 +64,12 @@ currentStep:any
         link.remove();
     }
    selectedfiles:any
+   fileUploaded: boolean = false;
+   fileUploadError: boolean = false;
     onFilesSelected(event: any) {
       console.log(event.target.files)
      this.selectedfiles = event.target.files[0];
+     this.fileUploadError = false;
     //  this.selectUploadedFiles = event.target.files[0];
     //  if (this.selectUploadedFiles) {
     //    this.globaldisable = true;
@@ -137,6 +140,7 @@ isImageFile(filePath: string): boolean {
       updateRegistration(data?:any){
        this._commonService.updatedata(APIS.tihclDIC.updateRgistrationwithDic+this.applicationData?.applicationNo+'?dicNocFilePath='+(data?.filePath)+'&appStatus=DIC_APPROVAL',{}).subscribe({
           next: (response) => {
+                 this.fileUploaded = true;
                  this.progressBarStatusUpdate.emit({"update":true})
                   this.getDtataByUrl(APIS.tihclExecutive.registerData + (this.applicationData.registrationUsageId? this.applicationData?.registrationUsageId:this.applicationData?.registrationId))
               //  this.getLevelOneData(this.currentPage,  this.pageSize);
@@ -147,7 +151,10 @@ isImageFile(filePath: string): boolean {
         });
       }
     Approved(){
-        // https://tihcl.com/tihcl/api/registrations/status/updation/TH647249?appStatus=MANAGER_APPROVAL_1&reasonForRejection=null
+        if (!this.fileUploaded && !this.managrData?.dicNocFilePath) {
+          this.fileUploadError = true;
+          return;
+        }
         this._commonService.updatedataByUrl(APIS.tihclManager.approveLevelOne+this.applicationData?.applicationNo+'?appStatus=DIC_CONSENT_APPROVAL&reasonForRejection=null').subscribe({
           next: (response) => {
             this.progressBarStatusUpdate.emit({"update":true})

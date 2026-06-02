@@ -52,6 +52,9 @@
                 <small *ngIf="this.managrData?.dicNocFilePath" class="text-muted d-block text-center">
                 Uploaded file: {{ this.managrData?.dicNocFilePath?.split('/').pop() }}
                 </small>
+                <div *ngIf="fileUploadError" class="text-danger small text-center mt-1">
+                  Please upload DIC Consent Letter before proceeding.
+                </div>
               </div>
             </div>
               </div>

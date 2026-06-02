@@ -74,6 +74,7 @@ export const APIS = {
         getDatarampProgramName:API_BASE_URL+'/ramp/programs?agencyId=1&activityId=1',
         getNewApplications:API_BASE_URL+`/registrations/new/applications`,
         getPendingApplications:API_BASE_URL+`/registrations/under-processing`,
+        getCompletedApplications:API_BASE_URL+`/registrations/completed`,
         registerData: API_BASE_URL + '/registrations/usage/id/',
         submitPrimilinary:API_BASE_URL+`/registrations/preliminary/save/`,
          submitPrimilinaryTable:API_BASE_URL+`/registrations/credit-facility-details/save`,

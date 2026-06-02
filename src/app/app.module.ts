@@ -47,6 +47,7 @@ import { LoanAppilicationNewComponent } from './TIHCL/loan-appilication-new/loan
 import { MultiselectDropdownComponent } from './seperate-components/multiselect-dropdown/multiselect-dropdown.component';
 import { NewApplicationExecutiveComponent } from './tihcl-executive/new-application-executive/new-application-executive.component';
 import { PendingApplicationExecutiveComponent } from './tihcl-executive/pending-application-executive/pending-application-executive.component';
+import { CompletedApplicationExecutiveComponent } from './tihcl-executive/completed-application-executive/completed-application-executive.component';
 import { ExecutiveWorkflowComponent } from './tihcl-executive/executive-workflow/executive-workflow.component';
 import { PreliminarAssessmentComponent } from './tihcl-executive/executive-workflow/pages/preliminar-assessment/preliminar-assessment.component';
 import { ManagerApprovalComponent } from './tihcl-executive/executive-workflow/pages/manager-approval/manager-approval.component';
@@ -129,7 +130,7 @@ import { ReassignApplicationsComponent } from './tihcl-manager/reassign-applicat
         GetOutcomeComponent,
         ViewMsmeCouncellorDataComponent, ProgramSessionsComponent, LoanApplicationFormComponent, 
         Level1ApprovalComponent, Level2ApprovalComponent, Level3ApprovalComponent, LoanAppilicationNewComponent,
-        MultiselectDropdownComponent, NewApplicationExecutiveComponent, PendingApplicationExecutiveComponent,
+        MultiselectDropdownComponent, NewApplicationExecutiveComponent, PendingApplicationExecutiveComponent, CompletedApplicationExecutiveComponent,
         ExecutiveWorkflowComponent, PreliminarAssessmentComponent,
         ManagerApprovalComponent, UnitVisitComponent, DiagnosticReportComponent,
         DiConcernLetterComponent, RampChecklistComponent, PrimaryNocComponent, SanctionedDetailsComponent,

@@ -32,7 +32,7 @@ searchText:any=''
   ngOnInit(): void {
     this.currentPage=1
     this.pageSize=10
-    
+
     this.getNewApplications(1, 10);
   }
   onPageChange(event: {page: number, pageSize: number}): void {
@@ -68,7 +68,7 @@ searchText:any=''
       }
     });
     }
-   
+
   }
   filterTable(){
       this.getNewApplications(1, 10);
