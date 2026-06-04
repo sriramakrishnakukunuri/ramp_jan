@@ -37,28 +37,8 @@ districtName:any='district'
   pagedData: any[] = [];
    onTabChange(activeTab:any){
     this.activeTab = activeTab;
-    if(activeTab=='APPLICATIONS_RECEIVED' ) { 
-      console.log(activeTab); 
-      this.pageSize=10
-      this.getDataReceived(1,10)
-    
-    }
-    if(activeTab=='APPLICATIONS_UNDER_PROCESS') {
-      console.log(activeTab)
-      this.pageSize=10
-      this.getDataReceived(1,10)
-    
-    }
-    else if(activeTab=='APPLICATIONS_WITH_DIC') {
-      console.log(activeTab)
-      this.getDataReceived(1,10)
-    }
-    else if(activeTab=='APPLICATIONS_SANCTIONED') { 
-   this.getDataReceived(1,10)
-    }
-    else if(activeTab=='APPLICATIONS_NOT_CONSIDERED') { 
-   this.getDataReceived(1,10)
-    }
+    this.pageSize = 10;
+    this.getDataReceived(1, 10);
   }
     allDistricts:any
     getAllDistricts(){
@@ -119,8 +99,9 @@ districtName:any='district'
  getDataReceived(pageNo:any,PageSize:any): any {
 
     this.tableListReceived = [];
+    const statusParam = this.activeTab === 'ALL' ? '' : '&status=' + this.activeTab;
     if(this.districtName=='district'){
-      this._commonService.getDataByUrl(APIS.tihclCOI.getApplicaionData+'&status='+this.activeTab+'&pageNo=' + (pageNo-1) + '&pageSize=' + PageSize).subscribe({
+      this._commonService.getDataByUrl(APIS.tihclCOI.getApplicaionData+statusParam+'&pageNo=' + (pageNo-1) + '&pageSize=' + PageSize).subscribe({
       next: (dataList: any) => {
         this.tableListReceived = dataList.data;
         this.totalItems=dataList?.totalElements
@@ -133,7 +114,7 @@ districtName:any='district'
     });
     }
     else{
-      this._commonService.getDataByUrl(APIS.tihclCOI.getApplicaionData+'&status='+this.activeTab+'&district='+this.districtName+'&pageNo=' + (pageNo-1) + '&pageSize=' + PageSize).subscribe({
+      this._commonService.getDataByUrl(APIS.tihclCOI.getApplicaionData+statusParam+'&district='+this.districtName+'&pageNo=' + (pageNo-1) + '&pageSize=' + PageSize).subscribe({
       next: (dataList: any) => {
         this.tableListReceived = dataList.data;
         this.totalItems=dataList?.totalElements

@@ -24,7 +24,10 @@
         <!-- Combined stat + tab selector bar -->
         <div class="row g-2 mb-3">
           <div class="col-6 col-sm-4 col-md-2">
-            <div class="stat-tab-card-total card text-white text-center p-2 h-100" style="background-color: #6f42c1;">
+            <div class="stat-tab-card card text-white text-center p-2 h-100"
+              style="background-color: #6f42c1;"
+              [class.active-tab]="activeTab==='ALL'"
+              (click)="onTabChange('ALL')">
               <div class="small fw-600">Total Applications Received</div>
               <div class="fw-bold fs-5 mt-1">{{totalApplicationsReceived}}</div>
             </div>
@@ -79,8 +82,8 @@
         <div class="tab-content border bg-light" id="nav-tabContent">
           <div class="tab-pane fade active show" id="APPLICATIONS_RECEIVED" role="tabpanel"
             aria-labelledby="nav-home-tab"
-            [ngClass]="{ 'active':(activeTab==='APPLICATIONS_RECEIVED' || activeTab==='APPLICATIONS_UNDER_PROCESS' || activeTab==='APPLICATIONS_WITH_DIC' || activeTab==='APPLICATIONS_SANCTIONED' || activeTab==='APPLICATIONS_NOT_CONSIDERED')}"
-            *ngIf="(activeTab==='APPLICATIONS_RECEIVED' || activeTab==='APPLICATIONS_UNDER_PROCESS' || activeTab==='APPLICATIONS_WITH_DIC' || activeTab==='APPLICATIONS_SANCTIONED' || activeTab==='APPLICATIONS_NOT_CONSIDERED')">
+            [ngClass]="{ 'active':(activeTab==='ALL' || activeTab==='APPLICATIONS_RECEIVED' || activeTab==='APPLICATIONS_UNDER_PROCESS' || activeTab==='APPLICATIONS_WITH_DIC' || activeTab==='APPLICATIONS_SANCTIONED' || activeTab==='APPLICATIONS_NOT_CONSIDERED')}"
+            *ngIf="(activeTab==='ALL' || activeTab==='APPLICATIONS_RECEIVED' || activeTab==='APPLICATIONS_UNDER_PROCESS' || activeTab==='APPLICATIONS_WITH_DIC' || activeTab==='APPLICATIONS_SANCTIONED' || activeTab==='APPLICATIONS_NOT_CONSIDERED')">
 
             <div class="card-body p-0">
               <div class="p-3">
