@@ -60,6 +60,8 @@ StatusofApplication:any=''
       // Step 1 - Registration
       enterpriseName: ['', [Validators.required, Validators.minLength(3)]],
       promoterName: ['', [Validators.required, Validators.minLength(3)]],
+      gender: ['', Validators.required],
+      socialCategory: ['', Validators.required],
       constitution: ['', Validators.required],
       productionDate: ['', Validators.required],
       udyamRegNumber: ['', [Validators.required, this.udyamRegNumberValidator]],
@@ -122,6 +124,8 @@ StatusofApplication:any=''
         this.applicationForm.patchValue({
           enterpriseName: enterpreneur.enterpriseName || '',
           promoterName: enterpreneur.promoterName || '',
+          gender: enterpreneur.gender || '',
+          socialCategory: enterpreneur.socialCategory || '',
           constitution: enterpreneur.constitution || '',
           productionDate: enterpreneur.productionDate || '',
           udyamRegNumber: enterpreneur.udyamRegNumber || '',

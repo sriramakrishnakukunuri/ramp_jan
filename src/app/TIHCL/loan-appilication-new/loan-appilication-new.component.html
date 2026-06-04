@@ -129,6 +129,42 @@
                         <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                           <div class="form-floating mb-3"
                             [ngClass]="applicationForm.get('promoterName')?.valid ? '' :'isDisabled'">
+                            <select class="form-select" id="gender" formControlName="gender" aria-label="">
+                              <option value="">Select Gender</option>
+                              <option value="Male">Male</option>
+                              <option value="Female">Female</option>
+                              <option value="Others">Others</option>
+                            </select>
+                            <label for="gender">Gender <span class="text-danger">*</span></label>
+                            <div
+                              *ngIf="applicationForm.get('gender')?.invalid && applicationForm.get('gender')?.touched"
+                              class="text-danger">
+                              Gender is required
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                          <div class="form-floating mb-3"
+                            [ngClass]="applicationForm.get('gender')?.valid ? '' :'isDisabled'">
+                            <select class="form-select" id="socialCategory" formControlName="socialCategory" aria-label="">
+                              <option value="">Select Social Category</option>
+                              <option value="SC">SC</option>
+                              <option value="ST">ST</option>
+                              <option value="BC">BC</option>
+                              <option value="General">General</option>
+                              <option value="Minority">Minority</option>
+                            </select>
+                            <label for="socialCategory">Social Category <span class="text-danger">*</span></label>
+                            <div
+                              *ngIf="applicationForm.get('socialCategory')?.invalid && applicationForm.get('socialCategory')?.touched"
+                              class="text-danger">
+                              Social Category is required
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                          <div class="form-floating mb-3"
+                            [ngClass]="applicationForm.get('socialCategory')?.valid ? '' :'isDisabled'">
                             <select class="form-select" id="constitution" formControlName="constitution" aria-label="">
                               <option value="">Select Constitution</option>
                               <option value="Sole proprietorship">Sole proprietorship</option>
