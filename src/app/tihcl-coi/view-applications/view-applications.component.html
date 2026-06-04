@@ -21,69 +21,60 @@
         </div>
       </div>
       <div class="card-body">
-        <div class="row mb-3">
-          <div class="col-12 col-sm-12 col-md-2 col-lg-2">
-            <div class="card bg-primary text-white text-center shadow-none  p-2"
+        <!-- Combined stat + tab selector bar -->
+        <div class="row g-2 mb-3">
+          <div class="col-6 col-sm-4 col-md-2">
+            <div class="stat-tab-card-total card text-white text-center p-2 h-100" style="background-color: #6f42c1;">
+              <div class="small fw-600">Total Applications Received</div>
+              <div class="fw-bold fs-5 mt-1">{{totalApplicationsReceived}}</div>
+            </div>
+          </div>
+          <div class="col-6 col-sm-4 col-md-2">
+            <div class="stat-tab-card card text-white text-center p-2 h-100"
+              style="background-color: #0d6efd;"
+              [class.active-tab]="activeTab==='APPLICATIONS_RECEIVED'"
               (click)="onTabChange('APPLICATIONS_RECEIVED')">
-              <label class="mb-2 fw-600">Applications Received </label>
-              <p class="fw-bold fs-6 mb-0 ">{{PrigramSummaryData?.applicationsReceived || 0}}</p>
+              <div class="small fw-600">New Applications</div>
+              <div class="fw-bold fs-5 mt-1">{{PrigramSummaryData?.applicationsReceived || 0}}</div>
             </div>
           </div>
-          <div class="col-12 col-sm-12 col-md-3 col-lg-3">
-            <div class="card bg-warning text-white text-center shadow-none  p-2"
+          <div class="col-6 col-sm-4 col-md-2">
+            <div class="stat-tab-card card text-white text-center p-2 h-100"
+              style="background-color: #ffc107;"
+              [class.active-tab]="activeTab==='APPLICATIONS_UNDER_PROCESS'"
               (click)="onTabChange('APPLICATIONS_UNDER_PROCESS')">
-              <label class="mb-2 fw-600">Applications Under Process</label>
-              <p class="fw-bold fs-6 mb-0 fw-600">{{PrigramSummaryData?.applicationsUnderProcess || 0}}</p>
+              <div class="small fw-600">Applications Under Process</div>
+              <div class="fw-bold fs-5 mt-1">{{PrigramSummaryData?.applicationsUnderProcess || 0}}</div>
             </div>
           </div>
-          <div class="col-12 col-sm-12 col-md-2 col-lg-2">
-            <div class="card text-white text-center shadow-none pt-2 pb-2" style="background-color: chocolate;"
+          <div class="col-6 col-sm-4 col-md-2">
+            <div class="stat-tab-card card text-white text-center p-2 h-100"
+              style="background-color: chocolate;"
+              [class.active-tab]="activeTab==='APPLICATIONS_WITH_DIC'"
               (click)="onTabChange('APPLICATIONS_WITH_DIC')">
-              <label class="mb-2 fw-600">Applications With DIC </label>
-              <p class="fw-bold fs-6 mb-0">{{PrigramSummaryData?.applicationsWithDic || 0}}</p>
+              <div class="small fw-600">Applications With DIC</div>
+              <div class="fw-bold fs-5 mt-1">{{PrigramSummaryData?.applicationsWithDic || 0}}</div>
             </div>
           </div>
-          <div class="col-12 col-sm-12 col-md-2 col-lg-2 ">
-            <div class="card  bg-success  text-white text-center shadow-none pt-2 pb-2"
+          <div class="col-6 col-sm-4 col-md-2">
+            <div class="stat-tab-card card text-white text-center p-2 h-100"
+              style="background-color: #198754;"
+              [class.active-tab]="activeTab==='APPLICATIONS_SANCTIONED'"
               (click)="onTabChange('APPLICATIONS_SANCTIONED')">
-              <label class="mb-2 fw-600">Applications Sanctioned </label>
-              <p class="fw-bold fs-6 mb-0">{{PrigramSummaryData?.applicationsLoanSanctioned || 0}}</p>
+              <div class="small fw-600">Applications Sanctioned</div>
+              <div class="fw-bold fs-5 mt-1">{{PrigramSummaryData?.applicationsLoanSanctioned || 0}}</div>
             </div>
           </div>
-          <div class="col-12 col-sm-12 col-md-3 col-lg-3 ">
-            <div class="card bg-danger text-white text-center shadow-none  p-2"
+          <div class="col-6 col-sm-4 col-md-2">
+            <div class="stat-tab-card card text-white text-center p-2 h-100"
+              style="background-color: #dc3545;"
+              [class.active-tab]="activeTab==='APPLICATIONS_NOT_CONSIDERED'"
               (click)="onTabChange('APPLICATIONS_NOT_CONSIDERED')">
-              <label class="mb-2 fw-600">Applications Not Considered </label>
-              <p class="fw-bold fs-6 mb-0">{{PrigramSummaryData?.applicationsNotConsidered || 0}}</p>
+              <div class="small fw-600">Applications Not Considered</div>
+              <div class="fw-bold fs-5 mt-1">{{PrigramSummaryData?.applicationsNotConsidered || 0}}</div>
             </div>
           </div>
-
         </div>
-        <nav>
-          <div class="nav nav-tabs mb-3" id="nav-tab" role="tablist">
-
-            <button [ngClass]="{ 'active':activeTab==='APPLICATIONS_RECEIVED'}"
-              (click)="onTabChange('APPLICATIONS_RECEIVED')" class="nav-link active" id="nav-home-tab"
-              data-bs-toggle="tab" data-bs-target="#APPLICATIONS_RECEIVED" type="button" role="tab"
-              aria-controls="nav-home" aria-selected="true"> Applications Received </button>
-            <button [ngClass]="{ 'active':activeTab==='APPLICATIONS_UNDER_PROCESS'}"
-              (click)="onTabChange('APPLICATIONS_UNDER_PROCESS')" class="nav-link" id="nav-profile-tab"
-              data-bs-toggle="tab" data-bs-target="#APPLICATIONS_RECEIVED" type="button" role="tab"
-              aria-controls="nav-profile" aria-selected="false"> Applications Under Process </button>
-            <button [ngClass]="{ 'active':activeTab==='APPLICATIONS_WITH_DIC'}"
-              (click)="onTabChange('APPLICATIONS_WITH_DIC')" class="nav-link" id="nav-profile-tab" data-bs-toggle="tab"
-              data-bs-target="#APPLICATIONS_RECEIVED" type="button" role="tab" aria-controls="nav-profile"
-              aria-selected="false"> Applications With DIC </button>
-            <button [ngClass]="{ 'active':activeTab==='APPLICATIONS_SANCTIONED'}"
-              (click)="onTabChange('APPLICATIONS_SANCTIONED')" class="nav-link" id="nav-profile-tab"
-              data-bs-toggle="tab" data-bs-target="#APPLICATIONS_RECEIVED" type="button" role="tab"
-              aria-controls="nav-profile" aria-selected="false"> Applications Sanctioned</button>
-            <button [ngClass]="{ 'active':activeTab==='APPLICATIONS_NOT_CONSIDERED'}"
-              (click)="onTabChange('APPLICATIONS_NOT_CONSIDERED')" class="nav-link active" id="nav-home-tab"
-              data-bs-toggle="tab" data-bs-target="#APPLICATIONS_RECEIVED" type="button" role="tab"
-              aria-controls="nav-home" aria-selected="true"> Applications not considered</button>
-          </div>
-        </nav>
 
         <div class="tab-content border bg-light" id="nav-tabContent">
           <div class="tab-pane fade active show" id="APPLICATIONS_RECEIVED" role="tabpanel"

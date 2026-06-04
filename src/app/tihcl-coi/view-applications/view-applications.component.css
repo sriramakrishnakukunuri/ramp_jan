@@ -1,0 +1,19 @@
+.stat-tab-card {
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  border: 3px solid transparent;
+  border-radius: 6px;
+}
+.stat-tab-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+}
+.stat-tab-card.active-tab {
+  border-color: white;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+  transform: translateY(-3px);
+}
+.stat-tab-card-total {
+  cursor: default;
+  border-radius: 6px;
+}

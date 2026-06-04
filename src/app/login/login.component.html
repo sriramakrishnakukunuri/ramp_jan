@@ -114,8 +114,34 @@
                 <div *ngIf="loginForm.get('phone')?.errors?.pattern">Phone number must be 10 digits and start with 6, 7, 8, or 9</div>
             </div>
         </div>
+        <div class="form-floating mb-3">
+            <select class="form-control" id="gender" formControlName="gender">
+                <option value="" disabled selected>Select Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Others">Others</option>
+            </select>
+            <label for="gender">Gender</label>
+            <div *ngIf="loginForm.get('gender')?.touched && loginForm.get('gender')?.invalid" class="invalid-feedback d-block">
+                <div *ngIf="loginForm.get('gender')?.errors?.required">Gender is required</div>
+            </div>
+        </div>
+        <div class="form-floating mb-3">
+            <select class="form-control" id="socialCategory" formControlName="socialCategory">
+                <option value="" disabled selected>Select Social Category</option>
+                <option value="SC">SC</option>
+                <option value="ST">ST</option>
+                <option value="BC">BC</option>
+                <option value="General">General</option>
+                <option value="Minority">Minority</option>
+            </select>
+            <label for="socialCategory">Social Category</label>
+            <div *ngIf="loginForm.get('socialCategory')?.touched && loginForm.get('socialCategory')?.invalid" class="invalid-feedback d-block">
+                <div *ngIf="loginForm.get('socialCategory')?.errors?.required">Social Category is required</div>
+            </div>
+        </div>
         <div class="d-grid mb-3">
-            <a (click)="OTPVerify()" class="btn btn-primary" [ngClass]="{'disabled': loginForm.get('phone')?.invalid}">Submit</a>
+            <a (click)="OTPVerify()" class="btn btn-primary" [ngClass]="{'disabled': loginForm.get('phone')?.invalid || loginForm.get('gender')?.invalid || loginForm.get('socialCategory')?.invalid}">Submit</a>
         </div>
         <div *ngIf="Mobileerror" class="alert alert-danger mt-3 mb-0">{{Mobileerror}}</div>
         <div class="text-center mb-4">

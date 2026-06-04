@@ -54,7 +54,9 @@ export class LoginComponent implements OnInit {
                     entrepreneur?.classList.remove('active');
                 } else {
                     this.loginForm = this.formBuilder.group({
-                        phone: ['', [Validators.required, Validators.pattern(/^[6789]\d{9}$/)]]
+                        phone: ['', [Validators.required, Validators.pattern(/^[6789]\d{9}$/)]],
+                        gender: ['', Validators.required],
+                        socialCategory: ['', Validators.required]
                     });
                     entrepreneur?.classList.add('active');
                     teamMember?.classList.remove('active');

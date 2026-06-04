@@ -881,13 +881,13 @@
                  [ngClass]="{ 'active': currentTab === 'OPERATIONAL_STATUS' }">
                  <form [formGroup]="operationalStatus">
                    <div>
-                     <label class="fs-md fw-600">Number Of Employees Working</label>
+                     <label class="fs-md fw-600">Number Of Employees Working <span class="text-danger">*</span></label>
                      <div class="row">
                        <div class="col-12 col-sm-6 col-md-4 col-lg-4">
                          <div class="form-floating mb-3">
                            <input type="number" class="form-control" id="skilled" placeholder=""
                              formControlName="skilledCount" min="0">
-                           <label for="skilled">Skilled</label>
+                           <label for="skilled">Skilled <span class="text-danger">*</span></label>
                          </div>
                          <div
                            *ngIf="operationalStatus.get('skilledCount')?.invalid && operationalStatus.get('skilledCount')?.touched"
@@ -899,7 +899,7 @@
                          <div class="form-floating mb-3">
                            <input type="number" class="form-control" id="unskilled" placeholder=""
                              formControlName="unskilledCount" min="0">
-                           <label for="unskilled">Unskilled</label>
+                           <label for="unskilled">Unskilled <span class="text-danger">*</span></label>
                          </div>
                          <div
                            *ngIf="operationalStatus.get('unskilledCount')?.invalid && operationalStatus.get('unskilledCount')?.touched"
@@ -911,7 +911,7 @@
                          <div class="form-floating mb-3">
                            <input type="number" class="form-control" id="female" placeholder=""
                              formControlName="femaleCount" min="0">
-                           <label for="female">Female</label>
+                           <label for="female">Female <span class="text-danger">*</span></label>
                          </div>
                          <div
                            *ngIf="operationalStatus.get('femaleCount')?.invalid && operationalStatus.get('femaleCount')?.touched"
@@ -922,13 +922,13 @@
                      </div>
                    </div>
                    <div>
-                     <label class="fs-md fw-600">Capacity Utilization</label>
+                     <label class="fs-md fw-600">Capacity Utilization <span class="text-danger">*</span></label>
                      <div class="row">
                        <div class="col-12 col-sm-6 col-md-4 col-lg-4">
                          <div class="form-floating mb-3">
                            <input type="number" class="form-control" id="installed" placeholder=""
                              formControlName="installedCapacity" min="0" max="100">
-                           <label for="installed">Installed %</label>
+                           <label for="installed">Installed % <span class="text-danger">*</span></label>
                          </div>
                          <div
                            *ngIf="operationalStatus.get('installedCapacity')?.invalid && operationalStatus.get('installedCapacity')?.touched"
@@ -940,7 +940,7 @@
                          <div class="form-floating mb-3">
                            <input type="number" class="form-control" id="utilisation" placeholder=""
                              formControlName="utilizedCapacity" min="0" max="100">
-                           <label for="utilisation">Utilisation %</label>
+                           <label for="utilisation">Utilisation % <span class="text-danger">*</span></label>
                          </div>
                          <div
                            *ngIf="operationalStatus.get('utilizedCapacity')?.invalid && operationalStatus.get('utilizedCapacity')?.touched"
@@ -952,7 +952,12 @@
                          <div class="form-floating mb-3">
                            <input type="text" class="form-control" id="observation" placeholder=""
                              formControlName="observation">
-                           <label for="observation">Observation</label>
+                           <label for="observation">Observation <span class="text-danger">*</span></label>
+                         </div>
+                         <div
+                           *ngIf="operationalStatus.get('observation')?.invalid && operationalStatus.get('observation')?.touched"
+                           class="text-danger small">
+                           Observation is required
                          </div>
                        </div>
                      </div>
@@ -1035,7 +1040,7 @@
                        <div class="mb-3">
                          <div class="row">
                            <div class="col-12 col-sm-6 col-md-3 col-lg-2">
-                             <label class="fs-md fw-600">Unsecured Loans</label>
+                             <label class="fs-md fw-600">Unsecured Loans <span class="text-danger">*</span></label>
                            </div>
                            <div class="col-12 col-sm-6 col-md-9 col-lg-10">
                              <div class="form-check form-check-inline">
@@ -1108,7 +1113,7 @@
                          <label class="fs-md fw-600 mb-2">Financial Requirement</label>
                          <div class="row">
                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                             <label class="fs-md fw-600">How much loan is required</label>
+                             <label class="fs-md fw-600">How much loan is required <span class="text-danger">*</span></label>
                            </div>
                            <div class="col-12 col-sm-6 col-md-4 col-lg-4">
                              <app-indian-rupees-input formControlName="requiredLoanAmount" placeholder="Enter Amount">
@@ -1116,13 +1121,18 @@
                              <!-- <input type="text" class="form-control form-control-sm" placeholder="Loan"> -->
                              <!-- <input type="number" class="form-control" placeholder=""
                                formControlName="requiredLoanAmount" min="0"> -->
+                             <div
+                               *ngIf="operationalStatus.get('requiredLoanAmount')?.invalid && operationalStatus.get('requiredLoanAmount')?.touched"
+                               class="text-danger small">
+                               Loan amount is required
+                             </div>
                            </div>
                          </div>
                        </div>
 
                        <div class="mb-3">
                          <div>
-                           <label class="d-block fs-md fw-600 mb-1">Security for Loan</label>
+                           <label class="d-block fs-md fw-600 mb-1">Security for Loan <span class="text-danger">*</span></label>
                            <div class="form-check form-check-inline">
                              <input class="form-check-input" type="radio" formControlName="loanSecurityType"
                                (change)="changesdata()" id="pendingSubsidy" value=" Pending subsidies/Incentives">
@@ -1152,6 +1162,11 @@
                              <input class="form-check-input" type="radio" formControlName="loanSecurityType"
                                (change)="changesdata()" id="commercialPropertyLoan" value="Commercial Property">
                              <label class="form-check-label" for="commercialPropertyLoan">Commercial Property</label>
+                           </div>
+                           <div
+                             *ngIf="operationalStatus.get('loanSecurityType')?.invalid && operationalStatus.get('loanSecurityType')?.touched"
+                             class="text-danger small mt-1">
+                             Security type is required
                            </div>
                          </div>
 
@@ -1192,7 +1207,7 @@
                        <div class="mb-3">
                          <div class="row">
                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                             <label class="fs-md fw-600">Any Statutory Due Pending</label>
+                             <label class="fs-md fw-600">Any Statutory Due Pending <span class="text-danger">*</span></label>
                            </div>
                            <div class="col-12 col-sm-6 col-md-4 col-lg-9">
                              <div class="form-check form-check-inline">

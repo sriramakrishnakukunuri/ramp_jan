@@ -86,10 +86,10 @@
                 <button type="button" class="btn-close text-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <!-- Sanction Details Section -->
+                <!-- Sanctioned Details Section -->
                 <div class="card mb-4">
                     <div class="card-header bg-light">
-                        <h6 class="mb-0 fw-bold">Sanction Information</h6>
+                        <h6 class="mb-0 fw-bold">Sanctioned Details</h6>
                     </div>
                     <div class="card-body">
                         <div class="row">
@@ -102,13 +102,13 @@
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                 <div class="mb-3">
                                     <label class="d-block fs-md fw-600 mb-1">Sanctioned Amount</label>
-                                    <label class="d-block fs-md">{{ (ExistingunitVisit?.sanctionedAmount | commaSeperation ) || 'N/A' }}</label>
+                                    <label class="d-block fs-md">{{ (ExistingunitVisit?.sanctionedAmount | commaSeperation) || 'N/A' }}</label>
                                 </div>
                             </div>
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                 <div class="mb-3">
-                                    <label class="d-block fs-md fw-600 mb-1">To Be Disbursed Amount</label>
-                                    <label class="d-block fs-md">{{ (ExistingunitVisit?.toBeDisbursedAmount | commaSeperation ) || 'N/A' }}</label>
+                                    <label class="d-block fs-md fw-600 mb-1">To be Disbursed Amount</label>
+                                    <label class="d-block fs-md">{{ (ExistingunitVisit?.toBeDisbursedAmount | commaSeperation) || 'N/A' }}</label>
                                 </div>
                             </div>
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
@@ -125,14 +125,20 @@
                             </div>
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                 <div class="mb-3">
-                                    <label class="d-block fs-md fw-600 mb-1">Moratorium Period</label>
-                                    <label class="d-block fs-md">{{ ExistingunitVisit?.moratoriumPeriod || 'N/A' }} months</label>
+                                    <label class="d-block fs-md fw-600 mb-1">Product Type</label>
+                                    <label class="d-block fs-md">{{ ExistingunitVisit?.productType || 'N/A' }}</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                <div class="mb-3">
+                                    <label class="d-block fs-md fw-600 mb-1">Moratorium Period (Months)</label>
+                                    <label class="d-block fs-md">{{ ExistingunitVisit?.moratoriumPeriod || 'N/A' }}</label>
                                 </div>
                             </div>
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                 <div class="mb-3">
                                     <label class="d-block fs-md fw-600 mb-1">DSRA Amount</label>
-                                    <label class="d-block fs-md">{{ (ExistingunitVisit?.dsraAmount | commaSeperation ) || 'N/A' }}</label>
+                                    <label class="d-block fs-md">{{ (ExistingunitVisit?.dsraAmount | commaSeperation) || 'N/A' }}</label>
                                 </div>
                             </div>
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
@@ -141,13 +147,24 @@
                                     <label class="d-block fs-md">{{ ExistingunitVisit?.isSecurityProvided ? 'Yes' : 'No' }}</label>
                                 </div>
                             </div>
-                            <div class="col-12 col-sm-6 col-md-4 col-lg-3" *ngIf="ExistingunitVisit?.isSecurityProvided">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Security Details Section -->
+                <div class="card mb-4" *ngIf="ExistingunitVisit?.isSecurityProvided">
+                    <div class="card-header bg-light">
+                        <h6 class="mb-0 fw-bold">Security Details</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                 <div class="mb-3">
                                     <label class="d-block fs-md fw-600 mb-1">Security Description</label>
                                     <label class="d-block fs-md">{{ ExistingunitVisit?.securityDescription || 'N/A' }}</label>
                                 </div>
                             </div>
-                            <div class="col-12 col-sm-6 col-md-4 col-lg-3" *ngIf="ExistingunitVisit?.isSecurityProvided">
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                 <div class="mb-3">
                                     <label class="d-block fs-md fw-600 mb-1">Security Value</label>
                                     <label class="d-block fs-md">{{ (ExistingunitVisit?.securityValue | commaSeperation) || 'N/A' }}</label>
@@ -155,8 +172,8 @@
                             </div>
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                 <div class="mb-3">
-                                    <label class="d-block fs-md fw-600 mb-1">Terms of Sanction</label>
-                                    <label class="d-block fs-md">{{ ExistingunitVisit?.termsOfSanction || 'N/A' }}</label>
+                                    <label class="d-block fs-md fw-600 mb-1">Security Type</label>
+                                    <label class="d-block fs-md">{{ ExistingunitVisit?.securityType || 'N/A' }}</label>
                                 </div>
                             </div>
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
