@@ -87,7 +87,8 @@ export class UnitVisitComponent implements OnInit {
       costPerUnit: ['', ],
       sellingPricePerUnit: ['', ],
       profitMargin: ['', ],
-      recentConsumption: ['', [Validators.required, Validators.min(0)]],
+      recentConsumption: ['', [Validators.min(0)]],
+      electricityBillAmount: ['', [Validators.required, Validators.min(0)]],
       // maxConsumption: ['', [Validators.required, Validators.min(0)]],
       powerBillPaidDate: ['', Validators.required],
       machineryDetailsRequest: this.fb.array([]),
@@ -258,6 +259,7 @@ createForm(): void {
       sellingPricePerUnit: data?.sellingPricePerUnit,
       profitMargin: data?.profitMargin,
       recentConsumption: data?.recentConsumption,
+      electricityBillAmount: data?.electricityBillAmount,
       // maxConsumption: data?.maxConsumption,
        powerBillPaidDate: data?.powerBillPaidDate
       });

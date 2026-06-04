@@ -969,13 +969,23 @@
             <div class="form-floating mb-3">
               <input type="number" class="form-control" id="recent" name="recentConsumption" placeholder=""
                 formControlName="recentConsumption" min="0">
-              <label for="recent">Recent Consumption (In Units) <span class="text-danger"> *</span></label>
-              <div
-                *ngIf="unitVisitForm.get('recentConsumption')?.errors?.['required'] && (unitVisitForm.get('recentConsumption')?.dirty || unitVisitForm.get('recentConsumption')?.touched)"
-                class="text-danger">
-                Recent Consumption is required
-              </div>
+              <label for="recent">Recent Consumption (In Units)</label>
               <div *ngIf="unitVisitForm.get('recentConsumption')?.errors?.['min']" class="text-danger">
+                Value cannot be negative
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+            <div class="form-floating mb-3">
+              <input type="number" class="form-control" id="electricityBillAmount" name="electricityBillAmount"
+                placeholder="" formControlName="electricityBillAmount" min="0">
+              <label for="electricityBillAmount">Electricity Bill Amount <span class="text-danger">*</span></label>
+              <div
+                *ngIf="unitVisitForm.get('electricityBillAmount')?.errors?.['required'] && (unitVisitForm.get('electricityBillAmount')?.dirty || unitVisitForm.get('electricityBillAmount')?.touched)"
+                class="text-danger">
+                Electricity Bill Amount is required
+              </div>
+              <div *ngIf="unitVisitForm.get('electricityBillAmount')?.errors?.['min']" class="text-danger">
                 Value cannot be negative
               </div>
             </div>
