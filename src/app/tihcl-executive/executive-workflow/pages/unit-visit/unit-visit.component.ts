@@ -83,7 +83,7 @@ export class UnitVisitComponent implements OnInit {
       periodicity: [, Validators.required],
       installedCapacity: ['', [Validators.required]],
       currentCapacityUtilisation: ['', [Validators.required]],
-      currentProductionInUnit: ['', [Validators.required,]],
+      currentProductionInUnit: [null, [Validators.required, Validators.min(1), Validators.max(100)]],
       costPerUnit: ['', ],
       sellingPricePerUnit: ['', ],
       profitMargin: ['', ],

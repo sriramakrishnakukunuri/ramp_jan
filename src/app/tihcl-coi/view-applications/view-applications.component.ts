@@ -99,7 +99,7 @@ districtName:any='district'
  getDataReceived(pageNo:any,PageSize:any): any {
 
     this.tableListReceived = [];
-    const statusParam = this.activeTab === 'ALL' ? '' : '&status=' + this.activeTab;
+    const statusParam = '&status=' + (this.activeTab === 'ALL' ? 'ALL_APPLICATIONS' : this.activeTab);
     if(this.districtName=='district'){
       this._commonService.getDataByUrl(APIS.tihclCOI.getApplicaionData+statusParam+'&pageNo=' + (pageNo-1) + '&pageSize=' + PageSize).subscribe({
       next: (dataList: any) => {

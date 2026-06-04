@@ -16,9 +16,9 @@ export class ReportsComponent implements OnInit {
   activeTab:any='pendingApplications';
 
   // Date Range Properties
-  fromDate: Date | null = null;
-  toDate: Date | null = null;
-  maxDate: Date = new Date();
+  fromDate: string = '';
+  toDate: string = '';
+  maxDate: string = new Date().toISOString().split('T')[0];
    constructor(
     private _commonService: CommonServiceService,
     private toastrService: ToastrService,
@@ -39,8 +39,16 @@ export class ReportsComponent implements OnInit {
   }
 
   clearDateRange(): void {
-    this.fromDate = null;
-    this.toDate = null;
+    this.fromDate = '';
+    this.toDate = '';
+  }
+
+  formatDisplayDate(dateStr: string): string {
+    if (!dateStr) return '';
+    const months = ['January', 'February', 'March', 'April', 'May', 'June',
+                    'July', 'August', 'September', 'October', 'November', 'December'];
+    const [year, month, day] = dateStr.split('-');
+    return `${day}-${months[parseInt(month, 10) - 1]}-${year}`;
   }
   DownloadExcelOverView(reportType: string) {
     //  if (!this.fromDate || !this.toDate) {
@@ -163,18 +171,7 @@ previewFile(url: string, fileName: string, isExcel: boolean = false) {
     if (!this.fromDate || !this.toDate) {
       return '';
     }
-    
-    const fromDateStr = this.formatDate(this.fromDate);
-    const toDateStr = this.formatDate(this.toDate);
-    
-    return `?fromDate=${fromDateStr}&toDate=${toDateStr}`;
-  }
-  
-   formatDate(date: Date): string {
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    return `${year}-${month}-${day}`;
+    return `?fromDate=${this.fromDate}&toDate=${this.toDate}`;
   }
 
    isDownloading: boolean = false;

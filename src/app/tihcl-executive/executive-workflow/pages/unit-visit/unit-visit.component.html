@@ -375,13 +375,13 @@
                 <input class="form-check-input" type="checkbox" id="upgradation" name="isUpgradationRequired"
                   formControlName="isUpgradationRequired">
                 <label class="form-check-label fs-md" for="upgradation">
-                  Is upgradation required?
+                  Is any machinery upgrade required?
                 </label>
               </div>
               <div
                 *ngIf="unitVisitForm.get('isUpgradationRequired')?.invalid && (unitVisitForm.get('isUpgradationRequired')?.dirty || unitVisitForm.get('isUpgradationRequired')?.touched)"
                 class="text-danger">
-                Is upgradation required? is required
+                This field is required
               </div>
             </div>
             <div class="col-12 col-sm-6 col-md-4 col-lg-4">
@@ -406,7 +406,7 @@
         <!-- Company Name Board -->
         <div class="row mb-3">
           <div class="col-12 col-sm-6 col-md-4 col-lg-4">
-            <h6 class="fw-600 fs-md">Company Name Board <span class="text-danger"> *</span></h6>
+            <h6 class="fw-600 fs-md">Is the company name board displayed? <span class="text-danger"> *</span></h6>
             <div class="form-check form-check-inline">
               <input class="form-check-input" type="radio" name="isCompanyNameBoard" id="boardYes" [value]="true"
                 formControlName="isCompanyNameBoard">
@@ -420,13 +420,13 @@
             <div
               *ngIf="unitVisitForm.get('isCompanyNameBoard')?.invalid && unitVisitForm.get('isCompanyNameBoard')?.touched"
               class="text-danger">
-              Company Name Board is required
+              Company name board is required
             </div>
           </div>
 
           <!-- Financed Bank Name Board -->
           <div class="col-12 col-sm-6 col-md-4 col-lg-4">
-            <h6 class="fw-600 fs-md">Financed Bank Name Board <span class="text-danger"> *</span></h6>
+            <h6 class="fw-600 fs-md">Is the financing bank name board displayed? <span class="text-danger"> *</span></h6>
             <div class="form-check form-check-inline">
               <input class="form-check-input" type="radio" name="isFinancedBankNameBoard" id="boardYes1" [value]="true"
                 formControlName="isFinancedBankNameBoard">
@@ -440,7 +440,7 @@
             <div
               *ngIf="unitVisitForm.get('isFinancedBankNameBoard')?.invalid && unitVisitForm.get('isFinancedBankNameBoard')?.touched"
               class="text-danger">
-              Financed Bank Name Board is required
+              Financing bank name board is required
             </div>
           </div>
         </div>
@@ -511,7 +511,7 @@
           <!-- Employees Attendance Register -->
           <div class="col-12 col-sm-6 col-md-4 col-lg-4">
             <div class="mb-3">
-              <label class="d-block fw-600 fs-md">Employees Attendance Register <span class="text-danger">
+              <label class="d-block fw-600 fs-md">Is the Employees' Attendance Register maintained? <span class="text-danger">
                   *</span></label>
               <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" name="isEmpAttendanceRegister" id="registerYes"
@@ -526,7 +526,7 @@
               <div
                 *ngIf="unitVisitForm.get('isEmpAttendanceRegister')?.invalid && unitVisitForm.get('isEmpAttendanceRegister')?.touched"
                 class="text-danger">
-                Employees Attendance Register is required
+                Employees' Attendance Register is required
               </div>
             </div>
           </div>
@@ -753,6 +753,8 @@
 
 
 
+            <!-- Force Raw Material, Work in Progress, Finished Goods onto their own row -->
+            <div class="w-100"></div>
             <!-- Raw material -->
             <div class="col-12 col-sm-6 col-md-4 col-lg-4">
               <app-indian-rupees-input formControlName="rawMaterials" label="Raw material(In Rs)" (valueChange)="OnchangeValue()" placeholder="Enter Amount"></app-indian-rupees-input>
@@ -833,7 +835,8 @@
 
         <hr>
 
-        <!-- Production Units -->
+        <!-- Production Details -->
+        <label class="fs-md fw-600 mb-2">Production Details</label>
         <div class="row">
           <!-- Maximum production -->
           <div class="col-12 col-sm-6 col-md-4 col-lg-4">
@@ -894,8 +897,8 @@
           <!-- Current production -->
           <div class="col-12 col-sm-6 col-md-4 col-lg-4">
             <div class="form-floating mb-3">
-              <input type="text" class="form-control" id="current" name="currentProductionInUnit" placeholder=""
-                formControlName="currentProductionInUnit">
+              <input type="number" class="form-control" id="current" name="currentProductionInUnit" placeholder=""
+                formControlName="currentProductionInUnit" min="1" max="100">
               <label for="current">Current production (In Percentage) <span class="text-danger"> *</span></label>
               <div
                 *ngIf="unitVisitForm.get('currentProductionInUnit')?.errors?.['required'] && (unitVisitForm.get('currentProductionInUnit')?.dirty || unitVisitForm.get('currentProductionInUnit')?.touched)"
@@ -903,7 +906,10 @@
                 Current production is required
               </div>
               <div *ngIf="unitVisitForm.get('currentProductionInUnit')?.errors?.['min']" class="text-danger">
-                Value cannot be negative
+                Value must be at least 1
+              </div>
+              <div *ngIf="unitVisitForm.get('currentProductionInUnit')?.errors?.['max']" class="text-danger">
+                Value cannot exceed 100
               </div>
             </div>
           </div>

@@ -927,25 +927,25 @@
                        <div class="col-12 col-sm-6 col-md-4 col-lg-4">
                          <div class="form-floating mb-3">
                            <input type="number" class="form-control" id="installed" placeholder=""
-                             formControlName="installedCapacity" min="0" max="100">
+                             formControlName="installedCapacity" min="1" max="100">
                            <label for="installed">Installed % <span class="text-danger">*</span></label>
                          </div>
                          <div
                            *ngIf="operationalStatus.get('installedCapacity')?.invalid && operationalStatus.get('installedCapacity')?.touched"
                            class="text-danger small">
-                           Must be a positive number and Not Greater than 100
+                           Must be between 1 and 100
                          </div>
                        </div>
                        <div class="col-12 col-sm-6 col-md-4 col-lg-4">
                          <div class="form-floating mb-3">
                            <input type="number" class="form-control" id="utilisation" placeholder=""
-                             formControlName="utilizedCapacity" min="0" max="100">
+                             formControlName="utilizedCapacity" min="1" max="100">
                            <label for="utilisation">Utilisation % <span class="text-danger">*</span></label>
                          </div>
                          <div
                            *ngIf="operationalStatus.get('utilizedCapacity')?.invalid && operationalStatus.get('utilizedCapacity')?.touched"
                            class="text-danger small">
-                           Must be a positive number and Not Greater than 100
+                           Must be between 1 and 100
                          </div>
                        </div>
                        <div class="col-12 col-sm-6 col-md-4 col-lg-4">
