@@ -232,6 +232,10 @@ export class GlobalDashboardComponent implements OnInit, OnDestroy {
     return Array.from({ length: n }, (_, i) => p[i % p.length]);
   }
 
+  get hasSanctioned(): boolean {
+    return this.districtCounts.some(d => d.sanctioned > 0);
+  }
+
   get totalApplications(): number {
     return (this.summaryData?.applicationsReceived || 0) +
            (this.summaryData?.applicationsUnderProcess || 0) +

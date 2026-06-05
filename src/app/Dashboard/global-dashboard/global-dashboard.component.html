@@ -110,8 +110,8 @@
                     <div class="card h-100 shadow-sm border">
                       <div class="card-body">
                         <h6 class="fw-bold mb-3">Sanctioned Applications by District</h6>
-                        <div *ngIf="districtCounts.filter(d => d.sanctioned > 0).length === 0" class="text-center text-muted py-4">No sanctioned applications</div>
-                        <canvas id="sanctionedBarChart" *ngIf="districtCounts.filter(d => d.sanctioned > 0).length > 0" height="220"></canvas>
+                        <div *ngIf="!hasSanctioned" class="text-center text-muted py-4">No sanctioned applications</div>
+                        <canvas id="sanctionedBarChart" *ngIf="hasSanctioned" height="220"></canvas>
                       </div>
                     </div>
                   </div>
