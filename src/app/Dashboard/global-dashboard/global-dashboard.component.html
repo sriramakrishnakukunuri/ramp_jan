@@ -1,14 +1,128 @@
 <main class="mt-4">
-    <section>
-        <div class="container-fluid">
-            <div class="card mb-4">
-                <div class="card-header bg-transparent">
-                    <h6 class="mb-2 mb-sm-0">Dashboard</h6>
-                </div>
-                <div class="card-body">    
-                    <iframe style="width:94VW; height:100vh;" frameborder="0" width="1000" height="450" [src]="url" allowfullscreen></iframe>                
-                </div>
-            </div>
+  <section>
+    <div class="container-fluid">
+      <div class="card mb-4">
+        <div class="card-header bg-theme text-white d-flex align-items-center justify-content-between">
+          <h6 class="mb-0 fw-bold">{{ activeView === 'dashboard' ? 'Dashboard' : 'TIHCL Metrics' }}</h6>
+          <div class="btn-group btn-group-sm">
+            <button class="btn" [ngClass]="activeView === 'dashboard' ? 'btn-light' : 'btn-outline-light'" (click)="switchView('dashboard')">
+              <i class="bi bi-grid-fill me-1"></i>Dashboard
+            </button>
+            <button class="btn" [ngClass]="activeView === 'metrics' ? 'btn-light' : 'btn-outline-light'" (click)="switchView('metrics')">
+              <i class="bi bi-bar-chart-fill me-1"></i>Metrics
+            </button>
+          </div>
         </div>
-    </section>
+
+        <!-- Looker Studio Tab -->
+        <div class="card-body p-0" *ngIf="activeView === 'dashboard'">
+          <iframe style="width:94vw; height:100vh;" frameborder="0" width="1000" height="450" [src]="url" allowfullscreen></iframe>
+        </div>
+
+        <!-- Metrics Tab -->
+        <div class="card-body" *ngIf="activeView === 'metrics'">
+
+          <!-- Loading -->
+          <div *ngIf="loadingMetrics" class="text-center py-5">
+            <div class="spinner-border text-primary" role="status"></div>
+            <p class="mt-3 text-muted">Loading metrics data...</p>
+          </div>
+
+          <div *ngIf="!loadingMetrics">
+            <div class="row g-3">
+
+              <!-- Left Stats Column -->
+              <div class="col-12 col-md-2">
+                <div class="d-flex flex-md-column flex-row flex-wrap gap-2 h-100">
+
+                  <div class="stat-card flex-fill text-center p-3 rounded-3 text-white" style="background:linear-gradient(135deg,#7b2ff7,#a855f7);">
+                    <div class="fw-600 small mb-1">No of Applications</div>
+                    <div class="fw-bold fs-3">{{ totalApplications }}</div>
+                  </div>
+
+                  <div class="stat-card flex-fill text-center p-3 rounded-3 text-white" style="background:linear-gradient(135deg,#7b2ff7,#a855f7);">
+                    <div class="fw-600 small mb-1">New Applications</div>
+                    <div class="fw-bold fs-3">{{ summaryData?.applicationsReceived || 0 }}</div>
+                  </div>
+
+                  <div class="stat-card flex-fill text-center p-3 rounded-3 text-white" style="background:linear-gradient(135deg,#7b2ff7,#a855f7);">
+                    <div class="fw-600 small mb-1">Under Processing</div>
+                    <div class="fw-bold fs-3">{{ summaryData?.applicationsUnderProcess || 0 }}</div>
+                  </div>
+
+                  <div class="stat-card flex-fill text-center p-3 rounded-3 text-white" style="background:linear-gradient(135deg,#7b2ff7,#a855f7);">
+                    <div class="fw-600 small mb-1">With DIC</div>
+                    <div class="fw-bold fs-3">{{ summaryData?.applicationsWithDic || 0 }}</div>
+                  </div>
+
+                  <div class="stat-card flex-fill text-center p-3 rounded-3 text-white" style="background:linear-gradient(135deg,#7b2ff7,#a855f7);">
+                    <div class="fw-600 small mb-1">Sanctioned</div>
+                    <div class="fw-bold fs-3">{{ summaryData?.applicationsLoanSanctioned || 0 }}</div>
+                  </div>
+
+                  <div class="stat-card flex-fill text-center p-3 rounded-3 text-white" style="background:linear-gradient(135deg,#7b2ff7,#a855f7);">
+                    <div class="fw-600 small mb-1">Not Considered</div>
+                    <div class="fw-bold fs-3">{{ summaryData?.applicationsNotConsidered || 0 }}</div>
+                  </div>
+
+                </div>
+              </div>
+
+              <!-- Charts Area -->
+              <div class="col-12 col-md-10">
+                <div class="row g-3">
+
+                  <!-- No of Applications by District -->
+                  <div class="col-12 col-lg-6">
+                    <div class="card h-100 shadow-sm border">
+                      <div class="card-body">
+                        <h6 class="fw-bold mb-3">No of Applications by District</h6>
+                        <div *ngIf="districtCounts.length === 0" class="text-center text-muted py-4">No data available</div>
+                        <canvas id="districtBarChart" *ngIf="districtCounts.length > 0" height="220"></canvas>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Status by District (Stacked Bar) -->
+                  <div class="col-12 col-lg-6">
+                    <div class="card h-100 shadow-sm border">
+                      <div class="card-body">
+                        <h6 class="fw-bold mb-3">Status of Applications by District</h6>
+                        <div *ngIf="districtCounts.length === 0" class="text-center text-muted py-4">No data available</div>
+                        <canvas id="statusBarChart" *ngIf="districtCounts.length > 0" height="220"></canvas>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- District-wise Distribution (Donut) -->
+                  <div class="col-12 col-lg-6">
+                    <div class="card h-100 shadow-sm border">
+                      <div class="card-body">
+                        <h6 class="fw-bold mb-3">District-wise Application Distribution</h6>
+                        <div *ngIf="districtCounts.length === 0" class="text-center text-muted py-4">No data available</div>
+                        <canvas id="donutChart" *ngIf="districtCounts.length > 0" height="220"></canvas>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Sanctioned by District -->
+                  <div class="col-12 col-lg-6">
+                    <div class="card h-100 shadow-sm border">
+                      <div class="card-body">
+                        <h6 class="fw-bold mb-3">Sanctioned Applications by District</h6>
+                        <div *ngIf="districtCounts.filter(d => d.sanctioned > 0).length === 0" class="text-center text-muted py-4">No sanctioned applications</div>
+                        <canvas id="sanctionedBarChart" *ngIf="districtCounts.filter(d => d.sanctioned > 0).length > 0" height="220"></canvas>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
 </main>
