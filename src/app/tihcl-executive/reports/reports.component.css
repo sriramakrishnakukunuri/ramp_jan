@@ -1,29 +1,296 @@
-.form-label{
-    font-weight: 600;
-    color:rgb(97, 81, 240)
+/* ── Card wrapper ────────────────────────────── */
+.reports-card {
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.07);
+  border-radius: 12px;
+  overflow: hidden;
 }
 
+/* ── Date range section ──────────────────────── */
+.date-range-section {
+  background: linear-gradient(135deg, #f0eeff 0%, #e8f0ff 100%);
+  border: 1px solid #d0c8f8;
+}
+
+.date-field-label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #5c3fd1;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.date-input-group {
+  box-shadow: 0 1px 4px rgba(97, 81, 240, 0.12);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.date-icon {
+  background: #fff;
+  border-right: none;
+  color: #6151f0;
+  border-color: #c5b8f8;
+}
+
+.date-input {
+  border-left: none;
+  border-color: #c5b8f8;
+  font-size: 0.88rem;
+  color: #333;
+}
+
+.date-input:focus {
+  border-color: #6151f0;
+  box-shadow: none;
+}
+
+.date-input:focus ~ .date-icon,
+.date-icon:has(~ .date-input:focus) {
+  border-color: #6151f0;
+}
+
+.date-formatted-display {
+  margin-top: 5px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #5c3fd1;
+  padding-left: 2px;
+}
+
+.text-muted-light {
+  color: #adb5bd !important;
+  font-weight: 400 !important;
+}
+
+.date-arrow {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid #c5b8f8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6151f0;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.active-range-badge {
+  background: linear-gradient(135deg, #5c3fd1, #6151f0);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.btn-clear-date {
+  height: 38px;
+  padding: 0 16px;
+  border: 1px solid #c5b8f8;
+  border-radius: 8px;
+  background: #fff;
+  color: #6151f0;
+  font-size: 0.82rem;
+  font-weight: 600;
+  transition: background 0.15s, color 0.15s;
+  white-space: nowrap;
+}
+
+.btn-clear-date:hover:not(:disabled) {
+  background: #6151f0;
+  color: #fff;
+  border-color: #6151f0;
+}
+
+.btn-clear-date:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ── Report cards (rc) ───────────────────────── */
+.rc {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  border: 1px solid #e8eaf6;
+  border-top: 4px solid var(--rc-color, #6151f0);
+  padding: 20px;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.rc:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+.rc--blue   { --rc-color: #4285F4; }
+.rc--teal   { --rc-color: #00ACC1; }
+.rc--amber  { --rc-color: #F59E0B; }
+.rc--green  { --rc-color: #22c55e; }
+.rc--purple { --rc-color: #9C27B0; }
+
+.rc-watermark {
+  position: absolute;
+  right: -8px;
+  bottom: -12px;
+  font-size: 5.5rem;
+  color: var(--rc-color, #6151f0);
+  opacity: 0.07;
+  pointer-events: none;
+  line-height: 1;
+}
+
+.rc-title {
+  font-size: 0.97rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  position: relative;
+}
+
+.rc-subtitle {
+  font-size: 0.78rem;
+  color: #6c757d;
+  margin-top: 3px;
+  position: relative;
+}
+
+.btn-rc-excel {
+  background: #16a34a;
+  color: #fff;
+  border: none;
+  border-radius: 7px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 6px 10px;
+  transition: background 0.15s;
+}
+
+.btn-rc-excel:hover {
+  background: #15803d;
+  color: #fff;
+}
+
+.btn-rc-pdf {
+  background: #dc2626;
+  color: #fff;
+  border: none;
+  border-radius: 7px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 6px 10px;
+  transition: background 0.15s;
+}
+
+.btn-rc-pdf:hover {
+  background: #b91c1c;
+  color: #fff;
+}
+
+/* ── Application filter bar ──────────────────── */
+.app-filter-bar {
+  background: #f8faff;
+  border: 1px solid #e4e8f5;
+}
+
+.fw-500 { font-weight: 500; }
+.fw-600 { font-weight: 600; }
+
+/* ── Table ───────────────────────────────────── */
+.app-table thead tr {
+  background: #f0eeff;
+}
+
+.app-table thead th {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #5c3fd1;
+  border-bottom: none;
+  padding: 12px 16px;
+}
+
+.app-table tbody td {
+  padding: 11px 16px;
+  font-size: 0.86rem;
+  vertical-align: middle;
+}
+
+.app-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.sno-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #f0eeff;
+  color: #5c3fd1;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.appno-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 6px;
+  background: #eff6ff;
+  color: #1d4ed8;
+  font-size: 0.78rem;
+  font-weight: 600;
+  border: 1px solid #bfdbfe;
+}
+
+.btn-download-app {
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 5px 14px;
+  border-radius: 20px;
+  border: 1.5px solid #6151f0;
+  color: #6151f0;
+  background: transparent;
+  transition: all 0.15s;
+}
+
+.btn-download-app:hover {
+  background: #6151f0;
+  color: #fff;
+}
+
+/* ── Empty state ─────────────────────────────── */
+.empty-state i {
+  font-size: 3rem;
+  color: #d0c8f8;
+  display: block;
+}
+
+.empty-state p {
+  color: #adb5bd;
+  font-size: 0.88rem;
+}
+
+/* ── Mat overrides ───────────────────────────── */
 .select-all,
 .update-btn {
   margin: 5px 17px;
 }
+
 ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
-  color: rgba(0, 0, 0, 0.12);
+  color: rgba(0, 0, 0, 0.15);
 }
 
 ::ng-deep .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
-  color: #0082f1;
+  color: #6151f0;
 }
 
-::ng-deep .mat-date-range-input {
-  display: flex;
-  align-items: center;
-}
-
-::ng-deep .mat-datepicker-toggle {
-  color: #6c757d;
-}
-
-::ng-deep .mat-datepicker-toggle:hover {
-  color: #0082f1;
+::ng-deep .compact-select .mat-form-field-wrapper {
+  padding-bottom: 0;
 }

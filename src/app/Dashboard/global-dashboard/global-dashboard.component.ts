@@ -32,7 +32,7 @@ export class GlobalDashboardComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loginsessionDetails = JSON.parse(sessionStorage.getItem('user') || '{}');
-    this.setDashboardUrl();
+    this.loadMetricsData();
   }
 
   ngOnDestroy(): void {

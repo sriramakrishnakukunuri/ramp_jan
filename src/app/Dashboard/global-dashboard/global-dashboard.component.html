@@ -2,25 +2,11 @@
   <section>
     <div class="container-fluid">
       <div class="card mb-4">
-        <div class="card-header bg-theme text-white d-flex align-items-center justify-content-between">
-          <h6 class="mb-0 fw-bold">{{ activeView === 'dashboard' ? 'Dashboard' : 'TIHCL Metrics' }}</h6>
-          <div class="btn-group btn-group-sm">
-            <button class="btn" [ngClass]="activeView === 'dashboard' ? 'btn-light' : 'btn-outline-light'" (click)="switchView('dashboard')">
-              <i class="bi bi-grid-fill me-1"></i>Dashboard
-            </button>
-            <button class="btn" [ngClass]="activeView === 'metrics' ? 'btn-light' : 'btn-outline-light'" (click)="switchView('metrics')">
-              <i class="bi bi-bar-chart-fill me-1"></i>Metrics
-            </button>
-          </div>
+        <div class="card-header bg-theme text-white">
+          <h6 class="mb-0 fw-bold">TIHCL Metrics</h6>
         </div>
 
-        <!-- Looker Studio Tab -->
-        <div class="card-body p-0" *ngIf="activeView === 'dashboard'">
-          <iframe style="width:94vw; height:100vh;" frameborder="0" width="1000" height="450" [src]="url" allowfullscreen></iframe>
-        </div>
-
-        <!-- Metrics Tab -->
-        <div class="card-body" *ngIf="activeView === 'metrics'">
+        <div class="card-body">
 
           <!-- Loading -->
           <div *ngIf="loadingMetrics" class="text-center py-5">

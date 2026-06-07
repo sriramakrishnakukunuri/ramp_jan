@@ -1,375 +1,328 @@
 <main class="mt-4">
-  <section>
-    <div class="card mb-3">
-      <div class="card-header bg-theme text-white" style="cursor: pointer;" (click)="toggleReportSection()">
-        <div class="d-flex justify-content-between align-items-center">
-          <h6 class="mb-0 fw-600">Download Reports</h6>
-          <i class="bi" [ngClass]="{'bi-chevron-down': !showReportSection, 'bi-chevron-up': showReportSection}"></i>
+  <section class="container-fluid">
+
+    <!-- Overview Reports Card -->
+    <div class="card mb-4 reports-card border-0">
+      <div class="card-header bg-theme text-white d-flex justify-content-between align-items-center"
+        style="cursor: pointer;" (click)="toggleReportSection()">
+        <div class="d-flex align-items-center gap-2">
+          <i class="bi bi-file-earmark-bar-graph fs-5"></i>
+          <h6 class="mb-0 fw-bold">Download Reports</h6>
         </div>
+        <i class="bi" [ngClass]="showReportSection ? 'bi-chevron-up' : 'bi-chevron-down'"></i>
       </div>
-      <div class="card-body" *ngIf="showReportSection">
-        <div class="row mb-4 pb-3" style="border-bottom: 1px solid #dee2e6;">
-          <div class="col-12 d-flex justify-content-end">
-            <div class="d-flex align-items-end gap-3 flex-wrap">
-              <div>
-                <label class="form-label fw-600 mb-1 small">From Date</label>
-                <input type="date" class="form-control" [(ngModel)]="fromDate" [max]="maxDate">
-                <div *ngIf="fromDate" class="text-muted small mt-1">{{ formatDisplayDate(fromDate) }}</div>
+
+      <div *ngIf="showReportSection" class="card-body p-4">
+
+        <!-- Date Range Filter -->
+        <div class="date-range-section rounded-3 p-4 mb-4">
+          <div class="d-flex align-items-center gap-2 mb-3">
+            <i class="bi bi-funnel-fill" style="color: #6151f0;"></i>
+            <span class="fw-bold" style="color: #3d2e9c; font-size: 0.88rem;">Filter by Date Range</span>
+            <span *ngIf="fromDate && toDate"
+              class="ms-auto badge rounded-pill px-3 py-2 active-range-badge">
+              <i class="bi bi-check-circle-fill me-1"></i>
+              {{ formatDisplayDate(fromDate) }} &nbsp;—&nbsp; {{ formatDisplayDate(toDate) }}
+            </span>
+          </div>
+
+          <div class="d-flex align-items-start gap-3 flex-wrap">
+            <div class="date-field-wrapper flex-fill" style="min-width: 200px; max-width: 280px;">
+              <label class="date-field-label">From Date</label>
+              <div class="input-group date-input-group">
+                <span class="input-group-text date-icon"><i class="bi bi-calendar3"></i></span>
+                <input type="date" class="form-control date-input" [(ngModel)]="fromDate" [max]="maxDate"
+                  placeholder="Select date">
               </div>
-              <div>
-                <label class="form-label fw-600 mb-1 small">To Date</label>
-                <input type="date" class="form-control" [(ngModel)]="toDate" [max]="maxDate" [min]="fromDate">
-                <div *ngIf="toDate" class="text-muted small mt-1">{{ formatDisplayDate(toDate) }}</div>
+              <div class="date-formatted-display" *ngIf="fromDate">
+                <i class="bi bi-arrow-right-short"></i> {{ formatDisplayDate(fromDate) }}
               </div>
-              <div>
-                <button type="button" class="btn btn-outline-secondary" (click)="clearDateRange()"
-                  [disabled]="!fromDate && !toDate">
-                  <i class="bi bi-x-circle"></i> Clear
-                </button>
+              <div class="date-formatted-display text-muted-light" *ngIf="!fromDate">No date selected</div>
+            </div>
+
+            <div class="date-separator-col d-flex align-items-center" style="padding-top: 28px;">
+              <div class="date-arrow">
+                <i class="bi bi-arrow-right"></i>
               </div>
+            </div>
+
+            <div class="date-field-wrapper flex-fill" style="min-width: 200px; max-width: 280px;">
+              <label class="date-field-label">To Date</label>
+              <div class="input-group date-input-group">
+                <span class="input-group-text date-icon"><i class="bi bi-calendar3"></i></span>
+                <input type="date" class="form-control date-input" [(ngModel)]="toDate"
+                  [max]="maxDate" [min]="fromDate" placeholder="Select date">
+              </div>
+              <div class="date-formatted-display" *ngIf="toDate">
+                <i class="bi bi-arrow-right-short"></i> {{ formatDisplayDate(toDate) }}
+              </div>
+              <div class="date-formatted-display text-muted-light" *ngIf="!toDate">No date selected</div>
+            </div>
+
+            <div class="d-flex align-items-center" style="padding-top: 24px;">
+              <button class="btn btn-clear-date" (click)="clearDateRange()" [disabled]="!fromDate && !toDate">
+                <i class="bi bi-x-lg me-1"></i>Clear
+              </button>
             </div>
           </div>
         </div>
-       
+
+        <!-- Report Cards Grid -->
         <div class="row g-3">
-          <div class="col-12">
-            <div class="row g-3">
-                <div class="col-md-2">  </div>
-              <div class="col-md-4">
-                <label class="form-label mb-2">Application Overview</label>
-              
-              </div>
-                <div class="col-md-4">
-                <div class="d-flex gap-2">
-                  <button type="button" class="btn btn-primary flex-fill py-2 d-flex align-items-center justify-content-center gap-2"
-                    (click)="DownloadExcelOverView('Overview Excel')">
-                    <i class="bi bi-file-earmark-spreadsheet"></i>
-                    <span>Excel</span>
-                  </button>
-                  <button type="button" class="btn btn-primary flex-fill py-2 d-flex align-items-center justify-content-center gap-2"
-                    (click)="DownloadPDFOverView('Overview PDF')">
-                    <i class="bi bi-file-earmark-pdf"></i>
-                    <span>PDF</span>
-                  </button>
-                </div>
-                <!-- <button type="button" class="btn btn-primary w-100 py-2 d-flex align-items-center justify-content-center gap-2"
-                  (click)="DownloadExcelOverView('Overview Excel')">
-                  <i class="bi bi-file-earmark-spreadsheet"></i>
-                  <span>Download</span>
-                </button> -->
-              </div>
-              <div class="col-md-2">  </div>
-               <div class="col-md-2">  </div>
-              <div class="col-md-4">
-               <label class="form-label mb-2">Application Status</label>
-              
-              </div>
-                <div class="col-md-4">
-                <div class="d-flex gap-2">
-                  <button type="button" class="btn btn-primary flex-fill py-2 d-flex align-items-center justify-content-center gap-2"
-                    (click)="DownloadExcelOverView('Status Excel')">
-                    <i class="bi bi-file-earmark-spreadsheet"></i>
-                    <span>Excel</span>
-                  </button>
-                  <button type="button" class="btn btn-primary flex-fill py-2 d-flex align-items-center justify-content-center gap-2"
-                    (click)="DownloadPDFOverView('Status PDF')">
-                    <i class="bi bi-file-earmark-pdf"></i>
-                    <span>PDF</span>
-                  </button>
-                </div>
-              </div>
-              <div class="col-md-2">  </div>
-              <div class="col-md-2">  </div>
-               <div class="col-md-4">
-               <label class="form-label mb-2">Stress Score</label>
-              
-              </div>
-               
-                <div class="col-md-4">
-                  <div class="d-flex gap-2">
-                  <button type="button" class="btn btn-primary flex-fill py-2 d-flex align-items-center justify-content-center gap-2"
-                    (click)="DownloadExcelOverView('Stress Score Excel')">
-                    <i class="bi bi-file-earmark-spreadsheet"></i>
-                    <span>Excel</span>
-                  </button>
-                  <button type="button" class="btn btn-primary flex-fill py-2 d-flex align-items-center justify-content-center gap-2"
-                    (click)="DownloadPDFOverView('Stress Score PDF')">
-                    <i class="bi bi-file-earmark-pdf"></i>
-                    <span>PDF</span>
-                  </button>
-                </div>
-                  <!-- <button type="button" class="btn btn-primary w-100 py-2 d-flex align-items-center justify-content-center gap-2"
-                  (click)="DownloadExcelOverView('Stress Score Excel')">
-                  <i class="bi bi-graph-up"></i>
-                  <span>Download</span>
-                </button> -->
-              </div>
-              <div class="col-md-2">  </div>
-              <!-- <div class="col-md-6">
-                <label class="form-label mb-2">Stress Score</label>
-                <button type="button" class="btn btn-primary w-100 py-2 d-flex align-items-center justify-content-center gap-2"
-                  (click)="DownloadExcelOverView('Stress Score Excel')">
-                  <i class="bi bi-graph-up"></i>
-                  <span>Download</span>
+
+          <div class="col-12 col-sm-6 col-xl-4">
+            <div class="rc rc--blue h-100">
+              <div class="rc-watermark"><i class="bi bi-bar-chart-line"></i></div>
+              <div class="rc-title">Application Overview</div>
+              <div class="rc-subtitle">Summary of all applications</div>
+              <div class="d-flex gap-2 mt-auto pt-3">
+                <button class="btn btn-rc-excel flex-fill" (click)="DownloadExcelOverView('Overview Excel')">
+                  <i class="bi bi-file-earmark-spreadsheet me-1"></i>Excel
                 </button>
-              </div> -->
-               <div class="col-md-2">  </div>
-              <div class="col-md-4">
-               <label class="form-label mb-2">Sanctioned Details</label>
-              
+                <button class="btn btn-rc-pdf flex-fill" (click)="DownloadPDFOverView('Overview PDF')">
+                  <i class="bi bi-file-earmark-pdf me-1"></i>PDF
+                </button>
               </div>
-                <div class="col-md-4">
-                <div class="d-flex gap-2">
-                  <button type="button" class="btn btn-primary flex-fill py-2 d-flex align-items-center justify-content-center gap-2"
-                    (click)="DownloadExcelOverView('Sanctioned Details Excel')">
-                    <i class="bi bi-file-earmark-spreadsheet"></i>
-                    <span>Excel</span>
-                  </button>
-                  <button type="button" class="btn btn-primary flex-fill py-2 d-flex align-items-center justify-content-center gap-2"
-                    (click)="DownloadPDFOverView('Sanctioned Details PDF')">
-                    <i class="bi bi-file-earmark-pdf"></i>
-                    <span>PDF</span>
-                  </button>
-                </div>
-               <!-- <button type="button" class="btn btn-primary w-100 py-2 d-flex align-items-center justify-content-center gap-2"
-                  (click)="DownloadExcelOverView('Sanctioned Details Excel')">
-                  <i class="bi bi-shield-check"></i>
-                  <span>Download</span>
-                </button> -->
-              </div>
-              <div class="col-md-2">  </div>
-              <div class="col-md-2">  </div>
-              
-               <div class="col-md-4">
-               <label class="form-label mb-2">Fee Collection</label>
-              
-              </div>
-                <div class="col-md-4">
-                  <div class="d-flex gap-2">
-                  <button type="button" class="btn btn-primary flex-fill py-2 d-flex align-items-center justify-content-center gap-2"
-                    (click)="DownloadExcelOverView('Fee Collection Details Excel')">
-                    <i class="bi bi-file-earmark-spreadsheet"></i>
-                    <span>Excel</span>
-                  </button>
-                  <button type="button" class="btn btn-primary flex-fill py-2 d-flex align-items-center justify-content-center gap-2"
-                    (click)="DownloadPDFOverView('Fee Collection Details PDF')">
-                    <i class="bi bi-file-earmark-pdf"></i>
-                    <span>PDF</span>
-                  </button>
-                </div>
-                <!-- <button type="button" class="btn btn-primary w-100 py-2 d-flex align-items-center justify-content-center gap-2"
-                  (click)="DownloadExcelOverView('Fee Collection Details Excel')">
-                  <i class="bi bi-wallet2"></i>
-                  <span>Download</span>
-                </button> -->
-              </div>
-              <div class="col-md-2">  </div>
-              
             </div>
           </div>
+
+          <div class="col-12 col-sm-6 col-xl-4">
+            <div class="rc rc--teal h-100">
+              <div class="rc-watermark"><i class="bi bi-clipboard2-data"></i></div>
+              <div class="rc-title">Application Status</div>
+              <div class="rc-subtitle">Stage-wise status report</div>
+              <div class="d-flex gap-2 mt-auto pt-3">
+                <button class="btn btn-rc-excel flex-fill" (click)="DownloadExcelOverView('Status Excel')">
+                  <i class="bi bi-file-earmark-spreadsheet me-1"></i>Excel
+                </button>
+                <button class="btn btn-rc-pdf flex-fill" (click)="DownloadPDFOverView('Status PDF')">
+                  <i class="bi bi-file-earmark-pdf me-1"></i>PDF
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-sm-6 col-xl-4">
+            <div class="rc rc--amber h-100">
+              <div class="rc-watermark"><i class="bi bi-graph-up-arrow"></i></div>
+              <div class="rc-title">Stress Score</div>
+              <div class="rc-subtitle">Unit stress analysis report</div>
+              <div class="d-flex gap-2 mt-auto pt-3">
+                <button class="btn btn-rc-excel flex-fill" (click)="DownloadExcelOverView('Stress Score Excel')">
+                  <i class="bi bi-file-earmark-spreadsheet me-1"></i>Excel
+                </button>
+                <button class="btn btn-rc-pdf flex-fill" (click)="DownloadPDFOverView('Stress Score PDF')">
+                  <i class="bi bi-file-earmark-pdf me-1"></i>PDF
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-sm-6 col-xl-4">
+            <div class="rc rc--green h-100">
+              <div class="rc-watermark"><i class="bi bi-shield-check"></i></div>
+              <div class="rc-title">Sanctioned Details</div>
+              <div class="rc-subtitle">Loan sanctioned records</div>
+              <div class="d-flex gap-2 mt-auto pt-3">
+                <button class="btn btn-rc-excel flex-fill" (click)="DownloadExcelOverView('Sanctioned Details Excel')">
+                  <i class="bi bi-file-earmark-spreadsheet me-1"></i>Excel
+                </button>
+                <button class="btn btn-rc-pdf flex-fill" (click)="DownloadPDFOverView('Sanctioned Details PDF')">
+                  <i class="bi bi-file-earmark-pdf me-1"></i>PDF
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-sm-6 col-xl-4">
+            <div class="rc rc--purple h-100">
+              <div class="rc-watermark"><i class="bi bi-wallet2"></i></div>
+              <div class="rc-title">Fee Collection</div>
+              <div class="rc-subtitle">Fee collection details</div>
+              <div class="d-flex gap-2 mt-auto pt-3">
+                <button class="btn btn-rc-excel flex-fill" (click)="DownloadExcelOverView('Fee Collection Details Excel')">
+                  <i class="bi bi-file-earmark-spreadsheet me-1"></i>Excel
+                </button>
+                <button class="btn btn-rc-pdf flex-fill" (click)="DownloadPDFOverView('Fee Collection Details PDF')">
+                  <i class="bi bi-file-earmark-pdf me-1"></i>PDF
+                </button>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
-    <div class="container-fluid">
-      <div class="card">
-        <div class="card-header bg-theme text-white">
-          <h6 class="mb-0 ">Download Application Reports</h6>
+
+    <!-- Application Reports Card -->
+    <div class="card reports-card border-0">
+      <div class="card-header bg-theme text-white">
+        <div class="d-flex align-items-center gap-2">
+          <i class="bi bi-cloud-download fs-5"></i>
+          <h6 class="mb-0 fw-bold">Download Application Reports</h6>
         </div>
-        <div class="card-body">
-          <div class="row mb-3">
-            <div class="col-md-12 d-flex justify-content-end align-items-center">
-            
-              <div class="me-2" style="width: 200px;">
-                <!-- (ngModelChange)="onEnterpriseChange($event)" -->
-                <mat-form-field appearance="outline" class="w-100" >
-              <mat-label>Select District</mat-label>
-              <mat-select [(ngModel)]="districtName" (ngModelChange)="GetDataByFilter($event)" multiple>
-                <app-select-search-filter [array]="allDistricts" [displayMember]="'districtName'"
-                  (filteredReturn)="filterallDistricts = $event">
-                </app-select-search-filter>
-                 <div class="select-all">
-                    <mat-checkbox
-                      (click)="$event.stopPropagation()"
-                      [ngModelOptions]="{ standalone: true }"
-                      [(ngModel)]="allSelectedDistrict"
-                      (change)="toggleAllDistrict()"
-                      >{{!allSelectedDistrict?'Select All':'Unselect All'}}</mat-checkbox
-                    >
-                  </div>
-                <!-- <mat-option value="">Select District</mat-option>   -->
-                <mat-option *ngFor="let question of filterallDistricts" [value]="question.districtName">
-                  {{ question?.districtName }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-              
-              </div>
-             
-              <div class="me-2" style="width: 200px;">
-                   <mat-form-field appearance="outline" class="w-100" >
-              <mat-label>Select Executive</mat-label>
-              <mat-select [(ngModel)]="executiveName" (ngModelChange)="GetDataByFilter($event)" multiple>
-                <app-select-search-filter [array]="allExecutives" [displayMember]="'executiveName'"
-                  (filteredReturn)="filterallExecutives = $event">
-                </app-select-search-filter>
-                <div class="select-all">
-                                        <mat-checkbox
-                      (click)="$event.stopPropagation()"
-                      [ngModelOptions]="{ standalone: true }"
-                      [(ngModel)]="allSelectedExecutive"
-                      (change)="toggleAllExecutive()"
-                      >{{!allSelectedExecutive?'Select All':'Unselect All'}}</mat-checkbox>
-                  </div>
+      </div>
+      <div class="card-body p-4">
 
-                <!-- <mat-option value="">Select Executive Name</mat-option>   -->
-                <mat-option *ngFor="let question of filterallExecutives" [value]="question.userId">
-                  {{ question?.executiveName }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-              </div>
-               <div class="me-2" style="width: 200px;">
-                  <mat-form-field appearance="outline" class="w-100" >
-              <mat-label>Select Category</mat-label>
-              <mat-select [(ngModel)]="category" (ngModelChange)="GetDataByFilter($event)" multiple>
-                 <div class="select-all">
-                    <mat-checkbox
-                      (click)="$event.stopPropagation()"
-                      [ngModelOptions]="{ standalone: true }"
-                      [(ngModel)]="allSelectedCategory"
-                      (change)="toggleAllCategory()"
-                      >{{!allSelectedCategory?'Select All':'Unselect All'}}</mat-checkbox
-                    >
+        <!-- Filters -->
+        <div class="app-filter-bar rounded-3 p-3 mb-3">
+          <div class="d-flex align-items-center gap-2 mb-2">
+            <i class="bi bi-sliders2 text-secondary small"></i>
+            <span class="text-secondary fw-600" style="font-size: 0.78rem;">Filter Applications</span>
+          </div>
+          <div class="row g-2">
+            <div class="col-12 col-md-4">
+              <mat-form-field appearance="outline" class="w-100 compact-select">
+                <mat-label>Select District</mat-label>
+                <mat-select [(ngModel)]="districtName" (ngModelChange)="GetDataByFilter($event)" multiple>
+                  <app-select-search-filter [array]="allDistricts" [displayMember]="'districtName'"
+                    (filteredReturn)="filterallDistricts = $event">
+                  </app-select-search-filter>
+                  <div class="select-all">
+                    <mat-checkbox (click)="$event.stopPropagation()" [ngModelOptions]="{ standalone: true }"
+                      [(ngModel)]="allSelectedDistrict" (change)="toggleAllDistrict()">
+                      {{ !allSelectedDistrict ? 'Select All' : 'Unselect All' }}
+                    </mat-checkbox>
                   </div>
-                <!-- <mat-option value="">Select </mat-option>   -->
-                <mat-option  value="Manufacturing">Manufacturing</mat-option>
-                <mat-option  value="Services">Services</mat-option>
-                <mat-option  value="Trading">Trading</mat-option>
-              </mat-select>
-            </mat-form-field>
-              </div>
-
+                  <mat-option *ngFor="let question of filterallDistricts" [value]="question.districtName">
+                    {{ question?.districtName }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-12 col-md-4">
+              <mat-form-field appearance="outline" class="w-100 compact-select">
+                <mat-label>Select Executive</mat-label>
+                <mat-select [(ngModel)]="executiveName" (ngModelChange)="GetDataByFilter($event)" multiple>
+                  <app-select-search-filter [array]="allExecutives" [displayMember]="'executiveName'"
+                    (filteredReturn)="filterallExecutives = $event">
+                  </app-select-search-filter>
+                  <div class="select-all">
+                    <mat-checkbox (click)="$event.stopPropagation()" [ngModelOptions]="{ standalone: true }"
+                      [(ngModel)]="allSelectedExecutive" (change)="toggleAllExecutive()">
+                      {{ !allSelectedExecutive ? 'Select All' : 'Unselect All' }}
+                    </mat-checkbox>
+                  </div>
+                  <mat-option *ngFor="let question of filterallExecutives" [value]="question.userId">
+                    {{ question?.executiveName }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-12 col-md-4">
+              <mat-form-field appearance="outline" class="w-100 compact-select">
+                <mat-label>Select Category</mat-label>
+                <mat-select [(ngModel)]="category" (ngModelChange)="GetDataByFilter($event)" multiple>
+                  <div class="select-all">
+                    <mat-checkbox (click)="$event.stopPropagation()" [ngModelOptions]="{ standalone: true }"
+                      [(ngModel)]="allSelectedCategory" (change)="toggleAllCategory()">
+                      {{ !allSelectedCategory ? 'Select All' : 'Unselect All' }}
+                    </mat-checkbox>
+                  </div>
+                  <mat-option value="Manufacturing">Manufacturing</mat-option>
+                  <mat-option value="Services">Services</mat-option>
+                  <mat-option value="Trading">Trading</mat-option>
+                </mat-select>
+              </mat-form-field>
             </div>
           </div>
-          <table id="pending_table" class="table nowrap display w-100 fs-md mt-0">
+        </div>
+
+        <!-- Results count -->
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <span class="text-muted small">
+            Showing {{ tableList?.length || 0 }} of {{ totalItems }} results
+          </span>
+        </div>
+
+        <!-- Table -->
+        <div class="table-responsive rounded-3 border">
+          <table class="table table-hover align-middle mb-0 app-table">
             <thead>
               <tr>
-                <th class="text-start">S.No</th>
-
-
-
-                <th>Name Of Unit</th>
+                <th class="text-center" style="width: 60px;">S.No</th>
+                <th>Name of Unit</th>
                 <th>Promoter Name</th>
                 <th>Application No</th>
-                <th>Download</th>
-                <!-- <th>Sector</th> -->
+                <th class="text-center">Action</th>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let item of tableList; let i = index">
-                <td class="text-start">{{ i + 1 }}</td>
-
-                <td>{{ item.enterpriseName }}</td>
-                <td>{{ item.promoterName }}</td>
-                <td>{{ item.applicationNo }}</td>
-                <td><a  style="color:#0082f1;font-size: larger;" (click)="DownloadApplicationReport(item?.registrationId)"><span class="bi bi-download"></span></a></td>
-                <!-- <td>{{ item.sector }}</td> -->
+                <td class="text-center">
+                  <span class="sno-badge">{{ (currentPage - 1) * pageSize + i + 1 }}</span>
+                </td>
+                <td class="fw-500">{{ item.enterpriseName }}</td>
+                <td class="text-muted">{{ item.promoterName }}</td>
+                <td>
+                  <span class="appno-badge">{{ item.applicationNo }}</span>
+                </td>
+                <td class="text-center">
+                  <button class="btn btn-download-app" (click)="DownloadApplicationReport(item?.registrationId)">
+                    <i class="bi bi-download me-1"></i>Download
+                  </button>
+                </td>
               </tr>
-
             </tbody>
           </table>
-          <div *ngIf="tableList?.length === 0" class="text-center py-3 text-muted">
-            Data Not Available
-          </div>
+        </div>
+
+        <div *ngIf="tableList?.length === 0" class="empty-state text-center py-5">
+          <i class="bi bi-folder2-open"></i>
+          <p class="mt-2 mb-0">No records found for the selected filters</p>
+        </div>
+
+        <div class="mt-3">
           <app-pagination [currentPage]="currentPage" [totalItems]="totalItems" [pageSize]="pageSize" [key]="activeTab"
             (pageChange)="onPageChange($event)">
           </app-pagination>
         </div>
+
       </div>
     </div>
+
   </section>
 </main>
 
 <!-- Loading Modal -->
-<div class="modal fade" id="downloadingModal" tabindex="-1" aria-labelledby="downloadingModalLabel" aria-hidden="true"
+<div class="modal fade" id="downloadingModal" tabindex="-1" aria-hidden="true"
   data-keyboard="false" data-bs-backdrop="static">
   <div class="modal-dialog modal-sm modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-body text-center">
+    <div class="modal-content border-0 shadow-lg">
+      <div class="modal-body text-center p-4">
         <div class="spinner-border text-primary mb-3" role="status">
           <span class="visually-hidden">Loading...</span>
         </div>
-        <h6>Preparing your download...</h6>
-        <p class="text-muted mb-0">Please wait while we generate your file</p>
+        <h6 class="fw-bold">Preparing your download...</h6>
+        <p class="text-muted mb-0 small">Please wait while we generate your file</p>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ...existing code... -->
-
 <!-- Preview Modal -->
-<div class="modal fade" [class.show]="showPreviewModal" [style.display]="showPreviewModal ? 'block' : 'none'" 
-     tabindex="-1" role="dialog" (click)="closePreview()">
+<div class="modal fade" [class.show]="showPreviewModal" [style.display]="showPreviewModal ? 'block' : 'none'"
+  tabindex="-1" role="dialog" (click)="closePreview()">
   <div class="modal-dialog modal-xl modal-dialog-centered" role="document" (click)="$event.stopPropagation()">
-    <div class="modal-content" style="height: 90vh;">
+    <div class="modal-content border-0 shadow-lg" style="height: 90vh;">
       <div class="modal-header bg-theme text-white">
-        <h5 class="modal-title">
-          <i class="bi bi-file-earmark-pdf me-2"></i>
-          {{ previewFileName }}
+        <h5 class="modal-title d-flex align-items-center gap-2">
+          <i class="bi bi-file-earmark-pdf"></i>{{ previewFileName }}
         </h5>
         <button type="button" class="btn-close btn-close-white" (click)="closePreview()"></button>
       </div>
       <div class="modal-body p-0" style="height: calc(90vh - 120px);">
-        <iframe *ngIf="previewUrl" [src]="previewUrl" 
-                style="width: 100%; height: 100%; border: none;">
-        </iframe>
+        <iframe *ngIf="previewUrl" [src]="previewUrl" style="width: 100%; height: 100%; border: none;"></iframe>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" (click)="closePreview()">
-          <i class="bi bi-x-circle me-1"></i> Close
+          <i class="bi bi-x-circle me-1"></i>Close
         </button>
         <button type="button" class="btn btn-primary" (click)="downloadFromPreview()">
-          <i class="bi bi-download me-1"></i> Download
+          <i class="bi bi-download me-1"></i>Download
         </button>
       </div>
     </div>
   </div>
 </div>
 <div class="modal-backdrop fade" [class.show]="showPreviewModal" *ngIf="showPreviewModal"></div>
-
-<!-- ...existing code... -->
-
-<!-- Excel download preview -->
-<!-- <div class="modal fade" [class.show]="showPreviewModal" [style.display]="showPreviewModal ? 'block' : 'none'" 
-     tabindex="-1" role="dialog" (click)="closePreview()">
-  <div class="modal-dialog modal-xl modal-dialog-centered" role="document" (click)="$event.stopPropagation()">
-    <div class="modal-content" style="height: 90vh;">
-      <div class="modal-header bg-theme text-white">
-        <h5 class="modal-title">
-          <i class="bi" [ngClass]="isExcelFile ? 'bi-file-earmark-spreadsheet' : 'bi-file-earmark-pdf'" class="me-2"></i>
-          {{ previewFileName }}
-        </h5>
-        <button type="button" class="btn-close btn-close-white" (click)="closePreview()"></button>
-      </div>
-      <div class="modal-body p-0" style="height: calc(90vh - 120px);">
-        <div *ngIf="isExcelFile" class="alert alert-info m-3">
-          <i class="bi bi-info-circle me-2"></i>
-          Excel preview is loading using Microsoft Office Online Viewer. If preview doesn't load, please download the file directly.
-        </div>
-        <iframe *ngIf="previewUrl" [src]="previewUrl" 
-                style="width: 100%; height: 100%; border: none;">
-        </iframe>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" (click)="closePreview()">
-          <i class="bi bi-x-circle me-1"></i> Close
-        </button>
-        <button type="button" class="btn btn-primary" (click)="downloadFromPreview()">
-          <i class="bi bi-download me-1"></i> Download
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="modal-backdrop fade" [class.show]="showPreviewModal" *ngIf="showPreviewModal"></div> -->
