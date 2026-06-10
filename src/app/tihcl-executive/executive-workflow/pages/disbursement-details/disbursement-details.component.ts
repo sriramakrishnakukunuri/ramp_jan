@@ -65,15 +65,15 @@ export class DisbursementDetailsComponent implements OnInit {
              totalDisbursedAmount: dataList?.totalDisbursedAmount || 0,
              dateDisbursement: dataList?.dateDisbursement ? this.formatDateForInput(dataList.dateDisbursement) : null,
              collectionDate: dataList?.collectionDate ? this.formatDateForInput(dataList.collectionDate) : null,
-             processingFeeCollectedAmount: dataList?.processingFeeCollectedAmount || '',
+             processingFeeCollectedAmount: dataList?.processingFeeCollectedAmount ?? 0,
              processingFeeReceivedDate:dataList?.processingFeeReceivedDate ? this.formatDateForInput(dataList.processingFeeReceivedDate) : null,
-            processingFeeGSTPercent: dataList?.processingFeeGSTPercent || '',
+            processingFeeGSTPercent: dataList?.processingFeeGSTPercent ?? '',
              tgipassUpload: dataList?.tgipassUpload || '',
              rocFiling: dataList?.rocFiling || '',
              tgipassUploadPath: dataList?.tgipassUploadPath || null,
              rocFilingPath: dataList?.rocFilingPath || null,
-             processingFeeGSTAmount: dataList?.processingFeeGSTAmount || null,
-             processingFeeAmount: dataList?.processingFeeAmount || null,
+             processingFeeGSTAmount: dataList?.processingFeeGSTAmount ?? 0,
+             processingFeeAmount: dataList?.processingFeeAmount ?? 0,
             remarks: dataList?.remarks || null,
              });
 
@@ -413,12 +413,13 @@ deleteBankDetails(item: any, index: number): void {
       disbursements: this.disbursements
     });
     this.loader.show()
+     const isAlreadyCompleted = (this.applicationData?.applicationStatus === 'DISBURSEMENT_COMPLETED' || this.applicationData?.status === 'DISBURSEMENT_COMPLETED');
      const payload = {
         ...this.disbursementForm.value,
         "applicationNo": this.applicationData?.applicationNo,
          disbursements: this.disbursements?this.disbursements:[],
          disbursementBankDetails: this.bankdetails?this.bankdetails:[],
-        "applicationStatus": "DISBURSEMENT_PARTIAL"
+        "applicationStatus": isAlreadyCompleted ? "DISBURSEMENT_COMPLETED" : "DISBURSEMENT_PARTIAL"
       };
     this._commonService.add(APIS.tihclExecutive.saveDisbursement,payload).subscribe({
              next: (response) => {
@@ -428,12 +429,12 @@ deleteBankDetails(item: any, index: number): void {
                 this.applicationData=applicationData
                 this.getExistingData(APIS.tihclExecutive.getDisbursementRid + (this.applicationData.registrationUsageId? this.applicationData?.registrationUsageId:this.applicationData?.registrationId))
               this.getSantionedData(APIS.tihclExecutive.getSanctionRid + (this.applicationData.registrationUsageId? this.applicationData?.registrationUsageId:this.applicationData?.registrationId))
-              
+
                  this.toastrService.success('Disbursment Details Saved Successfully','Disbursment Details');
              },
              error: (error) => {
               this.loader.hide()
-               
+
                 this.toastrService.error('An error occurred while saving disbursement details.');
                console.error('Error submitting form:', error);
              }

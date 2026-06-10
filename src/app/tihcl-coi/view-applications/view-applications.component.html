@@ -38,7 +38,7 @@
               [class.active-tab]="activeTab==='APPLICATIONS_RECEIVED'"
               (click)="onTabChange('APPLICATIONS_RECEIVED')">
               <div class="small fw-600">New Applications</div>
-              <div class="fw-bold fs-5 mt-1">{{PrigramSummaryData?.applicationsReceived || 0}}</div>
+              <div class="fw-bold fs-5 mt-1">{{PrigramSummaryData?.newApplication || 0}}</div>
             </div>
           </div>
           <div class="col-6 col-sm-4 col-md-2">

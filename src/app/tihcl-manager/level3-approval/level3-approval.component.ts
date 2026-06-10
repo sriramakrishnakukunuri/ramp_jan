@@ -111,6 +111,11 @@ export class Level3ApprovalComponent implements OnInit {
                }
              });
      }
+   viewFile(path: string) {
+     if (path) {
+       this._commonService.openFile(path);
+     }
+   }
    Remarks:any=''
    Approved(){
     this.loader.show();

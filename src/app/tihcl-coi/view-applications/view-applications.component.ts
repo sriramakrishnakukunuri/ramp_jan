@@ -67,11 +67,7 @@ districtName:any='district'
 }
 
   get totalApplicationsReceived(): number {
-    return (this.PrigramSummaryData?.applicationsReceived || 0) +
-      (this.PrigramSummaryData?.applicationsUnderProcess || 0) +
-      (this.PrigramSummaryData?.applicationsWithDic || 0) +
-      (this.PrigramSummaryData?.applicationsLoanSanctioned || 0) +
-      (this.PrigramSummaryData?.applicationsNotConsidered || 0);
+    return this.PrigramSummaryData?.totalApplicationReceived || 0;
   }
 
    PrigramSummaryData:any={}

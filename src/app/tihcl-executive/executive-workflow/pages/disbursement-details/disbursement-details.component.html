@@ -367,7 +367,7 @@
     
     <button type="button" class="btn btn-primary float-end " (click)='finalSave()' [ngClass]="{'isDisabled':(applicationData?.applicationStatus?applicationData?.applicationStatus=='DISBURSEMENT_COMPLETED' :applicationData?.status=='DISBURSEMENT_COMPLETED') || disbursementForm.invalid || f['totalDisbursedAmount'].value > f['totalSanctionedAmount'].value }">Final Submisiion</button>
   <button type="submit" class="btn btn-primary float-end me-3"
-      [ngClass]="{'isDisabled':(applicationData?.applicationStatus?applicationData?.applicationStatus=='DISBURSEMENT_COMPLETED' :applicationData?.status=='DISBURSEMENT_COMPLETED') || disbursementForm.invalid  || f['totalDisbursedAmount'].value > f['totalSanctionedAmount'].value}"
+      [ngClass]="{'isDisabled': disbursementForm.invalid || f['totalDisbursedAmount'].value > f['totalSanctionedAmount'].value}"
       *ngIf="freeze<=11">Save</button>
   </form>
 </fieldset>
@@ -478,7 +478,7 @@
             </div>
             <div class="col-12 col-sm-6">
               <div class="form-floating mb-3">
-                <input type="number" class="form-control" id="accountNumber" formControlName="accountNumber" placeholder="">
+                <input type="text" class="form-control" id="accountNumber" formControlName="accountNumber" placeholder="" inputmode="numeric">
                 <label for="accountNumber">Account Number <span class="text-danger">*</span></label>
                 <div *ngIf="abf['accountNumber']?.invalid && (abf['accountNumber']?.dirty || abf['accountNumber']?.touched)" class="text-danger">
                   <small *ngIf="abf['accountNumber']?.errors?.required">Account Number is required</small>

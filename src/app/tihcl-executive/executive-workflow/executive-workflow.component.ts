@@ -246,10 +246,28 @@ PreviousStep() {
   }
 }
 
+showStressConfirmModal = false;
+
 NextStep() {
+  if (this.currentStep === 7) {
+    this.showStressConfirmModal = true;
+    return;
+  }
+  this.doNextStep();
+}
+
+confirmStressAndNext(): void {
+  this.showStressConfirmModal = false;
+  this.doNextStep();
+}
+
+cancelStressConfirm(): void {
+  this.showStressConfirmModal = false;
+}
+
+private doNextStep(): void {
   if (this.currentStep < this.statusList.length) {
     this.currentStep++;
-    // this.freezeValue = this.currentStep;
     this._commonService.setCurrentStep(this.currentStep);
   }
 }
