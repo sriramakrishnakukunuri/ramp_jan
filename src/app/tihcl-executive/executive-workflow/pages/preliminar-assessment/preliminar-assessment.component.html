@@ -458,7 +458,7 @@
                           
                           <td>
                             <select class="form-select" [formControlName]="'stressScore_' + question.id"
-                              (change)="calculateScore()" [ngClass]="{'isDisabled': freeze>=7}">
+                              (change)="calculateScore()" [ngClass]="{'isDisabled': freeze>=8}">
                               <option value="">Select Categorisation</option>
                               <option *ngFor="let option of question.options" [value]="option.label">
                                 {{ option.label }}
@@ -472,7 +472,7 @@
                           </td>
                           <td>
                             <input style="width: 200px;" type="text" class="form-control" id="product" placeholder="Remarks"
-                             [formControlName]="'stressScoreJustification_' + question.id" [readOnly]="freeze>=7">
+                             [formControlName]="'stressScoreJustification_' + question.id" [readOnly]="freeze>=8">
                           </td>
                         </tr>
                       </tbody>
@@ -553,7 +553,7 @@
       <!-- Submit Button -->
       <input *ngIf="freeze==1" type="submit" name="next" class="btn btn-primary float-end"
         value="Submit for Manager Approval" />
-        <button *ngIf="freeze>1 && freeze<7" type="button" class="btn btn-primary float-end" (click)="onUpdate()">Save</button>
+        <button *ngIf="freeze>1 && freeze<8" type="button" class="btn btn-primary float-end" (click)="onUpdate()">Save</button>
     </form>
   </div>
 </div>
