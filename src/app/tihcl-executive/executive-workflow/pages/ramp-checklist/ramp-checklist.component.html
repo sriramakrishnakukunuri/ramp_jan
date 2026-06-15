@@ -637,6 +637,30 @@
   </fieldset>
 </form>
 
+<!-- Stress Score Confirmation Modal -->
+<div class="modal fade" [ngClass]="{ 'show d-block': showStressConfirmModal }" tabindex="-1" [style.background]="showStressConfirmModal ? 'rgba(0,0,0,0.5)' : ''">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bg-theme">
+        <h6 class="modal-title text-white fw-bold">Confirm Submission</h6>
+      </div>
+      <div class="modal-body">
+        <div class="d-flex align-items-start gap-2">
+          <i class="bi bi-exclamation-triangle-fill text-warning fs-4 mt-1"></i>
+          <div>
+            <p class="fw-bold mb-1">Has the Stress Score been updated?</p>
+            <p class="text-muted small mb-0">You will not be able to change this later once submitted.</p>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="cancelStressConfirm()">Cancel</button>
+        <button type="button" class="btn btn-primary" (click)="confirmAndSubmit()">Yes, Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="modal fade" [ngClass]="{ 'show d-block': showCreditPreviewModal }" tabindex="-1">
 
   <div class="modal-dialog modal-lg modal-dialog-centered">
