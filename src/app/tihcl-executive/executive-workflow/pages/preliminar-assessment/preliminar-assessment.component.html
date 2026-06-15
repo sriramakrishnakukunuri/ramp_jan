@@ -458,21 +458,21 @@
                           
                           <td>
                             <select class="form-select" [formControlName]="'stressScore_' + question.id"
-                              (change)="calculateScore()">
+                              (change)="calculateScore()" [ngClass]="{'isDisabled': freeze>=7}">
                               <option value="">Select Categorisation</option>
                               <option *ngFor="let option of question.options" [value]="option.label">
                                 {{ option.label }}
                               </option>
                             </select>
-                            <div *ngIf="assessmentForm.get('stressScore_' + question.id)?.invalid && 
+                            <div *ngIf="assessmentForm.get('stressScore_' + question.id)?.invalid &&
                                        assessmentForm.get('stressScore_' + question.id)?.touched"
                               class="text-danger small">
                               Please select an option
                             </div>
                           </td>
                           <td>
-                            <input  style="width: 200px;" type="text" class="form-control" id="product" placeholder="Remarks" 
-                             [formControlName]="'stressScoreJustification_' + question.id">
+                            <input style="width: 200px;" type="text" class="form-control" id="product" placeholder="Remarks"
+                             [formControlName]="'stressScoreJustification_' + question.id" [readOnly]="freeze>=7">
                           </td>
                         </tr>
                       </tbody>
@@ -553,7 +553,7 @@
       <!-- Submit Button -->
       <input *ngIf="freeze==1" type="submit" name="next" class="btn btn-primary float-end"
         value="Submit for Manager Approval" />
-        <button *ngIf="freeze<=10 && freeze>1" type="button" class="btn btn-primary float-end" (click)="onUpdate()">Save</button>
+        <button *ngIf="freeze>1 && freeze<7" type="button" class="btn btn-primary float-end" (click)="onUpdate()">Save</button>
     </form>
   </div>
 </div>
