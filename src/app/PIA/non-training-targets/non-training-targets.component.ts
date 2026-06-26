@@ -285,7 +285,9 @@ export class NonTrainingTargetsComponent implements OnInit {
         this.financialForm.get('bank')?.updateValueAndValidity();
         this.financialForm.get('transactionId')?.updateValueAndValidity();
         this.financialForm.get('ifscCode')?.updateValueAndValidity();
-        
+        this.travelForm.get('amount')?.setValidators([Validators.required, Validators.min(0), Validators.max(5000)]);
+        this.travelForm.get('amount')?.updateValueAndValidity();
+
       }
       else if(val=='BANK_TRANSFER'){
         this.financialForm.get('bank')?.setValidators([Validators.required]);
@@ -300,7 +302,9 @@ export class NonTrainingTargetsComponent implements OnInit {
         this.financialForm.get('bank')?.updateValueAndValidity();
         this.financialForm.get('transactionId')?.updateValueAndValidity();
         this.financialForm.get('ifscCode')?.updateValueAndValidity();
-       
+        this.travelForm.get('amount')?.setValidators([Validators.required, Validators.min(0)]);
+        this.travelForm.get('amount')?.updateValueAndValidity();
+
       }
       else if(val=='UPI'){
         this.financialForm.get('bank')?.setValidators(null);
@@ -316,7 +320,9 @@ export class NonTrainingTargetsComponent implements OnInit {
         this.financialForm.get('bank')?.updateValueAndValidity();
         this.financialForm.get('transactionId')?.updateValueAndValidity();
         this.financialForm.get('ifscCode')?.updateValueAndValidity();
-       
+        this.travelForm.get('amount')?.setValidators([Validators.required, Validators.min(0)]);
+        this.travelForm.get('amount')?.updateValueAndValidity();
+
       }
        else if(val=='CHEQUE'){
         this.financialForm.get('bank')?.setValidators(null);
@@ -331,8 +337,10 @@ export class NonTrainingTargetsComponent implements OnInit {
         
         this.financialForm.get('bank')?.updateValueAndValidity();
         this.financialForm.get('transactionId')?.updateValueAndValidity();
-      
+
         this.financialForm.get('ifscCode')?.updateValueAndValidity();
+        this.travelForm.get('amount')?.setValidators([Validators.required, Validators.min(0)]);
+        this.travelForm.get('amount')?.updateValueAndValidity();
       }
     }
 
@@ -614,7 +622,9 @@ removeFile(): void {
           this.financialForm.get('accountNumber')?.updateValueAndValidity();
           this.financialForm.get('transactionId')?.updateValueAndValidity();
           this.financialForm.get('ifscCode')?.updateValueAndValidity();
-          
+          this.financialForm.get('expenditureAmount')?.setValidators([Validators.required, Validators.min(0), Validators.max(5000)]);
+          this.financialForm.get('expenditureAmount')?.updateValueAndValidity();
+
         }
         else if(val=='BANK_TRANSFER'){
           this.financialForm.get('bankName')?.setValidators([Validators.required]);
@@ -633,7 +643,9 @@ removeFile(): void {
           this.financialForm.get('accountNumber')?.updateValueAndValidity();
           this.financialForm.get('transactionId')?.updateValueAndValidity();
           this.financialForm.get('ifscCode')?.updateValueAndValidity();
-         
+          this.financialForm.get('expenditureAmount')?.setValidators([Validators.required, Validators.min(0)]);
+          this.financialForm.get('expenditureAmount')?.updateValueAndValidity();
+
         }
         else if(val=='UPI'){
           this.financialForm.get('bankName')?.setValidators(null);
@@ -653,7 +665,9 @@ removeFile(): void {
           this.financialForm.get('accountNumber')?.updateValueAndValidity();
           this.financialForm.get('transactionId')?.updateValueAndValidity();
           this.financialForm.get('ifscCode')?.updateValueAndValidity();
-         
+          this.financialForm.get('expenditureAmount')?.setValidators([Validators.required, Validators.min(0)]);
+          this.financialForm.get('expenditureAmount')?.updateValueAndValidity();
+
         }
          else if(val=='CHEQUE'){
           this.financialForm.get('bankName')?.setValidators(null);
@@ -672,8 +686,10 @@ removeFile(): void {
           this.financialForm.get('bankName')?.updateValueAndValidity();
           this.financialForm.get('accountNumber')?.updateValueAndValidity();
           this.financialForm.get('transactionId')?.updateValueAndValidity();
-        
+
           this.financialForm.get('ifscCode')?.updateValueAndValidity();
+          this.financialForm.get('expenditureAmount')?.setValidators([Validators.required, Validators.min(0)]);
+          this.financialForm.get('expenditureAmount')?.updateValueAndValidity();
         }
       }
 

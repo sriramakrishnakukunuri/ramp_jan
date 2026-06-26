@@ -350,7 +350,9 @@ createForm(): FormGroup {
         this.financialForm.get('ifscCode')?.updateValueAndValidity();
                 this.financialForm.get('checkNo')?.updateValueAndValidity();
         this.financialForm.get('checkDate')?.updateValueAndValidity();
-        
+        this.financialForm.get('expenditureAmount')?.setValidators([Validators.required, Validators.min(0), Validators.max(5000)]);
+        this.financialForm.get('expenditureAmount')?.updateValueAndValidity();
+
       }
       else if(val=='BANK_TRANSFER'){
         this.financialForm.get('bankName')?.setValidators([Validators.required]);
@@ -359,28 +361,30 @@ createForm(): FormGroup {
         this.financialForm.get('ifscCode')?.setValidators([Validators.required,Validators.pattern(/^[A-Z]{4}0[A-Z0-9]{6}$/)]);
        this.financialForm.get('checkNo')?.setValidators(null);
         this.financialForm.get('checkDate')?.setValidators(null);
-      
+
         this.financialForm.get('bankName')?.enable();
         this.financialForm.get('accountNumber')?.enable();
         this.financialForm.get('transactionId')?.disable();
         this.financialForm.get('ifscCode')?.enable();
           this.financialForm.get('checkNo')?.disable();
         this.financialForm.get('checkDate')?.disable();
-      
+
         this.financialForm.get('bankName')?.patchValue('');
         this.financialForm.get('accountNumber')?.patchValue('');
         this.financialForm.get('transactionId')?.patchValue('');
         this.financialForm.get('ifscCode')?.patchValue('');
        this.financialForm.get('checkNo')?.patchValue('');
         this.financialForm.get('checkDate')?.patchValue('');
-      
+
         this.financialForm.get('bankName')?.updateValueAndValidity();
         this.financialForm.get('accountNumber')?.updateValueAndValidity();
         this.financialForm.get('transactionId')?.updateValueAndValidity();
         this.financialForm.get('ifscCode')?.updateValueAndValidity();
         this.financialForm.get('checkNo')?.updateValueAndValidity();
         this.financialForm.get('checkDate')?.updateValueAndValidity();
-   
+        this.financialForm.get('expenditureAmount')?.setValidators([Validators.required, Validators.min(0)]);
+        this.financialForm.get('expenditureAmount')?.updateValueAndValidity();
+
       }
       else if(val=='UPI'){
         this.financialForm.get('bankName')?.setValidators(null);
@@ -389,28 +393,30 @@ createForm(): FormGroup {
         this.financialForm.get('ifscCode')?.setValidators(null);
        this.financialForm.get('checkNo')?.setValidators(null);
         this.financialForm.get('checkDate')?.setValidators(null);
-     
+
         this.financialForm.get('bankName')?.disable();
         this.financialForm.get('accountNumber')?.disable();
         this.financialForm.get('transactionId')?.enable();
         this.financialForm.get('ifscCode')?.disable();
           this.financialForm.get('checkNo')?.disable();
         this.financialForm.get('checkDate')?.disable();
-     
+
         this.financialForm.get('bankName')?.patchValue('');
         this.financialForm.get('accountNumber')?.patchValue('');
         this.financialForm.get('transactionId')?.patchValue('');
         this.financialForm.get('ifscCode')?.patchValue('');
         this.financialForm.get('checkNo')?.patchValue('');
         this.financialForm.get('checkDate')?.patchValue('');
-         
+
         this.financialForm.get('bankName')?.updateValueAndValidity();
         this.financialForm.get('accountNumber')?.updateValueAndValidity();
         this.financialForm.get('transactionId')?.updateValueAndValidity();
         this.financialForm.get('ifscCode')?.updateValueAndValidity();
         this.financialForm.get('checkNo')?.updateValueAndValidity();
         this.financialForm.get('checkDate')?.updateValueAndValidity();
-       
+        this.financialForm.get('expenditureAmount')?.setValidators([Validators.required, Validators.min(0)]);
+        this.financialForm.get('expenditureAmount')?.updateValueAndValidity();
+
       }
        else if(val=='CHEQUE'){
                 this.financialForm.get('bankName')?.setValidators([Validators.required]);
@@ -420,7 +426,7 @@ createForm(): FormGroup {
          this.financialForm.get('ifscCode')?.setValidators(null);
         this.financialForm.get('checkNo')?.setValidators([Validators.required]);
         this.financialForm.get('checkDate')?.setValidators([Validators.required]);
-       
+
         this.financialForm.get('bankName')?.enable();
 
        this.financialForm.get('accountNumber')?.disable();
@@ -428,22 +434,24 @@ createForm(): FormGroup {
         this.financialForm.get('ifscCode')?.disable();
         this.financialForm.get('checkNo')?.enable();
         this.financialForm.get('checkDate')?.enable();
-       
+
         this.financialForm.get('bankName')?.patchValue('');
         this.financialForm.get('accountNumber')?.patchValue('');
         this.financialForm.get('transactionId')?.patchValue('');
         this.financialForm.get('ifscCode')?.patchValue('');
          this.financialForm.get('checkNo')?.patchValue('');
         this.financialForm.get('checkDate')?.patchValue('');
-       
+
         this.financialForm.get('bankName')?.updateValueAndValidity();
         this.financialForm.get('accountNumber')?.updateValueAndValidity();
         this.financialForm.get('transactionId')?.updateValueAndValidity();
-      
+
         this.financialForm.get('ifscCode')?.updateValueAndValidity();
          this.financialForm.get('checkNo')?.updateValueAndValidity();
         this.financialForm.get('checkDate')?.updateValueAndValidity();
-   
+        this.financialForm.get('expenditureAmount')?.setValidators([Validators.required, Validators.min(0)]);
+        this.financialForm.get('expenditureAmount')?.updateValueAndValidity();
+
       }
     }
     getSubactivities(event:any){
@@ -1393,7 +1401,9 @@ createFormTravel(): FormGroup {
         this.travelForm.get('ifscCode')?.updateValueAndValidity();
         this.travelForm.get('checkNo')?.updateValueAndValidity();
         this.travelForm.get('checkDate')?.updateValueAndValidity();
-        
+        this.travelForm.get('amount')?.setValidators([Validators.required, Validators.min(0), Validators.max(5000)]);
+        this.travelForm.get('amount')?.updateValueAndValidity();
+
       }
       else if(val=='BANK_TRANSFER'){
         this.travelForm.get('bank')?.setValidators([Validators.required]);
@@ -1416,7 +1426,9 @@ createFormTravel(): FormGroup {
         this.travelForm.get('ifscCode')?.updateValueAndValidity();
         this.travelForm.get('checkNo')?.updateValueAndValidity();
         this.travelForm.get('checkDate')?.updateValueAndValidity();
-       
+        this.travelForm.get('amount')?.setValidators([Validators.required, Validators.min(0)]);
+        this.travelForm.get('amount')?.updateValueAndValidity();
+
       }
       else if(val=='UPI'){
         this.travelForm.get('bank')?.setValidators(null);
@@ -1434,13 +1446,15 @@ createFormTravel(): FormGroup {
         this.travelForm.get('ifscCode')?.patchValue('');
         this.travelForm.get('checkNo')?.patchValue('');
         this.travelForm.get('checkDate')?.patchValue('');
-         
+
         this.travelForm.get('bank')?.updateValueAndValidity();
         this.travelForm.get('transactionId')?.updateValueAndValidity();
         this.travelForm.get('ifscCode')?.updateValueAndValidity();
         this.travelForm.get('checkNo')?.updateValueAndValidity();
         this.travelForm.get('checkDate')?.updateValueAndValidity();
-       
+        this.travelForm.get('amount')?.setValidators([Validators.required, Validators.min(0)]);
+        this.travelForm.get('amount')?.updateValueAndValidity();
+
       }
        else if(val=='CHEQUE'){
         this.travelForm.get('bank')?.setValidators([Validators.required]);
@@ -1460,13 +1474,15 @@ createFormTravel(): FormGroup {
         this.travelForm.get('ifscCode')?.patchValue('');
         this.travelForm.get('checkNo')?.patchValue('');
         this.travelForm.get('checkDate')?.patchValue('');
-        
+
         this.travelForm.get('bank')?.updateValueAndValidity();
         this.travelForm.get('transactionId')?.updateValueAndValidity();
-      
+
         this.travelForm.get('ifscCode')?.updateValueAndValidity();
         this.travelForm.get('checkNo')?.updateValueAndValidity();
         this.travelForm.get('checkDate')?.updateValueAndValidity();
+        this.travelForm.get('amount')?.setValidators([Validators.required, Validators.min(0)]);
+        this.travelForm.get('amount')?.updateValueAndValidity();
       }
     }
       // Add consumables properties
@@ -1730,6 +1746,8 @@ createFormTravel(): FormGroup {
       this.consumablesForm.get('ifscCode')?.updateValueAndValidity();
       this.consumablesForm.get('checkNo')?.updateValueAndValidity();
       this.consumablesForm.get('checkDate')?.updateValueAndValidity();
+      this.consumablesForm.get('unitCost')?.setValidators([Validators.required, Validators.min(0), Validators.max(5000)]);
+      this.consumablesForm.get('unitCost')?.updateValueAndValidity();
     }
     else if (val == 'BANK_TRANSFER') {
       this.consumablesForm.get('bankName')?.setValidators([Validators.required]);
@@ -1755,6 +1773,8 @@ createFormTravel(): FormGroup {
       this.consumablesForm.get('ifscCode')?.updateValueAndValidity();
       this.consumablesForm.get('checkNo')?.updateValueAndValidity();
       this.consumablesForm.get('checkDate')?.updateValueAndValidity();
+      this.consumablesForm.get('unitCost')?.setValidators([Validators.required, Validators.min(0)]);
+      this.consumablesForm.get('unitCost')?.updateValueAndValidity();
     }
     else if (val == 'UPI') {
       this.consumablesForm.get('bankName')?.setValidators(null);
@@ -1780,6 +1800,8 @@ createFormTravel(): FormGroup {
       this.consumablesForm.get('ifscCode')?.updateValueAndValidity();
       this.consumablesForm.get('checkNo')?.updateValueAndValidity();
       this.consumablesForm.get('checkDate')?.updateValueAndValidity();
+      this.consumablesForm.get('unitCost')?.setValidators([Validators.required, Validators.min(0)]);
+      this.consumablesForm.get('unitCost')?.updateValueAndValidity();
     }
     else if (val == 'CHEQUE') {
       this.consumablesForm.get('bankName')?.setValidators([Validators.required]);
@@ -1805,10 +1827,12 @@ createFormTravel(): FormGroup {
       this.consumablesForm.get('ifscCode')?.updateValueAndValidity();
       this.consumablesForm.get('checkNo')?.updateValueAndValidity();
       this.consumablesForm.get('checkDate')?.updateValueAndValidity();
+      this.consumablesForm.get('unitCost')?.setValidators([Validators.required, Validators.min(0)]);
+      this.consumablesForm.get('unitCost')?.updateValueAndValidity();
     }
   }
 
- 
+
 // Add transaction-related properties after consumables properties (around line 1327)
 transactionForm!: FormGroup;
 isEditModeTransaction = false;

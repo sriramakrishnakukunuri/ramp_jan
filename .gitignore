@@ -12,7 +12,10 @@
 npm-debug.log
 yarn-error.log
 RAMP.war
+
 RAMP1.war
+node_modules
+
 
 # IDEs and editors
 .idea/

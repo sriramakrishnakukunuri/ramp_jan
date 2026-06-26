@@ -449,7 +449,9 @@ createForm(): FormGroup {
         this.financialForm.get('accountNumber')?.updateValueAndValidity();
         this.financialForm.get('transactionId')?.updateValueAndValidity();
         this.financialForm.get('ifscCode')?.updateValueAndValidity();
-        
+        this.financialForm.get('expenditureAmount')?.setValidators([Validators.required, Validators.min(0), Validators.max(5000)]);
+        this.financialForm.get('expenditureAmount')?.updateValueAndValidity();
+
       }
       else if(val=='BANK_TRANSFER'){
         this.financialForm.get('bankName')?.setValidators([Validators.required]);
@@ -468,7 +470,9 @@ createForm(): FormGroup {
         this.financialForm.get('accountNumber')?.updateValueAndValidity();
         this.financialForm.get('transactionId')?.updateValueAndValidity();
         this.financialForm.get('ifscCode')?.updateValueAndValidity();
-       
+        this.financialForm.get('expenditureAmount')?.setValidators([Validators.required, Validators.min(0)]);
+        this.financialForm.get('expenditureAmount')?.updateValueAndValidity();
+
       }
       else if(val=='UPI'){
         this.financialForm.get('bankName')?.setValidators(null);
@@ -483,12 +487,14 @@ createForm(): FormGroup {
         this.financialForm.get('accountNumber')?.patchValue('');
         this.financialForm.get('transactionId')?.patchValue('');
         this.financialForm.get('ifscCode')?.patchValue('');
-         
+
         this.financialForm.get('bankName')?.updateValueAndValidity();
         this.financialForm.get('accountNumber')?.updateValueAndValidity();
         this.financialForm.get('transactionId')?.updateValueAndValidity();
         this.financialForm.get('ifscCode')?.updateValueAndValidity();
-       
+        this.financialForm.get('expenditureAmount')?.setValidators([Validators.required, Validators.min(0)]);
+        this.financialForm.get('expenditureAmount')?.updateValueAndValidity();
+
       }
        else if(val=='CHEQUE'){
         this.financialForm.get('bankName')?.setValidators(null);
@@ -503,12 +509,14 @@ createForm(): FormGroup {
         this.financialForm.get('accountNumber')?.patchValue('');
         this.financialForm.get('transactionId')?.patchValue('');
         this.financialForm.get('ifscCode')?.patchValue('');
-        
+
         this.financialForm.get('bankName')?.updateValueAndValidity();
         this.financialForm.get('accountNumber')?.updateValueAndValidity();
         this.financialForm.get('transactionId')?.updateValueAndValidity();
-      
+
         this.financialForm.get('ifscCode')?.updateValueAndValidity();
+        this.financialForm.get('expenditureAmount')?.setValidators([Validators.required, Validators.min(0)]);
+        this.financialForm.get('expenditureAmount')?.updateValueAndValidity();
       }
     }
   getPreliminaryData:any=[]
@@ -1369,7 +1377,9 @@ createFormTravel(): FormGroup {
         this.travelForm.get('bank')?.updateValueAndValidity();
         this.travelForm.get('transactionId')?.updateValueAndValidity();
         this.travelForm.get('ifscCode')?.updateValueAndValidity();
-        
+        this.travelForm.get('amount')?.setValidators([Validators.required, Validators.min(0), Validators.max(5000)]);
+        this.travelForm.get('amount')?.updateValueAndValidity();
+
       }
       else if(val=='BANK_TRANSFER'){
         this.travelForm.get('bank')?.setValidators([Validators.required]);
@@ -1384,7 +1394,9 @@ createFormTravel(): FormGroup {
         this.travelForm.get('bank')?.updateValueAndValidity();
         this.travelForm.get('transactionId')?.updateValueAndValidity();
         this.travelForm.get('ifscCode')?.updateValueAndValidity();
-       
+        this.travelForm.get('amount')?.setValidators([Validators.required, Validators.min(0)]);
+        this.travelForm.get('amount')?.updateValueAndValidity();
+
       }
       else if(val=='UPI'){
         this.travelForm.get('bank')?.setValidators(null);
@@ -1396,11 +1408,13 @@ createFormTravel(): FormGroup {
         this.travelForm.get('bank')?.patchValue('');
         this.travelForm.get('transactionId')?.patchValue('');
         this.travelForm.get('ifscCode')?.patchValue('');
-         
+
         this.travelForm.get('bank')?.updateValueAndValidity();
         this.travelForm.get('transactionId')?.updateValueAndValidity();
         this.travelForm.get('ifscCode')?.updateValueAndValidity();
-       
+        this.travelForm.get('amount')?.setValidators([Validators.required, Validators.min(0)]);
+        this.travelForm.get('amount')?.updateValueAndValidity();
+
       }
        else if(val=='CHEQUE'){
         this.travelForm.get('bank')?.setValidators(null);
@@ -1412,11 +1426,13 @@ createFormTravel(): FormGroup {
         this.travelForm.get('bank')?.patchValue('');
         this.travelForm.get('transactionId')?.patchValue('');
         this.travelForm.get('ifscCode')?.patchValue('');
-        
+
         this.travelForm.get('bank')?.updateValueAndValidity();
         this.travelForm.get('transactionId')?.updateValueAndValidity();
-      
+
         this.travelForm.get('ifscCode')?.updateValueAndValidity();
+        this.travelForm.get('amount')?.setValidators([Validators.required, Validators.min(0)]);
+        this.travelForm.get('amount')?.updateValueAndValidity();
       }
     }
   // end infracture

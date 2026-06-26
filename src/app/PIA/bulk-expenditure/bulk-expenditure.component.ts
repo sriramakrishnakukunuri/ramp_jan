@@ -98,6 +98,8 @@ export class BulkExpenditureComponent implements OnInit {
         this.BulkExpenditureForm.get('ifscCode')?.updateValueAndValidity();
          this.BulkExpenditureForm.get('checkNo')?.updateValueAndValidity();
         this.BulkExpenditureForm.get('checkDate')?.updateValueAndValidity();
+        this.BulkExpenditureForm.get('unitCost')?.setValidators([Validators.required, Validators.min(0), Validators.max(5000)]);
+        this.BulkExpenditureForm.get('unitCost')?.updateValueAndValidity();
       }
       else if(val=='BANK_TRANSFER'){
         this.BulkExpenditureForm.get('bankName')?.setValidators([Validators.required]);
@@ -118,6 +120,8 @@ export class BulkExpenditureComponent implements OnInit {
         this.BulkExpenditureForm.get('ifscCode')?.updateValueAndValidity();
          this.BulkExpenditureForm.get('checkNo')?.updateValueAndValidity();
         this.BulkExpenditureForm.get('checkDate')?.updateValueAndValidity();
+        this.BulkExpenditureForm.get('unitCost')?.setValidators([Validators.required, Validators.min(0)]);
+        this.BulkExpenditureForm.get('unitCost')?.updateValueAndValidity();
       }
       else if(val=='UPI'){
         this.BulkExpenditureForm.get('bankName')?.setValidators(null);
@@ -138,6 +142,8 @@ export class BulkExpenditureComponent implements OnInit {
         this.BulkExpenditureForm.get('ifscCode')?.updateValueAndValidity();
          this.BulkExpenditureForm.get('checkNo')?.updateValueAndValidity();
         this.BulkExpenditureForm.get('checkDate')?.updateValueAndValidity();
+        this.BulkExpenditureForm.get('unitCost')?.setValidators([Validators.required, Validators.min(0)]);
+        this.BulkExpenditureForm.get('unitCost')?.updateValueAndValidity();
       }
        else if(val=='CHEQUE'){
         this.BulkExpenditureForm.get('bankName')?.setValidators(null);
@@ -158,6 +164,8 @@ export class BulkExpenditureComponent implements OnInit {
         this.BulkExpenditureForm.get('checkNo')?.updateValueAndValidity();
         this.BulkExpenditureForm.get('checkDate')?.updateValueAndValidity();
         this.BulkExpenditureForm.get('ifscCode')?.updateValueAndValidity();
+        this.BulkExpenditureForm.get('unitCost')?.setValidators([Validators.required, Validators.min(0)]);
+        this.BulkExpenditureForm.get('unitCost')?.updateValueAndValidity();
       }
     }
     closeModal(): void {

@@ -217,6 +217,8 @@ export class ProgramExpenditureComponent implements OnInit {
       this.PrePostExpenditureForm.get('ifscCode')?.updateValueAndValidity();
        this.PrePostExpenditureForm.get('checkNo')?.updateValueAndValidity();
       this.PrePostExpenditureForm.get('checkDate')?.updateValueAndValidity();
+      this.PrePostExpenditureForm.get('cost')?.setValidators([Validators.required, Validators.min(0), Validators.max(5000)]);
+      this.PrePostExpenditureForm.get('cost')?.updateValueAndValidity();
 
     }
     else if(val=='BANK_TRANSFER'){
@@ -238,6 +240,8 @@ export class ProgramExpenditureComponent implements OnInit {
       this.PrePostExpenditureForm.get('ifscCode')?.updateValueAndValidity();
        this.PrePostExpenditureForm.get('checkNo')?.updateValueAndValidity();
       this.PrePostExpenditureForm.get('checkDate')?.updateValueAndValidity();
+      this.PrePostExpenditureForm.get('cost')?.setValidators([Validators.required, Validators.min(0)]);
+      this.PrePostExpenditureForm.get('cost')?.updateValueAndValidity();
     }
     else if(val=='UPI'){
       this.PrePostExpenditureForm.get('bankName')?.setValidators(null);
@@ -258,6 +262,8 @@ export class ProgramExpenditureComponent implements OnInit {
       this.PrePostExpenditureForm.get('ifscCode')?.updateValueAndValidity();
        this.PrePostExpenditureForm.get('checkNo')?.updateValueAndValidity();
       this.PrePostExpenditureForm.get('checkDate')?.updateValueAndValidity();
+      this.PrePostExpenditureForm.get('cost')?.setValidators([Validators.required, Validators.min(0)]);
+      this.PrePostExpenditureForm.get('cost')?.updateValueAndValidity();
     }
       else if(val=='CHEQUE'){
       this.PrePostExpenditureForm.get('bankName')?.setValidators(null);
@@ -278,6 +284,8 @@ export class ProgramExpenditureComponent implements OnInit {
       this.PrePostExpenditureForm.get('ifscCode')?.updateValueAndValidity();
       this.PrePostExpenditureForm.get('checkNo')?.updateValueAndValidity();
       this.PrePostExpenditureForm.get('checkDate')?.updateValueAndValidity();
+      this.PrePostExpenditureForm.get('cost')?.setValidators([Validators.required, Validators.min(0)]);
+      this.PrePostExpenditureForm.get('cost')?.updateValueAndValidity();
     }
   }
   formDetailsBulk() {

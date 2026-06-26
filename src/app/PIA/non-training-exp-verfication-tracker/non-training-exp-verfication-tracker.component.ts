@@ -870,7 +870,9 @@ export class NonTrainingExpVerficationTrackerComponent implements OnInit {
        this.PrePostExpenditureForm.get('ifscCode')?.updateValueAndValidity();
         this.PrePostExpenditureForm.get('checkNo')?.updateValueAndValidity();
        this.PrePostExpenditureForm.get('checkDate')?.updateValueAndValidity();
- 
+       this.PrePostExpenditureForm.get('cost')?.setValidators([Validators.required, Validators.min(0), Validators.max(5000)]);
+       this.PrePostExpenditureForm.get('cost')?.updateValueAndValidity();
+
      }
      else if(val=='BANK_TRANSFER'){
        this.PrePostExpenditureForm.get('bankName')?.setValidators([Validators.required]);
@@ -891,6 +893,8 @@ export class NonTrainingExpVerficationTrackerComponent implements OnInit {
        this.PrePostExpenditureForm.get('ifscCode')?.updateValueAndValidity();
         this.PrePostExpenditureForm.get('checkNo')?.updateValueAndValidity();
        this.PrePostExpenditureForm.get('checkDate')?.updateValueAndValidity();
+       this.PrePostExpenditureForm.get('cost')?.setValidators([Validators.required, Validators.min(0)]);
+       this.PrePostExpenditureForm.get('cost')?.updateValueAndValidity();
      }
      else if(val=='UPI'){
        this.PrePostExpenditureForm.get('bankName')?.setValidators(null);
@@ -911,6 +915,8 @@ export class NonTrainingExpVerficationTrackerComponent implements OnInit {
        this.PrePostExpenditureForm.get('ifscCode')?.updateValueAndValidity();
         this.PrePostExpenditureForm.get('checkNo')?.updateValueAndValidity();
        this.PrePostExpenditureForm.get('checkDate')?.updateValueAndValidity();
+       this.PrePostExpenditureForm.get('cost')?.setValidators([Validators.required, Validators.min(0)]);
+       this.PrePostExpenditureForm.get('cost')?.updateValueAndValidity();
      }
        else if(val=='CHEQUE'){
        this.PrePostExpenditureForm.get('bankName')?.setValidators(null);
@@ -931,6 +937,8 @@ export class NonTrainingExpVerficationTrackerComponent implements OnInit {
        this.PrePostExpenditureForm.get('ifscCode')?.updateValueAndValidity();
        this.PrePostExpenditureForm.get('checkNo')?.updateValueAndValidity();
        this.PrePostExpenditureForm.get('checkDate')?.updateValueAndValidity();
+       this.PrePostExpenditureForm.get('cost')?.setValidators([Validators.required, Validators.min(0)]);
+       this.PrePostExpenditureForm.get('cost')?.updateValueAndValidity();
      }
    }
    formDetailsBulk() {
@@ -1497,6 +1505,8 @@ export class NonTrainingExpVerficationTrackerComponent implements OnInit {
                     this.financialForm.get('transactionId')?.updateValueAndValidity();
                     this.financialForm.get('checkNo')?.updateValueAndValidity();
                     this.financialForm.get('checkDate')?.updateValueAndValidity();
+                    this.financialForm.get('expenditureAmount')?.setValidators([Validators.required, Validators.min(0), Validators.max(5000)]);
+                    this.financialForm.get('expenditureAmount')?.updateValueAndValidity();
                   }
                   else if(val=='BANK_TRANSFER'){
                     this.financialForm.patchValue({
@@ -1508,11 +1518,13 @@ export class NonTrainingExpVerficationTrackerComponent implements OnInit {
                     this.financialForm.get('transactionId')?.setValidators([Validators.required]);
                     this.financialForm.get('checkNo')?.clearValidators();
                     this.financialForm.get('checkDate')?.clearValidators();
-                    
+
                     this.financialForm.get('ifscCode')?.updateValueAndValidity();
                     this.financialForm.get('transactionId')?.updateValueAndValidity();
                     this.financialForm.get('checkNo')?.updateValueAndValidity();
                     this.financialForm.get('checkDate')?.updateValueAndValidity();
+                    this.financialForm.get('expenditureAmount')?.setValidators([Validators.required, Validators.min(0)]);
+                    this.financialForm.get('expenditureAmount')?.updateValueAndValidity();
                   }
                   else if(val=='UPI'){
                     this.financialForm.patchValue({
@@ -1524,11 +1536,13 @@ export class NonTrainingExpVerficationTrackerComponent implements OnInit {
                     this.financialForm.get('transactionId')?.setValidators([Validators.required]);
                     this.financialForm.get('checkNo')?.clearValidators();
                     this.financialForm.get('checkDate')?.clearValidators();
-                    
+
                     this.financialForm.get('ifscCode')?.updateValueAndValidity();
                     this.financialForm.get('transactionId')?.updateValueAndValidity();
                     this.financialForm.get('checkNo')?.updateValueAndValidity();
                     this.financialForm.get('checkDate')?.updateValueAndValidity();
+                    this.financialForm.get('expenditureAmount')?.setValidators([Validators.required, Validators.min(0)]);
+                    this.financialForm.get('expenditureAmount')?.updateValueAndValidity();
                   }
                    else if(val=='CHEQUE'){
                     this.financialForm.patchValue({
@@ -1539,11 +1553,13 @@ export class NonTrainingExpVerficationTrackerComponent implements OnInit {
                     this.financialForm.get('transactionId')?.clearValidators();
                     this.financialForm.get('checkNo')?.setValidators([Validators.required]);
                     this.financialForm.get('checkDate')?.setValidators([Validators.required]);
-                    
+
                     this.financialForm.get('ifscCode')?.updateValueAndValidity();
                     this.financialForm.get('transactionId')?.updateValueAndValidity();
                     this.financialForm.get('checkNo')?.updateValueAndValidity();
                     this.financialForm.get('checkDate')?.updateValueAndValidity();
+                    this.financialForm.get('expenditureAmount')?.setValidators([Validators.required, Validators.min(0)]);
+                    this.financialForm.get('expenditureAmount')?.updateValueAndValidity();
                   }
                 }
                 //  uploadedFiles: any ;
