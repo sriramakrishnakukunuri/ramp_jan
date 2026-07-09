@@ -1218,15 +1218,18 @@ createFormTravel(): FormGroup {
  
   iseditModeTravel = false;
   TravelID:any
+  existingBillPath: string = ''
   openModelTravel(mode: string,item?: any): void {
     if (mode === 'add') {
       this.travelForm.reset();
       this.iseditModeTravel = false;
+      this.existingBillPath = '';
       this.resetForm();
     }
     if (mode === 'edit') {
       this.TravelID=item?.travelTransportId
       this.iseditModeTravel = true;
+      this.existingBillPath = item?.uploadBillUrl || '';
       this.travelForm.patchValue({
         nonTrainingSubActivityId: item?.nonTrainingSubActivityId || 0,
         dateOfTravel: item?.dateOfTravel ? this.convertToISOFormat(item?.dateOfTravel) : '',
@@ -1238,13 +1241,12 @@ createFormTravel(): FormGroup {
         billNo: item?.billNo || '',
         billDate: item?.billDate ? this.convertToISOFormat(item?.billDate) : '',
         payeeName: item?.payeeName || '',
-        // accountNumber: item?.accountNumber || '',
         bank: item?.bank || '',
         ifscCode: item?.ifscCode || '',
         modeOfPayment: item?.modeOfPayment || '',
         transactionId: item?.transactionId || '',
         purpose: item?.purpose || '',
-        billInvoicePath: item?.billInvoicePath || ''
+        billInvoicePath: ''
       });
     }
     const modal1 = bootstrap.Modal.getOrCreateInstance(document.getElementById('addTravel'));
@@ -1256,7 +1258,7 @@ createFormTravel(): FormGroup {
      if (this.travelForm.valid) {
     if(this.iseditModeTravel){
         this.fTravel['nonTrainingSubActivityId'].setValue(Number(this.selectedBudgetHead));
-        this._commonService.update(APIS.nontrainingtargets.updateNonTrainingtargetsTravel,{...this.travelForm.value,nonTrainingSubActivityId:Number(this.selectedBudgetHead),travelTransportId:this.TravelID},this.TravelID).subscribe((res: any) => {
+        this._commonService.update(APIS.nontrainingtargets.updateNonTrainingtargetsTravel,{...this.travelForm.value,nonTrainingSubActivityId:Number(this.selectedBudgetHead),travelTransportId:this.TravelID,billInvoicePath:this.travelForm.value.billInvoicePath||this.existingBillPath},this.TravelID).subscribe((res: any) => {
           this.toastrService.success('Data Updated successfully','Non Training Progress Data Success!');
           
           this.resetForm();

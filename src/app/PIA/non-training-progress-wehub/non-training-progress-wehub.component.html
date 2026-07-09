@@ -310,11 +310,11 @@
                     <td>{{ preliminary?.ifscCode }}</td>
                     <td>{{ preliminary?.purpose }}</td>
                     <td class="text-center">
-                      <a *ngIf="preliminary?.uploadBillUrl" class="btn btn-default text-primary btn-sm"
-                        (click)="showFileViewer(preliminary.uploadBillUrl)">
+                      <a *ngIf="preliminary?.uploadBillUrl || preliminary?.billInvoicePath" class="btn btn-default text-primary btn-sm"
+                        (click)="showFileViewer(preliminary.uploadBillUrl || preliminary.billInvoicePath)">
                         <span class="bi bi-eye"></span>
                       </a>
-                      <span *ngIf="!preliminary?.uploadBillUrl" class="text-muted">No file</span>
+                      <span *ngIf="!preliminary?.uploadBillUrl && !preliminary?.billInvoicePath" class="text-muted">No file</span>
                     </td>
                     <!-- <td class="text-center">
                                                 <a href="#" class="btn btn-default text-primary btn-sm"><span class="bi bi-eye"></span></a>
@@ -1637,9 +1637,12 @@
             <!-- Upload Bill -->
             <div class="col-12 col-sm-6 col-md-4 col-lg-4">
               <div class="form-floating mb-3">
-                <input type="file" class="form-control" formControlName="billInvoicePath"
+                <input type="file" class="form-control"
                   (change)="onFileSelectedTravel($event)">
                 <label for="uploadBill">Upload Bill Invoice</label>
+              </div>
+              <div *ngIf="iseditModeTravel && existingBillPath" class="mt-1 small">
+                Existing: <a class="text-primary" style="cursor:pointer" (click)="showFileViewer(existingBillPath)">View uploaded bill</a>
               </div>
             </div>
           </div>

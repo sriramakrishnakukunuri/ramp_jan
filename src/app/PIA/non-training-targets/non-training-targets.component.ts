@@ -81,7 +81,6 @@ export class NonTrainingTargetsComponent implements OnInit {
        this._commonService.setOption('subActivityId',null)
     }
    
-    console.log('Selected Budget Head:', this.selectedBudgetHead);
     if(this.selectedBudgetHead!='70'){
         if(this.selectedBudgetHead=='134'){
           this.typeOfHand='formalisationcompliance'
@@ -119,7 +118,6 @@ export class NonTrainingTargetsComponent implements OnInit {
           this.financialTarget = this.TargetDetails?.financialTarget || 0;
           this.physicalTargetAchievement = this.TargetDetails?.physicalTargetAchievement || 0;
           this.financialTargetAchievement = this.TargetDetails?.financialTargetAchievement || 0;
-          console.log('TargetDetails:', this.TargetDetails);
           if(this.selectedBudgetHead=='68' || this.selectedBudgetHead=='69' || this.selectedBudgetHead=='71' || this.selectedBudgetHead=='128'){
             this.getPreliminaryDataById()
             if(this.selectedBudgetHead=='69'){
@@ -263,7 +261,6 @@ export class NonTrainingTargetsComponent implements OnInit {
 
   // addd by upendranath reddy for common file preview
   showFileViewer(filePath: string) {
-    console.log('File path to open:', filePath);
 
     this._commonService.openFile(filePath);
 
@@ -447,7 +444,6 @@ getPreliminaryData:any=[]
          this.f['nonTrainingSubActivityId'].setValue(Number(this.selectedBudgetHead));
          this.f['nonTrainingActivityId'].setValue(Number(this.selectedActivity));
             const formData = new FormData();
-            console.log('this.uploadedFilesFinance:', this.uploadedFilesFinance,Object(this.uploadedFilesFinance).length>0,typeof this.uploadedFilesFinance);
              if (this.uploadedFilesFinance.name && typeof this.uploadedFilesFinance !== 'string') {
               formData.append("files", this.uploadedFilesFinance);
               }
@@ -486,7 +482,6 @@ getPreliminaryData:any=[]
       this.getDeatilOfTargets()
      }
      else{
-       console.log('Form Submitted:', this.financialForm.value);
        this.f['agencyId'].setValue(Number(this.selectedAgencyId));
          this.f['nonTrainingSubActivityId'].setValue(Number(this.selectedBudgetHead));
          this.f['nonTrainingActivityId'].setValue(Number(this.selectedActivity));
@@ -568,7 +563,6 @@ getPreliminaryData:any=[]
     uploadedFiles:any
   uploadedFilesFinance: any ;
   onFileSelected(event: any): void {
-    console.log('File selected event:', event);
     const file = event.target.files[0];
     if (file) {
       this.uploadedFilesFinance = file;
@@ -814,7 +808,6 @@ removeFile(): void {
           this._commonService.update(APIS.nontrainingtargets.updateNonTrainingtargetsAleapContingency,{...this.contingencyForm.value,"expenditures":[],nonTrainingActivityId:Number(this.selectedActivity),nonTrainingSubActivityId:Number(this.selectedBudgetHead),dateOfJoining:this.contingencyForm?.value?.dateOfJoining?moment(this.contingencyForm?.value?.dateOfJoining).format('DD-MM-YYYY'):null},this.ContingencyID).subscribe((res: any) => {
             this.toastrService.success('Data Updated successfully','Non Training Progress Data Success!');
             
-            console.log('Preliminary Data:', this.getContingencyData);
             this.resetFormContingency();
             this.isSubmitted = false;
             const modal1 = bootstrap.Modal.getInstance(document.getElementById('addContingency'));
@@ -829,7 +822,6 @@ removeFile(): void {
           });
       }
       else{
-        console.log('Form Submitted:', this.contingencyForm.value);
           this._commonService.add(APIS.nontrainingtargets.saveNonTrainingtargetsAleapContingency,{...this.contingencyForm.value,"expenditures":[],nonTrainingActivityId:Number(this.selectedActivity),nonTrainingSubActivityId:Number(this.selectedBudgetHead),dateOfJoining:this.contingencyForm?.value?.dateOfJoining?moment(this.contingencyForm?.value?.dateOfJoining).format('DD-MM-YYYY'):null}).subscribe((res: any) => {
             this.toastrService.success('Data saved successfully','Non Training Progress Data Success!');
             this.resetFormContingency();
@@ -949,7 +941,6 @@ removeFile(): void {
   // Update onSubmitPayment method
   onSubmitPayment(): void {
       this.isSubmitted = true;
-      console.log(this.paymentForm.value);
       if (this.paymentForm.valid) {
         
          if(this.iseditModePayment){
@@ -1027,9 +1018,7 @@ removeFile(): void {
       }
     }
   onResourceChange(event:any,list:any){
-    console.log('Selected Resource ID:', list);
     const selectedResource = list.find((item: any) => item.resourceId == event);
-    console.log('Selected Resource:', selectedResource);
     if(selectedResource){
       this.paymentForm.patchValue({
         bankName: selectedResource?.bankName || '',
@@ -1056,7 +1045,6 @@ removeFile(): void {
   }
   paymentForMonth: any = "";
   onChangeDate(event:any){
-    console.log(event,event.value,moment(event.value).format('MM-YYYY'));
     this.paymentForm.patchValue({paymentForMonth: moment(event.value).format('MM-YYYY')
     });
    this.paymentForMonth= event.value ? moment(event.value).format('MM-YYYY') : '';
@@ -1066,7 +1054,6 @@ removeFile(): void {
   }
   // onSubmitPayment(): void {
   //     this.isSubmitted = true;
-  //     console.log(this.paymentForm.value);
   //     if (this.paymentForm.valid) {
         
   //        if(this.iseditModePayment){
@@ -1081,7 +1068,6 @@ removeFile(): void {
   //         this._commonService.update(APIS.nontrainingtargets.updateNonTrainingtargetsAleapContingencyPayment,{...formData},this.paymentID).subscribe((res: any) => {
   //           this.toastrService.success('payments Updated successfully','Non Training Progress Data Success!');
             
-  //           console.log('Preliminary Data:', this.getContingencyData);
             
   //           this.isSubmitted = false;
   //           const modal1 = bootstrap.Modal.getInstance(document.getElementById('addPayment'));
@@ -1098,7 +1084,6 @@ removeFile(): void {
   //         });
   //     }
   //     else{
-  //       console.log('Form Submitted:', this.contingencyForm.value);
   //       const formData = new FormData();
   //           formData.append("expenditureDto", JSON.stringify({
   //           nonTrainingResourceExpenditureId: 0, // Generated by backend
@@ -1264,7 +1249,6 @@ removeFile(): void {
      this.isSubmitted = true;
      
      if (this.vendorForm.invalid) {
-       console.log('Vendor form is invalid');
        return;
      }
    
@@ -1471,15 +1455,18 @@ removeFile(): void {
       }
      iseditModeTravel = false;
      TravelID:any
+     existingBillPath: string = ''
      openModelTravel(mode: string,item?: any): void {
        if (mode === 'add') {
          this.travelForm.reset();
          this.iseditModeTravel = false;
+         this.existingBillPath = '';
          this.resetForm();
        }
        else {
          this.TravelID=item?.travelTransportId
          this.iseditModeTravel = true;
+         this.existingBillPath = item?.uploadBillUrl || '';
          this.modeOfPaymentTravel(item?.modeOfPayment);
          this.travelForm.patchValue({
            nonTrainingSubActivityId: item?.nonTrainingSubActivityId || 0,
@@ -1492,16 +1479,15 @@ removeFile(): void {
            billNo: item?.billNo || '',
            billDate: item?.billDate ? this.convertToISOFormat(item?.billDate) : '',
            payeeName: item?.payeeName || '',
-           // accountNumber: item?.accountNumber || '',
            bank: item?.bank || '',
            ifscCode: item?.ifscCode || '',
            modeOfPayment: item?.modeOfPayment || '',
            transactionId: item?.transactionId || '',
            purpose: item?.purpose || '',
-           billInvoicePath: item?.billInvoicePath || ''
+           billInvoicePath: ''
          });
        }
-       const modal1 = new bootstrap.Modal(document.getElementById('addTravel'));
+       const modal1 = bootstrap.Modal.getOrCreateInstance(document.getElementById('addTravel'));
        modal1.show();
      }
      getTravelData:any=[]
@@ -1510,10 +1496,9 @@ removeFile(): void {
         if (this.travelForm.valid) {
        if(this.iseditModeTravel){
            this.fTravel['nonTrainingSubActivityId'].setValue(Number(this.selectedBudgetHead));
-           this._commonService.update(APIS.nontrainingtargets.updateNonTrainingtargetsTravel,{...this.travelForm.value,nonTrainingSubActivityId:Number(this.selectedBudgetHead),travelTransportId:this.TravelID},this.TravelID).subscribe((res: any) => {
+           this._commonService.update(APIS.nontrainingtargets.updateNonTrainingtargetsTravel,{...this.travelForm.value,nonTrainingSubActivityId:Number(this.selectedBudgetHead),travelTransportId:this.TravelID,billInvoicePath:this.travelForm.value.billInvoicePath||this.existingBillPath},this.TravelID).subscribe((res: any) => {
              this.toastrService.success('Data Updated successfully','Non Training Progress Data Success!');
              
-             console.log('Preliminary Data:', this.getTravelData);
              this.resetForm();
              this.isSubmitted = false;
              const modalElement = document.getElementById('addTravel');
@@ -1534,7 +1519,6 @@ removeFile(): void {
           
        }
        else{
-         console.log('Form Submitted:', this.travelForm.value);
            this.fTravel['nonTrainingSubActivityId'].setValue(Number(this.selectedBudgetHead));
             const formData = new FormData();
              formData.append("dto", JSON.stringify({...this.travelForm.value}));
