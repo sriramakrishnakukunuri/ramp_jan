@@ -1261,7 +1261,7 @@ createFormTravel(): FormGroup {
         billInvoicePath: item?.billInvoicePath || ''
       });
     }
-    const modal1 = new bootstrap.Modal(document.getElementById('addTravel'));
+    const modal1 = bootstrap.Modal.getOrCreateInstance(document.getElementById('addTravel'));
     modal1.show();
   }
   getTravelData:any=[]

@@ -306,15 +306,15 @@
                     <td>{{ preliminary?.modeOfPayment }}</td>
                     <td>{{ preliminary?.payeeName }}</td>
                     <td>{{ preliminary?.transactionId }}</td>
-                    <td>{{ preliminary?.bankName }}</td>
+                    <td>{{ preliminary?.bank }}</td>
                     <td>{{ preliminary?.ifscCode }}</td>
                     <td>{{ preliminary?.purpose }}</td>
                     <td class="text-center">
-                      <a *ngIf="preliminary?.uploadBillUrl" class="btn btn-default text-primary btn-sm"
-                        (click)="showFileViewer(preliminary.uploadBillUrl)">
+                      <a *ngIf="preliminary?.billInvoicePath" class="btn btn-default text-primary btn-sm"
+                        (click)="showFileViewer(preliminary.billInvoicePath)">
                         <span class="bi bi-eye"></span>
                       </a>
-                      <span *ngIf="!preliminary?.uploadBillUrl" class="text-muted">No file</span>
+                      <span *ngIf="!preliminary?.billInvoicePath" class="text-muted">No file</span>
                     </td>
                     <!-- <td class="text-center">
                                                 <a href="#" class="btn btn-default text-primary btn-sm"><span class="bi bi-eye"></span></a>
@@ -1416,7 +1416,7 @@
   <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-xl">
     <div class="modal-content">
       <div class="modal-header py-2">
-        <h6 class="modal-title" id="addTravelLabel">{{iseditMode?'Update' :'Add'}} Travel and Transport</h6>
+        <h6 class="modal-title" id="addTravelLabel">{{iseditModeTravel?'Update' :'Add'}} Travel and Transport</h6>
         <button type="button" class="btn-close me-1" data-bs-dismiss="modal" aria-label="Close"
           (click)="resetForm()"></button>
       </div>
@@ -1647,7 +1647,7 @@
           <div class="text-end mt-3">
             <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal" aria-label="Close"
               (click)="resetForm()">Close</button>
-            <button type="submit" class="btn btn-lime-green">{{iseditMode?'Update' :'Add'}}</button>
+            <button type="submit" class="btn btn-lime-green">{{iseditModeTravel?'Update' :'Add'}}</button>
           </div>
         </form>
       </div>
