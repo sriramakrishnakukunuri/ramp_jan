@@ -83,8 +83,7 @@ toggleZoom() {
   }
 
   onImageError() {
-    this.errorMessage = 'Preview not available';
-    this.fileType = 'invalid';
+    this.fileType = 'other';
   }
 
 

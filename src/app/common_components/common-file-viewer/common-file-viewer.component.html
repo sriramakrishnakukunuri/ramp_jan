@@ -38,8 +38,8 @@
           <p>Excel preview not supported. <a [href]="filePath" target="_blank" rel="noopener">Download file</a></p>
         </div> -->
 
-        <!-- Other files -->
-        <p *ngIf="fileType === 'other'">Cannot preview this file type. <a [href]="filePath" target="_blank">Download</a></p>
+        <!-- Other files or image load failure -->
+        <p *ngIf="fileType === 'other'">Preview not available. <a [href]="filePath" target="_blank" rel="noopener">Open file in new tab</a></p>
 
       </div>
       <div class="modal-footer">
