@@ -1396,6 +1396,30 @@
               </div>
             </div>
 
+            <!-- Cheque No -->
+            <div class="col-12 col-sm-6 col-md-4 col-lg-4" *ngIf="travelForm.get('modeOfPayment')?.value === 'CHEQUE'">
+              <div class="form-floating mb-3">
+                <input type="text" class="form-control" formControlName="checkNo"
+                  [class.is-invalid]="isSubmitted && fTravel['checkNo'].invalid">
+                <label for="checkNo">Cheque No</label>
+                <div *ngIf="isSubmitted && fTravel['checkNo'].invalid" class="invalid-feedback">
+                  Cheque number is required
+                </div>
+              </div>
+            </div>
+
+            <!-- Cheque Date -->
+            <div class="col-12 col-sm-6 col-md-4 col-lg-4" *ngIf="travelForm.get('modeOfPayment')?.value === 'CHEQUE'">
+              <div class="form-floating mb-3">
+                <input type="date" class="form-control" formControlName="checkDate"
+                  [class.is-invalid]="isSubmitted && fTravel['checkDate'].invalid">
+                <label for="checkDate">Cheque Date</label>
+                <div *ngIf="isSubmitted && fTravel['checkDate'].invalid" class="invalid-feedback">
+                  Cheque date is required
+                </div>
+              </div>
+            </div>
+
             <!-- Purpose -->
             <div class="col-12 col-sm-6 col-md-4 col-lg-4">
               <div class="form-floating mb-3">

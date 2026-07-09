@@ -1050,10 +1050,12 @@ removeFile(): void {
        modeOfPayment: ['', Validators.required],
        transactionId: [''],
        purpose: ['', Validators.required],
-       billInvoicePath: ['']
+       billInvoicePath: [''],
+       checkNo: [''],
+       checkDate: ['']
      });
    }
- 
+
    get fTravel() {
      return this.travelForm.controls;
    }
@@ -1243,6 +1245,14 @@ removeFile(): void {
          this.travelForm.get('ifscCode')?.updateValueAndValidity();
          this.travelForm.get('amount')?.setValidators([Validators.required, Validators.min(0), Validators.max(5000)]);
          this.travelForm.get('amount')?.updateValueAndValidity();
+         this.travelForm.get('checkNo')?.clearValidators();
+         this.travelForm.get('checkDate')?.clearValidators();
+         this.travelForm.get('checkNo')?.disable();
+         this.travelForm.get('checkDate')?.disable();
+         this.travelForm.get('checkNo')?.patchValue('');
+         this.travelForm.get('checkDate')?.patchValue('');
+         this.travelForm.get('checkNo')?.updateValueAndValidity();
+         this.travelForm.get('checkDate')?.updateValueAndValidity();
 
        }
        else if(val=='BANK_TRANSFER'){
@@ -1260,6 +1270,14 @@ removeFile(): void {
          this.travelForm.get('ifscCode')?.updateValueAndValidity();
          this.travelForm.get('amount')?.setValidators([Validators.required, Validators.min(0)]);
          this.travelForm.get('amount')?.updateValueAndValidity();
+         this.travelForm.get('checkNo')?.clearValidators();
+         this.travelForm.get('checkDate')?.clearValidators();
+         this.travelForm.get('checkNo')?.disable();
+         this.travelForm.get('checkDate')?.disable();
+         this.travelForm.get('checkNo')?.patchValue('');
+         this.travelForm.get('checkDate')?.patchValue('');
+         this.travelForm.get('checkNo')?.updateValueAndValidity();
+         this.travelForm.get('checkDate')?.updateValueAndValidity();
 
        }
        else if(val=='UPI'){
@@ -1278,6 +1296,14 @@ removeFile(): void {
          this.travelForm.get('ifscCode')?.updateValueAndValidity();
          this.travelForm.get('amount')?.setValidators([Validators.required, Validators.min(0)]);
          this.travelForm.get('amount')?.updateValueAndValidity();
+         this.travelForm.get('checkNo')?.clearValidators();
+         this.travelForm.get('checkDate')?.clearValidators();
+         this.travelForm.get('checkNo')?.disable();
+         this.travelForm.get('checkDate')?.disable();
+         this.travelForm.get('checkNo')?.patchValue('');
+         this.travelForm.get('checkDate')?.patchValue('');
+         this.travelForm.get('checkNo')?.updateValueAndValidity();
+         this.travelForm.get('checkDate')?.updateValueAndValidity();
 
        }
         else if(val=='CHEQUE'){
@@ -1297,10 +1323,18 @@ removeFile(): void {
          this.travelForm.get('ifscCode')?.updateValueAndValidity();
          this.travelForm.get('amount')?.setValidators([Validators.required, Validators.min(0)]);
          this.travelForm.get('amount')?.updateValueAndValidity();
+         this.travelForm.get('checkNo')?.setValidators([Validators.required]);
+         this.travelForm.get('checkDate')?.setValidators([Validators.required]);
+         this.travelForm.get('checkNo')?.enable();
+         this.travelForm.get('checkDate')?.enable();
+         this.travelForm.get('checkNo')?.patchValue('');
+         this.travelForm.get('checkDate')?.patchValue('');
+         this.travelForm.get('checkNo')?.updateValueAndValidity();
+         this.travelForm.get('checkDate')?.updateValueAndValidity();
        }
      }
    // end infracture
- 
+
  }
  
  

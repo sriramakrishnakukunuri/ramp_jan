@@ -136,12 +136,15 @@ export class ProgramExpenditureComponent implements OnInit {
   }
  // Load Programs
  programs:any
+ programsFiltered:any
  onAgencyChange(): void {
   this.programs = [];
+  this.programsFiltered = [];
   if (this.agencyId) {
     this._commonService.getDataByUrl(`${APIS.programCreation.getProgramsListByAgencyStatus}/${this.agencyId}?status=Collage Added`).subscribe({
       next: (data: any) => {
         this.programs = data.data;
+        this.programsFiltered = data.data;
       },
       error: (err) => {
         console.error('Error loading programs:', err);
