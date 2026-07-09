@@ -13,48 +13,21 @@
                     </div>
                     <div class="card-body">
                        
-                        <div class="row mb-3">
+                        <div class="row mb-3 align-items-center">
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                                <div class="form-floating mb-1">
-                                    <input type="text" class="form-control" id="programFilter" placeholder="Search program"
-                                        [(ngModel)]="programSearchText" [ngModelOptions]="{standalone: true}"
-                                        (input)="filterPrograms($any($event.target).value)">
-                                    <label for="programFilter">Search Program</label>
-                                </div>
-                                <div class="form-floating mb-3">
-                                    <select class="form-select" id="programSelect" formControlName="programId"
-                                        (change)="getProgramDetailsById($any($event.target).value)">
-                                        <option value="">Select Program</option>
-                                        <option *ngFor="let program of programsFiltered" [value]="program.programId">
+                                <mat-form-field appearance="outline" class="w-100">
+                                    <mat-label>Program</mat-label>
+                                    <mat-select formControlName="programId" (selectionChange)="getProgramDetailsById($event.value)">
+                                        <mat-select-filter [array]="programs" [displayMember]="'programTitle'" (filteredReturn)="programsFiltered = $event">
+                                        </mat-select-filter>
+                                        <mat-option value="" disabled>Select Program</mat-option>
+                                        <mat-option *ngFor="let program of programsFiltered" [value]="program.programId">
                                             {{ program.programTitle }}
-                                        </option>
-                                    </select>
-                                    <label for="programSelect">Program</label>
-                                </div>
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
                             </div>
-                            <div class="col-12 col-sm-6 col-md-4 col-lg-3" hidden>
-                                <div class="form-floating mb-3 mb-sm-3 mb-md-0">
-                                    <select class="form-select events-expenditure" name="activityId"  formControlName="activityId">
-                                        <option selected value="">Select Type Of Activity</option>
-                                        <option value="{{list.activityId}}" *ngFor="let list of activityList">{{list.activityName}}</option>
-                                    </select>                                
-                                    <label for="activity">Select Activity</label>
-                                </div>
-                            </div>
-                            <div class="col-12 col-sm-6 col-md-4 col-lg-3" hidden>
-                                <div class="form-floating mb-3 mb-sm-0">
-                                    <select class="form-select events-expenditure" name="subActivityId"  formControlName="subActivityId">
-                                        <option  value="">Select Sub Activity</option>
-                                        <option value="{{list.subActivityId}}" *ngFor="let list of subActivitiesList">{{list.subActivityName}}</option>
-                                    </select>
-                                    <label for="subActivity">Sub Activity</label>
-                                </div>
-                            </div>
-                            
-                           
-                        </div>       
-                        <div class="row">
-                            <div class="col-10 mb-3">
+                            <div class="col-12 col-sm-6 col-md-8 col-lg-9 mb-3">
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" name="expenditureType" formControlName="expenditureType" id="preEvent" value="PRE">
                                     <label class="form-check-label fs-md" for="preEvent">Pre Event Expenditure</label>
@@ -68,12 +41,25 @@
                                     <label class="form-check-label fs-md" for="BulkEvent">Bulk Expenditure</label>
                                 </div>
                             </div>
-                            <!-- <div class="col-2 col-sm-2 col-md-2 col-lg-2">
-                                <div class="">
-                                <button type="button" [ngClass]="{'isDisable': programCreationMain.get('programId')?.value == ''}" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModalDeleteConfirm">Final Submission</button> &nbsp;&nbsp;
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3" hidden>
+                                <div class="form-floating mb-3 mb-sm-3 mb-md-0">
+                                    <select class="form-select events-expenditure" name="activityId"  formControlName="activityId">
+                                        <option selected value="">Select Type Of Activity</option>
+                                        <option value="{{list.activityId}}" *ngFor="let list of activityList">{{list.activityName}}</option>
+                                    </select>
+                                    <label for="activity">Select Activity</label>
                                 </div>
-                            </div> -->
-                        </div>                 
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3" hidden>
+                                <div class="form-floating mb-3 mb-sm-0">
+                                    <select class="form-select events-expenditure" name="subActivityId"  formControlName="subActivityId">
+                                        <option  value="">Select Sub Activity</option>
+                                        <option value="{{list.subActivityId}}" *ngFor="let list of subActivitiesList">{{list.subActivityName}}</option>
+                                    </select>
+                                    <label for="subActivity">Sub Activity</label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </form>

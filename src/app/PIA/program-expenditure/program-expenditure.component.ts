@@ -141,12 +141,6 @@ export class ProgramExpenditureComponent implements OnInit {
  // Load Programs
  programs:any
  programsFiltered:any
- programSearchText:string = ''
- filterPrograms(search: string) {
-   this.programsFiltered = this.programs?.filter((p: any) =>
-     p.programTitle?.toLowerCase().includes(search.toLowerCase())
-   ) || [];
- }
  onAgencyChange(): void {
   this.programs = [];
   this.programsFiltered = [];
