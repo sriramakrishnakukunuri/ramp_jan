@@ -306,15 +306,15 @@
                     <td>{{ preliminary?.modeOfPayment }}</td>
                     <td>{{ preliminary?.payeeName }}</td>
                     <td>{{ preliminary?.transactionId }}</td>
-                    <td>{{ preliminary?.bank }}</td>
+                    <td>{{ preliminary?.accountNumber }}</td>
                     <td>{{ preliminary?.ifscCode }}</td>
                     <td>{{ preliminary?.purpose }}</td>
                     <td class="text-center">
-                      <a *ngIf="preliminary?.billInvoicePath" class="btn btn-default text-primary btn-sm"
-                        (click)="showFileViewer(preliminary.billInvoicePath)">
+                      <a *ngIf="preliminary?.uploadBillUrl" class="btn btn-default text-primary btn-sm"
+                        (click)="showFileViewer(preliminary.uploadBillUrl)">
                         <span class="bi bi-eye"></span>
                       </a>
-                      <span *ngIf="!preliminary?.billInvoicePath" class="text-muted">No file</span>
+                      <span *ngIf="!preliminary?.uploadBillUrl" class="text-muted">No file</span>
                     </td>
                     <!-- <td class="text-center">
                                                 <a href="#" class="btn btn-default text-primary btn-sm"><span class="bi bi-eye"></span></a>

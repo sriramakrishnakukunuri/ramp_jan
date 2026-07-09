@@ -109,7 +109,6 @@ deleteTechnologyAdoptionID: any;
 
     // addd by upendranath reddy for common file preview
   showFileViewer(filePath: string) {
-    console.log('File path to open:', filePath);
 
     this._commonService.openFile(filePath);
 
@@ -158,7 +157,6 @@ deleteTechnologyAdoptionID: any;
   financialTargetAchievement: any = 0;
   onBudgetHeadChange(event: any) {
     this.selectedBudgetHead = event;
-    console.log('Selected Budget Head:', this.selectedBudgetHead);
     this.getDeatilOfTargets()
   }
  TargetDetails: any;
@@ -170,7 +168,6 @@ deleteTechnologyAdoptionID: any;
           this.financialTarget = this.TargetDetails?.financialTarget || 0;
           this.physicalTargetAchievement = this.TargetDetails?.physicalTargetAchievement || 0;
           this.financialTargetAchievement = this.TargetDetails?.financialTargetAchievement || 0;
-          console.log('TargetDetails:', this.TargetDetails);
             if (
             this.selectedBudgetHead == '1' ||
             this.selectedBudgetHead == '64' ||
@@ -561,7 +558,6 @@ createForm(): FormGroup {
         this.f['nonTrainingSubActivityId'].setValue(Number(this.selectedBudgetHead));
         this.f['nonTrainingActivityId'].setValue(Number(this.selectedActivity));
          const formData = new FormData();
-            console.log('this.uploadedFilesFinance:', this.uploadedFilesFinance,Object(this.uploadedFilesFinance).length>0,typeof this.uploadedFilesFinance);
              if (this.uploadedFilesFinance.name && typeof this.uploadedFilesFinance !== 'string') {
               formData.append("files", this.uploadedFilesFinance);
               }
@@ -575,7 +571,6 @@ createForm(): FormGroup {
         this._commonService.update(APIS.nontrainingtargets.updateNonTrainingtargetsAleapPriliminary,formData,this.preliminaryID).subscribe((res: any) => {
         this.toastrService.success('Data Updated successfully','Non Training Progress Data Success!');
           
-          console.log('Preliminary Data:', this.getPreliminaryData);
           this.resetForm();
           this.isSubmitted = false;
           const modalElement = document.getElementById('addSurvey');
@@ -594,7 +589,6 @@ createForm(): FormGroup {
         this.getDeatilOfTargets()
     }
     else{
-      console.log('Form Submitted:', this.financialForm.value);
       this.f['agencyId'].setValue(Number(this.selectedAgencyId));
         this.f['nonTrainingSubActivityId'].setValue(Number(this.selectedBudgetHead));
         this.f['nonTrainingActivityId'].setValue(Number(this.selectedActivity));
@@ -618,7 +612,6 @@ createForm(): FormGroup {
           this.isSubmitted = false;
           const modal1 = bootstrap.Modal.getInstance(document.getElementById('addSurvey'));
           modal1.hide();
-          console.log(error);
           this.toastrService.error(error.message);
         });
         this.getDeatilOfTargets()
@@ -674,7 +667,6 @@ createForm(): FormGroup {
     uploadedFiles: any ;
   uploadedFilesFinance: any ;
   onFileSelected(event: any): void {
-    console.log('File selected event:', event);
     const file = event.target.files[0];
     if (file) {
       this.uploadedFilesFinance = file;
@@ -778,7 +770,6 @@ removeFile(): void {
         this._commonService.update(APIS.nontrainingtargets.updateNonTrainingtargetsAleapContingency,{...this.contingencyForm.value,"expenditures":[],nonTrainingActivityId:Number(this.selectedActivity),nonTrainingSubActivityId:Number(this.selectedBudgetHead),dateOfJoining:this.contingencyForm?.value?.dateOfJoining?moment(this.contingencyForm?.value?.dateOfJoining).format('DD-MM-YYYY'):null},this.ContingencyID).subscribe((res: any) => {
           this.toastrService.success('Data Updated successfully','Non Training Progress Data Success!');
           
-          console.log('Preliminary Data:', this.getContingencyData);
           this.resetFormContingency();
           this.isSubmitted = false;
           const modal1 = bootstrap.Modal.getInstance(document.getElementById('addContingency'));
@@ -793,7 +784,6 @@ removeFile(): void {
         });
     }
     else{
-      console.log('Form Submitted:', this.contingencyForm.value);
         this._commonService.add(APIS.nontrainingtargets.saveNonTrainingtargetsAleapContingency,{...this.contingencyForm.value,"expenditures":[],nonTrainingActivityId:Number(this.selectedActivity),nonTrainingSubActivityId:Number(this.selectedBudgetHead),dateOfJoining:this.contingencyForm?.value?.dateOfJoining?moment(this.contingencyForm?.value?.dateOfJoining).format('DD-MM-YYYY'):null}).subscribe((res: any) => {
           this.toastrService.success('Data saved successfully','Non Training Progress Data Success!');
           this.resetFormContingency();
@@ -957,9 +947,7 @@ resetForm(): void {
     modal1.show();
   }
   onResourceChange(event:any,list:any){
-    console.log('Selected Resource ID:', list);
     const selectedResource = list.find((item: any) => item.resourceId == event);
-    console.log('Selected Resource:', selectedResource);
     if(selectedResource){
       this.paymentForm.patchValue({
         bankName: selectedResource?.bankName || '',
@@ -986,7 +974,6 @@ resetForm(): void {
   }
   paymentForMonth: any = "08-2025";
   onChangeDate(event:any){
-    console.log(event,event.value,moment(event.value).format('MM-YYYY'));
     this.paymentForm.patchValue({paymentForMonth: moment(event.value).format('MM-YYYY')
     });
    this.paymentForMonth= event.value ? moment(event.value).format('MM-YYYY') : '';
@@ -1042,7 +1029,6 @@ resetForm(): void {
     // Update onSubmitPayment method
     onSubmitPayment(): void {
         this.isSubmitted = true;
-        console.log(this.paymentForm.value);
         if (this.paymentForm.valid) {
           
            if(this.iseditModePayment){
@@ -1273,7 +1259,6 @@ createFormTravel(): FormGroup {
         this._commonService.update(APIS.nontrainingtargets.updateNonTrainingtargetsTravel,{...this.travelForm.value,nonTrainingSubActivityId:Number(this.selectedBudgetHead),travelTransportId:this.TravelID},this.TravelID).subscribe((res: any) => {
           this.toastrService.success('Data Updated successfully','Non Training Progress Data Success!');
           
-          console.log('Preliminary Data:', this.getTravelData);
           this.resetForm();
           this.isSubmitted = false;
           const modalElement = document.getElementById('addTravel');
@@ -1294,7 +1279,6 @@ createFormTravel(): FormGroup {
        
     }
     else{
-      console.log('Form Submitted:', this.travelForm.value);
         this.fTravel['nonTrainingSubActivityId'].setValue(Number(this.selectedBudgetHead));
          const formData = new FormData();
           formData.append("dto", JSON.stringify({...this.travelForm.value}));
@@ -1577,7 +1561,6 @@ createFormCandidate(): FormGroup {
         this._commonService.update(APIS.nontrainingtargets.updateNonTrainingtargetsCandidate,{...this.candidateForm.value,subActivityId:Number(this.selectedBudgetHead)},this.candidateID).subscribe((res: any) => {
           this.toastrService.success('Data Updated successfully','Non Training Progress Data Success!');
            this.closeModalCandidates();
-          console.log('Preliminary Data:', this.getTravelData);
           this.resetFormCandidates();
      
           this.isSubmitted = false;
@@ -1600,7 +1583,6 @@ createFormCandidate(): FormGroup {
        
     }
     else{
-      console.log('Form Submitted:', this.candidateForm.value);
         this.fcandidate['subActivityId'].setValue(Number(this.selectedBudgetHead));
         //  const formData = new FormData();
         //   formData.append("dto", JSON.stringify({...this.candidateForm.value}));
@@ -1954,7 +1936,6 @@ onSubmitVendor() {
   this.isSubmitted = true;
   
   if (this.vendorForm.invalid) {
-    console.log('Vendor form is invalid');
     return;
   }
 
