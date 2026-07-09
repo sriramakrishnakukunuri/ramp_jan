@@ -15,17 +15,22 @@
                        
                         <div class="row mb-3">
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                                <mat-form-field appearance="outline" class="w-100">
-                                    <mat-label>Program</mat-label>
-                                    <mat-select formControlName="programId" (selectionChange)="getProgramDetailsById($event.value)">
-                                        <mat-select-filter [array]="programs" [displayMember]="'programTitle'" (filteredReturn)="programsFiltered = $event">
-                                        </mat-select-filter>
-                                        <mat-option value="" disabled>Select Program</mat-option>
-                                        <mat-option *ngFor="let program of programsFiltered" [value]="program.programId">
+                                <div class="form-floating mb-1">
+                                    <input type="text" class="form-control" id="programFilter" placeholder="Search program"
+                                        [(ngModel)]="programSearchText" [ngModelOptions]="{standalone: true}"
+                                        (input)="filterPrograms($any($event.target).value)">
+                                    <label for="programFilter">Search Program</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <select class="form-select" id="programSelect" formControlName="programId"
+                                        (change)="getProgramDetailsById($any($event.target).value)">
+                                        <option value="">Select Program</option>
+                                        <option *ngFor="let program of programsFiltered" [value]="program.programId">
                                             {{ program.programTitle }}
-                                        </mat-option>
-                                    </mat-select>
-                                </mat-form-field>
+                                        </option>
+                                    </select>
+                                    <label for="programSelect">Program</label>
+                                </div>
                             </div>
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3" hidden>
                                 <div class="form-floating mb-3 mb-sm-3 mb-md-0">
