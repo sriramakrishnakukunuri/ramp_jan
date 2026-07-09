@@ -42,6 +42,10 @@ export class ProgramExpenditureComponent implements OnInit {
     this.programCreationMain.controls['activityId'].valueChanges.subscribe((activityId: any) => {
       if (activityId) this.getSubActivitiesList(activityId);
     });
+
+    this.programCreationMain.controls['expenditureType'].valueChanges.subscribe((val: any) => {
+      if (val) this.ChangeexpenditureType(true, val);
+    });
   }
 
   get f2() {
