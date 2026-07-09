@@ -23,15 +23,14 @@ export class CommonFileViewerComponent implements OnInit {
 
 getFullFileUrl(path: string): string {
   const trimmed = path?.split('public_html/')?.[1];
-  return trimmed ? `${this.BASE_URL}${trimmed}` : '';
+  if (!trimmed) return '';
+  const encoded = trimmed.split('/').map(seg => encodeURIComponent(seg)).join('/');
+  return `${this.BASE_URL}${encoded}`;
 }
 
  ngOnInit(): void {
-  // Subscribe to service to get file path
   this.fileService.file$.subscribe(path => {
-    console.log('File path subscription triggered', path);
     if (!path) return;
-    console.log('Received file path:', path);
 
     // Use the utility to get the full URL
     this.filePath = this.getFullFileUrl(path);
