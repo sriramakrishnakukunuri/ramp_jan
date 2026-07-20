@@ -40,7 +40,77 @@ export class NonTrainingTargetsComponent implements OnInit {
 
   ngOnInit(): void {
      this.getBudgetHeadList()
-    
+     if (this.isRestrictedAgency) {
+       this.getRichMilestonesList();
+     }
+  }
+  get isRestrictedAgency(): boolean {
+    const name = this.loginsessionDetails?.agencyName;
+    return name === 'RICH_6A' || name === 'RICH_6B';
+  }
+  richMilestonesList: any[] = [];
+  selectedRichMilestone: any = null;
+  getRichMilestonesList() {
+    this._commonService.getDataByUrl(APIS.nontrainingtargets.getRichMilestones).subscribe(
+      (res: any) => {
+        this.richMilestonesList = Array.isArray(res) ? res : (res?.data || []);
+      },
+      () => { this.richMilestonesList = []; }
+    );
+  }
+  onRichMilestoneChange(id: any) {
+    const numericId = Number(id);
+    this.selectedRichMilestone = this.richMilestonesList.find(
+      (m: any) => Number(m?.richMilestoneId) === numericId
+    ) || null;
+    if (this.financialForm.get('richMilestoneId')) {
+      this.financialForm.get('richMilestoneId')?.setValue(numericId || null);
+    }
+  }
+  private buildFinancialDto(): any {
+    const { richMilestoneId, ...rest } = this.financialForm.value;
+    const dto: any = { ...rest };
+    if (richMilestoneId) {
+      dto.richMilestoneIds = [Number(richMilestoneId)];
+    }
+    return dto;
+  }
+  get selectedSubActivityName(): string {
+    return this.SubActivityList?.find(
+      (item: any) => String(item?.subActivityId) === String(this.selectedBudgetHead)
+    )?.subActivityName || '';
+  }
+  private readonly rich6BAllowedSubActivities: string[] = [
+    'Develop and Enhance MSME Green Dashboard and intergrate with Cluster level information',
+    'Onboard and Conduct RECP Assessments across 2000 MSMEs',
+    'Provide RECP studies-based implementation support to MSMEs and establish State-Level MSME Ecosystem for Clean Technology Adoption',
+    'Preparation of Success Stories and project report'
+  ];
+  private readonly rich6AAllowedSubActivities: string[] = [
+    'Submission of Inception Report',
+    'Identification of cluster as per geo tagged lat/long and Spatial energy intensity mapping',
+    'Seed geo tagged clusters with meta data on the dashboard',
+    'Product technical specifications document preperation',
+    'Portal development and live hosting'
+  ];
+  get showRestrictedTabCard(): boolean {
+    const name = this.loginsessionDetails?.agencyName;
+    const current = (this.selectedSubActivityName || '').trim();
+    if (name === 'RICH_6A') {
+      return this.rich6AAllowedSubActivities.some(allowed => allowed.trim() === current);
+    }
+    if (name === 'RICH_6B') {
+      return this.rich6BAllowedSubActivities.some(allowed => allowed.trim() === current);
+    }
+    return false;
+  }
+  get showMilestoneSelector(): boolean {
+    const name = this.loginsessionDetails?.agencyName;
+    if (name === 'RICH_6B') return true;
+    if (name === 'RICH_6A') {
+      return (this.selectedSubActivityName || '').trim() !== 'Submission of Inception Report';
+    }
+    return false;
   }
    budgetHeadList: any;
     getBudgetHeadList() {
@@ -255,7 +325,8 @@ export class NonTrainingTargetsComponent implements OnInit {
       purpose: ['', Validators.required],
       uploadBillUrl: [''],
       checkNo: [''],
-      checkDate: ['']
+      checkDate: [''],
+      richMilestoneId: [null]
     });
   }
 
@@ -451,7 +522,7 @@ getPreliminaryData:any=[]
                 this.financialForm.patchValue({uploadBillUrl:this.uploadedFilesFinance})
               }
 
-              formData.append("dto", JSON.stringify({...this.financialForm.value,nonTrainingSubActivityId:Number(this.selectedBudgetHead),id:this.preliminaryID}));
+              formData.append("dto", JSON.stringify({...this.buildFinancialDto(),nonTrainingSubActivityId:Number(this.selectedBudgetHead),id:this.preliminaryID}));
   
          this._commonService.update(
         APIS.nontrainingtargets.updateNonTrainingtargetsAleapPriliminary,
@@ -486,7 +557,7 @@ getPreliminaryData:any=[]
          this.f['nonTrainingSubActivityId'].setValue(Number(this.selectedBudgetHead));
          this.f['nonTrainingActivityId'].setValue(Number(this.selectedActivity));
           const formData = new FormData();
-           formData.append("dto", JSON.stringify({...this.financialForm.value}));
+           formData.append("dto", JSON.stringify(this.buildFinancialDto()));
  
            if (this.uploadedFilesFinance) {
              formData.append("file", this.uploadedFilesFinance);

@@ -190,6 +190,7 @@ export const APIS = {
     deleteNonTrainingtargetsCandidate: API_BASE_URL + '/',
     saveNonTrainingtargetsCandidate: API_BASE_URL + '/save',
     getNonTrainingtargetsCandidate: API_BASE_URL + '/by-subactivity?subActivityId=',
+    getRichMilestones: API_BASE_URL + '/rich-milestones',
 
     saveTgtpcNtReports: API_BASE_URL +'/tgtpc-nt-reports/save',
     updateTgtpcNtReports: API_BASE_URL +'/tgtpc-nt-reports/update/',

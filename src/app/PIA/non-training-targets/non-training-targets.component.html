@@ -72,7 +72,7 @@
        <!-- begin:: Preliminary survey for selection of potential SHGs -->
        <!-- selectedBudgetHead=='71' || selectedBudgetHead=='68' -->
        <div class="card budgets mb-3 "
-         *ngIf="selectedBudgetHead=='69' || selectedBudgetHead=='72' || selectedBudgetHead=='128' || selectedBudgetHead=='70' || this.selectedBudgetHead=='134' || this.selectedBudgetHead=='136' || this.selectedBudgetHead=='137'  || this.selectedBudgetHead=='135' || this.selectedBudgetHead=='139' || this.selectedBudgetHead=='138' || this.selectedBudgetHead=='140' || this.selectedBudgetHead=='141' ">
+         *ngIf="isRestrictedAgency || selectedBudgetHead=='69' || selectedBudgetHead=='72' || selectedBudgetHead=='128' || selectedBudgetHead=='70' || this.selectedBudgetHead=='134' || this.selectedBudgetHead=='136' || this.selectedBudgetHead=='137'  || this.selectedBudgetHead=='135' || this.selectedBudgetHead=='139' || this.selectedBudgetHead=='138' || this.selectedBudgetHead=='140' || this.selectedBudgetHead=='141' ">
 
          <div class="card-header bg-transparent d-flex justify-content-between align-items-center">
 
@@ -91,6 +91,7 @@
               <h6 class="fw-600 mb-2 mb-sm-3 mb-md-0" *ngIf="selectedBudgetHead=='140'">Product Development & IPR Support </h6>
           
 <h6 class="fw-600 mb-2 mb-sm-3 mb-md-0" *ngIf="selectedBudgetHead=='141'">Access to Certifications like ZED, LEAN etc </h6>
+           <h6 class="fw-600 mb-2 mb-sm-3 mb-md-0" *ngIf="isRestrictedAgency">{{ selectedSubActivityName }}</h6>
 
            <!-- <h6 class="fw-600 mb-2 mb-sm-3 mb-md-0"  *ngIf="selectedBudgetHead=='71'" >Raw material support </h6> -->
            <div class="text-end">
@@ -100,7 +101,7 @@
          </div>
          <div class="card-body">
            <!-- || selectedBudgetHead=='71' || selectedBudgetHead=='68' -->
-           <div class="row" *ngIf="selectedBudgetHead=='69' || selectedBudgetHead=='72' || selectedBudgetHead=='128' || selectedBudgetHead=='70' || this.selectedBudgetHead=='134'  || this.selectedBudgetHead=='136' || this.selectedBudgetHead=='139' || this.selectedBudgetHead=='137' || this.selectedBudgetHead=='135' || this.selectedBudgetHead=='138' || this.selectedBudgetHead=='140' || this.selectedBudgetHead=='141' ">
+           <div class="row" *ngIf="isRestrictedAgency || selectedBudgetHead=='69' || selectedBudgetHead=='72' || selectedBudgetHead=='128' || selectedBudgetHead=='70' || this.selectedBudgetHead=='134'  || this.selectedBudgetHead=='136' || this.selectedBudgetHead=='139' || this.selectedBudgetHead=='137' || this.selectedBudgetHead=='135' || this.selectedBudgetHead=='138' || this.selectedBudgetHead=='140' || this.selectedBudgetHead=='141' ">
              <div class="col-12 col-sm-12 col-md-6 col-lg-6">
                <fieldset class="mb-3" style="border: 1px solid #e0e0e0; border-radius: 8px; padding-left: 18px; ">
                  <legend class="text-lime-green" style="padding: 0 8px;">Physical</legend>
@@ -969,34 +970,34 @@
          </div>
        </div>
        <!-- end:: Contingency fund -->
-        <div class="card budgets mb-3" *ngIf="selectedBudgetHead=='70' || this.selectedBudgetHead=='134'  || this.selectedBudgetHead=='135' || this.selectedBudgetHead=='136' || this.selectedBudgetHead=='137' || this.selectedBudgetHead=='139'">
+        <div class="card budgets mb-3" *ngIf="showRestrictedTabCard || selectedBudgetHead=='70' || this.selectedBudgetHead=='134'  || this.selectedBudgetHead=='135' || this.selectedBudgetHead=='136' || this.selectedBudgetHead=='137' || this.selectedBudgetHead=='139'">
         <div class="card-body">
           <!-- Tab Navigation -->
           <ul class="nav nav-tabs mb-3" id="handHoldingTabs" role="tablist">
-            <li class="nav-item" role="presentation">
-              <button class="nav-link active" id="handholding-tab" (click)="getDeatilOfTargets()" data-bs-toggle="tab" 
-                      data-bs-target="#handholding" type="button" role="tab" 
+            <li class="nav-item" role="presentation" *ngIf="!isRestrictedAgency">
+              <button class="nav-link active" id="handholding-tab" (click)="getDeatilOfTargets()" data-bs-toggle="tab"
+                      data-bs-target="#handholding" type="button" role="tab"
                       aria-controls="handholding" aria-selected="true">
                 Handholding
               </button>
             </li>
             <li class="nav-item" role="presentation">
-              <button class="nav-link" id="expenditure-tab" data-bs-toggle="tab" (click)="getDeatilOfTargets()"
-                      data-bs-target="#expenditure" type="button" role="tab" 
-                      aria-controls="expenditure" aria-selected="false">
+              <button class="nav-link" [class.active]="isRestrictedAgency" id="expenditure-tab" data-bs-toggle="tab" (click)="getDeatilOfTargets()"
+                      data-bs-target="#expenditure" type="button" role="tab"
+                      aria-controls="expenditure" [attr.aria-selected]="isRestrictedAgency">
                 General Expenditure
               </button>
             </li>
-            <li class="nav-item" role="presentation">
+            <li class="nav-item" role="presentation" *ngIf="!isRestrictedAgency">
               <button class="nav-link" id="salary-tab" data-bs-toggle="tab" (click)="getDeatilOfTargets()"
-                      data-bs-target="#salary" type="button" role="tab" 
+                      data-bs-target="#salary" type="button" role="tab"
                       aria-controls="salary" aria-selected="false">
                 Resource & Payment
-              </button> 
+              </button>
             </li>
-            <li class="nav-item" role="presentation">
+            <li class="nav-item" role="presentation" *ngIf="!isRestrictedAgency">
               <button class="nav-link" id="travel-tab" data-bs-toggle="tab"  (click)="getDeatilOfTargets()"
-                      data-bs-target="#travel" type="button" role="tab" 
+                      data-bs-target="#travel" type="button" role="tab"
                       aria-controls="travel" aria-selected="false">
                 Travel Expenditure
               </button>
@@ -1006,18 +1007,18 @@
           <!-- Tab Content -->
           <div class="tab-content" id="handHoldingTabContent">
             <!-- Handholding Tab -->
-            <div class="tab-pane fade show active" id="handholding" role="tabpanel" 
-                 aria-labelledby="handholding-tab">
-              <app-hand-holding-aleap 
-                [activityId]="selectedActivity" 
-                [subActivityId]="selectedBudgetHead" 
-                [handHoldingType]="typeOfHand" 
+            <div class="tab-pane fade show active" id="handholding" role="tabpanel"
+                 aria-labelledby="handholding-tab" *ngIf="!isRestrictedAgency">
+              <app-hand-holding-aleap
+                [activityId]="selectedActivity"
+                [subActivityId]="selectedBudgetHead"
+                [handHoldingType]="typeOfHand"
                 (handHoldingDataChange)="getDeatilOfTargets()">
               </app-hand-holding-aleap>
             </div>
 
             <!-- Expenditure Tab -->
-            <div class="tab-pane fade" id="expenditure" role="tabpanel" 
+            <div class="tab-pane fade" [class.show]="isRestrictedAgency" [class.active]="isRestrictedAgency" id="expenditure" role="tabpanel"
                  aria-labelledby="expenditure-tab">
               <div class="p-3">
                 
@@ -1099,8 +1100,8 @@
             </div>
 
             <!-- Salary & Resource Tab -->
-            <div class="tab-pane fade" id="salary" role="tabpanel" 
-                 aria-labelledby="salary-tab">
+            <div class="tab-pane fade" id="salary" role="tabpanel"
+                 aria-labelledby="salary-tab" *ngIf="!isRestrictedAgency">
               <div class="p-3">
            <div class="card" >
              <div class="card-header bg-transparent">
@@ -1229,8 +1230,8 @@
             </div>
 
             <!-- Travel Tab -->
-            <div class="tab-pane fade" id="travel" role="tabpanel" 
-                 aria-labelledby="travel-tab">
+            <div class="tab-pane fade" id="travel" role="tabpanel"
+                 aria-labelledby="travel-tab" *ngIf="!isRestrictedAgency">
               <div class="p-3">
                <div class="card">
             <div class="card-header bg-transparent">
@@ -1332,12 +1333,48 @@
    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-xl">
      <div class="modal-content">
        <div class="modal-header py-2">
-         <h6 class="modal-title" id="addSurveyLabel">{{iseditMode?'Update' :'Add'}} Expenditure</h6>
+         <h6 class="modal-title" id="addSurveyLabel">{{iseditMode?'Update' :'Add'}} {{isRestrictedAgency ? 'Milestone' : 'Expenditure'}}</h6>
          <button type="button" class="btn-close me-1" data-bs-dismiss="modal" aria-label="Close"
            (click)="resetForm()"></button>
        </div>
        <div class="modal-body">
          <form [formGroup]="financialForm" (ngSubmit)="onSubmit()">
+           <div class="row" *ngIf="showMilestoneSelector">
+             <div class="col-12 col-sm-6 col-md-3 col-lg-3">
+               <div class="form-floating mb-3">
+                 <select class="form-select" id="richMilestoneSelect"
+                   formControlName="richMilestoneId"
+                   (change)="onRichMilestoneChange($any($event.target).value)">
+                   <option value="">Select Payment Iteration</option>
+                   <option *ngFor="let m of richMilestonesList" [value]="m?.richMilestoneId">
+                     {{ m?.paymentIteration }}
+                   </option>
+                 </select>
+                 <label for="richMilestoneSelect">Payment Iteration</label>
+               </div>
+             </div>
+             <div class="col-12 col-sm-6 col-md-3 col-lg-3">
+               <div class="form-floating mb-3">
+                 <input type="text" class="form-control" id="rmMilestone"
+                   [value]="selectedRichMilestone?.paymentMilestone || ''" disabled readonly>
+                 <label for="rmMilestone">Payment Milestone</label>
+               </div>
+             </div>
+             <div class="col-12 col-sm-6 col-md-3 col-lg-3">
+               <div class="form-floating mb-3">
+                 <input type="text" class="form-control" id="rmPercentage"
+                   [value]="selectedRichMilestone?.paymentPercentage != null ? selectedRichMilestone.paymentPercentage + '%' : ''" disabled readonly>
+                 <label for="rmPercentage">Payment Percentage</label>
+               </div>
+             </div>
+             <div class="col-12 col-sm-6 col-md-3 col-lg-3">
+               <div class="form-floating mb-3">
+                 <input type="text" class="form-control" id="rmAmount"
+                   [value]="selectedRichMilestone?.amount != null ? (selectedRichMilestone.amount | commaSeperationIndia) : ''" disabled readonly>
+                 <label for="rmAmount">Amount</label>
+               </div>
+             </div>
+           </div>
            <div class="row">
              <!-- Agency ID (hidden or visible depending on requirements) -->
              <div class="col-12 col-sm-6 col-md-4 col-lg-4" *ngIf="false">
@@ -1423,7 +1460,7 @@
                    (change)="modeOfPaymentIt($any($event.target).value)"
                    [class.is-invalid]="isSubmitted && f['modeOfPayment'].invalid">
                    <option value="BANK_TRANSFER">Bank Transfer</option>
-                   <option value="CASH">Cash</option>
+                   <option value="CASH" *ngIf="!isRestrictedAgency">Cash</option>
                    <option value="UPI">UPI</option>
                    <option value="CHEQUE">CHEQUE</option>
                  </select>
