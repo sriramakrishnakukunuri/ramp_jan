@@ -48,6 +48,12 @@ export class NonTrainingTargetsComponent implements OnInit {
     const name = this.loginsessionDetails?.agencyName;
     return name === 'RICH_6A' || name === 'RICH_6B';
   }
+  get isRich6A(): boolean {
+    return this.loginsessionDetails?.agencyName === 'RICH_6A';
+  }
+  get isRich6B(): boolean {
+    return this.loginsessionDetails?.agencyName === 'RICH_6B';
+  }
   richMilestonesList: any[] = [];
   selectedRichMilestone: any = null;
   getRichMilestonesList() {
@@ -86,20 +92,13 @@ export class NonTrainingTargetsComponent implements OnInit {
     'Provide RECP studies-based implementation support to MSMEs and establish State-Level MSME Ecosystem for Clean Technology Adoption',
     'Preparation of Success Stories and project report'
   ];
-  private readonly rich6AAllowedSubActivities: string[] = [
-    'Submission of Inception Report',
-    'Identification of cluster as per geo tagged lat/long and Spatial energy intensity mapping',
-    'Seed geo tagged clusters with meta data on the dashboard',
-    'Product technical specifications document preperation',
-    'Portal development and live hosting'
-  ];
   get showRestrictedTabCard(): boolean {
     const name = this.loginsessionDetails?.agencyName;
-    const current = (this.selectedSubActivityName || '').trim();
     if (name === 'RICH_6A') {
-      return this.rich6AAllowedSubActivities.some(allowed => allowed.trim() === current);
+      return !!this.selectedRichMilestone;
     }
     if (name === 'RICH_6B') {
+      const current = (this.selectedSubActivityName || '').trim();
       return this.rich6BAllowedSubActivities.some(allowed => allowed.trim() === current);
     }
     return false;

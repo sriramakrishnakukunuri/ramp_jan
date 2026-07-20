@@ -10,7 +10,44 @@
            </div>
          </div>
          <div class="card-body">
-           <div class="row">
+           <div class="row" *ngIf="isRich6A">
+             <div class="col-12 col-sm-6 col-md-3 col-lg-3">
+               <div class="form-floating mb-3 mb-sm-3 mb-md-0">
+                 <select class="form-select" id="topMilestoneSelect"
+                   [ngModel]="selectedRichMilestone?.richMilestoneId || ''"
+                   [ngModelOptions]="{standalone: true}"
+                   (change)="onRichMilestoneChange($any($event.target).value)">
+                   <option value="">Select Milestone</option>
+                   <option *ngFor="let m of richMilestonesList" [value]="m?.richMilestoneId">
+                     {{ m?.paymentIteration }}
+                   </option>
+                 </select>
+                 <label for="topMilestoneSelect">Milestone</label>
+               </div>
+             </div>
+             <div class="col-12 col-sm-6 col-md-3 col-lg-3">
+               <div class="form-floating mb-3 mb-sm-3 mb-md-0">
+                 <input type="text" class="form-control" id="topRmMilestone"
+                   [value]="selectedRichMilestone?.paymentMilestone || ''" disabled readonly>
+                 <label for="topRmMilestone">Payment Milestone</label>
+               </div>
+             </div>
+             <div class="col-12 col-sm-6 col-md-3 col-lg-3">
+               <div class="form-floating mb-3 mb-sm-3 mb-md-0">
+                 <input type="text" class="form-control" id="topRmPercentage"
+                   [value]="selectedRichMilestone?.paymentPercentage != null ? selectedRichMilestone.paymentPercentage + '%' : ''" disabled readonly>
+                 <label for="topRmPercentage">Payment Percentage</label>
+               </div>
+             </div>
+             <div class="col-12 col-sm-6 col-md-3 col-lg-3">
+               <div class="form-floating mb-3 mb-sm-3 mb-md-0">
+                 <input type="text" class="form-control" id="topRmAmount"
+                   [value]="selectedRichMilestone?.amount != null ? (selectedRichMilestone.amount | commaSeperationIndia) : ''" disabled readonly>
+                 <label for="topRmAmount">Amount</label>
+               </div>
+             </div>
+           </div>
+           <div class="row" *ngIf="!isRich6A">
              <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                <div class="form-floating mb-3 mb-sm-3 mb-md-0">
                  <select class="form-select events-expenditure" id="budgethead" [(ngModel)]="selectedActivity"
@@ -72,7 +109,7 @@
        <!-- begin:: Preliminary survey for selection of potential SHGs -->
        <!-- selectedBudgetHead=='71' || selectedBudgetHead=='68' -->
        <div class="card budgets mb-3 "
-         *ngIf="isRestrictedAgency || selectedBudgetHead=='69' || selectedBudgetHead=='72' || selectedBudgetHead=='128' || selectedBudgetHead=='70' || this.selectedBudgetHead=='134' || this.selectedBudgetHead=='136' || this.selectedBudgetHead=='137'  || this.selectedBudgetHead=='135' || this.selectedBudgetHead=='139' || this.selectedBudgetHead=='138' || this.selectedBudgetHead=='140' || this.selectedBudgetHead=='141' ">
+         *ngIf="isRich6B || selectedBudgetHead=='69' || selectedBudgetHead=='72' || selectedBudgetHead=='128' || selectedBudgetHead=='70' || this.selectedBudgetHead=='134' || this.selectedBudgetHead=='136' || this.selectedBudgetHead=='137'  || this.selectedBudgetHead=='135' || this.selectedBudgetHead=='139' || this.selectedBudgetHead=='138' || this.selectedBudgetHead=='140' || this.selectedBudgetHead=='141' ">
 
          <div class="card-header bg-transparent d-flex justify-content-between align-items-center">
 
@@ -973,7 +1010,7 @@
         <div class="card budgets mb-3" *ngIf="showRestrictedTabCard || selectedBudgetHead=='70' || this.selectedBudgetHead=='134'  || this.selectedBudgetHead=='135' || this.selectedBudgetHead=='136' || this.selectedBudgetHead=='137' || this.selectedBudgetHead=='139'">
         <div class="card-body">
           <!-- Tab Navigation -->
-          <ul class="nav nav-tabs mb-3" id="handHoldingTabs" role="tablist">
+          <ul class="nav nav-tabs mb-3" id="handHoldingTabs" role="tablist" *ngIf="!isRich6A">
             <li class="nav-item" role="presentation" *ngIf="!isRestrictedAgency">
               <button class="nav-link active" id="handholding-tab" (click)="getDeatilOfTargets()" data-bs-toggle="tab"
                       data-bs-target="#handholding" type="button" role="tab"
@@ -1021,14 +1058,182 @@
             <div class="tab-pane fade" [class.show]="isRestrictedAgency" [class.active]="isRestrictedAgency" id="expenditure" role="tabpanel"
                  aria-labelledby="expenditure-tab">
               <div class="p-3">
-                
+
+                 <!-- Payment Details inline form for RICH_6A -->
+                 <div class="card mb-3" *ngIf="isRich6A">
+                   <div class="card-header bg-transparent">
+                     <h6 class="fw-600 mb-0">Payment Details</h6>
+                   </div>
+                   <div class="card-body">
+                     <form [formGroup]="financialForm" (ngSubmit)="onSubmit()">
+                       <div class="row">
+                         <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                           <div class="form-floating mb-3">
+                             <input type="date" class="form-control" formControlName="paymentDate" appDisableFutureDates
+                               [class.is-invalid]="isSubmitted && f['paymentDate'].invalid">
+                             <label for="paymentDate">Payment Date</label>
+                             <div *ngIf="isSubmitted && f['paymentDate'].invalid" class="invalid-feedback">
+                               Payment date is required
+                             </div>
+                           </div>
+                         </div>
+                         <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                           <div class="form-floating mb-3">
+                             <input type="number" class="form-control" formControlName="expenditureAmount"
+                               [class.is-invalid]="isSubmitted && f['expenditureAmount'].invalid">
+                             <label for="expenditureAmount">Amount</label>
+                             <div *ngIf="isSubmitted && f['expenditureAmount'].invalid" class="invalid-feedback">
+                               <span *ngIf="f['expenditureAmount'].errors?.['required']">Expenditure amount is required</span>
+                               <span *ngIf="f['expenditureAmount'].errors?.['min']">Amount must be greater than 0</span>
+                               <span *ngIf="f['expenditureAmount'].errors?.['max']">Amount cannot exceed ₹5000</span>
+                             </div>
+                           </div>
+                         </div>
+                         <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                           <div class="form-floating mb-3">
+                             <input type="text" class="form-control" formControlName="billNo"
+                               [class.is-invalid]="isSubmitted && f['billNo'].invalid">
+                             <label for="billNo">Bill No.</label>
+                             <div *ngIf="isSubmitted && f['billNo'].invalid" class="invalid-feedback">
+                               Bill number is required
+                             </div>
+                           </div>
+                         </div>
+                         <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                           <div class="form-floating mb-3">
+                             <input type="date" class="form-control" formControlName="billDate" appDisableFutureDates
+                               [class.is-invalid]="isSubmitted && f['billDate'].invalid">
+                             <label for="billDate">Bill Date</label>
+                             <div *ngIf="isSubmitted && f['billDate'].invalid" class="invalid-feedback">
+                               Bill date is required
+                             </div>
+                           </div>
+                         </div>
+                         <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                           <div class="form-floating mb-3">
+                             <select class="form-select" formControlName="modeOfPayment"
+                               (change)="modeOfPaymentIt($any($event.target).value)"
+                               [class.is-invalid]="isSubmitted && f['modeOfPayment'].invalid">
+                               <option value="BANK_TRANSFER">Bank Transfer</option>
+                               <option value="CASH" *ngIf="!isRestrictedAgency">Cash</option>
+                               <option value="UPI">UPI</option>
+                               <option value="CHEQUE">CHEQUE</option>
+                             </select>
+                             <label for="modeOfPayment">Mode Of Payment</label>
+                             <div *ngIf="isSubmitted && f['modeOfPayment'].invalid" class="invalid-feedback">
+                               Payment mode is required
+                             </div>
+                           </div>
+                         </div>
+                         <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                           <div class="form-floating mb-3">
+                             <input type="text" class="form-control" formControlName="payeeName"
+                               [class.is-invalid]="isSubmitted && f['payeeName'].invalid">
+                             <label for="payeeName">Payee Name</label>
+                             <div *ngIf="isSubmitted && f['payeeName'].invalid" class="invalid-feedback">
+                               Payee name is required
+                             </div>
+                           </div>
+                         </div>
+                         <div class="col-12 col-sm-6 col-md-4 col-lg-4"
+                           *ngIf="f['modeOfPayment']?.value === 'BANK_TRANSFER' || f['modeOfPayment']?.value === 'CHEQUE'">
+                           <div class="form-floating mb-3">
+                             <input type="text" class="form-control" formControlName="accountNumber"
+                               [class.is-invalid]="isSubmitted && f['accountNumber'].invalid">
+                             <label for="accountNumber">Account Number</label>
+                             <div *ngIf="isSubmitted && f['accountNumber'].invalid" class="invalid-feedback">
+                               Please enter a valid account number
+                             </div>
+                           </div>
+                         </div>
+                         <div class="col-12 col-sm-6 col-md-4 col-lg-4" *ngIf="f['modeOfPayment']?.value === 'UPI'">
+                           <div class="form-floating mb-3">
+                             <input type="text" class="form-control" formControlName="transactionId">
+                             <label for="transactionId">Transaction Id</label>
+                           </div>
+                         </div>
+                         <div class="col-12 col-sm-6 col-md-4 col-lg-4"
+                           *ngIf="f['modeOfPayment']?.value === 'BANK_TRANSFER' || f['modeOfPayment']?.value === 'CHEQUE'">
+                           <div class="form-floating mb-3">
+                             <input type="text" class="form-control" formControlName="bankName"
+                               [class.is-invalid]="isSubmitted && f['bankName'].invalid">
+                             <label for="bankName">Bank</label>
+                             <div *ngIf="isSubmitted && f['bankName'].invalid" class="invalid-feedback">
+                               Bank name is required
+                             </div>
+                           </div>
+                         </div>
+                         <div class="col-12 col-sm-6 col-md-4 col-lg-4"
+                           *ngIf="f['modeOfPayment']?.value === 'BANK_TRANSFER' || f['modeOfPayment']?.value === 'CHEQUE'">
+                           <div class="form-floating mb-3">
+                             <input type="text" class="form-control" formControlName="ifscCode"
+                               [class.is-invalid]="isSubmitted && f['ifscCode'].invalid">
+                             <label for="ifscCode">IFSC Code</label>
+                             <div *ngIf="isSubmitted && f['ifscCode'].invalid" class="invalid-feedback">
+                               Invalid IFSC format. Correct format: AAAA0BBBBBB (4 Captial letters, then 0, then 6 letters/numbers)
+                             </div>
+                           </div>
+                         </div>
+                         <div class="col-12 col-sm-6 col-md-4 col-lg-4" *ngIf="f['modeOfPayment']?.value === 'CHEQUE'">
+                           <div class="form-floating mb-3">
+                             <input type="text" class="form-control" formControlName="checkNo"
+                               [class.is-invalid]="isSubmitted && f['checkNo'].invalid">
+                             <label for="checkNo">Cheque No</label>
+                             <div *ngIf="isSubmitted && f['checkNo'].invalid" class="invalid-feedback">
+                               Cheque number is required
+                             </div>
+                           </div>
+                         </div>
+                         <div class="col-12 col-sm-6 col-md-4 col-lg-4" *ngIf="f['modeOfPayment']?.value === 'CHEQUE'">
+                           <div class="form-floating mb-3">
+                             <input type="date" class="form-control" formControlName="checkDate"
+                               [class.is-invalid]="isSubmitted && f['checkDate'].invalid">
+                             <label for="checkDate">Cheque Date</label>
+                             <div *ngIf="isSubmitted && f['checkDate'].invalid" class="invalid-feedback">
+                               Cheque date is required
+                             </div>
+                           </div>
+                         </div>
+                         <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                           <div class="form-floating mb-3">
+                             <input type="text" class="form-control" formControlName="purpose"
+                               [class.is-invalid]="isSubmitted && f['purpose'].invalid">
+                             <label for="purpose">Purpose</label>
+                             <div *ngIf="isSubmitted && f['purpose'].invalid" class="invalid-feedback">
+                               Purpose is required
+                             </div>
+                           </div>
+                         </div>
+                         <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                           <div class="form-floating mb-3">
+                             <input type="file" id="filesInline" class="form-control" [disabled]="uploadedFilesFinance"
+                               (change)="onFileSelected($event)">
+                             <label for="uploadBill" for="filesInline">Upload Bill Invoice</label>
+                           </div>
+                           <div *ngIf="uploadedFilesFinance" class="mt-2">
+                             <div class="d-flex align-items-center mb-1">
+                               <span class="me-2">{{ this.uploadedFilesFinance.name?uploadedFilesFinance.name:uploadedFilesFinance.split('/').pop() }}</span>
+                               <button type="button" (click)="removeFile()" class="btn btn-sm btn-lime-green">
+                                 <span class="bi bi-trash"></span>
+                               </button>
+                             </div>
+                           </div>
+                         </div>
+                       </div>
+                       <div class="text-end mt-3">
+                         <button type="submit" class="btn btn-lime-green">{{iseditMode?'Update' :'Submit'}}</button>
+                       </div>
+                     </form>
+                   </div>
+                 </div>
+
                  <div class="card" >
              <div class="card-header bg-transparent">
                <div class="row align-items-center">
                  <div class="col-8 col-sm-8 col-md-9 col-lg-10">
-                   <h6 class="fw-600 mb-2 mb-sm-3 mb-md-0">Expenditure</h6>
+                   <h6 class="fw-600 mb-2 mb-sm-3 mb-md-0">{{ isRich6A ? 'Previous Payments' : 'Expenditure' }}</h6>
                  </div>
-                 <div class="col-4 col-sm-4 col-md-3 col-lg-2">
+                 <div class="col-4 col-sm-4 col-md-3 col-lg-2" *ngIf="!isRich6A">
                    <div class="text-end">
                      <button type="button" class="btn btn-sm btn-lime-green" (click)="openModel('add')"><span
                          class="bi bi-plus-lg"></span> Add</button>
@@ -1042,6 +1247,9 @@
                    <thead class="bg-lime-green">
                      <tr>
                        <th>S.No</th>
+                       <th *ngIf="isRestrictedAgency">Payment Iteration</th>
+                       <th *ngIf="isRestrictedAgency">Milestone</th>
+                       <th *ngIf="isRestrictedAgency">Milestone Amount</th>
                        <th>Report Submission Date</th>
                        <!-- <th> Vendor Company Name</th> -->
                        <!-- <th>Date of Approval</th> -->
@@ -1060,10 +1268,13 @@
                    </thead>
                    <tbody>
                      <tr *ngIf="!getPreliminaryData || getPreliminaryData.length === 0">
-                       <td colspan="14" class="text-center text-muted">Data Not available.</td>
+                       <td [attr.colspan]="isRestrictedAgency ? 17 : 14" class="text-center text-muted">Data Not available.</td>
                      </tr>
                      <tr *ngFor="let preliminary of getPreliminaryData; let i = index">
                        <td>{{ i + 1 }}</td>
+                       <td *ngIf="isRestrictedAgency">{{ (preliminary?.milestones && preliminary.milestones[0]) ? preliminary.milestones[0].paymentIteration : '' }}</td>
+                       <td *ngIf="isRestrictedAgency">{{ (preliminary?.milestones && preliminary.milestones[0]) ? preliminary.milestones[0].paymentMilestone : '' }}</td>
+                       <td *ngIf="isRestrictedAgency">{{ (preliminary?.milestones && preliminary.milestones[0]) ? (preliminary.milestones[0].amount | commaSeperationIndia) : '' }}</td>
                        <td>{{ preliminary?.paymentDate  }}</td>
                        <!-- <td *>{{preliminary?.category}}</td> -->
                        <!-- <td>{{ preliminary.billDate | date: 'dd-MM-yyyy' }}</td> -->
@@ -1329,7 +1540,7 @@
  </main>
 
  <!-- begin:: add Preliminary survey for selection of potential SHGs modal -->
- <div class="modal fade" id="addSurvey" tabindex="-1" aria-labelledby="addSurveyLabel" aria-hidden="true">
+ <div class="modal fade" id="addSurvey" tabindex="-1" aria-labelledby="addSurveyLabel" aria-hidden="true" *ngIf="!isRich6A">
    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-xl">
      <div class="modal-content">
        <div class="modal-header py-2">
@@ -1345,12 +1556,12 @@
                  <select class="form-select" id="richMilestoneSelect"
                    formControlName="richMilestoneId"
                    (change)="onRichMilestoneChange($any($event.target).value)">
-                   <option value="">Select Payment Iteration</option>
+                   <option value="">Select Milestone</option>
                    <option *ngFor="let m of richMilestonesList" [value]="m?.richMilestoneId">
                      {{ m?.paymentIteration }}
                    </option>
                  </select>
-                 <label for="richMilestoneSelect">Payment Iteration</label>
+                 <label for="richMilestoneSelect">Milestone</label>
                </div>
              </div>
              <div class="col-12 col-sm-6 col-md-3 col-lg-3">
