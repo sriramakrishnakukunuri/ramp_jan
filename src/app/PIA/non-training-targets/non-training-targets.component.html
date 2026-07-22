@@ -1248,12 +1248,12 @@
                      <tr>
                        <th>S.No</th>
                        <th *ngIf="isRestrictedAgency">Payment Iteration</th>
-                       <th *ngIf="isRestrictedAgency">Milestone</th>
+                       <th *ngIf="isRestrictedAgency">{{ isRich6A ? 'Milestone Details' : 'Milestone' }}</th>
                        <th *ngIf="isRestrictedAgency">Milestone Amount</th>
                        <th>Report Submission Date</th>
                        <!-- <th> Vendor Company Name</th> -->
                        <!-- <th>Date of Approval</th> -->
-                       <th>Amount</th>
+                       <th>{{ isRich6A ? 'Bill Amount' : 'Amount' }}</th>
                        <th>Bill No.</th>
                        <th>Bill Date</th>
                        <th>Mode Of Payment</th>
@@ -1261,14 +1261,14 @@
                        <th>Transcation ID</th>
                        <th>Bank</th>
                        <th>IFSC Code</th>
-                       <th>Purpose</th>
+                       <th *ngIf="!isRich6A">Purpose</th>
                        <th>Bill Invoice</th>
                        <th class="text-center">Edit / Delete</th>
                      </tr>
                    </thead>
                    <tbody>
                      <tr *ngIf="!getPreliminaryData || getPreliminaryData.length === 0">
-                       <td [attr.colspan]="isRestrictedAgency ? 17 : 14" class="text-center text-muted">Data Not available.</td>
+                       <td [attr.colspan]="isRich6A ? 16 : (isRestrictedAgency ? 17 : 14)" class="text-center text-muted">Data Not available.</td>
                      </tr>
                      <tr *ngFor="let preliminary of getPreliminaryData; let i = index">
                        <td>{{ i + 1 }}</td>
@@ -1286,7 +1286,7 @@
                        <td>{{ preliminary?.transactionId }}</td>
                        <td>{{ preliminary?.bankName }}</td>
                        <td>{{ preliminary?.ifscCode }}</td>
-                       <td>{{ preliminary?.purpose }}</td>
+                       <td *ngIf="!isRich6A">{{ preliminary?.purpose }}</td>
                        <td class="text-center">
                          <a *ngIf="preliminary?.uploadBillUrl" class="btn btn-default text-primary btn-sm"
                            (click)="showFileViewer(preliminary.uploadBillUrl)">
