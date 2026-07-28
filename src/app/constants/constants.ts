@@ -142,6 +142,8 @@ export const APIS = {
       tihclCOI:{
         getApplicaionData: API_BASE_URL + '/registrations/application/status?',
         getNumericData: API_BASE_URL + '/application/counts?district=',
+        getAllSanctionDetails: API_BASE_URL + '/sanction/details/all',
+        getAllDisbursementDetails: API_BASE_URL + '/disbursement/details/all',
     },
     tihcl_uploads:{
         

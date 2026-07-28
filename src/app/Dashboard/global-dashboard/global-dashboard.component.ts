@@ -23,6 +23,11 @@ export class GlobalDashboardComponent implements OnInit, OnDestroy {
   districtCounts: any[] = [];
   loadingMetrics = false;
 
+  totalDisbursedAmount = 0;
+  toBeDisbursedAmount = 0;
+  totalSanctionedAmount = 0;
+  monthlyDisbursements: { label: string, amount: number, cumulative: number }[] = [];
+
   private charts: { [key: string]: Chart } = {};
 
   constructor(
@@ -54,9 +59,14 @@ export class GlobalDashboardComponent implements OnInit, OnDestroy {
     this.loadingMetrics = true;
 
     this._commonService.getById(APIS.tihclCOI.getNumericData, 'district').subscribe({
-      next: (res: any) => { this.summaryData = res || {}; },
+      next: (res: any) => {
+        this.summaryData = res || {};
+        setTimeout(() => this.renderStatusMixChart(), 200);
+      },
       error: () => {}
     });
+
+    this.loadAmountMetrics();
 
     this._commonService.getDataByUrl(APIS.tihclMasterList.getDistricts).subscribe({
       next: (res: any) => {
@@ -65,7 +75,7 @@ export class GlobalDashboardComponent implements OnInit, OnDestroy {
 
         const calls = districts.map((d: any) =>
           this._commonService.getById(APIS.tihclCOI.getNumericData, d.districtName).pipe(
-            catchError(() => of({ applicationsReceived: 0, applicationsUnderProcess: 0, applicationsWithDic: 0, applicationsLoanSanctioned: 0, applicationsNotConsidered: 0 }))
+            catchError(() => of({ newApplication: 0, applicationsUnderProcess: 0, applicationsWithDic: 0, applicationsLoanSanctioned: 0, applicationsNotConsidered: 0 }))
           )
         );
 
@@ -73,7 +83,7 @@ export class GlobalDashboardComponent implements OnInit, OnDestroy {
           next: (results: any) => {
             const mapped = districts.map((d: any, i: number) => {
               const r = results[i] || {};
-              const received = r.applicationsReceived || 0;
+              const received = r.newApplication || 0;
               const underProcess = r.applicationsUnderProcess || 0;
               const withDic = r.applicationsWithDic || 0;
               const sanctioned = r.applicationsLoanSanctioned || 0;
@@ -99,42 +109,107 @@ export class GlobalDashboardComponent implements OnInit, OnDestroy {
     });
   }
 
+  loadAmountMetrics() {
+    forkJoin({
+      disbursement: this._commonService.getDataByUrl(APIS.tihclCOI.getAllDisbursementDetails).pipe(catchError(() => of([]))),
+      sanction: this._commonService.getDataByUrl(APIS.tihclCOI.getAllSanctionDetails).pipe(catchError(() => of([])))
+    }).subscribe({
+      next: (res: any) => {
+        const disbursements = this.toList(res.disbursement);
+        const sanctions = this.toList(res.sanction);
+
+        this.totalDisbursedAmount = this.sumBy(disbursements, 'totalDisbursedAmount');
+        this.toBeDisbursedAmount = this.sumBy(sanctions, 'toBeDisbursedAmount');
+        this.totalSanctionedAmount = this.sumBy(sanctions, 'sanctionedAmount');
+        this.monthlyDisbursements = this.buildMonthlyDisbursements(disbursements);
+
+        setTimeout(() => this.renderMoneyCharts(), 200);
+      },
+      error: () => {}
+    });
+  }
+
+  private toList(res: any): any[] {
+    return Array.isArray(res) ? res : (res?.data || []);
+  }
+
+  private sumBy(list: any[], key: string): number {
+    return list.reduce((sum, item) => sum + (Number(item?.[key]) || 0), 0);
+  }
+
+  // Buckets every disbursement tranche by month. Falls back to the record-level
+  // date/total when a record has no tranche breakdown.
+  private buildMonthlyDisbursements(disbursements: any[]): { label: string, amount: number, cumulative: number }[] {
+    const buckets: { [key: string]: number } = {};
+
+    const add = (rawDate: any, rawAmount: any) => {
+      const date = this.parseDate(rawDate);
+      const amount = Number(rawAmount) || 0;
+      if (!date || !amount) return;
+      const key = date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2);
+      buckets[key] = (buckets[key] || 0) + amount;
+    };
+
+    disbursements.forEach(record => {
+      const tranches: any[] = Array.isArray(record?.disbursements) ? record.disbursements : [];
+      if (tranches.length) {
+        tranches.forEach(t => add(t?.disbursementDate, t?.amount));
+      } else {
+        add(record?.dateDisbursement || record?.collectionDate, record?.totalDisbursedAmount);
+      }
+    });
+
+    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    let running = 0;
+
+    return Object.keys(buckets)
+      .sort()
+      .slice(-12)
+      .map(key => {
+        const [year, month] = key.split('-');
+        running += buckets[key];
+        return {
+          label: months[Number(month) - 1] + " '" + year.slice(-2),
+          amount: buckets[key],
+          cumulative: running
+        };
+      });
+  }
+
+  // Backend dates arrive as DD-MM-YYYY in some places and ISO in others.
+  private parseDate(value: any): Date | null {
+    if (!value) return null;
+    const s = value.toString().trim();
+
+    let m = s.match(/^(\d{4})-(\d{1,2})-(\d{1,2})/);
+    if (m) return new Date(+m[1], +m[2] - 1, +m[3]);
+
+    m = s.match(/^(\d{1,2})[-\/](\d{1,2})[-\/](\d{4})/);
+    if (m) return new Date(+m[3], +m[2] - 1, +m[1]);
+
+    return null;
+  }
+
+  formatCompactINR(value: number): string {
+    const v = Number(value) || 0;
+    if (v >= 1e7) return '₹' + (v / 1e7).toFixed(2) + ' Cr';
+    if (v >= 1e5) return '₹' + (v / 1e5).toFixed(2) + ' L';
+    return '₹' + v.toLocaleString('en-IN');
+  }
+
   renderAllCharts() {
-    this.renderDistrictBarChart();
     this.renderStatusStackedChart();
-    this.renderDonutChart();
-    this.renderSanctionedBarChart();
+    this.renderStatusMixChart();
+    this.renderMoneyCharts();
+  }
+
+  renderMoneyCharts() {
+    this.renderAmountOverviewChart();
+    this.renderDisbursementTrendChart();
   }
 
   private destroyChart(id: string) {
     if (this.charts[id]) { this.charts[id].destroy(); delete this.charts[id]; }
-  }
-
-  renderDistrictBarChart() {
-    this.destroyChart('district');
-    const canvas = document.getElementById('districtBarChart') as HTMLCanvasElement;
-    if (!canvas || !this.districtCounts.length) return;
-    const labels = this.districtCounts.map(d => d.name);
-    const data = this.districtCounts.map(d => d.total);
-
-    this.charts['district'] = new Chart(canvas, {
-      type: 'bar',
-      data: {
-        labels,
-        datasets: [{ data, backgroundColor: this.palette(labels.length), borderRadius: 5 }]
-      },
-      options: {
-        responsive: true,
-        plugins: {
-          legend: { display: false },
-          tooltip: { callbacks: { label: (ctx: any) => `${ctx.parsed.y} applications` } }
-        },
-        scales: {
-          x: { ticks: { maxRotation: 40, font: { size: 10 } }, grid: { display: false } },
-          y: { beginAtZero: true, ticks: { stepSize: 1 } }
-        }
-      }
-    });
   }
 
   renderStatusStackedChart() {
@@ -157,7 +232,17 @@ export class GlobalDashboardComponent implements OnInit, OnDestroy {
       },
       options: {
         responsive: true,
-        plugins: { legend: { position: 'top', labels: { boxWidth: 12, font: { size: 10 } } } },
+        plugins: {
+          legend: { position: 'top', labels: { boxWidth: 12, font: { size: 10 } } },
+          tooltip: {
+            callbacks: {
+              footer: (items: any) => {
+                const d = this.districtCounts[items?.[0]?.dataIndex];
+                return d ? `Total: ${d.total} applications` : '';
+              }
+            }
+          }
+        },
         scales: {
           x: { stacked: true, ticks: { maxRotation: 40, font: { size: 10 } }, grid: { display: false } },
           y: { stacked: true, beginAtZero: true }
@@ -166,19 +251,29 @@ export class GlobalDashboardComponent implements OnInit, OnDestroy {
     });
   }
 
-  renderDonutChart() {
-    this.destroyChart('donut');
-    const canvas = document.getElementById('donutChart') as HTMLCanvasElement;
-    if (!canvas || !this.districtCounts.length) return;
-    const top = this.districtCounts.slice(0, 10);
-    const labels = top.map(d => d.name);
-    const data = top.map(d => d.total);
+  renderStatusMixChart() {
+    this.destroyChart('statusMix');
+    const canvas = document.getElementById('statusMixChart') as HTMLCanvasElement;
+    if (!canvas || !this.hasStatusMix) return;
 
-    this.charts['donut'] = new Chart(canvas, {
+    const labels = ['New Applications', 'Under Process', 'With DIC', 'Sanctioned', 'Not Considered'];
+    const data = [
+      this.summaryData?.newApplication || 0,
+      this.summaryData?.applicationsUnderProcess || 0,
+      this.summaryData?.applicationsWithDic || 0,
+      this.summaryData?.applicationsLoanSanctioned || 0,
+      this.summaryData?.applicationsNotConsidered || 0
+    ];
+
+    this.charts['statusMix'] = new Chart(canvas, {
       type: 'doughnut',
       data: {
         labels,
-        datasets: [{ data, backgroundColor: this.palette(labels.length), borderWidth: 2, borderColor: '#fff', hoverOffset: 8 }]
+        datasets: [{
+          data,
+          backgroundColor: ['#4285F4', '#00ACC1', '#E91E8C', '#4CAF50', '#FF5722'],
+          borderWidth: 2, borderColor: '#fff', hoverOffset: 8
+        }]
       },
       options: {
         responsive: true,
@@ -199,29 +294,84 @@ export class GlobalDashboardComponent implements OnInit, OnDestroy {
     });
   }
 
-  renderSanctionedBarChart() {
-    this.destroyChart('sanctioned');
-    const canvas = document.getElementById('sanctionedBarChart') as HTMLCanvasElement;
-    if (!canvas || !this.districtCounts.length) return;
-    const active = this.districtCounts.filter(d => d.sanctioned > 0);
-    const labels = active.map(d => d.name);
-    const data = active.map(d => d.sanctioned);
+  renderAmountOverviewChart() {
+    this.destroyChart('amountOverview');
+    const canvas = document.getElementById('amountOverviewChart') as HTMLCanvasElement;
+    if (!canvas || !this.hasAmountData) return;
 
-    this.charts['sanctioned'] = new Chart(canvas, {
+    this.charts['amountOverview'] = new Chart(canvas, {
       type: 'bar',
       data: {
-        labels,
-        datasets: [{ data, backgroundColor: '#4CAF50', borderRadius: 5 }]
+        labels: ['Sanctioned', 'Disbursed', 'To Be Disbursed'],
+        datasets: [{
+          data: [this.totalSanctionedAmount, this.totalDisbursedAmount, this.toBeDisbursedAmount],
+          backgroundColor: ['#4285F4', '#22c55e', '#f59e0b'],
+          borderRadius: 5
+        }]
       },
       options: {
         responsive: true,
         plugins: {
           legend: { display: false },
-          tooltip: { callbacks: { label: (ctx: any) => `${ctx.parsed.y} sanctioned` } }
+          tooltip: { callbacks: { label: (ctx: any) => this.formatCompactINR(ctx.parsed.y) } }
         },
         scales: {
-          x: { ticks: { maxRotation: 40, font: { size: 10 } }, grid: { display: false } },
-          y: { beginAtZero: true, ticks: { stepSize: 1 } }
+          x: { grid: { display: false } },
+          y: { beginAtZero: true, ticks: { callback: (v: any) => this.formatCompactINR(v), font: { size: 10 } } }
+        }
+      }
+    });
+  }
+
+  renderDisbursementTrendChart() {
+    this.destroyChart('trend');
+    const canvas = document.getElementById('disbursementTrendChart') as HTMLCanvasElement;
+    if (!canvas || !this.monthlyDisbursements.length) return;
+
+    this.charts['trend'] = new Chart(canvas, {
+      type: 'bar',
+      data: {
+        labels: this.monthlyDisbursements.map(m => m.label),
+        datasets: [
+          {
+            label: 'Disbursed in month',
+            data: this.monthlyDisbursements.map(m => m.amount),
+            backgroundColor: '#22c55e',
+            borderRadius: 4,
+            order: 2
+          },
+          {
+            label: 'Cumulative',
+            data: this.monthlyDisbursements.map(m => m.cumulative),
+            type: 'line',
+            borderColor: '#4285F4',
+            backgroundColor: '#4285F4',
+            borderWidth: 2,
+            pointRadius: 3,
+            tension: 0.3,
+            yAxisID: 'y1',
+            order: 1
+          } as any
+        ]
+      },
+      options: {
+        responsive: true,
+        interaction: { mode: 'index', intersect: false },
+        plugins: {
+          legend: { position: 'top', labels: { boxWidth: 12, font: { size: 10 } } },
+          tooltip: { callbacks: { label: (ctx: any) => `${ctx.dataset.label}: ${this.formatCompactINR(ctx.parsed.y)}` } }
+        },
+        scales: {
+          x: { grid: { display: false }, ticks: { font: { size: 10 } } },
+          y: {
+            beginAtZero: true, position: 'left',
+            ticks: { callback: (v: any) => this.formatCompactINR(v), font: { size: 10 } }
+          },
+          y1: {
+            beginAtZero: true, position: 'right',
+            grid: { drawOnChartArea: false },
+            ticks: { callback: (v: any) => this.formatCompactINR(v), font: { size: 10 } }
+          }
         }
       }
     });
@@ -232,12 +382,19 @@ export class GlobalDashboardComponent implements OnInit, OnDestroy {
     return Array.from({ length: n }, (_, i) => p[i % p.length]);
   }
 
-  get hasSanctioned(): boolean {
-    return this.districtCounts.some(d => d.sanctioned > 0);
+  get hasStatusMix(): boolean {
+    return this.totalApplications > 0;
+  }
+
+  get hasAmountData(): boolean {
+    return (this.totalSanctionedAmount + this.totalDisbursedAmount + this.toBeDisbursedAmount) > 0;
   }
 
   get totalApplications(): number {
-    return (this.summaryData?.applicationsReceived || 0) +
+    if (this.summaryData?.totalApplicationReceived) {
+      return this.summaryData.totalApplicationReceived;
+    }
+    return (this.summaryData?.newApplication || 0) +
            (this.summaryData?.applicationsUnderProcess || 0) +
            (this.summaryData?.applicationsWithDic || 0) +
            (this.summaryData?.applicationsLoanSanctioned || 0) +
